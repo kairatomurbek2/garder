@@ -192,6 +192,18 @@ class Orientation(models.Model):
         verbose_name_plural = _('Orientation Types')
 
 
+class Employee(models.Model):
+    user = models.OneToOneField(User)
+    address = models.CharField(max_length=50, verbose_name=_("Address"))
+    city = models.CharField(max_length=30, verbose_name=_("City"))
+    state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
+    zip = models.CharField(max_length=10, verbose_name=_("ZIP"))
+    company = models.CharField(max_length=30, verbose_name=_("Company"))
+    phone1 = models.CharField(max_length=20, verbose_name=_("Phone 1"))
+    phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
+    fax = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Fax"))
+
+
 class Customer (models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -286,7 +298,8 @@ class Survey(models.Model):
     cc_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CC Present"))
     protected = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Protected"))
     aux_water = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Auxiliary Water"))
-    detector_manufacturer = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Manufacturer"))
+    detector_manufacturer = models.CharField(max_length=20, blank=True, null=True,
+                                             verbose_name=_("Detector Manufacturer"))
     detector_model = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Model"))
     detector_serial_no = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Serial No."))
     special = models.ForeignKey(Special, null=True, blank=True, verbose_name=_("Special"))
@@ -310,8 +323,10 @@ class Hazard(models.Model):
     install_date = models.DateTimeField(blank=True, null=True, verbose_name=_("Install Date"))
     replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
     orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'))
-    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'), related_name='bp_present')
-    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'), related_name='bp_required')
+    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'),
+                                        related_name='bp_present')
+    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'),
+                                         related_name='bp_required')
     bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"))
     manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"))
     model_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Model No."))
@@ -373,6 +388,13 @@ class Letter(models.Model):
     date = models.DateTimeField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"))
 
+    def __unicode__(self):
+        return "%s, %s" % (self.date, self.letter_type)
+
+    class Meta:
+        verbose_name = _("Letter")
+        verbose_name_plural = _("Letters")
+
 
 class Licence(models.Model):
     given_to = models.ForeignKey(Group, verbose_name=_("Given To"))
@@ -380,6 +402,13 @@ class Licence(models.Model):
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(verbose_name=_("End Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+
+    def __unicode__(self):
+        return "%s, %s" % (self.given_to.name, self.start_date)
+
+    class Meta:
+        verbose_name = "Licence"
+        verbose_name_plural = "Licences"
 
 
 class TestPermission(models.Model):
@@ -389,6 +418,13 @@ class TestPermission(models.Model):
     due_date = models.DateField(verbose_name=_("Due Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
+    def __unicode__(self):
+        return "%s %s, %s" % (self.given_to.first_name, self.given_to.last_name, self.given_date)
+
+    class Meta:
+        verbose_name = "Test Permission"
+        verbose_name_plural = "Test Permissions"
+
 
 class Inspection(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"))
@@ -396,3 +432,10 @@ class Inspection(models.Model):
     assigned_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Assigned By"), related_name='assigner')
     assigned_date = models.DateField(verbose_name=_("Assigned Date"), auto_now_add=True)
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+
+    def __unicode__(self):
+        return "%s %s, %s" % (self.assigned_to.first_name, self.assigned_to.last_name, self.assigned_date)
+
+    class Meta:
+        verbose_name = "Inspection"
+        verbose_name_plural = "Inspections"
