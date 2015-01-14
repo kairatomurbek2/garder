@@ -27,7 +27,7 @@ class SiteType(models.Model):
 
 
 class SiteUse(models.Model):
-    site_use = models.CharField(max_length=20, verbose_name=_("Site Use"))
+    site_use = models.CharField(max_length=30, verbose_name=_("Site Use"))
 
     def __unicode__(self):
         return self.site_use
@@ -41,7 +41,7 @@ class ServiceType(models.Model):
     service_type = models.CharField(max_length=20, verbose_name=_("Service Type"))
 
     def __unicode__(self):
-        return self.source_type
+        return self.service_type
 
     class Meta:
         verbose_name = _('Service Type')
@@ -52,7 +52,7 @@ class SurveyType(models.Model):
     survey_type = models.CharField(max_length=20, verbose_name=_("Survey Type"))
 
     def __unicode__(self):
-        return self.source_type
+        return self.survey_type
 
     class Meta:
         verbose_name = _('Survey Type')

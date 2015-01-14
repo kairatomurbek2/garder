@@ -5,4 +5,5 @@ virtualenv --no-site-packages --distribute virtualenv
 pip install -r requirements.txt
 cd bigsurvey
 ./manage.py migrate
+./manage.py loaddata data
 deactivate
