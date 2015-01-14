@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 virtualenv --no-site-packages --distribute virtualenv
 . virtualenv/bin/activate
