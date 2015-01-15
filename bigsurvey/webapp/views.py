@@ -1,3 +1,34 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView, View
+import models
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
-# Create your views here.
+
+class LoginRequiredView(View):
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredView, self).dispatch(*args, **kwargs)
+
+
+class HomeView(TemplateView, LoginRequiredView):
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data()
+        user = self.request.user
+        user_groups = user.groups.values_list('name', flat=True)
+        if "SuperAdministrators" in user_groups:
+            context['sup'] = True
+            context['site_list'] = models.Site.objects.all()
+        elif "Administrators" in user_groups:
+            context['adm'] = True
+            context['site_list'] = models.Site.objects.filter(pws=user.pws)
+        elif "Surveyors" in user_groups:
+            context['surv'] = True
+            sites = models.Inspection.objects.filter(assigned_to=user).values_list('site', flat=True)
+            context['site_list'] = sites
+        elif "Testers" in user_groups:
+            context['test'] = True
+            sites = models.TestPermission.objects.filter(given_to=user).values_list('site', flat=True)
+            context['site_list'] = sites
+        return context

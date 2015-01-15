@@ -2,5 +2,5 @@ virtualenv
 *.pyc
 .idea
 *.sqlite3
-**/settings_local.py
 *~
+settings_local.py

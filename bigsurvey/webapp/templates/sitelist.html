@@ -1,0 +1,26 @@
+{% load i18n %}
+<table>
+    <thead>
+    <tr>
+        <th>
+            {% trans "Site" %}
+        </th>
+        <th colspan="2">
+            {% trans "Actions" %}
+        </th>
+    </tr>
+    </thead>
+    {% for site in site_list %}
+        <tr>
+            <td>
+                {{ site.city }}, {{ site.street_address }}, {{ site.street_number }}
+            </td>
+            <td>
+                {% url "webapp:site_edit" %}
+            </td>
+            <td>
+                {% url "webapp:permissions" %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
