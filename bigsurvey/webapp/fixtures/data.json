@@ -1,5 +1,1257 @@
 [
   {
+    "fields": {
+      "codename": "add_logentry",
+      "name": "Can add log entry",
+      "content_type": 1
+    },
+    "model": "auth.permission",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "codename": "change_logentry",
+      "name": "Can change log entry",
+      "content_type": 1
+    },
+    "model": "auth.permission",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "codename": "delete_logentry",
+      "name": "Can delete log entry",
+      "content_type": 1
+    },
+    "model": "auth.permission",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "codename": "add_permission",
+      "name": "Can add permission",
+      "content_type": 2
+    },
+    "model": "auth.permission",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "codename": "change_permission",
+      "name": "Can change permission",
+      "content_type": 2
+    },
+    "model": "auth.permission",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "codename": "delete_permission",
+      "name": "Can delete permission",
+      "content_type": 2
+    },
+    "model": "auth.permission",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "codename": "add_group",
+      "name": "Can add group",
+      "content_type": 3
+    },
+    "model": "auth.permission",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "codename": "change_group",
+      "name": "Can change group",
+      "content_type": 3
+    },
+    "model": "auth.permission",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "codename": "delete_group",
+      "name": "Can delete group",
+      "content_type": 3
+    },
+    "model": "auth.permission",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "codename": "add_user",
+      "name": "Can add user",
+      "content_type": 4
+    },
+    "model": "auth.permission",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "codename": "change_user",
+      "name": "Can change user",
+      "content_type": 4
+    },
+    "model": "auth.permission",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "codename": "delete_user",
+      "name": "Can delete user",
+      "content_type": 4
+    },
+    "model": "auth.permission",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "codename": "add_contenttype",
+      "name": "Can add content type",
+      "content_type": 5
+    },
+    "model": "auth.permission",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "codename": "change_contenttype",
+      "name": "Can change content type",
+      "content_type": 5
+    },
+    "model": "auth.permission",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "codename": "delete_contenttype",
+      "name": "Can delete content type",
+      "content_type": 5
+    },
+    "model": "auth.permission",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "codename": "add_session",
+      "name": "Can add session",
+      "content_type": 6
+    },
+    "model": "auth.permission",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "codename": "change_session",
+      "name": "Can change session",
+      "content_type": 6
+    },
+    "model": "auth.permission",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "codename": "delete_session",
+      "name": "Can delete session",
+      "content_type": 6
+    },
+    "model": "auth.permission",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "codename": "add_sourcetype",
+      "name": "Can add Source Type",
+      "content_type": 7
+    },
+    "model": "auth.permission",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "codename": "change_sourcetype",
+      "name": "Can change Source Type",
+      "content_type": 7
+    },
+    "model": "auth.permission",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "codename": "delete_sourcetype",
+      "name": "Can delete Source Type",
+      "content_type": 7
+    },
+    "model": "auth.permission",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "codename": "add_sitetype",
+      "name": "Can add Site Type",
+      "content_type": 8
+    },
+    "model": "auth.permission",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "codename": "change_sitetype",
+      "name": "Can change Site Type",
+      "content_type": 8
+    },
+    "model": "auth.permission",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "codename": "delete_sitetype",
+      "name": "Can delete Site Type",
+      "content_type": 8
+    },
+    "model": "auth.permission",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "codename": "add_siteuse",
+      "name": "Can add Site Use",
+      "content_type": 9
+    },
+    "model": "auth.permission",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "codename": "change_siteuse",
+      "name": "Can change Site Use",
+      "content_type": 9
+    },
+    "model": "auth.permission",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "codename": "delete_siteuse",
+      "name": "Can delete Site Use",
+      "content_type": 9
+    },
+    "model": "auth.permission",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "codename": "add_servicetype",
+      "name": "Can add Service Type",
+      "content_type": 10
+    },
+    "model": "auth.permission",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "codename": "change_servicetype",
+      "name": "Can change Service Type",
+      "content_type": 10
+    },
+    "model": "auth.permission",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "codename": "delete_servicetype",
+      "name": "Can delete Service Type",
+      "content_type": 10
+    },
+    "model": "auth.permission",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "codename": "add_surveytype",
+      "name": "Can add Survey Type",
+      "content_type": 11
+    },
+    "model": "auth.permission",
+    "pk": 31
+  },
+  {
+    "fields": {
+      "codename": "change_surveytype",
+      "name": "Can change Survey Type",
+      "content_type": 11
+    },
+    "model": "auth.permission",
+    "pk": 32
+  },
+  {
+    "fields": {
+      "codename": "delete_surveytype",
+      "name": "Can delete Survey Type",
+      "content_type": 11
+    },
+    "model": "auth.permission",
+    "pk": 33
+  },
+  {
+    "fields": {
+      "codename": "add_bptype",
+      "name": "Can add BFP Type",
+      "content_type": 12
+    },
+    "model": "auth.permission",
+    "pk": 34
+  },
+  {
+    "fields": {
+      "codename": "change_bptype",
+      "name": "Can change BFP Type",
+      "content_type": 12
+    },
+    "model": "auth.permission",
+    "pk": 35
+  },
+  {
+    "fields": {
+      "codename": "delete_bptype",
+      "name": "Can delete BFP Type",
+      "content_type": 12
+    },
+    "model": "auth.permission",
+    "pk": 36
+  },
+  {
+    "fields": {
+      "codename": "add_bpsize",
+      "name": "Can add BFP Size",
+      "content_type": 13
+    },
+    "model": "auth.permission",
+    "pk": 37
+  },
+  {
+    "fields": {
+      "codename": "change_bpsize",
+      "name": "Can change BFP Size",
+      "content_type": 13
+    },
+    "model": "auth.permission",
+    "pk": 38
+  },
+  {
+    "fields": {
+      "codename": "delete_bpsize",
+      "name": "Can delete BFP Size",
+      "content_type": 13
+    },
+    "model": "auth.permission",
+    "pk": 39
+  },
+  {
+    "fields": {
+      "codename": "add_bpmanufacturer",
+      "name": "Can add BFP Manufacturer",
+      "content_type": 14
+    },
+    "model": "auth.permission",
+    "pk": 40
+  },
+  {
+    "fields": {
+      "codename": "change_bpmanufacturer",
+      "name": "Can change BFP Manufacturer",
+      "content_type": 14
+    },
+    "model": "auth.permission",
+    "pk": 41
+  },
+  {
+    "fields": {
+      "codename": "delete_bpmanufacturer",
+      "name": "Can delete BFP Manufacturer",
+      "content_type": 14
+    },
+    "model": "auth.permission",
+    "pk": 42
+  },
+  {
+    "fields": {
+      "codename": "add_customercode",
+      "name": "Can add Customer Code",
+      "content_type": 15
+    },
+    "model": "auth.permission",
+    "pk": 43
+  },
+  {
+    "fields": {
+      "codename": "change_customercode",
+      "name": "Can change Customer Code",
+      "content_type": 15
+    },
+    "model": "auth.permission",
+    "pk": 44
+  },
+  {
+    "fields": {
+      "codename": "delete_customercode",
+      "name": "Can delete Customer Code",
+      "content_type": 15
+    },
+    "model": "auth.permission",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "codename": "add_hazardtype",
+      "name": "Can add Hazard Type",
+      "content_type": 16
+    },
+    "model": "auth.permission",
+    "pk": 46
+  },
+  {
+    "fields": {
+      "codename": "change_hazardtype",
+      "name": "Can change Hazard Type",
+      "content_type": 16
+    },
+    "model": "auth.permission",
+    "pk": 47
+  },
+  {
+    "fields": {
+      "codename": "delete_hazardtype",
+      "name": "Can delete Hazard Type",
+      "content_type": 16
+    },
+    "model": "auth.permission",
+    "pk": 48
+  },
+  {
+    "fields": {
+      "codename": "add_testmanufacturer",
+      "name": "Can add Test Manufacturer",
+      "content_type": 17
+    },
+    "model": "auth.permission",
+    "pk": 49
+  },
+  {
+    "fields": {
+      "codename": "change_testmanufacturer",
+      "name": "Can change Test Manufacturer",
+      "content_type": 17
+    },
+    "model": "auth.permission",
+    "pk": 50
+  },
+  {
+    "fields": {
+      "codename": "delete_testmanufacturer",
+      "name": "Can delete Test Manufacturer",
+      "content_type": 17
+    },
+    "model": "auth.permission",
+    "pk": 51
+  },
+  {
+    "fields": {
+      "codename": "add_icpointtype",
+      "name": "Can add Interconnection Point Type",
+      "content_type": 18
+    },
+    "model": "auth.permission",
+    "pk": 52
+  },
+  {
+    "fields": {
+      "codename": "change_icpointtype",
+      "name": "Can change Interconnection Point Type",
+      "content_type": 18
+    },
+    "model": "auth.permission",
+    "pk": 53
+  },
+  {
+    "fields": {
+      "codename": "delete_icpointtype",
+      "name": "Can delete Interconnection Point Type",
+      "content_type": 18
+    },
+    "model": "auth.permission",
+    "pk": 54
+  },
+  {
+    "fields": {
+      "codename": "add_assemblylocation",
+      "name": "Can add Assembly Location",
+      "content_type": 19
+    },
+    "model": "auth.permission",
+    "pk": 55
+  },
+  {
+    "fields": {
+      "codename": "change_assemblylocation",
+      "name": "Can change Assembly Location",
+      "content_type": 19
+    },
+    "model": "auth.permission",
+    "pk": 56
+  },
+  {
+    "fields": {
+      "codename": "delete_assemblylocation",
+      "name": "Can delete Assembly Location",
+      "content_type": 19
+    },
+    "model": "auth.permission",
+    "pk": 57
+  },
+  {
+    "fields": {
+      "codename": "add_lettertype",
+      "name": "Can add Letter Type",
+      "content_type": 20
+    },
+    "model": "auth.permission",
+    "pk": 58
+  },
+  {
+    "fields": {
+      "codename": "change_lettertype",
+      "name": "Can change Letter Type",
+      "content_type": 20
+    },
+    "model": "auth.permission",
+    "pk": 59
+  },
+  {
+    "fields": {
+      "codename": "delete_lettertype",
+      "name": "Can delete Letter Type",
+      "content_type": 20
+    },
+    "model": "auth.permission",
+    "pk": 60
+  },
+  {
+    "fields": {
+      "codename": "add_floorscount",
+      "name": "Can add Floors Count",
+      "content_type": 21
+    },
+    "model": "auth.permission",
+    "pk": 61
+  },
+  {
+    "fields": {
+      "codename": "change_floorscount",
+      "name": "Can change Floors Count",
+      "content_type": 21
+    },
+    "model": "auth.permission",
+    "pk": 62
+  },
+  {
+    "fields": {
+      "codename": "delete_floorscount",
+      "name": "Can delete Floors Count",
+      "content_type": 21
+    },
+    "model": "auth.permission",
+    "pk": 63
+  },
+  {
+    "fields": {
+      "codename": "add_special",
+      "name": "Can add Special",
+      "content_type": 22
+    },
+    "model": "auth.permission",
+    "pk": 64
+  },
+  {
+    "fields": {
+      "codename": "change_special",
+      "name": "Can change Special",
+      "content_type": 22
+    },
+    "model": "auth.permission",
+    "pk": 65
+  },
+  {
+    "fields": {
+      "codename": "delete_special",
+      "name": "Can delete Special",
+      "content_type": 22
+    },
+    "model": "auth.permission",
+    "pk": 66
+  },
+  {
+    "fields": {
+      "codename": "add_orientation",
+      "name": "Can add Orientation Type",
+      "content_type": 23
+    },
+    "model": "auth.permission",
+    "pk": 67
+  },
+  {
+    "fields": {
+      "codename": "change_orientation",
+      "name": "Can change Orientation Type",
+      "content_type": 23
+    },
+    "model": "auth.permission",
+    "pk": 68
+  },
+  {
+    "fields": {
+      "codename": "delete_orientation",
+      "name": "Can delete Orientation Type",
+      "content_type": 23
+    },
+    "model": "auth.permission",
+    "pk": 69
+  },
+  {
+    "fields": {
+      "codename": "add_employee",
+      "name": "Can add employee",
+      "content_type": 24
+    },
+    "model": "auth.permission",
+    "pk": 70
+  },
+  {
+    "fields": {
+      "codename": "change_employee",
+      "name": "Can change employee",
+      "content_type": 24
+    },
+    "model": "auth.permission",
+    "pk": 71
+  },
+  {
+    "fields": {
+      "codename": "delete_employee",
+      "name": "Can delete employee",
+      "content_type": 24
+    },
+    "model": "auth.permission",
+    "pk": 72
+  },
+  {
+    "fields": {
+      "codename": "add_customer",
+      "name": "Can add Customer",
+      "content_type": 25
+    },
+    "model": "auth.permission",
+    "pk": 73
+  },
+  {
+    "fields": {
+      "codename": "change_customer",
+      "name": "Can change Customer",
+      "content_type": 25
+    },
+    "model": "auth.permission",
+    "pk": 74
+  },
+  {
+    "fields": {
+      "codename": "delete_customer",
+      "name": "Can delete Customer",
+      "content_type": 25
+    },
+    "model": "auth.permission",
+    "pk": 75
+  },
+  {
+    "fields": {
+      "codename": "add_pws",
+      "name": "Can add Public Water System",
+      "content_type": 26
+    },
+    "model": "auth.permission",
+    "pk": 76
+  },
+  {
+    "fields": {
+      "codename": "change_pws",
+      "name": "Can change Public Water System",
+      "content_type": 26
+    },
+    "model": "auth.permission",
+    "pk": 77
+  },
+  {
+    "fields": {
+      "codename": "delete_pws",
+      "name": "Can delete Public Water System",
+      "content_type": 26
+    },
+    "model": "auth.permission",
+    "pk": 78
+  },
+  {
+    "fields": {
+      "codename": "add_site",
+      "name": "Can add Site",
+      "content_type": 27
+    },
+    "model": "auth.permission",
+    "pk": 79
+  },
+  {
+    "fields": {
+      "codename": "change_site",
+      "name": "Can change Site",
+      "content_type": 27
+    },
+    "model": "auth.permission",
+    "pk": 80
+  },
+  {
+    "fields": {
+      "codename": "delete_site",
+      "name": "Can delete Site",
+      "content_type": 27
+    },
+    "model": "auth.permission",
+    "pk": 81
+  },
+  {
+    "fields": {
+      "codename": "add_service",
+      "name": "Can add Service",
+      "content_type": 28
+    },
+    "model": "auth.permission",
+    "pk": 82
+  },
+  {
+    "fields": {
+      "codename": "change_service",
+      "name": "Can change Service",
+      "content_type": 28
+    },
+    "model": "auth.permission",
+    "pk": 83
+  },
+  {
+    "fields": {
+      "codename": "delete_service",
+      "name": "Can delete Service",
+      "content_type": 28
+    },
+    "model": "auth.permission",
+    "pk": 84
+  },
+  {
+    "fields": {
+      "codename": "add_survey",
+      "name": "Can add Survey",
+      "content_type": 29
+    },
+    "model": "auth.permission",
+    "pk": 85
+  },
+  {
+    "fields": {
+      "codename": "change_survey",
+      "name": "Can change Survey",
+      "content_type": 29
+    },
+    "model": "auth.permission",
+    "pk": 86
+  },
+  {
+    "fields": {
+      "codename": "delete_survey",
+      "name": "Can delete Survey",
+      "content_type": 29
+    },
+    "model": "auth.permission",
+    "pk": 87
+  },
+  {
+    "fields": {
+      "codename": "add_hazard",
+      "name": "Can add Hazard",
+      "content_type": 30
+    },
+    "model": "auth.permission",
+    "pk": 88
+  },
+  {
+    "fields": {
+      "codename": "change_hazard",
+      "name": "Can change Hazard",
+      "content_type": 30
+    },
+    "model": "auth.permission",
+    "pk": 89
+  },
+  {
+    "fields": {
+      "codename": "delete_hazard",
+      "name": "Can delete Hazard",
+      "content_type": 30
+    },
+    "model": "auth.permission",
+    "pk": 90
+  },
+  {
+    "fields": {
+      "codename": "add_test",
+      "name": "Can add Test",
+      "content_type": 31
+    },
+    "model": "auth.permission",
+    "pk": 91
+  },
+  {
+    "fields": {
+      "codename": "change_test",
+      "name": "Can change Test",
+      "content_type": 31
+    },
+    "model": "auth.permission",
+    "pk": 92
+  },
+  {
+    "fields": {
+      "codename": "delete_test",
+      "name": "Can delete Test",
+      "content_type": 31
+    },
+    "model": "auth.permission",
+    "pk": 93
+  },
+  {
+    "fields": {
+      "codename": "add_letter",
+      "name": "Can add Letter",
+      "content_type": 32
+    },
+    "model": "auth.permission",
+    "pk": 94
+  },
+  {
+    "fields": {
+      "codename": "change_letter",
+      "name": "Can change Letter",
+      "content_type": 32
+    },
+    "model": "auth.permission",
+    "pk": 95
+  },
+  {
+    "fields": {
+      "codename": "delete_letter",
+      "name": "Can delete Letter",
+      "content_type": 32
+    },
+    "model": "auth.permission",
+    "pk": 96
+  },
+  {
+    "fields": {
+      "codename": "add_licence",
+      "name": "Can add Licence",
+      "content_type": 33
+    },
+    "model": "auth.permission",
+    "pk": 97
+  },
+  {
+    "fields": {
+      "codename": "change_licence",
+      "name": "Can change Licence",
+      "content_type": 33
+    },
+    "model": "auth.permission",
+    "pk": 98
+  },
+  {
+    "fields": {
+      "codename": "delete_licence",
+      "name": "Can delete Licence",
+      "content_type": 33
+    },
+    "model": "auth.permission",
+    "pk": 99
+  },
+  {
+    "fields": {
+      "codename": "add_testpermission",
+      "name": "Can add Test Permission",
+      "content_type": 34
+    },
+    "model": "auth.permission",
+    "pk": 100
+  },
+  {
+    "fields": {
+      "codename": "change_testpermission",
+      "name": "Can change Test Permission",
+      "content_type": 34
+    },
+    "model": "auth.permission",
+    "pk": 101
+  },
+  {
+    "fields": {
+      "codename": "delete_testpermission",
+      "name": "Can delete Test Permission",
+      "content_type": 34
+    },
+    "model": "auth.permission",
+    "pk": 102
+  },
+  {
+    "fields": {
+      "codename": "add_inspection",
+      "name": "Can add Inspection",
+      "content_type": 35
+    },
+    "model": "auth.permission",
+    "pk": 103
+  },
+  {
+    "fields": {
+      "codename": "change_inspection",
+      "name": "Can change Inspection",
+      "content_type": 35
+    },
+    "model": "auth.permission",
+    "pk": 104
+  },
+  {
+    "fields": {
+      "codename": "delete_inspection",
+      "name": "Can delete Inspection",
+      "content_type": 35
+    },
+    "model": "auth.permission",
+    "pk": 105
+  },
+  {
+    "fields": {
+      "name": "Testers",
+      "permissions": [
+        89,
+        91,
+        92
+      ]
+    },
+    "model": "auth.group",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "name": "Surveyors",
+      "permissions": [
+        88,
+        89,
+        85,
+        86
+      ]
+    },
+    "model": "auth.group",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "name": "Administrators",
+      "permissions": [
+        55,
+        56,
+        57,
+        40,
+        41,
+        42,
+        37,
+        38,
+        39,
+        34,
+        35,
+        36,
+        70,
+        71,
+        72,
+        43,
+        44,
+        45,
+        76,
+        77,
+        78,
+        61,
+        62,
+        63,
+        88,
+        89,
+        90,
+        46,
+        47,
+        48,
+        52,
+        53,
+        54,
+        103,
+        104,
+        105,
+        94,
+        95,
+        96,
+        58,
+        59,
+        60,
+        97,
+        98,
+        99,
+        67,
+        68,
+        69,
+        73,
+        74,
+        75,
+        82,
+        83,
+        84,
+        28,
+        29,
+        30,
+        79,
+        80,
+        81,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        19,
+        20,
+        21,
+        64,
+        65,
+        66,
+        85,
+        86,
+        87,
+        31,
+        32,
+        33,
+        91,
+        92,
+        93,
+        49,
+        50,
+        51,
+        100,
+        101,
+        102
+      ]
+    },
+    "model": "auth.group",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "name": "SuperAdministrators",
+      "permissions": [
+        1,
+        2,
+        3,
+        7,
+        8,
+        9,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        55,
+        56,
+        57,
+        40,
+        41,
+        42,
+        37,
+        38,
+        39,
+        34,
+        35,
+        36,
+        70,
+        71,
+        72,
+        43,
+        44,
+        45,
+        76,
+        77,
+        78,
+        61,
+        62,
+        63,
+        88,
+        89,
+        90,
+        46,
+        47,
+        48,
+        52,
+        53,
+        54,
+        103,
+        104,
+        105,
+        94,
+        95,
+        96,
+        58,
+        59,
+        60,
+        97,
+        98,
+        99,
+        67,
+        68,
+        69,
+        73,
+        74,
+        75,
+        82,
+        83,
+        84,
+        28,
+        29,
+        30,
+        79,
+        80,
+        81,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        19,
+        20,
+        21,
+        64,
+        65,
+        66,
+        85,
+        86,
+        87,
+        31,
+        32,
+        33,
+        91,
+        92,
+        93,
+        49,
+        50,
+        51,
+        100,
+        101,
+        102
+      ]
+    },
+    "model": "auth.group",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "username": "root",
+      "first_name": "som",
+      "last_name": "hz",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2015-01-15T11:13:17Z",
+      "groups": [4],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$u9z9TV8pJf6r$ARP9lroecfgLdtEcUbYrgWCrti36AwnvEZ3I0ThseE8=",
+      "email": "thesomeq@gmail.com",
+      "date_joined": "2015-01-12T06:14:02Z"
+    },
+    "model": "auth.user",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "username": "tester",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": true,
+      "last_login": "2015-01-15T11:14:37Z",
+      "groups": [1],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$f1AektJQFT9r$JThfdyKIkuljMhpViPjrV3FHOwD7wviP4FygzknllYY=",
+      "email": "",
+      "date_joined": "2015-01-15T10:53:43Z"
+    },
+    "model": "auth.user",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "username": "surveyor",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": true,
+      "last_login": "2015-01-15T11:27:14Z",
+      "groups": [2],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$I4iwX5QbCR4Y$5QMZNxhNEET9GCF3jscIPQFlTCkMXcAVjr9wnAAg+io=",
+      "email": "",
+      "date_joined": "2015-01-15T10:55:12Z"
+    },
+    "model": "auth.user",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "username": "admin",
+      "first_name": "wtryrey",
+      "last_name": "wtrty",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": true,
+      "last_login": "2015-01-15T11:04:49Z",
+      "groups": [3],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
+      "email": "",
+      "date_joined": "2015-01-15T10:55:45Z"
+    },
+    "model": "auth.user",
+    "pk": 4
+  },
+  {
     "fields": {"source_type": "Public Water Supply and Private Well"},
     "model": "webapp.sourcetype",
     "pk": 1
@@ -1442,1092 +2694,48 @@
   },
   {
     "fields": {
-      "codename": "add_logentry",
-      "name": "Can add log entry",
-      "content_type": 1
+      "city": "Bishkek",
+      "code": 1,
+      "name": "MegaCust Ivanovich",
+      "zip": "12345",
+      "address1": "Bishkek",
+      "address2": "",
+      "number": "12345",
+      "apt": "",
+      "phone": "",
+      "state": "AL",
+      "notes": ""
     },
-    "model": "auth.permission",
+    "model": "webapp.customer",
     "pk": 1
   },
   {
     "fields": {
-      "codename": "change_logentry",
-      "name": "Can change log entry",
-      "content_type": 1
+      "city": "Bishkek",
+      "notes": "",
+      "water_source": 4,
+      "number": "12345",
+      "name": "GorVodoKanal"
     },
-    "model": "auth.permission",
+    "model": "webapp.pws",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "city": "citycity",
+      "notes": "",
+      "water_source": 1,
+      "number": "qu289ey8hd",
+      "name": "PWSPWS"
+    },
+    "model": "webapp.pws",
     "pk": 2
-  },
-  {
-    "fields": {
-      "codename": "delete_logentry",
-      "name": "Can delete log entry",
-      "content_type": 1
-    },
-    "model": "auth.permission",
-    "pk": 3
-  },
-  {
-    "fields": {
-      "codename": "add_permission",
-      "name": "Can add permission",
-      "content_type": 2
-    },
-    "model": "auth.permission",
-    "pk": 4
-  },
-  {
-    "fields": {
-      "codename": "change_permission",
-      "name": "Can change permission",
-      "content_type": 2
-    },
-    "model": "auth.permission",
-    "pk": 5
-  },
-  {
-    "fields": {
-      "codename": "delete_permission",
-      "name": "Can delete permission",
-      "content_type": 2
-    },
-    "model": "auth.permission",
-    "pk": 6
-  },
-  {
-    "fields": {
-      "codename": "add_group",
-      "name": "Can add group",
-      "content_type": 3
-    },
-    "model": "auth.permission",
-    "pk": 7
-  },
-  {
-    "fields": {
-      "codename": "change_group",
-      "name": "Can change group",
-      "content_type": 3
-    },
-    "model": "auth.permission",
-    "pk": 8
-  },
-  {
-    "fields": {
-      "codename": "delete_group",
-      "name": "Can delete group",
-      "content_type": 3
-    },
-    "model": "auth.permission",
-    "pk": 9
-  },
-  {
-    "fields": {
-      "codename": "add_user",
-      "name": "Can add user",
-      "content_type": 4
-    },
-    "model": "auth.permission",
-    "pk": 10
-  },
-  {
-    "fields": {
-      "codename": "change_user",
-      "name": "Can change user",
-      "content_type": 4
-    },
-    "model": "auth.permission",
-    "pk": 11
-  },
-  {
-    "fields": {
-      "codename": "delete_user",
-      "name": "Can delete user",
-      "content_type": 4
-    },
-    "model": "auth.permission",
-    "pk": 12
-  },
-  {
-    "fields": {
-      "codename": "add_contenttype",
-      "name": "Can add content type",
-      "content_type": 5
-    },
-    "model": "auth.permission",
-    "pk": 13
-  },
-  {
-    "fields": {
-      "codename": "change_contenttype",
-      "name": "Can change content type",
-      "content_type": 5
-    },
-    "model": "auth.permission",
-    "pk": 14
-  },
-  {
-    "fields": {
-      "codename": "delete_contenttype",
-      "name": "Can delete content type",
-      "content_type": 5
-    },
-    "model": "auth.permission",
-    "pk": 15
-  },
-  {
-    "fields": {
-      "codename": "add_session",
-      "name": "Can add session",
-      "content_type": 6
-    },
-    "model": "auth.permission",
-    "pk": 16
-  },
-  {
-    "fields": {
-      "codename": "change_session",
-      "name": "Can change session",
-      "content_type": 6
-    },
-    "model": "auth.permission",
-    "pk": 17
-  },
-  {
-    "fields": {
-      "codename": "delete_session",
-      "name": "Can delete session",
-      "content_type": 6
-    },
-    "model": "auth.permission",
-    "pk": 18
-  },
-  {
-    "fields": {
-      "codename": "add_sourcetype",
-      "name": "Can add Source Type",
-      "content_type": 7
-    },
-    "model": "auth.permission",
-    "pk": 19
-  },
-  {
-    "fields": {
-      "codename": "change_sourcetype",
-      "name": "Can change Source Type",
-      "content_type": 7
-    },
-    "model": "auth.permission",
-    "pk": 20
-  },
-  {
-    "fields": {
-      "codename": "delete_sourcetype",
-      "name": "Can delete Source Type",
-      "content_type": 7
-    },
-    "model": "auth.permission",
-    "pk": 21
-  },
-  {
-    "fields": {
-      "codename": "add_sitetype",
-      "name": "Can add Site Type",
-      "content_type": 8
-    },
-    "model": "auth.permission",
-    "pk": 22
-  },
-  {
-    "fields": {
-      "codename": "change_sitetype",
-      "name": "Can change Site Type",
-      "content_type": 8
-    },
-    "model": "auth.permission",
-    "pk": 23
-  },
-  {
-    "fields": {
-      "codename": "delete_sitetype",
-      "name": "Can delete Site Type",
-      "content_type": 8
-    },
-    "model": "auth.permission",
-    "pk": 24
-  },
-  {
-    "fields": {
-      "codename": "add_siteuse",
-      "name": "Can add Site Use",
-      "content_type": 9
-    },
-    "model": "auth.permission",
-    "pk": 25
-  },
-  {
-    "fields": {
-      "codename": "change_siteuse",
-      "name": "Can change Site Use",
-      "content_type": 9
-    },
-    "model": "auth.permission",
-    "pk": 26
-  },
-  {
-    "fields": {
-      "codename": "delete_siteuse",
-      "name": "Can delete Site Use",
-      "content_type": 9
-    },
-    "model": "auth.permission",
-    "pk": 27
-  },
-  {
-    "fields": {
-      "codename": "add_servicetype",
-      "name": "Can add Service Type",
-      "content_type": 10
-    },
-    "model": "auth.permission",
-    "pk": 28
-  },
-  {
-    "fields": {
-      "codename": "change_servicetype",
-      "name": "Can change Service Type",
-      "content_type": 10
-    },
-    "model": "auth.permission",
-    "pk": 29
-  },
-  {
-    "fields": {
-      "codename": "delete_servicetype",
-      "name": "Can delete Service Type",
-      "content_type": 10
-    },
-    "model": "auth.permission",
-    "pk": 30
-  },
-  {
-    "fields": {
-      "codename": "add_surveytype",
-      "name": "Can add Survey Type",
-      "content_type": 11
-    },
-    "model": "auth.permission",
-    "pk": 31
-  },
-  {
-    "fields": {
-      "codename": "change_surveytype",
-      "name": "Can change Survey Type",
-      "content_type": 11
-    },
-    "model": "auth.permission",
-    "pk": 32
-  },
-  {
-    "fields": {
-      "codename": "delete_surveytype",
-      "name": "Can delete Survey Type",
-      "content_type": 11
-    },
-    "model": "auth.permission",
-    "pk": 33
-  },
-  {
-    "fields": {
-      "codename": "add_bptype",
-      "name": "Can add BFP Type",
-      "content_type": 12
-    },
-    "model": "auth.permission",
-    "pk": 34
-  },
-  {
-    "fields": {
-      "codename": "change_bptype",
-      "name": "Can change BFP Type",
-      "content_type": 12
-    },
-    "model": "auth.permission",
-    "pk": 35
-  },
-  {
-    "fields": {
-      "codename": "delete_bptype",
-      "name": "Can delete BFP Type",
-      "content_type": 12
-    },
-    "model": "auth.permission",
-    "pk": 36
-  },
-  {
-    "fields": {
-      "codename": "add_bpsize",
-      "name": "Can add BFP Size",
-      "content_type": 13
-    },
-    "model": "auth.permission",
-    "pk": 37
-  },
-  {
-    "fields": {
-      "codename": "change_bpsize",
-      "name": "Can change BFP Size",
-      "content_type": 13
-    },
-    "model": "auth.permission",
-    "pk": 38
-  },
-  {
-    "fields": {
-      "codename": "delete_bpsize",
-      "name": "Can delete BFP Size",
-      "content_type": 13
-    },
-    "model": "auth.permission",
-    "pk": 39
-  },
-  {
-    "fields": {
-      "codename": "add_bpmanufacturer",
-      "name": "Can add BFP Manufacturer",
-      "content_type": 14
-    },
-    "model": "auth.permission",
-    "pk": 40
-  },
-  {
-    "fields": {
-      "codename": "change_bpmanufacturer",
-      "name": "Can change BFP Manufacturer",
-      "content_type": 14
-    },
-    "model": "auth.permission",
-    "pk": 41
-  },
-  {
-    "fields": {
-      "codename": "delete_bpmanufacturer",
-      "name": "Can delete BFP Manufacturer",
-      "content_type": 14
-    },
-    "model": "auth.permission",
-    "pk": 42
-  },
-  {
-    "fields": {
-      "codename": "add_customercode",
-      "name": "Can add Customer Code",
-      "content_type": 15
-    },
-    "model": "auth.permission",
-    "pk": 43
-  },
-  {
-    "fields": {
-      "codename": "change_customercode",
-      "name": "Can change Customer Code",
-      "content_type": 15
-    },
-    "model": "auth.permission",
-    "pk": 44
-  },
-  {
-    "fields": {
-      "codename": "delete_customercode",
-      "name": "Can delete Customer Code",
-      "content_type": 15
-    },
-    "model": "auth.permission",
-    "pk": 45
-  },
-  {
-    "fields": {
-      "codename": "add_hazardtype",
-      "name": "Can add Hazard Type",
-      "content_type": 16
-    },
-    "model": "auth.permission",
-    "pk": 46
-  },
-  {
-    "fields": {
-      "codename": "change_hazardtype",
-      "name": "Can change Hazard Type",
-      "content_type": 16
-    },
-    "model": "auth.permission",
-    "pk": 47
-  },
-  {
-    "fields": {
-      "codename": "delete_hazardtype",
-      "name": "Can delete Hazard Type",
-      "content_type": 16
-    },
-    "model": "auth.permission",
-    "pk": 48
-  },
-  {
-    "fields": {
-      "codename": "add_testmanufacturer",
-      "name": "Can add Test Manufacturer",
-      "content_type": 17
-    },
-    "model": "auth.permission",
-    "pk": 49
-  },
-  {
-    "fields": {
-      "codename": "change_testmanufacturer",
-      "name": "Can change Test Manufacturer",
-      "content_type": 17
-    },
-    "model": "auth.permission",
-    "pk": 50
-  },
-  {
-    "fields": {
-      "codename": "delete_testmanufacturer",
-      "name": "Can delete Test Manufacturer",
-      "content_type": 17
-    },
-    "model": "auth.permission",
-    "pk": 51
-  },
-  {
-    "fields": {
-      "codename": "add_icpointtype",
-      "name": "Can add Interconnection Point Type",
-      "content_type": 18
-    },
-    "model": "auth.permission",
-    "pk": 52
-  },
-  {
-    "fields": {
-      "codename": "change_icpointtype",
-      "name": "Can change Interconnection Point Type",
-      "content_type": 18
-    },
-    "model": "auth.permission",
-    "pk": 53
-  },
-  {
-    "fields": {
-      "codename": "delete_icpointtype",
-      "name": "Can delete Interconnection Point Type",
-      "content_type": 18
-    },
-    "model": "auth.permission",
-    "pk": 54
-  },
-  {
-    "fields": {
-      "codename": "add_assemblylocation",
-      "name": "Can add Assembly Location",
-      "content_type": 19
-    },
-    "model": "auth.permission",
-    "pk": 55
-  },
-  {
-    "fields": {
-      "codename": "change_assemblylocation",
-      "name": "Can change Assembly Location",
-      "content_type": 19
-    },
-    "model": "auth.permission",
-    "pk": 56
-  },
-  {
-    "fields": {
-      "codename": "delete_assemblylocation",
-      "name": "Can delete Assembly Location",
-      "content_type": 19
-    },
-    "model": "auth.permission",
-    "pk": 57
-  },
-  {
-    "fields": {
-      "codename": "add_lettertype",
-      "name": "Can add Letter Type",
-      "content_type": 20
-    },
-    "model": "auth.permission",
-    "pk": 58
-  },
-  {
-    "fields": {
-      "codename": "change_lettertype",
-      "name": "Can change Letter Type",
-      "content_type": 20
-    },
-    "model": "auth.permission",
-    "pk": 59
-  },
-  {
-    "fields": {
-      "codename": "delete_lettertype",
-      "name": "Can delete Letter Type",
-      "content_type": 20
-    },
-    "model": "auth.permission",
-    "pk": 60
-  },
-  {
-    "fields": {
-      "codename": "add_floorscount",
-      "name": "Can add Floors Count",
-      "content_type": 21
-    },
-    "model": "auth.permission",
-    "pk": 61
-  },
-  {
-    "fields": {
-      "codename": "change_floorscount",
-      "name": "Can change Floors Count",
-      "content_type": 21
-    },
-    "model": "auth.permission",
-    "pk": 62
-  },
-  {
-    "fields": {
-      "codename": "delete_floorscount",
-      "name": "Can delete Floors Count",
-      "content_type": 21
-    },
-    "model": "auth.permission",
-    "pk": 63
-  },
-  {
-    "fields": {
-      "codename": "add_special",
-      "name": "Can add Special",
-      "content_type": 22
-    },
-    "model": "auth.permission",
-    "pk": 64
-  },
-  {
-    "fields": {
-      "codename": "change_special",
-      "name": "Can change Special",
-      "content_type": 22
-    },
-    "model": "auth.permission",
-    "pk": 65
-  },
-  {
-    "fields": {
-      "codename": "delete_special",
-      "name": "Can delete Special",
-      "content_type": 22
-    },
-    "model": "auth.permission",
-    "pk": 66
-  },
-  {
-    "fields": {
-      "codename": "add_orientation",
-      "name": "Can add Orientation Type",
-      "content_type": 23
-    },
-    "model": "auth.permission",
-    "pk": 67
-  },
-  {
-    "fields": {
-      "codename": "change_orientation",
-      "name": "Can change Orientation Type",
-      "content_type": 23
-    },
-    "model": "auth.permission",
-    "pk": 68
-  },
-  {
-    "fields": {
-      "codename": "delete_orientation",
-      "name": "Can delete Orientation Type",
-      "content_type": 23
-    },
-    "model": "auth.permission",
-    "pk": 69
-  },
-  {
-    "fields": {
-      "codename": "add_employee",
-      "name": "Can add employee",
-      "content_type": 24
-    },
-    "model": "auth.permission",
-    "pk": 70
-  },
-  {
-    "fields": {
-      "codename": "change_employee",
-      "name": "Can change employee",
-      "content_type": 24
-    },
-    "model": "auth.permission",
-    "pk": 71
-  },
-  {
-    "fields": {
-      "codename": "delete_employee",
-      "name": "Can delete employee",
-      "content_type": 24
-    },
-    "model": "auth.permission",
-    "pk": 72
-  },
-  {
-    "fields": {
-      "codename": "add_customer",
-      "name": "Can add Customer",
-      "content_type": 25
-    },
-    "model": "auth.permission",
-    "pk": 73
-  },
-  {
-    "fields": {
-      "codename": "change_customer",
-      "name": "Can change Customer",
-      "content_type": 25
-    },
-    "model": "auth.permission",
-    "pk": 74
-  },
-  {
-    "fields": {
-      "codename": "delete_customer",
-      "name": "Can delete Customer",
-      "content_type": 25
-    },
-    "model": "auth.permission",
-    "pk": 75
-  },
-  {
-    "fields": {
-      "codename": "add_pws",
-      "name": "Can add Public Water System",
-      "content_type": 26
-    },
-    "model": "auth.permission",
-    "pk": 76
-  },
-  {
-    "fields": {
-      "codename": "change_pws",
-      "name": "Can change Public Water System",
-      "content_type": 26
-    },
-    "model": "auth.permission",
-    "pk": 77
-  },
-  {
-    "fields": {
-      "codename": "delete_pws",
-      "name": "Can delete Public Water System",
-      "content_type": 26
-    },
-    "model": "auth.permission",
-    "pk": 78
-  },
-  {
-    "fields": {
-      "codename": "add_site",
-      "name": "Can add Site",
-      "content_type": 27
-    },
-    "model": "auth.permission",
-    "pk": 79
-  },
-  {
-    "fields": {
-      "codename": "change_site",
-      "name": "Can change Site",
-      "content_type": 27
-    },
-    "model": "auth.permission",
-    "pk": 80
-  },
-  {
-    "fields": {
-      "codename": "delete_site",
-      "name": "Can delete Site",
-      "content_type": 27
-    },
-    "model": "auth.permission",
-    "pk": 81
-  },
-  {
-    "fields": {
-      "codename": "add_service",
-      "name": "Can add Service",
-      "content_type": 28
-    },
-    "model": "auth.permission",
-    "pk": 82
-  },
-  {
-    "fields": {
-      "codename": "change_service",
-      "name": "Can change Service",
-      "content_type": 28
-    },
-    "model": "auth.permission",
-    "pk": 83
-  },
-  {
-    "fields": {
-      "codename": "delete_service",
-      "name": "Can delete Service",
-      "content_type": 28
-    },
-    "model": "auth.permission",
-    "pk": 84
-  },
-  {
-    "fields": {
-      "codename": "add_survey",
-      "name": "Can add Survey",
-      "content_type": 29
-    },
-    "model": "auth.permission",
-    "pk": 85
-  },
-  {
-    "fields": {
-      "codename": "change_survey",
-      "name": "Can change Survey",
-      "content_type": 29
-    },
-    "model": "auth.permission",
-    "pk": 86
-  },
-  {
-    "fields": {
-      "codename": "delete_survey",
-      "name": "Can delete Survey",
-      "content_type": 29
-    },
-    "model": "auth.permission",
-    "pk": 87
-  },
-  {
-    "fields": {
-      "codename": "add_hazard",
-      "name": "Can add Hazard",
-      "content_type": 30
-    },
-    "model": "auth.permission",
-    "pk": 88
-  },
-  {
-    "fields": {
-      "codename": "change_hazard",
-      "name": "Can change Hazard",
-      "content_type": 30
-    },
-    "model": "auth.permission",
-    "pk": 89
-  },
-  {
-    "fields": {
-      "codename": "delete_hazard",
-      "name": "Can delete Hazard",
-      "content_type": 30
-    },
-    "model": "auth.permission",
-    "pk": 90
-  },
-  {
-    "fields": {
-      "codename": "add_test",
-      "name": "Can add Test",
-      "content_type": 31
-    },
-    "model": "auth.permission",
-    "pk": 91
-  },
-  {
-    "fields": {
-      "codename": "change_test",
-      "name": "Can change Test",
-      "content_type": 31
-    },
-    "model": "auth.permission",
-    "pk": 92
-  },
-  {
-    "fields": {
-      "codename": "delete_test",
-      "name": "Can delete Test",
-      "content_type": 31
-    },
-    "model": "auth.permission",
-    "pk": 93
-  },
-  {
-    "fields": {
-      "codename": "add_letter",
-      "name": "Can add Letter",
-      "content_type": 32
-    },
-    "model": "auth.permission",
-    "pk": 94
-  },
-  {
-    "fields": {
-      "codename": "change_letter",
-      "name": "Can change Letter",
-      "content_type": 32
-    },
-    "model": "auth.permission",
-    "pk": 95
-  },
-  {
-    "fields": {
-      "codename": "delete_letter",
-      "name": "Can delete Letter",
-      "content_type": 32
-    },
-    "model": "auth.permission",
-    "pk": 96
-  },
-  {
-    "fields": {
-      "codename": "add_licence",
-      "name": "Can add Licence",
-      "content_type": 33
-    },
-    "model": "auth.permission",
-    "pk": 97
-  },
-  {
-    "fields": {
-      "codename": "change_licence",
-      "name": "Can change Licence",
-      "content_type": 33
-    },
-    "model": "auth.permission",
-    "pk": 98
-  },
-  {
-    "fields": {
-      "codename": "delete_licence",
-      "name": "Can delete Licence",
-      "content_type": 33
-    },
-    "model": "auth.permission",
-    "pk": 99
-  },
-  {
-    "fields": {
-      "codename": "add_testpermission",
-      "name": "Can add Test Permission",
-      "content_type": 34
-    },
-    "model": "auth.permission",
-    "pk": 100
-  },
-  {
-    "fields": {
-      "codename": "change_testpermission",
-      "name": "Can change Test Permission",
-      "content_type": 34
-    },
-    "model": "auth.permission",
-    "pk": 101
-  },
-  {
-    "fields": {
-      "codename": "delete_testpermission",
-      "name": "Can delete Test Permission",
-      "content_type": 34
-    },
-    "model": "auth.permission",
-    "pk": 102
-  },
-  {
-    "fields": {
-      "codename": "add_inspection",
-      "name": "Can add Inspection",
-      "content_type": 35
-    },
-    "model": "auth.permission",
-    "pk": 103
-  },
-  {
-    "fields": {
-      "codename": "change_inspection",
-      "name": "Can change Inspection",
-      "content_type": 35
-    },
-    "model": "auth.permission",
-    "pk": 104
-  },
-  {
-    "fields": {
-      "codename": "delete_inspection",
-      "name": "Can delete Inspection",
-      "content_type": 35
-    },
-    "model": "auth.permission",
-    "pk": 105
-  },
-  {
-    "fields": {
-      "name": "Tester",
-      "permissions": [
-        89,
-        91,
-        92
-      ]
-    },
-    "model": "auth.group",
-    "pk": 1
-  },
-  {
-    "fields": {
-      "name": "Surveyor",
-      "permissions": [
-        88,
-        89,
-        85,
-        86
-      ]
-    },
-    "model": "auth.group",
-    "pk": 2
-  },
-  {
-    "fields": {
-      "name": "Admin",
-      "permissions": [
-        55,
-        56,
-        57,
-        40,
-        41,
-        42,
-        37,
-        38,
-        39,
-        34,
-        35,
-        36,
-        73,
-        74,
-        75,
-        43,
-        44,
-        45,
-        70,
-        71,
-        72,
-        61,
-        62,
-        63,
-        88,
-        89,
-        90,
-        46,
-        47,
-        48,
-        52,
-        53,
-        54,
-        103,
-        104,
-        105,
-        94,
-        95,
-        96,
-        58,
-        59,
-        60,
-        97,
-        98,
-        99,
-        67,
-        68,
-        69,
-        76,
-        77,
-        78,
-        82,
-        83,
-        84,
-        28,
-        29,
-        30,
-        79,
-        80,
-        81,
-        22,
-        23,
-        24,
-        25,
-        26,
-        27,
-        19,
-        20,
-        21,
-        64,
-        65,
-        66,
-        85,
-        86,
-        87,
-        31,
-        32,
-        33,
-        91,
-        92,
-        93,
-        49,
-        50,
-        51,
-        100,
-        101,
-        102
-      ]
-    },
-    "model": "auth.group",
-    "pk": 3
-  },
-  {
-    "fields": {
-      "username": "root",
-      "first_name": "som",
-      "last_name": "hz",
-      "is_active": true,
-      "is_superuser": true,
-      "is_staff": true,
-      "last_login": "2015-01-12T06:14:42Z",
-      "groups": [],
-      "user_permissions": [],
-      "password": "pbkdf2_sha256$12000$u9z9TV8pJf6r$ARP9lroecfgLdtEcUbYrgWCrti36AwnvEZ3I0ThseE8=",
-      "email": "thesomeq@gmail.com",
-      "date_joined": "2015-01-12T06:14:02Z"
-    },
-    "model": "auth.user",
-    "pk": 1
   },
   {
     "fields": {
       "city": "hgjhgjh",
       "fax": "",
+      "pws": null,
       "zip": "12345",
       "phone2": "",
       "company": "asdasd",
@@ -2537,6 +2745,133 @@
       "address": "hggjgh"
     },
     "model": "webapp.employee",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "city": "city1",
+      "fax": "",
+      "pws": null,
+      "zip": "12345",
+      "phone2": "",
+      "company": "123456",
+      "phone1": "phone1",
+      "state": "AL",
+      "user": 2,
+      "address": "addr1"
+    },
+    "model": "webapp.employee",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "city": "wert",
+      "fax": "",
+      "pws": null,
+      "zip": "12346",
+      "phone2": "",
+      "company": "dgert",
+      "phone1": "ertert",
+      "state": "AR",
+      "user": 3,
+      "address": "wr"
+    },
+    "model": "webapp.employee",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "city": "assdasd",
+      "fax": "",
+      "pws": 1,
+      "zip": "43543",
+      "phone2": "",
+      "company": "sdfdf",
+      "phone1": "srfg",
+      "state": "KY",
+      "user": 4,
+      "address": "asdsd"
+    },
+    "model": "webapp.employee",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "customer": 1,
+      "city": "Bishkek",
+      "zip": "13245",
+      "irrigation_present": false,
+      "pws": 1,
+      "street_number": "",
+      "is_backflow": false,
+      "connect_date": "2015-01-15",
+      "notes": "",
+      "next_survey_date": "2015-01-15",
+      "apt": "",
+      "state": "AK",
+      "floors": 1,
+      "site_type": 2,
+      "potable_present": false,
+      "address": "12345",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 1,
+      "street_address": "",
+      "site_use": 1
+    },
+    "model": "webapp.site",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "customer": 1,
+      "city": "adadd",
+      "zip": "21313",
+      "irrigation_present": false,
+      "pws": 2,
+      "street_number": "asdassdasd",
+      "is_backflow": false,
+      "connect_date": "2015-01-15",
+      "notes": "",
+      "next_survey_date": null,
+      "apt": "asdassd",
+      "state": "AK",
+      "floors": 1,
+      "site_type": 8,
+      "potable_present": false,
+      "address": "adasdasdasd",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 1,
+      "street_address": "assdassdasd",
+      "site_use": 3
+    },
+    "model": "webapp.site",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "due_date": "2015-01-15",
+      "given_date": "2015-01-15",
+      "given_by": 4,
+      "notes": "",
+      "is_active": true,
+      "site": 1,
+      "given_to": 2
+    },
+    "model": "webapp.testpermission",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "assigned_by": 1,
+      "notes": "",
+      "is_active": true,
+      "site": 2,
+      "assigned_to": 3,
+      "assigned_date": "2015-01-15"
+    },
+    "model": "webapp.inspection",
     "pk": 1
   }
 ]

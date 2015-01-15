@@ -1,26 +1,28 @@
 {% load i18n %}
-<table>
+<table class="uk-table uk-text-center uk-table-hover">
     <thead>
     <tr>
-        <th>
+        <th class="uk-text-center uk-width-4-5">
             {% trans "Site" %}
         </th>
-        <th colspan="2">
+        <th colspan="2" class="uk-text-center uk-width-1-5">
             {% trans "Actions" %}
         </th>
     </tr>
     </thead>
+    <tbody>
     {% for site in site_list %}
         <tr>
             <td>
                 {{ site.city }}, {{ site.street_address }}, {{ site.street_number }}
             </td>
             <td>
-                {% url "webapp:site_edit" %}
+                <a href="">o_o</a>
             </td>
             <td>
-                {% url "webapp:permissions" %}
+                <a href="">o_o</a>
             </td>
         </tr>
     {% endfor %}
+    </tbody>
 </table>

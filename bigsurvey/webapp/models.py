@@ -192,19 +192,6 @@ class Orientation(models.Model):
         verbose_name_plural = _('Orientation Types')
 
 
-class Employee(models.Model):
-    user = models.OneToOneField(User)
-    address = models.CharField(max_length=50, verbose_name=_("Address"))
-    city = models.CharField(max_length=30, verbose_name=_("City"))
-    state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
-    zip = models.CharField(max_length=10, verbose_name=_("ZIP"))
-    company = models.CharField(max_length=30, verbose_name=_("Company"))
-    phone1 = models.CharField(max_length=20, verbose_name=_("Phone 1"))
-    phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
-    fax = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Fax"))
-    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
-
-
 class Customer (models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -226,7 +213,7 @@ class Customer (models.Model):
         verbose_name_plural = _('Customers')
 
 
-class PWS (models.Model):
+class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     city = models.CharField(max_length=30, verbose_name=_("City"))
@@ -239,6 +226,19 @@ class PWS (models.Model):
     class Meta:
         verbose_name = _('Public Water System')
         verbose_name_plural = _('Public Water Systems')
+
+
+class Employee(models.Model):
+    user = models.OneToOneField(User)
+    address = models.CharField(max_length=50, verbose_name=_("Address"))
+    city = models.CharField(max_length=30, verbose_name=_("City"))
+    state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
+    zip = models.CharField(max_length=10, verbose_name=_("ZIP"))
+    company = models.CharField(max_length=30, verbose_name=_("Company"))
+    phone1 = models.CharField(max_length=20, verbose_name=_("Phone 1"))
+    phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
+    fax = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Fax"))
+    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
 
 
 class Site(models.Model):
@@ -266,7 +266,7 @@ class Site(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s (%s)" % (self.street_address, self.street_number, self.PWS)
+        return "%s, %s (%s)" % (self.street_address, self.street_number, self.pws)
 
     class Meta:
         verbose_name = _("Site")
@@ -408,7 +408,7 @@ class Licence(models.Model):
     given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"), related_name="licences_given")
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(verbose_name=_("End Date"))
-    is_active = models.BooleanField(verbose_name=_("Is Active"))
+    is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):

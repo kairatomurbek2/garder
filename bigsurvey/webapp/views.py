@@ -22,13 +22,19 @@ class HomeView(TemplateView, LoginRequiredView):
             context['site_list'] = models.Site.objects.all()
         elif "Administrators" in user_groups:
             context['adm'] = True
-            context['site_list'] = models.Site.objects.filter(pws=user.pws)
+            context['site_list'] = models.Site.objects.filter(pws=user.employee.pws)
         elif "Surveyors" in user_groups:
             context['surv'] = True
-            sites = models.Inspection.objects.filter(assigned_to=user).values_list('site', flat=True)
+            inspections = models.Inspection.objects.filter(assigned_to=user)
+            sites = []
+            for inspection in inspections:
+                sites.append(inspection.site)
             context['site_list'] = sites
         elif "Testers" in user_groups:
             context['test'] = True
-            sites = models.TestPermission.objects.filter(given_to=user).values_list('site', flat=True)
+            permissions = models.TestPermission.objects.filter(given_to=user)
+            sites = []
+            for permission in permissions:
+                sites.append(permission.site)
             context['site_list'] = sites
         return context

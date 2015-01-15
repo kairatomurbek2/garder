@@ -16,62 +16,50 @@
 </head>
 <body>
 <nav class="uk-navbar">
+    <ul class="uk-navbar-nav">
+        <li class="uk-h2">
+            <a href="{% url 'webapp:home' %}">
+                {% trans "BFP" %}
+            </a>
+        </li>
+        {% block left-menu %}
+            {% if sup %}
+                <li class="uk-parent" data-uk-dropdown="">
+                    <a href="">{% trans "Permissions" %}</a>
+                    <div class="uk-dropdown uk-dropdown-navbar">
+                        <ul class="uk-nav uk-nav-navbar">
+                            <li><a href="">{% trans "Licences" %}</a></li>
+                            <li><a href="">{% trans "Inspections" %}</a></li>
+                            <li><a href="">{% trans "Test Permissions" %}</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url "admin" %}">{% trans "Admin" %}</a>
+                </li>
+                {% elif adm %}
+                <li class="uk-parent" data-uk-dropdown="">
+                    <a href="">{% trans "Permissions" %}</a>
+                    <div class="uk-dropdown uk-dropdown-navbar">
+                        <ul class="uk-nav uk-nav-navbar">
+                            <li><a href="">{% trans "Inspections" %}</a></li>
+                            <li><a href="">{% trans "Test Permissions" %}</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="{% url "admin" %}">{% trans "Admin" %}</a></li>
+                {% elif surv %}
+                <li><a href="">Surv</a></li>
+                {% elif test %}
+                <li><a href="">Test</a></li>
+            {% endif %}
+        {% endblock %}
+    </ul>
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
-            <li class="uk-h2">
-                <a href="{% url 'webapp:home' %}">
-                    {% trans "BFP" %}
-                </a>
-            </li>
-            {% block left-menu %}
-                {% if sup %}
-                    <li class="uk-parent" data-uk-dropdown="">
-                        <a href="">{% trans "Permissions" %}</a>
-                        <div class="uk-dropdown uk-dropdown-navbar">
-                            <ul class="uk-nav uk-nav-navbar">
-                                <li><a href="">{% trans "Licences" %}</a></li>
-                                <li><a href="">{% trans "Inspections" %}</a></li>
-                                <li><a href="">{% trans "Test Permissions" %}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="uk-parent" data-uk-dropdown="">
-                        <a href="">{% trans "Selectables" %}</a>
-                        <div class="uk-dropdown uk-dropdown-navbar">
-                            <ul class="uk-nav uk-navbar">
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                                <li><a href="">{% trans "" %}</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                {% elif adm %}
-
-                {% elif surv %}
-                {% elif test %}
-                {% endif %}
+            {% block right-menu %}
             {% endblock %}
         </ul>
-        <div class="uk-navbar-nav">
-            <ul class="uk-navbar-nav">
-                {% block right-menu %}
-                {% endblock %}
-            </ul>
-        </div>
     </div>
 </nav>
 {% block content %}
