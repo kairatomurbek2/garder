@@ -412,7 +412,7 @@ class Licence(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.given_to.name, self.start_date)
+        return u"%s %s, %s" % (self.given_to.first_name, self.given_to.last_name, self.start_date)
 
     class Meta:
         verbose_name = "Licence"

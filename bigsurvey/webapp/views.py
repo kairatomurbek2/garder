@@ -18,11 +18,13 @@ class HomeView(TemplateView, LoginRequiredView):
         user = self.request.user
         user_groups = user.groups.values_list('name', flat=True)
         if "SuperAdministrators" in user_groups:
-            context['sup'] = True
+            context['admin'] = True
+            context['super'] = True
             context['site_list'] = models.Site.objects.all()
         elif "Administrators" in user_groups:
-            context['adm'] = True
-            context['site_list'] = models.Site.objects.filter(pws=user.employee.pws)
+            if user.licences.filter(is_active=True).exists():
+                context['admin'] = True
+                context['site_list'] = models.Site.objects.filter(pws=user.employee.pws)
         elif "Surveyors" in user_groups:
             context['surv'] = True
             inspections = models.Inspection.objects.filter(assigned_to=user)
