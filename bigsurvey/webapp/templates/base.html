@@ -26,6 +26,7 @@
             {% if sup %}
                 <li class="uk-parent" data-uk-dropdown="">
                     <a href="">{% trans "Permissions" %}</a>
+
                     <div class="uk-dropdown uk-dropdown-navbar">
                         <ul class="uk-nav uk-nav-navbar">
                             <li><a href="">{% trans "Licences" %}</a></li>
@@ -35,11 +36,12 @@
                     </div>
                 </li>
                 <li>
-                    <a href="{% url "admin" %}">{% trans "Admin" %}</a>
+                    <a href="#">{% trans "Admin" %}</a>
                 </li>
-                {% elif adm %}
+            {% elif adm %}
                 <li class="uk-parent" data-uk-dropdown="">
                     <a href="">{% trans "Permissions" %}</a>
+
                     <div class="uk-dropdown uk-dropdown-navbar">
                         <ul class="uk-nav uk-nav-navbar">
                             <li><a href="">{% trans "Inspections" %}</a></li>
@@ -47,21 +49,23 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="{% url "admin" %}">{% trans "Admin" %}</a></li>
-                {% elif surv %}
+                <li><a href="#">{% trans "Admin" %}</a></li>
+            {% elif surv %}
                 <li><a href="">Surv</a></li>
-                {% elif test %}
+            {% elif test %}
                 <li><a href="">Test</a></li>
             {% endif %}
         {% endblock %}
     </ul>
     <div class="uk-navbar-flip">
-        <ul class="uk-navbar-nav">
-            {% block right-menu %}
-            {% endblock %}
-        </ul>
+        {% block right-menu %}
+            <ul class="uk-navbar-nav">
+                <li><a href="{% url 'accounts:logout' %}">{% trans "Log out" %}</a></li>
+            </ul>
+        {% endblock %}
     </div>
 </nav>
 {% block content %}
 {% endblock %}
 </body>
+</html>
