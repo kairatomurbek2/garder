@@ -1,14 +1,14 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from main.parameters import *
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 
 
 class SourceType(models.Model):
     source_type = models.CharField(max_length=50, verbose_name=_("Source Type"))
 
     def __unicode__(self):
-        return self.source_type
+        return u"%s" % self.source_type
 
     class Meta:
         verbose_name = _('Source Type')
@@ -19,7 +19,7 @@ class SiteType(models.Model):
     site_type = models.CharField(max_length=50, verbose_name=_("Site Type"))
 
     def __unicode__(self):
-        return self.site_type
+        return u"%s" % self.site_type
 
     class Meta:
         verbose_name = _('Site Type')
@@ -30,7 +30,7 @@ class SiteUse(models.Model):
     site_use = models.CharField(max_length=30, verbose_name=_("Site Use"))
 
     def __unicode__(self):
-        return self.site_use
+        return u"%s" % self.site_use
 
     class Meta:
         verbose_name = _('Site Use')
@@ -41,7 +41,7 @@ class ServiceType(models.Model):
     service_type = models.CharField(max_length=20, verbose_name=_("Service Type"))
 
     def __unicode__(self):
-        return self.service_type
+        return u"%s" % self.service_type
 
     class Meta:
         verbose_name = _('Service Type')
@@ -52,7 +52,7 @@ class SurveyType(models.Model):
     survey_type = models.CharField(max_length=20, verbose_name=_("Survey Type"))
 
     def __unicode__(self):
-        return self.survey_type
+        return u"%s" % self.survey_type
 
     class Meta:
         verbose_name = _('Survey Type')
@@ -63,7 +63,7 @@ class BPType(models.Model):
     bp_type = models.CharField(max_length=10, verbose_name=_("BFP Type"))
 
     def __unicode__(self):
-        return self.bp_type
+        return u"%s" % self.bp_type
 
     class Meta:
         verbose_name = _('BFP Type')
@@ -74,7 +74,7 @@ class BPSize(models.Model):
     bp_size = models.CharField(max_length=10, verbose_name=_("BFP Size"))
 
     def __unicode__(self):
-        return self.bp_size
+        return u"%s" % self.bp_size
 
     class Meta:
         verbose_name = _('BFP Size')
@@ -85,7 +85,7 @@ class BPManufacturer(models.Model):
     bp_manufacturer = models.CharField(max_length=30, verbose_name=_("BFP Manufacturer"))
 
     def __unicode__(self):
-        return self.bp_manufacturer
+        return u"%s" % self.bp_manufacturer
 
     class Meta:
         verbose_name = _('BFP Manufacturer')
@@ -96,7 +96,7 @@ class CustomerCode(models.Model):
     customer_code = models.CharField(max_length=20, verbose_name=_("Customer Code"))
 
     def __unicode__(self):
-        return self.customer_code
+        return u"%s" % self.customer_code
 
     class Meta:
         verbose_name = _('Customer Code')
@@ -107,7 +107,7 @@ class HazardType(models.Model):
     hazard_type = models.CharField(max_length=50, verbose_name=_("Hazard Type"))
 
     def __unicode__(self):
-        return self.hazard_type
+        return u"%s" % self.hazard_type
 
     class Meta:
         verbose_name = _('Hazard Type')
@@ -118,7 +118,7 @@ class TestManufacturer(models.Model):
     test_manufacturer = models.CharField(max_length=20, verbose_name=_("Test Manufacturer"))
 
     def __unicode__(self):
-        return self.test_manufacturer
+        return u"%s" % self.test_manufacturer
 
     class Meta:
         verbose_name = _('Test Manufacturer')
@@ -129,7 +129,7 @@ class ICPointType(models.Model):
     ic_point = models.CharField(max_length=20, verbose_name=_("Interconnection Point"))
 
     def __unicode__(self):
-        return self.ic_point
+        return u"%s" % self.ic_point
 
     class Meta:
         verbose_name = _('Interconnection Point Type')
@@ -140,7 +140,7 @@ class AssemblyLocation(models.Model):
     assembly_location = models.CharField(max_length=20, verbose_name=_("Assembly Location"))
 
     def __unicode__(self):
-        return self.assembly_location
+        return u"%s" % self.assembly_location
 
     class Meta:
         verbose_name = _('Assembly Location')
@@ -152,7 +152,7 @@ class LetterType(models.Model):
     template = models.TextField(max_length=2000, blank=True, null=True, verbose_name=_('Letter Template'))
 
     def __unicode__(self):
-        return self.letter_type
+        return u"%s" % self.letter_type
 
     class Meta:
         verbose_name = _('Letter Type')
@@ -163,7 +163,7 @@ class FloorsCount(models.Model):
     floors_count = models.CharField(max_length=10, verbose_name=_("Floors Count"))
 
     def __unicode__(self):
-        return self.floors_count
+        return u"%s" % self.floors_count
 
     class Meta:
         verbose_name = _('Floors Count')
@@ -174,7 +174,7 @@ class Special(models.Model):
     special = models.CharField(max_length=5, verbose_name=_("Special"))
 
     def __unicode__(self):
-        return self.special
+        return u"%s" % self.special
 
     class Meta:
         verbose_name = _('Special')
@@ -185,7 +185,7 @@ class Orientation(models.Model):
     orientation = models.CharField(max_length=15, verbose_name=_("Orientation"))
 
     def __unicode__(self):
-        return self.orientation
+        return u"%s" % self.orientation
 
     class Meta:
         verbose_name = _('Orientation Type')
@@ -206,7 +206,7 @@ class Customer (models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s (%s, %s)" % (self.name, self.city, self.state)
+        return u"%s, %s" % (self.name, self.city)
 
     class Meta:
         verbose_name = _('Customer')
@@ -221,7 +221,7 @@ class PWS(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return self.name + ", " + self.city
+        return u"%s, %s" % (self.name, self.city)
 
     class Meta:
         verbose_name = _('Public Water System')
@@ -245,9 +245,8 @@ class Site(models.Model):
     customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="sites")
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites")
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))
-    address = models.CharField(max_length=30, verbose_name=_("Address"))
-    street_address = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Street Address"))
-    street_number = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("Street Number"))
+    address1 = models.CharField(max_length=50, verbose_name=_("Address 1"))
+    address2 = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Address 2"))
     apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Apt"))
     city = models.CharField(max_length=30, verbose_name=_("City"))
     state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
@@ -266,7 +265,7 @@ class Site(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s (%s)" % (self.street_address, self.street_number, self.pws)
+        return u"%s, %s" % (self.city, self.address1)
 
     class Meta:
         verbose_name = _("Site")
@@ -279,7 +278,7 @@ class Service(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s" % (self.site, self.service_type)
+        return u"%s, %s" % (self.site, self.service_type)
 
     class Meta:
         verbose_name = _("Service")
@@ -308,7 +307,7 @@ class Survey(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s" % (self.survey_date, self.survey_type)
+        return u"%s, %s" % (self.survey_date, self.survey_type)
 
     class Meta:
         verbose_name = _("Survey")
@@ -317,8 +316,9 @@ class Survey(models.Model):
 
 class Hazard(models.Model):
     survey = models.ForeignKey(Survey, verbose_name=_("Survey"), related_name="hazards")
+    location1 = models.CharField(max_length=70, verbose_name=_("location 1"))
+    location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("location 2"))
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
-    BPPresent = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is BP Present"))
     assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
                                           related_name="hazards")
     assembly_status = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Assembly Status"))
@@ -341,7 +341,7 @@ class Hazard(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s" % (self.assembly_location.assembly_location, self.hazard_type)
+        return u"%s, %s" % (self.assembly_location, self.hazard_type)
 
     class Meta:
         verbose_name = _("Hazard")
@@ -382,7 +382,7 @@ class Test(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s" % (self.bp_device.assembly_location, self.test_date)
+        return u"%s, %s" % (self.bp_device.assembly_location, self.test_date)
 
     class Meta:
         verbose_name = _("Test")
@@ -396,7 +396,7 @@ class Letter(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
 
     def __unicode__(self):
-        return "%s, %s" % (self.date, self.letter_type)
+        return u"%s, %s" % (self.date, self.letter_type)
 
     class Meta:
         verbose_name = _("Letter")
@@ -412,7 +412,7 @@ class Licence(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s, %s" % (self.given_to.name, self.start_date)
+        return u"%s, %s" % (self.given_to.name, self.start_date)
 
     class Meta:
         verbose_name = "Licence"
@@ -430,7 +430,7 @@ class TestPermission(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s %s, %s" % (self.given_to.first_name, self.given_to.last_name, self.given_date)
+        return u"%s %s, %s" % (self.given_to.first_name, self.given_to.last_name, self.given_date)
 
     class Meta:
         verbose_name = "Test Permission"
@@ -447,7 +447,7 @@ class Inspection(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return "%s %s, %s" % (self.assigned_to.first_name, self.assigned_to.last_name, self.assigned_date)
+        return u"%s %s, %s" % (self.assigned_to.first_name, self.assigned_to.last_name, self.assigned_date)
 
     class Meta:
         verbose_name = "Inspection"
