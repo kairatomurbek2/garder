@@ -1,9 +1,10 @@
 from django.conf.urls import url, patterns
+from accounts import views
 
 urlpatterns = patterns('accounts.views',
 
-    url(r'^login/', 'login', {'template_name': 'accounts/login.html'}, name='login'),
-    url(r'^logout/', 'logout_view', name='logout'),
+    url(r'^login/', views.LoginView.as_view(), name='login'),
+    url(r'^logout/', views.LogoutView.as_view(), name='logout'),
 
 )
 
