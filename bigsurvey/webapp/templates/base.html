@@ -23,38 +23,17 @@
             </a>
         </li>
         {% block left-menu %}
-            {% if sup %}
-                <li class="uk-parent" data-uk-dropdown="">
-                    <a href="">{% trans "Permissions" %}</a>
-
-                    <div class="uk-dropdown uk-dropdown-navbar">
-                        <ul class="uk-nav uk-nav-navbar">
-                            <li><a href="">{% trans "Licences" %}</a></li>
-                            <li><a href="">{% trans "Inspections" %}</a></li>
-                            <li><a href="">{% trans "Test Permissions" %}</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">{% trans "Admin" %}</a>
-                </li>
-            {% elif adm %}
-                <li class="uk-parent" data-uk-dropdown="">
-                    <a href="">{% trans "Permissions" %}</a>
-
-                    <div class="uk-dropdown uk-dropdown-navbar">
-                        <ul class="uk-nav uk-nav-navbar">
-                            <li><a href="">{% trans "Inspections" %}</a></li>
-                            <li><a href="">{% trans "Test Permissions" %}</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li><a href="#">{% trans "Admin" %}</a></li>
-            {% elif surv %}
-                <li><a href="">Surv</a></li>
-            {% elif test %}
-                <li><a href="">Test</a></li>
+            {% if super %}
+                <li><a href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
+                <li><a href="#">{% trans "PWS" %}</a></li>
             {% endif %}
+            {% if admin %}
+                <li><a href="#">{% trans "Customers" %}</a></li>
+                <li><a href="#">{% trans "Letters" %}</a></li>
+                <li><a href="#">{% trans "Selectables" %}</a></li>
+                <li><a href="#">{% trans "Import" %}</a></li>
+            {% endif %}
+            <li><a href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
         {% endblock %}
     </ul>
     <div class="uk-navbar-flip">

@@ -3,25 +3,29 @@
     <thead>
     <tr>
         <th class="uk-text-center uk-width-4-5">
-            {% trans "Site" %}
+            {% trans "Sites" %}
         </th>
-        <th colspan="2" class="uk-text-center uk-width-1-5">
-            {% trans "Actions" %}
-        </th>
+        {% if admin or super %}
+            <th colspan="2" class="uk-text-center uk-width-1-5">
+                {% trans "Actions" %}
+            </th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
     {% for site in site_list %}
         <tr>
             <td>
-                {{ site.city }}, {{ site.street_address }}, {{ site.street_number }}
+                <a href="#">{{ site }}</a>
             </td>
-            <td>
-                <a href="">o_o</a>
-            </td>
-            <td>
-                <a href="">o_o</a>
-            </td>
+            {% if admin or super %}
+                <td>
+                    <a href="#">{% trans "Edit" %}</a>
+                </td>
+                <td>
+                    <a href="#">{% trans "Assign Survey/Test" %}</a>
+                </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>
