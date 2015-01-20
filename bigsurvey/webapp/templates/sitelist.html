@@ -1,32 +1,91 @@
 {% load i18n %}
-<table class="uk-table uk-text-center uk-table-hover">
-    <thead>
-    <tr>
-        <th class="uk-text-center uk-width-4-5">
-            {% trans "Sites" %}
-        </th>
-        {% if admin or super %}
-            <th colspan="2" class="uk-text-center uk-width-1-5">
+<form action="" method="get">
+    <br/>
+    <table class="uk-table uk-text-center uk-table-hover">
+        <thead>
+        <tr style="border-bottom: solid 1px #000000">
+            <th colspan="6" class="uk-text-center uk-width-3-4" style="border-right: solid 1px #000000">
+                {% trans "Sites" %}
+            </th>
+            <th colspan="2" class="uk-text-center uk-width-1-4">
                 {% trans "Actions" %}
             </th>
-        {% endif %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for site in site_list %}
-        <tr>
-            <td>
-                <a href="#">{{ site }}</a>
-            </td>
-            {% if admin or super %}
-                <td>
-                    <a href="#">{% trans "Edit" %}</a>
-                </td>
-                <td>
-                    <a href="#">{% trans "Assign Survey/Test" %}</a>
-                </td>
-            {% endif %}
         </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        <tr>
+            <th class="uk-text-center">
+                {% trans "City:" %}
+            </th>
+            <th class="uk-text-center">
+                {% trans "Address:" %}
+            </th>
+            <th class="uk-text-center">
+                {% trans "Customer:" %}
+            </th>
+            <th class="uk-text-center">
+                {% trans "PWS:" %}
+            </th>
+            <th class="uk-text-center">
+                {% trans "Site Use:" %}
+            </th>
+            <th class="uk-text-center">
+                {% trans "Site Type:" %}
+            </th>
+            <th class="uk-text-center uk-text-middle" colspan="2" rowspan="2" style="border-left: solid 1px #000000">
+                <button class="uk-button" type="submit">{% trans "Apply Filter" %}</button>
+            </th>
+        </tr>
+        <tr style="border-bottom: solid 1px #000000">
+            <th>
+                {{ site_filter.form.city }}
+            </th>
+            <th>
+                {{ site_filter.form.address1 }}
+            </th>
+            <th>
+                {{ site_filter.form.customer }}
+            </th>
+            <th>
+                {{ site_filter.form.pws }}
+            </th>
+            <th>
+                {{ site_filter.form.site_use }}
+            </th>
+            <th>
+                {{ site_filter.form.site_type }}
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for site in site_filter %}
+            <tr>
+                <td>
+                    {{ site.city }}
+                </td>
+                <td>
+                    {{ site.address1 }}
+                </td>
+                <td>
+                    {{ site.customer.name }}
+                </td>
+                <td>
+                    {{ site.pws.name }}
+                </td>
+                <td>
+                    {{ site.site_use }}
+                </td>
+                <td>
+                    {{ site.site_type }}
+                </td>
+                {% if admin or super %}
+                    <td class="uk-text-center" style="border-left: solid 1px #000000">
+                        <a href="#">{% trans "Detail" %}</a>
+                    </td>
+                    <td class="uk-text-center">
+                        <a href="#">{% trans "Assign" %}</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
