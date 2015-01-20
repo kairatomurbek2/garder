@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load staticfiles %}
 {% block content %}
-    {% include "sitelist.html" %}
+    {% include "site_list.html" %}
+{% endblock %}
+{% block menu %}
+    {% if super or admin %}
+        <li><a href="#">{% trans "Add Site" %}</a></li>
+    {% endif %}
 {% endblock %}

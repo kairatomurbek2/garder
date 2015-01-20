@@ -12,6 +12,7 @@ def initial_setup():
     call_command('migrate', interactive=False, verbosity=1)
     call_command('loaddata', 'test', interactive=False, verbosity=1)
     world.browser = webdriver.Firefox()
+    world.browser.maximize_window()
 
 
 @after.all

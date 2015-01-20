@@ -12,4 +12,4 @@ class SiteFilter(django_filters.FilterSet):
 
     class Meta:
         models = models.Site
-        fields = ['customer', 'pws', 'city', 'address1', 'site_use', 'site_type']
+        fields = ['customer', 'pws', 'city', 'address1', 'site_use', 'site_type', 'pk']

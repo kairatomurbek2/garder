@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load surveys_for_services %}
+{% block content %}
+    <div id="site_detail">
+        <table class="uk-table uk-table-stripped">
+            <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.customer.name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.pws.name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Connect Date" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.connect_date }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.city }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "State" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.state }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "ZIP" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.zip }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Street Address" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.address1 }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Street Number" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.address2 }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Appartment" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.apt }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Floors Count" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.floors }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Interconnection Point" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.interconnection_point }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Site Use" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.site_use }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Site Type" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.site_type }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Potable" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.potable_present }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Fire" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.fire_present }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Irrigation" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.irrigation_present }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Due Install" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.is_due_install }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Backflow" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.is_backflow }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Next Survey" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.next_survey_Date }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
+                <td colspan="5">{{ site.notes }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr>
+    <div id="tab_control" class="uk-tab-center">
+        <ul class="uk-tab" data-uk-tab="" data-uk-switcher="{connect:'#services'}">
+            <li class="uk-active">
+                <a href="#">{% trans "Potable" %}</a>
+            </li>
+            <li>
+                <a href="#">{% trans "Fire" %}</a>
+            </li>
+            <li>
+                <a href="#">{% trans "Irrigation" %}</a>
+            </li>
+        </ul>
+        <ul class="uk-switcher" id="services">
+            <li>
+                <div id="potable_content">
+                    {% if site.potable_present %}
+                        {% include_surveys site 'potable' %}
+                    {% else %}
+                        <h2>{% trans "POTABLE NOT AVAILABLE" %}</h2>
+                    {% endif %}
+                </div>
+            </li>
+            <li>
+                <div id="fire_content">
+                    {% if site.fire_present %}
+                        {% include_surveys site 'fire' %}
+                    {% else %}
+                        <h2>{% trans "FIRE NOT AVAILABLE" %}</h2>
+                    {% endif %}
+                </div>
+            </li>
+            <li>
+                <div id="irrigation_content">
+                    {% if site.irrigation_present %}
+                        {% include_surveys site 'irrigation' %}
+                    {% else %}
+                        <h2>{% trans "IRRIGATION NOT AVAILABLE" %}</h2>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+{% block menu %}
+{% endblock %}

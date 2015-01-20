@@ -17,34 +17,37 @@
 <body>
 <nav class="uk-navbar">
     <ul class="uk-navbar-nav">
-        <li class="uk-h2">
+        <li class="uk-parent" data-uk-dropdown="" id="bfp_menu">
             <a href="{% url 'webapp:home' %}">
                 {% trans "BFP" %}
             </a>
+            <div class="uk-dropdown uk-dropdown-navbar">
+                <ul class="uk-nav uk-nav-navbar">
+                    {% if super %}
+                        <li><a href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
+                        <li><a href="#">{% trans "PWS" %}</a></li>
+                    {% endif %}
+                    {% if admin %}
+                        <li><a href="#">{% trans "Customers" %}</a></li>
+                        <li><a href="#">{% trans "Letters" %}</a></li>
+                        <li><a href="#">{% trans "Selectables" %}</a></li>
+                        <li><a href="#">{% trans "Import" %}</a></li>
+                    {% endif %}
+                    <li><a href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+                </ul>
+            </div>
         </li>
-        {% block left-menu %}
-            {% if super %}
-                <li><a href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
-                <li><a href="#">{% trans "PWS" %}</a></li>
-            {% endif %}
-            {% if admin %}
-                <li><a href="#">{% trans "Customers" %}</a></li>
-                <li><a href="#">{% trans "Letters" %}</a></li>
-                <li><a href="#">{% trans "Selectables" %}</a></li>
-                <li><a href="#">{% trans "Import" %}</a></li>
-            {% endif %}
-            <li><a href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
-        {% endblock %}
     </ul>
+    <div class="uk-navbar-center">
+        <ul class="uk-navbar-nav" id="page_menu">
+            {% block menu %}
+            {% endblock %}
+        </ul>
+    </div>
     <div class="uk-navbar-flip">
-        {% block right-menu %}
-            <ul class="uk-navbar-nav">
-                {% if super or admin %}
-                    <li><a href="#">{% trans "Add Site" %}</a></li>
-                {% endif %}
-                <li><a href="{% url 'accounts:logout' %}">{% trans "Log Out" %}</a></li>
-            </ul>
-        {% endblock %}
+        <ul class="uk-navbar-nav">
+            <li><a href="{% url 'accounts:logout' %}">{% trans "Log Out" %}</a></li>
+        </ul>
     </div>
 </nav>
 {% block content %}

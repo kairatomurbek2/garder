@@ -256,7 +256,7 @@ class Site(models.Model):
     floors = models.ForeignKey(FloorsCount, verbose_name=_("Building Height"), related_name="sites")
     interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"),
                                               related_name="sites")
-    potable_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Potable Present"))
+    potable_present = models.BooleanField(choices=YESNO_CHOICES, default=True, verbose_name=_("Potable Present"))
     fire_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Fire Present"))
     irrigation_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Irrigation Present"))
     is_due_install = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Due Install"))
