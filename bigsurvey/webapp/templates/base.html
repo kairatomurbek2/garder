@@ -39,7 +39,10 @@
     <div class="uk-navbar-flip">
         {% block right-menu %}
             <ul class="uk-navbar-nav">
-                <li><a href="{% url 'accounts:logout' %}">{% trans "Log out" %}</a></li>
+                {% if super or admin %}
+                    <li><a href="#">{% trans "Add Site" %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'accounts:logout' %}">{% trans "Log Out" %}</a></li>
             </ul>
         {% endblock %}
     </div>

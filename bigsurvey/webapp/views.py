@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, View
 import models
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from filters import SiteFilter
 
 
 class LoginRequiredView(View):
@@ -20,23 +21,25 @@ class HomeView(TemplateView, LoginRequiredView):
         if "SuperAdministrators" in user_groups:
             context['admin'] = True
             context['super'] = True
-            context['site_list'] = models.Site.objects.all()
+            sites = models.Site.objects.all()
         elif "Administrators" in user_groups:
             if user.licences.filter(is_active=True).exists():
                 context['admin'] = True
-                context['site_list'] = models.Site.objects.filter(pws=user.employee.pws)
+                sites = models.Site.objects.filter(pws=user.employee.pws)
         elif "Surveyors" in user_groups:
             context['surv'] = True
-            inspections = models.Inspection.objects.filter(assigned_to=user)
-            sites = []
+            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
+            site_pks = []
             for inspection in inspections:
-                sites.append(inspection.site)
-            context['site_list'] = sites
+                site_pks.append(inspection.site.pk)
+            sites = models.Site.objects.filter(pk__in=site_pks)
         elif "Testers" in user_groups:
             context['test'] = True
-            permissions = models.TestPermission.objects.filter(given_to=user)
-            sites = []
+            permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
+            site_pks = []
             for permission in permissions:
-                sites.append(permission.site)
-            context['site_list'] = sites
+                site_pks.append(permission.site.pk)
+            sites = models.Site.objects.filter(pk__in=site_pks)
+        site_filter = SiteFilter(self.request.GET, queryset=sites)
+        context['site_filter'] = site_filter
         return context
