@@ -201,7 +201,7 @@ class Customer (models.Model):
     apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Apt"))
     city = models.CharField(max_length=30, verbose_name=_("City"))
     state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
-    zip = models.CharField(max_length=5, verbose_name=_("ZIP"))
+    zip = models.CharField(max_length=10, verbose_name=_("ZIP"))
     phone = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("Phone"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
