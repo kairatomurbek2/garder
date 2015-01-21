@@ -84,11 +84,8 @@
                         <a href="#">{% trans "Assign" %}</a>
                     </td>
                 {% else %}
-                    <td class="uk-text-center" style="border-left: solid 1px darkgray">
+                    <td colspan="2" class="uk-text-center" style="border-left: solid 1px darkgray">
                         <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
-                    </td>
-                    <td class="uk-text-center">
-                        <a href="#">{% trans "Commit" %}</a>
                     </td>
                 {% endif %}
             </tr>

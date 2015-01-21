@@ -2,8 +2,9 @@
 {% load i18n %}
 {% load boolean_yes_no %}
 {% load surveys_for_services %}
+{% load hazards_for_services %}
 {% block content %}
-    <div id="site_detail">
+    <div id="site_detail" class="uk-panel uk-panel-box">
         <table class="uk-table uk-table-stripped">
             <tbody>
             <tr>
@@ -84,7 +85,11 @@
             <li>
                 <div id="potable_content">
                     {% if site.potable_present %}
-                        {% include_surveys site 'potable' %}
+                        {% if test %}
+                            {% include_hazards 'potable' %}
+                        {% else %}
+                            {% include_surveys 'potable' %}
+                        {% endif %}
                     {% else %}
                         <h3 class="uk-text-center uk-margin-large-top">
                             {% trans "Potable water supply is not present" %}
@@ -95,7 +100,11 @@
             <li>
                 <div id="fire_content">
                     {% if site.fire_present %}
-                        {% include_surveys site 'fire' %}
+                        {% if test %}
+                            {% include_hazards 'fire' %}
+                        {% else %}
+                            {% include_surveys 'fire' %}
+                        {% endif %}
                     {% else %}
                         <h3 class="uk-text-center uk-margin-large-top">
                             {% trans "Fire water supply is not present" %}
@@ -106,7 +115,11 @@
             <li>
                 <div id="irrigation_content">
                     {% if site.irrigation_present %}
-                        {% include_surveys site 'irrigation' %}
+                        {% if test %}
+                            {% include_hazards 'irrigation' %}
+                        {% else %}
+                            {% include_surveys 'irrigation' %}
+                        {% endif %}
                     {% else %}
                         <h3 class="uk-text-center uk-margin-large-top">
                             {% trans "Irrigation water supply is not present" %}
@@ -118,4 +131,19 @@
     </div>
 {% endblock %}
 {% block menu %}
+    {% if admin or super %}
+        <li>
+            <a href="#">{% trans "Assign Surveyor" %}</a>
+        </li>
+        <li>
+            <a href="#">{% trans "Assign Tester" %}</a>
+        </li>
+        <li>
+            <a href="#">{% trans "Edit Site" %}</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="#">{% trans "Commit" %}</a>
+        </li>
+    {% endif %}
 {% endblock %}

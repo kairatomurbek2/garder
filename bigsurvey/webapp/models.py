@@ -312,6 +312,7 @@ class Survey(models.Model):
     class Meta:
         verbose_name = _("Survey")
         verbose_name_plural = _("Surveys")
+        get_latest_by = 'survey_date'
 
 
 class Hazard(models.Model):
@@ -341,7 +342,7 @@ class Hazard(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.assembly_location, self.hazard_type)
+        return u"%s, %s" % (self.location1, self.hazard_type)
 
     class Meta:
         verbose_name = _("Hazard")
