@@ -1,11 +1,14 @@
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, CreateView, UpdateView
 import models
+import forms
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from filters import SiteFilter
+from django.http import Http404
+from django.core.urlresolvers import reverse
 
 
-class BaseView(TemplateView):
+class BaseView(View):
     def get_context_data(self, **kwargs):
         context = super(BaseView, self).get_context_data(**kwargs)
         user = self.request.user
@@ -26,7 +29,19 @@ class BaseView(TemplateView):
         return super(BaseView, self).dispatch(*args, **kwargs)
 
 
-class HomeView(BaseView):
+class BaseTemplateView(BaseView, TemplateView):
+    pass
+
+
+class SuperAdministratorView(BaseView):
+    def get_context_data(self, **kwargs):
+        context = super(SuperAdministratorView, self).get_context_data(**kwargs)
+        if not context.get('super'):
+            raise Http404
+        return context
+
+
+class HomeView(BaseTemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
@@ -53,10 +68,37 @@ class HomeView(BaseView):
         return models.Site.objects.filter(pk__in=site_pks)
 
 
-class SiteDetailView(BaseView):
+class SiteDetailView(BaseTemplateView):
     template_name = 'site.html'
 
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         context['site'] = models.Site.objects.get(pk=self.kwargs['pk'])
         return context
+
+
+class PWSView(BaseTemplateView):
+    template_name = 'pws_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PWSView, self).get_context_data(**kwargs)
+        context['pws_list'] = models.PWS.objects.all()
+        return context
+
+
+class PWSAddView(CreateView, SuperAdministratorView):
+    template_name = 'pws_form.html'
+    form_class = forms.PWSForm
+    model = models.PWS
+
+    def get_success_url(self):
+        return reverse('webapp:pws_list')
+
+
+class PWSEditView(UpdateView, SuperAdministratorView):
+    template_name = 'pws_form.html'
+    form_class = forms.PWSForm
+    model = models.PWS
+
+    def get_success_url(self):
+        return reverse('webapp:pws_list')

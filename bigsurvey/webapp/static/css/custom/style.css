@@ -1,0 +1,27 @@
+div.table-wrapper {
+    padding: 0 20px;
+}
+
+tr.top-half {
+    border: 2px solid #dddddd;
+    border-bottom: none;
+}
+
+tr.bottom-half {
+    border: 2px solid #dddddd;
+    border-top: none;
+}
+
+.actions-wrapper {
+    padding-left: 8px;
+    padding-top: 10px;
+}
+
+.actions-wrapper li {
+    list-style-type: none;
+}
+
+.errorlist {
+    margin: 0;
+    color: #d85030;
+}
