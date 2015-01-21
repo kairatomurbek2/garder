@@ -2,12 +2,12 @@ from lettuce import *
 from webapp.features.test_data import *
 
 
-@step('I go to (.*) page')
+@step('Opened (.*) page')
 def go_to_page(step, page):
     world.browser.get(get_url(UiElements.links[page]['url']))
 
 
-@step('Login as (.*)')
+@step('I login as (.*)')
 def login_as(step, role):
     requisites = TestData.logins[role]
     login(step, requisites['username'], requisites['password'])
@@ -22,11 +22,9 @@ def login(step, username, password):
     world.browser.find_element_by_xpath(UiElements.Xpath.buttons['auth_submit']).submit()
 
 
-@step('I see (.*) on page')
-def see_on_page(step, text):
-    assert text in world.browser.page_source, '%s is not on page' % text
-
-
-@step('I do not see (.*) on page')
-def do_not_see_on_page(step, text):
-    assert text not in world.browser.page_source, '% is on page' % text
+@step('I (.*) - (.*) on page')
+def see_or_not_on_page(step, reaction, text):
+    if reaction == 'see':
+        assert text in world.browser.page_source, '%s is not on page' % text
+    else:
+        assert text not in world.browser.page_source, '%s is on page' % text

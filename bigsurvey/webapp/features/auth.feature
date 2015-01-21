@@ -1,25 +1,16 @@
 Feature: Authorization
 
-    Scenario: Root authorization
-        When I go to login page
-        And Login as root
-        Then I see First Site on page
-        And I see Second Site on page
-
-    Scenario: Admin authorization
-        When I go to login page
-        And Login as admin
-        Then I see Second Site on page
-        And I do not see First Site on page
-
-    Scenario: Surveyor authorization
-        When I go to login page
-        And Login as surveyor
-        Then I see First Site on page
-        And I do not see Second Site on page
-
-    Scenario: Tester authorization
-        When I go to login page
-        And Login as tester
-        Then I see Second Site on page
-        And I do not see First Site on page
+    Scenario Outline: Authorization
+        Given Opened login page
+        When I login as <role>
+        Then I <reaction> - <site> on page
+    Examples:
+        | role     | reaction   | site        |
+        | root     | see        | First Site  |
+        | root     | see        | Second Site |
+        | admin    | see        | Second Site |
+        | admin    | do not see | First Site  |
+        | surveyor | see        | First Site  |
+        | surveyor | do not see | Second Site |
+        | tester   | see        | Second Site |
+        | tester   | do not see | First Site  |

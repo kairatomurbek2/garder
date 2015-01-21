@@ -4,3 +4,4 @@ virtualenv
 *.sqlite3
 *~
 settings_local.py
+settings_test.py
