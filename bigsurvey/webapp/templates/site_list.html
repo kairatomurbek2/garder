@@ -3,8 +3,8 @@
     <br/>
     <table class="uk-table uk-text-center uk-table-hover">
         <thead>
-        <tr style="border-bottom: solid 1px #000000">
-            <th colspan="6" class="uk-text-center uk-width-3-4" style="border-right: solid 1px #000000">
+        <tr style="border-bottom: solid 1px darkgray">
+            <th colspan="6" class="uk-text-center uk-width-3-4" style="border-right: solid 1px darkgray">
                 {% trans "Sites" %}
             </th>
             <th colspan="2" class="uk-text-center uk-width-1-4">
@@ -30,11 +30,11 @@
             <th class="uk-text-center">
                 {% trans "Site Type:" %}
             </th>
-            <th class="uk-text-center uk-text-middle" colspan="2" rowspan="2" style="border-left: solid 1px #000000">
+            <th class="uk-text-center uk-text-middle" colspan="2" rowspan="2" style="border-left: solid 1px darkgray">
                 <button class="uk-button" type="submit">{% trans "Apply Filter" %}</button>
             </th>
         </tr>
-        <tr style="border-bottom: solid 1px #000000">
+        <tr style="border-bottom: solid 1px darkgray">
             <th>
                 {{ site_filter.form.city }}
             </th>
@@ -77,15 +77,18 @@
                     {{ site.site_type }}
                 </td>
                 {% if admin or super %}
-                    <td class="uk-text-center" style="border-left: solid 1px #000000">
+                    <td class="uk-text-center" style="border-left: solid 1px darkgray">
                         <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
                     </td>
                     <td class="uk-text-center">
                         <a href="#">{% trans "Assign" %}</a>
                     </td>
                 {% else %}
-                    <td colspan="2" class="uk-text-center" style="border-left: solid 1px #000000">
+                    <td class="uk-text-center" style="border-left: solid 1px darkgray">
                         <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
+                    </td>
+                    <td class="uk-text-center">
+                        <a href="#">{% trans "Commit" %}</a>
                     </td>
                 {% endif %}
             </tr>

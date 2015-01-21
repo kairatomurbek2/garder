@@ -1,0 +1,24 @@
+{% load i18n %}
+{% for survey in surveys %}
+        <div class="uk-align-center" data-uk-toggle="{target:'#survey-{{ survey.pk }}'}">
+            <a class="uk-text-center">
+                <h4>
+                    {{ survey.survey_date }}, {{ survey.survey_type }}
+                </h4>
+            </a>
+        </div>
+        <div id="survey-{{ survey.pk }}" class="uk-panel uk-panel-box uk-hidden">
+            <table class="uk-table">
+                <thead>
+                <tr>
+                    <th>{% trans "Service Type" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ survey.service.service_type }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+{% endfor %}

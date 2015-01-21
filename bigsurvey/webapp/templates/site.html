@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load boolean_yes_no %}
 {% load surveys_for_services %}
 {% block content %}
     <div id="site_detail">
@@ -43,17 +44,17 @@
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Potable" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ site.potable_present }}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.potable_present|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Fire" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ site.fire_present }}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.fire_present|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Irrigation" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ site.irrigation_present }}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.irrigation_present|yn }}</td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Due Install" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ site.is_due_install }}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.is_due_install|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Backflow" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ site.is_backflow }}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.is_backflow|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Next Survey" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.next_survey_Date }}</td>
             </tr>
@@ -66,7 +67,7 @@
     </div>
     <hr>
     <div id="tab_control" class="uk-tab-center">
-        <ul class="uk-tab" data-uk-tab="" data-uk-switcher="{connect:'#services'}">
+        <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
             <li class="uk-active">
                 <a href="#">{% trans "Potable" %}</a>
             </li>
@@ -77,13 +78,17 @@
                 <a href="#">{% trans "Irrigation" %}</a>
             </li>
         </ul>
-        <ul class="uk-switcher" id="services">
+    </div>
+    <div id="tab_content">
+        <ul class="uk-switcher uk-margin" id="services">
             <li>
                 <div id="potable_content">
                     {% if site.potable_present %}
                         {% include_surveys site 'potable' %}
                     {% else %}
-                        <h2>{% trans "POTABLE NOT AVAILABLE" %}</h2>
+                        <h3 class="uk-text-center uk-margin-large-top">
+                            {% trans "Potable water supply is not present" %}
+                        </h3>
                     {% endif %}
                 </div>
             </li>
@@ -92,7 +97,9 @@
                     {% if site.fire_present %}
                         {% include_surveys site 'fire' %}
                     {% else %}
-                        <h2>{% trans "FIRE NOT AVAILABLE" %}</h2>
+                        <h3 class="uk-text-center uk-margin-large-top">
+                            {% trans "Fire water supply is not present" %}
+                        </h3>
                     {% endif %}
                 </div>
             </li>
@@ -101,7 +108,9 @@
                     {% if site.irrigation_present %}
                         {% include_surveys site 'irrigation' %}
                     {% else %}
-                        <h2>{% trans "IRRIGATION NOT AVAILABLE" %}</h2>
+                        <h3 class="uk-text-center uk-margin-large-top">
+                            {% trans "Irrigation water supply is not present" %}
+                        </h3>
                     {% endif %}
                 </div>
             </li>
