@@ -1,16 +1,16 @@
 from common_steps import *
 from lettuce import *
-from webapp.features.test_data import *
+from settings import *
 
 
-@step('I login as (.*)')
+@step('I login as "([a-z0-9_]+)"')
 def login_as(step, role):
-    requisites = TestData.logins[role]
-    login(step, requisites['username'], requisites['password'])
+    requisites = LOGINS[role]
+    step.given('I login with username "%s" and password "%s"' % (requisites['username'], requisites['password']))
 
 
-@step('Login with username (.*) and password (.*)')
+@step('I login with username "(.*)" and password "(.*)"')
 def login(step, username, password):
-    fill_field_with_value(step, 'auth_username', username)
-    fill_field_with_value(step, 'auth_password', password)
-    submit_form(step, 'auth')
+    fill_in_textfield(step, 'auth_username', username)
+    fill_in_textfield(step, 'auth_password', password)
+    step.given('I submit "%s" form' % 'auth')

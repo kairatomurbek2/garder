@@ -77,7 +77,7 @@ class SiteDetailView(BaseTemplateView):
         return context
 
 
-class PWSView(BaseTemplateView):
+class PWSView(SuperAdministratorView, BaseTemplateView):
     template_name = 'pws_list.html'
 
     def get_context_data(self, **kwargs):
