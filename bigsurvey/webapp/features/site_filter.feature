@@ -4,7 +4,7 @@ Feature: Filtration
         Given I open "login" page
         And I login as "<role>"
         And I open "site_list" page
-        When I fill in the following "<fields>" with following "<values>"
+        When I fill in following fields "<fields>" with following values "<values>"
         And I submit "site_filter" form
         Then I should <reaction> "<text>"
 

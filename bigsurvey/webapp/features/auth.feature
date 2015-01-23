@@ -3,14 +3,13 @@ Feature: Authorization
     Scenario Outline: Authorization
         Given I open "login" page
         When I login as "<role>"
-        Then I should <reaction> "<site>"
+        Then I should <reaction> following "<text>"
     Examples:
-        | role     | reaction | site        |
-        | root     | see      | First Site  |
-        | root     | see      | Second Site |
-        | admin    | see      | Ancoridge   |
-        | admin    | not see  | First Site  |
-        | surveyor | see      | First Site  |
-        | surveyor | not see  | Second Site |
-        | tester   | see      | Second Site |
-        | tester   | not see  | First Site  |
+        | role     | reaction | text                                                                     |
+        | root     | see      | First Site :: Second Site :: Houston :: Ancoridge :: Seattle :: New York |
+        | admin    | see      | Ancoridge :: Chikago :: Seattle                                          |
+        | admin    | not see  | First Site :: Second Site :: Boston :: Houston :: Washington             |
+        | surveyor | see      | First Site :: Seattle                                                    |
+        | surveyor | not see  | Second Site :: Boston :: Houston :: Washington :: Ancoridge              |
+        | tester   | see      | Second Site :: New York                                                  |
+        | tester   | not see  | First Site :: Boston :: Houston :: Washington :: Ancoridge :: Seattle    |
