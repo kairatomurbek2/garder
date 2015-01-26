@@ -45,7 +45,7 @@ def check_multiple_content(step, reaction, text):
         step.given('I should %s "%s"' % (reaction, item))
 
 
-@step('I should (see|not see) element with ([-_a-z]+)="([-_a-z0-9]+)"')
+@step('I should (see|not see) element with ([-a-z]+)="([-_a-z0-9]+)"')
 def check_elem_by_attr(step, reaction, attr, value):
     elem = find_elem_by_xpath('//*[@%s="%s"]' % (attr, value))
     if reaction == 'see':
@@ -54,26 +54,26 @@ def check_elem_by_attr(step, reaction, attr, value):
         assert not elem, 'Element with %s="%s" was found' % (attr, value)
 
 
-@step('I should (see|not see) elements with ([-_a-z]+)="([-_a-z0-9: ]+)"')
+@step('I should (see|not see) elements with ([-a-z]+)="([-_a-z0-9: ]+)"')
 def check_multiple_elem_by_attr(step, reaction, attr, values):
     values = values.split(' :: ')
     for item in values:
         step.given('I should %s element with %s="%s"' % (reaction, attr, item))
 
 
-@step('Element with ([-_a-z]+)="([-_a-z0-9: ]+)" should (contain|not contain) "(.*)"')
-def check_text_inside_element(step, attr, value, reaction, text):
+@step('Element with ([-a-z]+)="([-_a-z0-9]+)" should (contain|not contain) "(.*)"')
+def check_content_inside_element(step, attr, value, reaction, text):
     elem = find_elem_by_xpath('//*[@%s="%s"]' % (attr, value))
     assert elem, 'Element with %s="%s" was not found' % (attr, value)
-    child_elem = find_elem_by_xpath('//*[contains(text(), "%s")]' % text, context=elem)
+    child_elem = find_elem_by_xpath('.//*[contains(text(), "%s")]' % text, context=elem)
     if reaction == 'contain':
         assert child_elem, 'Element with %s="%s" was found but it does not contain "%s"' % (attr, value, text)
     else:
         assert not child_elem, 'Element with %s="%s" was found but it contains "%s"' % (attr, value, text)
 
 
-@step('Element with ([-_a-z]+)="([-_a-z0-9: ]+)" should (contain|not contain) following "(.*)"')
-def check_text_inside_element(step, attr, value, reaction, text):
+@step('Element with ([-a-z]+)="([-_a-z0-9]+)" should (contain|not contain) following "(.*)"')
+def check_multiple_content_inside_element(step, attr, value, reaction, text):
     text = text.split(' :: ')
     for item in text:
         step.given('Element with %s="%s" should %s "%s"' % (attr, value, reaction, item))
