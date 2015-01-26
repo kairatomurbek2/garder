@@ -1,9 +1,7 @@
-import datetime
 from django.core.management import call_command
 
 from lettuce import before, after, world
 from selenium import webdriver
-import sys
 
 
 @before.all
@@ -11,7 +9,6 @@ def init():
     call_command('reset_db', interactive=False, verbosity=1)
     call_command('migrate', interactive=False, verbosity=1)
     call_command('loaddata', 'test', interactive=False, verbosity=1)
-
     world.browser = webdriver.Firefox()
     world.browser.maximize_window()
 

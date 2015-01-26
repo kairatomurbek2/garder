@@ -11,5 +11,5 @@ Feature: Authorization
         | admin    | not see  | First Site :: Second Site :: Boston :: Houston :: Washington             |
         | surveyor | see      | First Site :: Seattle                                                    |
         | surveyor | not see  | Second Site :: Boston :: Houston :: Washington :: Ancoridge              |
-        | tester   | see      | Second Site :: New York                                                  |
-        | tester   | not see  | First Site :: Boston :: Houston :: Washington :: Ancoridge :: Seattle    |
+        | tester   | see      | Second Site :: New York :: Seattle                                       |
+        | tester   | not see  | First Site :: Boston :: Houston :: Washington :: Ancoridge               |

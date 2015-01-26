@@ -1,6 +1,8 @@
 from helper import *
 from lettuce import *
 from settings import *
+from django.test.utils import override_settings
+from django.conf import settings
 
 
 @step('I go to "([a-z0-9_]+)" page$')
@@ -13,6 +15,7 @@ def open_page(step, page):
 @step('I go to "([a-z0-9_]+)" page with params "(.*)"')
 @step('I visit "([a-z0-9_]+)" page with params "(.*)"')
 @step('I open "([a-z0-9_]+)" page with params "(.*)"')
+@override_settings(DEBUG=True)
 def open_page_with_params(step, page, params):
     params = params.split(' :: ')
     world.browser.get(get_url(URLS[page] % tuple(params)))
@@ -28,9 +31,11 @@ def open_url(step, url):
 @step('I should (see|not see) "(.*)"')
 def check_content(step, reaction, text):
     if reaction == 'see':
-        assert text in world.browser.page_source, '%s is not on page' % text
+        assert text in world.browser.page_source, '%s is not on page. Current URL is %s' % (
+            text, world.browser.current_url)
     else:
-        assert text not in world.browser.page_source, '%s is on page' % text
+        assert text not in world.browser.page_source, '%s is on page. Current URL is %s' % (
+            text, world.browser.current_url)
 
 
 @step('I should (see|not see) following "(.*)"')
@@ -40,7 +45,7 @@ def check_multiple_content(step, reaction, text):
         step.given('I should %s "%s"' % (reaction, item))
 
 
-@step('I should (see|not see) element with ([-a-z]+)="([-_a-z0-9]+)"')
+@step('I should (see|not see) element with ([-_a-z]+)="([-_a-z0-9]+)"')
 def check_elem_by_attr(step, reaction, attr, value):
     elem = find_elem_by_xpath('//*[@%s="%s"]' % (attr, value))
     if reaction == 'see':
@@ -49,11 +54,29 @@ def check_elem_by_attr(step, reaction, attr, value):
         assert not elem, 'Element with %s="%s" was found' % (attr, value)
 
 
-@step('I should (see|not see) elements with ([-a-z]+)="([-_a-z0-9: ]+)"')
+@step('I should (see|not see) elements with ([-_a-z]+)="([-_a-z0-9: ]+)"')
 def check_multiple_elem_by_attr(step, reaction, attr, values):
     values = values.split(' :: ')
     for item in values:
         step.given('I should %s element with %s="%s"' % (reaction, attr, item))
+
+
+@step('Element with ([-_a-z]+)="([-_a-z0-9: ]+)" should (contain|not contain) "(.*)"')
+def check_text_inside_element(step, attr, value, reaction, text):
+    elem = find_elem_by_xpath('//*[@%s="%s"]' % (attr, value))
+    assert elem, 'Element with %s="%s" was not found' % (attr, value)
+    child_elem = find_elem_by_xpath('//*[contains(text(), "%s")]' % text, context=elem)
+    if reaction == 'contain':
+        assert child_elem, 'Element with %s="%s" was found but it does not contain "%s"' % (attr, value, text)
+    else:
+        assert not child_elem, 'Element with %s="%s" was found but it contains "%s"' % (attr, value, text)
+
+
+@step('Element with ([-_a-z]+)="([-_a-z0-9: ]+)" should (contain|not contain) following "(.*)"')
+def check_text_inside_element(step, attr, value, reaction, text):
+    text = text.split(' :: ')
+    for item in text:
+        step.given('Element with %s="%s" should %s "%s"' % (attr, value, reaction, item))
 
 
 @step('I should be at "(.*)" page$')

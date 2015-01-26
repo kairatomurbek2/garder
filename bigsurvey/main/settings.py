@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'webapp',
     'accounts',
-    'lettuce.django'
+    'lettuce.django',
+    'webapp_features',
 )
 
 MIDDLEWARE_CLASSES = (
