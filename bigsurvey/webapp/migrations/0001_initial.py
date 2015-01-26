@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 ('apt', models.CharField(max_length=15, null=True, verbose_name='Customer Apt', blank=True)),
                 ('city', models.CharField(max_length=30, verbose_name='City')),
                 ('state', models.CharField(max_length=2, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
-                ('zip', models.CharField(max_length=5, verbose_name='ZIP')),
+                ('zip', models.CharField(max_length=10, verbose_name='ZIP')),
                 ('phone', models.CharField(max_length=10, null=True, verbose_name='Phone', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
             ],
@@ -126,7 +126,8 @@ class Migration(migrations.Migration):
             name='Hazard',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('BPPresent', models.BooleanField(default=False, verbose_name='Is BP Present', choices=[(True, b'Yes'), (False, b'No')])),
+                ('location1', models.CharField(max_length=70, verbose_name='location 1')),
+                ('location2', models.CharField(max_length=70, null=True, verbose_name='location 2', blank=True)),
                 ('assembly_status', models.BooleanField(default=False, verbose_name='Assembly Status', choices=[(True, b'Yes'), (False, b'No')])),
                 ('installer', models.CharField(max_length=30, null=True, verbose_name='Installer', blank=True)),
                 ('install_date', models.DateTimeField(null=True, verbose_name='Install Date', blank=True)),
@@ -256,18 +257,6 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='Service',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
-            ],
-            options={
-                'verbose_name': 'Service',
-                'verbose_name_plural': 'Services',
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
             name='ServiceType',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -284,14 +273,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('connect_date', models.DateField(null=True, verbose_name='Connect Date', blank=True)),
-                ('address', models.CharField(max_length=30, verbose_name='Address')),
-                ('street_address', models.CharField(max_length=30, null=True, verbose_name='Street Address', blank=True)),
-                ('street_number', models.CharField(max_length=10, null=True, verbose_name='Street Number', blank=True)),
+                ('address1', models.CharField(max_length=50, verbose_name='Address 1')),
+                ('address2', models.CharField(max_length=50, null=True, verbose_name='Address 2', blank=True)),
                 ('apt', models.CharField(max_length=15, null=True, verbose_name='Apt', blank=True)),
                 ('city', models.CharField(max_length=30, verbose_name='City')),
                 ('state', models.CharField(max_length=2, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
                 ('zip', models.CharField(max_length=10, verbose_name='ZIP')),
-                ('potable_present', models.BooleanField(default=False, verbose_name='Potable Present', choices=[(True, b'Yes'), (False, b'No')])),
+                ('potable_present', models.BooleanField(default=True, verbose_name='Potable Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('fire_present', models.BooleanField(default=False, verbose_name='Fire Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('irrigation_present', models.BooleanField(default=False, verbose_name='Irrigation Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('is_due_install', models.BooleanField(default=False, verbose_name='Is Due Install', choices=[(True, b'Yes'), (False, b'No')])),
@@ -375,10 +363,12 @@ class Migration(migrations.Migration):
                 ('detector_model', models.CharField(max_length=20, null=True, verbose_name='Detector Model', blank=True)),
                 ('detector_serial_no', models.CharField(max_length=20, null=True, verbose_name='Detector Serial No.', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
-                ('service', models.ForeignKey(related_name='surveys', verbose_name='Service', to='webapp.Service')),
+                ('service_type', models.ForeignKey(related_name='surveys', verbose_name='Service Type', to='webapp.ServiceType')),
+                ('site', models.ForeignKey(related_name='surveys', verbose_name='Site', to='webapp.Site')),
                 ('special', models.ForeignKey(related_name='surveys', verbose_name='Special', blank=True, to='webapp.Special', null=True)),
             ],
             options={
+                'get_latest_by': 'survey_date',
                 'verbose_name': 'Survey',
                 'verbose_name_plural': 'Surveys',
             },
@@ -499,18 +489,6 @@ class Migration(migrations.Migration):
             model_name='site',
             name='site_use',
             field=models.ForeignKey(related_name='sites', verbose_name='Site Use', to='webapp.SiteUse'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='service',
-            name='service_type',
-            field=models.ForeignKey(related_name='services', verbose_name='Service Type', to='webapp.ServiceType'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='service',
-            name='site',
-            field=models.ForeignKey(related_name='services', verbose_name='Site', to='webapp.Site'),
             preserve_default=True,
         ),
         migrations.AddField(

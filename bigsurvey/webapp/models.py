@@ -272,21 +272,9 @@ class Site(models.Model):
         verbose_name_plural = _("Sites")
 
 
-class Service(models.Model):
-    site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="services")
-    service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="services")
-    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    def __unicode__(self):
-        return u"%s, %s" % (self.site, self.service_type)
-
-    class Meta:
-        verbose_name = _("Service")
-        verbose_name_plural = _("Services")
-
-
 class Survey(models.Model):
-    service = models.ForeignKey(Service, verbose_name=_("Service"), related_name="surveys")
+    site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="surveys")
+    service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="surveys")
     survey_date = models.DateTimeField(verbose_name=_("Survey Date"))
     survey_type = models.ForeignKey(SurveyType, verbose_name=_("Survey Type"), related_name="surveys")
     surveyor = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Surveyor"), related_name="surveys")

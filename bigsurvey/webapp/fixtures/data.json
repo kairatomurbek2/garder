@@ -485,17 +485,17 @@
     "pk": 9
   },
   {
-    "fields": {"service_type": "Fire"},
+    "fields": {"service_type": "fire"},
     "model": "webapp.servicetype",
     "pk": 2
   },
   {
-    "fields": {"service_type": "Potable"},
+    "fields": {"service_type": "potable"},
     "model": "webapp.servicetype",
     "pk": 3
   },
   {
-    "fields": {"service_type": "Irrigation"},
+    "fields": {"service_type": "irrigation"},
     "model": "webapp.servicetype",
     "pk": 4
   },
@@ -1442,13 +1442,13 @@
   },
   {
     "fields": {
-      "city": "Bishkek",
+      "city": "First Customer city",
       "code": 1,
-      "name": "MegaCust Ivanovich",
-      "zip": "12345",
-      "address1": "Bishkek",
+      "name": "First Customer name",
+      "zip": "First",
+      "address1": "First Customer address",
       "address2": "",
-      "number": "12345",
+      "number": "Customer1",
       "apt": "",
       "phone": "",
       "state": "AL",
@@ -1459,43 +1459,250 @@
   },
   {
     "fields": {
-      "city": "Bishkek",
-      "notes": "",
-      "water_source": 4,
-      "number": "12345",
-      "name": "GorVodoKanal"
+      "city": "Houston",
+      "code": 3,
+      "name": "John Smith",
+      "zip": "52901",
+      "address1": "15, Washington St",
+      "address2": "",
+      "number": "ZXC2",
+      "apt": "",
+      "phone": "",
+      "state": "TX",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "city": "Ancoridge",
+      "code": 4,
+      "name": "Mike Doe",
+      "zip": "29021",
+      "address1": "10, New St",
+      "address2": "",
+      "number": "SJK472",
+      "apt": "",
+      "phone": "",
+      "state": "AK",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "city": "Washington",
+      "code": 2,
+      "name": "Amanda James",
+      "zip": "90192",
+      "address1": "White House",
+      "address2": "",
+      "number": "INM188",
+      "apt": "",
+      "phone": "",
+      "state": "DC",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "city": "Los Angeles",
+      "code": 1,
+      "name": "Jane Asperson",
+      "zip": "18212",
+      "address1": "176, Beach Avenue",
+      "address2": "",
+      "number": "IKW182",
+      "apt": "",
+      "phone": "",
+      "state": "CA",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "city": "Boston",
+      "code": 4,
+      "name": "Matt Asperson",
+      "zip": "19212",
+      "address1": "18, Park St",
+      "address2": "",
+      "number": "MIA281",
+      "apt": "",
+      "phone": "",
+      "state": "MA",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "city": "Chikago",
+      "code": 2,
+      "name": "Giles Corey",
+      "zip": "19021",
+      "address1": "128, River Groove",
+      "address2": "",
+      "number": "OIK182",
+      "apt": "",
+      "phone": "",
+      "state": "IL",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "city": "Seattle",
+      "code": 3,
+      "name": "Gabe Newell",
+      "zip": "12382",
+      "address1": "127",
+      "address2": "",
+      "number": "VALVE",
+      "apt": "",
+      "phone": "",
+      "state": "WA",
+      "notes": ""
+    },
+    "model": "webapp.customer",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "city": "Second PWS city",
+      "notes": "Quisque lorem magna, tincidunt in tempor at, placerat ut augue. Duis mattis massa luctus dui blandit auctor. Donec erat tellus, varius at vulputate in, finibus quis lacus. Proin in dui sit amet ex dignissim molestie eget volutpat nibh. Proin vel iaculis l",
+      "water_source": 2,
+      "number": "PWS2",
+      "name": "Second PWS"
     },
     "model": "webapp.pws",
     "pk": 1
   },
   {
     "fields": {
-      "city": "citycity",
-      "notes": "",
+      "city": "First PWS city",
+      "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id feugiat urna, in convallis dui. Fusce in luctus quam. In pellentesque porta nisi ut vulputate. Sed dignissim dolor felis, eget pellentesque dolor iaculis ut. Mauris at convallis odio. Mauris c",
       "water_source": 1,
-      "number": "qu289ey8hd",
-      "name": "PWSPWS"
+      "number": "PWS1",
+      "name": "First PWS"
     },
     "model": "webapp.pws",
     "pk": 2
   },
   {
     "fields": {
+      "city": "Third PWS city",
+      "notes": "This is test notes",
+      "water_source": 3,
+      "number": "PWS3",
+      "name": "Third PWS"
+    },
+    "model": "webapp.pws",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "city": "Houston",
+      "notes": "",
+      "water_source": 3,
+      "number": "XOL852",
+      "name": "Houston PWS"
+    },
+    "model": "webapp.pws",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "city": "Ancoridge",
+      "notes": "",
+      "water_source": 3,
+      "number": "AL202",
+      "name": "Alaska Central PWS"
+    },
+    "model": "webapp.pws",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "city": "Washington",
+      "notes": "",
+      "water_source": 3,
+      "number": "DOC121",
+      "name": "White House PWS"
+    },
+    "model": "webapp.pws",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "city": "Los Angeles",
+      "notes": "",
+      "water_source": 2,
+      "number": "LA200",
+      "name": "Los Angeles Beach System"
+    },
+    "model": "webapp.pws",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "city": "Boston",
+      "notes": "",
+      "water_source": 2,
+      "number": "KSL12",
+      "name": "MIT Public Water System"
+    },
+    "model": "webapp.pws",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "city": "Chikago",
+      "notes": "",
+      "water_source": 1,
+      "number": "NUI812",
+      "name": "North USA PWS"
+    },
+    "model": "webapp.pws",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "city": "Seattle",
+      "notes": "",
+      "water_source": 2,
+      "number": "SW12",
+      "name": "South Western PWS"
+    },
+    "model": "webapp.pws",
+    "pk": 10
+  },
+  {
+    "fields": {
       "customer": 1,
-      "city": "Bishkek",
+      "city": "Second Site city",
       "irrigation_present": false,
       "pws": 1,
-      "zip": "13245",
+      "zip": "Second zip",
       "is_backflow": false,
       "connect_date": "2015-01-15",
-      "address2": null,
+      "address2": "",
       "next_survey_date": "2015-01-15",
       "apt": "",
-      "state": "AK",
+      "state": "ID",
       "floors": 1,
       "site_type": 2,
       "potable_present": false,
-      "address1": "Some Address",
+      "address1": "Second Site address",
       "is_due_install": false,
       "fire_present": false,
       "interconnection_point": 1,
@@ -1508,20 +1715,20 @@
   {
     "fields": {
       "customer": 1,
-      "city": "adadd",
+      "city": "First Site city",
       "irrigation_present": false,
       "pws": 2,
-      "zip": "21313",
+      "zip": "First zip",
       "is_backflow": false,
       "connect_date": "2015-01-15",
-      "address2": null,
+      "address2": "",
       "next_survey_date": null,
-      "apt": "asdassd",
+      "apt": "",
       "state": "AK",
       "floors": 1,
       "site_type": 8,
       "potable_present": false,
-      "address1": "Some Address",
+      "address1": "First Site address",
       "is_due_install": false,
       "fire_present": false,
       "interconnection_point": 1,
@@ -1530,6 +1737,238 @@
     },
     "model": "webapp.site",
     "pk": 2
+  },
+  {
+    "fields": {
+      "customer": 2,
+      "city": "Houston",
+      "irrigation_present": false,
+      "pws": 4,
+      "zip": "50396",
+      "is_backflow": false,
+      "connect_date": "2015-01-22",
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "TX",
+      "floors": 3,
+      "site_type": 4,
+      "potable_present": true,
+      "address1": "56, 27 Avenue",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 2,
+      "notes": "",
+      "site_use": 6
+    },
+    "model": "webapp.site",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "customer": 3,
+      "city": "Ancoridge",
+      "irrigation_present": false,
+      "pws": 9,
+      "zip": "39012",
+      "is_backflow": false,
+      "connect_date": "2015-01-22",
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "AK",
+      "floors": 3,
+      "site_type": 11,
+      "potable_present": true,
+      "address1": "18/12, Central Square",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 2,
+      "notes": "",
+      "site_use": 5
+    },
+    "model": "webapp.site",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "customer": 4,
+      "city": "Washington",
+      "irrigation_present": false,
+      "pws": 6,
+      "zip": "80192",
+      "is_backflow": false,
+      "connect_date": "2015-01-22",
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "DC",
+      "floors": 3,
+      "site_type": 31,
+      "potable_present": true,
+      "address1": "White House",
+      "is_due_install": false,
+      "fire_present": true,
+      "interconnection_point": 1,
+      "notes": "",
+      "site_use": 3
+    },
+    "model": "webapp.site",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "customer": 4,
+      "city": "New York",
+      "irrigation_present": false,
+      "pws": 6,
+      "zip": "89012",
+      "is_backflow": false,
+      "connect_date": null,
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "NY",
+      "floors": 3,
+      "site_type": 31,
+      "potable_present": false,
+      "address1": "Manhattan",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 2,
+      "notes": "",
+      "site_use": 7
+    },
+    "model": "webapp.site",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "customer": 5,
+      "city": "Los Angeles",
+      "irrigation_present": false,
+      "pws": 7,
+      "zip": "18012",
+      "is_backflow": false,
+      "connect_date": "2015-01-22",
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "CA",
+      "floors": 3,
+      "site_type": 11,
+      "potable_present": true,
+      "address1": "745, 18 Avenue",
+      "is_due_install": false,
+      "fire_present": true,
+      "interconnection_point": 2,
+      "notes": "",
+      "site_use": 1
+    },
+    "model": "webapp.site",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "customer": 6,
+      "city": "Boston",
+      "irrigation_present": false,
+      "pws": 8,
+      "zip": "10292",
+      "is_backflow": false,
+      "connect_date": null,
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "MA",
+      "floors": 3,
+      "site_type": 1,
+      "potable_present": true,
+      "address1": "182, Freeport St",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 2,
+      "notes": "",
+      "site_use": 5
+    },
+    "model": "webapp.site",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "customer": 7,
+      "city": "Chikago",
+      "irrigation_present": false,
+      "pws": 9,
+      "zip": "00192",
+      "is_backflow": false,
+      "connect_date": null,
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "IL",
+      "floors": 1,
+      "site_type": 19,
+      "potable_present": true,
+      "address1": "121, Broadview",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 1,
+      "notes": "",
+      "site_use": 5
+    },
+    "model": "webapp.site",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "customer": 8,
+      "city": "Seattle",
+      "irrigation_present": true,
+      "pws": 9,
+      "zip": "18921",
+      "is_backflow": false,
+      "connect_date": null,
+      "address2": "",
+      "next_survey_date": null,
+      "apt": "",
+      "state": "WA",
+      "floors": 2,
+      "site_type": 4,
+      "potable_present": true,
+      "address1": "98, South Jackson st",
+      "is_due_install": false,
+      "fire_present": false,
+      "interconnection_point": 1,
+      "notes": "",
+      "site_use": 1
+    },
+    "model": "webapp.site",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "replace_date": null,
+      "bp_type_required": null,
+      "orientation": null,
+      "bp_type_present": null,
+      "install_date": null,
+      "notes": "",
+      "serial_no": "",
+      "location2": "",
+      "assembly_status": false,
+      "assembly_location": null,
+      "due_install_test_date": "2015-05-31",
+      "survey": 2,
+      "installer": "",
+      "model_no": "",
+      "hazard_type": 40,
+      "location1": "Seattle",
+      "bp_size": null,
+      "manufacturer": null
+    },
+    "model": "webapp.hazard",
+    "pk": 1
   },
   {
     "fields": {
@@ -2154,8 +2593,8 @@
   },
   {
     "fields": {
-      "codename": "add_employee",
-      "name": "Can add employee",
+      "codename": "add_customer",
+      "name": "Can add Customer",
       "content_type": 24
     },
     "model": "auth.permission",
@@ -2163,8 +2602,8 @@
   },
   {
     "fields": {
-      "codename": "change_employee",
-      "name": "Can change employee",
+      "codename": "change_customer",
+      "name": "Can change Customer",
       "content_type": 24
     },
     "model": "auth.permission",
@@ -2172,8 +2611,8 @@
   },
   {
     "fields": {
-      "codename": "delete_employee",
-      "name": "Can delete employee",
+      "codename": "delete_customer",
+      "name": "Can delete Customer",
       "content_type": 24
     },
     "model": "auth.permission",
@@ -2181,8 +2620,8 @@
   },
   {
     "fields": {
-      "codename": "add_customer",
-      "name": "Can add Customer",
+      "codename": "add_pws",
+      "name": "Can add Public Water System",
       "content_type": 25
     },
     "model": "auth.permission",
@@ -2190,8 +2629,8 @@
   },
   {
     "fields": {
-      "codename": "change_customer",
-      "name": "Can change Customer",
+      "codename": "change_pws",
+      "name": "Can change Public Water System",
       "content_type": 25
     },
     "model": "auth.permission",
@@ -2199,8 +2638,8 @@
   },
   {
     "fields": {
-      "codename": "delete_customer",
-      "name": "Can delete Customer",
+      "codename": "delete_pws",
+      "name": "Can delete Public Water System",
       "content_type": 25
     },
     "model": "auth.permission",
@@ -2208,8 +2647,8 @@
   },
   {
     "fields": {
-      "codename": "add_pws",
-      "name": "Can add Public Water System",
+      "codename": "add_employee",
+      "name": "Can add employee",
       "content_type": 26
     },
     "model": "auth.permission",
@@ -2217,8 +2656,8 @@
   },
   {
     "fields": {
-      "codename": "change_pws",
-      "name": "Can change Public Water System",
+      "codename": "change_employee",
+      "name": "Can change employee",
       "content_type": 26
     },
     "model": "auth.permission",
@@ -2226,8 +2665,8 @@
   },
   {
     "fields": {
-      "codename": "delete_pws",
-      "name": "Can delete Public Water System",
+      "codename": "delete_employee",
+      "name": "Can delete employee",
       "content_type": 26
     },
     "model": "auth.permission",
@@ -2262,8 +2701,8 @@
   },
   {
     "fields": {
-      "codename": "add_service",
-      "name": "Can add Service",
+      "codename": "add_survey",
+      "name": "Can add Survey",
       "content_type": 28
     },
     "model": "auth.permission",
@@ -2271,8 +2710,8 @@
   },
   {
     "fields": {
-      "codename": "change_service",
-      "name": "Can change Service",
+      "codename": "change_survey",
+      "name": "Can change Survey",
       "content_type": 28
     },
     "model": "auth.permission",
@@ -2280,8 +2719,8 @@
   },
   {
     "fields": {
-      "codename": "delete_service",
-      "name": "Can delete Service",
+      "codename": "delete_survey",
+      "name": "Can delete Survey",
       "content_type": 28
     },
     "model": "auth.permission",
@@ -2289,8 +2728,8 @@
   },
   {
     "fields": {
-      "codename": "add_survey",
-      "name": "Can add Survey",
+      "codename": "add_hazard",
+      "name": "Can add Hazard",
       "content_type": 29
     },
     "model": "auth.permission",
@@ -2298,8 +2737,8 @@
   },
   {
     "fields": {
-      "codename": "change_survey",
-      "name": "Can change Survey",
+      "codename": "change_hazard",
+      "name": "Can change Hazard",
       "content_type": 29
     },
     "model": "auth.permission",
@@ -2307,8 +2746,8 @@
   },
   {
     "fields": {
-      "codename": "delete_survey",
-      "name": "Can delete Survey",
+      "codename": "delete_hazard",
+      "name": "Can delete Hazard",
       "content_type": 29
     },
     "model": "auth.permission",
@@ -2316,8 +2755,8 @@
   },
   {
     "fields": {
-      "codename": "add_hazard",
-      "name": "Can add Hazard",
+      "codename": "add_test",
+      "name": "Can add Test",
       "content_type": 30
     },
     "model": "auth.permission",
@@ -2325,8 +2764,8 @@
   },
   {
     "fields": {
-      "codename": "change_hazard",
-      "name": "Can change Hazard",
+      "codename": "change_test",
+      "name": "Can change Test",
       "content_type": 30
     },
     "model": "auth.permission",
@@ -2334,8 +2773,8 @@
   },
   {
     "fields": {
-      "codename": "delete_hazard",
-      "name": "Can delete Hazard",
+      "codename": "delete_test",
+      "name": "Can delete Test",
       "content_type": 30
     },
     "model": "auth.permission",
@@ -2343,8 +2782,8 @@
   },
   {
     "fields": {
-      "codename": "add_test",
-      "name": "Can add Test",
+      "codename": "add_letter",
+      "name": "Can add Letter",
       "content_type": 31
     },
     "model": "auth.permission",
@@ -2352,8 +2791,8 @@
   },
   {
     "fields": {
-      "codename": "change_test",
-      "name": "Can change Test",
+      "codename": "change_letter",
+      "name": "Can change Letter",
       "content_type": 31
     },
     "model": "auth.permission",
@@ -2361,8 +2800,8 @@
   },
   {
     "fields": {
-      "codename": "delete_test",
-      "name": "Can delete Test",
+      "codename": "delete_letter",
+      "name": "Can delete Letter",
       "content_type": 31
     },
     "model": "auth.permission",
@@ -2370,8 +2809,8 @@
   },
   {
     "fields": {
-      "codename": "add_letter",
-      "name": "Can add Letter",
+      "codename": "add_licence",
+      "name": "Can add Licence",
       "content_type": 32
     },
     "model": "auth.permission",
@@ -2379,8 +2818,8 @@
   },
   {
     "fields": {
-      "codename": "change_letter",
-      "name": "Can change Letter",
+      "codename": "change_licence",
+      "name": "Can change Licence",
       "content_type": 32
     },
     "model": "auth.permission",
@@ -2388,8 +2827,8 @@
   },
   {
     "fields": {
-      "codename": "delete_letter",
-      "name": "Can delete Letter",
+      "codename": "delete_licence",
+      "name": "Can delete Licence",
       "content_type": 32
     },
     "model": "auth.permission",
@@ -2397,8 +2836,8 @@
   },
   {
     "fields": {
-      "codename": "add_licence",
-      "name": "Can add Licence",
+      "codename": "add_testpermission",
+      "name": "Can add Test Permission",
       "content_type": 33
     },
     "model": "auth.permission",
@@ -2406,8 +2845,8 @@
   },
   {
     "fields": {
-      "codename": "change_licence",
-      "name": "Can change Licence",
+      "codename": "change_testpermission",
+      "name": "Can change Test Permission",
       "content_type": 33
     },
     "model": "auth.permission",
@@ -2415,8 +2854,8 @@
   },
   {
     "fields": {
-      "codename": "delete_licence",
-      "name": "Can delete Licence",
+      "codename": "delete_testpermission",
+      "name": "Can delete Test Permission",
       "content_type": 33
     },
     "model": "auth.permission",
@@ -2424,8 +2863,8 @@
   },
   {
     "fields": {
-      "codename": "add_testpermission",
-      "name": "Can add Test Permission",
+      "codename": "add_inspection",
+      "name": "Can add Inspection",
       "content_type": 34
     },
     "model": "auth.permission",
@@ -2433,8 +2872,8 @@
   },
   {
     "fields": {
-      "codename": "change_testpermission",
-      "name": "Can change Test Permission",
+      "codename": "change_inspection",
+      "name": "Can change Inspection",
       "content_type": 34
     },
     "model": "auth.permission",
@@ -2442,8 +2881,8 @@
   },
   {
     "fields": {
-      "codename": "delete_testpermission",
-      "name": "Can delete Test Permission",
+      "codename": "delete_inspection",
+      "name": "Can delete Inspection",
       "content_type": 34
     },
     "model": "auth.permission",
@@ -2451,119 +2890,11 @@
   },
   {
     "fields": {
-      "codename": "add_inspection",
-      "name": "Can add Inspection",
-      "content_type": 35
-    },
-    "model": "auth.permission",
-    "pk": 103
-  },
-  {
-    "fields": {
-      "codename": "change_inspection",
-      "name": "Can change Inspection",
-      "content_type": 35
-    },
-    "model": "auth.permission",
-    "pk": 104
-  },
-  {
-    "fields": {
-      "codename": "delete_inspection",
-      "name": "Can delete Inspection",
-      "content_type": 35
-    },
-    "model": "auth.permission",
-    "pk": 105
-  },
-  {
-    "fields": {
-      "codename": "add_customer",
-      "name": "Can add Customer",
-      "content_type": 24
-    },
-    "model": "auth.permission",
-    "pk": 106
-  },
-  {
-    "fields": {
-      "codename": "change_customer",
-      "name": "Can change Customer",
-      "content_type": 24
-    },
-    "model": "auth.permission",
-    "pk": 107
-  },
-  {
-    "fields": {
-      "codename": "delete_customer",
-      "name": "Can delete Customer",
-      "content_type": 24
-    },
-    "model": "auth.permission",
-    "pk": 108
-  },
-  {
-    "fields": {
-      "codename": "add_pws",
-      "name": "Can add Public Water System",
-      "content_type": 25
-    },
-    "model": "auth.permission",
-    "pk": 109
-  },
-  {
-    "fields": {
-      "codename": "change_pws",
-      "name": "Can change Public Water System",
-      "content_type": 25
-    },
-    "model": "auth.permission",
-    "pk": 110
-  },
-  {
-    "fields": {
-      "codename": "delete_pws",
-      "name": "Can delete Public Water System",
-      "content_type": 25
-    },
-    "model": "auth.permission",
-    "pk": 111
-  },
-  {
-    "fields": {
-      "codename": "add_employee",
-      "name": "Can add employee",
-      "content_type": 26
-    },
-    "model": "auth.permission",
-    "pk": 112
-  },
-  {
-    "fields": {
-      "codename": "change_employee",
-      "name": "Can change employee",
-      "content_type": 26
-    },
-    "model": "auth.permission",
-    "pk": 113
-  },
-  {
-    "fields": {
-      "codename": "delete_employee",
-      "name": "Can delete employee",
-      "content_type": 26
-    },
-    "model": "auth.permission",
-    "pk": 114
-  },
-  {
-    "fields": {
       "name": "Testers",
       "permissions": [
-        89,
-        91,
-        92
+        86,
+        88,
+        89
       ]
     },
     "model": "auth.group",
@@ -2573,10 +2904,10 @@
     "fields": {
       "name": "Surveyors",
       "permissions": [
-        88,
-        89,
         85,
-        86
+        86,
+        82,
+        83
       ]
     },
     "model": "auth.group",
@@ -2586,6 +2917,9 @@
     "fields": {
       "name": "Administrators",
       "permissions": [
+        10,
+        11,
+        12,
         55,
         56,
         57,
@@ -2610,36 +2944,27 @@
         61,
         62,
         63,
-        88,
-        89,
-        90,
+        85,
+        86,
+        87,
         46,
         47,
         48,
         52,
         53,
         54,
-        103,
-        104,
-        105,
-        94,
-        95,
-        96,
+        100,
+        101,
+        102,
+        91,
+        92,
+        93,
         58,
         59,
         60,
-        97,
-        98,
-        99,
         67,
         68,
         69,
-        73,
-        74,
-        75,
-        82,
-        83,
-        84,
         28,
         29,
         30,
@@ -2658,21 +2983,21 @@
         64,
         65,
         66,
-        85,
-        86,
-        87,
+        82,
+        83,
+        84,
         31,
         32,
         33,
-        91,
-        92,
-        93,
+        88,
+        89,
+        90,
         49,
         50,
         51,
-        100,
-        101,
-        102
+        97,
+        98,
+        99
       ]
     },
     "model": "auth.group",
@@ -2685,9 +3010,6 @@
         1,
         2,
         3,
-        7,
-        8,
-        9,
         4,
         5,
         6,
@@ -2724,36 +3046,33 @@
         61,
         62,
         63,
-        88,
-        89,
-        90,
+        85,
+        86,
+        87,
         46,
         47,
         48,
         52,
         53,
         54,
-        103,
-        104,
-        105,
-        94,
-        95,
-        96,
+        100,
+        101,
+        102,
+        91,
+        92,
+        93,
         58,
         59,
         60,
-        97,
-        98,
-        99,
+        94,
+        95,
+        96,
         67,
         68,
         69,
         73,
         74,
         75,
-        82,
-        83,
-        84,
         28,
         29,
         30,
@@ -2772,21 +3091,21 @@
         64,
         65,
         66,
-        85,
-        86,
-        87,
+        82,
+        83,
+        84,
         31,
         32,
         33,
-        91,
-        92,
-        93,
+        88,
+        89,
+        90,
         49,
         50,
         51,
-        100,
-        101,
-        102
+        97,
+        98,
+        99
       ]
     },
     "model": "auth.group",
@@ -2795,12 +3114,12 @@
   {
     "fields": {
       "username": "root",
-      "first_name": "som",
-      "last_name": "hz",
+      "first_name": "root",
+      "last_name": "root",
       "is_active": true,
       "is_superuser": true,
       "is_staff": true,
-      "last_login": "2015-01-15T11:13:17Z",
+      "last_login": "2015-01-26T14:38:30Z",
       "groups": [4],
       "user_permissions": [],
       "password": "pbkdf2_sha256$12000$u9z9TV8pJf6r$ARP9lroecfgLdtEcUbYrgWCrti36AwnvEZ3I0ThseE8=",
@@ -2813,12 +3132,12 @@
   {
     "fields": {
       "username": "tester",
-      "first_name": "",
-      "last_name": "",
+      "first_name": "tester",
+      "last_name": "tester",
       "is_active": true,
       "is_superuser": false,
       "is_staff": true,
-      "last_login": "2015-01-15T11:14:37Z",
+      "last_login": "2015-01-26T08:08:13Z",
       "groups": [1],
       "user_permissions": [],
       "password": "pbkdf2_sha256$12000$f1AektJQFT9r$JThfdyKIkuljMhpViPjrV3FHOwD7wviP4FygzknllYY=",
@@ -2831,12 +3150,12 @@
   {
     "fields": {
       "username": "surveyor",
-      "first_name": "",
-      "last_name": "",
+      "first_name": "surveyor",
+      "last_name": "surveyor",
       "is_active": true,
       "is_superuser": false,
       "is_staff": true,
-      "last_login": "2015-01-15T11:27:14Z",
+      "last_login": "2015-01-26T08:06:55Z",
       "groups": [2],
       "user_permissions": [],
       "password": "pbkdf2_sha256$12000$I4iwX5QbCR4Y$5QMZNxhNEET9GCF3jscIPQFlTCkMXcAVjr9wnAAg+io=",
@@ -2849,12 +3168,12 @@
   {
     "fields": {
       "username": "admin",
-      "first_name": "wtryrey",
-      "last_name": "wtrty",
+      "first_name": "admin",
+      "last_name": "admin",
       "is_active": true,
       "is_superuser": false,
       "is_staff": true,
-      "last_login": "2015-01-15T11:04:49Z",
+      "last_login": "2015-01-26T04:27:04Z",
       "groups": [3],
       "user_permissions": [],
       "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
@@ -2878,6 +3197,18 @@
   },
   {
     "fields": {
+      "assigned_by": 1,
+      "notes": "",
+      "is_active": true,
+      "site": 10,
+      "assigned_to": 3,
+      "assigned_date": "2015-01-22"
+    },
+    "model": "webapp.inspection",
+    "pk": 2
+  },
+  {
+    "fields": {
       "due_date": "2015-01-15",
       "given_date": "2015-01-15",
       "given_by": 4,
@@ -2891,64 +3222,152 @@
   },
   {
     "fields": {
-      "city": "hgjhgjh",
+      "due_date": "2015-04-30",
+      "given_date": "2015-01-22",
+      "given_by": 1,
+      "notes": "",
+      "is_active": true,
+      "site": 6,
+      "given_to": 2
+    },
+    "model": "webapp.testpermission",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "due_date": "2015-05-31",
+      "given_date": "2015-01-26",
+      "given_by": 4,
+      "notes": "",
+      "is_active": true,
+      "site": 10,
+      "given_to": 2
+    },
+    "model": "webapp.testpermission",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "given_by": 1,
+      "end_date": "2015-04-30",
+      "notes": "",
+      "is_active": true,
+      "given_to": 4,
+      "start_date": "2015-01-01"
+    },
+    "model": "webapp.licence",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "detector_manufacturer": "",
+      "detector_model": "",
+      "pump_present": false,
+      "meter_number": "",
+      "survey_type": 4,
+      "meter_size": "",
+      "cc_present": false,
+      "site": 5,
+      "survey_date": "2015-01-26T04:18:00Z",
+      "metered": false,
+      "surveyor": 3,
+      "protected": false,
+      "meter_reading": null,
+      "service_type": 3,
+      "detector_serial_no": "",
+      "additives_present": false,
+      "aux_water": false,
+      "notes": "",
+      "special": null
+    },
+    "model": "webapp.survey",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "detector_manufacturer": "",
+      "detector_model": "",
+      "pump_present": false,
+      "meter_number": "",
+      "survey_type": 6,
+      "meter_size": "",
+      "cc_present": false,
+      "site": 10,
+      "survey_date": "2015-01-26T04:20:13Z",
+      "metered": false,
+      "surveyor": 3,
+      "protected": false,
+      "meter_reading": null,
+      "service_type": 3,
+      "detector_serial_no": "",
+      "additives_present": false,
+      "aux_water": false,
+      "notes": "",
+      "special": null
+    },
+    "model": "webapp.survey",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "city": "root city",
       "fax": "",
       "pws": null,
-      "zip": "12345",
+      "zip": "root zip",
       "phone2": "",
-      "company": "asdasd",
-      "phone1": "123456789",
+      "company": "root company",
+      "phone1": "root phone",
       "state": "AK",
       "user": 1,
-      "address": "hggjgh"
+      "address": "root address"
     },
     "model": "webapp.employee",
     "pk": 1
   },
   {
     "fields": {
-      "city": "city1",
+      "city": "tester city",
       "fax": "",
       "pws": null,
-      "zip": "12345",
+      "zip": "tester zip",
       "phone2": "",
-      "company": "123456",
-      "phone1": "phone1",
+      "company": "tester company",
+      "phone1": "tester phone",
       "state": "AL",
       "user": 2,
-      "address": "addr1"
+      "address": "tester address"
     },
     "model": "webapp.employee",
     "pk": 2
   },
   {
     "fields": {
-      "city": "wert",
+      "city": "surveyor city",
       "fax": "",
       "pws": null,
-      "zip": "12346",
+      "zip": "survey zip",
       "phone2": "",
-      "company": "dgert",
-      "phone1": "ertert",
+      "company": "surveyor company",
+      "phone1": "surveyor phone",
       "state": "AR",
       "user": 3,
-      "address": "wr"
+      "address": "surveyor address"
     },
     "model": "webapp.employee",
     "pk": 3
   },
   {
     "fields": {
-      "city": "assdasd",
+      "city": "admin city",
       "fax": "",
-      "pws": 1,
-      "zip": "43543",
+      "pws": 9,
+      "zip": "admin zip",
       "phone2": "",
-      "company": "sdfdf",
-      "phone1": "srfg",
+      "company": "admin company",
+      "phone1": "admin phone",
       "state": "KY",
       "user": 4,
-      "address": "asdsd"
+      "address": "admin address"
     },
     "model": "webapp.employee",
     "pk": 4
