@@ -4,6 +4,7 @@ import models
 
 
 class PWSForm(forms.ModelForm):
+    fields = ['number', 'name', 'city', 'water_source']
     number = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=15, label=_("Number"))
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=50, label=_("Name"))
     city = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=30, label=_("City"))
