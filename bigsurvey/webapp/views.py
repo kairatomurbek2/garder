@@ -8,55 +8,36 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 
 
-class BaseView(View):
-    def get_context_data(self, **kwargs):
-        context = super(BaseView, self).get_context_data(**kwargs)
-        user = self.request.user
-        user_groups = user.groups.values_list('name', flat=True)
-        if "SuperAdministrators" in user_groups:
-            context['admin'] = True
-            context['super'] = True
-        elif "Administrators" in user_groups:
-            context['admin'] = True
-        elif "Surveyors" in user_groups:
-            context['surv'] = True
-        elif "Testers" in user_groups:
-            context['test'] = True
-        return context
-
+class BaseView(TemplateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(BaseView, self).dispatch(*args, **kwargs)
 
 
-class BaseTemplateView(BaseView, TemplateView):
-    pass
-
-
 class SuperAdministratorView(BaseView):
     def get_context_data(self, **kwargs):
-        context = super(SuperAdministratorView, self).get_context_data(**kwargs)
-        if not context.get('super'):
+        if not self.request.user.is_superadmin:
             raise Http404
-        return context
+        return super(SuperAdministratorView, self).get_context_data(**kwargs)
 
 
-class HomeView(BaseTemplateView):
+class HomeView(BaseView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
-        if context.get('super'):
-            sites = models.Site.objects.all()
-        elif context.get('admin'):
-            sites = models.Site.objects.filter(pws=user.employee.pws)
-        elif context.get('surv'):
-            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
-            sites = self.filter_sites_by_related(inspections)
-        elif context.get('test'):
+        sites = []
+        if user.has_perm('webapp.can_see_test_sites'):
             permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
             sites = self.filter_sites_by_related(permissions)
+        if user.has_perm('webapp.can_see_surv_sites'):
+            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
+            sites = self.filter_sites_by_related(inspections)
+        if user.has_perm('webapp.can_see_pws_sites'):
+            sites = models.Site.objects.filter(pws=user.employee.pws)
+        if user.has_perm('webapp.can_see_all_sites'):
+            sites = models.Site.objects.all()
         site_filter = SiteFilter(self.request.GET, queryset=sites)
         context['site_filter'] = site_filter
         return context
@@ -68,7 +49,7 @@ class HomeView(BaseTemplateView):
         return models.Site.objects.filter(pk__in=site_pks)
 
 
-class SiteDetailView(BaseTemplateView):
+class SiteDetailView(BaseView):
     template_name = 'site.html'
 
     def get_context_data(self, **kwargs):
@@ -77,7 +58,14 @@ class SiteDetailView(BaseTemplateView):
         return context
 
 
-class PWSView(SuperAdministratorView, BaseTemplateView):
+class PWSAccessMixin(BaseView):
+    def get_context_data(self, **kwargs):
+        if not self.request.user.has_perm('webapp.has_access_to_pws'):
+            raise Http404
+        return super(PWSAccessMixin, self).get_context_data(**kwargs)
+
+
+class PWSView(PWSAccessMixin):
     template_name = 'pws_list.html'
 
     def get_context_data(self, **kwargs):
@@ -86,7 +74,7 @@ class PWSView(SuperAdministratorView, BaseTemplateView):
         return context
 
 
-class PWSAddView(CreateView, SuperAdministratorView):
+class PWSAddView(PWSAccessMixin):
     template_name = 'pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS
@@ -95,7 +83,7 @@ class PWSAddView(CreateView, SuperAdministratorView):
         return reverse('webapp:pws_list')
 
 
-class PWSEditView(UpdateView, SuperAdministratorView):
+class PWSEditView(PWSAccessMixin):
     template_name = 'pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS

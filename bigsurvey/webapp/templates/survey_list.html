@@ -60,6 +60,6 @@
     </div>
     <hr>
 {% endfor %}
-{% if surv and countgt0 or admin %}
+{% if perm.webapp.case_see_surv_sites and countgt0 or perm.webapp.can_see_all_sites or perm.webapp.can_see_pws_sites %}
     <a class="uk-align-center uk-text-center" href="#">{% trans "Add Survey" %}</a>
 {% endif %}

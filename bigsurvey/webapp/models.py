@@ -192,7 +192,7 @@ class Orientation(models.Model):
         verbose_name_plural = _('Orientation Types')
 
 
-class Customer (models.Model):
+class Customer(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
@@ -224,6 +224,9 @@ class PWS(models.Model):
         return u"%s, %s" % (self.name, self.city)
 
     class Meta:
+        permissions = (
+            ('has_access_to_pws', _("Has access to PWS")),
+        )
         verbose_name = _('Public Water System')
         verbose_name_plural = _('Public Water Systems')
 
@@ -239,6 +242,9 @@ class Employee(models.Model):
     phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
     fax = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Fax"))
     pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
+
+    def __unicode__(self):
+        return str(self.user)
 
 
 class Site(models.Model):
@@ -268,6 +274,12 @@ class Site(models.Model):
         return u"%s, %s" % (self.city, self.address1)
 
     class Meta:
+        permissions = (
+            ("can_see_test_sites", _("Can see sites he has test permissions")),
+            ("can_see_surv_sites", _("Can see sites assigned to him")),
+            ("can_see_pws_sites", _("Can see sites belonging to his PWS")),
+            ("can_see_all_sites", _("Can see all sites")),
+        )
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
 

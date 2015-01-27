@@ -25,11 +25,11 @@
 
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
-                    {% if super %}
+                    {% if perm.webapp.can_see_all_sites %}
                         <li><a id="admin_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
                         <li><a id="pws_link" href="#">{% trans "PWS" %}</a></li>
                     {% endif %}
-                    {% if admin %}
+                    {% if perm.webapp.can_see_pws_sites %}
                         <li><a id="customers_link" href="#">{% trans "Customers" %}</a></li>
                         <li><a id="letters_link" href="#">{% trans "Letters" %}</a></li>
                         <li><a id="selectables_link" href="#">{% trans "Selectables" %}</a></li>
