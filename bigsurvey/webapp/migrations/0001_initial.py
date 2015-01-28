@@ -107,6 +107,9 @@ class Migration(migrations.Migration):
                 ('fax', models.CharField(max_length=20, null=True, verbose_name='Fax', blank=True)),
             ],
             options={
+                'verbose_name': 'Employee',
+                'verbose_name_plural': 'Employees',
+                'permissions': (('superadministrator', 'Superadministrator'), ('administrator', 'Administrator'), ('surveyor', 'Surveyor'), ('tester', 'Tester')),
             },
             bases=(models.Model,),
         ),

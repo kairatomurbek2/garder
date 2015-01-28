@@ -76,7 +76,7 @@
                 <td>
                     {{ site.site_type }}
                 </td>
-                {% if perm.webapp.can_see_all_sites or perm.webapp.can_see_pws_sites %}
+                {% if perms.webapp.administrator %}
                     <td class="uk-text-center" style="border-left: solid 1px darkgray">
                         <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
                     </td>

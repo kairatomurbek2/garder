@@ -4,7 +4,7 @@
     {% include "site_list.html" %}
 {% endblock %}
 {% block menu %}
-    {% if perm.webapp.can_see_all_sites or perm.webapp.can_see_pws_sites %}
+    {% if perms.webapp.administrator %}
         <li><a href="#">{% trans "Add Site" %}</a></li>
     {% endif %}
 {% endblock %}

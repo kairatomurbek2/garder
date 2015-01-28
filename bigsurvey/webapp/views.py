@@ -8,35 +8,46 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 
 
-class BaseView(TemplateView):
+class BaseView(View):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(BaseView, self).dispatch(*args, **kwargs)
 
 
-class SuperAdministratorView(BaseView):
+class AdministratorMixin(View):
     def get_context_data(self, **kwargs):
-        if not self.request.user.is_superadmin:
+        if not self.request.user.has_perm('webapp.administrator'):
             raise Http404
-        return super(SuperAdministratorView, self).get_context_data(**kwargs)
+        return super(AdministratorMixin, self).get_context_data(**kwargs)
 
 
-class HomeView(BaseView):
+class SuperAdministratorMixin(View):
+    def get_context_data(self, **kwargs):
+        if not self.request.user.has_perm('webapp.superadministrator'):
+            raise Http404
+        return super(SuperAdministratorMixin, self).get_context_data(**kwargs)
+
+
+class BaseTemplateView(BaseView, TemplateView):
+    pass
+
+
+class HomeView(BaseTemplateView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
         sites = []
-        if user.has_perm('webapp.can_see_test_sites'):
+        if user.has_perm('webapp.tester'):
             permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
             sites = self.filter_sites_by_related(permissions)
-        if user.has_perm('webapp.can_see_surv_sites'):
+        if user.has_perm('webapp.surveyor'):
             inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
             sites = self.filter_sites_by_related(inspections)
-        if user.has_perm('webapp.can_see_pws_sites'):
+        if user.has_perm('webapp.administrator'):
             sites = models.Site.objects.filter(pws=user.employee.pws)
-        if user.has_perm('webapp.can_see_all_sites'):
+        if user.has_perm('webapp.superadministrator'):
             sites = models.Site.objects.all()
         site_filter = SiteFilter(self.request.GET, queryset=sites)
         context['site_filter'] = site_filter
@@ -49,7 +60,7 @@ class HomeView(BaseView):
         return models.Site.objects.filter(pk__in=site_pks)
 
 
-class SiteDetailView(BaseView):
+class SiteDetailView(BaseTemplateView):
     template_name = 'site.html'
 
     def get_context_data(self, **kwargs):
@@ -58,14 +69,7 @@ class SiteDetailView(BaseView):
         return context
 
 
-class PWSAccessMixin(BaseView):
-    def get_context_data(self, **kwargs):
-        if not self.request.user.has_perm('webapp.has_access_to_pws'):
-            raise Http404
-        return super(PWSAccessMixin, self).get_context_data(**kwargs)
-
-
-class PWSView(PWSAccessMixin):
+class PWSView(SuperAdministratorMixin, BaseTemplateView):
     template_name = 'pws_list.html'
 
     def get_context_data(self, **kwargs):
@@ -74,7 +78,7 @@ class PWSView(PWSAccessMixin):
         return context
 
 
-class PWSAddView(PWSAccessMixin):
+class PWSAddView(SuperAdministratorMixin, CreateView):
     template_name = 'pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS
@@ -83,7 +87,7 @@ class PWSAddView(PWSAccessMixin):
         return reverse('webapp:pws_list')
 
 
-class PWSEditView(PWSAccessMixin):
+class PWSEditView(SuperAdministratorMixin, UpdateView):
     template_name = 'pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS

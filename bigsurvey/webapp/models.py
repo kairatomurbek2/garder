@@ -224,9 +224,6 @@ class PWS(models.Model):
         return u"%s, %s" % (self.name, self.city)
 
     class Meta:
-        permissions = (
-            ('has_access_to_pws', _("Has access to PWS")),
-        )
         verbose_name = _('Public Water System')
         verbose_name_plural = _('Public Water Systems')
 
@@ -245,6 +242,16 @@ class Employee(models.Model):
 
     def __unicode__(self):
         return str(self.user)
+
+    class Meta:
+        permissions = (
+            ("superadministrator", _("Superadministrator")),
+            ("administrator", _("Administrator")),
+            ("surveyor", _("Surveyor")),
+            ("tester", _("Tester")),
+        )
+        verbose_name = _("Employee")
+        verbose_name_plural = _("Employees")
 
 
 class Site(models.Model):
@@ -274,12 +281,6 @@ class Site(models.Model):
         return u"%s, %s" % (self.city, self.address1)
 
     class Meta:
-        permissions = (
-            ("can_see_test_sites", _("Can see sites he has test permissions")),
-            ("can_see_surv_sites", _("Can see sites assigned to him")),
-            ("can_see_pws_sites", _("Can see sites belonging to his PWS")),
-            ("can_see_all_sites", _("Can see all sites")),
-        )
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
 

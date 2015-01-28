@@ -85,7 +85,7 @@
             <li>
                 <div id="potable_content">
                     {% if site.potable_present %}
-                        {% if perm.can_see_test_sites %}
+                        {% if perms.webapp.tester %}
                             {% include_hazards 'potable' %}
                         {% else %}
                             {% include_surveys 'potable' %}
@@ -100,7 +100,7 @@
             <li>
                 <div id="fire_content">
                     {% if site.fire_present %}
-                        {% if perm.webapp.can_see_test_sites %}
+                        {% if perms.webapp.tester %}
                             {% include_hazards 'fire' %}
                         {% else %}
                             {% include_surveys 'fire' %}
@@ -115,7 +115,7 @@
             <li>
                 <div id="irrigation_content">
                     {% if site.irrigation_present %}
-                        {% if perm.webapp.can_see_test_sites %}
+                        {% if perms.webapp.tester %}
                             {% include_hazards 'irrigation' %}
                         {% else %}
                             {% include_surveys 'irrigation' %}
@@ -131,7 +131,7 @@
     </div>
 {% endblock %}
 {% block menu %}
-    {% if perm.webapp.can_see_all_sites or perm.webapp.can_see_pws_sites %}
+    {% if perms.webapp.administrator %}
         <li>
             <a href="#">{% trans "Assign Surveyor" %}</a>
         </li>
