@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load boolean_yes_no %}
+{% load surveys_for_services %}
+{% load hazards_for_services %}
+
+{% block menu %}
+    <li><a href="{% url 'webapp:customer_add' %}">{% trans "Add new" %}</a></li>
+    <li><a href="{% url 'webapp:customer_edit' customer.id %}">{% trans "Edit" %}</a></li>
+    <li><a href="{% url 'webapp:customer_list' %}">{% trans "List" %}</a></li>
+    <li><a href="#">{% trans "Import" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div id="site_detail" class="uk-panel uk-panel-box">
+        <table class="uk-table uk-table-stripped">
+            <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Number" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.number }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Code" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.code }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.city }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "State" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.state }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "ZIP" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.zip }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Address 1" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.address1 }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Address 2" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.address2 }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Appartment" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.apt }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Phone" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ customer.phone }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
+                <td colspan="5">{{ customer.notes }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

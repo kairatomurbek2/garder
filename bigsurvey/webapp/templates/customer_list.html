@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% block menu %}
+    <li><a href="{% url 'webapp:customer_add' %}">{% trans "Add new" %}</a></li>
+    <li><a href="#">{% trans "Import" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="table-wrapper">
+        <table class="uk-table uk-table-hover">
+            <thead>
+            <tr>
+                <th class="uk-width-1-5">{% trans "Number" %}</th>
+                <th class="uk-width-1-5">{% trans "Name" %}</th>
+                <th class="uk-width-1-5">{% trans "City" %}</th>
+                <th class="uk-width-1-5">{% trans "Address 1" %}</th>
+                <th class="uk-width-1-5 uk-text-center" colspan="2">{% trans "Actions" %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for customer in customer_list %}
+                <tr>
+                    <td>{{ customer.number }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.city }}</td>
+                    <td>{{ customer.address1 }}</td>
+                    <td class="uk-text-center">
+                        <a href="{% url 'webapp:customer_detail' customer.id %}">{% trans "Detail" %}</a>
+                    </td>
+                    <td class="uk-text-center">
+                        <a href="{% url 'webapp:customer_edit' customer.id %}">{% trans "Edit" %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

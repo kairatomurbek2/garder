@@ -8,7 +8,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 
 
-class BaseView(View):
+class BaseView(TemplateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(BaseView, self).dispatch(*args, **kwargs)
@@ -28,11 +28,7 @@ class SuperAdministratorMixin(View):
         return super(SuperAdministratorMixin, self).get_context_data(**kwargs)
 
 
-class BaseTemplateView(BaseView, TemplateView):
-    pass
-
-
-class HomeView(BaseTemplateView):
+class HomeView(BaseView):
     template_name = "home.html"
 
     def get_context_data(self, **kwargs):
@@ -60,7 +56,7 @@ class HomeView(BaseTemplateView):
         return models.Site.objects.filter(pk__in=site_pks)
 
 
-class SiteDetailView(BaseTemplateView):
+class SiteDetailView(BaseView):
     template_name = 'site.html'
 
     def get_context_data(self, **kwargs):
@@ -69,7 +65,7 @@ class SiteDetailView(BaseTemplateView):
         return context
 
 
-class PWSView(SuperAdministratorMixin, BaseTemplateView):
+class PWSView(SuperAdministratorMixin, BaseView):
     template_name = 'pws_list.html'
 
     def get_context_data(self, **kwargs):
@@ -91,6 +87,42 @@ class PWSEditView(SuperAdministratorMixin, UpdateView):
     template_name = 'pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS
+
+    def get_success_url(self):
+        return reverse('webapp:pws_list')
+
+
+class CustomerView(AdministratorMixin, BaseView):
+    template_name = 'customer_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerView, self).get_context_data(**kwargs)
+        context['customer_list'] = models.Customer.objects.all()
+        return context
+
+
+class CustomerDetailView(AdministratorMixin, BaseView):
+    template_name = 'customer.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerDetailView, self).get_context_data(**kwargs)
+        context['customer'] = models.Customer.objects.get(pk=self.kwargs['pk'])
+        return context
+
+
+class CustomerAddView(AdministratorMixin, CreateView):
+    template_name = 'customer_form.html'
+    form_class = forms.CustomerForm
+    model = models.Customer
+
+    def get_success_url(self):
+        return reverse('webapp:pws_list')
+
+
+class CustomerEditView(AdministratorMixin, CreateView):
+    template_name = 'customer_form.html'
+    form_class = forms.CustomerForm
+    model = models.Customer
 
     def get_success_url(self):
         return reverse('webapp:pws_list')
