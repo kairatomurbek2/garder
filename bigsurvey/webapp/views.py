@@ -116,13 +116,13 @@ class CustomerAddView(AdministratorMixin, CreateView):
     model = models.Customer
 
     def get_success_url(self):
-        return reverse('webapp:pws_list')
+        return reverse('webapp:customer_list')
 
 
-class CustomerEditView(AdministratorMixin, CreateView):
+class CustomerEditView(AdministratorMixin, UpdateView):
     template_name = 'customer_form.html'
     form_class = forms.CustomerForm
     model = models.Customer
 
     def get_success_url(self):
-        return reverse('webapp:pws_list')
+        return reverse('webapp:customer_list')
