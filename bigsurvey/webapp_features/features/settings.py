@@ -13,6 +13,10 @@ URLS = {
     'pws_list': '/pws/',
     'pws_add': '/pws/add/',
     'pws_edit': '/pws/edit/%s/',
+    'customer_list': '/customer/',
+    'customer_detail': '/customer/%s/',
+    'customer_add': '/customer/add/',
+    'customer_edit': '/customer/edit/%s/',
 }
 
 LOGINS = {
@@ -40,6 +44,7 @@ class Xpath:
         'auth': '//form[@name="auth"]',
         'site_filter': '//form[@name="site_filter"]',
         'pws': '//form[@name="pws"]',
+        'customer': '//form[@name="customer"]',
     }
 
     text_fields = {
@@ -47,6 +52,7 @@ class Xpath:
         'auth_password': '//input[@name="password"]',
         'city': '//input[@name="city"]',
         'address1': '//input[@name="address1"]',
+        'address2': '//input[@name="address2"]',
         'customer': '//input[@name="customer"]',
         'pws': '//input[@name="pws"]',
         'site_use': '//input[@name="site_use"]',
@@ -54,10 +60,15 @@ class Xpath:
         'number': '//input[@name="number"]',
         'name': '//input[@name="name"]',
         'notes': '//textarea[@name="notes"]',
+        'zip': '//input[@name="zip"]',
+        'apt': '//input[@name="apt"]',
+        'phone': '//input[@name="phone"]',
     }
 
     selects = {
         'water_source': '//select[@name="water_source"]',
+        'state': '//select[@name="state"]',
+        'code': '//select[@name="code"]',
     }
 
     checkboxes = {

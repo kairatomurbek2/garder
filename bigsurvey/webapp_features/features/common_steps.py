@@ -141,6 +141,7 @@ def select_option(step, value, select_name):
     select = find_elem_by_xpath(Xpath.selects[select_name])
     assert select, 'Select "%s" was not found' % select_name
     option = find_elem_by_xpath(str('.//option[@value="%s"]' % value), context=select) or \
-             find_elem_by_xpath(str('.//option[. = "%s"]' % value), context=select)
+             find_elem_by_xpath(str('.//option[. = "%s"]' % value), context=select) or \
+             find_elem_by_xpath(str('.//option[contains(.,"%s")]' % value), context=select)
     assert option, 'Option with value "%s" was not found' % value
     option.click()

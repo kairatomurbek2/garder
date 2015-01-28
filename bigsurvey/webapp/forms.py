@@ -29,8 +29,8 @@ class CustomerForm(forms.ModelForm):
     apt = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=15,
                           label=_('Appartment'), required=False)
     city = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=30, label=_('City'))
-    state = forms.TypedChoiceField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), choices=STATES,
-                                   label=_('State'), empty_value=_('None'))
+    state = forms.ChoiceField(widget=forms.Select(attrs={'class': 'uk-width-1-1'}), choices=STATES,
+                              label=_('State'))
     zip = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=10, label=_('ZIP'))
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'uk-width-1-1'}), max_length=10, label=_('Phone'),
                             required=False)
