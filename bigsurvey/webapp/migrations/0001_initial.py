@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Assembly Location',
                 'verbose_name_plural': 'Assembly Locations',
+                'permissions': (('browse_assemblylocation', 'Can browse Assembly Location'),),
             },
             bases=(models.Model,),
         ),
@@ -33,6 +34,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'BFP Manufacturer',
                 'verbose_name_plural': 'BFP Manufacturers',
+                'permissions': (('browse_bpmanufacturer', 'Can browse BP Manufacturer'),),
             },
             bases=(models.Model,),
         ),
@@ -45,6 +47,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'BFP Size',
                 'verbose_name_plural': 'BFP Sizes',
+                'permissions': (('browse_bpsize', 'Can browse BP Size'),),
             },
             bases=(models.Model,),
         ),
@@ -57,6 +60,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'BFP Type',
                 'verbose_name_plural': 'BFP Types',
+                'permissions': (('browse_bptype', 'Can browse BP Type'),),
             },
             bases=(models.Model,),
         ),
@@ -78,6 +82,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Customer',
                 'verbose_name_plural': 'Customers',
+                'permissions': (('browse_customer', 'Can browse Customer'),),
             },
             bases=(models.Model,),
         ),
@@ -90,6 +95,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Customer Code',
                 'verbose_name_plural': 'Customer Codes',
+                'permissions': (('browse_customercode', 'Can browse Customer Code'),),
             },
             bases=(models.Model,),
         ),
@@ -109,7 +115,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Employee',
                 'verbose_name_plural': 'Employees',
-                'permissions': (('superadministrator', 'Superadministrator'), ('administrator', 'Administrator'), ('surveyor', 'Surveyor'), ('tester', 'Tester')),
+                'permissions': (('browse_employee', 'Can browse Employee'), ('access_to_adminpanel', 'Can log into Admin Panel')),
             },
             bases=(models.Model,),
         ),
@@ -122,6 +128,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Floors Count',
                 'verbose_name_plural': 'Floors Count',
+                'permissions': (('browse_floorscount', 'Can browse Floors Count'),),
             },
             bases=(models.Model,),
         ),
@@ -147,6 +154,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Hazard',
                 'verbose_name_plural': 'Hazards',
+                'permissions': (('browse_hazard', 'Can browse Hazard'),),
             },
             bases=(models.Model,),
         ),
@@ -159,6 +167,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Hazard Type',
                 'verbose_name_plural': 'Hazard Types',
+                'permissions': (('browse_hazardtype', 'Can browse Hazard Type'),),
             },
             bases=(models.Model,),
         ),
@@ -171,6 +180,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Interconnection Point Type',
                 'verbose_name_plural': 'Interconnection Point Types',
+                'permissions': (('browse_icpointtype', 'Can browse Interconnection Point Type'),),
             },
             bases=(models.Model,),
         ),
@@ -187,6 +197,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Inspection',
                 'verbose_name_plural': 'Inspections',
+                'permissions': (('browse_inspection', 'Can browse Inspection'),),
             },
             bases=(models.Model,),
         ),
@@ -199,6 +210,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Letter',
                 'verbose_name_plural': 'Letters',
+                'permissions': (('browse_letter', 'Can browse Letter'),),
             },
             bases=(models.Model,),
         ),
@@ -212,6 +224,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Letter Type',
                 'verbose_name_plural': 'Letter Types',
+                'permissions': (('browse_lettertype', 'Can browse Letter Type'),),
             },
             bases=(models.Model,),
         ),
@@ -229,6 +242,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Licence',
                 'verbose_name_plural': 'Licences',
+                'permissions': (('browse_licence', 'Can browse Licence'),),
             },
             bases=(models.Model,),
         ),
@@ -241,6 +255,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Orientation Type',
                 'verbose_name_plural': 'Orientation Types',
+                'permissions': (('browse_orientation', 'Can browse Orientation Type'),),
             },
             bases=(models.Model,),
         ),
@@ -256,6 +271,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Public Water System',
                 'verbose_name_plural': 'Public Water Systems',
+                'permissions': (('browse_pws', 'Can browse Public Water System'),),
             },
             bases=(models.Model,),
         ),
@@ -268,6 +284,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Service Type',
                 'verbose_name_plural': 'Service Types',
+                'permissions': (('browse_servicetype', 'Can browse Service Type'),),
             },
             bases=(models.Model,),
         ),
@@ -297,6 +314,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site',
                 'verbose_name_plural': 'Sites',
+                'permissions': (('browse_site', 'Can browse Site'), ('browse_all_sites', 'Can browse all Sites'), ('browse_pws_sites', 'Can browse Sites from his PWS'), ('browse_surv_sites', 'Can browse Sites that he inspects'), ('browse_test_sites', 'Can browse Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file')),
             },
             bases=(models.Model,),
         ),
@@ -309,6 +327,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site Type',
                 'verbose_name_plural': 'Site Types',
+                'permissions': (('browse_sitetype', 'Can browse Site Type'),),
             },
             bases=(models.Model,),
         ),
@@ -321,6 +340,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site Use',
                 'verbose_name_plural': 'Site Use Types',
+                'permissions': (('browse_siteuse', 'Can browse Site Use'),),
             },
             bases=(models.Model,),
         ),
@@ -333,6 +353,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Source Type',
                 'verbose_name_plural': 'Source Types',
+                'permissions': (('browse_sourcetype', 'Can browse Source Type'),),
             },
             bases=(models.Model,),
         ),
@@ -345,6 +366,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Special',
                 'verbose_name_plural': 'Special',
+                'permissions': (('browse_special', 'Can browse Special'),),
             },
             bases=(models.Model,),
         ),
@@ -374,6 +396,7 @@ class Migration(migrations.Migration):
                 'get_latest_by': 'survey_date',
                 'verbose_name': 'Survey',
                 'verbose_name_plural': 'Surveys',
+                'permissions': (('browse_survey', 'Can browse Survey'),),
             },
             bases=(models.Model,),
         ),
@@ -386,6 +409,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Survey Type',
                 'verbose_name_plural': 'Survey Types',
+                'permissions': (('browse_surveytype', 'Can browse Survey Type'),),
             },
             bases=(models.Model,),
         ),
@@ -425,6 +449,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Test',
                 'verbose_name_plural': 'Tests',
+                'permissions': (('browse_test', 'Can browse Test'),),
             },
             bases=(models.Model,),
         ),
@@ -437,6 +462,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Test Manufacturer',
                 'verbose_name_plural': 'Test Manufacturers',
+                'permissions': (('browse_testmanufacturer', 'Can browse Test Manufacturer'),),
             },
             bases=(models.Model,),
         ),
@@ -455,6 +481,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Test Permission',
                 'verbose_name_plural': 'Test Permissions',
+                'permissions': (('browse_testpermission', 'Can browse Test Permission'),),
             },
             bases=(models.Model,),
         ),

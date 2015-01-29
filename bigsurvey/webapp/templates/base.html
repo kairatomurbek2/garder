@@ -25,17 +25,24 @@
 
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
-                    {% if perms.webapp.superadministrator %}
+                    {% if perms.webapp.access_to_adminpanel %}
                         <li><a id="admin_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
+                    {% endif %}
+                    {% if perms.webapp.browse_pws %}
                         <li><a id="pws_link" href="#">{% trans "PWS" %}</a></li>
                     {% endif %}
-                    {% if perms.webapp.administrator %}
+                    {% if perms.webapp.browse_customer %}
                         <li><a id="customers_link" href="#">{% trans "Customers" %}</a></li>
+                    {% endif %}
+                    {% if perms.webapp.browse_letter %}
                         <li><a id="letters_link" href="#">{% trans "Letters" %}</a></li>
-                        <li><a id="selectables_link" href="#">{% trans "Selectables" %}</a></li>
+                    {% endif %}
+                    {% if perms.webapp.access_to_import %}
                         <li><a id="import_link" href="#">{% trans "Import" %}</a></li>
                     {% endif %}
-                    <li><a id="sites_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+                    {% if perms.webapp.browse_site %}
+                        <li><a id="sites_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </li>

@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block menu %}
+    <li><a href="{% url 'webapp:site_add' %}">{% trans "Add new" %}</a></li>
+    <li><a href="{% url 'webapp:home' %}">{% trans "List" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="table-wrapper">
+        <form class="uk-form" method="post" name="site">
+            {% csrf_token %}
+            <table class="uk-table">
+                <tbody>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.customer.id_for_label }}">{{ form.customer.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.customer|add_class:'uk-width-1-1' }}
+                        {{ form.customer.errors }}
+                    </td>
+                    {# if perms.webapp.browse_all_sites #}
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.pws.id_for_label }}">{{ form.pws.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.pws|add_class:'uk-width-1-1' }}
+                            {{ form.pws.errors }}
+                        </td>
+                    {# endif #}
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.connect_date.id_for_label }}">{{ form.connect_date.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.connect_date|add_class:'uk-width-1-1' }}
+                        {{ form.connect_date.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.city|add_class:'uk-width-1-1' }}
+                        {{ form.city.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.state|add_class:'uk-width-1-1' }}
+                        {{ form.state.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.zip.id_for_label }}">{{ form.zip.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.zip|add_class:'uk-width-1-1' }}
+                        {{ form.zip.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.address1|add_class:'uk-width-1-1' }}
+                        {{ form.address1.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.address2|add_class:'uk-width-1-1' }}
+                        {{ form.address2.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.apt.id_for_label }}">{{ form.apt.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.apt|add_class:'uk-width-1-1' }}
+                        {{ form.apt.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.site_use.id_for_label }}">{{ form.site_use.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.site_use|add_class:'uk-width-1-1' }}
+                        {{ form.site_use.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.site_type.id_for_label }}">{{ form.site_type.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.site_type|add_class:'uk-width-1-1' }}
+                        {{ form.site_type.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.floors.id_for_label }}">{{ form.floors.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.floors|add_class:'uk-width-1-1' }}
+                        {{ form.floors.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.interconnection_point.id_for_label }}">{{ form.interconnection_point.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.interconnection_point|add_class:'uk-width-1-1' }}
+                        {{ form.interconnection_point.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.potable_present.id_for_label }}">{{ form.potable_present.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.potable_present|add_class:'uk-width-1-1' }}
+                        {{ form.potable_present.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.fire_present.id_for_label }}">{{ form.fire_present.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.fire_present|add_class:'uk-width-1-1' }}
+                        {{ form.fire_present.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.irrigation_present.id_for_label }}">{{ form.irrigation_present.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.irrigation_present|add_class:'uk-width-1-1' }}
+                        {{ form.irrigation_present.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.is_due_install.id_for_label }}">{{ form.is_due_install.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.is_due_install|add_class:'uk-width-1-1' }}
+                        {{ form.is_due_install.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.is_backflow.id_for_label }}">{{ form.is_backflow.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.is_backflow|add_class:'uk-width-1-1' }}
+                        {{ form.is_backflow.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.next_survey_date.id_for_label }}">{{ form.next_survey_date.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.next_survey_date|add_class:'uk-width-1-1' }}
+                        {{ form.next_survey_date.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                    </td>
+                    <td class="uk-width-5-6" colspan="3">
+                        {{ form.notes|add_class:'uk-width-1-1' }}
+                        {{ form.notes.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

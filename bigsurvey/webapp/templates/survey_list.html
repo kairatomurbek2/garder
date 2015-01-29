@@ -60,6 +60,8 @@
     </div>
     <hr>
 {% endfor %}
-{% if perms.webapp.surveyor and countgt0 or perms.webapp.administrator %}
-    <a class="uk-align-center uk-text-center" href="#">{% trans "Add Survey" %}</a>
+{% if perms.webapp.add_survey %}
+    {% if not perms.webapp.add_survey_only_if_doesnt_exist or countlte0 %}
+        <a class="uk-align-center uk-text-center" href="#">{% trans "Add Survey" %}</a>
+    {% endif %}
 {% endif %}

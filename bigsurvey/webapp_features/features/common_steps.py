@@ -5,17 +5,12 @@ from django.test.utils import override_settings
 from django.conf import settings
 
 
-@step('I go to "([a-z0-9_]+)" page$')
-@step('I visit "([a-z0-9_]+)" page$')
-@step('I open "([a-z0-9_]+)" page$')
-def open_page(step, page):
-    world.browser.get(get_url(URLS[page]))
+@step('I open "login" page$')
+def open_login_page(step):
+    world.browser.get(get_url(URLS.login))
 
 
-@step('I go to "([a-z0-9_]+)" page with params "(.*)"')
-@step('I visit "([a-z0-9_]+)" page with params "(.*)"')
 @step('I open "([a-z0-9_]+)" page with params "(.*)"')
-@override_settings(DEBUG=True)
 def open_page_with_params(step, page, params):
     params = params.split(' :: ')
     world.browser.get(get_url(URLS[page] % tuple(params)))

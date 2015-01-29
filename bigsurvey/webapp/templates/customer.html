@@ -6,7 +6,7 @@
 
 {% block menu %}
     <li><a href="{% url 'webapp:customer_add' %}">{% trans "Add new" %}</a></li>
-    <li><a href="{% url 'webapp:customer_edit' customer.id %}">{% trans "Edit" %}</a></li>
+    <li><a href="{% url 'webapp:customer_edit' customer.pk %}">{% trans "Edit" %}</a></li>
     <li><a href="{% url 'webapp:customer_list' %}">{% trans "List" %}</a></li>
     <li><a href="#">{% trans "Import" %}</a></li>
 {% endblock %}

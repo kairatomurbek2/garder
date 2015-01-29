@@ -13,6 +13,9 @@ class SourceType(models.Model):
     class Meta:
         verbose_name = _('Source Type')
         verbose_name_plural = _('Source Types')
+        permissions = (
+            ('browse_sourcetype', _('Can browse Source Type')),
+        )
 
 
 class SiteType(models.Model):
@@ -24,6 +27,9 @@ class SiteType(models.Model):
     class Meta:
         verbose_name = _('Site Type')
         verbose_name_plural = _('Site Types')
+        permissions = (
+            ('browse_sitetype', _('Can browse Site Type')),
+        )
 
 
 class SiteUse(models.Model):
@@ -35,6 +41,9 @@ class SiteUse(models.Model):
     class Meta:
         verbose_name = _('Site Use')
         verbose_name_plural = _('Site Use Types')
+        permissions = (
+            ('browse_siteuse', _('Can browse Site Use')),
+        )
 
 
 class ServiceType(models.Model):
@@ -46,6 +55,9 @@ class ServiceType(models.Model):
     class Meta:
         verbose_name = _('Service Type')
         verbose_name_plural = _('Service Types')
+        permissions = (
+            ('browse_servicetype', _('Can browse Service Type')),
+        )
 
 
 class SurveyType(models.Model):
@@ -57,6 +69,9 @@ class SurveyType(models.Model):
     class Meta:
         verbose_name = _('Survey Type')
         verbose_name_plural = _('Survey Types')
+        permissions = (
+            ('browse_surveytype', _('Can browse Survey Type')),
+        )
 
 
 class BPType(models.Model):
@@ -68,6 +83,9 @@ class BPType(models.Model):
     class Meta:
         verbose_name = _('BFP Type')
         verbose_name_plural = _('BFP Types')
+        permissions = (
+            ('browse_bptype', _('Can browse BP Type')),
+        )
 
 
 class BPSize(models.Model):
@@ -79,6 +97,9 @@ class BPSize(models.Model):
     class Meta:
         verbose_name = _('BFP Size')
         verbose_name_plural = _('BFP Sizes')
+        permissions = (
+            ('browse_bpsize', _('Can browse BP Size')),
+        )
 
 
 class BPManufacturer(models.Model):
@@ -90,6 +111,9 @@ class BPManufacturer(models.Model):
     class Meta:
         verbose_name = _('BFP Manufacturer')
         verbose_name_plural = _('BFP Manufacturers')
+        permissions = (
+            ('browse_bpmanufacturer', _('Can browse BP Manufacturer')),
+        )
 
 
 class CustomerCode(models.Model):
@@ -101,6 +125,9 @@ class CustomerCode(models.Model):
     class Meta:
         verbose_name = _('Customer Code')
         verbose_name_plural = _('Customer Codes')
+        permissions = (
+            ('browse_customercode', _('Can browse Customer Code')),
+        )
 
 
 class HazardType(models.Model):
@@ -112,6 +139,9 @@ class HazardType(models.Model):
     class Meta:
         verbose_name = _('Hazard Type')
         verbose_name_plural = _('Hazard Types')
+        permissions = (
+            ('browse_hazardtype', _('Can browse Hazard Type')),
+        )
 
 
 class TestManufacturer(models.Model):
@@ -123,6 +153,9 @@ class TestManufacturer(models.Model):
     class Meta:
         verbose_name = _('Test Manufacturer')
         verbose_name_plural = _('Test Manufacturers')
+        permissions = (
+            ('browse_testmanufacturer', _('Can browse Test Manufacturer')),
+        )
 
 
 class ICPointType(models.Model):
@@ -134,6 +167,9 @@ class ICPointType(models.Model):
     class Meta:
         verbose_name = _('Interconnection Point Type')
         verbose_name_plural = _('Interconnection Point Types')
+        permissions = (
+            ('browse_icpointtype', _('Can browse Interconnection Point Type')),
+        )
 
 
 class AssemblyLocation(models.Model):
@@ -145,6 +181,9 @@ class AssemblyLocation(models.Model):
     class Meta:
         verbose_name = _('Assembly Location')
         verbose_name_plural = _('Assembly Locations')
+        permissions = (
+            ('browse_assemblylocation', _('Can browse Assembly Location')),
+        )
 
 
 class LetterType(models.Model):
@@ -157,6 +196,9 @@ class LetterType(models.Model):
     class Meta:
         verbose_name = _('Letter Type')
         verbose_name_plural = _('Letter Types')
+        permissions = (
+            ('browse_lettertype', _('Can browse Letter Type')),
+        )
 
 
 class FloorsCount(models.Model):
@@ -168,6 +210,9 @@ class FloorsCount(models.Model):
     class Meta:
         verbose_name = _('Floors Count')
         verbose_name_plural = _('Floors Count')
+        permissions = (
+            ('browse_floorscount', _('Can browse Floors Count')),
+        )
 
 
 class Special(models.Model):
@@ -179,6 +224,9 @@ class Special(models.Model):
     class Meta:
         verbose_name = _('Special')
         verbose_name_plural = _('Special')
+        permissions = (
+            ('browse_special', _('Can browse Special')),
+        )
 
 
 class Orientation(models.Model):
@@ -190,6 +238,9 @@ class Orientation(models.Model):
     class Meta:
         verbose_name = _('Orientation Type')
         verbose_name_plural = _('Orientation Types')
+        permissions = (
+            ('browse_orientation', _('Can browse Orientation Type')),
+        )
 
 
 class Customer(models.Model):
@@ -211,6 +262,9 @@ class Customer(models.Model):
     class Meta:
         verbose_name = _('Customer')
         verbose_name_plural = _('Customers')
+        permissions = (
+            ('browse_customer', _('Can browse Customer')),
+        )
 
 
 class PWS(models.Model):
@@ -226,6 +280,9 @@ class PWS(models.Model):
     class Meta:
         verbose_name = _('Public Water System')
         verbose_name_plural = _('Public Water Systems')
+        permissions = (
+            ('browse_pws', _('Can browse Public Water System')),
+        )
 
 
 class Employee(models.Model):
@@ -244,14 +301,12 @@ class Employee(models.Model):
         return str(self.user)
 
     class Meta:
-        permissions = (
-            ("superadministrator", _("Superadministrator")),
-            ("administrator", _("Administrator")),
-            ("surveyor", _("Surveyor")),
-            ("tester", _("Tester")),
-        )
         verbose_name = _("Employee")
         verbose_name_plural = _("Employees")
+        permissions = (
+            ('browse_employee', _('Can browse Employee')),
+            ('access_to_adminpanel', _('Can log into Admin Panel'))
+        )
 
 
 class Site(models.Model):
@@ -267,8 +322,7 @@ class Site(models.Model):
     site_use = models.ForeignKey(SiteUse, verbose_name=_("Site Use"), related_name="sites")
     site_type = models.ForeignKey(SiteType, verbose_name=_("Site Type"), related_name="sites")
     floors = models.ForeignKey(FloorsCount, verbose_name=_("Building Height"), related_name="sites")
-    interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"),
-                                              related_name="sites")
+    interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"), related_name="sites")
     potable_present = models.BooleanField(choices=YESNO_CHOICES, default=True, verbose_name=_("Potable Present"))
     fire_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Fire Present"))
     irrigation_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Irrigation Present"))
@@ -283,6 +337,17 @@ class Site(models.Model):
     class Meta:
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
+        permissions = (
+            ('browse_site', _('Can browse Site')),
+            ('browse_all_sites', _('Can browse all Sites')),
+            ('browse_pws_sites', _('Can browse Sites from his PWS')),
+            ('browse_surv_sites', _('Can browse Sites that he inspects')),
+            ('browse_test_sites', _('Can browse Sites that he tests')),
+            ('access_to_import', _('Can import Sites from Excel file')),
+            ('assign_surveyor', _('Can assign Surveyor to Site')),
+            ('assign_tester', _('Can assign Tester to Site')),
+            ('commit_site', _('Can commit Site'))
+        )
 
 
 class Survey(models.Model):
@@ -300,8 +365,7 @@ class Survey(models.Model):
     cc_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CC Present"))
     protected = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Protected"))
     aux_water = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Auxiliary Water"))
-    detector_manufacturer = models.CharField(max_length=20, blank=True, null=True,
-                                             verbose_name=_("Detector Manufacturer"))
+    detector_manufacturer = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Manufacturer"))
     detector_model = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Model"))
     detector_serial_no = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Serial No."))
     special = models.ForeignKey(Special, null=True, blank=True, verbose_name=_("Special"), related_name="surveys")
@@ -314,6 +378,10 @@ class Survey(models.Model):
         verbose_name = _("Survey")
         verbose_name_plural = _("Surveys")
         get_latest_by = 'survey_date'
+        permissions = (
+            ('browse_survey', _('Can browse Survey')),
+            ('add_survey_only_if_doesnt_exist', _('Can add Survey only if it doesnt exist'))
+        )
 
 
 class Hazard(models.Model):
@@ -321,22 +389,16 @@ class Hazard(models.Model):
     location1 = models.CharField(max_length=70, verbose_name=_("location 1"))
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("location 2"))
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
-    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
-                                          related_name="hazards")
+    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"), related_name="hazards")
     assembly_status = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Assembly Status"))
     installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
     install_date = models.DateTimeField(blank=True, null=True, verbose_name=_("Install Date"))
     replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
-    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
-                                    related_name="hazards")
-    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'),
-                                        related_name='hazards_p')
-    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'),
-                                         related_name='hazards_r')
-    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
-                                related_name="hazards")
-    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
-                                     related_name="hazards")
+    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'), related_name="hazards")
+    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'), related_name='hazards_p')
+    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'), related_name='hazards_r')
+    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"), related_name="hazards")
+    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"), related_name="hazards")
     model_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Model No."))
     serial_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Serial No."))
     due_install_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
@@ -348,11 +410,13 @@ class Hazard(models.Model):
     class Meta:
         verbose_name = _("Hazard")
         verbose_name_plural = _("Hazards")
+        permissions = (
+            ('browse_hazard', _('Can browse Hazard')),
+        )
 
 
 class Test(models.Model):
-    bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"),
-                                  related_name="tests")
+    bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"), related_name="tests")
     test_serial_number = models.CharField(max_length=20, verbose_name=_("Test Serial No."))
     test_manufacturer = models.ForeignKey(TestManufacturer, verbose_name=_("Test Manufacturer"), related_name="tests")
     last_calibration_date = models.DateField(verbose_name=_("Last Calibration Date"))
@@ -389,6 +453,9 @@ class Test(models.Model):
     class Meta:
         verbose_name = _("Test")
         verbose_name_plural = _("Tests")
+        permissions = (
+            ('browse_test', _('Can browse Test')),
+        )
 
 
 class Letter(models.Model):
@@ -403,6 +470,9 @@ class Letter(models.Model):
     class Meta:
         verbose_name = _("Letter")
         verbose_name_plural = _("Letters")
+        permissions = (
+            ('browse_letter', _('Can browse Letter')),
+        )
 
 
 class Licence(models.Model):
@@ -419,13 +489,15 @@ class Licence(models.Model):
     class Meta:
         verbose_name = "Licence"
         verbose_name_plural = "Licences"
+        permissions = (
+            ('browse_licence', _('Can browse Licence')),
+        )
 
 
 class TestPermission(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="test_perms")
     given_to = models.ForeignKey(User, verbose_name=_("Given To"), related_name='test_perms_granted')
-    given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"),
-                                 related_name='test_perms_given')
+    given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"), related_name='test_perms_given')
     given_date = models.DateField(verbose_name=_("Given Date"), auto_now_add=True)
     due_date = models.DateField(verbose_name=_("Due Date"))
     is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
@@ -437,13 +509,15 @@ class TestPermission(models.Model):
     class Meta:
         verbose_name = "Test Permission"
         verbose_name_plural = "Test Permissions"
+        permissions = (
+            ('browse_testpermission', _('Can browse Test Permission')),
+        )
 
 
 class Inspection(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name='inspections')
     assigned_to = models.ForeignKey(User, verbose_name=_("Assigned To"), related_name='inspections')
-    assigned_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Assigned By"),
-                                    related_name='inspects_assigned')
+    assigned_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Assigned By"), related_name='inspects_assigned')
     assigned_date = models.DateField(verbose_name=_("Assigned Date"), auto_now_add=True)
     is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
@@ -454,3 +528,7 @@ class Inspection(models.Model):
     class Meta:
         verbose_name = "Inspection"
         verbose_name_plural = "Inspections"
+        permissions = (
+            ('browse_inspection', _('Can browse Inspection')),
+
+        )

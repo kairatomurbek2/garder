@@ -8,9 +8,9 @@ register = template.Library()
 def include_surveys(context, service_type):
     surveys = context['site'].surveys.filter(service_type__service_type=service_type)
     context['surveys'] = surveys
-    context['countgt0'] = True
+    context['countlte0'] = True
     if surveys.count() > 0:
-        context['countgt0'] = False
+        context['countlte0'] = False
     if service_type == 'fire':
         context['fire'] = True
     return context

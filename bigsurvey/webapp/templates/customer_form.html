@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load i18n %}
 {% block menu %}
     <li><a href="{% url 'webapp:customer_add' %}">{% trans "Add new" %}</a></li>
@@ -11,87 +12,97 @@
             <table class="uk-table">
                 <tbody>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.number.id_for_label }}">{{ form.number.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.number.id_for_label }}">{{ form.number.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.number }}</p>
+                        {{ form.number|add_class:'uk-width-1-1' }}
                         {{ form.number.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.name.id_for_label }}">{{ form.name.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.name }}</p>
+                        {{ form.name|add_class:'uk-width-1-1' }}
                         {{ form.name.errors }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.code.id_for_label }}">{{ form.code.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.code.id_for_label }}">{{ form.code.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.code }}</p>
+                        {{ form.code|add_class:'uk-width-1-1' }}
                         {{ form.code.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.city.id_for_label }}">{{ form.city.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.city }}</p>
+                        {{ form.city|add_class:'uk-width-1-1' }}
                         {{ form.city.errors }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.state.id_for_label }}">{{ form.state.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.state }}</p>
+                        {{ form.state|add_class:'uk-width-1-1' }}
                         {{ form.state.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.zip.id_for_label }}">{{ form.zip.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.zip.id_for_label }}">{{ form.zip.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.zip }}</p>
+                        {{ form.zip|add_class:'uk-width-1-1' }}
                         {{ form.zip.errors }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.address1 }}</p>
+                        {{ form.address1|add_class:'uk-width-1-1' }}
                         {{ form.address1.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.address2 }}</p>
+                        {{ form.address2|add_class:'uk-width-1-1' }}
                         {{ form.address2.errors }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.apt.id_for_label }}">{{ form.apt.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.apt.id_for_label }}">{{ form.apt.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.apt }}</p>
+                        {{ form.apt|add_class:'uk-width-1-1' }}
                         {{ form.apt.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                    </td>
                     <td class="uk-width-1-3">
-                        <p>{{ form.phone }}</p>
+                        {{ form.phone|add_class:'uk-width-1-1' }}
                         {{ form.phone.errors }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right"><label
-                            for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label></td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                    </td>
                     <td class="uk-width-5-6" colspan="3">
-                        <p>{{ form.notes }}</p>
+                        {{ form.notes|add_class:'uk-width-1-1' }}
                         {{ form.notes.errors }}
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4">
-                        <button type="submit"
-                                class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
+                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
                     </td>
                 </tr>
                 </tbody>

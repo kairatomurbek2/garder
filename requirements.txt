@@ -21,3 +21,4 @@ sure==1.2.9
 testtools==1.5.0
 unittest2==0.8.0
 wsgiref==0.1.2
+django-widget-tweaks==1.3

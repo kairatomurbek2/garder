@@ -4,7 +4,7 @@
     {% include "site_list.html" %}
 {% endblock %}
 {% block menu %}
-    {% if perms.webapp.administrator %}
+    {% if perms.webapp.add_site %}
         <li><a href="#">{% trans "Add Site" %}</a></li>
     {% endif %}
 {% endblock %}

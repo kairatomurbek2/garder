@@ -22,23 +22,23 @@
             </thead>
             <tbody>
             {% for pws in pws_list %}
-                <tr id="top-half-pws{{ pws.id }}">
+                <tr id="top-half-pws{{ pws.pk }}">
                     <td>{{ pws.number }}</td>
                     <td>{{ pws.name }}</td>
                     <td>{{ pws.city }}</td>
                     <td>{{ pws.water_source }}</td>
                     <td class="uk-text-center">
-                        <a href="#" data-id="{{ pws.id }}"
-                           data-uk-toggle="{target:'#bottom-half-pws{{ pws.id }}'}"
+                        <a href="#" data-id="{{ pws.pk }}"
+                           data-uk-toggle="{target:'#bottom-half-pws{{ pws.pk }}'}"
                            data-state="hidden"
                            data-hide-text="{% trans "Hide notes" %}"
                            data-expand-text="{% trans "Show notes" %}">{% trans "Show notes" %}</a>
                     </td>
                     <td class="uk-text-center">
-                        <a href="{% url 'webapp:pws_edit' pws.id %}">{% trans "Edit" %}</a>
+                        <a href="{% url 'webapp:pws_edit' pws.pk %}">{% trans "Edit" %}</a>
                     </td>
                 </tr>
-                <tr class="uk-hidden" id="bottom-half-pws{{ pws.id }}">
+                <tr class="uk-hidden" id="bottom-half-pws{{ pws.pk }}">
                     <td class="uk-text-muted">{% trans "Notes:" %}</td>
                     <td colspan="5">{{ pws.notes }}</td>
                 </tr>

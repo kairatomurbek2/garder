@@ -25,10 +25,10 @@
                     <td>{{ customer.city }}</td>
                     <td>{{ customer.address1 }}</td>
                     <td class="uk-text-center">
-                        <a href="{% url 'webapp:customer_detail' customer.id %}">{% trans "Detail" %}</a>
+                        <a href="{% url 'webapp:customer_detail' customer.pk %}">{% trans "Detail" %}</a>
                     </td>
                     <td class="uk-text-center">
-                        <a href="{% url 'webapp:customer_edit' customer.id %}">{% trans "Edit" %}</a>
+                        <a href="{% url 'webapp:customer_edit' customer.pk %}">{% trans "Edit" %}</a>
                     </td>
                 </tr>
             {% endfor %}

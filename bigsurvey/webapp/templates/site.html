@@ -85,10 +85,10 @@
             <li>
                 <div id="potable_content">
                     {% if site.potable_present %}
-                        {% if perms.webapp.tester %}
-                            {% include_hazards 'potable' %}
-                        {% else %}
+                        {% if perms.webapp.browse_survey %}
                             {% include_surveys 'potable' %}
+                        {% else %}
+                            {% include_hazards 'potable' %}
                         {% endif %}
                     {% else %}
                         <h3 class="uk-text-center uk-margin-large-top">
@@ -100,10 +100,10 @@
             <li>
                 <div id="fire_content">
                     {% if site.fire_present %}
-                        {% if perms.webapp.tester %}
-                            {% include_hazards 'fire' %}
-                        {% else %}
+                        {% if perms.webapp.browse_survey %}
                             {% include_surveys 'fire' %}
+                        {% else %}
+                            {% include_hazards 'fire' %}
                         {% endif %}
                     {% else %}
                         <h3 class="uk-text-center uk-margin-large-top">
@@ -115,10 +115,10 @@
             <li>
                 <div id="irrigation_content">
                     {% if site.irrigation_present %}
-                        {% if perms.webapp.tester %}
-                            {% include_hazards 'irrigation' %}
-                        {% else %}
+                        {% if perms.webapp.browse_survey %}
                             {% include_surveys 'irrigation' %}
+                        {% else %}
+                            {% include_hazards 'irrigation' %}
                         {% endif %}
                     {% else %}
                         <h3 class="uk-text-center uk-margin-large-top">
@@ -131,17 +131,22 @@
     </div>
 {% endblock %}
 {% block menu %}
-    {% if perms.webapp.administrator %}
+    {% if perms.webapp.assign_surveyor %}
         <li>
             <a href="#">{% trans "Assign Surveyor" %}</a>
         </li>
+    {% endif %}
+    {% if perms.webapp.assign_tester %}
         <li>
             <a href="#">{% trans "Assign Tester" %}</a>
         </li>
+    {% endif %}
+    {% if perms.webapp.change_site %}
         <li>
-            <a href="#">{% trans "Edit Site" %}</a>
+            <a href="{% url 'webapp:site_edit' site.pk %}">{% trans "Edit Site" %}</a>
         </li>
-    {% else %}
+    {% endif %}
+    {% if perms.webapp.commit_site %}
         <li>
             <a href="#">{% trans "Commit" %}</a>
         </li>
