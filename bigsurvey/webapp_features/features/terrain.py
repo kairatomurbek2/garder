@@ -15,7 +15,6 @@ def init():
 
 @after.all
 def teardown(total):
-    call_command('reset_db', interactive=False, verbosity=1)
     world.browser.quit()
 
 

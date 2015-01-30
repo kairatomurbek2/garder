@@ -28,7 +28,7 @@ class BaseTemplateView(BaseView, TemplateView):
     pass
 
 
-class ObjectMixin(object):
+class ObjectPermissionMixin(object):
     __metaclass__ = ABCMeta
 
     @staticmethod
@@ -37,7 +37,7 @@ class ObjectMixin(object):
         pass
 
 
-class SiteObjectMixin(ObjectMixin):
+class SiteObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.browse_all_sites') or \
@@ -81,7 +81,7 @@ class HomeView(BaseTemplateView):
         return models.Site.objects.filter(pk__in=site_pks)
 
 
-class SiteDetailView(BaseTemplateView, SiteObjectMixin):
+class SiteDetailView(BaseTemplateView, SiteObjectPermissionMixin):
     template_name = 'site.html'
     permission = 'webapp.browse_site'
 
@@ -109,7 +109,7 @@ class SiteAddView(BaseView, CreateView):
         return reverse('webapp:home')
 
 
-class SiteEditView(BaseView, UpdateView, SiteObjectMixin):
+class SiteEditView(BaseView, UpdateView, SiteObjectPermissionMixin):
     template_name = 'site_form.html'
     form_class = forms.SiteForm
     model = models.Site
@@ -181,19 +181,21 @@ class CustomerDetailView(BaseTemplateView):
         return context
 
 
-class CustomerAddView(CreateView):
+class CustomerAddView(BaseView, CreateView):
     template_name = 'customer_form.html'
     form_class = forms.CustomerForm
     model = models.Customer
+    permission = 'webapp.add_customer'
 
     def get_success_url(self):
         return reverse('webapp:customer_list')
 
 
-class CustomerEditView(UpdateView):
+class CustomerEditView(BaseView, UpdateView):
     template_name = 'customer_form.html'
     form_class = forms.CustomerForm
     model = models.Customer
+    permission = 'webapp.change_customer'
 
     def get_success_url(self):
         return reverse('webapp:customer_list')

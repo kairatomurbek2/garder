@@ -1,15 +1,42 @@
-Feature: Customer Detail
+Feature: Customer detail
 
-    Scenario Outline: Customer Detail
+
+    Scenario Outline: Customer detail page access
         Given I open "login" page
         And I login as "<role>"
-        When I open "customer_detail" page with params "<params>"
-        Then I should <reaction> following "<text>"
-
+        When I open "customer detail" page with pk "3"
+        Then I should <reaction> "Not Found"
     Examples:
-        | role     | params | reaction | text                         |
-        | root     | 3      | see      | SJK472 :: Ancoridge          |
-        | root     | 7      | see      | 128, River Groove :: Chikago |
-        | admin    | 3      | see      | SJK472 :: Ancoridge          |
-        | surveyor | 3      | see      | Not Found                    |
-        | tester   | 3      | see      | Not Found                    |
+        | role     | reaction |
+        | root     | not see  |
+        | admin    | not see  |
+        | surveyor | see      |
+        | tester   | see      |
+
+
+    Scenario: Root is opening customer detail page
+        Given I open "login" page
+        And I login as "root"
+        When I open "customer detail" page with pk "3"
+        Then I should see following
+            | text       |
+            | SJK472     |
+            | Ancoridge  |
+            | 10, New St |
+            | Mike Doe   |
+            | Industrial |
+            | 29021      |
+
+
+    Scenario: Admin is opening customer detail page
+        Given I open "login" page
+        And I login as "admin"
+        When I open "customer detail" page with pk "7"
+        Then I should see following
+            | text              |
+            | OIK182            |
+            | Chikago           |
+            | 128, River Groove |
+            | Giles Corey       |
+            | Governmental      |
+            | 19021             |

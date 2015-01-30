@@ -1,39 +1,111 @@
 Feature: Site detail
 
-    Scenario Outline: Site detail
+
+    Scenario Outline: Site detail page access
         Given I open "login" page
         And I login as "<role>"
-        When I open "site_detail" page with params "<params>"
-        Then I should <reaction> following "<text>"
+        When I open "site detail" page with pk "<pk>"
+        Then I should <reaction> "Not Found"
     Examples:
-        | role     | params | reaction | text                                                         |
-        | root     | 10     | see      | Gabe Newell :: Assign Surveyor :: Assign Tester :: Edit Site |
-        | admin    | 10     | see      | Gabe Newell :: Assign Surveyor :: Assign Tester :: Edit Site |
-        | surveyor | 10     | see      | Gabe Newell :: Commit                                        |
-        | surveyor | 10     | not see  | Assign Surveyor :: Assign Tester :: Edit Site                |
-        | tester   | 10     | see      | Gabe Newell :: Commit                                        |
-        | tester   | 10     | not see  | Assign Surveyor :: Assign Tester :: Edit Site :: Add Survey  |
+        | role     | pk | reaction |
+        | root     | 3  | not see  |
+        | root     | 4  | not see  |
+        | admin    | 3  | see      |
+        | admin    | 4  | not see  |
+        | surveyor | 3  | see      |
+        | surveyor | 2  | not see  |
+        | tester   | 3  | see      |
+        | tester   | 6  | not see  |
 
 
-    Scenario Outline: Site surveys and hazards
+    Scenario: Root is opening site detail page
         Given I open "login" page
-        And I login as "<role>"
-        When I open "site_detail" page with params "<params>"
-        Then Element with id="<id>" should <reaction> following "<text>"
-    Examples:
-        | role     | params | id                 | reaction    | text                                           |
-        | root     | 10     | potable_content    | contain     | Jan. 26, 2015, 4:20 a.m., Annual :: Add Survey |
-        | root     | 10     | fire_content       | contain     | Fire water supply is not present               |
-        | root     | 10     | fire_content       | not contain | Add Survey                                     |
-        | root     | 10     | irrigation_content | contain     | Add Survey                                     |
-        | admin    | 10     | potable_content    | contain     | Jan. 26, 2015, 4:20 a.m., Annual :: Add Survey |
-        | admin    | 10     | fire_content       | contain     | Fire water supply is not present               |
-        | admin    | 10     | fire_content       | not contain | Add Survey                                     |
-        | admin    | 10     | irrigation_content | contain     | Add Survey                                     |
-        | surveyor | 10     | potable_content    | contain     | Jan. 26, 2015, 4:20 a.m., Annual               |
-        | surveyor | 10     | potable_content    | not contain | Add Survey                                     |
-        | surveyor | 10     | fire_content       | contain     | Fire water supply is not present               |
-        | surveyor | 10     | irrigation_content | contain     | Add Survey                                     |
-        | tester   | 10     | potable_content    | contain     | Seattle, Digester                              |
-        | tester   | 10     | potable_content    | not contain | Jan. 26, 2015, 4:20 a.m., Annual               |
-        | tester   | 10     | fire_content       | contain     | Fire water supply is not present               |
+        And I login as "root"
+        When I open "site detail" page with pk "10"
+        Then I should see following
+            | text            |
+            | Gabe Newell     |
+            | Assign Surveyor |
+            | Assign Tester   |
+            | Edit Site       |
+            | Commit          |
+        And I should see following text in following services
+            | service    | text                             |
+            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | potable    | Add Survey                       |
+            | fire       | Fire water supply is not present |
+            | irrigation | Add Survey                       |
+        And I should not see following text in following services
+            | service | text       |
+            | fire    | Add Survey |
+
+
+    Scenario: Admin is opening site detail page
+        Given I open "login" page
+        And I login as "admin"
+        When I open "site detail" page with pk "10"
+        Then I should see following
+            | text            |
+            | Gabe Newell     |
+            | Assign Surveyor |
+            | Assign Tester   |
+            | Edit Site       |
+            | Commit          |
+        And I should see following text in following services
+            | service    | text                             |
+            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | potable    | Add Survey                       |
+            | fire       | Fire water supply is not present |
+            | irrigation | Add Survey                       |
+        And I should not see following text in following services
+            | service | text       |
+            | fire    | Add Survey |
+
+
+    Scenario: Surveyor is opening site detail page
+        Given I open "login" page
+        And I login as "surveyor"
+        When I open "site detail" page with pk "10"
+        Then I should see following
+            | text        |
+            | Gabe Newell |
+            | Commit      |
+        And I should not see following
+            | text            |
+            | Assign Surveyor |
+            | Assign Tester   |
+            | Edit Site       |
+        And I should see following text in following services
+            | service    | text                             |
+            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | fire       | Fire water supply is not present |
+            | irrigation | Add Survey                       |
+        And I should not see following text in following services
+            | service | text       |
+            | potable | Add Survey |
+            | fire    | Add Survey |
+
+
+    Scenario: Tester is opening site detail page
+        Given I open "login" page
+        And I login as "tester"
+        When I open "site detail" page with pk "10"
+        Then I should see following
+            | text        |
+            | Gabe Newell |
+            | Commit      |
+        And I should not see following
+            | text            |
+            | Assign Surveyor |
+            | Assign Tester   |
+            | Edit Site       |
+        And I should see following text in following services
+            | service | text                             |
+            | potable | Seattle, Digester                |
+            | fire    | Fire water supply is not present |
+        And I should not see following text in following services
+            | service    | text                             |
+            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | potable    | Add Survey                       |
+            | fire       | Add Survey                       |
+            | irrigation | Add Survey                       |

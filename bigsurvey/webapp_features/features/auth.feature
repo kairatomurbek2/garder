@@ -1,15 +1,20 @@
 Feature: Authorization
 
-    Scenario Outline: Authorization
+
+    Scenario Outline: Authorization with existent account
         Given I open "login" page
         When I login as "<role>"
-        Then I should <reaction> following "<text>"
+        Then I should be at "home" page
     Examples:
-        | role     | reaction | text                                                                     |
-        | root     | see      | First Site :: Second Site :: Houston :: Ancoridge :: Seattle :: New York |
-        | admin    | see      | Ancoridge :: Chikago :: Seattle                                          |
-        | admin    | not see  | First Site :: Second Site :: Boston :: Houston :: Washington             |
-        | surveyor | see      | First Site :: Seattle                                                    |
-        | surveyor | not see  | Second Site :: Boston :: Houston :: Washington :: Ancoridge              |
-        | tester   | see      | Second Site :: New York :: Seattle                                       |
-        | tester   | not see  | First Site :: Boston :: Houston :: Washington :: Ancoridge               |
+        | role     |
+        | root     |
+        | admin    |
+        | surveyor |
+        | tester   |
+
+
+    Scenario: Authorization with non-existent account
+        Given I open "login" page
+        When I login as "non existent user"
+        Then I should be at "login" page
+        And I should see "Your Username and password didn't match. Please try again."
