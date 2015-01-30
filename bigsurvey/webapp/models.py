@@ -302,15 +302,18 @@ class PWS(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User)
-    address = models.CharField(max_length=50, verbose_name=_("Address"))
-    city = models.CharField(max_length=30, verbose_name=_("City"))
-    state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
-    zip = models.CharField(max_length=10, verbose_name=_("ZIP"))
-    company = models.CharField(max_length=30, verbose_name=_("Company"))
-    phone1 = models.CharField(max_length=20, verbose_name=_("Phone 1"))
+    address = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Address"))
+    city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
+    state = models.CharField(max_length=2, blank=True, null=True, choices=STATES, verbose_name=_("State"))
+    zip = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("ZIP"))
+    phone1 = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Phone 1"))
     phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
     fax = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Fax"))
-    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
+    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees",
+                            help_text=_("Should be specified for remote administrators to grant them data access"))
+    certificate = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"),
+                                   help_text=_("May be specified for testers"))
+    company = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Company"))
 
     def __unicode__(self):
         return str(self.user)
@@ -433,7 +436,7 @@ class Hazard(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s" % self.hazard_type
+        return u"%s, %s" % (self.pk, self.hazard_type)
 
     class Meta:
         verbose_name = _("Hazard")
@@ -450,34 +453,34 @@ class Test(models.Model):
     test_manufacturer = models.ForeignKey(TestManufacturer, verbose_name=_("Test Manufacturer"), related_name="tests")
     last_calibration_date = models.DateField(verbose_name=_("Last Calibration Date"))
     tester = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Tester"), related_name="tests")
-    tester_certificate = models.CharField(max_length=15, verbose_name=_("Tester Certificate No."))
     test_date = models.DateField(verbose_name=_("Test Date"), auto_now_add=True)
     next_test_date = models.DateField(null=True, blank=True, verbose_name=_("Next Test Date"))
-    cv1_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("Leaked"))
-    cv1_gauge_pressure = models.FloatField(blank=True, null=True, verbose_name=_("Gauge Pressure"))
-    cv1_maintenance = models.BooleanField(default=False, choices=YESNO_CHOICES, verbose_name=_("Maintenance"))
-    cv1_maintenance_pressure = models.FloatField(blank=True, null=True, verbose_name=_("Maintenance Pressure"))
-    cv2_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("Leaked"))
-    cv2_gauge_pressure = models.FloatField(blank=True, null=True, verbose_name=_("Gauge Pressure"))
-    cv2_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Maintenance"))
-    cv2_maintenance_pressure = models.FloatField(null=True, blank=True, verbose_name=_("Maintenance Pressure"))
-    rv_opened = models.BooleanField(choices=VALVE_OPENED_CHOICES, default=False, verbose_name=_("Opened"))
-    rv_psi1 = models.FloatField(null=True, blank=True, verbose_name=_("Pressure 1"))
-    rv_psi2 = models.FloatField(null=True, blank=True, verbose_name=_("Pressure 2"))
-    rv_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Maintenance"))
-    outlet_sov_leaked = models.BooleanField(choices=VALVE_LEAKED_CHOICES, default=False, verbose_name=_("Leaked"))
+    cv1_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("CV1 Leaked"))
+    cv1_gauge_pressure = models.FloatField(blank=True, null=True, verbose_name=_("CV1 Gauge Pressure"))
+    cv1_maintenance = models.BooleanField(default=False, choices=YESNO_CHOICES, verbose_name=_("CV1 Maintenance"))
+    cv1_maintenance_pressure = models.FloatField(blank=True, null=True, verbose_name=_("CV1 Maintenance Pressure"))
+    cv2_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("CV2 Leaked"))
+    cv2_gauge_pressure = models.FloatField(blank=True, null=True, verbose_name=_("CV2 Gauge Pressure"))
+    cv2_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CV2 Maintenance"))
+    cv2_maintenance_pressure = models.FloatField(null=True, blank=True, verbose_name=_("CV2 Maintenance Pressure"))
+    rv_opened = models.BooleanField(choices=VALVE_OPENED_CHOICES, default=False, verbose_name=_("RV Opened"))
+    rv_psi1 = models.FloatField(null=True, blank=True, verbose_name=_("RV Pressure 1"))
+    rv_psi2 = models.FloatField(null=True, blank=True, verbose_name=_("RV Pressure 2"))
+    rv_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("RV Maintenance"))
+    outlet_sov_leaked = models.BooleanField(choices=VALVE_LEAKED_CHOICES, default=False,
+                                            verbose_name=_("Outlet SOV Leaked"))
     pvb_opened = models.BooleanField(choices=VALVE_OPENED_CHOICES, default=False, verbose_name=_("PVB Opened"))
-    pvb_open_pressure = models.FloatField(null=True, blank=True, verbose_name=_("Open Pressure"))
-    cv_leaked = models.BooleanField(choices=VALVE_LEAKED_CHOICES, default=False, verbose_name=_("Leaked"))
-    cv_held_pressure = models.FloatField(null=True, blank=True, verbose_name=_("Held Pressure"))
-    cv_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Maintenance"))
+    pvb_open_pressure = models.FloatField(null=True, blank=True, verbose_name=_("PVB Open Pressure"))
+    cv_leaked = models.BooleanField(choices=VALVE_LEAKED_CHOICES, default=False, verbose_name=_("CV Leaked"))
+    cv_held_pressure = models.FloatField(null=True, blank=True, verbose_name=_("CV Held Pressure"))
+    cv_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CV Maintenance"))
     air_inlet_psi = models.FloatField(null=True, blank=True, verbose_name=_("Air Inlet PSI"))
-    cv_psi = models.FloatField(null=True, blank=True, verbose_name=_("Check Valve PSI"))
+    cv_psi = models.FloatField(null=True, blank=True, verbose_name=_("CV PSI"))
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.bp_device.assembly_location, self.test_date)
+        return u"%s, %s" % (self.bp_device, self.test_date)
 
     class Meta:
         verbose_name = _("Test")
