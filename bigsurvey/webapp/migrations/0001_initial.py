@@ -26,6 +26,19 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='AssemblyStatus',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('assembly_status', models.CharField(max_length=20, verbose_name='Assembly Status')),
+            ],
+            options={
+                'verbose_name': 'Assembly Status',
+                'verbose_name_plural': 'Assembly Statuses',
+                'permissions': (('browse_assemblystatus', 'Can browse Assembly Status'),),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='BPManufacturer',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -136,9 +149,9 @@ class Migration(migrations.Migration):
             name='Hazard',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('location1', models.CharField(max_length=70, verbose_name='location 1')),
+                ('location1', models.CharField(max_length=70, null=True, verbose_name='location 1', blank=True)),
                 ('location2', models.CharField(max_length=70, null=True, verbose_name='location 2', blank=True)),
-                ('assembly_status', models.BooleanField(default=False, verbose_name='Assembly Status', choices=[(True, b'Yes'), (False, b'No')])),
+                ('installed_properly', models.BooleanField(default=False, verbose_name='Installed Properly', choices=[(True, b'Yes'), (False, b'No')])),
                 ('installer', models.CharField(max_length=30, null=True, verbose_name='Installer', blank=True)),
                 ('install_date', models.DateTimeField(null=True, verbose_name='Install Date', blank=True)),
                 ('replace_date', models.DateField(null=True, verbose_name='Replace Date', blank=True)),
@@ -147,6 +160,7 @@ class Migration(migrations.Migration):
                 ('due_install_test_date', models.DateField(null=True, verbose_name='Due Install/Test Date', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
                 ('assembly_location', models.ForeignKey(related_name='hazards', verbose_name='Assembly Location', blank=True, to='webapp.AssemblyLocation', null=True)),
+                ('assembly_status', models.ForeignKey(related_name='hazards', verbose_name='Assembly Status', blank=True, to='webapp.AssemblyStatus', null=True)),
                 ('bp_size', models.ForeignKey(related_name='hazards', verbose_name='BP Size', blank=True, to='webapp.BPSize', null=True)),
                 ('bp_type_present', models.ForeignKey(related_name='hazards_p', verbose_name='BP Type Present', blank=True, to='webapp.BPType', null=True)),
                 ('bp_type_required', models.ForeignKey(related_name='hazards_r', verbose_name='BP Type Required', blank=True, to='webapp.BPType', null=True)),
@@ -206,6 +220,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateTimeField(auto_now_add=True, verbose_name='Send Date')),
+                ('customer', models.ForeignKey(related_name='letters', verbose_name='Customer', to='webapp.Customer')),
             ],
             options={
                 'verbose_name': 'Letter',
@@ -265,7 +280,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('number', models.CharField(max_length=15, verbose_name='Number')),
                 ('name', models.CharField(max_length=50, verbose_name='Name')),
-                ('city', models.CharField(max_length=30, verbose_name='City')),
+                ('city', models.CharField(max_length=30, null=True, verbose_name='City', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
             ],
             options={
@@ -299,7 +314,11 @@ class Migration(migrations.Migration):
                 ('city', models.CharField(max_length=30, verbose_name='City')),
                 ('state', models.CharField(max_length=2, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
                 ('zip', models.CharField(max_length=10, verbose_name='ZIP')),
-                ('potable_present', models.BooleanField(default=True, verbose_name='Potable Present', choices=[(True, b'Yes'), (False, b'No')])),
+                ('meter_number', models.CharField(max_length=20, null=True, verbose_name='Meter Number', blank=True)),
+                ('meter_size', models.CharField(max_length=15, null=True, verbose_name='Meter Size', blank=True)),
+                ('meter_reading', models.FloatField(null=True, verbose_name='Meter Reading', blank=True)),
+                ('route', models.CharField(max_length=20, null=True, verbose_name='Seq. Route', blank=True)),
+                ('potable_present', models.BooleanField(default=False, verbose_name='Potable Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('fire_present', models.BooleanField(default=False, verbose_name='Fire Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('irrigation_present', models.BooleanField(default=False, verbose_name='Irrigation Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('is_due_install', models.BooleanField(default=False, verbose_name='Is Due Install', choices=[(True, b'Yes'), (False, b'No')])),
@@ -307,14 +326,14 @@ class Migration(migrations.Migration):
                 ('next_survey_date', models.DateField(null=True, verbose_name='Next Survey Date', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
                 ('customer', models.ForeignKey(related_name='sites', verbose_name='Customer', to='webapp.Customer')),
-                ('floors', models.ForeignKey(related_name='sites', verbose_name='Building Height', to='webapp.FloorsCount')),
-                ('interconnection_point', models.ForeignKey(related_name='sites', verbose_name='Interconnection Point', to='webapp.ICPointType')),
+                ('floors', models.ForeignKey(related_name='sites', verbose_name='Building Height', blank=True, to='webapp.FloorsCount', null=True)),
+                ('interconnection_point', models.ForeignKey(related_name='sites', verbose_name='Interconnection Point', blank=True, to='webapp.ICPointType', null=True)),
                 ('pws', models.ForeignKey(related_name='sites', verbose_name='PWS', to='webapp.PWS')),
             ],
             options={
                 'verbose_name': 'Site',
                 'verbose_name_plural': 'Sites',
-                'permissions': (('browse_site', 'Can browse Site'), ('browse_all_sites', 'Can browse all Sites'), ('browse_pws_sites', 'Can browse Sites from his PWS'), ('browse_surv_sites', 'Can browse Sites that he inspects'), ('browse_test_sites', 'Can browse Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file')),
+                'permissions': (('browse_site', 'Can browse Site'), ('browse_all_sites', 'Can browse all Sites'), ('browse_pws_sites', 'Can browse Sites from his PWS'), ('browse_surv_sites', 'Can browse Sites that he inspects'), ('browse_test_sites', 'Can browse Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site')),
             },
             bases=(models.Model,),
         ),
@@ -376,9 +395,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('survey_date', models.DateTimeField(verbose_name='Survey Date')),
                 ('metered', models.BooleanField(default=False, verbose_name='Metered', choices=[(True, b'Yes'), (False, b'No')])),
-                ('meter_number', models.CharField(max_length=15, null=True, verbose_name='Meter Number', blank=True)),
-                ('meter_size', models.CharField(max_length=15, null=True, verbose_name='Meter Size', blank=True)),
-                ('meter_reading', models.FloatField(null=True, verbose_name='Meter Reading', blank=True)),
                 ('pump_present', models.BooleanField(default=False, verbose_name='Pump Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('additives_present', models.BooleanField(default=False, verbose_name='Additives Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('cc_present', models.BooleanField(default=False, verbose_name='CC Present', choices=[(True, b'Yes'), (False, b'No')])),
@@ -396,7 +412,7 @@ class Migration(migrations.Migration):
                 'get_latest_by': 'survey_date',
                 'verbose_name': 'Survey',
                 'verbose_name_plural': 'Surveys',
-                'permissions': (('browse_survey', 'Can browse Survey'),),
+                'permissions': (('browse_survey', 'Can browse Survey'), ('add_survey_only_if_doesnt_exist', 'Can add Survey only if it doesnt exist')),
             },
             bases=(models.Model,),
         ),
@@ -500,7 +516,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='survey',
             name='survey_type',
-            field=models.ForeignKey(related_name='surveys', verbose_name='Survey Type', to='webapp.SurveyType'),
+            field=models.ForeignKey(related_name='surveys', verbose_name='Survey Type', blank=True, to='webapp.SurveyType', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -512,19 +528,19 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='site',
             name='site_type',
-            field=models.ForeignKey(related_name='sites', verbose_name='Site Type', to='webapp.SiteType'),
+            field=models.ForeignKey(related_name='sites', verbose_name='Site Type', blank=True, to='webapp.SiteType', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='site',
             name='site_use',
-            field=models.ForeignKey(related_name='sites', verbose_name='Site Use', to='webapp.SiteUse'),
+            field=models.ForeignKey(related_name='sites', verbose_name='Site Use', blank=True, to='webapp.SiteUse', null=True),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='pws',
             name='water_source',
-            field=models.ForeignKey(related_name='pws', verbose_name='Water Source', to='webapp.SourceType'),
+            field=models.ForeignKey(related_name='pws', verbose_name='Water Source', blank=True, to='webapp.SourceType', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

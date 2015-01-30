@@ -186,6 +186,20 @@ class AssemblyLocation(models.Model):
         )
 
 
+class AssemblyStatus(models.Model):
+    assembly_status = models.CharField(max_length=20, verbose_name=_("Assembly Status"))
+
+    def __unicode__(self):
+        return u"%s" % self.assembly_status
+
+    class Meta:
+        verbose_name = _('Assembly Status')
+        verbose_name_plural = _('Assembly Statuses')
+        permissions = (
+            ('browse_assemblystatus', _('Can browse Assembly Status')),
+        )
+
+
 class LetterType(models.Model):
     letter_type = models.CharField(max_length=20, verbose_name=_("Letter Type"))
     template = models.TextField(max_length=2000, blank=True, null=True, verbose_name=_('Letter Template'))
@@ -247,8 +261,8 @@ class Customer(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
-    address1 = models.CharField(max_length=30, verbose_name=_("Address 1"))
-    address2 = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Address 2"))
+    address1 = models.CharField(max_length=100, verbose_name=_("Address 1"))
+    address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"))
     apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Apt"))
     city = models.CharField(max_length=30, verbose_name=_("City"))
     state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
@@ -270,12 +284,13 @@ class Customer(models.Model):
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
-    city = models.CharField(max_length=30, verbose_name=_("City"))
-    water_source = models.ForeignKey(SourceType, verbose_name=_("Water Source"), related_name="pws")
+    city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
+    water_source = models.ForeignKey(SourceType, blank=True, null=True, verbose_name=_("Water Source"),
+                                     related_name="pws")
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.name, self.city)
+        return u"%s, %s" % (self.number, self.name)
 
     class Meta:
         verbose_name = _('Public Water System')
@@ -313,17 +328,23 @@ class Site(models.Model):
     customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="sites")
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites")
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))
-    address1 = models.CharField(max_length=50, verbose_name=_("Address 1"))
-    address2 = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Address 2"))
+    address1 = models.CharField(max_length=100, verbose_name=_("Address 1"))
+    address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"))
     apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Apt"))
     city = models.CharField(max_length=30, verbose_name=_("City"))
     state = models.CharField(max_length=2, choices=STATES, verbose_name=_("State"))
     zip = models.CharField(max_length=10, verbose_name=_("ZIP"))
-    site_use = models.ForeignKey(SiteUse, verbose_name=_("Site Use"), related_name="sites")
-    site_type = models.ForeignKey(SiteType, verbose_name=_("Site Type"), related_name="sites")
-    floors = models.ForeignKey(FloorsCount, verbose_name=_("Building Height"), related_name="sites")
-    interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"), related_name="sites")
-    potable_present = models.BooleanField(choices=YESNO_CHOICES, default=True, verbose_name=_("Potable Present"))
+    site_use = models.ForeignKey(SiteUse, verbose_name=_("Site Use"), blank=True, null=True, related_name="sites")
+    site_type = models.ForeignKey(SiteType, verbose_name=_("Site Type"), blank=True, null=True, related_name="sites")
+    floors = models.ForeignKey(FloorsCount, verbose_name=_("Building Height"), blank=True, null=True,
+                               related_name="sites")
+    interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"), blank=True,
+                                              null=True, related_name="sites")
+    meter_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Meter Number"))
+    meter_size = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Meter Size"))
+    meter_reading = models.FloatField(blank=True, null=True, verbose_name=_("Meter Reading"))
+    route = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Seq. Route"))
+    potable_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Potable Present"))
     fire_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Fire Present"))
     irrigation_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Irrigation Present"))
     is_due_install = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Due Install"))
@@ -354,25 +375,24 @@ class Survey(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="surveys")
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="surveys")
     survey_date = models.DateTimeField(verbose_name=_("Survey Date"))
-    survey_type = models.ForeignKey(SurveyType, verbose_name=_("Survey Type"), related_name="surveys")
+    survey_type = models.ForeignKey(SurveyType, blank=True, null=True, verbose_name=_("Survey Type"),
+                                    related_name="surveys")
     surveyor = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Surveyor"), related_name="surveys")
     metered = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Metered"))
-    meter_number = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Meter Number"))
-    meter_size = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Meter Size"))
-    meter_reading = models.FloatField(blank=True, null=True, verbose_name=_("Meter Reading"))
     pump_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Pump Present"))
     additives_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Additives Present"))
     cc_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CC Present"))
     protected = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Protected"))
     aux_water = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Auxiliary Water"))
-    detector_manufacturer = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Manufacturer"))
+    detector_manufacturer = models.CharField(max_length=20, blank=True, null=True,
+                                             verbose_name=_("Detector Manufacturer"))
     detector_model = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Model"))
     detector_serial_no = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Serial No."))
     special = models.ForeignKey(Special, null=True, blank=True, verbose_name=_("Special"), related_name="surveys")
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.survey_date, self.survey_type)
+        return u"%s, %s" % (self.survey_date, self.service_type)
 
     class Meta:
         verbose_name = _("Survey")
@@ -386,26 +406,34 @@ class Survey(models.Model):
 
 class Hazard(models.Model):
     survey = models.ForeignKey(Survey, verbose_name=_("Survey"), related_name="hazards")
-    location1 = models.CharField(max_length=70, verbose_name=_("location 1"))
+    location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("location 1"))
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("location 2"))
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
-    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"), related_name="hazards")
-    assembly_status = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Assembly Status"))
+    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
+                                          related_name="hazards")
+    assembly_status = models.ForeignKey(AssemblyStatus, null=True, blank=True, verbose_name=_("Assembly Status"),
+                                        related_name="hazards")
+    installed_properly = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Installed Properly"))
     installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
     install_date = models.DateTimeField(blank=True, null=True, verbose_name=_("Install Date"))
     replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
-    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'), related_name="hazards")
-    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'), related_name='hazards_p')
-    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'), related_name='hazards_r')
-    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"), related_name="hazards")
-    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"), related_name="hazards")
+    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
+                                    related_name="hazards")
+    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'),
+                                        related_name='hazards_p')
+    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'),
+                                         related_name='hazards_r')
+    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
+                                related_name="hazards")
+    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
+                                     related_name="hazards")
     model_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Model No."))
     serial_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Serial No."))
     due_install_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.location1, self.hazard_type)
+        return u"%s" % self.hazard_type
 
     class Meta:
         verbose_name = _("Hazard")
@@ -416,7 +444,8 @@ class Hazard(models.Model):
 
 
 class Test(models.Model):
-    bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"), related_name="tests")
+    bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"),
+                                  related_name="tests")
     test_serial_number = models.CharField(max_length=20, verbose_name=_("Test Serial No."))
     test_manufacturer = models.ForeignKey(TestManufacturer, verbose_name=_("Test Manufacturer"), related_name="tests")
     last_calibration_date = models.DateField(verbose_name=_("Last Calibration Date"))
@@ -459,7 +488,8 @@ class Test(models.Model):
 
 
 class Letter(models.Model):
-    survey = models.ForeignKey(Survey, verbose_name=_("Survey"), related_name="letters")
+    customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="letters")
+    survey = models.ForeignKey(Survey, blank=True, null=True, verbose_name=_("Survey"), related_name="letters")
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
     date = models.DateTimeField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
@@ -497,7 +527,8 @@ class Licence(models.Model):
 class TestPermission(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="test_perms")
     given_to = models.ForeignKey(User, verbose_name=_("Given To"), related_name='test_perms_granted')
-    given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"), related_name='test_perms_given')
+    given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"),
+                                 related_name='test_perms_given')
     given_date = models.DateField(verbose_name=_("Given Date"), auto_now_add=True)
     due_date = models.DateField(verbose_name=_("Due Date"))
     is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
@@ -517,7 +548,8 @@ class TestPermission(models.Model):
 class Inspection(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name='inspections')
     assigned_to = models.ForeignKey(User, verbose_name=_("Assigned To"), related_name='inspections')
-    assigned_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Assigned By"), related_name='inspects_assigned')
+    assigned_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Assigned By"),
+                                    related_name='inspects_assigned')
     assigned_date = models.DateField(verbose_name=_("Assigned Date"), auto_now_add=True)
     is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
@@ -530,5 +562,4 @@ class Inspection(models.Model):
         verbose_name_plural = "Inspections"
         permissions = (
             ('browse_inspection', _('Can browse Inspection')),
-
         )
