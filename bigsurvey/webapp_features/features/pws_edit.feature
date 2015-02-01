@@ -28,7 +28,7 @@ Feature: PWS editing
         Given I open "login" page
         And I login as "root"
         And I open "pws edit" page with pk "6"
-        And I fill in "city" with ""
+        And I fill in "name" with ""
         When I submit "pws" form
         Then I should be at "pws edit" page with pk "6"
-        And I should see "This field is required." validation error message on field "city"
+        And I should see "This field is required." validation error message on field "name"

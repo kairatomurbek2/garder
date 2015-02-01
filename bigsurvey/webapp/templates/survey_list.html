@@ -18,28 +18,22 @@
                 <td class="uk-text-center uk-text-primary">{{ survey.survey_date }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Survey Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.survey_type }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Special" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ survey.special }}</td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Metered" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.metered|yn }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Meter Number" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ survey.meter_number }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Meter Size" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ survey.meter_size }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Meter Reading" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ survey.meter_reading }}</td>
-            </tr>
-            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Pump Present" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.pump_present|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Additives Present" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.additives_present|yn }}</td>
+            </tr>
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "CC Present" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.cc_present|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Auxiliary Water" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.aux_water|yn }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Special" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.special }}</td>
             </tr>
             {% if fire %}
                 <tr>

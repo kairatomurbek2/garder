@@ -257,6 +257,20 @@ class Orientation(models.Model):
         )
 
 
+class SiteStatus(models.Model):
+    site_status = models.CharField(max_length=15, verbose_name=_("Site Status"))
+
+    def __unicode__(self):
+        return u"%s" % self.site_status
+
+    class Meta:
+        verbose_name = _('Site Status')
+        verbose_name_plural = _('Site Status')
+        permissions = (
+            ('browse_site_status', _('Can browse Site Status')),
+        )
+
+
 class Customer(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -328,6 +342,7 @@ class Employee(models.Model):
 
 
 class Site(models.Model):
+    status = models.ForeignKey(SiteStatus, null=True, blank=True, verbose_name=_("Status"), related_name="sites")
     customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="sites")
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites")
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))

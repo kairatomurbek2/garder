@@ -44,6 +44,14 @@
                 <td class="uk-text-center uk-text-primary">{{ site.site_type }}</td>
             </tr>
             <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Meter Number" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.meter_number }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Meter Size" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.meter_size }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Meter Reading" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.meter_reading }}</td>
+            </tr>
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Potable" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.potable_present|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Fire" %}</td>
