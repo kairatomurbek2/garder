@@ -26,6 +26,7 @@ Feature: PWS adding
         And I select "Private Well" from "water_source"
         When I submit "pws" form
         Then I should be at "pws list" page
+        And I should see "pws adding success" message
         And I should see "NEW PWS"
 
 
@@ -35,9 +36,8 @@ Feature: PWS adding
         And I open "pws add" page
         When I submit "pws" form
         Then I should be at "pws add" page
+        And I should see "pws adding error" message
         And I should see following validation error messages on following fields
             | field        | error_message           |
             | number       | This field is required. |
             | name         | This field is required. |
-            | city         | This field is required. |
-            | water_source | This field is required. |

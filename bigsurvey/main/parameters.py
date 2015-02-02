@@ -1,3 +1,6 @@
+from django.utils.translation import ugettext as _
+
+
 YESNO_CHOICES = (
     (True, "Yes"),
     (False, "No"),
@@ -30,3 +33,23 @@ STATES = (
     ('SD', 'South Dakota'), ('TN', 'Tennessee'), ('TX', 'Texas'), ('UT', 'Utah'), ('VT', 'Vermont'),
     ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'),
 )
+
+
+class Messages:
+    class Site:
+        adding_success = _('Site was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('Site was successfully updated')
+        editing_error = _('Error while submitting form')
+
+    class PWS:
+        adding_success = _('PWS was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('PWS was successfully updated')
+        editing_error = _('Error while submitting form')
+
+    class Customer:
+        adding_success = _('Customer was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('Customer was successfully updated')
+        editing_error = _('Error while submitting form')

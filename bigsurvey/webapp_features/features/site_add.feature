@@ -33,6 +33,7 @@ Feature: Site adding
         And I select "Yard" from "interconnection_point"
         When I submit "site" form
         Then I should be at "site list" page
+        And I should see "site adding success" message
         And I should see following
             | text                |
             | Moscow              |
@@ -50,6 +51,7 @@ Feature: Site adding
         And I fill in "connect_date" with "not a valid date"
         When I submit "site" form
         Then I should be at "site add" page
+        And I should see "site adding error" message
         And I should see following validation error messages on following fields
             | field                 | error_message           |
             | customer              | This field is required. |
@@ -58,8 +60,3 @@ Feature: Site adding
             | state                 | This field is required. |
             | zip                   | This field is required. |
             | address1              | This field is required. |
-            | site_use              | This field is required. |
-            | site_type             | This field is required. |
-            | site_type             | This field is required. |
-            | floors                | This field is required. |
-            | interconnection_point | This field is required. |

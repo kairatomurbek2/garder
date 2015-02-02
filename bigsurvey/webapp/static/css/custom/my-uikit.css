@@ -1,0 +1,15 @@
+.uk-width-1-7 {
+    width: 14.285%;
+}
+
+.uk-width-1-14 {
+    width: 7.142%;
+}
+
+.my-table {
+    table-layout: fixed;
+}
+
+.my-alert {
+    margin-top: 10px;
+}

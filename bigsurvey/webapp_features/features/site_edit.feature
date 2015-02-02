@@ -25,6 +25,7 @@ Feature: Site editing
             | address1 | 20/12 Central Square |
         When I submit "site" form
         Then I should be at "site list" page
+        And I should see "site editing success" message
         And I should see "20/12 Central Square"
 
 
@@ -35,4 +36,5 @@ Feature: Site editing
         And I fill in "connect_date" with "qaz2wsx"
         When I submit "site" form
         Then I should be at "site edit" page with pk "4"
+        And I should see "site editing error" message
         And I should see "Enter a valid date." validation error message on field "connect_date"

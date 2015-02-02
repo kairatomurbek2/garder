@@ -29,6 +29,7 @@ Feature: Customer adding
         And I select "Kansas" from "state"
         When I submit "customer" form
         Then I should be at "customer list" page
+        And I should see "customer adding success" message
         And I should see following
             | text          |
             | CUST987       |
@@ -43,6 +44,7 @@ Feature: Customer adding
         And I open "customer add" page
         When I submit "customer" form
         Then I should be at "customer add" page
+        And I should see "customer adding error" message
         And I should see following validation error messages on following fields
             | field    | error_message           |
             | number   | This field is required. |

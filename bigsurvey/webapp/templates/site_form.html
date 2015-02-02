@@ -7,6 +7,7 @@
 {% endblock %}
 {% block content %}
     <div class="table-wrapper">
+        {% include 'messages.html' %}
         <form class="uk-form" method="post" name="site">
             {% csrf_token %}
             <table class="uk-table">
@@ -19,15 +20,13 @@
                         {{ form.customer|add_class:'uk-width-1-1' }}
                         {{ form.customer.errors }}
                     </td>
-                    {# if perms.webapp.browse_all_sites #}
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.pws.id_for_label }}">{{ form.pws.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {{ form.pws|add_class:'uk-width-1-1' }}
-                            {{ form.pws.errors }}
-                        </td>
-                    {# endif #}
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.pws.id_for_label }}">{{ form.pws.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.pws|add_class:'uk-width-1-1' }}
+                        {{ form.pws.errors }}
+                    </td>
                 </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">

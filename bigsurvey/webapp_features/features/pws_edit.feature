@@ -21,6 +21,7 @@ Feature: PWS editing
         And I fill in "notes" with "This is notes for PWS with id=6"
         When I submit "pws" form
         Then I should be at "pws list" page
+        And I should see "pws editing success" message
         And I should see "This is notes for PWS with id=6"
 
 
@@ -31,4 +32,5 @@ Feature: PWS editing
         And I fill in "name" with ""
         When I submit "pws" form
         Then I should be at "pws edit" page with pk "6"
+        And I should see "pws editing error" message
         And I should see "This field is required." validation error message on field "name"

@@ -1,93 +1,91 @@
 {% load i18n %}
-<form action="" method="get" name="site_filter">
-    <br/>
-    <table class="uk-table uk-text-center uk-table-hover">
-        <thead>
-        <tr style="border-bottom: solid 1px darkgray">
-            <th colspan="6" class="uk-text-center uk-width-3-4" style="border-right: solid 1px darkgray">
-                {% trans "Sites" %}
-            </th>
-            <th colspan="2" class="uk-text-center uk-width-1-4">
-                {% trans "Actions" %}
-            </th>
-        </tr>
-        <tr>
-            <th class="uk-text-center">
-                {% trans "City:" %}
-            </th>
-            <th class="uk-text-center">
-                {% trans "Address:" %}
-            </th>
-            <th class="uk-text-center">
-                {% trans "Customer:" %}
-            </th>
-            <th class="uk-text-center">
-                {% trans "PWS:" %}
-            </th>
-            <th class="uk-text-center">
-                {% trans "Site Use:" %}
-            </th>
-            <th class="uk-text-center">
-                {% trans "Site Type:" %}
-            </th>
-            <th class="uk-text-center uk-text-middle" colspan="2" rowspan="2" style="border-left: solid 1px darkgray">
-                <button class="uk-button" type="submit">{% trans "Apply Filter" %}</button>
-            </th>
-        </tr>
-        <tr style="border-bottom: solid 1px darkgray">
-            <th>
-                {{ site_filter.form.city }}
-            </th>
-            <th>
-                {{ site_filter.form.address1 }}
-            </th>
-            <th>
-                {{ site_filter.form.customer }}
-            </th>
-            <th>
-                {{ site_filter.form.pws }}
-            </th>
-            <th>
-                {{ site_filter.form.site_use }}
-            </th>
-            <th>
-                {{ site_filter.form.site_type }}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for site in site_filter %}
+{% load widget_tweaks %}
+<div class="table-wrapper">
+    {% include 'messages.html' %}
+    <form class="uk-form" method="get" name="site_filter">
+        <table class="uk-table uk-table-hover my-table">
+            <thead>
+            <tr>
+                <th class="uk-text-center uk-width-1-7">
+                    {% trans "City" %}
+                </th>
+                <th class="uk-text-center uk-width-1-7">
+                    {% trans "Address" %}
+                </th>
+                <th class="uk-text-center uk-width-1-7">
+                    {% trans "Customer" %}
+                </th>
+                <th class="uk-text-center uk-width-1-7">
+                    {% trans "PWS" %}
+                </th>
+                <th class="uk-text-center uk-width-1-7">
+                    {% trans "Site Use" %}
+                </th>
+                <th class="uk-text-center uk-width-1-7">
+                    {% trans "Site Type" %}
+                </th>
+                <th class="uk-text-center uk-width-1-7" colspan="2">
+                    {% trans "Actions" %}
+                </th>
+            </tr>
             <tr>
                 <td>
-                    {{ site.city }}
+                    {{ site_filter.form.city }}
                 </td>
                 <td>
-                    {{ site.address1 }}
+                    {{ site_filter.form.address1 }}
                 </td>
                 <td>
-                    {{ site.customer.name }}
+                    {{ site_filter.form.customer }}
                 </td>
                 <td>
-                    {{ site.pws.name }}
+                    {{ site_filter.form.pws }}
                 </td>
                 <td>
-                    {{ site.site_use }}
+                    {{ site_filter.form.site_use }}
                 </td>
                 <td>
-                    {{ site.site_type }}
+                    {{ site_filter.form.site_type }}
                 </td>
-                {% if perms.webapp.browse_site %}
-                    <td class="uk-text-center" style="border-left: solid 1px darkgray">
-                        <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
-                    </td>
-                {% endif %}
-                {% if perms.webapp.assign_surveyor %}
-                    <td class="uk-text-center">
-                        <a href="#">{% trans "Assign" %}</a>
-                    </td>
-                {% endif %}
+                <td class="uk-width-1-7" colspan="2">
+                    <button class="uk-button uk-button-primary uk-width-1-1" type="submit">{% trans "Filter" %}</button>
+                </td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</form>
+            </thead>
+            <tbody>
+            {% for site in site_filter %}
+                <tr>
+                    <td>
+                        {{ site.city }}
+                    </td>
+                    <td>
+                        {{ site.address1 }}
+                    </td>
+                    <td>
+                        {{ site.customer.name }}
+                    </td>
+                    <td>
+                        {{ site.pws.name }}
+                    </td>
+                    <td>
+                        {{ site.site_use }}
+                    </td>
+                    <td>
+                        {{ site.site_type }}
+                    </td>
+                    {% if perms.webapp.browse_site %}
+                        <td class="uk-text-center uk-width-1-14">
+                            <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
+                        </td>
+                    {% endif %}
+                    {% if perms.webapp.assign_surveyor %}
+                        <td class="uk-text-center uk-width-1-14">
+                            <a href="#">{% trans "Assign" %}</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>

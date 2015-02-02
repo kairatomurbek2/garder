@@ -37,3 +37,22 @@ def check_customer_add_page(step):
 def check_customer_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.customer_edit % pk))
 
+
+@step('I should see "customer adding success" message')
+def check_customer_adding_success_message(step):
+    step.given('I should see "%s"' % Messages.Customer.adding_success)
+
+
+@step('I should see "customer adding error" message')
+def check_customer_adding_error_message(step):
+    step.given('I should see "%s"' % Messages.Customer.adding_error)
+
+
+@step('I should see "customer editing success" message')
+def check_customer_editing_success_message(step):
+    step.given('I should see "%s"' % Messages.Customer.editing_success)
+
+
+@step('I should see "customer editing error" message')
+def check_customer_editing_error_message(step):
+    step.given('I should see "%s"' % Messages.Customer.editing_error)

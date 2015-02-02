@@ -1,0 +1,10 @@
+{% load uikit_helper %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="my-alert uk-alert uk-alert-{% uikit_alert_class message.tags %}" data-uk-alert>
+            <a href="" class="uk-alert-close uk-close"></a>
+
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
+{% endif %}

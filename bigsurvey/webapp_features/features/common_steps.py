@@ -13,14 +13,14 @@ def check_url(step, url):
     assert world.browser.current_url == url, "Current URL is %s, expected %s" % (world.browser.current_url, url)
 
 
-@step('I should see "([^"]*)"')
+@step('I should see "([^"]*)"$')
 def check_text_exists(step, text):
-    helper.check_text_exists(text, '%s is not on page.' % text)
+    helper.check_text_exists(text, '"%s" is not on page.' % text)
 
 
-@step('I should not see "([^"]*)"')
+@step('I should not see "([^"]*)"$')
 def check_text_doesnt_exist(step, text):
-    helper.check_text_doesnt_exist(text, '%s in on page.' % text)
+    helper.check_text_doesnt_exist(text, '"%s" in on page.' % text)
 
 
 @step('I should see following$')
@@ -73,10 +73,10 @@ def check_error_message(step, error_message, field_name):
     field = helper.find(Xpath.Pattern.input % field_name) or \
             helper.find(Xpath.Pattern.textarea % field_name) or \
             helper.find(Xpath.Pattern.select % field_name)
-    print field
     helper.check_element_exists(field, 'Field "%s" was not found' % field_name)
-    error = helper.find(Xpath.Pattern.text_inside_element, field)
-    helper.check_element_exists(error, 'Field "%s" does not contain "%s" validation error message' % (error_message, field_name))
+    error = helper.find(Xpath.Pattern.validation_error_by_exact_text % error_message, field) or \
+            helper.find(Xpath.Pattern.validation_error_by_substr % error_message, field)
+    helper.check_element_exists(error, 'Field "%s" does not contain "%s" validation error message' % (field_name, error_message))
 
 
 @step('I should see following validation error messages on following fields')

@@ -7,6 +7,8 @@ from filters import SiteFilter
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from abc import ABCMeta, abstractmethod
+from django.contrib import messages
+from main.parameters import Messages
 
 
 class AccessRequiredMixin(View):
@@ -41,9 +43,9 @@ class SiteObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.browse_all_sites') or \
-               obj.pws == request.user.employee.pws or \
-               obj.inspections.filter(assigned_to=request.user) or \
-               obj.test_perms.filter(given_to=request.user)
+               request.user.has_perm('webapp.browse_pws_sites') and obj.pws == request.user.employee.pws or \
+               request.user.has_perm('webapp.browse_surv_sites') and obj.inspections.filter(assigned_to=request.user) or \
+               request.user.has_perm('webapp.browse_test_sites') and obj.test_perms.filter(given_to=request.user)
 
 
 class HomeView(BaseTemplateView):
@@ -60,17 +62,16 @@ class HomeView(BaseTemplateView):
 
     def _get_sites_for_user(self, user):
         sites = []
-        if user.has_perm('webapp.browse_site'):
-            if user.has_perm('webapp.browse_test_sites'):
-                permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
-                sites = self._filter_sites_by_related(permissions)
-            if user.has_perm('webapp.browse_surv_sites'):
-                inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
-                sites = self._filter_sites_by_related(inspections)
-            if user.has_perm('webapp.browse_pws_sites'):
-                sites = models.Site.objects.filter(pws=user.employee.pws)
-            if user.has_perm('webapp.browse_all_sites'):
-                sites = models.Site.objects.all()
+        if user.has_perm('webapp.browse_test_sites'):
+            permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
+            sites = self._filter_sites_by_related(permissions)
+        if user.has_perm('webapp.browse_surv_sites'):
+            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
+            sites = self._filter_sites_by_related(inspections)
+        if user.has_perm('webapp.browse_pws_sites'):
+            sites = models.Site.objects.filter(pws=user.employee.pws)
+        if user.has_perm('webapp.browse_all_sites'):
+            sites = models.Site.objects.all()
         return sites
 
     @staticmethod
@@ -105,6 +106,14 @@ class SiteAddView(BaseView, CreateView):
             form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         return form
 
+    def form_valid(self, form):
+        messages.success(self.request, Messages.Site.adding_success)
+        return super(SiteAddView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.Site.adding_error)
+        return super(SiteAddView, self).form_invalid(form)
+
     def get_success_url(self):
         return reverse('webapp:home')
 
@@ -126,6 +135,14 @@ class SiteEditView(BaseView, UpdateView, SiteObjectPermissionMixin):
         if not self.request.user.has_perm('webapp.browse_all_sites'):
             form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         return form
+
+    def form_valid(self, form):
+        messages.success(self.request, Messages.Site.editing_success)
+        return super(SiteEditView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.Site.editing_error)
+        return super(SiteEditView, self).form_invalid(form)
 
     def get_success_url(self):
         return reverse('webapp:home')
@@ -150,6 +167,14 @@ class PWSAddView(BaseView, CreateView):
     def get_success_url(self):
         return reverse('webapp:pws_list')
 
+    def form_valid(self, form):
+        messages.success(self.request, Messages.PWS.adding_success)
+        return super(PWSAddView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.PWS.adding_error)
+        return super(PWSAddView, self).form_invalid(form)
+
 
 class PWSEditView(BaseView, UpdateView):
     template_name = 'pws_form.html'
@@ -159,6 +184,14 @@ class PWSEditView(BaseView, UpdateView):
 
     def get_success_url(self):
         return reverse('webapp:pws_list')
+
+    def form_valid(self, form):
+        messages.success(self.request, Messages.PWS.editing_success)
+        return super(PWSEditView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.PWS.editing_error)
+        return super(PWSEditView, self).form_invalid(form)
 
 
 class CustomerView(BaseTemplateView):
@@ -190,6 +223,14 @@ class CustomerAddView(BaseView, CreateView):
     def get_success_url(self):
         return reverse('webapp:customer_list')
 
+    def form_valid(self, form):
+        messages.success(self.request, Messages.Customer.adding_success)
+        return super(CustomerAddView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.Customer.adding_error)
+        return super(CustomerAddView, self).form_invalid(form)
+
 
 class CustomerEditView(BaseView, UpdateView):
     template_name = 'customer_form.html'
@@ -199,3 +240,11 @@ class CustomerEditView(BaseView, UpdateView):
 
     def get_success_url(self):
         return reverse('webapp:customer_list')
+
+    def form_valid(self, form):
+        messages.success(self.request, Messages.Customer.editing_success)
+        return super(CustomerEditView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.Customer.editing_error)
+        return super(CustomerEditView, self).form_invalid(form)

@@ -52,3 +52,23 @@ def check_text_in_services_doesnt_exist(step):
         elem = helper.find(Xpath.Pattern.site_service % row['service'])
         helper.check_element_exists(elem, 'service "%s" was not found' % row['service'])
         helper.check_text_doesnt_exist(row['text'], '"%s" is in "%s" service' % (row['text'], row['service']), elem)
+
+
+@step('I should see "site adding success" message')
+def check_site_adding_success_message(step):
+    step.given('I should see "%s"' % Messages.Site.adding_success)
+
+
+@step('I should see "site adding error" message')
+def check_site_adding_error_message(step):
+    step.given('I should see "%s"' % Messages.Site.adding_error)
+
+
+@step('I should see "site editing success" message')
+def check_site_editing_success_message(step):
+    step.given('I should see "%s"' % Messages.Site.editing_success)
+
+
+@step('I should see "site editing error" message')
+def check_site_editing_error_message(step):
+    step.given('I should see "%s"' % Messages.Site.editing_error)
