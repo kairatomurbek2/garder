@@ -48,6 +48,14 @@ class SiteObjectPermissionMixin(ObjectPermissionMixin):
                request.user.has_perm('webapp.browse_test_sites') and obj.test_perms.filter(given_to=request.user)
 
 
+class SurveyObjectPermissionMixin(ObjectPermissionMixin):
+    @staticmethod
+    def has_perm(request, obj):
+        return request.user.has_perm('webapp.browse_all_surveys') or \
+               request.user.has_perm('webapp.browse_pws_surveys') and obj.site.pws == request.user.employee.pws or \
+               obj.surveyor == request.user
+
+
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
@@ -248,3 +256,15 @@ class CustomerEditView(BaseView, UpdateView):
     def form_invalid(self, form):
         messages.error(self.request, Messages.Customer.editing_error)
         return super(CustomerEditView, self).form_invalid(form)
+
+
+class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
+    template_name = 'survey.html'
+    permission = 'webapp.browse_survey'
+
+    def get_context_data(self, **kwargs):
+        context = super(SurveyDetailView, self).get_context_data(**kwargs)
+        context['survey'] = models.Survey.objects.get(pk=self.kwargs['pk'])
+        #if not self.has_perm(self.request, context['survey']):
+            #raise Http404
+        return context

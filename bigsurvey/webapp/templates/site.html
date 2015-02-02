@@ -4,8 +4,8 @@
 {% load surveys_for_services %}
 {% load hazards_for_services %}
 {% block content %}
-    <div id="site_detail" class="uk-panel uk-panel-box">
-        <table class="uk-table uk-table-stripped">
+    <div id="site_detail" class="uk-panel uk-panel-box table-wrapper">
+        <table class="uk-table uk-table-stripped my-table">
             <tbody>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Customer" %}</td>
@@ -74,7 +74,7 @@
             </tbody>
         </table>
     </div>
-    <hr>
+    <h3 class="uk-text-center">{% trans "Surveys" %}</h3>
     <div id="tab_control" class="uk-tab-center">
         <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
             <li class="uk-active">
@@ -99,9 +99,9 @@
                             {% include_hazards 'potable' %}
                         {% endif %}
                     {% else %}
-                        <h3 class="uk-text-center uk-margin-large-top">
+                        <h4 class="padding-top uk-text-center">
                             {% trans "Potable water supply is not present" %}
-                        </h3>
+                        </h4>
                     {% endif %}
                 </div>
             </li>
@@ -114,9 +114,9 @@
                             {% include_hazards 'fire' %}
                         {% endif %}
                     {% else %}
-                        <h3 class="uk-text-center uk-margin-large-top">
+                        <h4 class="padding-top uk-text-center">
                             {% trans "Fire water supply is not present" %}
-                        </h3>
+                        </h4>
                     {% endif %}
                 </div>
             </li>
@@ -129,9 +129,9 @@
                             {% include_hazards 'irrigation' %}
                         {% endif %}
                     {% else %}
-                        <h3 class="uk-text-center uk-margin-large-top">
+                        <h4 class="padding-top uk-text-center">
                             {% trans "Irrigation water supply is not present" %}
-                        </h3>
+                        </h4>
                     {% endif %}
                 </div>
             </li>

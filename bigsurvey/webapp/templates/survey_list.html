@@ -1,11 +1,10 @@
 {% load i18n %}
 {% load boolean_yes_no %}
-<hr>
 {% for survey in surveys %}
-    <div data-uk-toggle="{target:'#survey-{{ survey.pk }}'}">
-        <a class="uk-align-center uk-text-center">
-            <h4>{{ survey.survey_date }}, {{ survey.survey_type }}</h4>
-        </a>
+    <div class="padding-top">
+        <h4 class="uk-align-center uk-text-center">
+            <a data-uk-toggle="{target:'#survey-{{ survey.pk }}'}">{{ survey.survey_date }}, {{ survey.survey_type }}</a>
+        </h4>
     </div>
     <div id="survey-{{ survey.pk }}" class="uk-panel uk-panel-box uk-hidden">
         <a href="#" class="uk-align-right">{% trans "Edit" %}</a>
@@ -52,10 +51,11 @@
             </tbody>
         </table>
     </div>
-    <hr>
 {% endfor %}
 {% if perms.webapp.add_survey %}
     {% if not perms.webapp.add_survey_only_if_doesnt_exist or countlte0 %}
-        <a class="uk-align-center uk-text-center" href="#">{% trans "Add Survey" %}</a>
+        <div class="padding-top">
+            <a class="uk-align-center uk-text-center" href="#">{% trans "Add Survey" %}</a>
+        </div>
     {% endif %}
 {% endif %}

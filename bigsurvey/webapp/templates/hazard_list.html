@@ -1,11 +1,10 @@
 {% load i18n %}
 {% load boolean_yes_no %}
-<hr>
 {% for hazard in hazards %}
-    <div data-uk-toggle="{target:'#hazard-{{ hazard.pk }}'}">
-        <a class="uk-align-center uk-text-center">
-            <h4>{{ hazard.location1 }}, {{ hazard.hazard_type }}</h4>
-        </a>
+    <div class="padding-top">
+        <h4 class="uk-align-center uk-text-center">
+            <a data-uk-toggle="{target:'#hazard-{{ hazard.pk }}'}">{{ hazard.location1 }}, {{ hazard.hazard_type }}</a>
+        </h4>
     </div>
     <div id="hazard-{{ hazard.pk }}" class="uk-panel uk-panel-box uk-hidden">
         <a href="#" class="uk-align-right">{% trans "Edit" %}</a>
@@ -68,5 +67,4 @@
             </tbody>
         </table>
     </div>
-    <hr>
 {% endfor %}
