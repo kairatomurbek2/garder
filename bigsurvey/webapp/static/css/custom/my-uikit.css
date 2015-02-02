@@ -6,10 +6,22 @@
     width: 7.142%;
 }
 
-.my-table {
+.table-fixed {
     table-layout: fixed;
 }
 
-.my-alert {
+.alert-padding-top {
     padding-top: 10px;
+}
+
+.table-border-left {
+    border-left: solid 1px darkgray
+}
+
+.table-border-right {
+    border-right: solid 1px darkgray
+}
+
+.table-border-bottom {
+    border-bottom: solid 1px darkgray
 }
