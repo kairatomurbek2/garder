@@ -272,7 +272,7 @@ class SiteStatus(models.Model):
 
 
 class Customer(models.Model):
-    number = models.CharField(max_length=15, verbose_name=_("Number"))
+    number = models.CharField(max_length=15, unique=True, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
     address1 = models.CharField(max_length=100, verbose_name=_("Address 1"))
@@ -392,7 +392,7 @@ class Site(models.Model):
 class Survey(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="surveys")
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="surveys")
-    survey_date = models.DateTimeField(verbose_name=_("Survey Date"))
+    survey_date = models.DateField(verbose_name=_("Survey Date"))
     survey_type = models.ForeignKey(SurveyType, blank=True, null=True, verbose_name=_("Survey Type"),
                                     related_name="surveys")
     surveyor = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Surveyor"), related_name="surveys")
@@ -433,7 +433,7 @@ class Hazard(models.Model):
                                         related_name="hazards")
     installed_properly = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Installed Properly"))
     installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
-    install_date = models.DateTimeField(blank=True, null=True, verbose_name=_("Install Date"))
+    install_date = models.DateField(blank=True, null=True, verbose_name=_("Install Date"))
     replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
     orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
                                     related_name="hazards")
@@ -509,7 +509,7 @@ class Letter(models.Model):
     customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="letters")
     survey = models.ForeignKey(Survey, blank=True, null=True, verbose_name=_("Survey"), related_name="letters")
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
-    date = models.DateTimeField(verbose_name=_("Send Date"), auto_now_add=True)
+    date = models.DateField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
 
     def __unicode__(self):

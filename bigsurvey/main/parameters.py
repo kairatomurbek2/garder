@@ -35,6 +35,14 @@ STATES = (
 )
 
 
+DATE_FILTER_CHOICES = (
+    ('all', 'All'),
+    ('week', 'Next Week'),
+    ('month', 'Next Month'),
+    ('year', 'Next Year'),
+)
+
+
 class Messages:
     class Site:
         adding_success = _('Site was successfully added')
