@@ -10,8 +10,8 @@
     table-layout: fixed;
 }
 
-.alert-padding-top {
-    padding-top: 10px;
+.alert-margin-top {
+    margin-top: 10px;
 }
 
 .table-border-left {

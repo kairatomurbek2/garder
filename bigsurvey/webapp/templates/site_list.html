@@ -5,58 +5,58 @@
 {% include 'messages.html' %}
 
 
-<form action="" method="get" name="site_filter">
+<form action="" method="get" name="site_filter" class="uk-form">
     <div class="table-wrapper">
-    <table class="uk-table">
-        <thead>
-        <tr class="table-border-bottom">
-            <th colspan="12" class="uk-text-center uk-text-large uk-text-primary">
-                {% trans "Filters" %}
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="uk-text-center">
-            <td colspan="4">
-                {% trans "Customer name or account" %}:
-                {{ site_filter.form.customer }}
-            </td>
-            <td colspan="4">
-                {% trans "Site City" %}:
-                {{ site_filter.form.city }}
-            </td>
-            <td colspan="4">
-                {% trans "Site Address" %}:
-                {{ site_filter.form.address }}
-            </td>
-        </tr>
-        <tr class="table-border-bottom uk-text-center">
-            <td colspan="3">
-                {% trans "Site Use" %}:
-                {{ site_filter.form.site_use }}
-            </td>
-            <td colspan="3">
-                {% trans "Site Type" %}:
-                {{ site_filter.form.site_type }}
-            </td>
-            <td colspan="3">
-                {% trans "Site Status" %}:
-                {{ site_filter.form.status }}
-            </td>
-            <td colspan="3">
-                {% trans "Next Survey Date" %}:
-                {{ site_filter.form.next_survey_date }}
-            </td>
-        </tr>
-        <tr>
-            <td colspan="12">
-                <button class="uk-button uk-button-primary uk-align-center" type="submit">
-                    {% trans "Apply Filters" %}
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <table class="uk-table">
+            <thead>
+            <tr class="table-border-bottom">
+                <th colspan="12" class="uk-text-center uk-text-large uk-text-primary">
+                    {% trans "Filters" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="uk-text-center">
+                <td colspan="4">
+                    {% trans "Customer name or account" %}:
+                    {{ site_filter.form.customer }}
+                </td>
+                <td colspan="4">
+                    {% trans "Site City" %}:
+                    {{ site_filter.form.city }}
+                </td>
+                <td colspan="4">
+                    {% trans "Site Address" %}:
+                    {{ site_filter.form.address }}
+                </td>
+            </tr>
+            <tr class="table-border-bottom uk-text-center">
+                <td colspan="3">
+                    {% trans "Site Use" %}:
+                    {{ site_filter.form.site_use }}
+                </td>
+                <td colspan="3">
+                    {% trans "Site Type" %}:
+                    {{ site_filter.form.site_type }}
+                </td>
+                <td colspan="3">
+                    {% trans "Site Status" %}:
+                    {{ site_filter.form.status }}
+                </td>
+                <td colspan="3">
+                    {% trans "Next Survey Date" %}:
+                    {{ site_filter.form.next_survey_date }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12">
+                    <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                        {% trans "Apply Filters" %}
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </form>
 {% paginate %}

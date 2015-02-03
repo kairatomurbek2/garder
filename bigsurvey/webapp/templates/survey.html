@@ -1,1 +1,108 @@
-{{ survey }}
+{% extends 'base.html' %}
+{% load i18n %}
+{% load boolean_yes_no %}
+{% load hazards_for_services %}
+{% block menu %}
+    <li><a href="{% url 'webapp:survey_add' %}">{% trans "Add new" %}</a></li>
+    <li><a href="{% url 'webapp:survey_edit' survey.pk %}">{% trans "Edit" %}</a></li>
+    {% if perms.webapp.access_to_import %}
+        <li><a href="#">{% trans "Import" %}</a></li>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="uk-panel uk-panel-box">
+        <table class="uk-table uk-table-striped">
+            <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Surveyor" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.surveyor.first_name }} {{ survey.surveyor.last_name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Survey Date" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.survey_date }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Survey Type" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.survey_type }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Metered" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.metered|yn }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Pump Present" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.pump_present|yn }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Additives Present" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.additives_present|yn }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "CC Present" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.cc_present|yn }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Auxiliary Water" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.aux_water|yn }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Special" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.special }}</td>
+            </tr>
+            {% if fire %}
+                <tr>
+                    <td class="uk-text-right uk-text-muted">{% trans "Detector Manufacturer" %}</td>
+                    <td class="uk-text-center uk-text-primary">{{ survey.detector_manufacturer }}</td>
+                    <td class="uk-text-right uk-text-muted">{% trans "Detector Model" %}</td>
+                    <td class="uk-text-center uk-text-primary">{{ survey.detector_model }}</td>
+                    <td class="uk-text-right uk-text-muted">{% trans "Detector Serial No." %}</td>
+                    <td class="uk-text-center uk-text-primary">{{ survey.detector_serial_no }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
+                <td class="uk-text-center uk-text-primary" colspan="7">{{ survey.notes }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <h3 class="uk-text-center">{% trans "Hazards" %}</h3>
+    <div id="tab_control" class="uk-tab-center">
+        <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
+            <li class="uk-active">
+                <a href="#">{% trans "Potable" %}</a>
+            </li>
+            <li>
+                <a href="#">{% trans "Fire" %}</a>
+            </li>
+            <li>
+                <a href="#">{% trans "Irrigation" %}</a>
+            </li>
+        </ul>
+    </div>
+    <div id="tab_content">
+        <ul class="uk-switcher uk-margin" id="services">
+            <li>
+                <div id="potable_content">
+                    {% if survey.site.potable_present %}
+                        {% include_hazards 'potable' %}
+                    {% else %}
+                        <h4 class="padding-top uk-text-center">
+                            {% trans "Potable water supply is not present" %}
+                        </h4>
+                    {% endif %}
+                </div>
+            </li>
+            <li>
+                <div id="fire_content">
+                    {% if survey.site.fire_present %}
+                        {% include_hazards 'fire' %}
+                    {% else %}
+                        <h4 class="padding-top uk-text-center">
+                            {% trans "Fire water supply is not present" %}
+                        </h4>
+                    {% endif %}
+                </div>
+            </li>
+            <li>
+                <div id="irrigation_content">
+                    {% if survey.site.irrigation_present %}
+                        {% include_hazards 'irrigation' %}
+                    {% else %}
+                        <h4 class="padding-top uk-text-center">
+                            {% trans "Irrigation water supply is not present" %}
+                        </h4>
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

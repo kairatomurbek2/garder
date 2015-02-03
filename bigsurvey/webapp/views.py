@@ -42,18 +42,18 @@ class ObjectPermissionMixin(object):
 class SiteObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
-        return request.user.has_perm('webapp.browse_all_sites') or \
-               request.user.has_perm('webapp.browse_pws_sites') and obj.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.browse_surv_sites') and obj.inspections.filter(assigned_to=request.user) or \
-               request.user.has_perm('webapp.browse_test_sites') and obj.test_perms.filter(given_to=request.user)
+        return request.user.has_perm('webapp.access_to_all_sites') or \
+               request.user.has_perm('webapp.access_to_pws_sites') and obj.pws == request.user.employee.pws or \
+               request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(assigned_to=request.user) or \
+               request.user.has_perm('webapp.access_to_test_sites') and obj.test_perms.filter(given_to=request.user)
 
 
 class SurveyObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
-        return request.user.has_perm('webapp.browse_all_surveys') or \
-               request.user.has_perm('webapp.browse_pws_surveys') and obj.site.pws == request.user.employee.pws or \
-               obj.surveyor == request.user
+        return request.user.has_perm('webapp.access_to_all_surveys') or \
+               request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws or \
+               request.user.has_perm('webapp.access_to_own_surveys') and obj.surveyor == request.user
 
 
 class HomeView(BaseTemplateView):
@@ -70,15 +70,15 @@ class HomeView(BaseTemplateView):
 
     def _get_sites_for_user(self, user):
         sites = []
-        if user.has_perm('webapp.browse_test_sites'):
+        if user.has_perm('webapp.access_to_test_sites'):
             permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
             sites = self._filter_sites_by_related(permissions)
-        if user.has_perm('webapp.browse_surv_sites'):
+        if user.has_perm('webapp.access_to_survey_sites'):
             inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
             sites = self._filter_sites_by_related(inspections)
-        if user.has_perm('webapp.browse_pws_sites'):
+        if user.has_perm('webapp.access_to_pws_sites'):
             sites = models.Site.objects.filter(pws=user.employee.pws)
-        if user.has_perm('webapp.browse_all_sites'):
+        if user.has_perm('webapp.access_to_all_sites'):
             sites = models.Site.objects.all()
         return sites
 
@@ -265,6 +265,15 @@ class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
     def get_context_data(self, **kwargs):
         context = super(SurveyDetailView, self).get_context_data(**kwargs)
         context['survey'] = models.Survey.objects.get(pk=self.kwargs['pk'])
-        #if not self.has_perm(self.request, context['survey']):
-            #raise Http404
+        if not self.has_perm(self.request, context['survey']):
+            raise Http404
+        context['site'] = context['survey'].site
         return context
+
+
+class SurveyAddView(BaseView, CreateView):
+    pass
+
+
+class SurveyEditView(BaseView, UpdateView, SurveyObjectPermissionMixin):
+    pass

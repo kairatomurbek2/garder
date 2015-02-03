@@ -53,9 +53,11 @@
     </div>
 {% endfor %}
 {% if perms.webapp.add_survey %}
-    {% if not perms.webapp.add_survey_only_if_doesnt_exist or countlte0 %}
+    {% if perms.webapp.add_many_surveys_per_site or countlte0 %}
         <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="#">{% trans "Add Survey" %}</a>
+            <a class="uk-align-center uk-text-center" href="#">
+                <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
+            </a>
         </div>
     {% endif %}
 {% endif %}

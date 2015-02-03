@@ -68,3 +68,10 @@
         </table>
     </div>
 {% endfor %}
+{% if perms.webapp.add_hazard %}
+    <div class="padding-top">
+        <a class="uk-align-center uk-text-center" href="#">
+            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
+        </a>
+    </div>
+{% endif %}

@@ -267,7 +267,7 @@ class SiteStatus(models.Model):
         verbose_name = _('Site Status')
         verbose_name_plural = _('Site Status')
         permissions = (
-            ('browse_site_status', _('Can browse Site Status')),
+            ('browse_sitestatus', _('Can browse Site Status')),
         )
 
 
@@ -378,10 +378,10 @@ class Site(models.Model):
         verbose_name_plural = _("Sites")
         permissions = (
             ('browse_site', _('Can browse Site')),
-            ('browse_all_sites', _('Can browse all Sites')),
-            ('browse_pws_sites', _('Can browse Sites from his PWS')),
-            ('browse_surv_sites', _('Can browse Sites that he inspects')),
-            ('browse_test_sites', _('Can browse Sites that he tests')),
+            ('access_to_all_sites', _('Can browse all Sites')),
+            ('access_to_pws_sites', _('Has access to his PWS\'s Sites')),
+            ('access_to_survey_sites', _('Has access to Sites that he inspects')),
+            ('access_to_test_sites', _('Has access to Sites that he tests')),
             ('access_to_import', _('Can import Sites from Excel file')),
             ('assign_surveyor', _('Can assign Surveyor to Site')),
             ('assign_tester', _('Can assign Tester to Site')),
@@ -418,14 +418,17 @@ class Survey(models.Model):
         get_latest_by = 'survey_date'
         permissions = (
             ('browse_survey', _('Can browse Survey')),
-            ('add_survey_only_if_doesnt_exist', _('Can add Survey only if it doesnt exist'))
+            ('access_to_all_surveys', _('Has access to all Surveys')),
+            ('access_to_pws_surveys', _('Has access to to his PWS\'s Surveys')),
+            ('access_to_own_surveys', _('Has access to to own Surveys')),
+            ('add_many_surveys_per_site', _('Can add many Surveys per Site'))
         )
 
 
 class Hazard(models.Model):
     survey = models.ForeignKey(Survey, verbose_name=_("Survey"), related_name="hazards")
-    location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("location 1"))
-    location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("location 2"))
+    location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
+    location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
     assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
                                           related_name="hazards")
@@ -458,6 +461,10 @@ class Hazard(models.Model):
         verbose_name_plural = _("Hazards")
         permissions = (
             ('browse_hazard', _('Can browse Hazard')),
+            ('access_to_all_hazards', _('Has access to to all Hazards')),
+            ('access_to_pws_hazards', _('Has access to to his PWS\'s Hazards')),
+            ('access_to_own_hazards', _('Has access to to his own Hazards')),
+            ('access_to_site_hazards', _('Has access to to Site\'s Hazards'))
         )
 
 
@@ -502,6 +509,9 @@ class Test(models.Model):
         verbose_name_plural = _("Tests")
         permissions = (
             ('browse_test', _('Can browse Test')),
+            ('access_to_all_tests', _('Has access to to all Tests')),
+            ('access_to_pws_tests', _('Has access to to his PWS\'s Tests')),
+            ('access_to_own_tests', _('Has access to to his own Tests')),
         )
 
 

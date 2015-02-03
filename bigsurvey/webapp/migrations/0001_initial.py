@@ -150,8 +150,8 @@ class Migration(migrations.Migration):
             name='Hazard',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('location1', models.CharField(max_length=70, null=True, verbose_name='location 1', blank=True)),
-                ('location2', models.CharField(max_length=70, null=True, verbose_name='location 2', blank=True)),
+                ('location1', models.CharField(max_length=70, null=True, verbose_name='Location 1', blank=True)),
+                ('location2', models.CharField(max_length=70, null=True, verbose_name='Location 2', blank=True)),
                 ('installed_properly', models.BooleanField(default=False, verbose_name='Installed Properly', choices=[(True, b'Yes'), (False, b'No')])),
                 ('installer', models.CharField(max_length=30, null=True, verbose_name='Installer', blank=True)),
                 ('install_date', models.DateField(null=True, verbose_name='Install Date', blank=True)),
@@ -169,7 +169,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Hazard',
                 'verbose_name_plural': 'Hazards',
-                'permissions': (('browse_hazard', 'Can browse Hazard'),),
+                'permissions': (('browse_hazard', 'Can browse Hazard'), ('access_to_all_hazards', 'Has access to all Hazards'), ('access_to_pws_hazards', "Has access to his PWS's Hazards"), ('access_to_own_hazards', 'Has access to his own Hazards')),
             },
             bases=(models.Model,),
         ),
@@ -334,7 +334,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site',
                 'verbose_name_plural': 'Sites',
-                'permissions': (('browse_site', 'Can browse Site'), ('browse_all_sites', 'Can browse all Sites'), ('browse_pws_sites', 'Can browse Sites from his PWS'), ('browse_surv_sites', 'Can browse Sites that he inspects'), ('browse_test_sites', 'Can browse Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site')),
+                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Can browse all Sites'), ('access_to_pws_sites', "Can access his PWS's Sites"), ('access_to_survey_sites', 'Can access Sites that he inspects'), ('access_to_test_sites', 'Can access Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site')),
             },
             bases=(models.Model,),
         ),
@@ -347,7 +347,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site Status',
                 'verbose_name_plural': 'Site Status',
-                'permissions': (('browse_site_status', 'Can browse Site Status'),),
+                'permissions': (('browse_sitestatus', 'Can browse Site Status'),),
             },
             bases=(models.Model,),
         ),
@@ -426,7 +426,7 @@ class Migration(migrations.Migration):
                 'get_latest_by': 'survey_date',
                 'verbose_name': 'Survey',
                 'verbose_name_plural': 'Surveys',
-                'permissions': (('browse_survey', 'Can browse Survey'), ('add_survey_only_if_doesnt_exist', 'Can add Survey only if it doesnt exist')),
+                'permissions': (('browse_survey', 'Can browse Survey'), ('access_to_all_surveys', 'Can access all Surveys'), ('access_to_pws_surveys', "Can access to his PWS's Surveys"), ('access_to_own_surveys', 'Can access to own Surveys'), ('add_many_surveys_per_site', 'Can add many Surveys per Site')),
             },
             bases=(models.Model,),
         ),
@@ -478,7 +478,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Test',
                 'verbose_name_plural': 'Tests',
-                'permissions': (('browse_test', 'Can browse Test'),),
+                'permissions': (('browse_test', 'Can browse Test'), ('access_to_all_tests', 'Has access to all Tests'), ('access_to_pws_tests', "Has access to his PWS's Tests"), ('access_to_own_tests', 'Has access to his own Tests')),
             },
             bases=(models.Model,),
         ),
