@@ -2,26 +2,34 @@ import django_filters
 import models
 from main.parameters import DATE_FILTER_CHOICES
 from datetime import datetime, timedelta
+from django.utils.translation import ugettext_lazy as _
 
 
 def site_status_choices():
-    choices = [('', 'All')]
+    choices = [('', _('All'))]
     for status in models.SiteStatus.objects.all():
         choices.append((status.pk, status.site_status))
     return choices
 
 
 def site_use_choices():
-    choices = [('', 'All')]
+    choices = [('', _('All'))]
     for site_use in models.SiteUse.objects.all().order_by('site_use'):
         choices.append((site_use.pk, site_use.site_use))
     return choices
 
 
 def site_type_choices():
-    choices = [('', 'All')]
+    choices = [('', _('All'))]
     for site_type in models.SiteType.objects.all().order_by('site_type'):
         choices.append((site_type.pk, site_type.site_type))
+    return choices
+
+
+def pws_choices():
+    choices = [('', _('All'))]
+    for pws in models.PWS.objects.all().order_by('name'):
+        choices.append((pws.pk, pws.name))
     return choices
 
 
@@ -47,22 +55,25 @@ def next_date_filter(sites, value):
 
 
 class SiteFilter(django_filters.FilterSet):
-    customer = django_filters.CharFilter(label='', action=customer_filter)
-    city = django_filters.CharFilter(lookup_type='icontains', label='')
-    address = django_filters.CharFilter(lookup_type='icontains', label='', name='address1')
-    site_type = django_filters.ChoiceFilter(choices=site_type_choices(), label='')
-    site_use = django_filters.ChoiceFilter(choices=site_use_choices(), label='')
-    status = django_filters.ChoiceFilter(choices=site_status_choices(), label='')
-    next_survey_date = django_filters.ChoiceFilter(choices=DATE_FILTER_CHOICES, action=next_date_filter, label='')
+    customer = django_filters.CharFilter(label=_('Customer Name or Account'), action=customer_filter)
+    city = django_filters.CharFilter(lookup_type='icontains', label=_('Site City'))
+    address = django_filters.CharFilter(lookup_type='icontains', label=_('Site Address'), name='address1')
+    pws = django_filters.ChoiceFilter(choices=pws_choices(), label=_('PWS'))
+    site_type = django_filters.ChoiceFilter(choices=site_type_choices(), label=_('Site Type'))
+    site_use = django_filters.ChoiceFilter(choices=site_use_choices(), label=_('Site Use'))
+    status = django_filters.ChoiceFilter(choices=site_status_choices(), label=_('Site Status'))
+    next_survey_date = django_filters.ChoiceFilter(choices=DATE_FILTER_CHOICES, action=next_date_filter,
+                                                   label=_('Next Survey Date'))
 
     class Meta:
         models = models.Site
         fields = [
             'customer',
             'city',
+            'pws',
             'address1',
             'site_use',
             'site_type',
             'status',
-            'next_survey_date'
+            'next_survey_date',
         ]

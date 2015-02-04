@@ -1,3 +1,4 @@
+@site_list
 Feature: Site list
 
 

@@ -1,3 +1,4 @@
+@site_detail
 Feature: Site detail
 
 
@@ -31,7 +32,7 @@ Feature: Site detail
             | Commit          |
         And I should see following text in following services
             | service    | text                             |
-            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | potable    | Jan. 26, 2015, Annual            |
             | potable    | Add Survey                       |
             | fire       | Fire water supply is not present |
             | irrigation | Add Survey                       |
@@ -53,7 +54,7 @@ Feature: Site detail
             | Commit          |
         And I should see following text in following services
             | service    | text                             |
-            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | potable    | Jan. 26, 2015, Annual            |
             | potable    | Add Survey                       |
             | fire       | Fire water supply is not present |
             | irrigation | Add Survey                       |
@@ -77,7 +78,7 @@ Feature: Site detail
             | Edit Site       |
         And I should see following text in following services
             | service    | text                             |
-            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
+            | potable    | Jan. 26, 2015, Annual            |
             | fire       | Fire water supply is not present |
             | irrigation | Add Survey                       |
         And I should not see following text in following services
@@ -104,8 +105,8 @@ Feature: Site detail
             | potable | Seattle, Digester                |
             | fire    | Fire water supply is not present |
         And I should not see following text in following services
-            | service    | text                             |
-            | potable    | Jan. 26, 2015, 4:20 a.m., Annual |
-            | potable    | Add Survey                       |
-            | fire       | Add Survey                       |
-            | irrigation | Add Survey                       |
+            | service    | text                  |
+            | potable    | Jan. 26, 2015, Annual |
+            | potable    | Add Survey            |
+            | fire       | Add Survey            |
+            | irrigation | Add Survey            |

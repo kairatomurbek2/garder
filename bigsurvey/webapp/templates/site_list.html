@@ -10,46 +10,68 @@
         <table class="uk-table">
             <thead>
             <tr class="table-border-bottom">
-                <th colspan="12" class="uk-text-center uk-text-large uk-text-primary">
+                <th colspan="8" class="uk-text-center uk-text-large uk-text-primary">
                     {% trans "Filters" %}
                 </th>
             </tr>
             </thead>
             <tbody>
-            <tr class="uk-text-center">
-                <td colspan="4">
-                    {% trans "Customer name or account" %}:
-                    {{ site_filter.form.customer }}
+            <tr class="uk-text-right">
+                <td>
+                    {{ site_filter.form.customer.label }}:
                 </td>
-                <td colspan="4">
-                    {% trans "Site City" %}:
-                    {{ site_filter.form.city }}
+                <td>
+                    {{ site_filter.form.customer|add_class:"uk-width-1-1" }}
                 </td>
-                <td colspan="4">
-                    {% trans "Site Address" %}:
-                    {{ site_filter.form.address }}
+                {% if perms.access_to_all_sites %}
+                    <td>
+                        {{ site_filter.form.pws.label }}
+                    </td>
+                    <td>
+                        {{ site_filter.form.pws|add_class:"uk-width-1-1" }}
+                    </td>
+                {% endif %}
+                <td>
+                    {{ site_filter.form.city.label }}
+                </td>
+                <td>
+                    {{ site_filter.form.city|add_class:"uk-width-1-1" }}
+                </td>
+                <td>
+                    {{ site_filter.form.address.label }}
+                </td>
+                <td>
+                    {{ site_filter.form.address|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
-            <tr class="table-border-bottom uk-text-center">
-                <td colspan="3">
-                    {% trans "Site Use" %}:
-                    {{ site_filter.form.site_use }}
+            <tr class="table-border-bottom uk-text-right">
+                <td>
+                    {{ site_filter.form.site_use.label }}
                 </td>
-                <td colspan="3">
-                    {% trans "Site Type" %}:
-                    {{ site_filter.form.site_type }}
+                <td>
+                    {{ site_filter.form.site_use|add_class:"uk-width-1-1" }}
                 </td>
-                <td colspan="3">
-                    {% trans "Site Status" %}:
-                    {{ site_filter.form.status }}
+                <td>
+                    {{ site_filter.form.site_type.label }}
                 </td>
-                <td colspan="3">
-                    {% trans "Next Survey Date" %}:
-                    {{ site_filter.form.next_survey_date }}
+                <td>
+                    {{ site_filter.form.site_type|add_class:"uk-width-1-1" }}
+                </td>
+                <td>
+                    {{ site_filter.form.status.label }}
+                </td>
+                <td>
+                    {{ site_filter.form.status|add_class:"uk-width-1-1" }}
+                </td>
+                <td>
+                    {{ site_filter.form.next_survey_date.label }}
+                </td>
+                <td>
+                    {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
             <tr>
-                <td colspan="12">
+                <td colspan="8">
                     <button class="uk-button uk-button-primary uk-align-center" type="submit">
                         {% trans "Apply Filters" %}
                     </button>
@@ -72,6 +94,9 @@
             </th>
             <th>
                 {% trans "Customer" %}
+            </th>
+            <th>
+                {% trans "PWS" %}
             </th>
             <th>
                 {% trans "Site Use" %}
@@ -101,6 +126,9 @@
                 </td>
                 <td>
                     {{ site.customer.number }}, {{ site.customer.name }}
+                </td>
+                <td>
+                    {{ site.pws.name }}
                 </td>
                 <td>
                     {{ site.site_use }}
