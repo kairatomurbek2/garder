@@ -55,7 +55,7 @@
 {% if perms.webapp.add_survey %}
     {% if perms.webapp.add_many_surveys_per_site or countlte0 %}
         <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="#">
+            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service_type_pk %}">
                 <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
             </a>
         </div>

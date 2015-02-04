@@ -1,5 +1,6 @@
 from django import forms
 import models
+from main.parameters import Groups
 
 
 class PWSForm(forms.ModelForm):
@@ -17,3 +18,11 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = models.Site
+
+
+class SurveyForm(forms.ModelForm):
+    surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor), empty_label=None)
+
+    class Meta:
+        model = models.Survey
+        exclude = ('site', 'service_type')

@@ -3,7 +3,6 @@
 {% load boolean_yes_no %}
 {% load hazards_for_services %}
 {% block menu %}
-    <li><a href="{% url 'webapp:survey_add' %}">{% trans "Add new" %}</a></li>
     <li><a href="{% url 'webapp:survey_edit' survey.pk %}">{% trans "Edit" %}</a></li>
     {% if perms.webapp.access_to_import %}
         <li><a href="#">{% trans "Import" %}</a></li>
@@ -13,6 +12,14 @@
     <div class="uk-panel uk-panel-box">
         <table class="uk-table uk-table-striped">
             <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.site }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.site.pws }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Service Type" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.service_type }}</td>
+            </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Surveyor" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.surveyor.first_name }} {{ survey.surveyor.last_name }}</td>
@@ -55,54 +62,7 @@
         </table>
     </div>
     <h3 class="uk-text-center">{% trans "Hazards" %}</h3>
-    <div id="tab_control" class="uk-tab-center">
-        <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
-            <li class="uk-active">
-                <a href="#">{% trans "Potable" %}</a>
-            </li>
-            <li>
-                <a href="#">{% trans "Fire" %}</a>
-            </li>
-            <li>
-                <a href="#">{% trans "Irrigation" %}</a>
-            </li>
-        </ul>
-    </div>
-    <div id="tab_content">
-        <ul class="uk-switcher uk-margin" id="services">
-            <li>
-                <div id="potable_content">
-                    {% if survey.site.potable_present %}
-                        {% include_hazards 'potable' %}
-                    {% else %}
-                        <h4 class="padding-top uk-text-center">
-                            {% trans "Potable water supply is not present" %}
-                        </h4>
-                    {% endif %}
-                </div>
-            </li>
-            <li>
-                <div id="fire_content">
-                    {% if survey.site.fire_present %}
-                        {% include_hazards 'fire' %}
-                    {% else %}
-                        <h4 class="padding-top uk-text-center">
-                            {% trans "Fire water supply is not present" %}
-                        </h4>
-                    {% endif %}
-                </div>
-            </li>
-            <li>
-                <div id="irrigation_content">
-                    {% if survey.site.irrigation_present %}
-                        {% include_hazards 'irrigation' %}
-                    {% else %}
-                        <h4 class="padding-top uk-text-center">
-                            {% trans "Irrigation water supply is not present" %}
-                        </h4>
-                    {% endif %}
-                </div>
-            </li>
-        </ul>
+    <div>
+        {% include_hazards survey.service_type %}
     </div>
 {% endblock %}

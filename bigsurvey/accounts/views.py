@@ -24,6 +24,7 @@ class LoginView(View):
         form = self.form_class(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return HttpResponseRedirect(reverse('webapp:home'))
+            print request.GET.items()
+            return HttpResponseRedirect(request.GET.get('next', reverse('webapp:home')))
 
         return render(request, self.template_name, {'form': form})

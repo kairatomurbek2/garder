@@ -8,7 +8,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from abc import ABCMeta, abstractmethod
 from django.contrib import messages
-from main.parameters import Messages
+from main.parameters import Messages, Groups
 
 
 class AccessRequiredMixin(View):
@@ -84,9 +84,7 @@ class HomeView(BaseTemplateView):
 
     @staticmethod
     def _filter_sites_by_related(related):
-        site_pks = []
-        for obj in related:
-            site_pks.append(obj.site.pk)
+        site_pks = [obj.site.pk for obj in related]
         return models.Site.objects.filter(pk__in=site_pks)
 
 
@@ -110,7 +108,7 @@ class SiteAddView(BaseView, CreateView):
 
     def get_form(self, form_class):
         form = super(SiteAddView, self).get_form(form_class)
-        if not self.request.user.has_perm('webapp.browse_all_sites'):
+        if not self.request.user.has_perm('webapp.access_to_all_sites'):
             form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         return form
 
@@ -140,7 +138,7 @@ class SiteEditView(BaseView, UpdateView, SiteObjectPermissionMixin):
 
     def get_form(self, form_class):
         form = super(SiteEditView, self).get_form(form_class)
-        if not self.request.user.has_perm('webapp.browse_all_sites'):
+        if not self.request.user.has_perm('webapp.access_to_all_sites'):
             form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         return form
 
@@ -272,7 +270,34 @@ class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
 
 
 class SurveyAddView(BaseView, CreateView):
-    pass
+    template_name = 'survey_form.html'
+    form_class = forms.SurveyForm
+    model = models.Survey
+    permission = 'webapp.add_survey'
+
+    def get_success_url(self):
+        return reverse('webapp:survey_detail', args=(self.kwargs['pk'],))
+
+    def get_form(self, form_class):
+        form = super(SurveyAddView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_own_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
+        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        return form
+
+    def form_valid(self, form):
+        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not SiteObjectPermissionMixin.has_perm(self.request, form.instance.site):
+            raise Http404
+        form.instance.service_type = models.ServiceType.objects.get(pk=self.kwargs['service_type_pk'])
+        return super(SurveyAddView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        # messages.error(self.request, Messages.Customer.adding_error)
+        return super(SurveyAddView, self).form_invalid(form)
 
 
 class SurveyEditView(BaseView, UpdateView, SurveyObjectPermissionMixin):

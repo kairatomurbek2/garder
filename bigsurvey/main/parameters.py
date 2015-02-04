@@ -34,13 +34,19 @@ STATES = (
     ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'),
 )
 
-
 DATE_FILTER_CHOICES = (
     ('all', 'All'),
     ('week', 'Next Week'),
     ('month', 'Next Month'),
     ('year', 'Next Year'),
 )
+
+
+class Groups:
+    superadmin = 'SuperAdministrators'
+    admin = 'Administrators'
+    surveyor = 'Surveyors'
+    tester = 'Testers'
 
 
 class Messages:

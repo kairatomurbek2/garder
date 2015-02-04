@@ -378,7 +378,7 @@ class Site(models.Model):
         verbose_name_plural = _("Sites")
         permissions = (
             ('browse_site', _('Can browse Site')),
-            ('access_to_all_sites', _('Can browse all Sites')),
+            ('access_to_all_sites', _('Has access all Sites')),
             ('access_to_pws_sites', _('Has access to his PWS\'s Sites')),
             ('access_to_survey_sites', _('Has access to Sites that he inspects')),
             ('access_to_test_sites', _('Has access to Sites that he tests')),
