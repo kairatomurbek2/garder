@@ -276,7 +276,7 @@ class SurveyAddView(BaseView, CreateView):
     permission = 'webapp.add_survey'
 
     def get_success_url(self):
-        return reverse('webapp:survey_detail', args=(self.kwargs['pk'],))
+        return reverse('webapp:site_detail', args=(self.kwargs['pk'],))
 
     def get_form(self, form_class):
         form = super(SurveyAddView, self).get_form(form_class)
@@ -293,12 +293,37 @@ class SurveyAddView(BaseView, CreateView):
         if not SiteObjectPermissionMixin.has_perm(self.request, form.instance.site):
             raise Http404
         form.instance.service_type = models.ServiceType.objects.get(pk=self.kwargs['service_type_pk'])
+        messages.success(self.request, Messages.Survey.adding_success)
         return super(SurveyAddView, self).form_valid(form)
 
     def form_invalid(self, form):
-        # messages.error(self.request, Messages.Customer.adding_error)
+        messages.error(self.request, Messages.Survey.adding_error)
         return super(SurveyAddView, self).form_invalid(form)
 
 
 class SurveyEditView(BaseView, UpdateView, SurveyObjectPermissionMixin):
-    pass
+    template_name = 'survey_form.html'
+    form_class = forms.SurveyForm
+    model = models.Survey
+    permission = 'webapp.add_survey'
+
+    def get_success_url(self):
+        return reverse('webapp:survey_detail', args=(self.object.pk,))
+
+    def get_form(self, form_class):
+        form = super(SurveyEditView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_own_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
+        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        return form
+
+    def form_valid(self, form):
+        messages.success(self.request, Messages.Survey.editing_success)
+        return super(SurveyEditView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, Messages.Survey.editing_error)
+        return super(SurveyEditView, self).form_invalid(form)

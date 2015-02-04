@@ -9,8 +9,9 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    <div class="uk-panel uk-panel-box">
-        <table class="uk-table uk-table-striped">
+    <div class="table-wrapper">
+        {% include 'messages.html' %}
+        <table class="uk-table">
             <tbody>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
