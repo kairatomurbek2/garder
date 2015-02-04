@@ -3,11 +3,13 @@
 {% for survey in surveys %}
     <div class="padding-top">
         <h4 class="uk-align-center uk-text-center">
-            <a data-uk-toggle="{target:'#survey-{{ survey.pk }}'}">{{ survey.survey_date }}, {{ survey.survey_type }}</a>
+            <button class="uk-button uk-text-primary" data-uk-toggle="{target:'#survey-{{ survey.pk }}'}">
+                {{ survey.survey_date }}, {{ survey.survey_type }}
+            </button>
+            (<a href="{% url "webapp:survey_edit" survey.pk %}">{% trans "Edit" %}</a>)
         </h4>
     </div>
     <div id="survey-{{ survey.pk }}" class="uk-panel uk-panel-box uk-hidden">
-        <a href="#" class="uk-align-right">{% trans "Edit" %}</a>
         <table class="uk-table">
             <tbody>
             <tr>
@@ -55,7 +57,7 @@
 {% if perms.webapp.add_survey %}
     {% if perms.webapp.add_many_surveys_per_site or countlte0 %}
         <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service_type_pk %}">
+            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}">
                 <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
             </a>
         </div>

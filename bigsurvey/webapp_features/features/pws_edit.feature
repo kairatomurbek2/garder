@@ -1,3 +1,4 @@
+@pws_edit
 Feature: PWS editing
 
 

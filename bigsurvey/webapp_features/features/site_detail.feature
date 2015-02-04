@@ -28,7 +28,7 @@ Feature: Site detail
             | Gabe Newell     |
             | Assign Surveyor |
             | Assign Tester   |
-            | Edit Site       |
+            | Edit            |
             | Commit          |
         And I should see following text in following services
             | service    | text                             |
@@ -50,7 +50,7 @@ Feature: Site detail
             | Gabe Newell     |
             | Assign Surveyor |
             | Assign Tester   |
-            | Edit Site       |
+            | Edit            |
             | Commit          |
         And I should see following text in following services
             | service    | text                             |

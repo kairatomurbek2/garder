@@ -278,6 +278,11 @@ class SurveyAddView(BaseView, CreateView):
     def get_success_url(self):
         return reverse('webapp:site_detail', args=(self.kwargs['pk'],))
 
+    def get_context_data(self, **kwargs):
+        context = super(SurveyAddView, self).get_context_data(**kwargs)
+        context['site_id'] = self.kwargs['pk']
+        return context
+
     def get_form(self, form_class):
         form = super(SurveyAddView, self).get_form(form_class)
         if self.request.user.has_perm('webapp.access_to_own_surveys'):
@@ -292,7 +297,9 @@ class SurveyAddView(BaseView, CreateView):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         if not SiteObjectPermissionMixin.has_perm(self.request, form.instance.site):
             raise Http404
-        form.instance.service_type = models.ServiceType.objects.get(pk=self.kwargs['service_type_pk'])
+        form.instance.service_type = models.ServiceType.objects.filter(
+            service_type__icontains=self.kwargs['service']
+        )[0]
         messages.success(self.request, Messages.Survey.adding_success)
         return super(SurveyAddView, self).form_valid(form)
 

@@ -14,14 +14,14 @@ class Urls:
     site_list = '/'
     site_detail = '/site/%s/'
     site_add = '/site/add/'
-    site_edit = '/site/edit/%s/'
+    site_edit = '/site/%s/edit/'
     pws_list = '/pws/'
     pws_add = '/pws/add/'
-    pws_edit = '/pws/edit/%s/'
+    pws_edit = '/pws/%s/edit/'
     customer_list = '/customer/'
     customer_detail = '/customer/%s/'
     customer_add = '/customer/add/'
-    customer_edit = '/customer/edit/%s/'
+    customer_edit = '/customer/%s/edit/'
 
 
 class Logins:

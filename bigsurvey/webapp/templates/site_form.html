@@ -2,8 +2,11 @@
 {% load widget_tweaks %}
 {% load i18n %}
 {% block menu %}
-    <li><a href="{% url 'webapp:site_add' %}">{% trans "Add new" %}</a></li>
-    <li><a href="{% url 'webapp:home' %}">{% trans "List" %}</a></li>
+    {% if site.pk %}
+        <li><a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Cancel" %}</a></li>
+    {% else %}
+        <li><a href="{% url 'webapp:home' %}">{% trans "Cancel" %}</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="table-wrapper">

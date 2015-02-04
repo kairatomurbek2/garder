@@ -14,5 +14,5 @@ def include_surveys(context, service_type):
         context['countlte0'] = False
     if service_type == 'fire':
         context['fire'] = True
-    context['service_type_pk'] = models.ServiceType.objects.get(service_type=service_type).pk
+    context['service'] = service_type
     return context

@@ -5,17 +5,16 @@
 {% load hazards_for_services %}
 
 {% block menu %}
-    <li><a href="{% url 'webapp:customer_add' %}">{% trans "Add new" %}</a></li>
     <li><a href="{% url 'webapp:customer_edit' customer.pk %}">{% trans "Edit" %}</a></li>
-    <li><a href="{% url 'webapp:customer_list' %}">{% trans "List" %}</a></li>
-    <li><a href="#">{% trans "Import" %}</a></li>
+    <li><a href="#">{% trans "Send Letter" %}</a></li>
+    <li><a href="{% url 'webapp:customer_list' %}">{% trans "Customer List" %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="table-wrapper">
         <table class="uk-table">
             <tbody>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Number" %}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Account Number" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ customer.number }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Name" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ customer.name }}</td>

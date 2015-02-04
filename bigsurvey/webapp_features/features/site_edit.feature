@@ -1,3 +1,4 @@
+@site_edit
 Feature: Site editing
 
 

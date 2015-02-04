@@ -1,3 +1,4 @@
+@customer_edit
 Feature: Customer editing
 
 

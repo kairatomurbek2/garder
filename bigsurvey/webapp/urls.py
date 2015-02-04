@@ -15,6 +15,6 @@ urlpatterns = patterns(
     url(r'^customer/add/$', views.CustomerAddView.as_view(), name="customer_add"),
     url(r'^customer/(?P<pk>\d+)/edit/$', views.CustomerEditView.as_view(), name="customer_edit"),
     url(r'^survey/(?P<pk>\d+)/$', views.SurveyDetailView.as_view(), name="survey_detail"),
-    url(r'^site/(?P<pk>\d+)/service/(?P<service_type_pk>\d+)/addsurvey/$', views.SurveyAddView.as_view(), name="survey_add"),
+    url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/addsurvey/$', views.SurveyAddView.as_view(), name="survey_add"),
     url(r'^survey/(?P<pk>\d+)/edit/$', views.SurveyEditView.as_view(), name="survey_edit"),
 )

@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% load i18n %}
+{% block menu %}
+    <li>
+    {% if survey.site %}
+        <a href="{% url 'webapp:site_detail' survey.site.pk %}">{% trans "Cancel" %}</a>
+    {% else %}
+        <a href="{% url 'webapp:site_detail' site_id %}">{% trans "Cancel" %}</a>
+    {% endif %}
+    </li>
+{% endblock %}
 {% block content %}
     <div class="table-wrapper">
         {% include 'messages.html' %}
