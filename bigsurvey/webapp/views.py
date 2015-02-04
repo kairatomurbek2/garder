@@ -3,7 +3,7 @@ import models
 import forms
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from filters import SiteFilter
+from filters import SiteFilter, CustomerFilter
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from abc import ABCMeta, abstractmethod
@@ -201,12 +201,14 @@ class PWSEditView(BaseView, UpdateView):
 
 
 class CustomerView(BaseTemplateView):
-    template_name = 'customer_list.html'
+    template_name = 'customer_base.html'
     permission = 'webapp.browse_customer'
 
     def get_context_data(self, **kwargs):
         context = super(CustomerView, self).get_context_data(**kwargs)
-        context['customer_list'] = models.Customer.objects.all()
+        customers = models.Customer.objects.all()
+        customer_filter = CustomerFilter(self.request.GET, queryset=customers)
+        context['customer_filter'] = customer_filter
         return context
 
 
