@@ -17,4 +17,7 @@ urlpatterns = patterns(
     url(r'^survey/(?P<pk>\d+)/$', views.SurveyDetailView.as_view(), name="survey_detail"),
     url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/addsurvey/$', views.SurveyAddView.as_view(), name="survey_add"),
     url(r'^survey/(?P<pk>\d+)/edit/$', views.SurveyEditView.as_view(), name="survey_edit"),
+    url(r'^hazard/(?P<pk>\d+)/$', views.HazardDetailView.as_view(), name="hazard_detail"),
+    url(r'^survey/(?P<pk>\d+)/addhazard/$', views.HazardAddView.as_view(), name="hazard_add"),
+    url(r'^hazard/(?P<pk>\d+)/edit/$', views.HazardEditView.as_view(), name="hazard_edit"),
 )

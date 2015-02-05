@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView, View, CreateView, UpdateView
+from django.views.generic.edit import ModelFormMixin, ProcessFormView
 import models
 import forms
 from django.contrib.auth.decorators import login_required
@@ -30,6 +31,21 @@ class BaseTemplateView(BaseView, TemplateView):
     pass
 
 
+class BaseFormView(BaseView, ModelFormMixin, ProcessFormView):
+    success_message = None
+    error_message = None
+
+    def form_valid(self, form):
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return super(BaseFormView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        if self.error_message:
+            messages.error(self.request, self.error_message)
+        return super(BaseFormView, self).form_invalid(form)
+
+
 class ObjectPermissionMixin(object):
     __metaclass__ = ABCMeta
 
@@ -54,6 +70,15 @@ class SurveyObjectPermissionMixin(ObjectPermissionMixin):
         return request.user.has_perm('webapp.access_to_all_surveys') or \
                request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws or \
                request.user.has_perm('webapp.access_to_own_surveys') and obj.surveyor == request.user
+
+
+class HazardObjectPermissionMixin(ObjectPermissionMixin):
+    @staticmethod
+    def has_perm(request, obj):
+        return request.user.has_perm('webapp.access_to_all_hazards') or \
+               request.user.has_perm('webapp.access_to_pws_hazards') and obj.survey.site.pws == request.user.employee.pws or \
+               request.user.has_perm('webapp.access_to_own_hazards') and obj.survey.surveyor == request.user or \
+               request.user.has_perm('webapp.access_to_site_hazards') and models.TestPermission.objects.filter(site=obj.survey.site, given_to=request.user)
 
 
 class HomeView(BaseTemplateView):
@@ -100,58 +125,37 @@ class SiteDetailView(BaseTemplateView, SiteObjectPermissionMixin):
         return context
 
 
-class SiteAddView(BaseView, CreateView):
+class SiteBaseFormView(BaseFormView):
     template_name = 'site_form.html'
     form_class = forms.SiteForm
     model = models.Site
-    permission = 'webapp.add_site'
 
     def get_form(self, form_class):
-        form = super(SiteAddView, self).get_form(form_class)
+        form = super(SiteBaseFormView, self).get_form(form_class)
         if not self.request.user.has_perm('webapp.access_to_all_sites'):
             form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         return form
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.Site.adding_success)
-        return super(SiteAddView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.Site.adding_error)
-        return super(SiteAddView, self).form_invalid(form)
 
     def get_success_url(self):
         return reverse('webapp:home')
 
 
-class SiteEditView(BaseView, UpdateView, SiteObjectPermissionMixin):
-    template_name = 'site_form.html'
-    form_class = forms.SiteForm
-    model = models.Site
-    permission = 'webapp.change_site'
+class SiteAddView(SiteBaseFormView, CreateView):
+    permission = 'webapp.add_site'
+    success_message = Messages.Site.adding_success
+    error_message = Messages.Site.adding_error
 
-    def get_context_data(self, **kwargs):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
+
+class SiteEditView(SiteBaseFormView, UpdateView, SiteObjectPermissionMixin):
+    permission = 'webapp.change_site'
+    success_message = Messages.Site.editing_success
+    error_message = Messages.Site.editing_error
+
+    def get_form(self, form_class):
+        site = self.model.objects.get(pk=self.kwargs['pk'])
         if not self.has_perm(self.request, site):
             raise Http404
-        return super(SiteEditView, self).get_context_data(**kwargs)
-
-    def get_form(self, form_class):
-        form = super(SiteEditView, self).get_form(form_class)
-        if not self.request.user.has_perm('webapp.access_to_all_sites'):
-            form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
-        return form
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.Site.editing_success)
-        return super(SiteEditView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.Site.editing_error)
-        return super(SiteEditView, self).form_invalid(form)
-
-    def get_success_url(self):
-        return reverse('webapp:home')
+        return super(SiteEditView, self).get_form(form_class)
 
 
 class PWSView(BaseTemplateView):
@@ -164,40 +168,25 @@ class PWSView(BaseTemplateView):
         return context
 
 
-class PWSAddView(BaseView, CreateView):
+class PWSBaseFormView(BaseFormView):
     template_name = 'pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS
+
+    def get_success_url(self):
+        return reverse('webapp:pws_list')
+
+
+class PWSAddView(PWSBaseFormView, CreateView):
     permission = 'webapp.add_pws'
-
-    def get_success_url(self):
-        return reverse('webapp:pws_list')
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.PWS.adding_success)
-        return super(PWSAddView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.PWS.adding_error)
-        return super(PWSAddView, self).form_invalid(form)
+    success_message = Messages.PWS.adding_success
+    error_message = Messages.PWS.adding_error
 
 
-class PWSEditView(BaseView, UpdateView):
-    template_name = 'pws_form.html'
-    form_class = forms.PWSForm
-    model = models.PWS
+class PWSEditView(PWSBaseFormView, UpdateView):
     permission = 'webapp.change_pws'
-
-    def get_success_url(self):
-        return reverse('webapp:pws_list')
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.PWS.editing_success)
-        return super(PWSEditView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.PWS.editing_error)
-        return super(PWSEditView, self).form_invalid(form)
+    success_message = Messages.PWS.editing_success
+    error_message = Messages.PWS.editing_error
 
 
 class CustomerView(BaseTemplateView):
@@ -222,40 +211,25 @@ class CustomerDetailView(BaseTemplateView):
         return context
 
 
-class CustomerAddView(BaseView, CreateView):
+class CustomerBaseFormView(BaseFormView):
     template_name = 'customer_form.html'
     form_class = forms.CustomerForm
     model = models.Customer
+
+    def get_success_url(self):
+        return reverse('webapp:customer_list')
+
+
+class CustomerAddView(CustomerBaseFormView, CreateView):
     permission = 'webapp.add_customer'
-
-    def get_success_url(self):
-        return reverse('webapp:customer_list')
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.Customer.adding_success)
-        return super(CustomerAddView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.Customer.adding_error)
-        return super(CustomerAddView, self).form_invalid(form)
+    success_message = Messages.Customer.adding_success
+    error_message = Messages.Customer.adding_error
 
 
-class CustomerEditView(BaseView, UpdateView):
-    template_name = 'customer_form.html'
-    form_class = forms.CustomerForm
-    model = models.Customer
+class CustomerEditView(CustomerBaseFormView, UpdateView):
     permission = 'webapp.change_customer'
-
-    def get_success_url(self):
-        return reverse('webapp:customer_list')
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.Customer.editing_success)
-        return super(CustomerEditView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.Customer.editing_error)
-        return super(CustomerEditView, self).form_invalid(form)
+    success_message = Messages.Customer.editing_success
+    error_message = Messages.Customer.editing_error
 
 
 class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
@@ -271,10 +245,23 @@ class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
         return context
 
 
-class SurveyAddView(BaseView, CreateView):
+class SurveyBaseFormView(BaseFormView):
     template_name = 'survey_form.html'
     form_class = forms.SurveyForm
     model = models.Survey
+
+    def get_form(self, form_class):
+        form = super(SurveyBaseFormView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_own_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
+        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_surveys'):
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        return form
+
+
+class SurveyAddView(SurveyBaseFormView, CreateView):
     permission = 'webapp.add_survey'
 
     def get_success_url(self):
@@ -285,16 +272,6 @@ class SurveyAddView(BaseView, CreateView):
         context['site_id'] = self.kwargs['pk']
         return context
 
-    def get_form(self, form_class):
-        form = super(SurveyAddView, self).get_form(form_class)
-        if self.request.user.has_perm('webapp.access_to_own_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
-        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
-        return form
-
     def form_valid(self, form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         if not SiteObjectPermissionMixin.has_perm(self.request, form.instance.site):
@@ -302,37 +279,49 @@ class SurveyAddView(BaseView, CreateView):
         form.instance.service_type = models.ServiceType.objects.filter(
             service_type__icontains=self.kwargs['service']
         )[0]
-        messages.success(self.request, Messages.Survey.adding_success)
         return super(SurveyAddView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.Survey.adding_error)
-        return super(SurveyAddView, self).form_invalid(form)
 
-
-class SurveyEditView(BaseView, UpdateView, SurveyObjectPermissionMixin):
-    template_name = 'survey_form.html'
-    form_class = forms.SurveyForm
-    model = models.Survey
+class SurveyEditView(SurveyBaseFormView, UpdateView, SurveyObjectPermissionMixin):
     permission = 'webapp.add_survey'
+
+    def get_form(self, form_class):
+        survey = self.model.objects.get(pk=self.kwargs['pk'])
+        if not self.has_perm(self.request, survey):
+            raise Http404
+        return super(SurveyEditView, self).get_form(form_class)
 
     def get_success_url(self):
         return reverse('webapp:survey_detail', args=(self.object.pk,))
 
+
+class HazardDetailView(BaseTemplateView, HazardObjectPermissionMixin):
+    template_name = 'hazard.html'
+    permission = 'webapp.browse_hazard'
+
+    def get_context_data(self, **kwargs):
+        context = super(HazardDetailView, self).get_context_data(**kwargs)
+        context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        if not self.has_perm(self.request, context['hazard']):
+            raise Http404
+        return context
+
+
+class HazardBaseFormView(BaseFormView):
+    template_name = 'hazard_form.html'
+    form_class = forms.HazardForm
+    model = models.Hazard
+
+
+class HazardAddView(HazardBaseFormView, CreateView):
+    permission = 'webapp.add_hazard'
+
+
+class HazardEditView(HazardBaseFormView, UpdateView, HazardObjectPermissionMixin):
+    permission = 'webapp.change_hazard'
+
     def get_form(self, form_class):
-        form = super(SurveyEditView, self).get_form(form_class)
-        if self.request.user.has_perm('webapp.access_to_own_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
-        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
-        return form
-
-    def form_valid(self, form):
-        messages.success(self.request, Messages.Survey.editing_success)
-        return super(SurveyEditView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, Messages.Survey.editing_error)
-        return super(SurveyEditView, self).form_invalid(form)
+        hazard = self.model.objects.get(pk=self.kwargs['pk'])
+        if not self.has_perm(self.request, hazard):
+            raise Http404
+        return super(HazardEditView, self).get_form(form_class)

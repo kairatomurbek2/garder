@@ -26,3 +26,8 @@ class SurveyForm(forms.ModelForm):
     class Meta:
         model = models.Survey
         exclude = ('site', 'service_type')
+
+
+class HazardForm(forms.ModelForm):
+    class Meta:
+        model = models.Hazard

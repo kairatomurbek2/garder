@@ -2,9 +2,11 @@
 {% load pagination_tags %}
 {% load widget_tweaks %}
 {% autopaginate site_filter.qs as filtered_sites 50 %}
-{% include 'messages.html' %}
+<div class="wrapper">
+    {% include 'messages.html' %}
+</div>
 <form action="" method="get" name="site_filter" class="uk-form">
-    <div class="table-wrapper">
+    <div class="wrapper">
         <table class="uk-table">
             <thead>
             <tr class="table-border-bottom">
@@ -80,7 +82,7 @@
     </div>
 </form>
 {% paginate %}
-<div class="table-wrapper">
+<div class="wrapper">
     <table class="uk-table uk-table-hover">
         <thead>
         <tr class="table-border-bottom">

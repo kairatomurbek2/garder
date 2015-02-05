@@ -378,7 +378,7 @@ class Site(models.Model):
         verbose_name_plural = _("Sites")
         permissions = (
             ('browse_site', _('Can browse Site')),
-            ('access_to_all_sites', _('Has access all Sites')),
+            ('access_to_all_sites', _('Has access to all Sites')),
             ('access_to_pws_sites', _('Has access to his PWS\'s Sites')),
             ('access_to_survey_sites', _('Has access to Sites that he inspects')),
             ('access_to_test_sites', _('Has access to Sites that he tests')),
@@ -419,8 +419,8 @@ class Survey(models.Model):
         permissions = (
             ('browse_survey', _('Can browse Survey')),
             ('access_to_all_surveys', _('Has access to all Surveys')),
-            ('access_to_pws_surveys', _('Has access to to his PWS\'s Surveys')),
-            ('access_to_own_surveys', _('Has access to to own Surveys')),
+            ('access_to_pws_surveys', _('Has access to his PWS\'s Surveys')),
+            ('access_to_own_surveys', _('Has access to own Surveys')),
             ('add_many_surveys_per_site', _('Can add many Surveys per Site'))
         )
 
@@ -461,10 +461,10 @@ class Hazard(models.Model):
         verbose_name_plural = _("Hazards")
         permissions = (
             ('browse_hazard', _('Can browse Hazard')),
-            ('access_to_all_hazards', _('Has access to to all Hazards')),
-            ('access_to_pws_hazards', _('Has access to to his PWS\'s Hazards')),
-            ('access_to_own_hazards', _('Has access to to his own Hazards')),
-            ('access_to_site_hazards', _('Has access to to Site\'s Hazards'))
+            ('access_to_all_hazards', _('Has access to all Hazards')),
+            ('access_to_pws_hazards', _('Has access to his PWS\'s Hazards')),
+            ('access_to_own_hazards', _('Has access to his own Hazards')),
+            ('access_to_site_hazards', _('Has access to Site\'s Hazards'))
         )
 
 
@@ -509,9 +509,9 @@ class Test(models.Model):
         verbose_name_plural = _("Tests")
         permissions = (
             ('browse_test', _('Can browse Test')),
-            ('access_to_all_tests', _('Has access to to all Tests')),
-            ('access_to_pws_tests', _('Has access to to his PWS\'s Tests')),
-            ('access_to_own_tests', _('Has access to to his own Tests')),
+            ('access_to_all_tests', _('Has access to all Tests')),
+            ('access_to_pws_tests', _('Has access to his PWS\'s Tests')),
+            ('access_to_own_tests', _('Has access to his own Tests')),
         )
 
 

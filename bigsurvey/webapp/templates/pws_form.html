@@ -5,7 +5,7 @@
     <li><a href="{% url 'webapp:pws_list' %}">{% trans "Cancel" %}</a></li>
 {% endblock %}
 {% block content %}
-    <div class="table-wrapper">
+    <div class="wrapper">
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="pws">
             {% csrf_token %}

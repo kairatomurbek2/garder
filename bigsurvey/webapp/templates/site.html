@@ -18,7 +18,7 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    <div id="site_detail" class="table-wrapper">
+    <div id="site_detail" class="wrapper">
         {% include 'messages.html' %}
         <table class="uk-table">
             <tbody>
@@ -36,6 +36,7 @@
                 <td class="uk-text-center uk-text-primary">{{ site.site_use }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Site Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.site_type }}</td>
+                <td colspan="2"></td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
@@ -58,6 +59,7 @@
                 <td class="uk-text-center uk-text-primary">{{ site.floors }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Interconnection Point" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.interconnection_point }}</td>
+                <td colspan="2"></td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Meter Number" %}</td>

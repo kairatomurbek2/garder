@@ -4,20 +4,17 @@
 {% load hazards_for_services %}
 {% block menu %}
     <li><a href="{% url 'webapp:survey_edit' survey.pk %}">{% trans "Edit" %}</a></li>
-    {% if perms.webapp.access_to_import %}
-        <li><a href="#">{% trans "Import" %}</a></li>
-    {% endif %}
 {% endblock %}
 {% block content %}
-    <div class="table-wrapper">
+    <div class="wrapper">
         {% include 'messages.html' %}
         <table class="uk-table">
             <tbody>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ survey.site }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.site.pws }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ survey.site }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Service Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.service_type }}</td>
             </tr>
@@ -57,7 +54,7 @@
             {% endif %}
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
-                <td class="uk-text-center uk-text-primary" colspan="7">{{ survey.notes }}</td>
+                <td class="uk-text-center uk-text-primary" colspan="5">{{ survey.notes }}</td>
             </tr>
             </tbody>
         </table>

@@ -1,15 +1,23 @@
+{% extends 'base.html' %}
 {% load i18n %}
 {% load boolean_yes_no %}
-{% for hazard in hazards %}
-    <div class="padding-top">
-        <h4 class="uk-align-center uk-text-center">
-            <a data-uk-toggle="{target:'#hazard-{{ hazard.pk }}'}">{{ hazard.location1 }}, {{ hazard.hazard_type }}</a>
-        </h4>
-    </div>
-    <div id="hazard-{{ hazard.pk }}" class="uk-panel uk-panel-box uk-hidden">
-        <a href="#" class="uk-align-right">{% trans "Edit" %}</a>
+{% load hazards_for_services %}
+{% block menu %}
+    <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}">{% trans "Edit" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
         <table class="uk-table">
             <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ hazard.survey.site.pws }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ hazard.survey.site }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Survey" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ hazard.survey }}</td>
+            </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Location" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.assembly_location }}</td>
@@ -67,11 +75,8 @@
             </tbody>
         </table>
     </div>
-{% endfor %}
-{% if perms.webapp.add_hazard %}
-    <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="#">
-            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
-        </a>
+    <h3 class="uk-text-center">{% trans "Tests" %}</h3>
+    <div>
+        {% include 'test_list.html' %}
     </div>
-{% endif %}
+{% endblock %}
