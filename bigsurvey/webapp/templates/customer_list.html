@@ -1,7 +1,7 @@
 {% load pagination_tags %}
 {% load i18n %}
 {% load widget_tweaks %}
-{% autopaginate customer_filter.qs as filtered_customers 10 %}
+{% autopaginate customer_filter.qs as filtered_customers 50 %}
 <form action="" method="get" name="customer_filter" class="uk-form">
     <div class="table-wrapper">
         <table class="uk-table">
@@ -76,6 +76,7 @@
             <th>{% trans "City" %}</th>
             <th>{% trans "Address" %}</th>
             <th>{% trans "ZIP" %}</th>
+            <th>{% trans "Code" %}</th>
             <th class="uk-text-center table-border-left" colspan="3">{% trans "Actions" %}</th>
         </tr>
         </thead>
@@ -88,6 +89,7 @@
                 <td>{{ customer.city }}</td>
                 <td>{{ customer.address1 }}</td>
                 <td>{{ customer.zip }}</td>
+                <td>{{ customer.code }}</td>
                 <td class="uk-text-center table-border-left">
                     <a href="{% url 'webapp:customer_detail' customer.pk %}">{% trans "Detail" %}</a>
                 </td>
