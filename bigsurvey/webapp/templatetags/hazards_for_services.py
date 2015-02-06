@@ -8,9 +8,12 @@ register = template.Library()
 @register.inclusion_tag('hazard_list.html', takes_context=True)
 def include_hazards(context, service_type):
     surveys = context['site'].surveys.filter(service_type__service_type=service_type)
+    context['countlte0'] = True
     try:
         survey = surveys.latest()
         hazards = survey.hazards.all()
+        if hazards.count() > 0:
+            context['countlte0'] = False
     except ObjectDoesNotExist:
         hazards = []
     if service_type == 'fire':

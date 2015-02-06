@@ -42,6 +42,9 @@ DATE_FILTER_CHOICES = (
 )
 
 
+TESTER_ASSEMBLY_STATUSES = ['Installed', 'Replaced']
+
+
 class Groups:
     superadmin = 'SuperAdministrators'
     admin = 'Administrators'
@@ -72,4 +75,10 @@ class Messages:
         adding_success = _('Survey was successfully added')
         adding_error = _('Error while submitting form')
         editing_success = _('Survey was successfully updated')
+        editing_error = _('Error while submitting form')
+
+    class Hazard:
+        adding_success = _('Hazard was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('Hazard was successfully updated')
         editing_error = _('Error while submitting form')

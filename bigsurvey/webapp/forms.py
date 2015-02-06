@@ -31,3 +31,6 @@ class SurveyForm(forms.ModelForm):
 class HazardForm(forms.ModelForm):
     class Meta:
         model = models.Hazard
+        exclude = ('survey',)
+
+fields = ('bp_type_present', 'bp_type_required', 'bp_size', 'manufacturer', 'installer', 'install_date', 'replace_date', 'orientation', 'model_no', 'serial_no', 'assembly_location', 'assembly_status')

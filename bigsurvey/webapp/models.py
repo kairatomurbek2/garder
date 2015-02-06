@@ -464,7 +464,8 @@ class Hazard(models.Model):
             ('access_to_all_hazards', _('Has access to all Hazards')),
             ('access_to_pws_hazards', _('Has access to his PWS\'s Hazards')),
             ('access_to_own_hazards', _('Has access to his own Hazards')),
-            ('access_to_site_hazards', _('Has access to Site\'s Hazards'))
+            ('access_to_site_hazards', _('Has access to Site\'s Hazards')),
+            ('change_all_info_about_hazard', _('Can change all information about Hazard')),
         )
 
 

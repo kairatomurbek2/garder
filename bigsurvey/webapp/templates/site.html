@@ -92,7 +92,7 @@
             </tbody>
         </table>
     </div>
-    <h3 class="uk-text-center">{% trans "Surveys" %}</h3>
+    <h3 class="uk-text-center">{% if perms.webapp.browse_survey %}{% trans "Surveys" %}{% else %}{% trans "Hazards" %}{% endif %}</h3>
     <div id="tab_control" class="uk-tab-center">
         <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
             <li class="uk-active">

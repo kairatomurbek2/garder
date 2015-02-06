@@ -1,5 +1,8 @@
 {% load i18n %}
 {% load boolean_yes_no %}
+{% load valve_leaked_choices %}
+{% load valve_opened_choices %}
+{% load test_result_choices %}
 {% for test in hazard.tests.all %}
     <div class="padding-top">
         <h4 class="uk-align-center uk-text-center">
@@ -28,12 +31,12 @@
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Test Result" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ test.test_result }}</td>
+                <td class="uk-text-center uk-text-primary">{{ test.test_result|test_result }}</td>
             </tr>
             {% if hazard.survey.service_type.service_type == 'potable' %}
                 <tr>
                     <td class="uk-text-right uk-text-muted">{% trans "CV1 Leaked" %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ test.cv1_leaked }}</td>
+                    <td class="uk-text-center uk-text-primary">{{ test.cv1_leaked|valve_leaked }}</td>
                     <td class="uk-text-right uk-text-muted">{% trans "CV1 Gauge Pressure" %}</td>
                     <td class="uk-text-center uk-text-primary">{{ test.cv1_gauge_pressure }}</td>
                     <td class="uk-text-right uk-text-muted">{% trans "CV1 Maintenance" %}</td>
@@ -45,7 +48,7 @@
                 </tr>
                 <tr>
                     <td class="uk-text-right uk-text-muted">{% trans "CV2 Leaked" %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ test.cv2_leaked }}</td>
+                    <td class="uk-text-center uk-text-primary">{{ test.cv2_leaked|valve_leaked }}</td>
                     <td class="uk-text-right uk-text-muted">{% trans "CV2 Gauge Pressure" %}</td>
                     <td class="uk-text-center uk-text-primary">{{ test.cv2_gauge_pressure }}</td>
                     <td class="uk-text-right uk-text-muted">{% trans "CV2 Maintenance" %}</td>

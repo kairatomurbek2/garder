@@ -9,7 +9,7 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from abc import ABCMeta, abstractmethod
 from django.contrib import messages
-from main.parameters import Messages, Groups
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES
 
 
 class AccessRequiredMixin(View):
@@ -260,16 +260,16 @@ class SurveyBaseFormView(BaseFormView):
             form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
         return form
 
+    def get_success_url(self):
+        return reverse('webapp:survey_detail', args=(self.object.pk,))
+
 
 class SurveyAddView(SurveyBaseFormView, CreateView):
     permission = 'webapp.add_survey'
 
-    def get_success_url(self):
-        return reverse('webapp:site_detail', args=(self.kwargs['pk'],))
-
     def get_context_data(self, **kwargs):
         context = super(SurveyAddView, self).get_context_data(**kwargs)
-        context['site_id'] = self.kwargs['pk']
+        context['site_pk'] = self.kwargs['pk']
         return context
 
     def form_valid(self, form):
@@ -291,9 +291,6 @@ class SurveyEditView(SurveyBaseFormView, UpdateView, SurveyObjectPermissionMixin
             raise Http404
         return super(SurveyEditView, self).get_form(form_class)
 
-    def get_success_url(self):
-        return reverse('webapp:survey_detail', args=(self.object.pk,))
-
 
 class HazardDetailView(BaseTemplateView, HazardObjectPermissionMixin):
     template_name = 'hazard.html'
@@ -312,16 +309,45 @@ class HazardBaseFormView(BaseFormView):
     form_class = forms.HazardForm
     model = models.Hazard
 
+    def get_success_url(self):
+        return reverse('webapp:hazard_detail', args=(self.object.pk,))
+
 
 class HazardAddView(HazardBaseFormView, CreateView):
     permission = 'webapp.add_hazard'
+    success_message = Messages.Hazard.adding_success
+    error = Messages.Hazard.adding_error
+
+    def get_context_data(self, **kwargs):
+        context = super(HazardAddView, self).get_context_data(**kwargs)
+        context['survey_pk'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.survey = models.Survey.objects.get(pk=self.kwargs['pk'])
+        if not SurveyObjectPermissionMixin.has_perm(self.request, form.instance.survey):
+            raise Http404
+        return super(HazardAddView, self).form_valid(form)
 
 
 class HazardEditView(HazardBaseFormView, UpdateView, HazardObjectPermissionMixin):
     permission = 'webapp.change_hazard'
+    success_message = Messages.Hazard.editing_success
+    error_message = Messages.Hazard.editing_error
+
+    def form_invalid(self, form):
+        print form.fields
+        return super(HazardEditView, self).form_invalid(form)
 
     def get_form(self, form_class):
         hazard = self.model.objects.get(pk=self.kwargs['pk'])
         if not self.has_perm(self.request, hazard):
             raise Http404
-        return super(HazardEditView, self).get_form(form_class)
+        # Seems that it does not work, excluded fields appears in template anyway
+        self.form_class.Meta.exclude = ['survey']
+        if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
+            self.form_class.Meta.exclude.extend(['location1', 'location2', 'hazard_type', 'due_install_test_date', 'notes'])
+        form = super(HazardEditView, self).get_form(form_class)
+        if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
+            form.fields['assembly_status'].queryset = models.AssemblyStatus.objects.filter(assembly_status__in=TESTER_ASSEMBLY_STATUSES)
+        return form

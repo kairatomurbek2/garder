@@ -7,7 +7,7 @@
         </h4>
     </div>
     <div id="hazard-{{ hazard.pk }}" class="uk-panel uk-panel-box uk-hidden">
-        <a href="#" class="uk-align-right">{% trans "Edit" %}</a>
+        <a href="{% url 'webapp:hazard_edit' hazard.pk %}" class="uk-align-right">{% trans "Edit" %}</a>
         <table class="uk-table">
             <tbody>
             <tr>
@@ -70,7 +70,7 @@
 {% endfor %}
 {% if perms.webapp.add_hazard %}
     <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="#">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' survey.pk %}">
             <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
         </a>
     </div>
