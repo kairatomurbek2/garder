@@ -1,3 +1,4 @@
+@customer_detail
 Feature: Customer detail
 
 
@@ -6,6 +7,7 @@ Feature: Customer detail
         And I login as "<role>"
         When I open "customer detail" page with pk "3"
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |

@@ -3,7 +3,7 @@
     <ul class="uk-pagination">
     {% if page_obj.has_previous %}
         <li>
-            <a href="?page={{ page_obj.previous_page_number }}{{ getvars }}{{ hashtag }}">
+            <a data-action="pagination" data-id="{{ page_obj.previous_page_number }}" href="?page={{ page_obj.previous_page_number }}{{ getvars }}{{ hashtag }}">
                 <i class="uk-icon-angle-double-left"></i>
             </a>
         </li>
@@ -24,7 +24,7 @@
                 </li>
             {% else %}
                 <li>
-                    <a class="" href="?page={{ page }}{{ getvars }}{{ hashtag }}">
+                    <a class="" data-action="pagination" data-id="{{ page }}" href="?page={{ page }}{{ getvars }}{{ hashtag }}">
                         {{ page }}
                     </a>
                 </li>
@@ -37,7 +37,7 @@
     {% endfor %}
     {% if page_obj.has_next %}
         <li>
-            <a href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}">
+            <a data-action="pagination" data-id="{{ page_obj.next_page_number }}" href="?page={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}">
                 <i class="uk-icon-angle-double-right"></i>
             </a>
         </li>

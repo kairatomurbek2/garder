@@ -7,6 +7,7 @@ Feature: Customer editing
         And I login as "<role>"
         When I open "customer edit" page with pk "4"
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |

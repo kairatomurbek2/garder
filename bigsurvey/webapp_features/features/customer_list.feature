@@ -1,3 +1,4 @@
+@customer_list
 Feature: Customer list
 
     Scenario Outline: Customer list page access
@@ -5,6 +6,7 @@ Feature: Customer list
         And I login as "<role>"
         When I open "customer list" page
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |

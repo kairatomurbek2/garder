@@ -83,3 +83,9 @@ def check_error_message(step, error_message, field_name):
 def check_multiple_error_messages(step):
     for row in step.hashes:
         step.given('I should see "%s" validation error message on field "%s"' % (row['error_message'], row['field']))
+
+
+@step('I click button with text "([-_a-z0-9]+)"')
+def click_button_with_text(step, text):
+    button = helper.find(Xpath.Pattern.button_with_text % text)
+    button.click()

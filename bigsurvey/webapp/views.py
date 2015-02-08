@@ -130,6 +130,13 @@ class SiteBaseFormView(BaseFormView):
     form_class = forms.SiteForm
     model = models.Site
 
+    def get_context_data(self, **kwargs):
+        context = super(SiteBaseFormView, self).get_context_data(**kwargs)
+        customers = models.Customer.objects.all()
+        customer_filter = CustomerFilter(self.request.GET, queryset=customers)
+        context['customer_filter'] = customer_filter
+        return context
+
     def get_form(self, form_class):
         form = super(SiteBaseFormView, self).get_form(form_class)
         if not self.request.user.has_perm('webapp.access_to_all_sites'):
@@ -155,7 +162,9 @@ class SiteEditView(SiteBaseFormView, UpdateView, SiteObjectPermissionMixin):
         site = self.model.objects.get(pk=self.kwargs['pk'])
         if not self.has_perm(self.request, site):
             raise Http404
-        return super(SiteEditView, self).get_form(form_class)
+        form = super(SiteEditView, self).get_form(form_class)
+        form.initial['customer'] = site.customer.pk
+        return form
 
 
 class PWSView(BaseTemplateView):

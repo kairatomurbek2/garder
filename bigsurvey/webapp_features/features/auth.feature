@@ -1,3 +1,4 @@
+@authorization
 Feature: Authorization
 
 
@@ -5,6 +6,7 @@ Feature: Authorization
         Given I open "login" page
         When I login as "<role>"
         Then I should be at "home" page
+        And I log out
     Examples:
         | role     |
         | root     |

@@ -1,3 +1,4 @@
+@customer_add
 Feature: Customer adding
 
 
@@ -6,6 +7,7 @@ Feature: Customer adding
         And I login as "<role>"
         When I open "customer add" page
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |

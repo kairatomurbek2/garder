@@ -1,3 +1,4 @@
+@pws_add
 Feature: PWS adding
 
 
@@ -6,6 +7,7 @@ Feature: PWS adding
         And I login as "<role>"
         When I open "pws add" page
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |

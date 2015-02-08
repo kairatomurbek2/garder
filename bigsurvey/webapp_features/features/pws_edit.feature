@@ -7,6 +7,7 @@ Feature: PWS editing
         And I login as "<role>"
         When I open "pws edit" page with pk "6"
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |

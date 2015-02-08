@@ -1,3 +1,4 @@
+@site_add
 Feature: Site adding
 
 
@@ -6,6 +7,7 @@ Feature: Site adding
         And I login as "<role>"
         When I open "site add" page
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | reaction |
         | root     | not see  |
@@ -24,13 +26,16 @@ Feature: Site adding
             | city         | Moscow              |
             | zip          | 000000              |
             | address1     | Red Square, Cremlin |
-        And I select "Mike Doe" from "customer"
         And I select "Houston PWS" from "pws"
         And I select "Idaho" from "state"
         And I select "Agricultural" from "site_use"
         And I select "Grocery Store" from "site_type"
         And I select "2" from "floors"
         And I select "Yard" from "interconnection_point"
+        And I open select customer modal
+        And I fill in "name" with "Mike Doe"
+        And I submit "customer_filter" form
+        And I select customer with pk "3"
         When I submit "site" form
         Then I should be at "site list" page
         And I should see "site adding success" message

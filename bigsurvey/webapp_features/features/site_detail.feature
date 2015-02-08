@@ -7,6 +7,7 @@ Feature: Site detail
         And I login as "<role>"
         When I open "site detail" page with pk "<pk>"
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | pk | reaction |
         | root     | 3  | not see  |

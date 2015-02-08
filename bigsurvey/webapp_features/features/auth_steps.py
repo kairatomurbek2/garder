@@ -48,3 +48,8 @@ def check_home_page(step):
 @step('I should be at "login" page')
 def check_login_page(step):
     step.given('I should be at "%s"' % get_url(Urls.login))
+
+
+@step('I log out')
+def logout(step):
+    step.given('I open "%s"' % get_url(Urls.logout))

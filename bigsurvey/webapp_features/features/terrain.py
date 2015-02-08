@@ -2,6 +2,7 @@ from django.core.management import call_command
 
 from lettuce import before, after, world
 from selenium import webdriver
+from settings import Urls, get_url
 
 
 @before.all

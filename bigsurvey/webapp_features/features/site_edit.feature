@@ -7,6 +7,7 @@ Feature: Site editing
         And I login as "<role>"
         When I open "site edit" page with pk "<pk>"
         Then I should <reaction> "Not Found"
+        And I log out
     Examples:
         | role     | pk | reaction |
         | root     | 3  | not see  |

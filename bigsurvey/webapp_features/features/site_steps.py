@@ -72,3 +72,14 @@ def check_site_editing_success_message(step):
 @step('I should see "site editing error" message')
 def check_site_editing_error_message(step):
     step.given('I should see "%s"' % Messages.Site.editing_error)
+
+
+@step('I open select customer modal')
+def open_customer_selector(step):
+    click_button_with_text(step, "Select Customer")
+
+
+@step('I select customer with pk "(\d+)"')
+def select_customer(step, pk):
+    select_button = helper.find(Xpath.Pattern.customer_select_button % pk)
+    select_button.click()

@@ -15,9 +15,19 @@ class CustomerForm(forms.ModelForm):
 
 class SiteForm(forms.ModelForm):
     pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), empty_label=None)
+    customer = forms.CharField()
+
+    def save(self, commit=True):
+        customer_id = self.cleaned_data['customer']
+        customer = models.Customer.objects.get(pk=customer_id)
+        self.instance.customer = customer
+        return super(SiteForm, self).save(commit)
 
     class Meta:
         model = models.Site
+        exclude = [
+            'customer'
+        ]
 
 
 class SurveyForm(forms.ModelForm):
