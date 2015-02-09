@@ -20,4 +20,6 @@ urlpatterns = patterns(
     url(r'^hazard/(?P<pk>\d+)/$', views.HazardDetailView.as_view(), name="hazard_detail"),
     url(r'^survey/(?P<pk>\d+)/addhazard/$', views.HazardAddView.as_view(), name="hazard_add"),
     url(r'^hazard/(?P<pk>\d+)/edit/$', views.HazardEditView.as_view(), name="hazard_edit"),
+    url(r'^hazard/(?P<pk>\d+)/addtest/$', views.TestAddView.as_view(), name="test_add"),
+    url(r'^test/(?P<pk>\d+)/edit/$', views.TestEditView.as_view(), name="test_edit"),
 )

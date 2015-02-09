@@ -25,9 +25,7 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = models.Site
-        exclude = [
-            'customer'
-        ]
+        exclude = ('customer',)
 
 
 class SurveyForm(forms.ModelForm):
@@ -43,4 +41,10 @@ class HazardForm(forms.ModelForm):
         model = models.Hazard
         exclude = ('survey',)
 
-fields = ('bp_type_present', 'bp_type_required', 'bp_size', 'manufacturer', 'installer', 'install_date', 'replace_date', 'orientation', 'model_no', 'serial_no', 'assembly_location', 'assembly_status')
+
+class TestForm(forms.ModelForm):
+    tester = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.tester), empty_label=None)
+
+    class Meta:
+        model = models.Test
+        exclude = ('bp_device',)

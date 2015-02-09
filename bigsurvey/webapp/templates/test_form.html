@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block menu %}
+    <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <form class="uk-form" method="post" name="test">
+            {% csrf_token %}
+            <table class="uk-table">
+                <tbody>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                        <label for="{{ form.test_serial_number.id_for_label }}">{{ form.test_serial_number.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.test_serial_number|add_class:'uk-width-1-1' }}
+                        {{ form.test_serial_number.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                        <label for="{{ form.test_manufacturer.id_for_label }}">{{ form.test_manufacturer.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.test_manufacturer|add_class:'uk-width-1-1' }}
+                        {{ form.test_manufacturer.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                        <label for="{{ form.last_calibration_date.id_for_label }}">{{ form.last_calibration_date.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.last_calibration_date|add_class:'uk-width-1-1' }}
+                        {{ form.last_calibration_date.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.tester.id_for_label }}">{{ form.tester.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.tester|add_class:'uk-width-1-1' }}
+                        {{ form.tester.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.next_test_date.id_for_label }}">{{ form.next_test_date.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.next_test_date|add_class:'uk-width-1-1' }}
+                        {{ form.next_test_date.errors }}
+                    </td>
+                </tr>
+                {% if hazard.survey.service_type.service_type == 'potable' %}
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv1_leaked.id_for_label }}">{{ form.cv1_leaked.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv1_leaked|add_class:'uk-width-1-1' }}
+                            {{ form.cv1_leaked.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv1_gauge_pressure.id_for_label }}">{{ form.cv1_gauge_pressure.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv1_gauge_pressure|add_class:'uk-width-1-1' }}
+                            {{ form.cv1_gauge_pressure.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv1_maintenance.id_for_label }}">{{ form.cv1_maintenance.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv1_maintenance|add_class:'uk-width-1-1' }}
+                            {{ form.cv1_maintenance.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv1_maintenance_pressure.id_for_label }}">{{ form.cv1_maintenance_pressure.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv1_maintenance_pressure|add_class:'uk-width-1-1' }}
+                            {{ form.cv1_maintenance_pressure.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv2_leaked.id_for_label }}">{{ form.cv2_leaked.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv2_leaked|add_class:'uk-width-1-1' }}
+                            {{ form.cv2_leaked.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv2_gauge_pressure.id_for_label }}">{{ form.cv2_gauge_pressure.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv2_gauge_pressure|add_class:'uk-width-1-1' }}
+                            {{ form.cv2_gauge_pressure.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv2_maintenance.id_for_label }}">{{ form.cv2_maintenance.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv2_maintenance|add_class:'uk-width-1-1' }}
+                            {{ form.cv2_maintenance.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv2_maintenance_pressure.id_for_label }}">{{ form.cv2_maintenance_pressure.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv2_maintenance_pressure|add_class:'uk-width-1-1' }}
+                            {{ form.cv2_maintenance_pressure.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.rv_opened.id_for_label }}">{{ form.rv_opened.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.rv_opened|add_class:'uk-width-1-1' }}
+                            {{ form.rv_opened.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.rv_psi1.id_for_label }}">{{ form.rv_psi1.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.rv_psi1|add_class:'uk-width-1-1' }}
+                            {{ form.rv_psi1.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.rv_psi2.id_for_label }}">{{ form.rv_psi2.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.rv_psi2|add_class:'uk-width-1-1' }}
+                            {{ form.rv_psi2.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.rv_maintenance.id_for_label }}">{{ form.rv_maintenance.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.rv_maintenance|add_class:'uk-width-1-1' }}
+                            {{ form.rv_maintenance.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.outlet_sov_leaked.id_for_label }}">{{ form.outlet_sov_leaked.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.outlet_sov_leaked|add_class:'uk-width-1-1' }}
+                            {{ form.outlet_sov_leaked.errors }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if hazard.survey.service_type.service_type == 'fire' %}
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.pvb_opened.id_for_label }}">{{ form.pvb_opened.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.pvb_opened|add_class:'uk-width-1-1' }}
+                            {{ form.pvb_opened.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.pvb_open_pressure.id_for_label }}">{{ form.pvb_open_pressure.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.pvb_open_pressure|add_class:'uk-width-1-1' }}
+                            {{ form.pvb_open_pressure.errors }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if hazard.survey.service_type.service_type == 'irrigation' %}
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv_leaked.id_for_label }}">{{ form.cv_leaked.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv_leaked|add_class:'uk-width-1-1' }}
+                            {{ form.cv_leaked.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv_help_pressure.id_for_label }}">{{ form.cv_help_pressure.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv_help_pressure|add_class:'uk-width-1-1' }}
+                            {{ form.cv_help_pressure.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv_maintenance.id_for_label }}">{{ form.cv_maintenance.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv_maintenance|add_class:'uk-width-1-1' }}
+                            {{ form.cv_maintenance.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.cv_psi.id_for_label }}">{{ form.cv_psi.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.cv_psi|add_class:'uk-width-1-1' }}
+                            {{ form.cv_psi.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.air_inlet_psi.id_for_label }}">{{ form.air_inlet_psi.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ form.air_inlet_psi|add_class:'uk-width-1-1' }}
+                            {{ form.air_inlet_psi.errors }}
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                    </td>
+                    <td class="uk-width-5-6" colspan="3">
+                        {{ form.notes|add_class:'uk-width-1-1' }}
+                        {{ form.notes.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

@@ -108,9 +108,11 @@
     </div>
 {% endfor %}
 {% if perms.webapp.add_test %}
-    <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="#">
-            <i class="uk-icon-plus"></i> {% trans "Add Test" %}
-        </a>
-    </div>
+    {% if perms.webapp.add_many_tests_per_hazard or countlte0 %}
+        <div class="padding-top">
+            <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}">
+                <i class="uk-icon-plus"></i> {% trans "Add Test" %}
+            </a>
+        </div>
+    {% endif %}
 {% endif %}

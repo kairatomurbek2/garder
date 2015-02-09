@@ -81,6 +81,14 @@ class HazardObjectPermissionMixin(ObjectPermissionMixin):
                request.user.has_perm('webapp.access_to_site_hazards') and models.TestPermission.objects.filter(site=obj.survey.site, given_to=request.user)
 
 
+class TestObjectPermissionMixin(ObjectPermissionMixin):
+    @staticmethod
+    def has_perm(request, obj):
+        return request.user.has_perm('webapp.access_to_all_tests') or \
+               request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_service.survey.site.pws == request.user.employee.pws or \
+               request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
+
+
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
@@ -310,6 +318,8 @@ class HazardDetailView(BaseTemplateView, HazardObjectPermissionMixin):
         context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
         if not self.has_perm(self.request, context['hazard']):
             raise Http404
+        tests_count = models.Test.objects.filter(bp_device=context['hazard'], tester=self.request.user).count()
+        context['countlte0'] = tests_count <= 0
         return context
 
 
@@ -360,3 +370,45 @@ class HazardEditView(HazardBaseFormView, UpdateView, HazardObjectPermissionMixin
         if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
             form.fields['assembly_status'].queryset = models.AssemblyStatus.objects.filter(assembly_status__in=TESTER_ASSEMBLY_STATUSES)
         return form
+
+
+class TestBaseFormView(BaseFormView):
+    template_name = 'test_form.html'
+    form_class = forms.TestForm
+    model = models.Test
+
+    def get_success_url(self):
+        return reverse('webapp:hazard_detail', args=(self.kwargs['pk'],))
+
+    def get_context_data(self, **kwargs):
+        context = super(TestBaseFormView, self).get_context_data(**kwargs)
+        context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def get_form(self, form_class):
+        form = super(TestBaseFormView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_own_tests'):
+            form.fields['tester'].queryset = models.User.objects.filter(pk=self.request.user.pk)
+        if self.request.user.has_perm('webapp.access_to_pws_tests'):
+            form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_tests'):
+            form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester)
+        return form
+
+
+class TestAddView(TestBaseFormView, CreateView):
+    permission = 'webapp.add_test'
+    success_message = Messages.Test.adding_success
+    error_message = Messages.Test.adding_error
+
+    def form_valid(self, form):
+        form.instance.bp_device = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        if not HazardObjectPermissionMixin.has_perm(self.request, form.instance.bp_device):
+            raise Http404
+        return super(TestAddView, self).form_valid(form)
+
+
+class TestEditView(TestBaseFormView, UpdateView):
+    permission = 'webapp.edit_test'
+    success_message = Messages.Test.editing_success
+    error_message = Messages.Test.editing_error

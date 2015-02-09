@@ -475,7 +475,7 @@ class Test(models.Model):
     test_serial_number = models.CharField(max_length=20, verbose_name=_("Test Serial No."))
     test_manufacturer = models.ForeignKey(TestManufacturer, verbose_name=_("Test Manufacturer"), related_name="tests")
     last_calibration_date = models.DateField(verbose_name=_("Last Calibration Date"))
-    tester = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Tester"), related_name="tests")
+    tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")
     test_date = models.DateField(verbose_name=_("Test Date"), auto_now_add=True)
     next_test_date = models.DateField(null=True, blank=True, verbose_name=_("Next Test Date"))
     cv1_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("CV1 Leaked"))
@@ -513,6 +513,7 @@ class Test(models.Model):
             ('access_to_all_tests', _('Has access to all Tests')),
             ('access_to_pws_tests', _('Has access to his PWS\'s Tests')),
             ('access_to_own_tests', _('Has access to his own Tests')),
+            ('add_many_tests_per_hazard', _('Can add many Tests per Hazard'))
         )
 
 

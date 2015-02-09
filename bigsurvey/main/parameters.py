@@ -82,3 +82,9 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('Hazard was successfully updated')
         editing_error = _('Error while submitting form')
+
+    class Test:
+        adding_success = _('Test was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('Test was successfully updated')
+        editing_error = _('Error while submitting form')
