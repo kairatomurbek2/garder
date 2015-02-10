@@ -3,8 +3,8 @@
 {% load i18n %}
 {% block menu %}
     <li>
-    {% if survey.site %}
-        <a href="{% url 'webapp:site_detail' survey.site.pk %}">{% trans "Cancel" %}</a>
+    {% if survey.pk %}
+        <a href="{% url 'webapp:survey_detail' survey.pk %}">{% trans "Cancel" %}</a>
     {% else %}
         <a href="{% url 'webapp:site_detail' site_pk %}">{% trans "Cancel" %}</a>
     {% endif %}
@@ -18,7 +18,7 @@
             <table class="uk-table">
                 <tbody>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right">
+                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.survey_date.id_for_label }}">{{ form.survey_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">

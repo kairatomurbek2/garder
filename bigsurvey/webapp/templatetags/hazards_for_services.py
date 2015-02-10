@@ -1,22 +1,22 @@
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
+from webapp.models import Survey
 
 
 register = template.Library()
 
 
 @register.inclusion_tag('hazard_list.html', takes_context=True)
-def include_hazards(context, service_type):
-    surveys = context['site'].surveys.filter(service_type__service_type=service_type)
-    context['countlte0'] = True
-    try:
-        survey = surveys.latest()
+def include_hazards(context, service_type, survey_pk=0):
+    if survey_pk > 0:
+        survey = Survey.objects.get(pk=survey_pk)
         hazards = survey.hazards.all()
-        if hazards.count() > 0:
-            context['countlte0'] = False
-    except ObjectDoesNotExist:
-        hazards = []
-    if service_type == 'fire':
-        context['fire'] = True
+    else:
+        surveys = context['site'].surveys.filter(service_type__service_type=service_type)
+        try:
+            survey = surveys.latest()
+            hazards = survey.hazards.all()
+        except ObjectDoesNotExist:
+            hazards = []
     context['hazards'] = hazards
     return context

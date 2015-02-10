@@ -1,5 +1,4 @@
 from django import template
-import webapp.models as models
 
 
 register = template.Library()
@@ -12,7 +11,5 @@ def include_surveys(context, service_type):
     context['countlte0'] = True
     if surveys.count() > 0:
         context['countlte0'] = False
-    if service_type == 'fire':
-        context['fire'] = True
     context['service'] = service_type
     return context

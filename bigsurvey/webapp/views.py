@@ -258,7 +258,6 @@ class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
         context['survey'] = models.Survey.objects.get(pk=self.kwargs['pk'])
         if not self.has_perm(self.request, context['survey']):
             raise Http404
-        context['site'] = context['survey'].site
         return context
 
 

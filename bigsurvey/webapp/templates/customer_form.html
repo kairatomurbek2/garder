@@ -2,11 +2,7 @@
 {% load widget_tweaks %}
 {% load i18n %}
 {% block menu %}
-    {% if customer.pk %}
-        <li><a href="{% url 'webapp:customer_detail' customer.pk %}">{% trans "Cancel" %}</a></li>
-    {% else %}
-        <li><a href="{% url 'webapp:customer_list' %}">{% trans "Cancel" %}</a></li>
-    {% endif %}
+    <li><a href="{% url 'webapp:customer_list' %}">{% trans "Cancel" %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="wrapper">

@@ -87,7 +87,7 @@
         <thead>
         <tr class="table-border-bottom">
             <th class="uk-text-center table-border-right">
-                {% trans "ID" %}
+                {% trans "No." %}
             </th>
             <th>
                 {% trans "Address" %}
@@ -119,7 +119,7 @@
         {% for site in filtered_sites %}
             <tr>
                 <td class="uk-text-center table-border-right">
-                    {{ site.pk }}
+                    {{ forloop.counter }}
                 </td>
                 <td>
                     {{ site.city }}, {{ site.address1 }}

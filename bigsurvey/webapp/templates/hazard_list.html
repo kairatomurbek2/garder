@@ -1,77 +1,77 @@
 {% load i18n %}
 {% load boolean_yes_no %}
-{% for hazard in hazards %}
-    <div class="padding-top">
-        <h4 class="uk-align-center uk-text-center">
-            <a data-uk-toggle="{target:'#hazard-{{ hazard.pk }}'}">{{ hazard.location1 }}, {{ hazard.hazard_type }}</a>
-        </h4>
-    </div>
-    <div id="hazard-{{ hazard.pk }}" class="uk-panel uk-panel-box uk-hidden">
-        <a href="{% url 'webapp:hazard_edit' hazard.pk %}" class="uk-align-right">{% trans "Edit" %}</a>
-        <table class="uk-table">
-            <tbody>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Assembly Location" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.assembly_location }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Location 1" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.location1 }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Location 2" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.location2 }}</td>
-            </tr>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Assembly Status" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.assembly_status|yn }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "BP Type Required" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.bp_type_required }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Due Install/Test" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.due_install_test_date }}</td>
-            </tr>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Installer" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.installer }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Install Date" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.install_date }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Replace Date" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.replace_date }}</td>
-            </tr>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "BP Type Present" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.bp_type_present }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Orientation" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.orientation }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "BP Size" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.bp_size }}</td>
-            </tr>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Manufacturer" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.manufacturer }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Model No." %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.model_no }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Serial No." %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.serial_no }}</td>
-            </tr>
-            {% if fire %}
-                <tr>
-                    <td class="uk-text-right uk-text-muted">{% trans "Detector Manufacturer" %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ hazard.detector_manufacturer }}</td>
-                    <td class="uk-text-right uk-text-muted">{% trans "Detector Model" %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ hazard.detector_model }}</td>
-                    <td class="uk-text-right uk-text-muted">{% trans "Detector Serial No." %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ hazard.detector_serial_no }}</td>
-                </tr>
-            {% endif %}
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
-                <td class="uk-text-center uk-text-primary" colspan="5">{{ hazard.notes }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-{% endfor %}
 {% if perms.webapp.add_hazard %}
     <div class="padding-top">
         <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' survey.pk %}">
             <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
         </a>
     </div>
+{% endif %}
+{% if hazards %}
+    <div class="wrapper">
+        <table class="uk-table uk-table-hover">
+            <thead>
+                <tr class="table-border-bottom">
+                    <th class="table-border-right uk-text-center">
+                        {% trans "No." %}
+                    </th>
+                    <th>
+                        {% trans "Site" %}
+                    </th>
+                    <th>
+                        {% trans "Survey" %}
+                    </th>
+                    <th>
+                        {% trans "Location" %}
+                    </th>
+                    <th>
+                        {% trans "Assembly Status" %}
+                    </th>
+                    <th>
+                        {% trans "Due Install/Test" %}
+                    </th>
+                    <th colspan="2" class="uk-text-center table-border-left">
+                        {% trans "Actions" %}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hazard in hazards %}
+                <tr>
+                    <td class="uk-text-center table-border-right">
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ hazard.survey.site }}
+                    </td>
+                    <td>
+                        {{ hazard.survey }}
+                    </td>
+                    <td>
+                        {{ hazard.location1 }}
+                    </td>
+                    <td>
+                        {{ hazard.assembly_status }}
+                    </td>
+                    <td>
+                        {{ hazard.due_install_test_date }}
+                    </td>
+                    <td class="table-border-left uk-text-center">
+                        <a href="{% url "webapp:hazard_detail" hazard.pk %}">{% trans "Detail" %}</a>
+                    </td>
+                    <td class="uk-text-center">
+                        <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if perms.webapp.add_hazard %}
+        <div class="padding-top">
+            <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' survey.pk %}">
+                <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
+            </a>
+        </div>
+    {% endif %}
 {% endif %}
