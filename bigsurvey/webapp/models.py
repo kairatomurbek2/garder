@@ -574,6 +574,8 @@ class TestPermission(models.Model):
         verbose_name_plural = "Test Permissions"
         permissions = (
             ('browse_testpermission', _('Can browse Test Permission')),
+            ('access_to_all_testpermissions', _('Has access to all Test Permissions')),
+            ('access_to_pws_testpermissions', _('Has access to PWS Test Permissions')),
         )
 
 
@@ -594,4 +596,6 @@ class Inspection(models.Model):
         verbose_name_plural = "Inspections"
         permissions = (
             ('browse_inspection', _('Can browse Inspection')),
+            ('access_to_all_inspections', _('Has access to all Inspections')),
+            ('access_to_pws_inspections', _('Has access to PWS Inspections')),
         )

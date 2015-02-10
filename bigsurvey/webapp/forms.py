@@ -48,3 +48,13 @@ class TestForm(forms.ModelForm):
     class Meta:
         model = models.Test
         exclude = ('bp_device',)
+
+
+class InspectionForm(forms.ModelForm):
+    class Meta:
+        model = models.Inspection
+
+
+class TestPermissionForm(forms.ModelForm):
+    class Meta:
+        model = models.TestPermission

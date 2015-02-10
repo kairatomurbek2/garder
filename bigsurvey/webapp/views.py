@@ -89,6 +89,13 @@ class TestObjectPermissionMixin(ObjectPermissionMixin):
                request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
 
 
+class InspectionObjectPermissionMixin(ObjectPermissionMixin):
+    @staticmethod
+    def has_perm(request, obj):
+        return request.user.has_perm('webapp.access_to_all_inspections') or \
+               request.user.has_perm('webapp.access_to_pws_inspections') and obj.site.pws == request.user.employee.pws
+
+
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
@@ -411,3 +418,25 @@ class TestEditView(TestBaseFormView, UpdateView):
     permission = 'webapp.edit_test'
     success_message = Messages.Test.editing_success
     error_message = Messages.Test.editing_error
+
+
+class InspectionView(BaseTemplateView):
+    permission = 'webapp.browse_inspection'
+
+
+class InspectionBaseFormView(BaseFormView):
+    model = models.Inspection
+    form_class = forms.InspectionForm
+    template = 'inspection_form.html'
+
+
+class InspectionAddView(InspectionBaseFormView, CreateView):
+    permission = 'webapp.add_inspection'
+    success_message = Messages.Inspection.adding_success
+    error_message = Messages.Inspection.adding_error
+
+
+class InspectionEditView(InspectionBaseFormView, UpdateView):
+    permission = 'webapp.change_permission'
+    success_message = Messages.Inspection.editing_success
+    error_message = Messages.Inspection.editing_error
