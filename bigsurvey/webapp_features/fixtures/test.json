@@ -3960,7 +3960,7 @@
 },
 {
     "fields": {
-        "next_survey_date": null,
+        "next_survey_date": "2015-05-05",
         "apt": "",
         "floors": 1,
         "city": "Chikago",
