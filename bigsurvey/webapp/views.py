@@ -60,7 +60,8 @@ class SiteObjectPermissionMixin(ObjectPermissionMixin):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_sites') or \
                request.user.has_perm('webapp.access_to_pws_sites') and obj.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(assigned_to=request.user) or \
+               request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(
+                   assigned_to=request.user) or \
                request.user.has_perm('webapp.access_to_test_sites') and obj.test_perms.filter(given_to=request.user)
 
 
@@ -76,16 +77,19 @@ class HazardObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_hazards') or \
-               request.user.has_perm('webapp.access_to_pws_hazards') and obj.survey.site.pws == request.user.employee.pws or \
+               request.user.has_perm(
+                   'webapp.access_to_pws_hazards') and obj.survey.site.pws == request.user.employee.pws or \
                request.user.has_perm('webapp.access_to_own_hazards') and obj.survey.surveyor == request.user or \
-               request.user.has_perm('webapp.access_to_site_hazards') and models.TestPermission.objects.filter(site=obj.survey.site, given_to=request.user)
+               request.user.has_perm('webapp.access_to_site_hazards') and models.TestPermission.objects.filter(
+                   site=obj.survey.site, given_to=request.user)
 
 
 class TestObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_tests') or \
-               request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_service.survey.site.pws == request.user.employee.pws or \
+               request.user.has_perm(
+                   'webapp.access_to_pws_tests') and obj.bp_service.survey.site.pws == request.user.employee.pws or \
                request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
 
 
@@ -278,7 +282,8 @@ class SurveyBaseFormView(BaseFormView):
         if self.request.user.has_perm('webapp.access_to_own_surveys'):
             form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor,
+                                                                          employee__pws=self.request.user.employee.pws)
         if self.request.user.has_perm('webapp.access_to_all_surveys'):
             form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
         return form
@@ -371,10 +376,12 @@ class HazardEditView(HazardBaseFormView, UpdateView, HazardObjectPermissionMixin
         # Seems that it does not work, excluded fields appears in template anyway
         self.form_class.Meta.exclude = ['survey']
         if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
-            self.form_class.Meta.exclude.extend(['location1', 'location2', 'hazard_type', 'due_install_test_date', 'notes'])
+            self.form_class.Meta.exclude.extend(
+                ['location1', 'location2', 'hazard_type', 'due_install_test_date', 'notes'])
         form = super(HazardEditView, self).get_form(form_class)
         if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
-            form.fields['assembly_status'].queryset = models.AssemblyStatus.objects.filter(assembly_status__in=TESTER_ASSEMBLY_STATUSES)
+            form.fields['assembly_status'].queryset = models.AssemblyStatus.objects.filter(
+                assembly_status__in=TESTER_ASSEMBLY_STATUSES)
         return form
 
 
@@ -396,7 +403,8 @@ class TestBaseFormView(BaseFormView):
         if self.request.user.has_perm('webapp.access_to_own_tests'):
             form.fields['tester'].queryset = models.User.objects.filter(pk=self.request.user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_tests'):
-            form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+            form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester,
+                                                                        employee__pws=self.request.user.employee.pws)
         if self.request.user.has_perm('webapp.access_to_all_tests'):
             form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester)
         return form
@@ -422,12 +430,26 @@ class TestEditView(TestBaseFormView, UpdateView):
 
 class InspectionView(BaseTemplateView):
     permission = 'webapp.browse_inspection'
+    template_name = 'inspection_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(InspectionView, self).get_context_data(**kwargs)
+        context['inspection_list'] = self._get_inspections()
+        return context
+
+    def _get_inspections(self):
+        inspections = []
+        if self.request.user.has_perm('webapp.access_to_pws_inspections'):
+            inspections = models.Inspection.objects.filter(site__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_inspections'):
+            inspections = models.Inspection.objects.all()
+        return inspections
 
 
 class InspectionBaseFormView(BaseFormView):
     model = models.Inspection
     form_class = forms.InspectionForm
-    template = 'inspection_form.html'
+    template_name = 'inspection_form.html'
 
 
 class InspectionAddView(InspectionBaseFormView, CreateView):
