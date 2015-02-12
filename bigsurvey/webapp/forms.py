@@ -59,3 +59,4 @@ class InspectionForm(forms.ModelForm):
 class TestPermissionForm(forms.ModelForm):
     class Meta:
         model = models.TestPermission
+        exclude = ('given_by', 'site')

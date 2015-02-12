@@ -94,3 +94,9 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('Inspection was successfully updated')
         editing_error = _('Error while submitting form')
+
+    class TestPermission:
+        adding_success = _('Test Permission was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('Test Permission was successfully updated')
+        editing_error = _('Error while submitting form')

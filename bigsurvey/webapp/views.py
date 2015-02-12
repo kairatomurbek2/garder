@@ -10,7 +10,6 @@ from django.core.urlresolvers import reverse
 from abc import ABCMeta, abstractmethod
 from django.contrib import messages
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES
-from django.core.exceptions import ObjectDoesNotExist
 
 
 class AccessRequiredMixin(View):
@@ -70,7 +69,7 @@ class SurveyObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
         if request.user.has_perm('webapp.access_to_all_surveys') or \
-           request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws:
+                        request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws:
             return True
         if request.user.has_perm('webapp.access_to_own_surveys'):
             inspections = models.Inspection.objects.filter(assigned_to=request.user,
@@ -463,7 +462,7 @@ class InspectionBaseFormView(BaseFormView):
     template_name = 'inspection_form.html'
 
     def get_success_url(self):
-        return reverse('webapp:inspection_list')
+        return reverse('webapp:home')
 
     def get_form(self, form_class):
         form = super(InspectionBaseFormView, self).get_form(form_class)
@@ -482,10 +481,64 @@ class InspectionAddView(InspectionBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.assigned_by = self.request.user
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form.instance.is_active = True
         return super(InspectionAddView, self).form_valid(form)
 
 
 class InspectionEditView(InspectionBaseFormView, UpdateView):
-    permission = 'webapp.change_permission'
+    permission = 'webapp.change_inspection'
     success_message = Messages.Inspection.editing_success
     error_message = Messages.Inspection.editing_error
+
+
+class TestPermissionView(BaseTemplateView):
+    permission = 'webapp.browse_testpermission'
+    template_name = 'testpermission_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TestPermissionView, self).get_context_data(**kwargs)
+        context['testpermission_list'] = self._get_testpermissions()
+        return context
+
+    def _get_testpermissions(self):
+        testpermissions = []
+        if self.request.user.has_perm('webapp.access_to_pws_testpermissions'):
+            testpermissions = models.TestPermission.objects.filter(site__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_testpermissions'):
+            testpermissions = models.TestPermission.objects.all()
+        return testpermissions
+
+
+class TestPermissionBaseFormView(BaseFormView):
+    model = models.TestPermission
+    form_class = forms.TestPermissionForm
+    template_name = 'testpermission_form.html'
+
+    def get_success_url(self):
+        return reverse('webapp:home')
+
+    def get_form(self, form_class):
+        form = super(TestPermissionBaseFormView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_pws_testpermissions'):
+            form.fields['given_to'].queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_testpermissions'):
+            form.fields['given_to'].queryset = models.User.objects.filter(groups__name=Groups.tester)
+        return form
+
+
+class TestPermissionAddView(TestPermissionBaseFormView, CreateView):
+    permission = 'webapp.add_testpermission'
+    success_message = Messages.TestPermission.adding_success
+    error_message = Messages.TestPermission.adding_error
+
+    def form_valid(self, form):
+        form.instance.given_by = self.request.user
+        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form.instance.is_active = True
+        return super(TestPermissionAddView, self).form_valid(form)
+
+
+class TestPermissionEditView(TestPermissionBaseFormView, UpdateView):
+    permission = 'webapp.change_testpermission'
+    success_message = Messages.TestPermission.editing_success
+    error_message = Messages.TestPermission.editing_error
