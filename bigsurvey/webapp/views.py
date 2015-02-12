@@ -304,6 +304,8 @@ class SurveyBaseFormView(BaseFormView):
 
 class SurveyAddView(SurveyBaseFormView, CreateView):
     permission = 'webapp.add_survey'
+    success_message = Messages.Survey.adding_success
+    error_message = Messages.Survey.adding_error
 
     def get_context_data(self, **kwargs):
         context = super(SurveyAddView, self).get_context_data(**kwargs)
@@ -319,9 +321,30 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         )[0]
         return super(SurveyAddView, self).form_valid(form)
 
+    def get_form(self, form_class):
+        if not SiteObjectPermissionMixin.has_perm(self.request, models.Site.objects.get(pk=self.kwargs['pk'])):
+            raise Http404
+        form = super(SurveyAddView, self).get_form(form_class)
+        if not self.service_type_on_site_exists():
+            raise Http404
+        return form
+
+    def service_type_on_site_exists(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        service_type = self.kwargs['service']
+        if service_type == 'potable' and site.potable_present:
+            return True
+        if service_type == 'fire' and site.fire_present:
+            return True
+        if service_type == 'irrigation' and site.irrigation_present:
+            return True
+        return False
+
 
 class SurveyEditView(SurveyBaseFormView, UpdateView, SurveyObjectPermissionMixin):
     permission = 'webapp.add_survey'
+    success_message = Messages.Survey.editing_success
+    error_message = Messages.Survey.editing_error
 
     def get_form(self, form_class):
         survey = self.model.objects.get(pk=self.kwargs['pk'])

@@ -4,7 +4,7 @@ Feature: Survey Detail
   Scenario Outline: Survey detail page access
     Given I open "login" page
     And I login as "<role>"
-    When I open survey detail page with pk "<pk>"
+    When I open "survey detail" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I log out
 
