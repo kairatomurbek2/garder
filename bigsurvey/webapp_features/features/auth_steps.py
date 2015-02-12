@@ -53,3 +53,9 @@ def check_login_page(step):
 @step('I log out')
 def logout(step):
     step.given('I open "%s"' % get_url(Urls.logout))
+
+
+@step('I logged in as "([-_a-z0-9]+)"')
+def logged_in_as(step, role):
+    step.given('I open "login" page')
+    step.given('I login as "%s"' % role)

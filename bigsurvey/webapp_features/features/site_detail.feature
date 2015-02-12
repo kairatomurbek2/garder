@@ -25,15 +25,14 @@ Feature: Site detail
         And I login as "root"
         When I open "site detail" page with pk "10"
         Then I should see following
-            | text            |
-            | Gabe Newell     |
-            | Assign Surveyor |
-            | Assign Tester   |
-            | Edit            |
-            | Commit          |
+            | text        |
+            | Gabe Newell |
+            | Assign      |
+            | Edit        |
+            | Commit      |
         And I should see following text in following services
             | service    | text                             |
-            | potable    | Jan. 26, 2015, Annual            |
+            | potable    | Jan. 26, 2015                    |
             | potable    | Add Survey                       |
             | fire       | Fire water supply is not present |
             | irrigation | Add Survey                       |
@@ -49,13 +48,12 @@ Feature: Site detail
         Then I should see following
             | text            |
             | Gabe Newell     |
-            | Assign Surveyor |
-            | Assign Tester   |
+            | Assign          |
             | Edit            |
             | Commit          |
         And I should see following text in following services
             | service    | text                             |
-            | potable    | Jan. 26, 2015, Annual            |
+            | potable    | Jan. 26, 2015                    |
             | potable    | Add Survey                       |
             | fire       | Fire water supply is not present |
             | irrigation | Add Survey                       |
@@ -79,7 +77,7 @@ Feature: Site detail
             | Edit Site       |
         And I should see following text in following services
             | service    | text                             |
-            | potable    | Jan. 26, 2015, Annual            |
+            | potable    | Jan. 26, 2015                    |
             | fire       | Fire water supply is not present |
             | irrigation | Add Survey                       |
         And I should not see following text in following services
@@ -103,11 +101,11 @@ Feature: Site detail
             | Edit Site       |
         And I should see following text in following services
             | service | text                             |
-            | potable | Seattle, Digester                |
+            | potable | Seattle                          |
             | fire    | Fire water supply is not present |
         And I should not see following text in following services
             | service    | text                  |
-            | potable    | Jan. 26, 2015, Annual |
+            | potable    | Jan. 26, 2015         |
             | potable    | Add Survey            |
             | fire       | Add Survey            |
             | irrigation | Add Survey            |
