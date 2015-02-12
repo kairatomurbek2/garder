@@ -310,6 +310,8 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
     def get_context_data(self, **kwargs):
         context = super(SurveyAddView, self).get_context_data(**kwargs)
         context['site_pk'] = self.kwargs['pk']
+        if self.kwargs['service'] == 'fire':
+            context['fire'] = True
         return context
 
     def form_valid(self, form):

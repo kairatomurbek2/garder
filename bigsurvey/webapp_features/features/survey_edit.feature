@@ -1,7 +1,7 @@
-@survey_add
-Feature: Survey Add
+@survey_edit
+Feature: Survey Edit
 
-  Scenario Outline: Survey Add page access
+  Scenario Outline: Survey Edit page access
     Given I open "login" page
     And I login as "<role>"
     When I open "survey add" page for site with pk "<pk>" and service "<service>"
@@ -21,27 +21,30 @@ Feature: Survey Add
     | tester   | 10 | potable    | see      |
 
 
-  Scenario: Correct survey adding
+  Scenario: Correct survey editing
     Given I logged in as "root"
-    When I open "survey add" page for site with pk "5" and service "potable"
+    When I open "survey edit" page with pk "1"
     And I fill in following fields with following values
     | field                 | value      |
-    | survey_date           | 2015-03-15 |
+    | survey_date           | 2015-02-28 |
     And I select "Initial" from "survey_type"
     And I submit "survey" form
-    Then I should be at "survey detail" page with pk "3"
-    And I should see "survey adding success" message
+    Then I should be at "survey detail" page with pk "1"
+    And I should see "survey editing success" message
     And I should see following
-    | text           |
-    | March 15, 2015 |
+    | text          |
+    | Feb. 28, 2015 |
 
 
-  Scenario: Incorrect survey adding
+  Scenario: Incorrect survey editing
     Given I logged in as "root"
-    When I open "survey add" page for site with pk "5" and service "potable"
+    When I open "survey edit" page with pk "1"
+    And I fill in following fields with following values
+    | field                 | value      |
+    | survey_date           |            |
     And I submit "survey" form
-    Then I should be at "survey add" page for site with pk "5" and service "potable"
-    And I should see "survey adding error" message
+    Then I should be at "survey edit" page with pk "1"
+    And I should see "survey editing error" message
     And I should see following validation error messages on following fields
     | field       | error_message          |
     | survey_date | This field is required |
