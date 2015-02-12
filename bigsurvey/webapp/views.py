@@ -451,11 +451,27 @@ class InspectionBaseFormView(BaseFormView):
     form_class = forms.InspectionForm
     template_name = 'inspection_form.html'
 
+    def get_success_url(self):
+        return reverse('webapp:inspection_list')
+
+    def get_form(self, form_class):
+        form = super(InspectionBaseFormView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_pws_inspections'):
+            form.fields['assigned_to'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_inspections'):
+            form.fields['assigned_to'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        return form
+
 
 class InspectionAddView(InspectionBaseFormView, CreateView):
     permission = 'webapp.add_inspection'
     success_message = Messages.Inspection.adding_success
     error_message = Messages.Inspection.adding_error
+
+    def form_valid(self, form):
+        form.instance.assigned_by = self.request.user
+        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        return super(InspectionAddView, self).form_valid(form)
 
 
 class InspectionEditView(InspectionBaseFormView, UpdateView):
