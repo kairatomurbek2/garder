@@ -23,6 +23,9 @@ class Urls:
     customer_add = '/customer/add/'
     customer_edit = '/customer/%s/edit/'
     logout = '/accounts/logout/'
+    survey_detail = '/survey/%s/'
+    survey_edit = '/survey/%s/edit/'
+    survey_add = '/site/%s/%s/addsurvey/'
 
 
 class Logins:

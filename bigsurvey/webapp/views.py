@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from abc import ABCMeta, abstractmethod
 from django.contrib import messages
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class AccessRequiredMixin(View):
@@ -67,9 +68,19 @@ class SiteObjectPermissionMixin(ObjectPermissionMixin):
 class SurveyObjectPermissionMixin(ObjectPermissionMixin):
     @staticmethod
     def has_perm(request, obj):
-        return request.user.has_perm('webapp.access_to_all_surveys') or \
-               request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_own_surveys') and obj.surveyor == request.user
+        if request.user.has_perm('webapp.access_to_all_surveys') or \
+           request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws:
+            return True
+        if request.user.has_perm('webapp.access_to_own_surveys'):
+            inspections = models.Inspection.objects.filter(assigned_to=request.user,
+                                                           is_active=True,
+                                                           site=obj.site)
+            try:
+                if inspections[0]:
+                    return True
+            except IndexError:
+                return False
+        return False
 
 
 class HazardObjectPermissionMixin(ObjectPermissionMixin):
