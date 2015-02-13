@@ -338,7 +338,7 @@ class Employee(models.Model):
         verbose_name = _("Employee")
         verbose_name_plural = _("Employees")
         permissions = (
-            ('browse_employee', _('Can browse Users')),
+            ('browse_user', _('Can browse Users')),
             ('access_to_adminpanel', _('Can log into Admin Panel')),
             ('access_to_all_users', _('Has access to all Users')),
             ('access_to_pws_users', _('Has access to PWS Users')),

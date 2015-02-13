@@ -28,4 +28,7 @@ urlpatterns = patterns(
     url(r'^hazard/(?P<pk>\d+)/edit/$', views.HazardEditView.as_view(), name="hazard_edit"),
     url(r'^hazard/(?P<pk>\d+)/addtest/$', views.TestAddView.as_view(), name="test_add"),
     url(r'^test/(?P<pk>\d+)/edit/$', views.TestEditView.as_view(), name="test_edit"),
+    url(r'^user/$', views.UserListView.as_view(), name="user_list"),
+    url(r'^user/add/$', views.UserAddView.as_view(), name="user_add"),
+    url(r'^user/(?P<pk>\d+)/edit/$', views.UserEditView.as_view(), name="user_edit"),
 )

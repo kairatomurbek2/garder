@@ -41,7 +41,6 @@ DATE_FILTER_CHOICES = (
     ('year', 'Next Year'),
 )
 
-
 TESTER_ASSEMBLY_STATUSES = ['Installed', 'Replaced']
 
 
@@ -50,6 +49,9 @@ class Groups:
     admin = 'Administrators'
     surveyor = 'Surveyors'
     tester = 'Testers'
+
+
+ADMIN_GROUPS = [Groups.surveyor, Groups.tester]
 
 
 class Messages:
@@ -99,4 +101,10 @@ class Messages:
         adding_success = _('Test Permission was successfully added')
         adding_error = _('Error while submitting form')
         editing_success = _('Test Permission was successfully updated')
+        editing_error = _('Error while submitting form')
+
+    class User:
+        adding_success = _('User was successfully added')
+        adding_error = _('Error while submitting form')
+        editing_success = _('User was successfully updated')
         editing_error = _('Error while submitting form')

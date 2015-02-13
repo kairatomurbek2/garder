@@ -3,11 +3,13 @@ from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.contrib import messages
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import Group
 import mixins
 import models
 import forms
 from filters import SiteFilter, CustomerFilter
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS
 
 
 class BaseView(mixins.PermissionRequiredMixin):
@@ -562,7 +564,89 @@ class TestPermissionEditView(TestPermissionBaseFormView, UpdateView):
     error_message = Messages.TestPermission.editing_error
 
 
-class AddUserView(BaseFormView, CreateView):
-    permission = 'webapp.add_user'
-    model = models.Employee
+class UserListView(BaseTemplateView):
+    permission = 'webapp.browse_user'
+    template_name = 'user_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserListView, self).get_context_data(**kwargs)
+        context['user_list'] = self._get_users()
+        return context
+
+    def _get_users(self):
+        user_list = {}
+        if self.request.user.has_perm('webapp.access_to_pws_users'):
+            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_users'):
+            user_list['SuperAdministrators'] = models.User.objects.filter(groups__name=Groups.superadmin)
+            user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin)
+            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor)
+            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester)
+        return user_list
+
+
+class UserBaseFormView(BaseFormView):
+    model = models.User
     form_class = forms.UserForm
+    employee_model = models.Employee
+    employee_form_class = forms.EmployeeForm
+    template_name = 'user_form.html'
+
+    def _get_queryset_for_group_field(self):
+        queryset = []
+        if self.request.user.has_perm('webapp.access_to_pws_users'):
+            queryset = Group.objects.filter(name__in=ADMIN_GROUPS)
+        if self.request.user.has_perm('webapp.access_to_all_users'):
+            queryset = Group.objects.all()
+        return queryset
+
+    def _get_queryset_for_pws_field(self):
+        queryset = []
+        if self.request.user.has_perm('webapp.access_to_pws_users'):
+            queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+        if self.request.user.has_perm('webapp.access_to_all_users'):
+            queryset = models.PWS.objects.all()
+        return queryset
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form(self.form_class)
+        employee_form = self.get_form(self.employee_form_class)
+        if employee_form.is_valid() and form.is_valid():
+            form.save()
+            employee_form.instance.user = form.instance
+            employee_form.save()
+            return redirect(self.get_success_url())
+        else:
+            return render(self.request, self.template_name, {'form': form, 'employee_form': employee_form})
+
+    def get_success_url(self):
+        return reverse('webapp:user_list')
+
+
+class UserAddView(UserBaseFormView):
+    permission = 'auth.add_user'
+    success_message = Messages.User.adding_success
+    error_message = Messages.User.adding_error
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        employee_form = self.employee_form_class()
+        form.fields['groups'].queryset = self._get_queryset_for_group_field()
+        employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
+        return render(self.request, self.template_name, {'form': form, 'employee_form': employee_form})
+
+
+class UserEditView(UserBaseFormView, UpdateView):
+    permission = 'auth.change_user'
+    success_message = Messages.User.editing_success
+    error_message = Messages.User.editing_error
+
+    def get(self, request, *args, **kwargs):
+        user = models.User.objects.get(pk=self.kwargs['pk'])
+        form = self.form_class(instance=user)
+        employee = models.Employee.objects.get(user=user)
+        employee_form = self.employee_form_class(instance=employee)
+        form.fields['groups'].queryset = self._get_queryset_for_group_field()
+        employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
+        return render(self.request, self.template_name, {'form': form, 'employee_form': employee_form})
