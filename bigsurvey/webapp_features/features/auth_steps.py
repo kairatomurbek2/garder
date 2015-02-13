@@ -50,7 +50,7 @@ def check_login_page(step):
     step.given('I should be at "%s"' % get_url(Urls.login))
 
 
-@step('I log out')
+@step('I logout')
 def logout(step):
     step.given('I open "%s"' % get_url(Urls.logout))
 

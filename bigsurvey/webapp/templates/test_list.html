@@ -37,7 +37,7 @@
                 <td class="uk-text-center uk-text-primary">{{ test.last_calibration_date }}</td>
                 <td colspan="2"></td>
             </tr>
-            {% if hazard.survey.service_type.service_type == 'potable' %}
+            {% ifequal hazard.survey.service_type.service_type 'potable' %}
                 <tr>
                     <td class="uk-text-right uk-text-muted">{% trans "CV1 Leaked" %}</td>
                     <td class="uk-text-center uk-text-primary">{{ test.cv1_leaked|valve_leaked }}</td>
@@ -79,8 +79,8 @@
                     <td class="uk-text-center uk-text-primary">{{ test.outlet_sov_leaked }}</td>
                     <td colspan="2"></td>
                 </tr>
-            {% endif %}
-            {% if hazard.survey.service_type.service_type == 'fire' %}
+            {% endifequal %}
+            {% ifequal hazard.survey.service_type.service_type 'fire' %}
                 <tr class="table-border-bottom">
                     <td class="uk-text-right uk-text-muted">{% trans "PVB Opened" %}</td>
                     <td class="uk-text-center uk-text-primary">{{ test.pvb_opened }}</td>
@@ -88,8 +88,8 @@
                     <td class="uk-text-center uk-text-primary">{{ test.pvb_open_pressure }}</td>
                     <td colspan="2"></td>
                 </tr>
-            {% endif %}
-            {% if hazard.survey.service_type.service_type == 'irrigation' %}
+            {% endifequal %}
+            {% ifequal hazard.survey.service_type.service_type 'irrigation' %}
                 <tr class="table-border-bottom">
                     <td class="uk-text-right uk-text-muted">{% trans "CV Leaked" %}</td>
                     <td class="uk-text-center uk-text-primary">{{ test.cv_leaked }}</td>
@@ -105,7 +105,7 @@
                     <td class="uk-text-center uk-text-primary">{{ test.air_inlet_psi }}</td>
                     <td colspan="2"></td>
                 </tr>
-            {% endif %}
+            {% endifequal %}
             <tr class="table-border-bottom">
                 <td colspan="2"></td>
                 <td class="uk-text-right uk-text-muted">{% trans "Test Result" %}</td>

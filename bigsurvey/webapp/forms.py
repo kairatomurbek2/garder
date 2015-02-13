@@ -60,3 +60,9 @@ class TestPermissionForm(forms.ModelForm):
     class Meta:
         model = models.TestPermission
         exclude = ('given_by', 'site')
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = models.Employee
+        exclude = ('',)

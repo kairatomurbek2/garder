@@ -2,11 +2,10 @@
 Feature: Survey Detail
 
   Scenario Outline: Survey detail page access
-    Given I open "login" page
-    And I login as "<role>"
+    Given I logged in as "<role>"
     When I open "survey detail" page with pk "<pk>"
     Then I should <reaction> "Not Found"
-    And I log out
+    And I logout
 
   Examples:
     | role     | pk | reaction |
@@ -24,13 +23,13 @@ Feature: Survey Detail
     Given I logged in as "root"
     When I open "survey detail" page with pk "1"
     Then I should see following
-    | text         |
-    | Service Type |
-    | Surveyor     |
-    | Metered      |
-    | Hazards      |
-    | Detail       |
-    | Add Test     |
-    | Add Hazard   |
-    | Edit         |
-    | Back to Site |
+      | text         |
+      | Service Type |
+      | Surveyor     |
+      | Metered      |
+      | Hazards      |
+      | Detail       |
+      | Add Test     |
+      | Add Hazard   |
+      | Edit         |
+      | Back to Site |

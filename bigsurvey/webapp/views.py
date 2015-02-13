@@ -1,29 +1,16 @@
 from django.views.generic import TemplateView, View, CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
-import models
-import forms
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from filters import SiteFilter, CustomerFilter
 from django.http import Http404
 from django.core.urlresolvers import reverse
-from abc import ABCMeta, abstractmethod
 from django.contrib import messages
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES
+import mixins
+import models
+import forms
+from filters import SiteFilter, CustomerFilter
 
 
-class AccessRequiredMixin(View):
-    permission = None
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        if self.permission:
-            if not self.request.user.has_perm(self.permission):
-                raise Http404
-        return super(AccessRequiredMixin, self).dispatch(*args, **kwargs)
-
-
-class BaseView(AccessRequiredMixin):
+class BaseView(mixins.PermissionRequiredMixin):
     pass
 
 
@@ -46,70 +33,6 @@ class BaseFormView(BaseView, ModelFormMixin, ProcessFormView):
         return super(BaseFormView, self).form_invalid(form)
 
 
-class ObjectPermissionMixin(object):
-    __metaclass__ = ABCMeta
-
-    @staticmethod
-    @abstractmethod
-    def has_perm(request, obj):
-        pass
-
-
-class SiteObjectPermissionMixin(ObjectPermissionMixin):
-    @staticmethod
-    def has_perm(request, obj):
-        return request.user.has_perm('webapp.access_to_all_sites') or \
-               request.user.has_perm('webapp.access_to_pws_sites') and obj.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(
-                   assigned_to=request.user) or \
-               request.user.has_perm('webapp.access_to_test_sites') and obj.test_perms.filter(given_to=request.user)
-
-
-class SurveyObjectPermissionMixin(ObjectPermissionMixin):
-    @staticmethod
-    def has_perm(request, obj):
-        if request.user.has_perm('webapp.access_to_all_surveys') or \
-                        request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws:
-            return True
-        if request.user.has_perm('webapp.access_to_own_surveys'):
-            inspections = models.Inspection.objects.filter(assigned_to=request.user,
-                                                           is_active=True,
-                                                           site=obj.site)
-            try:
-                if inspections[0]:
-                    return True
-            except IndexError:
-                return False
-        return False
-
-
-class HazardObjectPermissionMixin(ObjectPermissionMixin):
-    @staticmethod
-    def has_perm(request, obj):
-        return request.user.has_perm('webapp.access_to_all_hazards') or \
-               request.user.has_perm(
-                   'webapp.access_to_pws_hazards') and obj.survey.site.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_own_hazards') and obj.survey.surveyor == request.user or \
-               request.user.has_perm('webapp.access_to_site_hazards') and models.TestPermission.objects.filter(
-                   site=obj.survey.site, given_to=request.user)
-
-
-class TestObjectPermissionMixin(ObjectPermissionMixin):
-    @staticmethod
-    def has_perm(request, obj):
-        return request.user.has_perm('webapp.access_to_all_tests') or \
-               request.user.has_perm(
-                   'webapp.access_to_pws_tests') and obj.bp_service.survey.site.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
-
-
-class InspectionObjectPermissionMixin(ObjectPermissionMixin):
-    @staticmethod
-    def has_perm(request, obj):
-        return request.user.has_perm('webapp.access_to_all_inspections') or \
-               request.user.has_perm('webapp.access_to_pws_inspections') and obj.site.pws == request.user.employee.pws
-
-
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
@@ -117,12 +40,11 @@ class HomeView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
-        sites = self._get_sites_for_user(user)
-        site_filter = SiteFilter(self.request.GET, queryset=sites)
-        context['site_filter'] = site_filter
+        sites = self._get_sites(user)
+        context['site_filter'] = self._get_site_filter(queryset=sites)
         return context
 
-    def _get_sites_for_user(self, user):
+    def _get_sites(self, user):
         sites = []
         if user.has_perm('webapp.access_to_test_sites'):
             permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
@@ -136,22 +58,28 @@ class HomeView(BaseTemplateView):
             sites = models.Site.objects.all()
         return sites
 
-    @staticmethod
-    def _filter_sites_by_related(related):
+    def _get_site_filter(self, queryset):
+        return SiteFilter(self.request.GET, queryset=queryset)
+
+    def _filter_sites_by_related(self, related):
         site_pks = [obj.site.pk for obj in related]
         return models.Site.objects.filter(pk__in=site_pks)
 
 
-class SiteDetailView(BaseTemplateView, SiteObjectPermissionMixin):
+class SiteDetailView(BaseTemplateView):
     template_name = 'site.html'
     permission = 'webapp.browse_site'
 
     def get_context_data(self, **kwargs):
         context = super(SiteDetailView, self).get_context_data(**kwargs)
-        context['site'] = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not self.has_perm(self.request, context['site']):
-            raise Http404
+        context['site'] = self._get_site()
         return context
+
+    def _get_site(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+            raise Http404
+        return site
 
 
 class SiteBaseFormView(BaseFormView):
@@ -161,10 +89,15 @@ class SiteBaseFormView(BaseFormView):
 
     def get_context_data(self, **kwargs):
         context = super(SiteBaseFormView, self).get_context_data(**kwargs)
-        customers = models.Customer.objects.all()
-        customer_filter = CustomerFilter(self.request.GET, queryset=customers)
-        context['customer_filter'] = customer_filter
+        customers = self._get_customers()
+        context['customer_filter'] = self._get_customer_filter(queryset=customers)
         return context
+
+    def _get_customers(self):
+        return models.Customer.objects.all()
+
+    def _get_customer_filter(self, queryset):
+        return CustomerFilter(self.request.GET, queryset=queryset)
 
     def get_form(self, form_class):
         form = super(SiteBaseFormView, self).get_form(form_class)
@@ -182,26 +115,25 @@ class SiteAddView(SiteBaseFormView, CreateView):
     error_message = Messages.Site.adding_error
 
 
-class SiteEditView(SiteBaseFormView, UpdateView, SiteObjectPermissionMixin):
+class SiteEditView(SiteBaseFormView, UpdateView):
     permission = 'webapp.change_site'
     success_message = Messages.Site.editing_success
     error_message = Messages.Site.editing_error
 
     def get_form(self, form_class):
-        site = self.model.objects.get(pk=self.kwargs['pk'])
-        if not self.has_perm(self.request, site):
-            raise Http404
         form = super(SiteEditView, self).get_form(form_class)
-        form.initial['customer'] = site.customer.pk
+        if not mixins.SiteObjectMixin.has_perm(self.request, form.instance):
+            raise Http404
+        form.initial['customer'] = form.instance.customer.pk
         return form
 
 
-class PWSView(BaseTemplateView):
+class PWSListView(BaseTemplateView):
     template_name = 'pws_list.html'
     permission = 'webapp.browse_pws'
 
     def get_context_data(self, **kwargs):
-        context = super(PWSView, self).get_context_data(**kwargs)
+        context = super(PWSListView, self).get_context_data(**kwargs)
         context['pws_list'] = models.PWS.objects.all()
         return context
 
@@ -227,16 +159,21 @@ class PWSEditView(PWSBaseFormView, UpdateView):
     error_message = Messages.PWS.editing_error
 
 
-class CustomerView(BaseTemplateView):
+class CustomerListView(BaseTemplateView):
     template_name = 'customer_base.html'
     permission = 'webapp.browse_customer'
 
     def get_context_data(self, **kwargs):
-        context = super(CustomerView, self).get_context_data(**kwargs)
-        customers = models.Customer.objects.all()
-        customer_filter = CustomerFilter(self.request.GET, queryset=customers)
-        context['customer_filter'] = customer_filter
+        context = super(CustomerListView, self).get_context_data(**kwargs)
+        customers = self._get_customers()
+        context['customer_filter'] = self._get_customer_filter(queryset=customers)
         return context
+
+    def _get_customers(self):
+        return models.Customer.objects.all()
+
+    def _get_customer_filter(self, queryset):
+        return CustomerFilter(self.request.GET, queryset=queryset)
 
 
 class CustomerDetailView(BaseTemplateView):
@@ -245,8 +182,11 @@ class CustomerDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CustomerDetailView, self).get_context_data(**kwargs)
-        context['customer'] = models.Customer.objects.get(pk=self.kwargs['pk'])
+        context['customer'] = self._get_customer()
         return context
+
+    def _get_customer(self):
+        return models.Customer.objects.get(pk=self.kwargs['pk'])
 
 
 class CustomerBaseFormView(BaseFormView):
@@ -270,16 +210,20 @@ class CustomerEditView(CustomerBaseFormView, UpdateView):
     error_message = Messages.Customer.editing_error
 
 
-class SurveyDetailView(BaseTemplateView, SurveyObjectPermissionMixin):
+class SurveyDetailView(BaseTemplateView):
     template_name = 'survey.html'
     permission = 'webapp.browse_survey'
 
     def get_context_data(self, **kwargs):
         context = super(SurveyDetailView, self).get_context_data(**kwargs)
-        context['survey'] = models.Survey.objects.get(pk=self.kwargs['pk'])
-        if not self.has_perm(self.request, context['survey']):
-            raise Http404
+        context['survey'] = self._get_survey()
         return context
+
+    def _get_survey(self):
+        survey = models.Survey.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
+            raise Http404
+        return survey
 
 
 class SurveyBaseFormView(BaseFormView):
@@ -289,14 +233,18 @@ class SurveyBaseFormView(BaseFormView):
 
     def get_form(self, form_class):
         form = super(SurveyBaseFormView, self).get_form(form_class)
-        if self.request.user.has_perm('webapp.access_to_own_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(pk=self.request.user.pk)
-        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor,
-                                                                          employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_surveys'):
-            form.fields['surveyor'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        form.fields['surveyor'].queryset = self._get_queryset_for_surveyor_field()
         return form
+
+    def _get_queryset_for_surveyor_field(self):
+        queryset = []
+        if self.request.user.has_perm('webapp.access_to_own_surveys'):
+            queryset = models.User.objects.filter(pk=self.request.user.pk)
+        if self.request.user.has_perm('webapp.access_to_pws_surveys'):
+            queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_surveys'):
+            queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        return queryset
 
     def get_success_url(self):
         return reverse('webapp:survey_detail', args=(self.object.pk,))
@@ -310,28 +258,37 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
     def get_context_data(self, **kwargs):
         context = super(SurveyAddView, self).get_context_data(**kwargs)
         context['site_pk'] = self.kwargs['pk']
-        if self.kwargs['service'] == 'fire':
-            context['fire'] = True
+        context['fire'] = self._is_fire_service()
         return context
 
+    def _is_fire_service(self):
+        if self.kwargs['service'] == 'fire':
+            return True
+        return False
+
     def form_valid(self, form):
-        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not SiteObjectPermissionMixin.has_perm(self.request, form.instance.site):
-            raise Http404
-        form.instance.service_type = models.ServiceType.objects.filter(
-            service_type__icontains=self.kwargs['service']
-        )[0]
+        form.instance.site = self._get_site()
+        form.instance.service_type = self._get_service_type()
         return super(SurveyAddView, self).form_valid(form)
 
-    def get_form(self, form_class):
-        if not SiteObjectPermissionMixin.has_perm(self.request, models.Site.objects.get(pk=self.kwargs['pk'])):
+    def _get_site(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
             raise Http404
+        return site
+
+    def _get_service_type(self):
+        return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
+
+    def get_form(self, form_class):
         form = super(SurveyAddView, self).get_form(form_class)
-        if not self.service_type_on_site_exists():
+        if not mixins.SiteObjectMixin.has_perm(self.request, self._get_site()):
+            raise Http404
+        if not self._service_type_on_site_exists():
             raise Http404
         return form
 
-    def service_type_on_site_exists(self):
+    def _service_type_on_site_exists(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         service_type = self.kwargs['service']
         if service_type == 'potable' and site.potable_present:
@@ -343,30 +300,37 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         return False
 
 
-class SurveyEditView(SurveyBaseFormView, UpdateView, SurveyObjectPermissionMixin):
+class SurveyEditView(SurveyBaseFormView, UpdateView):
     permission = 'webapp.add_survey'
     success_message = Messages.Survey.editing_success
     error_message = Messages.Survey.editing_error
 
     def get_form(self, form_class):
-        survey = self.model.objects.get(pk=self.kwargs['pk'])
-        if not self.has_perm(self.request, survey):
+        form = super(SurveyEditView, self).get_form(form_class)
+        if not mixins.SurveyObjectMixin.has_perm(self.request, form.instance):
             raise Http404
-        return super(SurveyEditView, self).get_form(form_class)
+        return form
 
 
-class HazardDetailView(BaseTemplateView, HazardObjectPermissionMixin):
+class HazardDetailView(BaseTemplateView):
     template_name = 'hazard.html'
     permission = 'webapp.browse_hazard'
 
     def get_context_data(self, **kwargs):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
-        context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        if not self.has_perm(self.request, context['hazard']):
-            raise Http404
-        tests_count = models.Test.objects.filter(bp_device=context['hazard'], tester=self.request.user).count()
-        context['countlte0'] = tests_count <= 0
+        context['hazard'] = self._get_hazard()
+        context['countlte0'] = self._is_tests_count_lte0(context['hazard'])
         return context
+
+    def _get_hazard(self):
+        hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        if not mixins.HazardObjectMixin.has_perm(self.request, hazard):
+            raise Http404
+        return hazard
+
+    def _is_tests_count_lte0(self, hazard):
+        tests_count = models.Test.objects.filter(bp_device=hazard, tester=self.request.user).count()
+        return tests_count <= 0
 
 
 class HazardBaseFormView(BaseFormView):
@@ -389,35 +353,34 @@ class HazardAddView(HazardBaseFormView, CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.survey = models.Survey.objects.get(pk=self.kwargs['pk'])
-        if not SurveyObjectPermissionMixin.has_perm(self.request, form.instance.survey):
-            raise Http404
+        form.instance.survey = self._get_survey()
         return super(HazardAddView, self).form_valid(form)
 
+    def _get_survey(self):
+        survey = models.Survey.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
+            raise Http404
+        return survey
 
-class HazardEditView(HazardBaseFormView, UpdateView, HazardObjectPermissionMixin):
+
+class HazardEditView(HazardBaseFormView, UpdateView):
     permission = 'webapp.change_hazard'
     success_message = Messages.Hazard.editing_success
     error_message = Messages.Hazard.editing_error
 
-    def form_invalid(self, form):
-        print form.fields
-        return super(HazardEditView, self).form_invalid(form)
-
     def get_form(self, form_class):
-        hazard = self.model.objects.get(pk=self.kwargs['pk'])
-        if not self.has_perm(self.request, hazard):
-            raise Http404
-        # Seems that it does not work, excluded fields appears in template anyway
-        self.form_class.Meta.exclude = ['survey']
-        if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
-            self.form_class.Meta.exclude.extend(
-                ['location1', 'location2', 'hazard_type', 'due_install_test_date', 'notes'])
         form = super(HazardEditView, self).get_form(form_class)
-        if not self.request.user.has_perm('webapp.change_all_info_about_hazard'):
-            form.fields['assembly_status'].queryset = models.AssemblyStatus.objects.filter(
-                assembly_status__in=TESTER_ASSEMBLY_STATUSES)
+        if not mixins.HazardObjectMixin.has_perm(self.request, form.instance):
+            raise Http404
+        form.fields['assembly_status'].queryset = self._get_queryset_for_assembly_status_field()
         return form
+
+    def _get_queryset_for_assembly_status_field(self):
+        if self.request.user.has_perm('webapp.change_all_info_about_hazard'):
+            queryset = models.AssemblyStatus.objects.all()
+        else:
+            queryset = models.AssemblyStatus.objects.filter(assembly_status__in=TESTER_ASSEMBLY_STATUSES)
+        return queryset
 
 
 class TestBaseFormView(BaseFormView):
@@ -435,14 +398,18 @@ class TestBaseFormView(BaseFormView):
 
     def get_form(self, form_class):
         form = super(TestBaseFormView, self).get_form(form_class)
-        if self.request.user.has_perm('webapp.access_to_own_tests'):
-            form.fields['tester'].queryset = models.User.objects.filter(pk=self.request.user.pk)
-        if self.request.user.has_perm('webapp.access_to_pws_tests'):
-            form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester,
-                                                                        employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_tests'):
-            form.fields['tester'].queryset = models.User.objects.filter(groups__name=Groups.tester)
+        form.fields['tester'].queryset = self._get_queryset_for_tester_field()
         return form
+
+    def _get_queryset_for_tester_field(self):
+        queryset = []
+        if self.request.user.has_perm('webapp.access_to_own_tests'):
+            queryset = models.User.objects.filter(pk=self.request.user.pk)
+        if self.request.user.has_perm('webapp.access_to_pws_tests'):
+            queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_tests'):
+            queryset = models.User.objects.filter(groups__name=Groups.tester)
+        return queryset
 
 
 class TestAddView(TestBaseFormView, CreateView):
@@ -451,10 +418,14 @@ class TestAddView(TestBaseFormView, CreateView):
     error_message = Messages.Test.adding_error
 
     def form_valid(self, form):
-        form.instance.bp_device = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        if not HazardObjectPermissionMixin.has_perm(self.request, form.instance.bp_device):
-            raise Http404
+        form.instance.bp_device = self._get_bp_device()
         return super(TestAddView, self).form_valid(form)
+
+    def _get_bp_device(self):
+        hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        if not mixins.HazardObjectMixin.has_perm(self.request, hazard):
+            raise Http404
+        return hazard
 
 
 class TestEditView(TestBaseFormView, UpdateView):
@@ -463,12 +434,12 @@ class TestEditView(TestBaseFormView, UpdateView):
     error_message = Messages.Test.editing_error
 
 
-class InspectionView(BaseTemplateView):
+class InspectionListView(BaseTemplateView):
     permission = 'webapp.browse_inspection'
     template_name = 'inspection_list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(InspectionView, self).get_context_data(**kwargs)
+        context = super(InspectionListView, self).get_context_data(**kwargs)
         context['inspection_list'] = self._get_inspections()
         return context
 
@@ -491,11 +462,16 @@ class InspectionBaseFormView(BaseFormView):
 
     def get_form(self, form_class):
         form = super(InspectionBaseFormView, self).get_form(form_class)
-        if self.request.user.has_perm('webapp.access_to_pws_inspections'):
-            form.fields['assigned_to'].queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_inspections'):
-            form.fields['assigned_to'].queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        form.fields['assigned_to'].queryset = self._get_queryset_for_assigned_to_field()
         return form
+
+    def _get_queryset_for_assigned_to_field(self):
+        queryset = []
+        if self.request.user.has_perm('webapp.access_to_pws_inspections'):
+            queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_inspections'):
+            queryset = models.User.objects.filter(groups__name=Groups.surveyor)
+        return queryset
 
 
 class InspectionAddView(InspectionBaseFormView, CreateView):
@@ -505,9 +481,15 @@ class InspectionAddView(InspectionBaseFormView, CreateView):
 
     def form_valid(self, form):
         form.instance.assigned_by = self.request.user
-        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form.instance.site = self._get_site()
         form.instance.is_active = True
         return super(InspectionAddView, self).form_valid(form)
+
+    def _get_site(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+            raise Http404
+        return site
 
 
 class InspectionEditView(InspectionBaseFormView, UpdateView):
@@ -516,12 +498,12 @@ class InspectionEditView(InspectionBaseFormView, UpdateView):
     error_message = Messages.Inspection.editing_error
 
 
-class TestPermissionView(BaseTemplateView):
+class TestPermissionListView(BaseTemplateView):
     permission = 'webapp.browse_testpermission'
     template_name = 'testpermission_list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(TestPermissionView, self).get_context_data(**kwargs)
+        context = super(TestPermissionListView, self).get_context_data(**kwargs)
         context['testpermission_list'] = self._get_testpermissions()
         return context
 
@@ -544,11 +526,16 @@ class TestPermissionBaseFormView(BaseFormView):
 
     def get_form(self, form_class):
         form = super(TestPermissionBaseFormView, self).get_form(form_class)
-        if self.request.user.has_perm('webapp.access_to_pws_testpermissions'):
-            form.fields['given_to'].queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_testpermissions'):
-            form.fields['given_to'].queryset = models.User.objects.filter(groups__name=Groups.tester)
+        form.fields['given_to'].queryset = self._get_queryset_for_given_to_field()
         return form
+
+    def _get_queryset_for_given_to_field(self):
+        queryset = []
+        if self.request.user.has_perm('webapp.access_to_pws_testpermissions'):
+            queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+        if self.request.user.has_perm('webapp.access_to_all_testpermissions'):
+            queryset = models.User.objects.filter(groups__name=Groups.tester)
+        return queryset
 
 
 class TestPermissionAddView(TestPermissionBaseFormView, CreateView):
@@ -558,12 +545,24 @@ class TestPermissionAddView(TestPermissionBaseFormView, CreateView):
 
     def form_valid(self, form):
         form.instance.given_by = self.request.user
-        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form.instance.site = self._get_site()
         form.instance.is_active = True
         return super(TestPermissionAddView, self).form_valid(form)
+
+    def _get_site(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+            raise Http404
+        return site
 
 
 class TestPermissionEditView(TestPermissionBaseFormView, UpdateView):
     permission = 'webapp.change_testpermission'
     success_message = Messages.TestPermission.editing_success
     error_message = Messages.TestPermission.editing_error
+
+
+class AddUserView(BaseFormView, CreateView):
+    permission = 'webapp.add_user'
+    model = models.Employee
+    form_class = forms.UserForm

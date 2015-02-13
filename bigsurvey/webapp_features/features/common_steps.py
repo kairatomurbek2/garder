@@ -3,9 +3,14 @@ from lettuce import *
 from settings import *
 
 
-@step(r'I open "(http.*)"')
+@step('I open "(http.*)"')
 def open_url(step, url):
     world.browser.get(url)
+
+
+@step('I open "home" page')
+def open_home_page(step):
+    step.given('I open "%s"' % get_url(Urls.home))
 
 
 @step('I should be at "(http.*)"')

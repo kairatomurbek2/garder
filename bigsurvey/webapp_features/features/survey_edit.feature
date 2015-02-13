@@ -2,11 +2,10 @@
 Feature: Survey Edit
 
   Scenario Outline: Survey Edit page access
-    Given I open "login" page
-    And I login as "<role>"
+    Given I logged in as "<role>"
     When I open "survey add" page for site with pk "<pk>" and service "<service>"
     Then I should <reaction> "Not Found"
-    And I log out
+    And I logout
 
   Examples:
     | role     | pk | service    | reaction |
@@ -25,26 +24,26 @@ Feature: Survey Edit
     Given I logged in as "root"
     When I open "survey edit" page with pk "1"
     And I fill in following fields with following values
-    | field                 | value      |
-    | survey_date           | 2015-02-28 |
+      | field       | value      |
+      | survey_date | 2015-02-28 |
     And I select "Initial" from "survey_type"
     And I submit "survey" form
     Then I should be at "survey detail" page with pk "1"
     And I should see "survey editing success" message
     And I should see following
-    | text          |
-    | Feb. 28, 2015 |
+      | text          |
+      | Feb. 28, 2015 |
 
 
   Scenario: Incorrect survey editing
     Given I logged in as "root"
     When I open "survey edit" page with pk "1"
     And I fill in following fields with following values
-    | field                 | value      |
-    | survey_date           |            |
+      | field       | value |
+      | survey_date |       |
     And I submit "survey" form
     Then I should be at "survey edit" page with pk "1"
     And I should see "survey editing error" message
     And I should see following validation error messages on following fields
-    | field       | error_message          |
-    | survey_date | This field is required |
+      | field       | error_message          |
+      | survey_date | This field is required |

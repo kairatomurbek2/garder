@@ -11,6 +11,7 @@ def get_url(url):
 class Urls:
     home = '/'
     login = '/accounts/login/'
+    logout = '/accounts/logout/'
     site_list = '/'
     site_detail = '/site/%s/'
     site_add = '/site/add/'
@@ -22,7 +23,6 @@ class Urls:
     customer_detail = '/customer/%s/'
     customer_add = '/customer/add/'
     customer_edit = '/customer/%s/edit/'
-    logout = '/accounts/logout/'
     survey_detail = '/survey/%s/'
     survey_edit = '/survey/%s/edit/'
     survey_add = '/site/%s/%s/addsurvey/'
