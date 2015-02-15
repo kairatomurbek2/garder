@@ -587,11 +587,27 @@ class UserListView(BaseTemplateView):
 
 
 class UserBaseFormView(BaseFormView):
-    model = models.User
-    form_class = forms.UserForm
+    user_model = models.User
+    user_form_class = forms.UserForm
+    user_object = None
     employee_model = models.Employee
     employee_form_class = forms.EmployeeForm
+    employee_object = None
     template_name = 'user_form.html'
+
+    def get(self, request, *args, **kwargs):
+        user_form = self.get_user_form()
+        user_form.fields['password1'].initial = ''
+        employee_form = self.get_employee_form()
+        user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
+        employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
+        return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
+
+    def get_user_form(self):
+        return self.user_form_class()
+
+    def get_employee_form(self):
+        return self.employee_form_class()
 
     def _get_queryset_for_group_field(self):
         queryset = []
@@ -604,21 +620,22 @@ class UserBaseFormView(BaseFormView):
     def _get_queryset_for_pws_field(self):
         queryset = []
         if self.request.user.has_perm('webapp.access_to_pws_users'):
-            queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+            if self.request.user.employee.pws:
+                queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         if self.request.user.has_perm('webapp.access_to_all_users'):
             queryset = models.PWS.objects.all()
         return queryset
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form(self.form_class)
+        user_form = self.get_form(self.user_form_class)
         employee_form = self.get_form(self.employee_form_class)
-        if employee_form.is_valid() and form.is_valid():
-            form.save()
-            employee_form.instance.user = form.instance
-            employee_form.save()
+        if employee_form.is_valid() and user_form.is_valid():
+            self.user_object = user_form.save()
+            employee_form.instance.user = user_form.instance
+            self.employee_object = employee_form.save()
             return redirect(self.get_success_url())
         else:
-            return render(self.request, self.template_name, {'form': form, 'employee_form': employee_form})
+            return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
 
     def get_success_url(self):
         return reverse('webapp:user_list')
@@ -629,24 +646,16 @@ class UserAddView(UserBaseFormView):
     success_message = Messages.User.adding_success
     error_message = Messages.User.adding_error
 
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        employee_form = self.employee_form_class()
-        form.fields['groups'].queryset = self._get_queryset_for_group_field()
-        employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-        return render(self.request, self.template_name, {'form': form, 'employee_form': employee_form})
 
-
-class UserEditView(UserBaseFormView, UpdateView):
+class UserEditView(UserBaseFormView):
     permission = 'auth.change_user'
     success_message = Messages.User.editing_success
     error_message = Messages.User.editing_error
 
-    def get(self, request, *args, **kwargs):
-        user = models.User.objects.get(pk=self.kwargs['pk'])
-        form = self.form_class(instance=user)
-        employee = models.Employee.objects.get(user=user)
-        employee_form = self.employee_form_class(instance=employee)
-        form.fields['groups'].queryset = self._get_queryset_for_group_field()
-        employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-        return render(self.request, self.template_name, {'form': form, 'employee_form': employee_form})
+    def get_user_form(self):
+        self.user_object = self.user_model.objects.get(pk=self.kwargs['pk'])
+        return self.user_form_class(instance=self.user_object)
+
+    def get_employee_form(self):
+        self.employee_object = self.employee_model.objects.get(user=self.user_object)
+        return self.employee_form_class(instance=self.employee_object)

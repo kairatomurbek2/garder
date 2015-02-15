@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import Group
 import models
@@ -20,7 +21,7 @@ class SiteForm(forms.ModelForm):
     customer = forms.CharField()
 
     def save(self, commit=True):
-        customer_id = self.cleaned_data['customer']
+        customer_id = self.cleaned_data.get('customer')
         customer = models.Customer.objects.get(pk=customer_id)
         self.instance.customer = customer
         return super(SiteForm, self).save(commit)
@@ -71,9 +72,26 @@ class EmployeeForm(forms.ModelForm):
 
 
 class UserForm(forms.ModelForm):
-    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput,
+    username = forms.RegexField(
+        label=_("Username"), max_length=30, regex=r"^[\w.@+-]+$",
+        help_text=_("Required. 30 characters or fewer. Letters, digits and "
+                    "@/./+/-/_ only."),
+        error_messages={
+            'invalid': _("This value may contain only letters, numbers and "
+                         "@/./+/-/_ characters.")})
+
+    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput, initial='')
+    password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput, initial='',
                                 help_text=_("Enter the same password as above, for verification."))
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if self.instance.pk is None:
+            return username
+        if self.Meta.model.objects.exclude(pk=self.instance.pk).filter(username=username).count():
+            raise ValidationError(_('User with this username already exists.'))
+        else:
+            return username
 
     class Meta:
         model = models.User
