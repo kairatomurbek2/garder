@@ -341,7 +341,7 @@ class Employee(models.Model):
             ('browse_user', _('Can browse Users')),
             ('access_to_adminpanel', _('Can log into Admin Panel')),
             ('access_to_all_users', _('Has access to all Users')),
-            ('access_to_pws_users', _('Has access to PWS Users')),
+            ('access_to_pws_users', _('Has access to PWS\'s Users')),
         )
 
 
@@ -383,7 +383,7 @@ class Site(models.Model):
         permissions = (
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),
-            ('access_to_pws_sites', _('Has access to his PWS\'s Sites')),
+            ('access_to_pws_sites', _('Has access to PWS\'s Sites')),
             ('access_to_survey_sites', _('Has access to Sites that he inspects')),
             ('access_to_test_sites', _('Has access to Sites that he tests')),
             ('access_to_import', _('Can import Sites from Excel file')),
@@ -423,7 +423,7 @@ class Survey(models.Model):
         permissions = (
             ('browse_survey', _('Can browse Survey')),
             ('access_to_all_surveys', _('Has access to all Surveys')),
-            ('access_to_pws_surveys', _('Has access to his PWS\'s Surveys')),
+            ('access_to_pws_surveys', _('Has access to PWS\'s Surveys')),
             ('access_to_own_surveys', _('Has access to own Surveys')),
             ('add_many_surveys_per_site', _('Can add many Surveys per Site'))
         )
@@ -466,8 +466,8 @@ class Hazard(models.Model):
         permissions = (
             ('browse_hazard', _('Can browse Hazard')),
             ('access_to_all_hazards', _('Has access to all Hazards')),
-            ('access_to_pws_hazards', _('Has access to his PWS\'s Hazards')),
-            ('access_to_own_hazards', _('Has access to his own Hazards')),
+            ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
+            ('access_to_own_hazards', _('Has access to own Hazards')),
             ('access_to_site_hazards', _('Has access to Site\'s Hazards')),
             ('change_all_info_about_hazard', _('Can change all information about Hazard')),
         )
@@ -515,8 +515,8 @@ class Test(models.Model):
         permissions = (
             ('browse_test', _('Can browse Test')),
             ('access_to_all_tests', _('Has access to all Tests')),
-            ('access_to_pws_tests', _('Has access to his PWS\'s Tests')),
-            ('access_to_own_tests', _('Has access to his own Tests')),
+            ('access_to_pws_tests', _('Has access to PWS\'s Tests')),
+            ('access_to_own_tests', _('Has access to own Tests')),
             ('add_many_tests_per_hazard', _('Can add many Tests per Hazard'))
         )
 
@@ -577,7 +577,7 @@ class TestPermission(models.Model):
         permissions = (
             ('browse_testpermission', _('Can browse Test Permission')),
             ('access_to_all_testpermissions', _('Has access to all Test Permissions')),
-            ('access_to_pws_testpermissions', _('Has access to PWS Test Permissions')),
+            ('access_to_pws_testpermissions', _('Has access to PWS\'s Test Permissions')),
         )
 
 
@@ -599,5 +599,5 @@ class Inspection(models.Model):
         permissions = (
             ('browse_inspection', _('Can browse Inspection')),
             ('access_to_all_inspections', _('Has access to all Inspections')),
-            ('access_to_pws_inspections', _('Has access to PWS Inspections')),
+            ('access_to_pws_inspections', _('Has access to PWS\'s Inspections')),
         )
