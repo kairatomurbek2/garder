@@ -1,6 +1,5 @@
 #!/bin/sh
 
 . virtualenv/bin/activate
-cd bigsurvey
-./manage.py dumpdata webapp auth --exclude=auth.permission --natural-foreign --indent=2 --settings=main.settings_test > ./webapp_features/fixtures/test.json
+python bigsurvey/manage.py dumpdata webapp auth --exclude=auth.permission --natural-foreign --settings=main.settings_test > bigsurvey/webapp_features/fixtures/test.json
 deactivate

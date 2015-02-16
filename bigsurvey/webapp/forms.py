@@ -1,7 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils.translation import ugettext as _
-from django.contrib.auth.models import Group
 import models
 from main.parameters import Groups
 
@@ -71,27 +72,47 @@ class EmployeeForm(forms.ModelForm):
         exclude = ('user',)
 
 
-class UserForm(forms.ModelForm):
-    username = forms.RegexField(
-        label=_("Username"), max_length=30, regex=r"^[\w.@+-]+$",
-        help_text=_("Required. 30 characters or fewer. Letters, digits and "
-                    "@/./+/-/_ only."),
-        error_messages={
-            'invalid': _("This value may contain only letters, numbers and "
-                         "@/./+/-/_ characters.")})
+class UserAddForm(UserCreationForm):
+    def save(self, commit=True):
+        self.instance = super(UserAddForm, self).save()
+        self.save_m2m()
+        return self.instance
 
-    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput, initial='')
-    password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput, initial='',
+    class Meta:
+        model = models.User
+        fields = ('username', 'email', 'first_name', 'last_name', 'groups')
+
+
+class UserEditForm(UserChangeForm):
+    error_messages = {
+        'duplicate_username': _("A user with that username already exists."),
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+
+    password = None
+    password1 = forms.CharField(label=_("Password"), widget=forms.PasswordInput, required=False,
+                                help_text=_("If you do not want to change password leave this field blank"))
+    password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput, required=False,
                                 help_text=_("Enter the same password as above, for verification."))
 
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if self.instance.pk is None:
-            return username
-        if self.Meta.model.objects.exclude(pk=self.instance.pk).filter(username=username).count():
-            raise ValidationError(_('User with this username already exists.'))
-        else:
-            return username
+    def save(self, commit=True):
+        password = self.cleaned_data.get('password1')
+        if password:
+            self.instance.set_password(password)
+        return super(UserEditForm, self).save(commit)
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        return password2
+
+    def clean_password(self):
+        return self.initial.get('password')
 
     class Meta:
         model = models.User
