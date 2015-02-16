@@ -19,7 +19,7 @@ def open_survey_add_page_for_site(step, site_pk):
 
 
 @step('I should be at "survey detail" page with pk "(\d+)"')
-def check_site_detail_page(step, pk):
+def check_survey_detail_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.survey_detail % pk))
 
 
@@ -29,7 +29,7 @@ def check_survey_add_page(step, pk, service):
 
 
 @step('I should be at "survey edit" page with pk "(\d+)"')
-def check_site_detail_page(step, pk):
+def check_survey_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.survey_edit % pk))
 
 

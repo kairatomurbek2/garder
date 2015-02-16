@@ -3,21 +3,20 @@ Feature: Survey Edit
 
   Scenario Outline: Survey Edit page access
     Given I logged in as "<role>"
-    When I open "survey add" page for site with pk "<pk>" and service "<service>"
+    When I open "survey edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
 
   Examples:
-    | role     | pk | service    | reaction |
-    | root     | 5  | potable    | not see  |
-    | root     | 5  | irrigation | see      |
-    | admin    | 5  | potable    | see      |
-    | admin    | 10 | potable    | not see  |
-    | admin    | 10 | fire       | see      |
-    | surveyor | 10 | irrigation | not see  |
-    | surveyor | 5  | potable    | see      |
-    | surveyor | 2  | potable    | see      |
-    | tester   | 10 | potable    | see      |
+    | role     | pk | reaction |
+    | root     | 1  | not see  |
+    | root     | 2  | not see  |
+    | admin    | 1  | see      |
+    | admin    | 2  | not see  |
+    | surveyor | 1  | see      |
+    | surveyor | 2  | not see  |
+    | tester   | 1  | see      |
+    | testeer  | 2  | see      |
 
 
   Scenario: Correct survey editing

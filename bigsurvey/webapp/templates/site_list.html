@@ -23,7 +23,7 @@
                 <td>
                     {{ site_filter.form.customer|add_class:"uk-width-1-1" }}
                 </td>
-                {% if perms.access_to_all_sites %}
+                {% if perms.webapp.access_to_all_sites %}
                     <td>
                         {{ site_filter.form.pws.label }}
                     </td>

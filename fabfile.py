@@ -15,9 +15,11 @@ def check_env_parameters():
         raise Exception('Env parameters are not set')
 
 
-def deploy():
+def deploy(commit="master"):
     check_env_parameters()
     with cd(env.get('project_path')):
-        run('git pull')
+        run('git fetch --tags')
+        run('git stash')
+        run('git checkout %s' % commit)
         run('./install.sh')
         sudo('service apache2 reload')
