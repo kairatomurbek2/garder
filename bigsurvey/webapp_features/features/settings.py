@@ -26,6 +26,9 @@ class Urls:
     survey_detail = '/survey/%s/'
     survey_edit = '/survey/%s/edit/'
     survey_add = '/site/%s/%s/addsurvey/'
+    hazard_detail = '/hazard/%s/'
+    hazard_edit = '/hazard/%s/edit/'
+    hazard_add = '/survey/%s/addhazard/'
 
 
 class Logins:

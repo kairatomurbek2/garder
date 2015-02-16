@@ -283,12 +283,11 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
 
     def get_form(self, form_class):
-        form = super(SurveyAddView, self).get_form(form_class)
         if not mixins.SiteObjectMixin.has_perm(self.request, self._get_site()):
             raise Http404
         if not self._service_type_on_site_exists():
             raise Http404
-        return form
+        return super(SurveyAddView, self).get_form(form_class)
 
     def _service_type_on_site_exists(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
@@ -353,6 +352,11 @@ class HazardAddView(HazardBaseFormView, CreateView):
         context = super(HazardAddView, self).get_context_data(**kwargs)
         context['survey_pk'] = self.kwargs['pk']
         return context
+
+    def get_form(self, form_class):
+        if not mixins.SurveyObjectMixin.has_perm(self.request, models.Survey.objects.get(pk=self.kwargs['pk'])):
+            raise Http404
+        return super(HazardAddView, self).get_form(form_class)
 
     def form_valid(self, form):
         form.instance.survey = self._get_survey()
@@ -601,12 +605,6 @@ class UserBaseFormView(BaseFormView):
         employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
         return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
 
-    def get_user_form(self):
-        return self.user_form_class(**self.get_form_kwargs())
-
-    def get_employee_form(self):
-        return self.employee_form_class(**self.get_form_kwargs())
-
     def _get_queryset_for_group_field(self):
         queryset = []
         if self.request.user.has_perm('webapp.access_to_pws_users'):
@@ -644,6 +642,12 @@ class UserAddView(UserBaseFormView):
     user_form_class = forms.UserAddForm
     success_message = Messages.User.adding_success
     error_message = Messages.User.adding_error
+
+    def get_user_form(self):
+        return self.user_form_class(**self.get_form_kwargs())
+
+    def get_employee_form(self):
+        return self.employee_form_class(**self.get_form_kwargs())
 
 
 class UserEditView(UserBaseFormView):
