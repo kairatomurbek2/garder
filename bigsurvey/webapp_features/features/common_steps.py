@@ -62,7 +62,7 @@ def select_option(step, value, select_name):
     option = helper.find(Xpath.Pattern.option_by_value % value, context=select) or \
              helper.find(Xpath.Pattern.option_by_exact_text % value, context=select) or \
              helper.find(Xpath.Pattern.option_by_substr % value, context=select)
-    assert option, 'Option with value "%s" was not found' % value
+    helper.check_element_exists(option, 'Option with value "%s" was not found' % value)
     option.click()
 
 

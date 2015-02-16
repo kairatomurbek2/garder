@@ -89,7 +89,9 @@ class Migration(migrations.Migration):
                 ('city', models.CharField(max_length=30, verbose_name='City')),
                 ('state', models.CharField(max_length=2, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
                 ('zip', models.CharField(max_length=10, verbose_name='ZIP')),
-                ('phone', models.CharField(max_length=10, null=True, verbose_name='Phone', blank=True)),
+                ('phone', models.CharField(max_length=15, null=True, verbose_name='Phone', blank=True)),
+                ('fax', models.CharField(max_length=15, null=True, verbose_name='Fax', blank=True)),
+                ('email', models.CharField(max_length=15, null=True, verbose_name='Email', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
             ],
             options={
@@ -129,7 +131,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Employee',
                 'verbose_name_plural': 'Employees',
-                'permissions': (('browse_employee', 'Can browse Employee'), ('access_to_adminpanel', 'Can log into Admin Panel')),
+                'permissions': (('browse_user', 'Can browse Users'), ('access_to_adminpanel', 'Can log into Admin Panel'), ('access_to_all_users', 'Has access to all Users'), ('access_to_pws_users', "Has access to PWS's Users")),
             },
             bases=(models.Model,),
         ),
@@ -169,7 +171,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Hazard',
                 'verbose_name_plural': 'Hazards',
-                'permissions': (('browse_hazard', 'Can browse Hazard'), ('access_to_all_hazards', 'Has access to all Hazards'), ('access_to_pws_hazards', "Has access to his PWS's Hazards"), ('access_to_own_hazards', 'Has access to his own Hazards')),
+                'permissions': (('browse_hazard', 'Can browse Hazard'), ('access_to_all_hazards', 'Has access to all Hazards'), ('access_to_pws_hazards', "Has access to PWS's Hazards"), ('access_to_own_hazards', 'Has access to own Hazards'), ('access_to_site_hazards', "Has access to Site's Hazards"), ('change_all_info_about_hazard', 'Can change all information about Hazard')),
             },
             bases=(models.Model,),
         ),
@@ -212,7 +214,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Inspection',
                 'verbose_name_plural': 'Inspections',
-                'permissions': (('browse_inspection', 'Can browse Inspection'),),
+                'permissions': (('browse_inspection', 'Can browse Inspection'), ('access_to_all_inspections', 'Has access to all Inspections'), ('access_to_pws_inspections', "Has access to PWS's Inspections")),
             },
             bases=(models.Model,),
         ),
@@ -334,7 +336,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site',
                 'verbose_name_plural': 'Sites',
-                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Can browse all Sites'), ('access_to_pws_sites', "Can access his PWS's Sites"), ('access_to_survey_sites', 'Can access Sites that he inspects'), ('access_to_test_sites', 'Can access Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site')),
+                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Has access to all Sites'), ('access_to_pws_sites', "Has access to PWS's Sites"), ('access_to_survey_sites', 'Has access to Sites that he inspects'), ('access_to_test_sites', 'Has access to Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site')),
             },
             bases=(models.Model,),
         ),
@@ -426,7 +428,7 @@ class Migration(migrations.Migration):
                 'get_latest_by': 'survey_date',
                 'verbose_name': 'Survey',
                 'verbose_name_plural': 'Surveys',
-                'permissions': (('browse_survey', 'Can browse Survey'), ('access_to_all_surveys', 'Can access all Surveys'), ('access_to_pws_surveys', "Can access to his PWS's Surveys"), ('access_to_own_surveys', 'Can access to own Surveys'), ('add_many_surveys_per_site', 'Can add many Surveys per Site')),
+                'permissions': (('browse_survey', 'Can browse Survey'), ('access_to_all_surveys', 'Has access to all Surveys'), ('access_to_pws_surveys', "Has access to PWS's Surveys"), ('access_to_own_surveys', 'Has access to own Surveys'), ('add_many_surveys_per_site', 'Can add many Surveys per Site')),
             },
             bases=(models.Model,),
         ),
@@ -478,7 +480,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Test',
                 'verbose_name_plural': 'Tests',
-                'permissions': (('browse_test', 'Can browse Test'), ('access_to_all_tests', 'Has access to all Tests'), ('access_to_pws_tests', "Has access to his PWS's Tests"), ('access_to_own_tests', 'Has access to his own Tests')),
+                'permissions': (('browse_test', 'Can browse Test'), ('access_to_all_tests', 'Has access to all Tests'), ('access_to_pws_tests', "Has access to PWS's Tests"), ('access_to_own_tests', 'Has access to own Tests'), ('add_many_tests_per_hazard', 'Can add many Tests per Hazard')),
             },
             bases=(models.Model,),
         ),
@@ -510,7 +512,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Test Permission',
                 'verbose_name_plural': 'Test Permissions',
-                'permissions': (('browse_testpermission', 'Can browse Test Permission'),),
+                'permissions': (('browse_testpermission', 'Can browse Test Permission'), ('access_to_all_testpermissions', 'Has access to all Test Permissions'), ('access_to_pws_testpermissions', "Has access to PWS's Test Permissions")),
             },
             bases=(models.Model,),
         ),
@@ -523,7 +525,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='test',
             name='tester',
-            field=models.ForeignKey(related_name='tests', verbose_name='Tester', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name='tests', verbose_name='Tester', to=settings.AUTH_USER_MODEL),
             preserve_default=True,
         ),
         migrations.AddField(
