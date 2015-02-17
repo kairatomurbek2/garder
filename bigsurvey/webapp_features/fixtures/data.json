@@ -4060,28 +4060,6 @@
 },
 {
   "fields": {
-    "username": "newuser",
-    "first_name": "John",
-    "last_name": "Smith",
-    "is_active": true,
-    "is_superuser": false,
-    "is_staff": false,
-    "last_login": "2015-02-17T09:20:42Z",
-    "groups": [
-      [
-        "Surveyors"
-      ]
-    ],
-    "user_permissions": [],
-    "password": "pbkdf2_sha256$12000$OZvvEom53ZHp$yM29bO10PrG1rRNuDrDljJsz7JMcfBtvgvDqVojjeds=",
-    "email": "newuser@example.com",
-    "date_joined": "2015-02-17T09:20:42Z"
-  },
-  "model": "auth.user",
-  "pk": 11
-},
-{
-  "fields": {
     "assigned_by": [
       "root"
     ],
@@ -4412,24 +4390,5 @@
   },
   "model": "webapp.employee",
   "pk": 5
-},
-{
-  "fields": {
-    "city": "",
-    "fax": "",
-    "certificate": "",
-    "pws": 5,
-    "zip": "",
-    "phone2": "",
-    "company": "",
-    "phone1": "",
-    "state": null,
-    "user": [
-      "newuser"
-    ],
-    "address": ""
-  },
-  "model": "webapp.employee",
-  "pk": 9
 }
 ]
