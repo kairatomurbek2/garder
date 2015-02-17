@@ -3912,7 +3912,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-02-17T05:18:51Z",
+    "last_login": "2015-02-17T09:20:44Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -3934,7 +3934,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-17T05:18:47Z",
+    "last_login": "2015-02-17T07:10:18Z",
     "groups": [
       [
         "Testers"
@@ -3956,7 +3956,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-17T05:17:11Z",
+    "last_login": "2015-02-17T09:21:15Z",
     "groups": [
       [
         "Surveyors"
@@ -3978,7 +3978,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-17T05:13:56Z",
+    "last_login": "2015-02-17T09:23:05Z",
     "groups": [
       [
         "Administrators"
@@ -4016,25 +4016,69 @@
 },
 {
   "fields": {
-    "username": "newuser",
-    "first_name": "first",
-    "last_name": "last",
+    "username": "tester_without_pws",
+    "first_name": "",
+    "last_name": "",
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-16T09:22:47Z",
+    "last_login": "2015-02-17T08:53:58Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$9aPtgV8Ggjfn$IfA9z9levvZAKCBIgWGJs3K9nppQXwEuKryj7X4HsMk=",
+    "email": "",
+    "date_joined": "2015-02-17T08:53:58Z"
+  },
+  "model": "auth.user",
+  "pk": 9
+},
+{
+  "fields": {
+    "username": "surveyor_without_pws",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-17T08:54:19Z",
     "groups": [
       [
         "Surveyors"
       ]
     ],
     "user_permissions": [],
-    "password": "pbkdf2_sha256$12000$c3kWKbhiABNq$l87otPuhiz/Hjo+NgVkggDDmMQjV22OQZHGzRxY+SJo=",
-    "email": "newuser@example.com",
-    "date_joined": "2015-02-16T09:12:13Z"
+    "password": "pbkdf2_sha256$12000$9xjIZttWgXf3$ldgZo6WFFIKvS76jUlhGORudXumALnBNqWw6z7jAROY=",
+    "email": "",
+    "date_joined": "2015-02-17T08:54:19Z"
   },
   "model": "auth.user",
-  "pk": 8
+  "pk": 10
+},
+{
+  "fields": {
+    "username": "newuser",
+    "first_name": "John",
+    "last_name": "Smith",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-17T09:20:42Z",
+    "groups": [
+      [
+        "Surveyors"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$OZvvEom53ZHp$yM29bO10PrG1rRNuDrDljJsz7JMcfBtvgvDqVojjeds=",
+    "email": "newuser@example.com",
+    "date_joined": "2015-02-17T09:20:42Z"
+  },
+  "model": "auth.user",
+  "pk": 11
 },
 {
   "fields": {
@@ -4297,8 +4341,8 @@
   "fields": {
     "city": "tester city",
     "fax": "",
-    "certificate": null,
-    "pws": null,
+    "certificate": "",
+    "pws": 9,
     "zip": "tester zip",
     "phone2": "",
     "company": "tester company",
@@ -4374,7 +4418,7 @@
     "city": "",
     "fax": "",
     "certificate": "",
-    "pws": null,
+    "pws": 5,
     "zip": "",
     "phone2": "",
     "company": "",
@@ -4386,6 +4430,6 @@
     "address": ""
   },
   "model": "webapp.employee",
-  "pk": 8
+  "pk": 9
 }
 ]
