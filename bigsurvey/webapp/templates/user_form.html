@@ -49,6 +49,7 @@
                     </td>
                     <td class="uk-width-1-3">
                         {{ user_form.password1|add_class:'uk-width-1-1' }}
+                        <p class="uk-form-help-block uk-text-muted">{{ user_form.password1.help_text }}</p>
                         {{ user_form.password1.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
@@ -56,6 +57,7 @@
                     </td>
                     <td class="uk-width-1-3">
                         {{ user_form.password2|add_class:'uk-width-1-1' }}
+                        <p class="uk-form-help-block uk-text-muted">{{ user_form.password2.help_text }}</p>
                         {{ user_form.password2.errors }}
                     </td>
                 </tr>

@@ -3912,7 +3912,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-02-16T07:58:34Z",
+    "last_login": "2015-02-17T05:18:51Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -3934,7 +3934,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-16T07:55:51Z",
+    "last_login": "2015-02-17T05:18:47Z",
     "groups": [
       [
         "Testers"
@@ -3956,7 +3956,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-16T07:24:00Z",
+    "last_login": "2015-02-17T05:17:11Z",
     "groups": [
       [
         "Surveyors"
@@ -3978,7 +3978,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-13T11:43:45Z",
+    "last_login": "2015-02-17T05:13:56Z",
     "groups": [
       [
         "Administrators"
@@ -4000,7 +4000,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": true,
-    "last_login": "2015-01-27T05:38:58Z",
+    "last_login": "2015-02-16T10:56:26Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -4013,6 +4013,28 @@
   },
   "model": "auth.user",
   "pk": 5
+},
+{
+  "fields": {
+    "username": "newuser",
+    "first_name": "first",
+    "last_name": "last",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-16T09:22:47Z",
+    "groups": [
+      [
+        "Surveyors"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$c3kWKbhiABNq$l87otPuhiz/Hjo+NgVkggDDmMQjV22OQZHGzRxY+SJo=",
+    "email": "newuser@example.com",
+    "date_joined": "2015-02-16T09:12:13Z"
+  },
+  "model": "auth.user",
+  "pk": 8
 },
 {
   "fields": {
@@ -4346,5 +4368,24 @@
   },
   "model": "webapp.employee",
   "pk": 5
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "newuser"
+    ],
+    "address": ""
+  },
+  "model": "webapp.employee",
+  "pk": 8
 }
 ]

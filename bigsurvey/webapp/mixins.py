@@ -40,7 +40,7 @@ class SurveyObjectMixin(ObjectMixin):
     @staticmethod
     def has_perm(request, obj):
         if request.user.has_perm('webapp.access_to_all_surveys') or \
-           request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws:
+                        request.user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == request.user.employee.pws:
             return True
         if request.user.has_perm('webapp.access_to_own_surveys'):
             inspections = models.Inspection.objects.filter(assigned_to=request.user,
@@ -69,8 +69,7 @@ class TestObjectMixin(ObjectMixin):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_tests') or \
-               request.user.has_perm(
-                   'webapp.access_to_pws_tests') and obj.bp_service.survey.site.pws == request.user.employee.pws or \
+               request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.survey.site.pws == request.user.employee.pws or \
                request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
 
 

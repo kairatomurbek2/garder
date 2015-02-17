@@ -91,6 +91,7 @@ def check_multiple_error_messages(step):
 
 
 @step('I click button with text "([-_a-z0-9]+)"')
-def click_button_with_text(step, text):
-    button = helper.find(Xpath.Pattern.button_with_text % text)
+def click_button_with_label(step, label):
+    button = helper.find(Xpath.Pattern.button_with_text % label)
+    helper.check_element_exists(button, 'Button with label "%s" was not found' % label)
     button.click()

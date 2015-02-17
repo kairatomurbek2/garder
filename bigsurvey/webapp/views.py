@@ -423,6 +423,11 @@ class TestAddView(TestBaseFormView, CreateView):
     success_message = Messages.Test.adding_success
     error_message = Messages.Test.adding_error
 
+    def get_form(self, form_class):
+        if not mixins.HazardObjectMixin.has_perm(self.request, models.Hazard.objects.get(pk=self.kwargs['pk'])):
+            raise Http404
+        return super(TestAddView, self).get_form(form_class)
+
     def form_valid(self, form):
         form.instance.bp_device = self._get_bp_device()
         return super(TestAddView, self).form_valid(form)
@@ -435,9 +440,15 @@ class TestAddView(TestBaseFormView, CreateView):
 
 
 class TestEditView(TestBaseFormView, UpdateView):
-    permission = 'webapp.edit_test'
+    permission = 'webapp.change_test'
     success_message = Messages.Test.editing_success
     error_message = Messages.Test.editing_error
+
+    def get_form(self, form_class):
+        form = super(TestEditView, self).get_form(form_class)
+        if not mixins.TestObjectMixin.has_perm(self.request, form.instance):
+            raise Http404
+        return form
 
 
 class InspectionListView(BaseTemplateView):

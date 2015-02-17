@@ -76,10 +76,11 @@ def check_site_editing_error_message(step):
 
 @step('I open select customer modal')
 def open_customer_selector(step):
-    click_button_with_text(step, "Select Customer")
+    click_button_with_label(step, "Select Customer")
 
 
 @step('I select customer with pk "(\d+)"')
 def select_customer(step, pk):
     select_button = helper.find(Xpath.Pattern.customer_select_button % pk)
+    helper.check_element_exists(select_button, 'Customer select button was not found')
     select_button.click()
