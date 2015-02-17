@@ -337,6 +337,7 @@ class HazardDetailView(BaseTemplateView):
 class HazardBaseFormView(BaseFormView):
     template_name = 'hazard_form.html'
     form_class = forms.HazardForm
+    form_class_for_tester = forms.HazardFormForTester
     model = models.Hazard
 
     def get_success_url(self):
@@ -373,6 +374,12 @@ class HazardEditView(HazardBaseFormView, UpdateView):
     permission = 'webapp.change_hazard'
     success_message = Messages.Hazard.editing_success
     error_message = Messages.Hazard.editing_error
+
+    def get_form_class(self):
+        if self.request.user.has_perm('webapp.change_all_info_about_hazard'):
+            return self.form_class
+        else:
+            return self.form_class_for_tester
 
     def get_form(self, form_class):
         form = super(HazardEditView, self).get_form(form_class)

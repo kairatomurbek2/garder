@@ -44,6 +44,8 @@ Feature: Hazard Edit
       | text       |
       | self       |
       | Horizontal |
+      | Digester   |
+      | Seattle    |
 
 
   Scenario: Incorrect hazard editing

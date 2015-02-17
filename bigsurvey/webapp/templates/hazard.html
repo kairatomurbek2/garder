@@ -11,12 +11,13 @@
         {% include 'messages.html' %}
         <table class="uk-table">
             <tbody>
-            <tr class="table-border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.survey.site }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Survey" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.survey }}</td>
-                <td colspan="2"></td>
+                <td class="uk-text-right uk-text-muted">{% trans "Hazard Type" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ hazard.hazard_type }}</td>
             </tr>
             <tr class="table-border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Location 1" %}</td>
@@ -31,7 +32,7 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Location" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.assembly_location }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Installed Properly" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ hazard.installed_properly }}</td>
+                <td class="uk-text-center uk-text-primary">{{ hazard.installed_properly|yn }}</td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Installer" %}</td>

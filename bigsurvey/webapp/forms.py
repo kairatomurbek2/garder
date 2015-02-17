@@ -44,6 +44,12 @@ class HazardForm(forms.ModelForm):
         exclude = ('survey',)
 
 
+class HazardFormForTester(forms.ModelForm):
+    class Meta:
+        model = models.Hazard
+        exclude = ('survey', 'hazard_type', 'location1', 'location2', 'notes', 'due_install_test_date')
+
+
 class TestForm(forms.ModelForm):
     tester = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.tester), empty_label=None)
 
