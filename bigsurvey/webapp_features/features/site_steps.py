@@ -1,3 +1,6 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 from common_steps import *
 from lettuce import *
 from settings import *
@@ -81,6 +84,7 @@ def open_customer_selector(step):
 
 @step('I select customer with pk "(\d+)"')
 def select_customer(step, pk):
-    select_button = helper.find(Xpath.Pattern.customer_select_button % pk)
-    helper.check_element_exists(select_button, 'Customer select button was not found')
+    wait = WebDriverWait(world.browser, 10)
+    select_button = wait.until(expected_conditions.presence_of_element_located((By.XPATH, Xpath.Pattern.customer_select_button % pk)))
+    helper.check_element_exists(select_button, 'Customer select button with pk "%s" was not found' % pk)
     select_button.click()

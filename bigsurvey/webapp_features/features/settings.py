@@ -75,8 +75,8 @@ class Xpath:
         button = './/input[@type="button"]'
         submit_button = './/input[@type="submit"]'
         reset_button = './/input[@type="reset"]'
-        button_with_text = ".//button[contains(., '%s')]"
-        customer_select_button = ".//button[@data-id='%s']"
+        button_with_text = './/button[contains(., "%s")]'
+        customer_select_button = './/button[@data-id="%s"]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'
