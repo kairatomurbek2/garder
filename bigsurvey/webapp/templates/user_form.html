@@ -19,7 +19,7 @@
                         {{ user_form.username|add_class:'uk-width-1-1' }}
                         {{ user_form.username.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.email.id_for_label }}">{{ user_form.email.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
@@ -28,14 +28,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ user_form.first_name.id_for_label }}">{{ user_form.first_name.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
                         {{ user_form.first_name|add_class:'uk-width-1-1' }}
                         {{ user_form.first_name.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ user_form.last_name.id_for_label }}">{{ user_form.last_name.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
@@ -62,7 +62,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ user_form.groups.id_for_label }}">{{ user_form.groups.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
@@ -126,13 +126,15 @@
                         {{ employee_form.fax|add_class:'uk-width-1-1' }}
                         {{ employee_form.fax.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ employee_form.pws.id_for_label }}">{{ employee_form.pws.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {{ employee_form.pws|add_class:'uk-width-1-1' }}
-                        {{ employee_form.pws.errors }}
-                    </td>
+                    {% if perms.webapp.access_to_all_users %}
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ employee_form.pws.id_for_label }}">{{ employee_form.pws.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {{ employee_form.pws|add_class:'uk-width-1-1' }}
+                            {{ employee_form.pws.errors }}
+                        </td>
+                    {% endif %}
                 </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">

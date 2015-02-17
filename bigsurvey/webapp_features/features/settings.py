@@ -31,6 +31,9 @@ class Urls:
     hazard_edit = '/hazard/%s/edit/'
     test_add = '/hazard/%s/addtest/'
     test_edit = '/test/%s/edit/'
+    user_list = '/user/'
+    user_add = '/user/add/'
+    user_edit = '/user/%s/edit/'
 
 
 class Logins:

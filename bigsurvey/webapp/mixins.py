@@ -78,3 +78,10 @@ class InspectionObjectMixin(ObjectMixin):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_inspections') or \
                request.user.has_perm('webapp.access_to_pws_inspections') and obj.site.pws == request.user.employee.pws
+
+
+class UserObjectMixin(ObjectMixin):
+    @staticmethod
+    def has_perm(request, obj):
+        return request.user.has_perm('webapp.access_to_all_users') or \
+               request.user.has_perm('webapp.access_to_pws_users') and obj.employee.pws == request.user.employee.pws

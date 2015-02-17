@@ -4390,5 +4390,43 @@
   },
   "model": "webapp.employee",
   "pk": 5
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": "AR",
+    "user": [
+      "surveyor_without_pws"
+    ],
+    "address": ""
+  },
+  "model": "webapp.employee",
+  "pk": 10
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": "OK",
+    "user": [
+      "tester_without_pws"
+    ],
+    "address": ""
+  },
+  "model": "webapp.employee",
+  "pk": 11
 }
 ]

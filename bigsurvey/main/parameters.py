@@ -51,7 +51,7 @@ class Groups:
     tester = 'Testers'
 
 
-ADMIN_GROUPS = [Groups.surveyor, Groups.tester]
+ADMIN_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]
 
 
 class Messages:

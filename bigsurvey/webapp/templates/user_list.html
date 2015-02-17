@@ -2,41 +2,46 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load boolean_yes_no %}
+{% block menu %}
+    <li><a href="{% url 'webapp:user_add' %}">{% trans "Add New" %}</a></li>
+{% endblock %}
 {% block content %}
     <div class="wrapper">
         {% include 'messages.html' %}
         {% for user_group, users in user_list.items %}
-            <h4>{% trans user_group %}</h4>
-            <table class="uk-table uk-table-hover table-fixed">
-                <thead>
-                <tr class="table-border-bottom">
-                    <th class="table-border-right uk-text-center uk-width-1-14">{% trans "No." %}</th>
-                    <th>{% trans "Username" %}</th>
-                    <th>{% trans "Email" %}</th>
-                    <th>{% trans "Name" %}</th>
-                    <th>{% trans "State" %}</th>
-                    <th>{% trans "City" %}</th>
-                    <th>{% trans "PWS" %}</th>
-                    <th class="uk-text-center table-border-left uk-width-1-14">{% trans "Actions" %}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users %}
-                    <tr>
-                        <td class="table-border-right uk-text-center">{{ forloop.counter }}</td>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.first_name }} {{ user.last_name }}</td>
-                        <td>{{ user.employee.state }}</td>
-                        <td>{{ user.employee.city }}</td>
-                        <td>{{ user.employee.pws }}</td>
-                        <td class="uk-text-center table-border-left">
-                            <a href="{% url 'webapp:user_edit' user.pk %}">{% trans "Edit" %}</a>
-                        </td>
+            {% if users %}
+                <h4>{% trans user_group %}</h4>
+                <table class="uk-table uk-table-hover table-fixed">
+                    <thead>
+                    <tr class="table-border-bottom">
+                        <th class="table-border-right uk-text-center uk-width-1-14">{% trans "No." %}</th>
+                        <th>{% trans "Username" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "State" %}</th>
+                        <th>{% trans "City" %}</th>
+                        <th>{% trans "PWS" %}</th>
+                        <th class="uk-text-center table-border-left uk-width-1-14">{% trans "Actions" %}</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td class="table-border-right uk-text-center">{{ forloop.counter }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>{{ user.employee.state }}</td>
+                            <td>{{ user.employee.city }}</td>
+                            <td>{{ user.employee.pws }}</td>
+                            <td class="uk-text-center table-border-left">
+                                <a href="{% url 'webapp:user_edit' user.pk %}">{% trans "Edit" %}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

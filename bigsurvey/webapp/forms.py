@@ -89,7 +89,6 @@ class UserAddForm(UserCreationForm):
 
 class UserEditForm(UserChangeForm):
     error_messages = {
-        'duplicate_username': _("A user with that username already exists."),
         'password_mismatch': _("The two password fields didn't match."),
     }
 

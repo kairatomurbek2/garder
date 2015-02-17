@@ -1,3 +1,4 @@
+from collections import OrderedDict
 from django.views.generic import TemplateView, View, CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
@@ -596,15 +597,18 @@ class UserListView(BaseTemplateView):
         return context
 
     def _get_users(self):
-        user_list = {}
-        if self.request.user.has_perm('webapp.access_to_pws_users'):
-            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
-            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+        user_list = OrderedDict()
         if self.request.user.has_perm('webapp.access_to_all_users'):
             user_list['SuperAdministrators'] = models.User.objects.filter(groups__name=Groups.superadmin)
             user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin)
             user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor)
             user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester)
+            user_list['WithoutGroup'] = models.User.objects.filter(groups__name='')
+        elif self.request.user.has_perm('webapp.access_to_pws_users'):
+            user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin, employee__pws=self.request.user.employee.pws)
+            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+            user_list['WithoutGroup'] = models.User.objects.filter(groups__name='', employee__pws=self.request.user.employee.pws)
         return user_list
 
 
@@ -646,9 +650,13 @@ class UserBaseFormView(BaseFormView):
         if user_form.is_valid() and employee_form.is_valid():
             self.user_object = user_form.save()
             employee_form.instance.user = self.user_object
+            if not self.request.user.has_perm('webapp.access_to_all_users'):
+                employee_form.instance.pws = self.request.user.pws
             self.employee_object = employee_form.save()
+            messages.success(self.request, self.success_message)
             return redirect(self.get_success_url())
         else:
+            messages.error(self.request, self.error_message)
             return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
 
     def get_success_url(self):
@@ -674,8 +682,22 @@ class UserEditView(UserBaseFormView):
     success_message = Messages.User.editing_success
     error_message = Messages.User.editing_error
 
+    def get(self, request, *args, **kwargs):
+        response = super(UserEditView, self).get(request, *args, **kwargs)
+        if not mixins.UserObjectMixin.has_perm(self.request, self.user_object):
+            raise Http404
+        return response
+
+    def post(self, request, *args, **kwargs):
+        user = self.user_model.objects.get(pk=self.kwargs['pk'])
+        if not mixins.UserObjectMixin.has_perm(self.request, user):
+            raise Http404
+        return super(UserEditView, self).post(request, *args, **kwargs)
+
     def get_user_form(self):
         self.user_object = self.user_model.objects.get(pk=self.kwargs['pk'])
+        if not mixins.UserObjectMixin.has_perm(self.request, self.user_object):
+            raise Http404
         return self.user_form_class(instance=self.user_object, **self.get_form_kwargs())
 
     def get_employee_form(self):
