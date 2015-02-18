@@ -117,6 +117,7 @@ Feature: Site detail
     And I open "site detail" page with pk "10"
     And I should see "Not Found"
     And I logout
+    And Uncommit sites
 
     Examples:
       | role     |

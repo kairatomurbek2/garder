@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from common_steps import *
 from lettuce import *
 from settings import *
+from webapp.models import TestPermission, Inspection
 
 
 @step('I open "site list" page')
@@ -107,3 +108,13 @@ def commit_site(step):
     )
     helper.check_element_exists(commit_button, 'Commit dialog button was not found')
     commit_button.click()
+
+
+@step("Uncommit sites")
+def uncommit_sites(step):
+    for inspection in Inspection.objects.filter(is_active=False):
+        inspection.is_active = True
+        inspection.save()
+    for test_permission in TestPermission.objects.filter(is_active=False):
+        test_permission.is_active = True
+        test_permission.save()
