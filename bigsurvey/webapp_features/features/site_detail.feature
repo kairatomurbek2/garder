@@ -104,3 +104,21 @@ Feature: Site detail
       | potable    | Add Survey    |
       | fire       | Add Survey    |
       | irrigation | Add Survey    |
+
+  @commit
+  Scenario Outline: Site commiting
+    Given I logged in as "<role>"
+    When I open "site detail" page with pk "10"
+    And I commit site
+    Then I should be at "site list" page
+    And I should not see following
+      | text               |
+      | VALVE, Gabe Newell |
+    And I open "site detail" page with pk "10"
+    And I should see "Not Found"
+    And I logout
+
+    Examples:
+      | role     |
+      | surveyor |
+      | tester   |

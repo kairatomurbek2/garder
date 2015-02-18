@@ -88,3 +88,22 @@ def select_customer(step, pk):
     select_button = wait.until(expected_conditions.presence_of_element_located((By.XPATH, Xpath.Pattern.customer_select_button % pk)))
     helper.check_element_exists(select_button, 'Customer select button with pk "%s" was not found' % pk)
     select_button.click()
+
+
+@step('I commit site')
+def commit_site(step):
+    wait = WebDriverWait(world.browser, 10)
+    commit_dialog_button = wait.until(
+        expected_conditions.presence_of_element_located(
+            (By.XPATH, Xpath.Pattern.commit_dialog_button)
+        )
+    )
+    helper.check_element_exists(commit_dialog_button, 'Commit dialog button was not found')
+    commit_dialog_button.click()
+    commit_button = wait.until(
+        expected_conditions.presence_of_element_located(
+            (By.XPATH, Xpath.Pattern.submit_button)
+        )
+    )
+    helper.check_element_exists(commit_button, 'Commit dialog button was not found')
+    commit_button.click()

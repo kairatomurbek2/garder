@@ -79,7 +79,6 @@ class Xpath:
         submit_button = './/input[@type="submit"]'
         reset_button = './/input[@type="reset"]'
         button_with_text = './/button[contains(., "%s")]'
-        customer_select_button = './/button[@data-id="%s"]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'
@@ -87,3 +86,5 @@ class Xpath:
         site_service = './/div[@id="%s_content"]'
         validation_error_by_exact_text = './/../ul[@class="errorlist"]/li[. = "%s"]'
         validation_error_by_substr = './/../ul[@class="errorlist"]/li[contains(., "%s")]'
+        customer_select_button = './/button[@data-id="%s"]'
+        commit_dialog_button = './/a[@id="commit_site_menu_button"]'

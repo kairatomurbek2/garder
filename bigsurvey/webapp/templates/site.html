@@ -19,7 +19,7 @@
         </li>
     {% endif %}
     {% if perms.webapp.commit_site %}
-        <li><a href="#" data-uk-modal="{target: '#commit_site'}">{% trans "Commit" %}</a></li>
+        <li><a href="#" data-uk-modal="{target: '#commit_site'}" id="commit_site_menu_button">{% trans "Commit" %}</a></li>
     {% endif %}
     <li><a href="{% url "webapp:home" %}">{% trans "Site List" %}</a></li>
 {% endblock %}
