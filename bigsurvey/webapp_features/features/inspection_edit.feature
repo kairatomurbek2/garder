@@ -22,7 +22,7 @@ Feature: Inspection editing
   Scenario: Correct Inspection editing
     Given I logged in as "root"
     And I open "inspection edit" page with pk "1"
-    And I select "surveyor_without_pws" from "assigned_to"
+    And I fill in "due_date" with "2017-01-01"
     When I submit "inspection" form
     Then I should be at "home" page
     And I should see "inspection editing success" message

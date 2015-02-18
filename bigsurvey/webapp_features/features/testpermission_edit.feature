@@ -22,7 +22,6 @@ Feature: Test Permission editing
   Scenario: Correct Test Permission editing
     Given I logged in as "root"
     And I open "testpermission edit" page with pk "1"
-    And I select "tester_without_pws" from "given_to"
     And I fill in "due_date" with "2016-01-01"
     When I submit "testpermission" form
     Then I should be at "home" page
