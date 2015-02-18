@@ -22,7 +22,7 @@ Feature: Test Permission adding
   Scenario: Correct Test Permission adding
     Given I logged in as "root"
     And I open "testpermission add" page for site with pk "1"
-    And I select "tester" from "given_to"
+    And I select "tester_without_pws" from "given_to"
     And I fill in "due_date" with "2015-06-01"
     When I submit "testpermission" form
     Then I should be at "home" page

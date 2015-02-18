@@ -22,7 +22,7 @@ Feature: Inspection adding
   Scenario: Correct Inspection adding
     Given I logged in as "root"
     And I open "inspection add" page for site with pk "1"
-    And I select "surveyor" from "assigned_to"
+    And I select "surveyor_without_pws" from "assigned_to"
     When I submit "inspection" form
     Then I should be at "home" page
     And I should see "inspection adding success" message
