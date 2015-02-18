@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from django.views.generic import TemplateView, View, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404
 from django.core.urlresolvers import reverse
@@ -376,7 +376,8 @@ class HazardAddView(HazardBaseFormView, CreateView):
         return context
 
     def get_form(self, form_class):
-        if not mixins.SurveyObjectMixin.has_perm(self.request, models.Survey.objects.get(pk=self.kwargs['pk'])):
+        survey = models.Survey.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
             raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
@@ -524,6 +525,12 @@ class InspectionAddView(InspectionBaseFormView, CreateView):
     success_message = Messages.Inspection.adding_success
     error_message = Messages.Inspection.adding_error
 
+    def get_form(self, form_class):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+            raise Http404
+        return super(InspectionAddView, self).get_form(form_class)
+
     def form_valid(self, form):
         form.instance.assigned_by = self.request.user
         form.instance.site = self._get_site()
@@ -541,6 +548,12 @@ class InspectionEditView(InspectionBaseFormView, UpdateView):
     permission = 'webapp.change_inspection'
     success_message = Messages.Inspection.editing_success
     error_message = Messages.Inspection.editing_error
+
+    def get_form(self, form_class):
+        form = super(InspectionEditView, self).get_form(form_class)
+        if not mixins.InspectionObjectMixin.has_perm(self.request, form.instance):
+            raise Http404
+        return form
 
 
 class TestPermissionListView(BaseTemplateView):
@@ -588,6 +601,12 @@ class TestPermissionAddView(TestPermissionBaseFormView, CreateView):
     success_message = Messages.TestPermission.adding_success
     error_message = Messages.TestPermission.adding_error
 
+    def get_form(self, form_class):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+            raise Http404
+        return super(TestPermissionAddView, self).get_form(form_class)
+
     def form_valid(self, form):
         form.instance.given_by = self.request.user
         form.instance.site = self._get_site()
@@ -605,6 +624,12 @@ class TestPermissionEditView(TestPermissionBaseFormView, UpdateView):
     permission = 'webapp.change_testpermission'
     success_message = Messages.TestPermission.editing_success
     error_message = Messages.TestPermission.editing_error
+
+    def get_form(self, form_class):
+        form = super(TestPermissionEditView, self).get_form(form_class)
+        if not mixins.TestPermissionObjectMixin.has_perm(self.request, form.instance):
+            raise Http404
+        return form
 
 
 class UserListView(BaseTemplateView):

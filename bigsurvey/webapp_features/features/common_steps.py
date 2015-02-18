@@ -25,7 +25,7 @@ def check_text_exists(step, text):
 
 @step('I should not see "([^"]*)"$')
 def check_text_doesnt_exist(step, text):
-    helper.check_text_doesnt_exist(text, '"%s" in on page.' % text)
+    helper.check_text_doesnt_exist(text, '"%s" is on page.' % text)
 
 
 @step('I should see following$')
@@ -95,3 +95,35 @@ def click_button_with_label(step, label):
     button = helper.find(Xpath.Pattern.button_with_text % label)
     helper.check_element_exists(button, 'Button with label "%s" was not found' % label)
     button.click()
+
+
+@step('I should see "(.*)" option in "(.*)" select')
+def check_option_in_select_exists(step, option_value, select_name):
+    select = helper.find(Xpath.Pattern.select % select_name)
+    helper.check_element_exists(select, 'Select "%s" was not found' % select_name)
+    option = helper.find(Xpath.Pattern.option_by_value % option_value, context=select) or \
+             helper.find(Xpath.Pattern.option_by_exact_text % option_value, context=select) or \
+             helper.find(Xpath.Pattern.option_by_substr % option_value, context=select)
+    helper.check_element_exists(option, 'Option with value "%s" was not found' % option_value)
+
+
+@step('I should not see "(.*)" option in "(.*)" select')
+def check_option_in_select_doesnt_exist(step, option_value, select_name):
+    select = helper.find(Xpath.Pattern.select % select_name)
+    helper.check_element_exists(select, 'Select "%s" was not found' % select_name)
+    option = helper.find(Xpath.Pattern.option_by_value % option_value, context=select) or \
+             helper.find(Xpath.Pattern.option_by_exact_text % option_value, context=select) or \
+             helper.find(Xpath.Pattern.option_by_substr % option_value, context=select)
+    helper.check_element_doesnt_exist(option, 'Option with value "%s" was found' % option_value)
+
+
+@step('I should see following options in following selects')
+def check_multiple_options_in_select_exist(step):
+    for pair in step.hashes:
+        step.given('I should see "%s" option in "%s" select' % (pair['option'], pair['select']))
+
+
+@step('I should not see following options in following selects')
+def check_multiple_options_in_select_doesnt_exist(step):
+    for pair in step.hashes:
+        step.given('I should not see "%s" option in "%s" select' % (pair['option'], pair['select']))
