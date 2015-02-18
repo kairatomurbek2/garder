@@ -8,14 +8,25 @@
         <li><a href="{% url 'webapp:site_edit' site.pk %}">{% trans "Edit" %}</a></li>
     {% endif %}
     {% if perms.webapp.assign_surveyor or perms.webapp.assign_tester %}
-        <li><a href="#">{% trans "Assign to..." %}</a></li>
+        <li class="uk-parent" data-uk-dropdown="">
+            <a href="#">{% trans "Assign" %}</a>
+            <div class="uk-dropdown uk-dropdown-navbar">
+                <ul class="uk-nav uk-nav-navbar">
+                    <li><a href="{% url 'webapp:inspection_add' site.pk %}">{% trans "Assign Surveyor" %}</a></li>
+                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}">{% trans "Grant Test Permission" %}</a></li>
+                </ul>
+            </div>
+        </li>
     {% endif %}
     {% if perms.webapp.commit_site %}
-        <li><a href="#">{% trans "Commit" %}</a></li>
+        <li><a href="#" data-uk-modal="{target: '#commit_site'}">{% trans "Commit" %}</a></li>
     {% endif %}
     <li><a href="{% url "webapp:home" %}">{% trans "Site List" %}</a></li>
 {% endblock %}
 {% block content %}
+    <div class="uk-modal" id="commit_site">
+        {% include "site_commit_popup.html" %}
+    </div>
     <div id="site_detail" class="wrapper">
         {% include 'messages.html' %}
         <table class="uk-table">

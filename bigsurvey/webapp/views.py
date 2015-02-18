@@ -11,6 +11,7 @@ import models
 import forms
 from filters import SiteFilter, CustomerFilter
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS
+from django.views.decorators.csrf import csrf_exempt
 
 
 class BaseView(mixins.PermissionRequiredMixin):
@@ -83,6 +84,25 @@ class SiteDetailView(BaseTemplateView):
         if not mixins.SiteObjectMixin.has_perm(self.request, site):
             raise Http404
         return site
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        site = models.Site.objects.get(pk=kwargs['pk'])
+        if user.has_perm('webapp.access_to_survey_sites'):
+            inspections = models.Inspection.objects.filter(site=site, assigned_to=user, is_active=True)
+            for inspection in inspections:
+                inspection.is_active = False
+                inspection.save()
+        else:
+            test_perms = models.TestPermission.objects.filter(site=site, given_to=user, is_active=True)
+            for perm in test_perms:
+                perm.is_active = False
+                perm.save()
+        return redirect(reverse("webapp:home"))
+
+    @csrf_exempt
+    def dispatch(self, *args, **kwargs):
+        return super(SiteDetailView, self).dispatch(*args, **kwargs)
 
 
 class SiteBaseFormView(BaseFormView):

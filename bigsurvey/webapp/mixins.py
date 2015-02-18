@@ -32,8 +32,10 @@ class SiteObjectMixin(ObjectMixin):
         return request.user.has_perm('webapp.access_to_all_sites') or \
                request.user.has_perm('webapp.access_to_pws_sites') and obj.pws == request.user.employee.pws or \
                request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(
-                   assigned_to=request.user) or \
-               request.user.has_perm('webapp.access_to_test_sites') and obj.test_perms.filter(given_to=request.user)
+                   assigned_to=request.user,
+                   is_active=True) or \
+               request.user.has_perm('webapp.access_to_test_sites') and obj.test_perms.filter(given_to=request.user,
+                                                                                              is_active=True)
 
 
 class SurveyObjectMixin(ObjectMixin):
@@ -70,7 +72,8 @@ class TestObjectMixin(ObjectMixin):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_tests') or \
                request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.survey.site.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
+               request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user \
+               and obj.bp_device.survey.site.test_permissions.filter(is_active=True, given_to=request.user)
 
 
 class InspectionObjectMixin(ObjectMixin):
