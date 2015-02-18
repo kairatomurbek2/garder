@@ -4,7 +4,7 @@ Feature: Site editing
 
   Scenario Outline: Site editing page access
     Given I logged in as "<role>"
-    When I open "site edit" page with pk "<pk>"
+    When I directly open "site_edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -19,21 +19,21 @@ Feature: Site editing
 
   Scenario: Correct site editing
     Given I logged in as "root"
-    And I open "site edit" page with pk "4"
+    And I open "site_edit" page with pk "4"
     And I fill in following fields with following values
       | field    | value                |
       | address1 | 20/12 Central Square |
     When I submit "site" form
-    Then I should be at "site list" page
+    Then I should be at "site_list" page
     And I should see "site editing success" message
     And I should see "20/12 Central Square"
 
 
   Scenario: Incorrect site editing
     Given I logged in as "root"
-    And I open "site edit" page with pk "4"
+    And I open "site_edit" page with pk "4"
     And I fill in "connect_date" with "qaz2wsx"
     When I submit "site" form
-    Then I should be at "site edit" page with pk "4"
+    Then I should be at "site_edit" page with pk "4"
     And I should see "site editing error" message
     And I should see "Enter a valid date." validation error message on field "connect_date"

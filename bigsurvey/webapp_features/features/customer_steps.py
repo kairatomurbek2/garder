@@ -3,37 +3,61 @@ from lettuce import *
 from settings import *
 
 
-@step('I open "customer list" page')
-def open_customer_list_page(step):
+@step('I directly open "customer_list" page')
+def directly_open_customer_list_page(step):
     step.given('I open "%s"' % get_url(Urls.customer_list))
 
 
-@step('I open "customer detail" page with pk "(\d+)"')
-def open_customer_detail_page(step, pk):
+@step('I open "customer_list" page')
+def open_customer_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "customers" menu link')
+
+
+@step('I directly open "customer_detail" page with pk "(\d+)"')
+def directly_open_customer_detail_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.customer_detail % pk))
 
 
-@step('I open "customer add" page')
-def open_customer_add_page(step):
+@step('I open "customer_detail" page with pk "(\d+)"')
+def open_customer_detail_page(step, pk):
+    step.given('I open "customer_list" page')
+    step.given('I click "customer_%s_detail" link' % pk)
+
+
+@step('I directly open "customer_add" page')
+def directly_open_customer_add_page(step):
     step.given('I open "%s"' % get_url(Urls.customer_add))
 
 
-@step('I open "customer edit" page with pk "(\d+)"')
-def open_customer_edit_page(step, pk):
+@step('I open "customer_add" page')
+def open_customer_add_page(step):
+    step.given('I open "customer_list" page')
+    step.given('I click "customer_add" link')
+
+
+@step('I directly open "customer_edit" page with pk "(\d+)"')
+def directly_open_customer_edit_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.customer_edit % pk))
 
 
-@step('I should be at "customer list" page')
+@step('I open "customer_edit" page with pk "(\d+)"')
+def open_customer_edit_page(step, pk):
+    step.given('I open "customer_list" page')
+    step.given('I click "customer_%s_edit" link' % pk)
+
+
+@step('I should be at "customer_list" page')
 def check_customer_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.customer_list))
 
 
-@step('I should be at "customer add" page')
+@step('I should be at "customer_add" page')
 def check_customer_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.customer_add))
 
 
-@step('I should be at "customer edit" page with pk "(\d+)"')
+@step('I should be at "customer_edit" page with pk "(\d+)"')
 def check_customer_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.customer_edit % pk))
 

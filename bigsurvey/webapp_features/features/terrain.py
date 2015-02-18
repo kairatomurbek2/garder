@@ -1,8 +1,6 @@
 from django.core.management import call_command
-
 from lettuce import before, after, world
 from selenium import webdriver
-from settings import Urls, get_url
 
 
 @before.all
@@ -20,5 +18,7 @@ def teardown(total):
 
 
 @before.each_scenario
+@after.each_scenario
 def clear_cookies(scenario):
     world.browser.delete_all_cookies()
+    world.user = None

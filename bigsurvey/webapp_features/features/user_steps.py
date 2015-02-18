@@ -3,32 +3,50 @@ from lettuce import *
 from settings import *
 
 
-@step('I open "user list" page')
-def open_user_list_page(step):
+@step('I directly open "user_list" page')
+def directly_open_user_list_page(step):
     step.given('I open "%s"' % get_url(Urls.user_list))
 
 
-@step('I open "user add" page')
-def open_user_add_page(step):
+@step('I open "user_list" page')
+def open_user_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "users" menu link')
+
+
+@step('I directly open "user_add" page')
+def directly_open_user_add_page(step):
     step.given('I open "%s"' % get_url(Urls.user_add))
 
 
-@step('I open "user edit" page with pk "(\d+)"')
-def open_user_edit_page(step, pk):
+@step('I open "user_add" page')
+def open_user_add_page(step):
+    step.given('I open "user_list" page')
+    step.given('I click "user_add" link')
+
+
+@step('I directly open "user_edit" page with pk "(\d+)"')
+def directly_open_user_edit_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.user_edit % pk))
 
 
-@step('I should be at "user list" page')
+@step('I open "user_edit" page with pk "(\d+)"')
+def open_user_edit_page(step, pk):
+    step.given('I open "user_list" page')
+    step.given('I click "user_%s_edit" link' % pk)
+
+
+@step('I should be at "user_list" page')
 def check_user_list_page(step):
     step.given('I should be at "%s"' % get_url(Urls.user_list))
 
 
-@step('I should be at "user add" page')
+@step('I should be at "user_add" page')
 def check_user_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.user_add))
 
 
-@step('I should be at "user edit" page with pk "(\d+)"')
+@step('I should be at "user_edit" page with pk "(\d+)"')
 def check_user_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.user_edit % pk))
 

@@ -1,24 +1,38 @@
 from common_steps import *
 from lettuce import *
 from settings import *
+from webapp.models import Test
 
 
-@step('I open "test add" page for hazard with pk "(\d+)"')
+@step('I directly open "test_add" page for hazard with pk "(\d+)"')
 def open_test_add_page(step, hazard_pk):
     step.given('I open "%s"' % get_url(Urls.test_add % hazard_pk))
 
 
-@step('I open "test edit" page with pk "(\d+)"')
-def open_test_edit_page(step, pk):
+@step('I open "test_add" page for hazard with pk "(\d+)"')
+def open_test_add_page(step, hazard_pk):
+    step.given('I open "hazard_detail" page with pk "%s"' % hazard_pk)
+    step.given('I click "hazard_%s_test_add" link' % hazard_pk)
+
+
+@step('I directly open "test_edit" page with pk "(\d+)"')
+def directly_open_test_edit_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.test_edit % pk))
 
 
-@step('I should be at "test add" page for hazard with pk "(\d+)"')
+@step('I open "test_edit" page with pk "(\d+)"')
+def open_test_edit_page(step, pk):
+    hazard = Test.objects.get(pk=pk).bp_device
+    step.given('I open "hazard_detail" page with pk "%s"' % hazard.pk)
+    step.given('I click "test_%s_edit" link' % pk)
+
+
+@step('I should be at "test_add" page for hazard with pk "(\d+)"')
 def check_test_add_page(step, hazard_pk):
     step.given('I should be at "%s"' % get_url(Urls.test_add % hazard_pk))
 
 
-@step('I should be at "test edit" page with pk "(\d+)"')
+@step('I should be at "test_edit" page with pk "(\d+)"')
 def check_test_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.test_edit % pk))
 

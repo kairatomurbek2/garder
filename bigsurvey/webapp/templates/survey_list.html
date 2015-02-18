@@ -3,7 +3,7 @@
 {% if perms.webapp.add_survey %}
     {% if perms.webapp.add_many_surveys_per_site or countlte0 %}
         <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}">
+            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}" id="site_{{ site.pk }}_service_{{ service }}_survey_add_link">
                 <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
             </a>
         </div>
@@ -13,26 +13,26 @@
     <div class="wrapper">
         <table class="uk-table uk-table-hover">
             <thead>
-                <tr class="table-border-bottom">
-                    <th class="table-border-right uk-text-center uk-width-1-10">
-                        {% trans "No." %}
-                    </th>
-                    <th>
-                        {% trans "Survey Date" %}
-                    </th>
-                    <th>
-                        {% trans "Surveyor" %}
-                    </th>
-                    <th>
-                        {% trans "Survey Type" %}
-                    </th>
-                    <th colspan="2" class="uk-text-center table-border-left uk-width-2-10">
-                        {% trans "Actions" %}
-                    </th>
-                </tr>
+            <tr class="table-border-bottom">
+                <th class="table-border-right uk-text-center uk-width-1-10">
+                    {% trans "No." %}
+                </th>
+                <th>
+                    {% trans "Survey Date" %}
+                </th>
+                <th>
+                    {% trans "Surveyor" %}
+                </th>
+                <th>
+                    {% trans "Survey Type" %}
+                </th>
+                <th colspan="2" class="uk-text-center table-border-left uk-width-2-10">
+                    {% trans "Actions" %}
+                </th>
+            </tr>
             </thead>
             <tbody>
-                {% for survey in surveys %}
+            {% for survey in surveys %}
                 <tr>
                     <td class="uk-text-center table-border-right">
                         {{ forloop.counter }}
@@ -47,13 +47,13 @@
                         {{ survey.survey_type }}
                     </td>
                     <td class="table-border-left uk-text-center">
-                        <a href="{% url "webapp:survey_detail" survey.pk %}">{% trans "Detail" %}</a>
+                        <a href="{% url "webapp:survey_detail" survey.pk %}" id="survey_{{ survey.pk }}_detail_link">{% trans "Detail" %}</a>
                     </td>
                     <td class="uk-text-center">
-                        <a href="{% url "webapp:hazard_add" survey.pk %}">{% trans "Add Hazard" %}</a>
+                        <a href="{% url "webapp:hazard_add" survey.pk %}" id="survey_{{ survey.pk }}_add_hazard_link">{% trans "Add Hazard" %}</a>
                     </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>

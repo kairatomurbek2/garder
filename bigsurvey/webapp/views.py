@@ -65,7 +65,8 @@ class HomeView(BaseTemplateView):
     def _get_site_filter(self, queryset):
         return SiteFilter(self.request.GET, queryset=queryset)
 
-    def _filter_sites_by_related(self, related):
+    @staticmethod
+    def _filter_sites_by_related(related):
         site_pks = [obj.site.pk for obj in related]
         return models.Site.objects.filter(pk__in=site_pks)
 
@@ -86,18 +87,12 @@ class SiteDetailView(BaseTemplateView):
         return site
 
     def post(self, request, *args, **kwargs):
-        user = request.user
+        user = self.request.user
         site = models.Site.objects.get(pk=kwargs['pk'])
         if user.has_perm('webapp.access_to_survey_sites'):
-            inspections = models.Inspection.objects.filter(site=site, assigned_to=user, is_active=True)
-            for inspection in inspections:
-                inspection.is_active = False
-                inspection.save()
+            models.Inspection.objects.filter(site=site, assigned_to=user, is_active=True).update(is_active=False)
         else:
-            test_perms = models.TestPermission.objects.filter(site=site, given_to=user, is_active=True)
-            for perm in test_perms:
-                perm.is_active = False
-                perm.save()
+            models.TestPermission.objects.filter(site=site, given_to=user, is_active=True).update(is_active=False)
         return redirect(reverse("webapp:home"))
 
     @csrf_exempt
@@ -116,7 +111,8 @@ class SiteBaseFormView(BaseFormView):
         context['customer_filter'] = self._get_customer_filter(queryset=customers)
         return context
 
-    def _get_customers(self):
+    @staticmethod
+    def _get_customers():
         return models.Customer.objects.all()
 
     def _get_customer_filter(self, queryset):
@@ -192,7 +188,8 @@ class CustomerListView(BaseTemplateView):
         context['customer_filter'] = self._get_customer_filter(queryset=customers)
         return context
 
-    def _get_customers(self):
+    @staticmethod
+    def _get_customers():
         return models.Customer.objects.all()
 
     def _get_customer_filter(self, queryset):

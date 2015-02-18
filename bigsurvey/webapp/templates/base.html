@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/custom/style.css' %}"/>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/uikit.min.js' %}"></script>
-    <script src="{% static 'js/custom/script.js' %}"></script>
     {% block scripts %}
     {% endblock %}
 </head>
@@ -33,22 +32,31 @@
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
                     {% if perms.webapp.access_to_adminpanel %}
-                        <li><a id="admin_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
+                        <li><a id="admin_menu_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_pws %}
-                        <li><a id="pws_link" href="{% url "webapp:pws_list" %}">{% trans "PWS" %}</a></li>
+                        <li><a id="pws_menu_link" href="{% url "webapp:pws_list" %}">{% trans "PWS" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_customer %}
-                        <li><a id="customers_link" href="{% url "webapp:customer_list" %}">{% trans "Customers" %}</a></li>
+                        <li><a id="customers_menu_link" href="{% url "webapp:customer_list" %}">{% trans "Customers" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_site %}
-                        <li><a id="sites_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+                        <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+                    {% endif %}
+                    {% if perms.webapp.browse_inspection %}
+                        <li><a id="inspections_menu_link" href="{% url 'webapp:inspection_list' %}">{% trans "Inspections" %}</a></li>
+                    {% endif %}
+                    {% if perms.webapp.browse_testpermission %}
+                        <li><a id="testpermissions_menu_link" href="{% url 'webapp:testpermission_list' %}">{% trans "Test Permissions" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_letter %}
-                        <li><a id="letters_link" href="#">{% trans "Letters" %}</a></li>
+                        <li><a id="letters_menu_link" href="#">{% trans "Letters" %}</a></li>
+                    {% endif %}
+                    {% if perms.webapp.browse_user %}
+                        <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.access_to_import %}
-                        <li><a id="import_link" href="#">{% trans "Import" %}</a></li>
+                        <li><a id="import_menu_link" href="#">{% trans "Import" %}</a></li>
                     {% endif %}
                 </ul>
             </div>

@@ -4,7 +4,7 @@ Feature: Site list
 
   Scenario: Root is opening site list page
     Given I logged in as "root"
-    When I open "site list" page
+    When I open "site_list" page
     Then I should see following
       | text        |
       | First Site  |
@@ -16,7 +16,7 @@ Feature: Site list
 
   Scenario: Admin is opening site list page
     Given I logged in as "admin"
-    When I open "site list" page
+    When I open "site_list" page
     Then I should see following
       | text      |
       | Ancoridge |
@@ -32,7 +32,7 @@ Feature: Site list
 
   Scenario: Surveyor is opening site list page
     Given I logged in as "surveyor"
-    When I open "site list" page
+    When I open "site_list" page
     Then I should see following
       | text       |
       | First Site |
@@ -47,7 +47,7 @@ Feature: Site list
 
   Scenario: Tester is opening site list page
     Given I logged in as "tester"
-    When I open "site list" page
+    When I open "site_list" page
     Then I should see following
       | text        |
       | Second Site |

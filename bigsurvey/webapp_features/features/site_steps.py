@@ -1,3 +1,4 @@
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -7,37 +8,61 @@ from settings import *
 from webapp.models import TestPermission, Inspection
 
 
-@step('I open "site list" page')
-def open_site_list_page(step):
+@step('I directly open "site_list" page')
+def directly_open_site_list_page(step):
     step.given('I open "%s"' % get_url(Urls.site_list))
 
 
-@step('I open "site detail" page with pk "(\d+)"')
-def open_site_list_page(step, pk):
+@step('I open "site_list" page')
+def open_site_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "sites" menu link')
+
+
+@step('I directly open "site_detail" page with pk "(\d+)"')
+def directly_open_site_detail_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.site_detail % pk))
 
 
-@step('I open "site add" page')
-def open_site_add_page(step):
+@step('I open "site_detail" page with pk "(\d+)"')
+def open_site_detail_page(step, pk):
+    step.given('I open "site_list" page')
+    step.given('I click "site_%s_detail" link' % pk)
+
+
+@step('I directly open "site_add" page')
+def directly_open_site_add_page(step):
     step.given('I open "%s"' % get_url(Urls.site_add))
 
 
-@step('I open "site edit" page with pk "(\d+)"')
-def open_site_edit_page(step, pk):
+@step('I open "site_add" page')
+def open_site_add_page(step):
+    step.given('I open "site_list" page')
+    step.given('I click "site_add" link')
+
+
+@step('I directly open "site_edit" page with pk "(\d+)"')
+def directly_open_site_edit_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.site_edit % pk))
 
 
-@step('I should be at "site list" page')
+@step('I open "site_edit" page with pk "(\d+)"')
+def open_site_edit_page(step, pk):
+    step.given('I open "site_detail" page with pk "%s"' % pk)
+    step.given('I click "site_%s_edit" link' % pk)
+
+
+@step('I should be at "site_list" page')
 def check_site_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.site_list))
 
 
-@step('I should be at "site add" page')
+@step('I should be at "site_add" page')
 def check_site_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.site_add))
 
 
-@step('I should be at "site edit" page with pk "(\d+)"')
+@step('I should be at "site_edit" page with pk "(\d+)"')
 def check_site_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.site_edit % pk))
 
@@ -86,21 +111,21 @@ def open_customer_selector(step):
 @step('I select customer with pk "(\d+)"')
 def select_customer(step, pk):
     wait = WebDriverWait(world.browser, 10)
-    select_button = wait.until(expected_conditions.presence_of_element_located((By.XPATH, Xpath.Pattern.customer_select_button % pk)))
+    select_button = wait.until(
+        expected_conditions.presence_of_element_located(
+            (By.XPATH, Xpath.Pattern.customer_select_button % pk)
+        )
+    )
     helper.check_element_exists(select_button, 'Customer select button with pk "%s" was not found' % pk)
     select_button.click()
 
 
 @step('I commit site')
 def commit_site(step):
-    wait = WebDriverWait(world.browser, 10)
-    commit_dialog_button = wait.until(
-        expected_conditions.presence_of_element_located(
-            (By.XPATH, Xpath.Pattern.commit_dialog_button)
-        )
-    )
+    commit_dialog_button = helper.find(Xpath.commit_dialog_button)
     helper.check_element_exists(commit_dialog_button, 'Commit dialog button was not found')
     commit_dialog_button.click()
+    wait = WebDriverWait(world.browser, 10)
     commit_button = wait.until(
         expected_conditions.presence_of_element_located(
             (By.XPATH, Xpath.Pattern.submit_button)
@@ -112,9 +137,13 @@ def commit_site(step):
 
 @step("Uncommit sites")
 def uncommit_sites(step):
-    for inspection in Inspection.objects.filter(is_active=False):
-        inspection.is_active = True
-        inspection.save()
-    for test_permission in TestPermission.objects.filter(is_active=False):
-        test_permission.is_active = True
-        test_permission.save()
+    Inspection.objects.all().update(is_active=True)
+    TestPermission.objects.all().update(is_active=True)
+
+
+@step('I hover on "assign" link')
+def hover_on_menu(step):
+    assign_link = helper.find(Xpath.Pattern.link % 'assign')
+    helper.check_element_exists(assign_link, 'Assign link was not found')
+    actions = ActionChains(world.browser)
+    actions.move_to_element(assign_link).perform()

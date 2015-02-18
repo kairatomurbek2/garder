@@ -3,7 +3,7 @@ Feature: Hazard Edit
 
   Scenario Outline: Hazard Edit page access
     Given I logged in as "<role>"
-    When I open "hazard edit" page with pk "<pk>"
+    When I directly open "hazard_edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
 
@@ -21,7 +21,7 @@ Feature: Hazard Edit
 
   Scenario: Tester Field Set
     Given I logged in as "tester"
-    When I open "hazard edit" page with pk "1"
+    When I open "hazard_edit" page with pk "1"
     Then I should not see following
       | text        |
       | Hazard Type |
@@ -32,13 +32,13 @@ Feature: Hazard Edit
 
   Scenario: Correct hazard editing
     Given I logged in as "tester"
-    When I open "hazard edit" page with pk "1"
+    When I open "hazard_edit" page with pk "1"
     And I fill in following fields with following values
       | field     | value |
       | installer | self  |
     And I select "Horizontal" from "orientation"
     And I submit "hazard" form
-    Then I should be at "hazard detail" page with pk "1"
+    Then I should be at "hazard_detail" page with pk "1"
     And I should see "hazard editing success" message
     And I should see following
       | text       |
@@ -50,10 +50,10 @@ Feature: Hazard Edit
 
   Scenario: Incorrect hazard editing
     Given I logged in as "root"
-    When I open "hazard edit" page with pk "1"
-    And I select "---------" from "hazard_type"
+    When I open "hazard_edit" page with pk "1"
+    And I select "" from "hazard_type"
     And I submit "hazard" form
-    Then I should be at "hazard edit" page with pk "1"
+    Then I should be at "hazard_edit" page with pk "1"
     And I should see "hazard editing error" message
     And I should see following validation error messages on following fields
       | field       | error_message          |

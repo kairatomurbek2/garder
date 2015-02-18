@@ -4,7 +4,7 @@ Feature: Test adding
 
   Scenario Outline: Test adding page access
     Given I logged in as "<role>"
-    When I open "test add" page for hazard with pk "<pk>"
+    When I directly open "test_add" page for hazard with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,7 +21,7 @@ Feature: Test adding
 
   Scenario: Correct test adding
     Given I logged in as "root"
-    And I open "test add" page for hazard with pk "1"
+    And I open "test_add" page for hazard with pk "1"
     And I fill in following fields with following values
       | field                 | value      |
       | test_serial_number    | TSN123321  |
@@ -30,7 +30,7 @@ Feature: Test adding
     And I select "Wilkins" from "test_manufacturer"
     And I select "tester" from "tester"
     When I submit "test" form
-    Then I should be at "hazard detail" page with pk "1"
+    Then I should be at "hazard_detail" page with pk "1"
     And I should see "test adding success" message
     And I should see following
       | text          |
@@ -42,10 +42,10 @@ Feature: Test adding
 
   Scenario: Incorrect test adding
     Given I logged in as "root"
-    And I open "test add" page for hazard with pk "1"
+    And I open "test_add" page for hazard with pk "1"
     And I fill in "last_calibration_date" with "not a valid date"
     When I submit "test" form
-    Then I should be at "test add" page for hazard with pk "1"
+    Then I should be at "test_add" page for hazard with pk "1"
     And I should see "test adding error" message
     And I should see following validation error messages on following fields
       | field                 | error_message           |

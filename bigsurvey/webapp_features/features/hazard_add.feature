@@ -3,7 +3,7 @@ Feature: Hazard Add
 
   Scenario Outline: Hazard Add page access
     Given I logged in as "<role>"
-    When I open "hazard add" page for survey with pk "<pk>"
+    When I directly open "hazard_add" page for survey with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
 
@@ -21,13 +21,13 @@ Feature: Hazard Add
 
   Scenario: Correct hazard adding
     Given I logged in as "root"
-    When I open "hazard add" page for survey with pk "1"
+    When I open "hazard_add" page for survey with pk "1"
     And I fill in following fields with following values
-      | field       | value      |
-      | location1   | backyard   |
+      | field     | value    |
+      | location1 | backyard |
     And I select "Ice Maker" from "hazard_type"
     And I submit "hazard" form
-    Then I should be at "hazard detail" page with pk "4"
+    Then I should be at "hazard_detail" page with pk "4"
     And I should see "hazard adding success" message
     And I should see following
       | text     |
@@ -36,9 +36,9 @@ Feature: Hazard Add
 
   Scenario: Incorrect hazard adding
     Given I logged in as "root"
-    When I open "hazard add" page for survey with pk "1"
+    When I open "hazard_add" page for survey with pk "1"
     And I submit "hazard" form
-    Then I should be at "hazard add" page for survey with pk "1"
+    Then I should be at "hazard_add" page for survey with pk "1"
     And I should see "hazard adding error" message
     And I should see following validation error messages on following fields
       | field       | error_message          |

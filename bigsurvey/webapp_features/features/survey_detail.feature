@@ -3,7 +3,7 @@ Feature: Survey Detail
 
   Scenario Outline: Survey detail page access
     Given I logged in as "<role>"
-    When I open "survey detail" page with pk "<pk>"
+    When I directly open "survey_detail" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
 
@@ -21,7 +21,7 @@ Feature: Survey Detail
 
   Scenario: Survey detail page elements
     Given I logged in as "root"
-    When I open "survey detail" page with pk "1"
+    When I open "survey_detail" page with pk "1"
     Then I should see following
       | text         |
       | Service Type |

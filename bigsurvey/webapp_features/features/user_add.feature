@@ -4,7 +4,7 @@ Feature: User adding
 
   Scenario Outline: User adding page access
     Given I logged in as "<role>"
-    When I open "user add" page
+    When I directly open "user_add" page
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -17,7 +17,7 @@ Feature: User adding
 
   Scenario: Correct user adding
     Given I logged in as "root"
-    And I open "user add" page
+    And I open "user_add" page
     And I fill in following fields with following values
       | field      | value               |
       | username   | newuser             |
@@ -29,7 +29,7 @@ Feature: User adding
     And I select "Surveyor" from "groups"
     And I select "Alaska Central PWS" from "pws"
     When I submit "user" form
-    Then I should be at "user list" page
+    Then I should be at "user_list" page
     And I should see "user adding success" message
     And I should see following
       | text                |
@@ -42,10 +42,10 @@ Feature: User adding
 
   Scenario: Incorrect user adding
     Given I logged in as "root"
-    And I open "user add" page
+    And I open "user_add" page
     And I fill in "username" with "admin"
     When I submit "user" form
-    Then I should be at "user add" page
+    Then I should be at "user_add" page
     And I should see "user adding error" message
     And I should see following validation error messages on following fields
       | field     | error_message                             |

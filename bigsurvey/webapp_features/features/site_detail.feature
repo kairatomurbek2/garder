@@ -4,7 +4,7 @@ Feature: Site detail
 
   Scenario Outline: Site detail page access
     Given I logged in as "<role>"
-    When I open "site detail" page with pk "<pk>"
+    When I directly open "site_detail" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,7 +21,7 @@ Feature: Site detail
 
   Scenario: Root is opening site detail page
     Given I logged in as "root"
-    When I open "site detail" page with pk "10"
+    When I open "site_detail" page with pk "10"
     Then I should see following
       | text        |
       | Gabe Newell |
@@ -41,7 +41,7 @@ Feature: Site detail
 
   Scenario: Admin is opening site detail page
     Given I logged in as "admin"
-    When I open "site detail" page with pk "10"
+    When I open "site_detail" page with pk "10"
     Then I should see following
       | text        |
       | Gabe Newell |
@@ -61,7 +61,7 @@ Feature: Site detail
 
   Scenario: Surveyor is opening site detail page
     Given I logged in as "surveyor"
-    When I open "site detail" page with pk "10"
+    When I open "site_detail" page with pk "10"
     Then I should see following
       | text        |
       | Gabe Newell |
@@ -84,7 +84,7 @@ Feature: Site detail
 
   Scenario: Tester is opening site detail page
     Given I logged in as "tester"
-    When I open "site detail" page with pk "10"
+    When I open "site_detail" page with pk "10"
     Then I should see following
       | text        |
       | Gabe Newell |
@@ -108,13 +108,13 @@ Feature: Site detail
   @commit
   Scenario Outline: Site commiting
     Given I logged in as "<role>"
-    When I open "site detail" page with pk "10"
+    When I open "site_detail" page with pk "10"
     And I commit site
-    Then I should be at "site list" page
+    Then I should be at "site_list" page
     And I should not see following
       | text               |
       | VALVE, Gabe Newell |
-    And I open "site detail" page with pk "10"
+    And I directly open "site_detail" page with pk "10"
     And I should see "Not Found"
     And I logout
     And Uncommit sites

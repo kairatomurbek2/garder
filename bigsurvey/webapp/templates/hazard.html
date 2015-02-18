@@ -3,7 +3,7 @@
 {% load boolean_yes_no %}
 {% load hazards_for_services %}
 {% block menu %}
-    <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}">{% trans "Edit" %}</a></li>
+    <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">{% trans "Edit" %}</a></li>
     <li><a href="{% url 'webapp:survey_detail' hazard.survey.pk %}">{% trans "Back to Survey" %}</a></li>
 {% endblock %}
 {% block content %}

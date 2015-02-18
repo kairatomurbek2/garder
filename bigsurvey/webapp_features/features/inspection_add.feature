@@ -4,7 +4,7 @@ Feature: Inspection adding
 
   Scenario Outline: Inspection adding page access
     Given I logged in as "<role>"
-    When I open "inspection add" page for site with pk "<pk>"
+    When I directly open "inspection_add" page for site with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,7 +21,7 @@ Feature: Inspection adding
 
   Scenario: Correct Inspection adding
     Given I logged in as "root"
-    And I open "inspection add" page for site with pk "1"
+    And I open "inspection_add" page for site with pk "1"
     And I select "surveyor_without_pws" from "assigned_to"
     When I submit "inspection" form
     Then I should be at "home" page
@@ -30,15 +30,15 @@ Feature: Inspection adding
 
   Scenario: Incorrect Inspection adding
     Given I logged in as "root"
-    And I open "inspection add" page for site with pk "1"
+    And I open "inspection_add" page for site with pk "1"
     When I submit "inspection" form
-    Then I should be at "inspection add" page for site with pk "1"
+    Then I should be at "inspection_add" page for site with pk "1"
     And I should see "inspection adding error" message
     And I should see "This field is required." validation error message on field "assigned_to"
 
   Scenario: "Assigned to" list contains only Surveyors
     Given I logged in as "root"
-    When I open "inspection add" page for site with pk "1"
+    When I open "inspection_add" page for site with pk "1"
     Then I should see following options in following selects
       | option               | select      |
       | surveyor             | assigned_to |

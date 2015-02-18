@@ -4,7 +4,7 @@ Feature: User editing
 
   Scenario Outline: User editing page access
     Given I logged in as "<role>"
-    When I open "user edit" page with pk "<pk>"
+    When I directly open "user_edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,25 +21,25 @@ Feature: User editing
 
   Scenario: Correct user editing
     Given I logged in as "root"
-    And I open "user edit" page with pk "3"
+    And I open "user_edit" page with pk "3"
     And I fill in following fields with following values
       | field      | value             |
       | first_name | New Surveyor Name |
     When I submit "user" form
-    Then I should be at "user list" page
+    Then I should be at "user_list" page
     And I should see "user editing success" message
     And I should see "New Surveyor Name"
 
 
   Scenario: Incorrect user editing
     Given I logged in as "root"
-    And I open "user edit" page with pk "3"
+    And I open "user_edit" page with pk "3"
     And I fill in following fields with following values
       | field     | value  |
       | username  | admin  |
       | password1 | 123456 |
     When I submit "user" form
-    Then I should be at "user edit" page with pk "3"
+    Then I should be at "user_edit" page with pk "3"
     And I should see "user editing error" message
     And I should see following validation error messages on following fields
       | field     | error_message                           |

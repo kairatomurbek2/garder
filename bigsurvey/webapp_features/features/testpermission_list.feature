@@ -3,7 +3,7 @@ Feature: Test Permission list
 
   Scenario Outline: Test Permission list page access
     Given I logged in as "<role>"
-    When I open "testpermission list" page
+    When I directly open "testpermission_list" page
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -16,7 +16,7 @@ Feature: Test Permission list
 
   Scenario: Root is opening Test Permission list page
     Given I logged in as "root"
-    When I open "testpermission list" page
+    When I open "testpermission_list" page
     Then I should see following
       | text                                  |
       | Second Site city, Second Site address |
@@ -25,7 +25,7 @@ Feature: Test Permission list
 
   Scenario: Admin is opening Test Permission list page
     Given I logged in as "admin"
-    When I open "testpermission list" page
+    When I open "testpermission_list" page
     Then I should see following
       | text                          |
       | Seattle, 98, South Jackson st |

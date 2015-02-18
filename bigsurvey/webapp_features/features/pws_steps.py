@@ -3,32 +3,50 @@ from lettuce import *
 from settings import *
 
 
-@step('I open "pws list" page')
-def open_pws_list_page(step):
+@step('I directly open "pws_list" page')
+def directly_open_pws_list_page(step):
     step.given('I open "%s"' % get_url(Urls.pws_list))
 
 
-@step('I open "pws add" page')
-def open_pws_add_page(step):
+@step('I open "pws_list" page')
+def open_pws_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "pws" menu link')
+
+
+@step('I directly open "pws_add" page')
+def directly_open_pws_add_page(step):
     step.given('I open "%s"' % get_url(Urls.pws_add))
 
 
-@step('I open "pws edit" page with pk "(\d+)"')
-def open_pws_edit_page(step, pk):
+@step('I open "pws_add" page')
+def open_pws_add_page(step):
+    step.given('I open "pws_list" page')
+    step.given('I click "pws_add" link')
+
+
+@step('I directly open "pws_edit" page with pk "(\d+)"')
+def directly_open_pws_edit_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.pws_edit % pk))
 
 
-@step('I should be at "pws list" page')
+@step('I open "pws_edit" page with pk "(\d+)"')
+def open_pws_edit_page(step, pk):
+    step.given('I open "pws_list" page')
+    step.given('I click "pws_%s_edit" link' % pk)
+
+
+@step('I should be at "pws_list" page')
 def check_pws_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.pws_list))
 
 
-@step('I should be at "pws add" page')
+@step('I should be at "pws_add" page')
 def check_pws_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.pws_add))
 
 
-@step('I should be at "pws edit" page with pk "(\d+)"')
+@step('I should be at "pws_edit" page with pk "(\d+)"')
 def check_pws_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.pws_edit % pk))
 

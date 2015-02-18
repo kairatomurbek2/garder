@@ -4,7 +4,7 @@ Feature: Test Permission editing
 
   Scenario Outline: Test Permission editing page access
     Given I logged in as "<role>"
-    When I open "testpermission edit" page with pk "<pk>"
+    When I directly open "testpermission_edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,7 +21,7 @@ Feature: Test Permission editing
 
   Scenario: Correct Test Permission editing
     Given I logged in as "root"
-    And I open "testpermission edit" page with pk "1"
+    And I open "testpermission_edit" page with pk "1"
     And I fill in "due_date" with "2016-01-01"
     When I submit "testpermission" form
     Then I should be at "home" page
@@ -30,9 +30,9 @@ Feature: Test Permission editing
 
   Scenario: Incorrect Test Permission editing
     Given I logged in as "root"
-    And I open "testpermission edit" page with pk "1"
+    And I open "testpermission_edit" page with pk "1"
     And I select "" from "given_to"
     When I submit "testpermission" form
-    Then I should be at "testpermission edit" page with pk "1"
+    Then I should be at "testpermission_edit" page with pk "1"
     And I should see "testpermission editing error" message
     And I should see "This field is required." validation error message on field "given_to"

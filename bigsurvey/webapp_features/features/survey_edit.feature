@@ -3,7 +3,7 @@ Feature: Survey Edit
 
   Scenario Outline: Survey Edit page access
     Given I logged in as "<role>"
-    When I open "survey edit" page with pk "<pk>"
+    When I directly open "survey_edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
 
@@ -16,18 +16,18 @@ Feature: Survey Edit
     | surveyor | 1  | see      |
     | surveyor | 2  | not see  |
     | tester   | 1  | see      |
-    | tester  | 2  | see      |
+    | tester   | 2  | see      |
 
 
   Scenario: Correct survey editing
     Given I logged in as "root"
-    When I open "survey edit" page with pk "1"
+    When I open "survey_edit" page with pk "1"
     And I fill in following fields with following values
       | field       | value      |
       | survey_date | 2015-02-28 |
     And I select "Initial" from "survey_type"
     And I submit "survey" form
-    Then I should be at "survey detail" page with pk "1"
+    Then I should be at "survey_detail" page with pk "1"
     And I should see "survey editing success" message
     And I should see following
       | text          |
@@ -36,12 +36,12 @@ Feature: Survey Edit
 
   Scenario: Incorrect survey editing
     Given I logged in as "root"
-    When I open "survey edit" page with pk "1"
+    When I open "survey_edit" page with pk "1"
     And I fill in following fields with following values
       | field       | value |
       | survey_date |       |
     And I submit "survey" form
-    Then I should be at "survey edit" page with pk "1"
+    Then I should be at "survey_edit" page with pk "1"
     And I should see "survey editing error" message
     And I should see following validation error messages on following fields
       | field       | error_message          |

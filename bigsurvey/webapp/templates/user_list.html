@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% load boolean_yes_no %}
 {% block menu %}
-    <li><a href="{% url 'webapp:user_add' %}">{% trans "Add New" %}</a></li>
+    <li><a href="{% url 'webapp:user_add' %}" id="user_add_link">{% trans "Add User" %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="wrapper">
@@ -35,7 +35,7 @@
                             <td>{{ user.employee.city }}</td>
                             <td>{{ user.employee.pws }}</td>
                             <td class="uk-text-center table-border-left">
-                                <a href="{% url 'webapp:user_edit' user.pk %}">{% trans "Edit" %}</a>
+                                <a href="{% url 'webapp:user_edit' user.pk %}" id="user_{{ user.pk }}_edit_link">{% trans "Edit" %}</a>
                             </td>
                         </tr>
                     {% endfor %}

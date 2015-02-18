@@ -4,7 +4,7 @@ Feature: Inspection editing
 
   Scenario Outline: Inspection editing page access
     Given I logged in as "<role>"
-    When I open "inspection edit" page with pk "<pk>"
+    When I directly open "inspection_edit" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,7 +21,7 @@ Feature: Inspection editing
 
   Scenario: Correct Inspection editing
     Given I logged in as "root"
-    And I open "inspection edit" page with pk "1"
+    And I open "inspection_edit" page with pk "1"
     And I fill in "notes" with "This is test notes"
     When I submit "inspection" form
     Then I should be at "home" page
@@ -30,9 +30,9 @@ Feature: Inspection editing
 
   Scenario: Incorrect Inspection editing
     Given I logged in as "root"
-    And I open "inspection edit" page with pk "1"
+    And I open "inspection_edit" page with pk "1"
     And I select "" from "assigned_to"
     When I submit "inspection" form
-    Then I should be at "inspection edit" page with pk "1"
+    Then I should be at "inspection_edit" page with pk "1"
     And I should see "inspection editing error" message
     And I should see "This field is required." validation error message on field "assigned_to"

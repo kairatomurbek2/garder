@@ -4,7 +4,7 @@ Feature: Customer detail
 
   Scenario Outline: Customer detail page access
     Given I logged in as "<role>"
-    When I open "customer detail" page with pk "3"
+    When I directly open "customer_detail" page with pk "3"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -17,7 +17,7 @@ Feature: Customer detail
 
   Scenario: Root is opening customer detail page
     Given I logged in as "root"
-    When I open "customer detail" page with pk "3"
+    When I open "customer_detail" page with pk "3"
     Then I should see following
       | text       |
       | SJK472     |
@@ -30,7 +30,7 @@ Feature: Customer detail
 
   Scenario: Admin is opening customer detail page
     Given I logged in as "admin"
-    When I open "customer detail" page with pk "7"
+    When I open "customer_detail" page with pk "7"
     Then I should see following
       | text              |
       | OIK182            |

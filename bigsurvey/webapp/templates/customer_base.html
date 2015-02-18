@@ -6,6 +6,6 @@
 {% endblock %}
 {% block menu %}
     {% if perms.webapp.add_site %}
-        <li><a href="{% url 'webapp:customer_add' %}">{% trans "Add Customer" %}</a></li>
+        <li><a href="{% url 'webapp:customer_add' %}" id="customer_add_link">{% trans "Add Customer" %}</a></li>
     {% endif %}
 {% endblock %}

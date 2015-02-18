@@ -84,13 +84,19 @@ class Xpath:
         button = './/input[@type="button"]'
         submit_button = './/input[@type="submit"]'
         reset_button = './/input[@type="reset"]'
-        button_with_text = './/button[contains(., "%s")]'
+        button_with_label = './/button[contains(., "%s")]'
+        link_by_href = './/a[@href="%s"]'
+        link_by_exact_text = './/a[. = "%s"]'
+        link_by_substr = './/a[contains(., "%s")]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'
-        menu_link = './/a[@id="%s_link"]'
+        menu_item = './/a[@id="%s_menu_link"]'
         site_service = './/div[@id="%s_content"]'
         validation_error_by_exact_text = './/../ul[@class="errorlist"]/li[. = "%s"]'
         validation_error_by_substr = './/../ul[@class="errorlist"]/li[contains(., "%s")]'
         customer_select_button = './/button[@data-id="%s"]'
-        commit_dialog_button = './/a[@id="commit_site_menu_button"]'
+        link = './/a[@id="%s_link"]'
+
+    commit_dialog_button = './/a[@id="commit_site_menu_button"]'
+    menu_link = './/li[@id="bfp_menu"]/a'

@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block content %}
-    {% include "site_list.html" %}
-{% endblock %}
 {% block menu %}
     {% if perms.webapp.add_site %}
-        <li><a href="{% url "webapp:site_add" %}">{% trans "Add Site" %}</a></li>
+        <li><a href="{% url "webapp:site_add" %}" id="site_add_link">{% trans "Add Site" %}</a></li>
     {% endif %}
+{% endblock %}
+{% block content %}
+    {% include "site_list.html" %}
 {% endblock %}

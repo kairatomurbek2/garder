@@ -5,15 +5,16 @@
 {% load hazards_for_services %}
 {% block menu %}
     {% if perms.webapp.change_site %}
-        <li><a href="{% url 'webapp:site_edit' site.pk %}">{% trans "Edit" %}</a></li>
+        <li><a href="{% url 'webapp:site_edit' site.pk %}" id="site_{{ site.pk }}_edit_link">{% trans "Edit" %}</a></li>
     {% endif %}
     {% if perms.webapp.assign_surveyor or perms.webapp.assign_tester %}
         <li class="uk-parent" data-uk-dropdown="">
-            <a href="#">{% trans "Assign" %}</a>
+            <a href="#" id="assign_link">{% trans "Assign" %}</a>
+
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
-                    <li><a href="{% url 'webapp:inspection_add' site.pk %}">{% trans "Assign Surveyor" %}</a></li>
-                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}">{% trans "Grant Test Permission" %}</a></li>
+                    <li><a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">{% trans "Assign Surveyor" %}</a></li>
+                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}" id="site_{{ site.pk }}_testpermission_add_link">{% trans "Grant Test Permission" %}</a></li>
                 </ul>
             </div>
         </li>
@@ -104,13 +105,13 @@
     <div id="tab_control" class="uk-tab-center">
         <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
             <li class="uk-active">
-                <a href="#">{% trans "Potable" %}</a>
+                <a href="#" id="potable_link">{% trans "Potable" %}</a>
             </li>
             <li>
-                <a href="#">{% trans "Fire" %}</a>
+                <a href="#" id="fire_link">{% trans "Fire" %}</a>
             </li>
             <li>
-                <a href="#">{% trans "Irrigation" %}</a>
+                <a href="#" id="irrigation_link">{% trans "Irrigation" %}</a>
             </li>
         </ul>
     </div>

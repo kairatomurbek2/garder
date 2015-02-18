@@ -3,32 +3,51 @@ from lettuce import *
 from settings import *
 
 
-@step('I open "inspection list" page')
-def open_inspection_list_page(step):
+@step('I directly open "inspection_list" page')
+def directly_open_inspection_list_page(step):
     step.given('I open "%s"' % get_url(Urls.inspection_list))
 
 
-@step('I open "inspection add" page for site with pk "(\d+)"')
-def open_inspection_add_page(step, site_pk):
+@step('I open "inspection_list" page')
+def open_inspection_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "inspections" menu link')
+
+
+@step('I directly open "inspection_add" page for site with pk "(\d+)"')
+def directly_open_inspection_add_page(step, site_pk):
     step.given('I open "%s"' % get_url(Urls.inspection_add % site_pk))
 
 
-@step('I open "inspection edit" page with pk "(\d+)"')
-def open_inspection_edit_page(step, pk):
+@step('I open "inspection_add" page for site with pk "(\d+)"')
+def open_inspection_add_page(step, site_pk):
+    step.given('I open "site_detail" page with pk "%s"' % site_pk)
+    step.given('I hover on "assign" link')
+    step.given('I click "site_%s_inspection_add" link' % site_pk)
+
+
+@step('I directly open "inspection_edit" page with pk "(\d+)"')
+def directly_open_inspection_edit_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.inspection_edit % pk))
 
 
-@step('I should be at "inspection list" page')
+@step('I open "inspection_edit" page with pk "(\d+)"')
+def open_inspection_edit_page(step, pk):
+    step.given('I open "inspection_list" page')
+    step.given('I click "inspection_%s_edit" link' % pk)
+
+
+@step('I should be at "inspection_list" page')
 def check_inspection_add_page(step):
     step.given('I should be at "%s"' % get_url(Urls.inspection_list))
 
 
-@step('I should be at "inspection add" page for site with pk "(\d+)"')
+@step('I should be at "inspection_add" page for site with pk "(\d+)"')
 def check_inspection_add_page(step, site_pk):
     step.given('I should be at "%s"' % get_url(Urls.inspection_add % site_pk))
 
 
-@step('I should be at "inspection edit" page with pk "(\d+)"')
+@step('I should be at "inspection_edit" page with pk "(\d+)"')
 def check_inspection_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.inspection_edit % pk))
 

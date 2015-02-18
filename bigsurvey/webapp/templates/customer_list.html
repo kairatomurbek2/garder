@@ -29,10 +29,10 @@
                 <td>{{ customer.zip }}</td>
                 <td>{{ customer.code }}</td>
                 <td class="uk-text-center table-border-left">
-                    <a href="{% url 'webapp:customer_detail' customer.pk %}">{% trans "Detail" %}</a>
+                    <a href="{% url 'webapp:customer_detail' customer.pk %}" id="customer_{{ customer.pk }}_detail_link">{% trans "Detail" %}</a>
                 </td>
                 <td class="uk-text-center">
-                    <a href="{% url 'webapp:customer_edit' customer.pk %}">{% trans "Edit" %}</a>
+                    <a href="{% url 'webapp:customer_edit' customer.pk %}" id="customer_{{ customer.pk }}_edit_link">{% trans "Edit" %}</a>
                 </td>
                 <td class="uk-text-center">
                     <a href="#">{% trans "Letter" %}</a>

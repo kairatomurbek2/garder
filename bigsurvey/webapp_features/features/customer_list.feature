@@ -3,7 +3,7 @@ Feature: Customer list
 
   Scenario Outline: Customer list page access
     Given I logged in as "<role>"
-    When I open "customer list" page
+    When I directly open "customer_list" page
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -16,7 +16,7 @@ Feature: Customer list
 
   Scenario: Root is opening customer list page
     Given I logged in as "root"
-    When I open "customer list" page
+    When I open "customer_list" page
     Then I should see following
       | text          |
       | John Smith    |
@@ -30,7 +30,7 @@ Feature: Customer list
 
   Scenario: Admin is opening customer list page
     Given I logged in as "admin"
-    When I open "customer list" page
+    When I open "customer_list" page
     Then I should see following
       | text          |
       | John Smith    |

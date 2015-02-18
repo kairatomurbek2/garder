@@ -4,7 +4,7 @@ Feature: Customer adding
 
   Scenario Outline: Customer adding page access
     Given I logged in as "<role>"
-    When I open "customer add" page
+    When I directly open "customer_add" page
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -17,7 +17,7 @@ Feature: Customer adding
 
   Scenario: Correct customer adding
     Given I logged in as "root"
-    And I open "customer add" page
+    And I open "customer_add" page
     And I fill in following fields with following values
       | field    | value         |
       | number   | CUST987       |
@@ -28,7 +28,7 @@ Feature: Customer adding
     And I select "Fire" from "code"
     And I select "Kansas" from "state"
     When I submit "customer" form
-    Then I should be at "customer list" page
+    Then I should be at "customer_list" page
     And I should see "customer adding success" message
     And I should see following
       | text          |
@@ -40,9 +40,9 @@ Feature: Customer adding
 
   Scenario: Incorrect customer adding
     Given I logged in as "root"
-    And I open "customer add" page
+    And I open "customer_add" page
     When I submit "customer" form
-    Then I should be at "customer add" page
+    Then I should be at "customer_add" page
     And I should see "customer adding error" message
     And I should see following validation error messages on following fields
       | field    | error_message           |

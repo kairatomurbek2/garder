@@ -13,9 +13,25 @@ def open_home_page(step):
     step.given('I open "%s"' % get_url(Urls.home))
 
 
+@step('I click "(.*)" link$')
+def click_link(step, link_name):
+    link = helper.find(Xpath.Pattern.link % link_name) or \
+           helper.find(Xpath.Pattern.link_by_href % link_name) or \
+           helper.find(Xpath.Pattern.link_by_exact_text % link_name) or \
+           helper.find(Xpath.Pattern.link_by_substr % link_name)
+    # TODO: Delete before commit
+    if link is None:
+        print Xpath.Pattern.link % link_name, Xpath.Pattern.link
+        f = file('/home/justlive/test.txt', 'w')
+        f.write(world.browser.page_source)
+        f.close()
+    helper.check_element_exists(link, 'Link with name "%s" was not found' % link_name)
+    link.click()
+
+
 @step('I should be at "(http.*)"')
 def check_url(step, url):
-    assert world.browser.current_url == url, "Current URL is %s, expected %s" % (world.browser.current_url, url)
+    assert world.browser.current_url == url, 'Current URL is %s, expected %s' % (world.browser.current_url, url)
 
 
 @step('I should see "([^"]*)"$')
@@ -92,7 +108,7 @@ def check_multiple_error_messages(step):
 
 @step('I click button with text "([-_a-z0-9]+)"')
 def click_button_with_label(step, label):
-    button = helper.find(Xpath.Pattern.button_with_text % label)
+    button = helper.find(Xpath.Pattern.button_with_label % label)
     helper.check_element_exists(button, 'Button with label "%s" was not found' % label)
     button.click()
 

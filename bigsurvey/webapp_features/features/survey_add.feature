@@ -3,7 +3,7 @@ Feature: Survey Add
 
   Scenario Outline: Survey Add page access
     Given I logged in as "<role>"
-    When I open "survey add" page for site with pk "<pk>" and service "<service>"
+    When I directly open "survey_add" page for site with pk "<pk>" and service "<service>"
     Then I should <reaction> "Not Found"
     And I logout
 
@@ -22,13 +22,13 @@ Feature: Survey Add
 
   Scenario: Correct survey adding
     Given I logged in as "root"
-    When I open "survey add" page for site with pk "5" and service "potable"
+    When I open "survey_add" page for site with pk "5" and service "potable"
     And I fill in following fields with following values
       | field       | value      |
       | survey_date | 2015-03-15 |
     And I select "Initial" from "survey_type"
     And I submit "survey" form
-    Then I should be at "survey detail" page with pk "3"
+    Then I should be at "survey_detail" page with pk "3"
     And I should see "survey adding success" message
     And I should see following
       | text           |
@@ -37,9 +37,9 @@ Feature: Survey Add
 
   Scenario: Incorrect survey adding
     Given I logged in as "root"
-    When I open "survey add" page for site with pk "5" and service "potable"
+    When I open "survey_add" page for site with pk "5" and service "potable"
     And I submit "survey" form
-    Then I should be at "survey add" page for site with pk "5" and service "potable"
+    Then I should be at "survey_add" page for site with pk "5" and service "potable"
     And I should see "survey adding error" message
     And I should see following validation error messages on following fields
       | field       | error_message          |

@@ -3,7 +3,7 @@ Feature: Hazard Detail
 
   Scenario Outline: Hazard detail page access
     Given I logged in as "<role>"
-    When I open "hazard detail" page with pk "<pk>"
+    When I directly open "hazard_detail" page with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
 
@@ -21,7 +21,7 @@ Feature: Hazard Detail
 
   Scenario: Hazard detail page elements
     Given I logged in as "root"
-    When I open "hazard detail" page with pk "1"
+    When I open "hazard_detail" page with pk "1"
     Then I should see following
       | text                  |
       | Site                  |

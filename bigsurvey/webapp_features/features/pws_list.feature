@@ -3,7 +3,7 @@ Feature: PWS list
 
   Scenario Outline: PWS list page access
     Given I logged in as "<role>"
-    When I open "pws list" page
+    When I directly open "pws_list" page
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -16,7 +16,7 @@ Feature: PWS list
 
   Scenario: Root is opening PWS list page
     Given I logged in as "root"
-    When I open "pws list" page
+    When I open "pws_list" page
     Then I should see following
       | text                     |
       | Houston PWS              |

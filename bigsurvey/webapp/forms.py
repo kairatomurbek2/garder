@@ -8,11 +8,13 @@ from main.parameters import Groups
 class PWSForm(forms.ModelForm):
     class Meta:
         model = models.PWS
+        fields = '__all__'
 
 
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = models.Customer
+        fields = '__all__'
 
 
 class SiteForm(forms.ModelForm):

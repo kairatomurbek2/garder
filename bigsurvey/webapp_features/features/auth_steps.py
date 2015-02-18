@@ -1,6 +1,7 @@
 from common_steps import *
 from lettuce import *
 from settings import *
+from django.contrib.auth.models import User
 
 
 @step('I open "login" page')
@@ -38,6 +39,10 @@ def login(step, username, password):
     step.given('I fill in "username" with "%s"' % username)
     step.given('I fill in "password" with "%s"' % password)
     step.given('I submit "%s" form' % 'auth')
+    try:
+        world.user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        pass
 
 
 @step('I should be at "home" page')
@@ -52,6 +57,7 @@ def check_login_page(step):
 
 @step('I logout')
 def logout(step):
+    world.user = None
     step.given('I open "%s"' % get_url(Urls.logout))
 
 

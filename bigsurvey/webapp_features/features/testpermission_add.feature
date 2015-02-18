@@ -4,7 +4,7 @@ Feature: Test Permission adding
 
   Scenario Outline: Test Permission adding page access
     Given I logged in as "<role>"
-    When I open "testpermission add" page for site with pk "<pk>"
+    When I directly open "testpermission_add" page for site with pk "<pk>"
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -21,7 +21,7 @@ Feature: Test Permission adding
 
   Scenario: Correct Test Permission adding
     Given I logged in as "root"
-    And I open "testpermission add" page for site with pk "1"
+    And I open "testpermission_add" page for site with pk "1"
     And I select "tester_without_pws" from "given_to"
     And I fill in "due_date" with "2015-06-01"
     When I submit "testpermission" form
@@ -31,10 +31,10 @@ Feature: Test Permission adding
 
   Scenario: Incorrect Test Permission adding
     Given I logged in as "root"
-    And I open "testpermission add" page for site with pk "1"
+    And I open "testpermission_add" page for site with pk "1"
     And I fill in "due_date" with "not a valid date"
     When I submit "testpermission" form
-    Then I should be at "testpermission add" page for site with pk "1"
+    Then I should be at "testpermission_add" page for site with pk "1"
     And I should see "testpermission adding error" message
     And I should see following validation error messages on following fields
       | field    | error_message           |
@@ -43,7 +43,7 @@ Feature: Test Permission adding
 
   Scenario: "Given to" list contains only Testers
     Given I logged in as "root"
-    When I open "testpermission add" page for site with pk "1"
+    When I open "testpermission_add" page for site with pk "1"
     Then I should see following options in following selects
       | option             | select   |
       | tester             | given_to |

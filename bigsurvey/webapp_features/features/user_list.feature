@@ -4,7 +4,7 @@ Feature: User list
 
   Scenario Outline: User list page access
     Given I logged in as "<role>"
-    When I open "user list" page
+    When I directly open "user_list" page
     Then I should <reaction> "Not Found"
     And I logout
   Examples:
@@ -17,7 +17,7 @@ Feature: User list
 
   Scenario: Root is opening user list page
     Given I logged in as "root"
-    When I open "user list" page
+    When I open "user_list" page
     Then I should see following
       | text                 |
       | root                 |
@@ -30,7 +30,7 @@ Feature: User list
 
   Scenario: Admin is opening user list page
     Given I logged in as "admin"
-    When I open "user list" page
+    When I open "user_list" page
     Then I should see following
       | text     |
       | admin    |

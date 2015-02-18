@@ -144,18 +144,18 @@
                 </td>
                 {% if perms.webapp.browse_site %}
                     <td class="uk-text-center table-border-left">
-                        <a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Detail" %}</a>
+                        <a href="{% url 'webapp:site_detail' site.pk %}" id="site_{{ site.pk }}_detail_link">{% trans "Detail" %}</a>
                     </td>
                 {% endif %}
                 {% if perms.webapp.assign_surveyor %}
                     <td class="uk-text-center">
                         <div class="uk-button-dropdown" data-uk-dropdown>
-                            <a href="#">{% trans "Assign" %}</a>
+                            <a href="#" id="assign_link">{% trans "Assign" %}</a>
 
                             <div class="uk-dropdown uk-dropdown-small">
                                 <ul class="uk-nav uk-nav-dropdown">
-                                    <li><a href="{% url 'webapp:inspection_add' site.pk %}">{% trans "Assign Surveyor" %}</a></li>
-                                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}">{% trans "Grant Test Permission" %}</a></li>
+                                    <li><a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">{% trans "Assign Surveyor" %}</a></li>
+                                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}" id="site_{{ site.pk }}_testpermission_add_link">{% trans "Grant Test Permission" %}</a></li>
                                 </ul>
                             </div>
 
