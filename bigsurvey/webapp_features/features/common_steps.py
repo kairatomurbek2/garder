@@ -27,6 +27,7 @@ def click_link(step, link_name):
         f.close()
     helper.check_element_exists(link, 'Link with name "%s" was not found' % link_name)
     link.click()
+    world.browser.implicitly_wait(1)
 
 
 @step('I should be at "(http.*)"')

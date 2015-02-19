@@ -32,3 +32,4 @@ def click_menu_link(step, link_name):
     link = helper.find(Xpath.Pattern.menu_item % link_name)
     helper.check_element_exists(link, '"%s" link is not in menu' % link_name)
     link.click()
+    world.browser.implicitly_wait(1)
