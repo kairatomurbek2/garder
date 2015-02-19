@@ -106,7 +106,7 @@ Feature: Site detail
       | irrigation | Add Survey    |
 
   @commit
-  Scenario Outline: Site commiting
+  Scenario Outline: Site committing
     Given I logged in as "<role>"
     When I open "site_detail" page with pk "10"
     And I commit site

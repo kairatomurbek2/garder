@@ -19,12 +19,6 @@ def click_link(step, link_name):
            helper.find(Xpath.Pattern.link_by_href % link_name) or \
            helper.find(Xpath.Pattern.link_by_exact_text % link_name) or \
            helper.find(Xpath.Pattern.link_by_substr % link_name)
-    # TODO: Delete before commit
-    if link is None:
-        print Xpath.Pattern.link % link_name, Xpath.Pattern.link
-        f = file('/home/justlive/test.txt', 'w')
-        f.write(world.browser.page_source)
-        f.close()
     helper.check_element_exists(link, 'Link with name "%s" was not found' % link_name)
     link.click()
 
