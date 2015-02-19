@@ -10,6 +10,7 @@ def init():
     call_command('loaddata', 'test', interactive=False, verbosity=1)
     world.browser = webdriver.Firefox()
     world.browser.maximize_window()
+    world.browser.implicitly_wait(20)
 
 
 @after.all
