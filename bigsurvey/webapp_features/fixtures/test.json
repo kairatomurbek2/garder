@@ -2330,6 +2330,28 @@
 },
 {
   "fields": {
+    "city": "Bishkek",
+    "notes": "",
+    "water_source": 2,
+    "number": "PWS123456",
+    "name": "NEW PWS"
+  },
+  "model": "webapp.pws",
+  "pk": 11
+},
+{
+  "fields": {
+    "city": "Bishkek",
+    "notes": "",
+    "water_source": 2,
+    "number": "PWS123456",
+    "name": "NEW PWS"
+  },
+  "model": "webapp.pws",
+  "pk": 12
+},
+{
+  "fields": {
     "next_survey_date": "2015-01-15",
     "apt": "",
     "floors": 1,
@@ -2949,6 +2971,11 @@
         "change_letter",
         "webapp",
         "letter"
+      ],
+      [
+        "access_to_batch_update",
+        "webapp",
+        "site"
       ],
       [
         "access_to_import",
@@ -3595,6 +3622,11 @@
         "site"
       ],
       [
+        "access_to_batch_update",
+        "webapp",
+        "site"
+      ],
+      [
         "access_to_import",
         "webapp",
         "site"
@@ -3912,7 +3944,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-02-17T09:20:44Z",
+    "last_login": "2015-02-19T08:52:38Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -3934,7 +3966,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-17T07:10:18Z",
+    "last_login": "2015-02-19T08:59:21Z",
     "groups": [
       [
         "Testers"
@@ -3956,7 +3988,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-17T09:21:15Z",
+    "last_login": "2015-02-18T07:06:57Z",
     "groups": [
       [
         "Surveyors"
@@ -3978,7 +4010,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-02-17T09:23:05Z",
+    "last_login": "2015-02-19T05:11:45Z",
     "groups": [
       [
         "Administrators"

@@ -9,6 +9,7 @@ urlpatterns = patterns(
     url(r'^site/(?P<pk>\d+)/edit/$', views.SiteEditView.as_view(), name="site_edit"),
     url(r'^inspection/$', views.InspectionListView.as_view(), name="inspection_list"),
     url(r'^site/(?P<pk>\d+)/assign/$', views.InspectionAddView.as_view(), name="inspection_add"),
+    url(r'^batch_update/$', views.BatchUpdateView.as_view(), name='batch_update'),
     url(r'^inspection/(?P<pk>\d+)/edit/$', views.InspectionEditView.as_view(), name="inspection_edit"),
     url(r'^testpermission/$', views.TestPermissionListView.as_view(), name="testpermission_list"),
     url(r'^site/(?P<pk>\d+)/grant/$', views.TestPermissionAddView.as_view(), name="testpermission_add"),

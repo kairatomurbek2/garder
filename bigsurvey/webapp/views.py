@@ -40,6 +40,7 @@ class BaseFormView(BaseView, ModelFormMixin, ProcessFormView):
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
+    filter_class = SiteFilter
 
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -63,7 +64,7 @@ class HomeView(BaseTemplateView):
         return sites
 
     def _get_site_filter(self, queryset):
-        return SiteFilter(self.request.GET, queryset=queryset)
+        return self.filter_class(self.request.GET, queryset=queryset)
 
     @staticmethod
     def _filter_sites_by_related(related):
@@ -104,6 +105,7 @@ class SiteBaseFormView(BaseFormView):
     template_name = 'site_form.html'
     form_class = forms.SiteForm
     model = models.Site
+    filter_class = CustomerFilter
 
     def get_context_data(self, **kwargs):
         context = super(SiteBaseFormView, self).get_context_data(**kwargs)
@@ -116,7 +118,7 @@ class SiteBaseFormView(BaseFormView):
         return models.Customer.objects.all()
 
     def _get_customer_filter(self, queryset):
-        return CustomerFilter(self.request.GET, queryset=queryset)
+        return self.filter_class(self.request.GET, queryset=queryset)
 
     def get_form(self, form_class):
         form = super(SiteBaseFormView, self).get_form(form_class)
@@ -145,6 +147,68 @@ class SiteEditView(SiteBaseFormView, UpdateView):
             raise Http404
         form.initial['customer'] = form.instance.customer.pk
         return form
+
+
+class BatchUpdateView(BaseTemplateView):
+    template_name = 'site_batch_update.html'
+    permission = 'webapp.access_to_batch_update'
+    filter_class = SiteFilter
+    form_class = forms.BatchUpdateForm
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = super(BatchUpdateView, self).get_context_data(**kwargs)
+        sites = self._get_sites(user)
+        context['site_filter'] = self._get_site_filter(queryset=sites)
+        context['form'] = self.form_class()
+        return context
+
+    @staticmethod
+    def _get_sites(user):
+        sites = []
+        if user.has_perm('webapp.access_to_pws_sites'):
+            sites = models.Site.objects.filter(pws=user.employee.pws)
+        if user.has_perm('webapp.access_to_all_sites'):
+            sites = models.Site.objects.all()
+        return sites
+
+    def _get_site_filter(self, queryset):
+        return self.filter_class(self.request.GET, queryset=queryset)
+
+    def post(self, request):
+        form = self.form_class(self.request.POST)
+        if form.is_valid():
+            date = form.cleaned_data.get('date')
+            site_pks = self.request.POST.getlist('site_pks')
+            self._batch_update(date, site_pks)
+            messages.success(self.request, Messages.Site.batch_updating_success)
+        else:
+            messages.error(self.request, Messages.Site.batch_updating_error)
+        return redirect(self.get_success_url())
+
+    def _batch_update(self, date, site_pks):
+        if 'set_sites_next_survey_date' in self.request.POST:
+            self._batch_update_sites(date, site_pks)
+        else:
+            self._batch_update_hazards(date, site_pks)
+
+    def _batch_update_sites(self, date, site_pks):
+        models.Site.objects.filter(pk__in=site_pks).update(next_survey_date=date)
+
+    def _batch_update_hazards(self, date, site_pks):
+        for site_pk in site_pks:
+            self._batch_update_hazards_for_site(date, site_pk)
+
+    def _batch_update_hazards_for_site(self, date, site_pk):
+        for service_type in models.ServiceType.objects.all():
+            try:
+                survey = models.Survey.objects.filter(site__pk=site_pk, service_type=service_type).latest('survey_date')
+                survey.hazards.update(due_install_test_date=date)
+            except:
+                pass
+
+    def get_success_url(self):
+        return reverse('webapp:batch_update')
 
 
 class PWSListView(BaseTemplateView):

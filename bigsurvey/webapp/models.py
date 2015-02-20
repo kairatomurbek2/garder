@@ -389,7 +389,8 @@ class Site(models.Model):
             ('access_to_import', _('Can import Sites from Excel file')),
             ('assign_surveyor', _('Can assign Surveyor to Site')),
             ('assign_tester', _('Can assign Tester to Site')),
-            ('commit_site', _('Can commit Site'))
+            ('commit_site', _('Can commit Site')),
+            ('access_to_batch_update', _('Has access to batch update')),
         )
 
 

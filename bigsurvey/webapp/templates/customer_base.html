@@ -1,11 +1,11 @@
 {# required for customers paginations to work, shoud be removed as far, as problem is found #}
 {% extends 'base.html' %}
 {% load i18n %}
-{% block content %}
-    {% include "customer_list.html" %}
-{% endblock %}
 {% block menu %}
     {% if perms.webapp.add_site %}
         <li><a href="{% url 'webapp:customer_add' %}" id="customer_add_link">{% trans "Add Customer" %}</a></li>
     {% endif %}
+{% endblock %}
+{% block content %}
+    {% include "customer_list.html" %}
 {% endblock %}

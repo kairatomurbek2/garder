@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 import models
 from main.parameters import Groups
 
@@ -122,3 +123,7 @@ class UserEditForm(UserChangeForm):
     class Meta:
         model = models.User
         fields = ('username', 'email', 'first_name', 'last_name', 'groups')
+
+
+class BatchUpdateForm(forms.Form):
+    date = forms.DateField(label=_('Select date'))
