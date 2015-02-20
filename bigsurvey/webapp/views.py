@@ -181,9 +181,9 @@ class BatchUpdateView(BaseTemplateView):
             date = form.cleaned_data.get('date')
             site_pks = self.request.POST.getlist('site_pks')
             self._batch_update(date, site_pks)
-            messages.success(self.request, Messages.Site.batch_updating_success)
+            messages.success(self.request, Messages.BatchUpdate.success)
         else:
-            messages.error(self.request, Messages.Site.batch_updating_error)
+            messages.error(self.request, Messages.BatchUpdate.error)
         return redirect(self.get_success_url())
 
     def _batch_update(self, date, site_pks):
@@ -204,7 +204,7 @@ class BatchUpdateView(BaseTemplateView):
             try:
                 survey = models.Survey.objects.filter(site__pk=site_pk, service_type=service_type).latest('survey_date')
                 survey.hazards.update(due_install_test_date=date)
-            except:
+            except models.Survey.DoesNotExist:
                 pass
 
     def get_success_url(self):

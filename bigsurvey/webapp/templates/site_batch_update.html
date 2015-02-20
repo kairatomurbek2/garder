@@ -12,10 +12,10 @@
     {% paginate %}
     <div class="wrapper">
         {% include 'messages.html' %}
-        <form method="post" class="uk-form">
+        <form method="post" class="uk-form" name="batch_update">
             {% csrf_token %}
             <div class="uk-text-center">
-                {{ form.date|attr:'type:date' }}
+                {{ form.date|attr:'data-uk-datepicker:{format:"YYYY-MM-DD"}' }}
                 <button type="submit" name="set_sites_next_survey_date" class="uk-button uk-button-success">{% trans "Set Sites' Next Survey Date" %}</button>
                 <button type="submit" name="set_hazards_due_install_test_date" class="uk-button uk-button-success">{% trans "Set Hazards' Due Install Test Date" %}</button>
             </div>
@@ -23,7 +23,7 @@
                 <thead>
                 <tr class="table-border-bottom">
                     <th class="uk-text-center table-border-right">
-                        <input type="checkbox" data-action="check_all">
+                        <input type="checkbox" data-action="check_all"/>
                     </th>
                     <th class="uk-text-center table-border-right">
                         {% trans "No." %}
@@ -55,7 +55,7 @@
                 {% for site in filtered_sites %}
                     <tr>
                         <td class="uk-text-center table-border-right">
-                            <input type="checkbox" name="site_pks" value="{{ site.pk }}">
+                            <input type="checkbox" name="site_pks" value="{{ site.pk }}"/>
                         </td>
                         <td class="uk-text-center table-border-right">
                             {{ forloop.counter }}

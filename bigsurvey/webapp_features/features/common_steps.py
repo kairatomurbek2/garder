@@ -100,7 +100,14 @@ def check_multiple_error_messages(step):
         step.given('I should see "%s" validation error message on field "%s"' % (row['error_message'], row['field']))
 
 
-@step('I click button with text "([-_a-z0-9]+)"')
+@step('I click "([-_a-z0-9]+)" button')
+def click_button(step, button_name):
+    button = helper.find(Xpath.Pattern.button % button_name)
+    helper.check_element_exists(button, 'Button with name "%s" was not found' % button_name)
+    button.click()
+
+
+@step('I click button with label "([-_a-z0-9]+)"')
 def click_button_with_label(step, label):
     button = helper.find(Xpath.Pattern.button_with_label % label)
     helper.check_element_exists(button, 'Button with label "%s" was not found' % label)
@@ -137,3 +144,19 @@ def check_multiple_options_in_select_exist(step):
 def check_multiple_options_in_select_doesnt_exist(step):
     for pair in step.hashes:
         step.given('I should not see "%s" option in "%s" select' % (pair['option'], pair['select']))
+
+
+@step('I check "(.*)" from "([-_a-z0-9]+)"')
+def check_value_from_checkbox(step, value, checkbox_name):
+    checkbox = helper.find(Xpath.Pattern.checkbox_by_value % (checkbox_name, value))
+    f = file('/home/justlive/test.txt', 'w')
+    f.write(world.browser.page_source)
+    f.close()
+    helper.check_element_exists(checkbox, 'Checkbox "%s" with value "%s" was not found' % (checkbox_name, value))
+    checkbox.click()
+
+
+@step('I check following values from "([-_a-z0-9]+)"')
+def check_multiple_values_from_checkbox(step, checkbox_name):
+    for row in step.hashes:
+        step.given('I check "%s" from "%s"' % (row['value'], checkbox_name))

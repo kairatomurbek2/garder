@@ -29,7 +29,6 @@ Feature: Hazard Detail
       | Location 1            |
       | Installer             |
       | Feb. 18, 2015         |
-      | May 31, 2015          |
       | Edit                  |
       | Menu                  |
       | Add Test              |

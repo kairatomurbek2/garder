@@ -1,9 +1,10 @@
 {% load i18n %}
 <div class="uk-modal-dialog uk-text-center" xmlns="http://www.w3.org/1999/html">
     <h4 class="uk-text-primary">{% trans "Are you sure you want to commit this site?" %}</h4>
+
     <div>
         <form action="{% url "webapp:site_detail" site.pk %}" method="POST">
-            <input class="uk-button uk-button-success" type="submit" name="commit_site" value="{% trans "Commit" %}">
+            <button class="uk-button uk-button-success" type="submit" name="commit_site">{% trans "Commit" %}</button>
             <span>
                 <button class="uk-button uk-button-danger uk-modal-close" type="button">
                     {% trans "Cancel" %}

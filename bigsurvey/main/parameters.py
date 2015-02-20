@@ -60,8 +60,10 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('Site was successfully updated')
         editing_error = _('Error while submitting form')
-        batch_updating_success = _('Batch update successfully performed')
-        batch_updating_error = _('Cannot perform batch update. Please provide date')
+
+    class BatchUpdate:
+        success = _('Batch update successfully performed')
+        error = _('Cannot perform batch update. Please provide date')
 
     class PWS:
         adding_success = _('PWS was successfully added')

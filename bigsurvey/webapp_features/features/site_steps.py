@@ -105,7 +105,7 @@ def check_site_editing_error_message(step):
 
 @step('I open select customer modal')
 def open_customer_selector(step):
-    click_button_with_label(step, "Select Customer")
+    step.given('I click "%s" button' % 'select_customer')
 
 
 @step('I select customer with pk "(\d+)"')
@@ -127,8 +127,8 @@ def commit_site(step):
     commit_dialog_button.click()
     wait = WebDriverWait(world.browser, 10)
     commit_button = wait.until(
-        expected_conditions.presence_of_element_located(
-            (By.XPATH, Xpath.Pattern.submit_button)
+        expected_conditions.visibility_of_element_located(
+            (By.XPATH, Xpath.Pattern.button % 'commit_site')
         )
     )
     helper.check_element_exists(commit_button, 'Commit dialog button was not found')

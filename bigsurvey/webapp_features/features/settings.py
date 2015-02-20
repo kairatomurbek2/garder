@@ -40,6 +40,7 @@ class Urls:
     testpermission_list = '/testpermission/'
     testpermission_add = '/site/%s/grant/'
     testpermission_edit = '/testpermission/%s/edit/'
+    batch_update = '/batch_update/'
 
 
 class Logins:
@@ -75,15 +76,9 @@ class Xpath:
         option_by_value = './/option[@value="%s"]'
         option_by_exact_text = './/option[. = "%s"]'
         option_by_substr = './/option[contains(., "%s")]'
-        checkbox_by_value = './/input[type="checkbox"][@value="%s"]'
-        checkbox_by_exact_text = './/input[type="checkbox"][. = "%s"]'
-        checkbox_by_substr = './/input[type="checkbox"][contains(., "%s")]'
-        radiobutton_by_value = './/input[type="radio"][@value="%s"]'
-        radiobutton_by_exact_text = './/input[type="radio"][. = "%"]'
-        radiobutton_by_substr = './/input[type="radio"][contains(., "%s")]'
-        button = './/input[@type="button"]'
-        submit_button = './/input[@type="submit"]'
-        reset_button = './/input[@type="reset"]'
+        checkbox_by_value = './/input[@type="checkbox"][@name="%s"][@value="%s"]'
+        radiobutton_by_value = './/input[@type="radio"][@name="%s"][@value="%s"]'
+        button = './/button[@name="%s"]'
         button_with_label = './/button[contains(., "%s")]'
         link_by_href = './/a[@href="%s"]'
         link_by_exact_text = './/a[. = "%s"]'
