@@ -18,14 +18,6 @@
                 <td>
                     {{ site_filter.form.customer|add_class:"uk-width-1-1" }}
                 </td>
-                {% if perms.webapp.access_to_all_sites %}
-                    <td>
-                        {{ site_filter.form.pws.label }}
-                    </td>
-                    <td>
-                        {{ site_filter.form.pws|add_class:"uk-width-1-1" }}
-                    </td>
-                {% endif %}
                 <td>
                     {{ site_filter.form.city.label }}
                 </td>
@@ -37,6 +29,12 @@
                 </td>
                 <td>
                     {{ site_filter.form.address|add_class:"uk-width-1-1" }}
+                </td>
+                <td>
+                    {{ site_filter.form.last_survey_date.label }}
+                </td>
+                <td>
+                    {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
             <tr class="table-border-bottom uk-text-right">

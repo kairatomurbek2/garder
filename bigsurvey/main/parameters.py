@@ -34,11 +34,22 @@ STATES = (
     ('VA', 'Virginia'), ('WA', 'Washington'), ('WV', 'West Virginia'), ('WI', 'Wisconsin'), ('WY', 'Wyoming'),
 )
 
-DATE_FILTER_CHOICES = (
-    ('all', 'All'),
-    ('week', 'Next Week'),
-    ('month', 'Next Month'),
-    ('year', 'Next Year'),
+NEXT_DATE_FILTER_CHOICES = (
+    ('all', _('All')),
+    ('week', _('Next Week')),
+    ('month', _('Next Month')),
+    ('year', _('Next Year')),
+)
+
+PAST_DATE_FILTER_CHOICES = (
+    ('all', _('All')),
+    ('week', _('1 week')),
+    ('month', _('1 month')),
+    ('2months', _('2 months')),
+    ('3months', _('3 months')),
+    ('6months', _('6 months')),
+    ('year', _('1 year')),
+    ('never', _('Never')),
 )
 
 TESTER_ASSEMBLY_STATUSES = ['Installed', 'Replaced']

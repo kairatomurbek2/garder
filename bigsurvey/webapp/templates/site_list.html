@@ -21,9 +21,6 @@
                 {% trans "Customer" %}
             </th>
             <th>
-                {% trans "PWS" %}
-            </th>
-            <th>
                 {% trans "Site Use" %}
             </th>
             <th>
@@ -31,6 +28,9 @@
             </th>
             <th>
                 {% trans "Site Status" %}
+            </th>
+            <th>
+                {% trans "Last Survey Date" %}
             </th>
             <th>
                 {% trans "Next Survey" %}
@@ -53,9 +53,6 @@
                     {{ site.customer.number }}, {{ site.customer.name }}
                 </td>
                 <td>
-                    {{ site.pws.name }}
-                </td>
-                <td>
                     {{ site.site_use }}
                 </td>
                 <td>
@@ -63,6 +60,9 @@
                 </td>
                 <td>
                     {{ site.status }}
+                </td>
+                <td>
+                    {{ site.last_survey_date }}
                 </td>
                 <td>
                     {{ site.next_survey_date }}

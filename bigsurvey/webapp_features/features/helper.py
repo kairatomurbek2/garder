@@ -16,6 +16,10 @@ def check_element_exists(elem, assert_message):
     assert elem, assert_message
 
 
+def check_element_visible(elem, assert_message):
+    assert elem.is_displayed(), assert_message
+
+
 def check_element_doesnt_exist(elem, assert_message):
     assert not elem, assert_message
 

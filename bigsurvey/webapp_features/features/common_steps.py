@@ -20,7 +20,8 @@ def click_link(step, link_name):
            helper.find(Xpath.Pattern.link_by_exact_text % link_name) or \
            helper.find(Xpath.Pattern.link_by_substr % link_name)
     helper.check_element_exists(link, 'Link with name "%s" was not found' % link_name)
-    link.click()
+    helper.check_element_visible(link, 'Link with name "%s" is not visible' % link_name)
+    step.given('I open "%s"' % link.get_attribute('href'))
 
 
 @step('I should be at "(http.*)"')

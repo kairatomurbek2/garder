@@ -23,19 +23,6 @@ Feature: Filtration
       | Seattle    |
 
 
-  Scenario: Filtration by pws field while logged in as root
-    Given I logged in as "root"
-    And I open "site_list" page
-    When I select "North USA PWS" from "pws"
-    And I submit "site_filter" form
-    Then I should see following
-      | text    |
-      | Seattle |
-    And I should not see following
-      | text   |
-      | Boston |
-
-
   Scenario: Filtration by address1 field while logged in as root
     Given I logged in as "root"
     And I open "site_list" page
@@ -122,3 +109,19 @@ Feature: Filtration
     And I should not see following
       | text    |
       | Seattle |
+
+
+  Scenario: Filtration by last survey date while logged in as root
+    Given I logged in as "root"
+    And I open "site_list" page
+    When I select "1 week" from "last_survey_date"
+    And I submit "site_filter" form
+    Then I should see following
+      | text       |
+      | Washington |
+      | Seattle    |
+    And I should not see following
+      | text    |
+      | Chikago |
+      | Boston  |
+      | Houston |

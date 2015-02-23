@@ -42,7 +42,6 @@ Feature: Site adding
       | Moscow              |
       | Red Square, Cremlin |
       | Mike Doe            |
-      | Houston PWS         |
       | Agricultural        |
       | Grocery Store       |
 
