@@ -31,5 +31,4 @@ def click_menu_link(step, link_name):
     step.given('I hover on "menu" link')
     link = helper.find(Xpath.Pattern.menu_item % link_name)
     helper.check_element_exists(link, '"%s" link is not in menu' % link_name)
-    helper.check_element_visible(link, 'Link with name "%s" is not visible' % link_name)
-    step.given('I open "%s"' % link.get_attribute('href'))
+    link.click()
