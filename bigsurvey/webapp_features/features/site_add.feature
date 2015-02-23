@@ -31,8 +31,6 @@ Feature: Site adding
     And I select "2" from "floors"
     And I select "Yard" from "interconnection_point"
     And I open select customer modal
-    And I fill in "name" with "Mike Doe"
-    And I submit "customer_filter" form
     And I select customer with pk "3"
     When I submit "site" form
     Then I should be at "site_list" page
