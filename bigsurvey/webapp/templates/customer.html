@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load boolean_yes_no %}
-{% load surveys_for_services %}
-{% load hazards_for_services %}
-
 {% block menu %}
     <li><a href="{% url 'webapp:customer_edit' customer.pk %}">{% trans "Edit" %}</a></li>
     <li><a href="#">{% trans "Send Letter" %}</a></li>
@@ -40,7 +37,8 @@
             <tr class="table-border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Phone" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ customer.phone }}</td>
-                .<td class="uk-text-right uk-text-muted">{% trans "Fax" %}</td>
+                .
+                <td class="uk-text-right uk-text-muted">{% trans "Fax" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ customer.fax }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Email" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ customer.email }}</td>

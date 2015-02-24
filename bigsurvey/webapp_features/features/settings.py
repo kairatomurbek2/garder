@@ -92,6 +92,7 @@ class Xpath:
         validation_error_by_substr = './/../ul[@class="errorlist"]/li[contains(., "%s")]'
         customer_select_button = './/button[@data-id="%s"]'
         link = './/a[@id="%s_link"]'
+        pagination_link = './/a[@data-action="pagination"][@data-id="%s"]'
 
     commit_dialog_button = './/a[@id="commit_site_menu_button"]'
     menu_link = './/li[@id="bfp_menu"]/a'

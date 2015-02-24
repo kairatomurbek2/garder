@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth import login as auth_login, logout
+from django.contrib.auth import login, logout
 from django.views.generic import View
 from django.core.urlresolvers import reverse
 
@@ -25,7 +25,6 @@ class LoginView(View):
     def post(self, request):
         form = self.form_class(request, data=request.POST)
         if form.is_valid():
-            auth_login(request, form.get_user())
+            login(request, form.get_user())
             return HttpResponseRedirect(request.GET.get('next', reverse('webapp:home')))
-
         return render(request, self.template_name, {'form': form})
