@@ -32,4 +32,5 @@ urlpatterns = patterns(
     url(r'^user/$', views.UserListView.as_view(), name="user_list"),
     url(r'^user/add/$', views.UserAddView.as_view(), name="user_add"),
     url(r'^user/(?P<pk>\d+)/edit/$', views.UserEditView.as_view(), name="user_edit"),
+    url(r'^help/$', views.HelpView.as_view(), name="help"),
 )

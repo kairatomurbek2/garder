@@ -809,3 +809,7 @@ class UserEditView(UserBaseFormView):
     def get_employee_form(self):
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
+
+
+class HelpView(BaseTemplateView):
+    template_name = 'help.html'
