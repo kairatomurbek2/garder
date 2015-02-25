@@ -1,0 +1,1447 @@
+[
+{
+  "fields": {
+    "name": "SuperAdministrators",
+    "permissions": [
+      [
+        "add_user",
+        "auth",
+        "user"
+      ],
+      [
+        "change_user",
+        "auth",
+        "user"
+      ],
+      [
+        "delete_user",
+        "auth",
+        "user"
+      ],
+      [
+        "add_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "browse_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "change_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "delete_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "add_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "browse_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "change_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "delete_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "add_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "browse_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "change_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "delete_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "add_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "browse_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "change_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "delete_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "add_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "browse_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "change_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "delete_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "add_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "browse_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "change_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "delete_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "add_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "browse_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "change_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "delete_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "access_to_adminpanel",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_all_users",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_pws_users",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "browse_user",
+        "webapp",
+        "employee"
+      ],
+      [
+        "change_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "delete_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "browse_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "change_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "delete_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "access_to_all_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_own_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_site_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "delete_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "browse_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "change_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "delete_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "add_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "browse_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "change_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "delete_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "access_to_all_inspections",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "access_to_pws_inspections",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "add_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "browse_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "change_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "delete_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "delete_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "add_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "browse_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "change_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "delete_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "add_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "browse_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "change_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "delete_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "add_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "browse_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "change_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "delete_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "add_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "browse_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "change_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "delete_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "add_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "browse_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "change_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "delete_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "access_to_all_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_batch_update",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_import",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_survey_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_test_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "assign_surveyor",
+        "webapp",
+        "site"
+      ],
+      [
+        "assign_tester",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "delete_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "browse_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "change_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "delete_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "add_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "browse_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "change_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "delete_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "add_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "browse_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "change_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "delete_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "add_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "browse_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "change_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "delete_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "add_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "browse_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "change_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "delete_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "access_to_all_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_own_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_pws_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_many_surveys_per_site",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "delete_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "browse_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "change_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "delete_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "access_to_all_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "access_to_own_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "access_to_pws_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_many_tests_per_hazard",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "delete_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "browse_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "change_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "delete_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "access_to_all_testpermissions",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "access_to_pws_testpermissions",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "add_testpermission",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "browse_testpermission",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "change_testpermission",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "delete_testpermission",
+        "webapp",
+        "testpermission"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 1
+},
+{
+  "fields": {
+    "name": "Administrators",
+    "permissions": [
+      [
+        "add_user",
+        "auth",
+        "user"
+      ],
+      [
+        "change_user",
+        "auth",
+        "user"
+      ],
+      [
+        "add_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "browse_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "change_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "access_to_adminpanel",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_pws_users",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "browse_user",
+        "webapp",
+        "employee"
+      ],
+      [
+        "change_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_pws_inspections",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "add_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "browse_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "change_inspection",
+        "webapp",
+        "inspection"
+      ],
+      [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "access_to_batch_update",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_import",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "assign_surveyor",
+        "webapp",
+        "site"
+      ],
+      [
+        "assign_tester",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_many_surveys_per_site",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_pws_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_many_tests_per_hazard",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "access_to_pws_testpermissions",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "add_testpermission",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "browse_testpermission",
+        "webapp",
+        "testpermission"
+      ],
+      [
+        "change_testpermission",
+        "webapp",
+        "testpermission"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 2
+},
+{
+  "fields": {
+    "name": "Surveyors",
+    "permissions": [
+      [
+        "access_to_own_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_survey_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "commit_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_own_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 3
+},
+{
+  "fields": {
+    "name": "Testers",
+    "permissions": [
+      [
+        "access_to_site_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_test_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "commit_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_own_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 4
+},
+{
+  "fields": {
+    "username": "root",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2015-02-25T07:15:17Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",
+    "email": "root@root.root",
+    "date_joined": "2015-02-25T06:28:42Z"
+  },
+  "model": "auth.user",
+  "pk": 1
+},
+{
+  "fields": {
+    "username": "mlebas",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": true,
+    "last_login": "2015-02-25T07:15:38Z",
+    "groups": [
+      [
+        "SuperAdministrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$huwUpvbDKKsr$nRLO1lT/SaSQFV86xd9whUhpVECJW5D22g6/s7txc1M=",
+    "email": "",
+    "date_joined": "2015-02-25T06:38:29Z"
+  },
+  "model": "auth.user",
+  "pk": 2
+},
+{
+  "fields": {
+    "username": "jlebas",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:39:31Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$wNCvJi5I2AmH$Q31nwo4UgCp+EwqBXpjsziGjP7rDb9Hm8IZ+sd5b6Nw=",
+    "email": "",
+    "date_joined": "2015-02-25T06:39:31Z"
+  },
+  "model": "auth.user",
+  "pk": 3
+},
+{
+  "fields": {
+    "username": "knijoka",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:39:57Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$gtf8XzJpFedl$yHTDaAowZLk9RBtaLZfjp6jmfQazrDxKxHy57dB641M=",
+    "email": "",
+    "date_joined": "2015-02-25T06:39:57Z"
+  },
+  "model": "auth.user",
+  "pk": 4
+},
+{
+  "fields": {
+    "username": "jjdahl",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T07:11:41Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$X3MAVYoRtTKY$LQ0Vf33p7EW3sNl62AaLG6nCH7OG7ZE5324xtWoyIz8=",
+    "email": "",
+    "date_joined": "2015-02-25T06:40:08Z"
+  },
+  "model": "auth.user",
+  "pk": 5
+},
+{
+  "fields": {
+    "username": "ndecoteau",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:40:43Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$Vo4mPpYrL1SD$zw2Xm7pEFEml4Wt5UoDl0pO846aXdUF2b7kzc7tbEOY=",
+    "email": "",
+    "date_joined": "2015-02-25T06:40:43Z"
+  },
+  "model": "auth.user",
+  "pk": 6
+},
+{
+  "fields": {
+    "username": "dvillien",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:11Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$Agw6yMxj2bQo$bKL2l2HkGElvqL1RSBDjF+CzmiyA79YPG6UNEbphTdY=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:11Z"
+  },
+  "model": "auth.user",
+  "pk": 7
+},
+{
+  "fields": {
+    "username": "rleblanc",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 8
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "root"
+    ],
+    "address": "IT-Attractor"
+  },
+  "model": "webapp.employee",
+  "pk": 1
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "dvillien"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 2
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "jjdahl"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 3
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "jlebas"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 4
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "knijoka"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 5
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "mlebas"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 6
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "ndecoteau"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 7
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "rleblanc"
+    ],
+    "address": "USA"
+  },
+  "model": "webapp.employee",
+  "pk": 8
+}
+]
