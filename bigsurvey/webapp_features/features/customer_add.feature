@@ -50,6 +50,4 @@ Feature: Customer adding
       | name     | This field is required. |
       | code     | This field is required. |
       | city     | This field is required. |
-      | state    | This field is required. |
-      | zip      | This field is required. |
       | address1 | This field is required. |

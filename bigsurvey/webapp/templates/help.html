@@ -1,5 +1,85 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load staticfiles %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/custom/help.css' %}"/>
+{% endblock %}
 {% block content %}
-    <h1>{% trans "This is help page :)" %}</h1>
+    <div class="wrapper">
+        <h2>Login</h2>
+        {% blocktrans %}
+            <p>In this tutorial we will learn you how to use the site.</p>
+            <p>When you open site, you will be redirected to the login page.</p>
+        {% endblocktrans %}
+        <div class="uk-text-center">
+            <img src="{% static 'img/help/login.png' %}">
+        </div>
+        {% blocktrans %}
+            <p>After successful login procedure you will be redirected to home page.</p>
+        {% endblocktrans %}
+        <h2>Menu</h2>
+        {% blocktrans %}
+            <p>Firstly we want to pay attention to the menu. It is present at all pages and located on top of the page.</p>
+        {% endblocktrans %}
+        <div class="uk-text-center">
+            <img src="{% static 'img/help/menu.png' %}">
+        </div>
+        {% blocktrans %}
+            <p>Menu has home page link, logout link and the menu dropdown.</p>
+        {% endblocktrans %}
+        <div class="uk-text-center">
+            <img src="{% static 'img/help/menu_dropdown.png' %}">
+        </div>
+        {% blocktrans %}
+            <p>Also menu can has additional items depending on currently opened page.</p>
+        {% endblocktrans %}
+        <h2>Sites</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>PWS</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Customers</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Surveys</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Hazards</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Tests</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Users</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Inspections</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Test Permissions</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Letters</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Import</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+        <h2>Batch Update</h2>
+        {% blocktrans %}
+            <p></p>
+        {% endblocktrans %}
+    </div>
 {% endblock %}

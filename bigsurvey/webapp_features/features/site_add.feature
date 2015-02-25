@@ -56,6 +56,4 @@ Feature: Site adding
       | customer     | This field is required. |
       | connect_date | Enter a valid date.     |
       | city         | This field is required. |
-      | state        | This field is required. |
-      | zip          | This field is required. |
       | address1     | This field is required. |
