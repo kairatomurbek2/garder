@@ -16,7 +16,7 @@
                         <label for="{{ form.assigned_to.id_for_label }}">{{ form.assigned_to.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.assigned_to|add_class:'uk-width-1-1' }}
+                        {% render_field form.assigned_to|add_class:'uk-width-1-1' %}
                         {{ form.assigned_to.errors }}
                     </td>
                     {% if form.instance.pk %}
@@ -36,7 +36,7 @@
                         <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
                     </td>
                     <td class="uk-width-5-6" colspan="3">
-                        {{ form.notes|add_class:'uk-width-1-1' }}
+                        {% render_field form.notes|add_class:'uk-width-1-1' %}
                         {{ form.notes.errors }}
                     </td>
                 </tr>

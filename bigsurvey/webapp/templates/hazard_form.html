@@ -16,28 +16,37 @@
             <table class="uk-table">
                 <tbody>
                 {% if perms.webapp.change_all_info_about_hazard %}
-                    <tr>
+                    <tr class="table-border-bottom">
                         <td class="uk-width-1-6 uk-text-right uk-text-bold">
                             <label for="{{ form.hazard_type.id_for_label }}">{{ form.hazard_type.label }}</label>
                         </td>
                         <td class="uk-width-1-3">
-                            {{ form.hazard_type|add_class:'uk-width-1-1' }}
+                            {% render_field form.hazard_type|add_class:'uk-width-1-1' %}
                             {{ form.hazard_type.errors }}
                         </td>
+                        {% if perms.webapp.change_all_info_about_hazard %}
+                            <td class="uk-width-1-6 uk-text-right">
+                                <label for="{{ form.due_install_test_date.id_for_label }}">{{ form.due_install_test_date.label }}</label>
+                            </td>
+                            <td class="uk-width-1-3">
+                                {% render_field form.due_install_test_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                                {{ form.due_install_test_date.errors }}
+                            </td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ form.location1.id_for_label }}">{{ form.location1.label }}</label>
                         </td>
                         <td class="uk-width-1-3">
-                            {{ form.location1|add_class:'uk-width-1-1' }}
+                            {% render_field form.location1|add_class:'uk-width-1-1' %}
                             {{ form.location1.errors }}
                         </td>
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ form.location2.id_for_label }}">{{ form.location2.label }}</label>
                         </td>
                         <td class="uk-width-1-3">
-                            {{ form.location2|add_class:'uk-width-1-1' }}
+                            {% render_field form.location2|add_class:'uk-width-1-1' %}
                             {{ form.location2.errors }}
                         </td>
                     </tr>
@@ -47,14 +56,14 @@
                         <label for="{{ form.assembly_location.id_for_label }}">{{ form.assembly_location.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.assembly_location|add_class:'uk-width-1-1' }}
+                        {% render_field form.assembly_location|add_class:'uk-width-1-1' %}
                         {{ form.assembly_location.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.assembly_status.id_for_label }}">{{ form.assembly_status.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.assembly_status|add_class:'uk-width-1-1' }}
+                        {% render_field form.assembly_status|add_class:'uk-width-1-1' %}
                         {{ form.assembly_status.errors }}
                     </td>
                 </tr>
@@ -63,98 +72,92 @@
                         <label for="{{ form.installed_properly.id_for_label }}">{{ form.installed_properly.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.installed_properly|add_class:'uk-width-1-1' }}
+                        {% render_field form.installed_properly|add_class:'uk-width-1-1' %}
                         {{ form.installed_properly.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.installer.id_for_label }}">{{ form.installer.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.installer|add_class:'uk-width-1-1' }}
+                        {% render_field form.installer|add_class:'uk-width-1-1' %}
                         {{ form.installer.errors }}
                     </td>
                 </tr>
-                <tr>
+                <tr class="table-border-bottom">
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.install_date.id_for_label }}">{{ form.install_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.install_date|add_class:'uk-width-1-1' }}
+                        {% render_field form.install_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
                         {{ form.install_date.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.replace_date.id_for_label }}">{{ form.replace_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.replace_date|add_class:'uk-width-1-1' }}
+                        {% render_field form.replace_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
                         {{ form.replace_date.errors }}
                     </td>
                 </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.orientation.id_for_label }}">{{ form.orientation.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {{ form.orientation|add_class:'uk-width-1-1' }}
-                        {{ form.orientation.errors }}
-                    </td>
-                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.bp_type_present.id_for_label }}">{{ form.bp_type_present.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.bp_type_present|add_class:'uk-width-1-1' }}
+                        {% render_field form.bp_type_present|add_class:'uk-width-1-1' %}
                         {{ form.bp_type_present.errors }}
                     </td>
-                </tr>
-                <tr>
-                    <td class="uk-width-1-6 uk-text-right">
+                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.bp_type_required.id_for_label }}">{{ form.bp_type_required.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.bp_type_required|add_class:'uk-width-1-1' }}
+                        {% render_field form.bp_type_required|add_class:'uk-width-1-1' %}
                         {{ form.bp_type_required.errors }}
                     </td>
+                </tr>
+                <tr>
+
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.bp_size.id_for_label }}">{{ form.bp_size.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.bp_size|add_class:'uk-width-1-1' }}
+                        {% render_field form.bp_size|add_class:'uk-width-1-1' %}
                         {{ form.bp_size.errors }}
                     </td>
-                </tr>
-                <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.manufacturer.id_for_label }}">{{ form.manufacturer.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.manufacturer|add_class:'uk-width-1-1' }}
+                        {% render_field form.manufacturer|add_class:'uk-width-1-1' %}
                         {{ form.manufacturer.errors }}
                     </td>
+                </tr>
+                <tr>
+
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.model_no.id_for_label }}">{{ form.model_no.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.model_no|add_class:'uk-width-1-1' }}
+                        {% render_field form.model_no|add_class:'uk-width-1-1' %}
                         {{ form.model_no.errors }}
                     </td>
-                </tr>
-                <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.serial_no.id_for_label }}">{{ form.serial_no.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.serial_no|add_class:'uk-width-1-1' }}
+                        {% render_field form.serial_no|add_class:'uk-width-1-1' %}
                         {{ form.serial_no.errors }}
                     </td>
-                    {% if perms.webapp.change_all_info_about_hazard %}
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.due_install_test_date.id_for_label }}">{{ form.due_install_test_date.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {{ form.due_install_test_date|add_class:'uk-width-1-1' }}
-                            {{ form.due_install_test_date.errors }}
-                        </td>
-                    {% endif %}
+                </tr>
+                <tr class="table-border-bottom">
+
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.orientation.id_for_label }}">{{ form.orientation.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {% render_field form.orientation|add_class:'uk-width-1-1' %}
+                        {{ form.orientation.errors }}
+                    </td>
                 </tr>
                 {% if perms.webapp.change_all_info_about_hazard %}
                     <tr>
@@ -162,7 +165,7 @@
                             <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
                         </td>
                         <td class="uk-width-5-6" colspan="3">
-                            {{ form.notes|add_class:'uk-width-1-1' }}
+                            {% render_field form.notes|add_class:'uk-width-1-1' %}
                             {{ form.notes.errors }}
                         </td>
                     </tr>

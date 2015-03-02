@@ -22,14 +22,14 @@
                         <label for="{{ form.survey_date.id_for_label }}">{{ form.survey_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.survey_date|add_class:'uk-width-1-1' }}
+                        {% render_field form.survey_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
                         {{ form.survey_date.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.survey_type.id_for_label }}">{{ form.survey_type.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.survey_type|add_class:'uk-width-1-1' }}
+                        {% render_field form.survey_type|add_class:'uk-width-1-1' %}
                         {{ form.survey_type.errors }}
                     </td>
                 </tr>
@@ -38,14 +38,14 @@
                         <label for="{{ form.surveyor.id_for_label }}">{{ form.surveyor.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.surveyor|add_class:'uk-width-1-1' }}
+                        {% render_field form.surveyor|add_class:'uk-width-1-1' %}
                         {{ form.surveyor.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.metered.id_for_label }}">{{ form.metered.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.metered|add_class:'uk-width-1-1' }}
+                        {% render_field form.metered|add_class:'uk-width-1-1' %}
                         {{ form.metered.errors }}
                     </td>
                 </tr>
@@ -54,14 +54,14 @@
                         <label for="{{ form.pump_present.id_for_label }}">{{ form.pump_present.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.pump_present|add_class:'uk-width-1-1' }}
+                        {% render_field form.pump_present|add_class:'uk-width-1-1' %}
                         {{ form.pump_present.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.additives_present.id_for_label }}">{{ form.additives_present.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.additives_present|add_class:'uk-width-1-1' }}
+                        {% render_field form.additives_present|add_class:'uk-width-1-1' %}
                         {{ form.additives_present.errors }}
                     </td>
                 </tr>
@@ -70,14 +70,14 @@
                         <label for="{{ form.cc_present.id_for_label }}">{{ form.cc_present.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.cc_present|add_class:'uk-width-1-1' }}
+                        {% render_field form.cc_present|add_class:'uk-width-1-1' %}
                         {{ form.cc_present.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.protected.id_for_label }}">{{ form.protected.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.protected|add_class:'uk-width-1-1' }}
+                        {% render_field form.protected|add_class:'uk-width-1-1' %}
                         {{ form.protected.errors }}
                     </td>
                 </tr>
@@ -86,7 +86,7 @@
                         <label for="{{ form.aux_water.id_for_label }}">{{ form.aux_water.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.aux_water|add_class:'uk-width-1-1' }}
+                        {% render_field form.aux_water|add_class:'uk-width-1-1' %}
                         {{ form.aux_water.errors }}
                     </td>
                     {% if fire or survey.service_type.service_type == 'fire'  %}
@@ -94,7 +94,7 @@
                         <label for="{{ form.detector_manufacturer.id_for_label }}">{{ form.detector_manufacturer.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.detector_manufacturer|add_class:'uk-width-1-1' }}
+                    {% render_field form.detector_manufacturer|add_class:'uk-width-1-1' %}
                         {{ form.detector_manufacturer.errors }}
                     </td>
                     {% else %}
@@ -102,7 +102,7 @@
                         <label for="{{ form.special.id_for_label }}">{{ form.special.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.special|add_class:'uk-width-1-1' }}
+                    {% render_field form.special|add_class:'uk-width-1-1' %}
                         {{ form.special.errors }}
                     </td>
                     {% endif %}
@@ -113,14 +113,14 @@
                         <label for="{{ form.detector_model.id_for_label }}">{{ form.detector_model.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.detector_model|add_class:'uk-width-1-1' }}
+                        {% render_field form.detector_model|add_class:'uk-width-1-1' %}
                         {{ form.detector_model.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.detector_serial_no.id_for_label }}">{{ form.detector_serial_no.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.detector_serial_no|add_class:'uk-width-1-1' }}
+                        {% render_field form.detector_serial_no|add_class:'uk-width-1-1' %}
                         {{ form.detector_serial_no.errors }}
                     </td>
                 </tr>
@@ -129,7 +129,7 @@
                         <label for="{{ form.special.id_for_label }}">{{ form.special.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {{ form.special|add_class:'uk-width-1-1' }}
+                        {% render_field form.special|add_class:'uk-width-1-1' %}
                         {{ form.special.errors }}
                     </td>
                 </tr>
@@ -139,7 +139,7 @@
                         <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
                     </td>
                     <td class="uk-width-5-6" colspan="3">
-                        {{ form.notes|add_class:'uk-width-1-1' }}
+                        {% render_field form.notes|add_class:'uk-width-1-1' %}
                         {{ form.notes.errors }}
                     </td>
                 </tr>
