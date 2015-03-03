@@ -1,0 +1,17 @@
+{% extends "letters/base.html" %}
+{% load i18n %}
+{% block letter_content %}
+In accordance with State regulations and the City of {{ letter.site.pws.city }} backflow prevention program, all
+backflow preventers must be tested annually.  According to our records, it is now time for your
+backflow preventer to be tested.  Only Water Supply Protection Specialist (WSPS) plumbers or
+DHH Approved General Testers can perform this task.  For your convenience, we have
+attached a list of local testers previously approved by the City of {{ letter.site.pws.city }}.  You may choose a
+tester from this list or any state approved tester.  However, the selected tester not on the
+previously approved list must obtain a Plumbers Packet from City Hall located at {{ letter.site.pws.office_address }} prior
+to performing the test.
+<br/><br/>
+Please have the backflow preventer tested by the above stated Test Due Date and send a copy
+of the test report to <u>{{ letter.user.email }}</u>.
+{% endblock %}
+{% block sign %}
+{% endblock %}

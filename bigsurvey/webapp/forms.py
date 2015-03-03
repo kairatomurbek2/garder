@@ -127,3 +127,7 @@ class UserEditForm(UserChangeForm):
 
 class BatchUpdateForm(forms.Form):
     date = forms.DateField(label=_('Select date'))
+
+
+class LetterSendForm(forms.Form):
+    pass

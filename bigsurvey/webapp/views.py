@@ -243,7 +243,7 @@ class PWSEditView(PWSBaseFormView, UpdateView):
 
 
 class CustomerListView(BaseTemplateView):
-    template_name = 'customer_base.html'
+    template_name = 'customer_list.html'
     permission = 'webapp.browse_customer'
 
     def get_context_data(self, **kwargs):
@@ -809,6 +809,31 @@ class UserEditView(UserBaseFormView):
     def get_employee_form(self):
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
+
+
+class LetterListView(BaseTemplateView):
+    template_name = "letter_list.html"
+    permission = 'webapp.browse_letter'
+
+    def get_context_data(self, **kwargs):
+        context = super(LetterListView, self).get_context_data(**kwargs)
+        context['letters'] = models.Letter.objects.all()
+        return context
+
+
+class LetterSendView(BaseFormView):
+    template_name = "letter_send.html"
+    form_class = forms.LetterSendForm
+    permission = 'webapp.send_letter'
+
+
+class LetterDetailView(BaseTemplateView):
+    template_name = "letter_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(LetterDetailView, self).get_context_data(**kwargs)
+        context['letter'] = models.Letter.objects.get(pk=kwargs['pk'])
+        return context
 
 
 class HelpView(BaseTemplateView):

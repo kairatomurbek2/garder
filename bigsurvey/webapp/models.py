@@ -283,7 +283,7 @@ class Customer(models.Model):
     zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("ZIP"))
     phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"))
     fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"))
-    email = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Email"))
+    email = models.EmailField(max_length=15, blank=True, null=True, verbose_name=_("Email"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
@@ -301,6 +301,7 @@ class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
+    office_address = models.CharField(blank=True, null=True, max_length=50, verbose_name=_("Office Address"))
     water_source = models.ForeignKey(SourceType, blank=True, null=True, verbose_name=_("Water Source"),
                                      related_name="pws")
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
@@ -530,8 +531,8 @@ class Test(models.Model):
 
 
 class Letter(models.Model):
-    customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="letters")
-    survey = models.ForeignKey(Survey, blank=True, null=True, verbose_name=_("Survey"), related_name="letters")
+    site = models.ForeignKey(Site, blank=True, null=True, verbose_name=_("Site"), related_name="letters")
+    hazard = models.ForeignKey(Hazard, blank=True, null=True, verbose_name=_("Hazard"), related_name="letters")
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
     date = models.DateField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
@@ -544,6 +545,7 @@ class Letter(models.Model):
         verbose_name_plural = _("Letters")
         permissions = (
             ('browse_letter', _('Can browse Letter')),
+            ('send_letter', _('Can send Letter')),
         )
 
 

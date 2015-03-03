@@ -1,0 +1,80 @@
+{% load i18n %}
+<table>
+    <tr>
+        <td>{{ letter.date }}</td>
+    </tr>
+    <tr>
+        <td>{{ letter.site.customer.name }}</td>
+        <td>{% trans "Account No." %}: {{ letter.site.customer.number }}</td>
+    </tr>
+    <tr>
+        <td>{{ letter.site.customer.address1 }}</td>
+        <td>{% trans "Assembly" %}: {{ letter.hazard.bp_type_required }}</td>
+    </tr>
+    <tr>
+        <td>{{ letter.site.customer.city }}, {{ letter.site.customer.state }}, {{ letter.site.customer.zip }}</td>
+        <td>{% trans "Test Due Date" %}: {{ letter.hazard.due_install_test_date }}</td>
+    </tr>
+    <tr>
+        <td>
+            <br/>
+            {% trans "RE: Cross Connection Control and Backflow Prevention Program" %}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {% trans "Service Address" %}: {{ letter.site.address1 }}
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <b><u>
+                {% block second_notice %}
+                {% endblock %}
+            </u></b>
+        </td>
+    </tr>
+    <tr>
+        <td><br/><br/>{% trans "Dear Customer" %},</td>
+    </tr>
+    <tr>
+    <td colspan="2"><br/>
+        {% block letter_content %}
+        {% endblock %}
+    </td>
+    </tr>
+    <tr>
+        <td colspan="2"><br/>
+            Thank you in advance for your cooperation and assistance in this matter.  Should you have any
+            questions, please feel free to contact our consultant, Backflow Prevention Services, at
+            {{ letter.user.email }}
+        </td>
+    </tr>
+    <tr>
+        <td><br/><br/>
+            {% trans "Sincerely" %},
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {% trans "Public Works Director" %}
+        </td>
+    </tr>
+    {% block sign %}
+    <tr>
+        <td colspan="2"><br/><br/>
+            {% block agreement %}
+            {% endblock %}
+        </td>
+    </tr>
+    <tr>
+        <td><br/>_______________________________________</td>
+        <td>______________</td>
+    </tr>
+    <tr>
+        <td>{% trans "Customer" %}</td>
+        <td>{% trans "Date" %}</td>
+    </tr>
+    {% endblock %}
+</table>

@@ -1,0 +1,30 @@
+{% extends "letters/base.html" %}
+{% load i18n %}
+{% block letter_content %}
+The City of {{ letter.site.pws.city }} is in the process of implementing a cross connection control and backflow
+prevention program in accordance with mandates established by the Louisiana Department of
+Health & Hospitals (DHH).  Part of the mandate establishes who is required to install a backflow
+preventer for the protection of the potable water supply system.  In accordance with the
+minimum standards established by DHH, your account is required to have a backflow
+prevention assembly installed. <u>The assembly must be tested upon installation and annually
+thereafter.</u>
+<br/><br/>
+In accordance with state plumbing regulations, the assembly must be installed by a Master
+Plumber who has a Water Supply Protection Specialist (WSPS) endorsement on their license or
+a Journeyman Plumber with the WSPS endorsement working for a Master Plumber.  For your
+convenience, we have attached a list of local plumbers possessing the WSPS endorsement.  You
+may choose a plumber from this list or any state approved WSPS endorsed plumber.  Per state
+regulations, the cost of the backflow preventer installation and testing must be borne by the
+customer.
+<br/><br/>
+<i>Prior to the installation of the backflow preventer, please have your selected plumber pick up a
+“Plumber’s Packet for Backflow Preventer Installation” from city hall located at <u>{{ letter.site.pws.office_address }}</u>.</i>
+<br/><br/>
+As mentioned above, this is a state mandated program. <u>The only recourse the City of {{ letter.site.pws.city }} has is to
+discontinue water service for non-compliant customers.</u> Please have the backflow preventer
+installed and tested by the above stated Test Due Date and email a copy of the test
+report to {{ letter.user.email }}.  In the event that the required backflow preventer is already installed,
+please email a copy of the test report to the email address provided.
+{% endblock %}
+{% block sign %}
+{% endblock %}

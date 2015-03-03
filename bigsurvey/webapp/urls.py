@@ -32,5 +32,8 @@ urlpatterns = patterns(
     url(r'^user/$', views.UserListView.as_view(), name="user_list"),
     url(r'^user/add/$', views.UserAddView.as_view(), name="user_add"),
     url(r'^user/(?P<pk>\d+)/edit/$', views.UserEditView.as_view(), name="user_edit"),
+    url(r'^letter/$', views.LetterListView.as_view(), name="letter_list"),
+    url(r'^survey/(?P<pk>\d+)/send_letter/$', views.LetterSendView.as_view(), name="letter_send"),
     url(r'^help/$', views.HelpView.as_view(), name="help"),
+    url(r'^letter/(?P<pk>\d+)/$', views.LetterDetailView.as_view(), name="letter_detail"),
 )
