@@ -23,6 +23,20 @@ def click_link(step, link_name):
     link.click()
 
 
+@step('I click survey detail link with number "(.*)"')
+def click_survey_detail_link(step, number):
+    link = helper.find(Xpath.Pattern.survey_detail % number)
+    helper.check_element_exists(link, 'Link with number "%s" was not found' % number)
+    link.click()
+
+
+@step('I click survey edit link')
+def click_survey_detail_link(step):
+    link = helper.find(Xpath.Pattern.survey_edit_link)
+    helper.check_element_exists(link, 'Survey edit link was not found')
+    link.click()
+
+
 @step('I should be at "(http.*)"')
 def check_url(step, url):
     assert world.browser.current_url == url, 'Current URL is %s, expected %s' % (world.browser.current_url, url)

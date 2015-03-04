@@ -39,6 +39,17 @@ def open_survey_edit_page(step, pk):
     step.given('I click "survey_%s_edit" link' % pk)
 
 
+@step('I click "(\d+)"th "survey_detail" link on page')
+def click_survey_detail(step, number):
+    step.given('I click survey detail link with number "%s"' % number)
+
+
+@step('I open "survey_edit" page for "(\d+)" survey on the page')
+def open_survey_edit_page(step, pk):
+    step.given('I click "%s"th "survey_detail" link on page' % pk)
+    step.given('I click survey edit link')
+
+
 @step('I should be at "survey_detail" page with pk "(\d+)"')
 def check_survey_detail_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.survey_detail % pk))

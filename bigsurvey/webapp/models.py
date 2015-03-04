@@ -374,13 +374,7 @@ class Site(models.Model):
     is_backflow = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Backflow Present"))
     next_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Next Survey Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    @property
-    def last_survey_date(self):
-        try:
-            return self.surveys.latest('survey_date').survey_date
-        except Survey.DoesNotExist:
-            return None
+    last_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Last survey date"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.city, self.address1)

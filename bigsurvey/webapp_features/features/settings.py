@@ -93,6 +93,8 @@ class Xpath:
         customer_select_button = './/button[@data-id="%s"]'
         link = './/a[@id="%s_link"]'
         pagination_link = './/a[@data-action="pagination"][@data-id="%s"]'
+        survey_detail = '//*[@id="potable_content"]/div[2]/table/tbody/tr[%s]/td[5]/a'
+        survey_edit_link = '//*[@id="page_menu"]/li[1]/a'
 
     commit_dialog_button = './/a[@id="commit_site_menu_button"]'
     menu_link = './/li[@id="bfp_menu"]/a'

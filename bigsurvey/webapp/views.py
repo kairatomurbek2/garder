@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from django.views.generic import TemplateView, CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -351,9 +351,14 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         return False
 
     def form_valid(self, form):
-        form.instance.site = self._get_site()
+        site = self._get_site()
+        form.instance.site = site
         form.instance.service_type = self._get_service_type()
-        return super(SurveyAddView, self).form_valid(form)
+        super(SurveyAddView, self).form_valid(form)
+        survey = site.surveys.latest('survey_date')
+        site.last_survey_date = survey.survey_date
+        site.save()
+        return HttpResponseRedirect(self.get_success_url())
 
     def _get_site(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
@@ -393,6 +398,20 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
         if not mixins.SurveyObjectMixin.has_perm(self.request, form.instance):
             raise Http404
         return form
+
+    def form_valid(self, form):
+        site = form.instance.site
+        super(SurveyEditView, self).form_valid(form)
+        survey = site.surveys.latest('survey_date')
+        site.last_survey_date = survey.survey_date
+        site.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def _get_site(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+            raise Http404
+        return site
 
 
 class HazardDetailView(BaseTemplateView):

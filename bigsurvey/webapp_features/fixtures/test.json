@@ -2221,10 +2221,11 @@
 {
   "fields": {
     "city": "Second PWS city",
+    "name": "Second PWS",
+    "office_address": null,
     "notes": "Quisque lorem magna, tincidunt in tempor at, placerat ut augue. Duis mattis massa luctus dui blandit auctor. Donec erat tellus, varius at vulputate in, finibus quis lacus. Proin in dui sit amet ex dignissim molestie eget volutpat nibh. Proin vel iaculis l",
-    "water_source": 2,
     "number": "PWS2",
-    "name": "Second PWS"
+    "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 1
@@ -2232,10 +2233,11 @@
 {
   "fields": {
     "city": "First PWS city",
+    "name": "First PWS",
+    "office_address": null,
     "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id feugiat urna, in convallis dui. Fusce in luctus quam. In pellentesque porta nisi ut vulputate. Sed dignissim dolor felis, eget pellentesque dolor iaculis ut. Mauris at convallis odio. Mauris c",
-    "water_source": 1,
     "number": "PWS1",
-    "name": "First PWS"
+    "water_source": 1
   },
   "model": "webapp.pws",
   "pk": 2
@@ -2243,10 +2245,11 @@
 {
   "fields": {
     "city": "Third PWS city",
+    "name": "Third PWS",
+    "office_address": null,
     "notes": "This is test notes",
-    "water_source": 3,
     "number": "PWS3",
-    "name": "Third PWS"
+    "water_source": 3
   },
   "model": "webapp.pws",
   "pk": 3
@@ -2254,10 +2257,11 @@
 {
   "fields": {
     "city": "Houston",
+    "name": "Houston PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 3,
     "number": "XOL852",
-    "name": "Houston PWS"
+    "water_source": 3
   },
   "model": "webapp.pws",
   "pk": 4
@@ -2265,10 +2269,11 @@
 {
   "fields": {
     "city": "Ancoridge",
+    "name": "Alaska Central PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 3,
     "number": "AL202",
-    "name": "Alaska Central PWS"
+    "water_source": 3
   },
   "model": "webapp.pws",
   "pk": 5
@@ -2276,10 +2281,11 @@
 {
   "fields": {
     "city": "Washington",
+    "name": "White House PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 3,
     "number": "DOC121",
-    "name": "White House PWS"
+    "water_source": 3
   },
   "model": "webapp.pws",
   "pk": 6
@@ -2287,10 +2293,11 @@
 {
   "fields": {
     "city": "Los Angeles",
+    "name": "Los Angeles Beach System",
+    "office_address": null,
     "notes": "",
-    "water_source": 2,
     "number": "LA200",
-    "name": "Los Angeles Beach System"
+    "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 7
@@ -2298,10 +2305,11 @@
 {
   "fields": {
     "city": "Boston",
+    "name": "MIT Public Water System",
+    "office_address": null,
     "notes": "",
-    "water_source": 2,
     "number": "KSL12",
-    "name": "MIT Public Water System"
+    "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 8
@@ -2309,10 +2317,11 @@
 {
   "fields": {
     "city": "Chikago",
+    "name": "North USA PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 1,
     "number": "NUI812",
-    "name": "North USA PWS"
+    "water_source": 1
   },
   "model": "webapp.pws",
   "pk": 9
@@ -2320,10 +2329,11 @@
 {
   "fields": {
     "city": "Seattle",
+    "name": "South Western PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 2,
     "number": "SW12",
-    "name": "South Western PWS"
+    "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 10
@@ -2331,10 +2341,11 @@
 {
   "fields": {
     "city": "Bishkek",
+    "name": "NEW PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 2,
     "number": "PWS123456",
-    "name": "NEW PWS"
+    "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 11
@@ -2342,10 +2353,11 @@
 {
   "fields": {
     "city": "Bishkek",
+    "name": "NEW PWS",
+    "office_address": null,
     "notes": "",
-    "water_source": 2,
     "number": "PWS123456",
-    "name": "NEW PWS"
+    "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 12
@@ -2355,6 +2367,7 @@
     "next_survey_date": "2015-01-15",
     "apt": "",
     "floors": 1,
+    "last_survey_date": null,
     "city": "Second Site city",
     "site_type": 2,
     "zip": "Second zip",
@@ -2386,6 +2399,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 1,
+    "last_survey_date": null,
     "city": "First Site city",
     "site_type": 8,
     "zip": "First zip",
@@ -2417,6 +2431,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 3,
+    "last_survey_date": null,
     "city": "Houston",
     "site_type": 4,
     "zip": "50396",
@@ -2448,6 +2463,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 3,
+    "last_survey_date": null,
     "city": "Ancoridge",
     "site_type": 11,
     "zip": "39012",
@@ -2479,6 +2495,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 3,
+    "last_survey_date": "2015-01-26",
     "city": "Washington",
     "site_type": 31,
     "zip": "80192",
@@ -2510,6 +2527,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 3,
+    "last_survey_date": null,
     "city": "New York",
     "site_type": 31,
     "zip": "89012",
@@ -2541,6 +2559,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 3,
+    "last_survey_date": null,
     "city": "Los Angeles",
     "site_type": 11,
     "zip": "18012",
@@ -2572,6 +2591,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 3,
+    "last_survey_date": null,
     "city": "Boston",
     "site_type": 1,
     "zip": "10292",
@@ -2603,6 +2623,7 @@
     "next_survey_date": "2016-02-09",
     "apt": "",
     "floors": 1,
+    "last_survey_date": null,
     "city": "Chikago",
     "site_type": 19,
     "zip": "00192",
@@ -2634,6 +2655,7 @@
     "next_survey_date": null,
     "apt": "",
     "floors": 2,
+    "last_survey_date": "2015-01-26",
     "city": "Seattle",
     "site_type": 4,
     "zip": "18921",
@@ -3944,7 +3966,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-02-19T08:52:38Z",
+    "last_login": "2015-03-04T11:19:56Z",
     "groups": [
       [
         "SuperAdministrators"

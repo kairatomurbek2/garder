@@ -74,9 +74,9 @@ class FilterUtils(object):
                 'year': current_date - timedelta(days=365),
             }
             if value == 'never':
-                return [site for site in sites if site.last_survey_date is None]
+                return sites.filter(last_survey_date=None)
             if value in dates:
-                return [site for site in sites if site.last_survey_date is not None and site.last_survey_date <= dates[value]]
+                return sites.filter(last_survey_date__lt=dates[value])
             return sites
 
 
