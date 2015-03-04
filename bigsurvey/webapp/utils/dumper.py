@@ -135,7 +135,7 @@ class Preloader(Connector):
     def _preload_letters(self):
         print "======== PRELOADING LETTERS ========"
         sqls = (
-            "INSERT INTO ALL_LETTERS ( LetterDate, Customer ) SELECT Letters.LetterDate, ALL_CUSTOMERS.ID FROM ALL_CUSTOMERS, Letters WHERE (((Letters.AccountNumber)=[ALL_CUSTOMERS].[AccountNumber]));",
+            "INSERT INTO ALL_LETTERS ( LetterDate, Site ) SELECT Letters.LetterDate, ALL_SITES.ID FROM ALL_SITES, Letters, ALL_CUSTOMERS WHERE (((Letters.AccountNumber)=[ALL_CUSTOMERS].[AccountNumber] and Int(ALL_SITES.Customer)=ALL_CUSTOMERS.ID));",
         )
         self._execute_list(sqls)
 
@@ -147,7 +147,7 @@ class Formatter(Connector):
         "customers": ("ALL_CUSTOMERS", ["CustomerName", "AccountNumber", "City", "Code", "Zip", "Address1", "Address2", "State"]),
         "sites": ("ALL_SITES", ["Customer", "PWS", ("connect_date", "date"), "address1", "address2", "apt", "city", "state", "zip", "site_use", "site_type", "floors", "ic_point", ("potable", "yesno"), ("fire", "yesno"), ("irrigation", "yesno"), ("is_due_install", "yesno"), ("is_backflow", "yesno"), "route", "meter_number", "meter_size", "meter_reading"]),
         "pws": ("ALL_PWS", ["Number", "Name", "City", "WaterSource"]),
-        "letters": ("ALL_LETTERS", ["Customer", ("LetterDate", "date")]),
+        "letters": ("ALL_LETTERS", ["Site", ("LetterDate", "date")]),
         "surveys": ("ALL_SURVEYS", ["site", "service_type", ("survey_date", "date"), "survey_type", "surveyor", ("metered", "yesno"), ("pump_present", "yesno"), ("additives_present", "yesno"), ("cc_present", "yesno"), ("protected", "yesno"), ("aux_water", "yesno"), "detector_manufacturer", "detector_model", "special", "detector_serial", "notes", "old_id"]),
         "hazards": ("ALL_HAZARDS", ["survey", "location1", "location2", "hazard_type", "assembly_location", "assembly_status", ("installed_properly", "yesno"), "installer", ("install_date", "date"), ("replace_date", "date"), "orientation", "bp_type_present", "bp_type_required", "bp_size", "bp_manufacturer", "model_no", "serial_no", ("due_install_test_date", "date")])
     }
@@ -195,6 +195,7 @@ class Formatter(Connector):
 
 class Jsoner(object):    
     def __init__(self):
+        models = {}
         self.models = {
             "webapp.sourcetype": {},
             "webapp.sitetype": {},
@@ -221,9 +222,13 @@ class Jsoner(object):
             "webapp.special": {},
             "webapp.orientation": {},
             "auth.user": {
+                "MLeBas": 2,
                 "mlebas": 2,
+                "JLeBas": 3,
                 "jlebas": 3,
                 "knijoka": 4,
+                "KNijoka": 4,
+                "Knijoka": 4,
                 "jjdahl": 5,
                 "ndecoteau": 6,
                 "dvillien": 7,
@@ -253,7 +258,7 @@ class Dumper(Connector):
         'survey': BASE_TEMPLATE % ('{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s"}', '"webapp.survey"', '%s'),
         'hazard': BASE_TEMPLATE % ('{"survey":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,"assembly_status":%s,"installed_properly":%s,"installer":null,"install_date":null,"replace_date":null,"orientation":%s,"bp_type_present":%s,"bp_type_required":%s,"bp_size":%s,"manufacturer":%s,"model_no":"%s","serial_no":"%s","due_install_test_date":null,"notes":""}', '"webapp.hazard"', '%s'),
         'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
-        'letter': BASE_TEMPLATE % ('{"customer":%s,"survey":null,"letter_type":1,"date":"%s","user":2}', '"webapp.letter"', '%s'),
+        'letter': BASE_TEMPLATE % ('{"site":%s,"hazard":null,"letter_type":1,"date":"%s","user":2}', '"webapp.letter"', '%s'),
     }
     SQL_STRS = {
         'dump_sites':'select Customer, PWS, address1, apt, city, state, zip, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading, route, potable, fire, irrigation, is_due_install, is_backflow, ID from ALL_SITES',
@@ -261,7 +266,7 @@ class Dumper(Connector):
         'dump_surveys':'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, ID from ALL_SURVEYS',
         'dump_pwss':'select Number, Name, WaterSource, ID from ALL_PWS',
         'dump_hazards':'select survey, hazard_type, assembly_location, assembly_status, installed_properly, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, ID from ALL_HAZARDS',
-        'dump_letters':'select customer, letterdate, ID from ALL_LETTERS',
+        'dump_letters':'select site, letterdate, ID from ALL_LETTERS',
     }
     DATA_TYPES = [
         'customer',

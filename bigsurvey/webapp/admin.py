@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext as _
 import models
+from django import forms
+from redactor.widgets import RedactorEditor
+from webapp.models import StaticText
+from main.settings import MEDIA_ROOT
 
 
 class EmployeeInline(admin.StackedInline):
@@ -14,6 +18,18 @@ class EmployeeInline(admin.StackedInline):
 
 class EmployeeAdmin(UserAdmin):
     inlines = (EmployeeInline, )
+
+
+class StaticTextAdminForm(forms.ModelForm):
+    class Meta:
+        model = StaticText
+        widgets = {
+            'text': RedactorEditor(allow_image_upload=True, allow_file_upload=False),
+        }
+
+
+class StaticTextAdmin(admin.ModelAdmin):
+    form = StaticTextAdminForm
 
 
 admin.site.unregister(User)
@@ -47,3 +63,4 @@ admin.site.register(models.TestManufacturer)
 admin.site.register(models.TestPermission)
 admin.site.register(models.AssemblyStatus)
 admin.site.register(models.SiteStatus)
+admin.site.register(models.StaticText, StaticTextAdmin)

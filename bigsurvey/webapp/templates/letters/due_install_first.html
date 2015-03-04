@@ -1,7 +1,7 @@
 {% extends "letters/base.html" %}
 {% load i18n %}
 {% block letter_content %}
-The City of {{ letter.site.pws.city }} is in the process of implementing a cross connection control and backflow
+The City of {{ letter.site.city }} is in the process of implementing a cross connection control and backflow
 prevention program in accordance with mandates established by the Louisiana Department of
 Health & Hospitals (DHH).  Part of the mandate establishes who is required to install a backflow
 preventer for the protection of the potable water supply system.  In accordance with the
@@ -20,7 +20,7 @@ customer.
 <i>Prior to the installation of the backflow preventer, please have your selected plumber pick up a
 “Plumber’s Packet for Backflow Preventer Installation” from city hall located at <u>{{ letter.site.pws.office_address }}</u>.</i>
 <br/><br/>
-As mentioned above, this is a state mandated program. <u>The only recourse the City of {{ letter.site.pws.city }} has is to
+As mentioned above, this is a state mandated program. <u>The only recourse the City of {{ letter.site.city }} has is to
 discontinue water service for non-compliant customers.</u> Please have the backflow preventer
 installed and tested by the above stated Test Due Date and email a copy of the test
 report to {{ letter.user.email }}.  In the event that the required backflow preventer is already installed,

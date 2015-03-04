@@ -43,7 +43,8 @@ INSTALLED_APPS = (
     'webapp_features',
     'django_extensions',
     'widget_tweaks',
-    'pagination'
+    'pagination',
+    'redactor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,6 +106,14 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+MEDIA_URL = '/uploads/'
+
+REDACTOR_OPTIONS = {'lang': 'en'}
+REDACTOR_UPLOAD = 'article'
+
 
 try:
     from settings_local import *

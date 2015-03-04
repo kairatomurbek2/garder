@@ -605,3 +605,15 @@ class Inspection(models.Model):
             ('access_to_all_inspections', _('Has access to all Inspections')),
             ('access_to_pws_inspections', _('Has access to PWS\'s Inspections')),
         )
+
+
+class StaticText(models.Model):
+    title = models.CharField(max_length=20, verbose_name=_('Title'))
+    text = models.TextField(null=True, blank=True, verbose_name=_('Text'))
+
+    def __unicode__(self):
+        return u"%s" % self.title
+
+    class Meta:
+        verbose_name = _("Static Text")
+        verbose_name_plural = _("Static Text")

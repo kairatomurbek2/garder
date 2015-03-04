@@ -53,7 +53,7 @@
                         <li><a id="testpermissions_menu_link" href="{% url 'webapp:testpermission_list' %}">{% trans "Test Permissions" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_letter %}
-                        <li><a id="letters_menu_link" href="#">{% trans "Letters" %}</a></li>
+                        <li><a id="letters_menu_link" href="{% url 'webapp:letter_list' %}">{% trans "Letters" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_user %}
                         <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>

@@ -15,7 +15,7 @@
                 <th class="table-border-right uk-text-center">{% trans "No." %}</th>
                 <th>{% trans "Customer" %}</th>
                 <th>{% trans "Sender" %}</th>
-                <th>{% trans "Survey" %}</th>
+                <th>{% trans "Hazard" %}</th>
                 <th>{% trans "Type" %}</th>
                 <th>{% trans "Date" %}</th>
                 <th class="uk-text-center table-border-left">{% trans "Actions" %}</th>
@@ -25,10 +25,10 @@
             {% for letter in letters %}
                 <tr>
                     <td class="table-border-right uk-text-center">{{ forloop.counter }}</td>
-                    <td>{{ letter.customer.name }}</td>
+                    <td>{{ letter.site.customer }}</td>
                     <td>{{ letter.user.username }}</td>
-                    <td>{% if letter.survey %}
-                        {{ letter.survey }}
+                    <td>{% if letter.hazard %}
+                        {{ letter.hazard }}
                     {% endif %}</td>
                     <td>{{ letter.letter_type }}</td>
                     <td>{{ letter.date }}</td>

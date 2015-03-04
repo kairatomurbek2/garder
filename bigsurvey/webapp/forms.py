@@ -129,5 +129,8 @@ class BatchUpdateForm(forms.Form):
     date = forms.DateField(label=_('Select date'))
 
 
-class LetterSendForm(forms.Form):
-    pass
+class LetterSendForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Letter
+        exclude = ('user',)
