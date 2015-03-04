@@ -44,7 +44,7 @@ def click_survey_detail(step, number):
     step.given('I click survey detail link with number "%s"' % number)
 
 
-@step('I open "survey_edit" page for "(\d+)" survey on the page')
+@step('I open "survey_edit" page for survey no "(\d+)" on the page')
 def open_survey_edit_page(step, pk):
     step.given('I click "%s"th "survey_detail" link on page' % pk)
     step.given('I click survey edit link')
