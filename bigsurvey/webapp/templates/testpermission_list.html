@@ -13,7 +13,6 @@
                 <th>{% trans "Given To" %}</th>
                 <th>{% trans "Given By" %}</th>
                 <th>{% trans "Given Date" %}</th>
-                <th>{% trans "Due Date" %}</th>
                 <th>{% trans "Is Active" %}</th>
                 <th class="uk-text-center table-border-left">{% trans "Actions" %}</th>
             </tr>
@@ -26,7 +25,6 @@
                     <td>{{ testpermission.given_to }}</td>
                     <td>{{ testpermission.given_by }}</td>
                     <td>{{ testpermission.given_date }}</td>
-                    <td>{{ testpermission.due_date }}</td>
                     <td>{{ testpermission.is_active }}</td>
                     <td class="uk-text-center table-border-left table-border-bottom" rowspan="2">
                         <a href="{% url 'webapp:testpermission_edit' testpermission.pk %}" id="testpermission_{{ testpermission.pk }}_edit_link">{% trans "Edit" %}</a>
@@ -34,7 +32,7 @@
                 </tr>
                 <tr class="table-border-bottom uk-text-muted">
                     <td>{% trans "Notes:" %}</td>
-                    <td colspan="6" class="table-border-left table-border-right">{{ testpermission.notes }}</td>
+                    <td colspan="5" class="table-border-left table-border-right">{{ testpermission.notes }}</td>
                 </tr>
             {% endfor %}
             </tbody>

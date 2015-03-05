@@ -28,7 +28,7 @@ Feature: Survey Add
       | survey_date | 2015-03-15 |
     And I select "Initial" from "survey_type"
     And I submit "survey" form
-    Then I should be at "survey_detail" page with pk "3"
+    Then I should be at "survey_detail" page with pk "4"
     And I should see "survey adding success" message
     And I should see following
       | text           |

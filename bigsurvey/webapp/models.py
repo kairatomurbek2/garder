@@ -568,7 +568,6 @@ class TestPermission(models.Model):
     given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"),
                                  related_name='test_perms_given')
     given_date = models.DateField(verbose_name=_("Given Date"), auto_now_add=True)
-    due_date = models.DateField(verbose_name=_("Due Date"))
     is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
@@ -609,6 +608,7 @@ class Inspection(models.Model):
 
 class StaticText(models.Model):
     title = models.CharField(max_length=20, verbose_name=_('Title'))
+    key = models.CharField(null=True, blank=True, max_length=20, verbose_name=_('Key'))
     text = models.TextField(null=True, blank=True, verbose_name=_('Text'))
 
     def __unicode__(self):

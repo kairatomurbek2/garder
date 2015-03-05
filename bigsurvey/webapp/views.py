@@ -860,5 +860,5 @@ class HelpView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HelpView, self).get_context_data(**kwargs)
-        context['help'] = models.StaticText.objects.get(title="Help")
+        context['help'] = models.StaticText.objects.all()
         return context

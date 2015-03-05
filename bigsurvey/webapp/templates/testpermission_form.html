@@ -19,16 +19,7 @@
                         {% render_field form.given_to|add_class:'uk-width-1-1' %}
                         {{ form.given_to.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
-                        <label for="{{ form.due_date.id_for_label }}">{{ form.due_date.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {% render_field form.due_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
-                        {{ form.due_date.errors }}
-                    </td>
-                </tr>
-                {% if form.instance.pk %}
-                    <tr>
+                    {% if form.instance.pk %}
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ form.is_active.id_for_label }}">{{ form.is_active.label }}</label>
                         </td>
@@ -36,8 +27,8 @@
                             {{ form.is_active }}
                             {{ form.is_active.errors }}
                         </td>
-                    </tr>
-                {% endif %}
+                    {% endif %}
+                </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>

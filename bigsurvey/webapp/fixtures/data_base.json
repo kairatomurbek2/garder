@@ -1,2090 +1,2098 @@
 [
 {
-    "fields": {
-        "source_type": "Public Water Supply and Private Well"
-    },
-    "model": "webapp.sourcetype",
-    "pk": 1
+  "fields": {
+    "source_type": "Public Water Supply and Private Well"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 1
 },
 {
-    "fields": {
-        "source_type": "Private Well"
-    },
-    "model": "webapp.sourcetype",
-    "pk": 2
+  "fields": {
+    "source_type": "Private Well"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 2
 },
 {
-    "fields": {
-        "source_type": "Public Water Supply"
-    },
-    "model": "webapp.sourcetype",
-    "pk": 3
+  "fields": {
+    "source_type": "Public Water Supply"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 3
 },
 {
-    "fields": {
-        "source_type": "Public Water Supply and Pond, Stream, Bay, etc"
-    },
-    "model": "webapp.sourcetype",
-    "pk": 4
+  "fields": {
+    "source_type": "Public Water Supply and Pond, Stream, Bay, etc"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 4
 },
 {
-    "fields": {
-        "site_type": "School"
-    },
-    "model": "webapp.sitetype",
-    "pk": 1
+  "fields": {
+    "site_type": "School"
+  },
+  "model": "webapp.sitetype",
+  "pk": 1
 },
 {
-    "fields": {
-        "site_type": "Irrigation"
-    },
-    "model": "webapp.sitetype",
-    "pk": 2
+  "fields": {
+    "site_type": "Irrigation"
+  },
+  "model": "webapp.sitetype",
+  "pk": 2
 },
 {
-    "fields": {
-        "site_type": "Multi-family"
-    },
-    "model": "webapp.sitetype",
-    "pk": 3
+  "fields": {
+    "site_type": "Multi-family"
+  },
+  "model": "webapp.sitetype",
+  "pk": 3
 },
 {
-    "fields": {
-        "site_type": "Offices"
-    },
-    "model": "webapp.sitetype",
-    "pk": 4
+  "fields": {
+    "site_type": "Offices"
+  },
+  "model": "webapp.sitetype",
+  "pk": 4
 },
 {
-    "fields": {
-        "site_type": "Pest Exterminator"
-    },
-    "model": "webapp.sitetype",
-    "pk": 5
+  "fields": {
+    "site_type": "Pest Exterminator"
+  },
+  "model": "webapp.sitetype",
+  "pk": 5
 },
 {
-    "fields": {
-        "site_type": "Pharmacy"
-    },
-    "model": "webapp.sitetype",
-    "pk": 6
+  "fields": {
+    "site_type": "Pharmacy"
+  },
+  "model": "webapp.sitetype",
+  "pk": 6
 },
 {
-    "fields": {
-        "site_type": "Pool"
-    },
-    "model": "webapp.sitetype",
-    "pk": 7
+  "fields": {
+    "site_type": "Pool"
+  },
+  "model": "webapp.sitetype",
+  "pk": 7
 },
 {
-    "fields": {
-        "site_type": "Realtor"
-    },
-    "model": "webapp.sitetype",
-    "pk": 8
+  "fields": {
+    "site_type": "Realtor"
+  },
+  "model": "webapp.sitetype",
+  "pk": 8
 },
 {
-    "fields": {
-        "site_type": "Restaurant"
-    },
-    "model": "webapp.sitetype",
-    "pk": 9
+  "fields": {
+    "site_type": "Restaurant"
+  },
+  "model": "webapp.sitetype",
+  "pk": 9
 },
 {
-    "fields": {
-        "site_type": "Mortuary"
-    },
-    "model": "webapp.sitetype",
-    "pk": 10
+  "fields": {
+    "site_type": "Mortuary"
+  },
+  "model": "webapp.sitetype",
+  "pk": 10
 },
 {
-    "fields": {
-        "site_type": "Retirement Home"
-    },
-    "model": "webapp.sitetype",
-    "pk": 11
+  "fields": {
+    "site_type": "Retirement Home"
+  },
+  "model": "webapp.sitetype",
+  "pk": 11
 },
 {
-    "fields": {
-        "site_type": "Medical"
-    },
-    "model": "webapp.sitetype",
-    "pk": 12
+  "fields": {
+    "site_type": "Medical"
+  },
+  "model": "webapp.sitetype",
+  "pk": 12
 },
 {
-    "fields": {
-        "site_type": "Storage Facility"
-    },
-    "model": "webapp.sitetype",
-    "pk": 13
+  "fields": {
+    "site_type": "Storage Facility"
+  },
+  "model": "webapp.sitetype",
+  "pk": 13
 },
 {
-    "fields": {
-        "site_type": "Video Rental"
-    },
-    "model": "webapp.sitetype",
-    "pk": 14
+  "fields": {
+    "site_type": "Video Rental"
+  },
+  "model": "webapp.sitetype",
+  "pk": 14
 },
 {
-    "fields": {
-        "site_type": "Church"
-    },
-    "model": "webapp.sitetype",
-    "pk": 15
+  "fields": {
+    "site_type": "Church"
+  },
+  "model": "webapp.sitetype",
+  "pk": 15
 },
 {
-    "fields": {
-        "site_type": "Catering"
-    },
-    "model": "webapp.sitetype",
-    "pk": 16
+  "fields": {
+    "site_type": "Catering"
+  },
+  "model": "webapp.sitetype",
+  "pk": 16
 },
 {
-    "fields": {
-        "site_type": "Chiropractic"
-    },
-    "model": "webapp.sitetype",
-    "pk": 17
+  "fields": {
+    "site_type": "Chiropractic"
+  },
+  "model": "webapp.sitetype",
+  "pk": 17
 },
 {
-    "fields": {
-        "site_type": "Car Wash"
-    },
-    "model": "webapp.sitetype",
-    "pk": 18
+  "fields": {
+    "site_type": "Car Wash"
+  },
+  "model": "webapp.sitetype",
+  "pk": 18
 },
 {
-    "fields": {
-        "site_type": "Business Office"
-    },
-    "model": "webapp.sitetype",
-    "pk": 19
+  "fields": {
+    "site_type": "Business Office"
+  },
+  "model": "webapp.sitetype",
+  "pk": 19
 },
 {
-    "fields": {
-        "site_type": "Beauty Salon / Barber"
-    },
-    "model": "webapp.sitetype",
-    "pk": 20
+  "fields": {
+    "site_type": "Beauty Salon / Barber"
+  },
+  "model": "webapp.sitetype",
+  "pk": 20
 },
 {
-    "fields": {
-        "site_type": "Retail"
-    },
-    "model": "webapp.sitetype",
-    "pk": 21
+  "fields": {
+    "site_type": "Retail"
+  },
+  "model": "webapp.sitetype",
+  "pk": 21
 },
 {
-    "fields": {
-        "site_type": "Home Owners Association"
-    },
-    "model": "webapp.sitetype",
-    "pk": 22
+  "fields": {
+    "site_type": "Home Owners Association"
+  },
+  "model": "webapp.sitetype",
+  "pk": 22
 },
 {
-    "fields": {
-        "site_type": "Dialysis Clinic"
-    },
-    "model": "webapp.sitetype",
-    "pk": 23
+  "fields": {
+    "site_type": "Dialysis Clinic"
+  },
+  "model": "webapp.sitetype",
+  "pk": 23
 },
 {
-    "fields": {
-        "site_type": "Doctors Office"
-    },
-    "model": "webapp.sitetype",
-    "pk": 24
+  "fields": {
+    "site_type": "Doctors Office"
+  },
+  "model": "webapp.sitetype",
+  "pk": 24
 },
 {
-    "fields": {
-        "site_type": "Dry Cleaners"
-    },
-    "model": "webapp.sitetype",
-    "pk": 25
+  "fields": {
+    "site_type": "Dry Cleaners"
+  },
+  "model": "webapp.sitetype",
+  "pk": 25
 },
 {
-    "fields": {
-        "site_type": "Fast Food"
-    },
-    "model": "webapp.sitetype",
-    "pk": 26
+  "fields": {
+    "site_type": "Fast Food"
+  },
+  "model": "webapp.sitetype",
+  "pk": 26
 },
 {
-    "fields": {
-        "site_type": "Fireline"
-    },
-    "model": "webapp.sitetype",
-    "pk": 27
+  "fields": {
+    "site_type": "Fireline"
+  },
+  "model": "webapp.sitetype",
+  "pk": 27
 },
 {
-    "fields": {
-        "site_type": "Food Processing"
-    },
-    "model": "webapp.sitetype",
-    "pk": 28
+  "fields": {
+    "site_type": "Food Processing"
+  },
+  "model": "webapp.sitetype",
+  "pk": 28
 },
 {
-    "fields": {
-        "site_type": "Office W/ Washerteria\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 29
+  "fields": {
+    "site_type": "Office W/ Washerteria\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 29
 },
 {
-    "fields": {
-        "site_type": "Gas Station\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 30
+  "fields": {
+    "site_type": "Gas Station\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 30
 },
 {
-    "fields": {
-        "site_type": "Governmental\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 31
+  "fields": {
+    "site_type": "Governmental\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 31
 },
 {
-    "fields": {
-        "site_type": "Motels/Hotels\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 32
+  "fields": {
+    "site_type": "Motels/Hotels\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 32
 },
 {
-    "fields": {
-        "site_type": "Health Club\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 33
+  "fields": {
+    "site_type": "Health Club\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 33
 },
 {
-    "fields": {
-        "site_type": "Department Store\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 34
+  "fields": {
+    "site_type": "Department Store\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 34
 },
 {
-    "fields": {
-        "site_type": "Industrial\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 35
+  "fields": {
+    "site_type": "Industrial\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 35
 },
 {
-    "fields": {
-        "site_type": "Dentist\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 36
+  "fields": {
+    "site_type": "Dentist\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 36
 },
 {
-    "fields": {
-        "site_type": "Convenience\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 37
+  "fields": {
+    "site_type": "Convenience\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 37
 },
 {
-    "fields": {
-        "site_type": "Residential\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 38
+  "fields": {
+    "site_type": "Residential\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 38
 },
 {
-    "fields": {
-        "site_type": "Commercial\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 39
+  "fields": {
+    "site_type": "Commercial\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 39
 },
 {
-    "fields": {
-        "site_type": "Bar and Grill\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 40
+  "fields": {
+    "site_type": "Bar and Grill\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 40
 },
 {
-    "fields": {
-        "site_type": "Irrigation and pool\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 41
+  "fields": {
+    "site_type": "Irrigation and pool\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 41
 },
 {
-    "fields": {
-        "site_type": "Laundromat\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 42
+  "fields": {
+    "site_type": "Laundromat\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 42
 },
 {
-    "fields": {
-        "site_type": "Grocery/Supermarket\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 43
+  "fields": {
+    "site_type": "Grocery/Supermarket\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 43
 },
 {
-    "fields": {
-        "site_type": "Auxiliary Water\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 44
+  "fields": {
+    "site_type": "Auxiliary Water\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 44
 },
 {
-    "fields": {
-        "site_type": "Animal Hospital / Veterinarian\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 45
+  "fields": {
+    "site_type": "Animal Hospital / Veterinarian\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 45
 },
 {
-    "fields": {
-        "site_type": "Doctors Office #1\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 46
+  "fields": {
+    "site_type": "Doctors Office #1\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 46
 },
 {
-    "fields": {
-        "site_type": "Dialysis Center\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 47
+  "fields": {
+    "site_type": "Dialysis Center\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 47
 },
 {
-    "fields": {
-        "site_type": "Commercial Residence\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 48
+  "fields": {
+    "site_type": "Commercial Residence\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 48
 },
 {
-    "fields": {
-        "site_type": "Commerc. Multi-ten\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 49
+  "fields": {
+    "site_type": "Commerc. Multi-ten\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 49
 },
 {
-    "fields": {
-        "site_type": "Comm\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 50
+  "fields": {
+    "site_type": "Comm\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 50
 },
 {
-    "fields": {
-        "site_type": "Carwash\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 51
+  "fields": {
+    "site_type": "Carwash\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 51
 },
 {
-    "fields": {
-        "site_type": "Beauty Shop\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 52
+  "fields": {
+    "site_type": "Beauty Shop\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 52
 },
 {
-    "fields": {
-        "site_type": "Empty Lot\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 53
+  "fields": {
+    "site_type": "Empty Lot\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 53
 },
 {
-    "fields": {
-        "site_type": "Barber Shop\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 54
+  "fields": {
+    "site_type": "Barber Shop\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 54
 },
 {
-    "fields": {
-        "site_type": "Florist\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 55
+  "fields": {
+    "site_type": "Florist\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 55
 },
 {
-    "fields": {
-        "site_type": "Automotive\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 56
+  "fields": {
+    "site_type": "Automotive\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 56
 },
 {
-    "fields": {
-        "site_type": "Assisted Living\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 57
+  "fields": {
+    "site_type": "Assisted Living\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 57
 },
 {
-    "fields": {
-        "site_type": "Apartments\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 58
+  "fields": {
+    "site_type": "Apartments\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 58
 },
 {
-    "fields": {
-        "site_type": "Resiedential\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 59
+  "fields": {
+    "site_type": "Resiedential\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 59
 },
 {
-    "fields": {
-        "site_type": "Retail Store\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 60
+  "fields": {
+    "site_type": "Retail Store\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 60
 },
 {
-    "fields": {
-        "site_type": "Salon\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 61
+  "fields": {
+    "site_type": "Salon\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 61
 },
 {
-    "fields": {
-        "site_type": "Storage Building\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 62
+  "fields": {
+    "site_type": "Storage Building\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 62
 },
 {
-    "fields": {
-        "site_type": "Veterinary Office\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 63
+  "fields": {
+    "site_type": "Veterinary Office\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 63
 },
 {
-    "fields": {
-        "site_type": "Warehouse\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 64
+  "fields": {
+    "site_type": "Warehouse\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 64
 },
 {
-    "fields": {
-        "site_type": "Beauty Salon\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 65
+  "fields": {
+    "site_type": "Beauty Salon\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 65
 },
 {
-    "fields": {
-        "site_type": "No Address\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 66
+  "fields": {
+    "site_type": "No Address\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 66
 },
 {
-    "fields": {
-        "site_type": "Auto Repair\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 67
+  "fields": {
+    "site_type": "Auto Repair\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 67
 },
 {
-    "fields": {
-        "site_type": "Child/Day Care/Nursery\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 68
+  "fields": {
+    "site_type": "Child/Day Care/Nursery\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 68
 },
 {
-    "fields": {
-        "site_type": "Agricultural\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 69
+  "fields": {
+    "site_type": "Agricultural\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 69
 },
 {
-    "fields": {
-        "site_type": "Recreation\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 70
+  "fields": {
+    "site_type": "Recreation\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 70
 },
 {
-    "fields": {
-        "site_type": "Processing Facility\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 71
+  "fields": {
+    "site_type": "Processing Facility\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 71
 },
 {
-    "fields": {
-        "site_type": "Potable/recreation\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 72
+  "fields": {
+    "site_type": "Potable/recreation\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 72
 },
 {
-    "fields": {
-        "site_type": "Potable\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 73
+  "fields": {
+    "site_type": "Potable\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 73
 },
 {
-    "fields": {
-        "site_type": "Doctors Office #2\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 74
+  "fields": {
+    "site_type": "Doctors Office #2\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 74
 },
 {
-    "fields": {
-        "site_type": "Office\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 75
+  "fields": {
+    "site_type": "Office\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 75
 },
 {
-    "fields": {
-        "site_type": "Bank\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 76
+  "fields": {
+    "site_type": "Bank\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 76
 },
 {
-    "fields": {
-        "site_type": "Motel\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 77
+  "fields": {
+    "site_type": "Motel\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 77
 },
 {
-    "fields": {
-        "site_type": "Jail/ Governmental\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 78
+  "fields": {
+    "site_type": "Jail/ Governmental\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 78
 },
 {
-    "fields": {
-        "site_type": "Ice Machine\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 79
+  "fields": {
+    "site_type": "Ice Machine\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 79
 },
 {
-    "fields": {
-        "site_type": "Hospital\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 80
+  "fields": {
+    "site_type": "Hospital\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 80
 },
 {
-    "fields": {
-        "site_type": "Home\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 81
+  "fields": {
+    "site_type": "Home\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 81
 },
 {
-    "fields": {
-        "site_type": "Health Unit\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 82
+  "fields": {
+    "site_type": "Health Unit\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 82
 },
 {
-    "fields": {
-        "site_type": "Grocery Store\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 83
+  "fields": {
+    "site_type": "Grocery Store\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 83
 },
 {
-    "fields": {
-        "site_type": "Funeral Home\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 84
+  "fields": {
+    "site_type": "Funeral Home\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 84
 },
 {
-    "fields": {
-        "site_type": "Fraternal Hall\n"
-    },
-    "model": "webapp.sitetype",
-    "pk": 85
+  "fields": {
+    "site_type": "Fraternal Hall\n"
+  },
+  "model": "webapp.sitetype",
+  "pk": 85
 },
 {
-    "fields": {
-        "site_use": "Commercial"
-    },
-    "model": "webapp.siteuse",
-    "pk": 1
+  "fields": {
+    "site_use": "Commercial"
+  },
+  "model": "webapp.siteuse",
+  "pk": 1
 },
 {
-    "fields": {
-        "site_use": "Farming"
-    },
-    "model": "webapp.siteuse",
-    "pk": 3
+  "fields": {
+    "site_use": "Farming"
+  },
+  "model": "webapp.siteuse",
+  "pk": 3
 },
 {
-    "fields": {
-        "site_use": "Governmental"
-    },
-    "model": "webapp.siteuse",
-    "pk": 4
+  "fields": {
+    "site_use": "Governmental"
+  },
+  "model": "webapp.siteuse",
+  "pk": 4
 },
 {
-    "fields": {
-        "site_use": "Industrial"
-    },
-    "model": "webapp.siteuse",
-    "pk": 5
+  "fields": {
+    "site_use": "Industrial"
+  },
+  "model": "webapp.siteuse",
+  "pk": 5
 },
 {
-    "fields": {
-        "site_use": "Multi-Family"
-    },
-    "model": "webapp.siteuse",
-    "pk": 6
+  "fields": {
+    "site_use": "Multi-Family"
+  },
+  "model": "webapp.siteuse",
+  "pk": 6
 },
 {
-    "fields": {
-        "site_use": "Residental"
-    },
-    "model": "webapp.siteuse",
-    "pk": 7
+  "fields": {
+    "site_use": "Residental"
+  },
+  "model": "webapp.siteuse",
+  "pk": 7
 },
 {
-    "fields": {
-        "site_use": "Agricultural"
-    },
-    "model": "webapp.siteuse",
-    "pk": 8
+  "fields": {
+    "site_use": "Agricultural"
+  },
+  "model": "webapp.siteuse",
+  "pk": 8
 },
 {
-    "fields": {
-        "site_use": "Commercial Multi-tenant"
-    },
-    "model": "webapp.siteuse",
-    "pk": 9
+  "fields": {
+    "site_use": "Commercial Multi-tenant"
+  },
+  "model": "webapp.siteuse",
+  "pk": 9
 },
 {
-    "fields": {
-        "service_type": "fire"
-    },
-    "model": "webapp.servicetype",
-    "pk": 2
+  "fields": {
+    "service_type": "fire"
+  },
+  "model": "webapp.servicetype",
+  "pk": 2
 },
 {
-    "fields": {
-        "service_type": "potable"
-    },
-    "model": "webapp.servicetype",
-    "pk": 3
+  "fields": {
+    "service_type": "potable"
+  },
+  "model": "webapp.servicetype",
+  "pk": 3
 },
 {
-    "fields": {
-        "service_type": "irrigation"
-    },
-    "model": "webapp.servicetype",
-    "pk": 4
+  "fields": {
+    "service_type": "irrigation"
+  },
+  "model": "webapp.servicetype",
+  "pk": 4
 },
 {
-    "fields": {
-        "survey_type": "Initial"
-    },
-    "model": "webapp.surveytype",
-    "pk": 2
+  "fields": {
+    "survey_type": "Initial"
+  },
+  "model": "webapp.surveytype",
+  "pk": 2
 },
 {
-    "fields": {
-        "survey_type": "Drive-by"
-    },
-    "model": "webapp.surveytype",
-    "pk": 3
+  "fields": {
+    "survey_type": "Drive-by"
+  },
+  "model": "webapp.surveytype",
+  "pk": 3
 },
 {
-    "fields": {
-        "survey_type": "Initial/Drive-by"
-    },
-    "model": "webapp.surveytype",
-    "pk": 4
+  "fields": {
+    "survey_type": "Initial/Drive-by"
+  },
+  "model": "webapp.surveytype",
+  "pk": 4
 },
 {
-    "fields": {
-        "survey_type": "Follow-up"
-    },
-    "model": "webapp.surveytype",
-    "pk": 5
+  "fields": {
+    "survey_type": "Follow-up"
+  },
+  "model": "webapp.surveytype",
+  "pk": 5
 },
 {
-    "fields": {
-        "survey_type": "Annual"
-    },
-    "model": "webapp.surveytype",
-    "pk": 6
+  "fields": {
+    "survey_type": "Annual"
+  },
+  "model": "webapp.surveytype",
+  "pk": 6
 },
 {
-    "fields": {
-        "bp_type": "RP"
-    },
-    "model": "webapp.bptype",
-    "pk": 1
+  "fields": {
+    "bp_type": "RP"
+  },
+  "model": "webapp.bptype",
+  "pk": 1
 },
 {
-    "fields": {
-        "bp_type": "RPDA"
-    },
-    "model": "webapp.bptype",
-    "pk": 2
+  "fields": {
+    "bp_type": "RPDA"
+  },
+  "model": "webapp.bptype",
+  "pk": 2
 },
 {
-    "fields": {
-        "bp_type": "HBVB"
-    },
-    "model": "webapp.bptype",
-    "pk": 3
+  "fields": {
+    "bp_type": "HBVB"
+  },
+  "model": "webapp.bptype",
+  "pk": 3
 },
 {
-    "fields": {
-        "bp_type": "DCDA"
-    },
-    "model": "webapp.bptype",
-    "pk": 4
+  "fields": {
+    "bp_type": "DCDA"
+  },
+  "model": "webapp.bptype",
+  "pk": 4
 },
 {
-    "fields": {
-        "bp_type": "Air Gap"
-    },
-    "model": "webapp.bptype",
-    "pk": 5
+  "fields": {
+    "bp_type": "Air Gap"
+  },
+  "model": "webapp.bptype",
+  "pk": 5
 },
 {
-    "fields": {
-        "bp_type": "PVB"
-    },
-    "model": "webapp.bptype",
-    "pk": 6
+  "fields": {
+    "bp_type": "PVB"
+  },
+  "model": "webapp.bptype",
+  "pk": 6
 },
 {
-    "fields": {
-        "bp_type": "AVB"
-    },
-    "model": "webapp.bptype",
-    "pk": 7
+  "fields": {
+    "bp_type": "AVB"
+  },
+  "model": "webapp.bptype",
+  "pk": 7
 },
 {
-    "fields": {
-        "bp_type": "DC"
-    },
-    "model": "webapp.bptype",
-    "pk": 8
+  "fields": {
+    "bp_type": "DC"
+  },
+  "model": "webapp.bptype",
+  "pk": 8
 },
 {
-    "fields": {
-        "bp_size": "3/4\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 1
+  "fields": {
+    "bp_size": "3/4\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 1
 },
 {
-    "fields": {
-        "bp_size": "5/8\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 2
+  "fields": {
+    "bp_size": "5/8\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 2
 },
 {
-    "fields": {
-        "bp_size": "1\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 3
+  "fields": {
+    "bp_size": "1\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 3
 },
 {
-    "fields": {
-        "bp_size": "1.5\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 4
+  "fields": {
+    "bp_size": "1.5\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 4
 },
 {
-    "fields": {
-        "bp_size": "2\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 5
+  "fields": {
+    "bp_size": "2\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 5
 },
 {
-    "fields": {
-        "bp_size": "2.5\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 6
+  "fields": {
+    "bp_size": "2.5\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 6
 },
 {
-    "fields": {
-        "bp_size": "3\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 7
+  "fields": {
+    "bp_size": "3\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 7
 },
 {
-    "fields": {
-        "bp_size": "4\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 8
+  "fields": {
+    "bp_size": "4\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 8
 },
 {
-    "fields": {
-        "bp_size": "5\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 9
+  "fields": {
+    "bp_size": "5\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 9
 },
 {
-    "fields": {
-        "bp_size": "6\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 10
+  "fields": {
+    "bp_size": "6\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 10
 },
 {
-    "fields": {
-        "bp_size": "8\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 11
+  "fields": {
+    "bp_size": "8\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 11
 },
 {
-    "fields": {
-        "bp_size": "9\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 12
+  "fields": {
+    "bp_size": "9\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 12
 },
 {
-    "fields": {
-        "bp_size": "10\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 13
+  "fields": {
+    "bp_size": "10\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 13
 },
 {
-    "fields": {
-        "bp_size": "12\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 14
+  "fields": {
+    "bp_size": "12\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 14
 },
 {
-    "fields": {
-        "bp_size": "14\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 15
+  "fields": {
+    "bp_size": "14\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 15
 },
 {
-    "fields": {
-        "bp_size": "16\"\n"
-    },
-    "model": "webapp.bpsize",
-    "pk": 16
+  "fields": {
+    "bp_size": "16\"\n"
+  },
+  "model": "webapp.bpsize",
+  "pk": 16
 },
 {
-    "fields": {
-        "bp_manufacturer": "Ames"
-    },
-    "model": "webapp.bpmanufacturer",
-    "pk": 1
+  "fields": {
+    "bp_manufacturer": "Ames"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 1
 },
 {
-    "fields": {
-        "bp_manufacturer": "Wilkins"
-    },
-    "model": "webapp.bpmanufacturer",
-    "pk": 2
+  "fields": {
+    "bp_manufacturer": "Wilkins"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 2
 },
 {
-    "fields": {
-        "bp_manufacturer": "Watts"
-    },
-    "model": "webapp.bpmanufacturer",
-    "pk": 3
+  "fields": {
+    "bp_manufacturer": "Watts"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 3
 },
 {
-    "fields": {
-        "bp_manufacturer": "Conbraco"
-    },
-    "model": "webapp.bpmanufacturer",
-    "pk": 4
+  "fields": {
+    "bp_manufacturer": "Conbraco"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 4
 },
 {
-    "fields": {
-        "bp_manufacturer": "Febco"
-    },
-    "model": "webapp.bpmanufacturer",
-    "pk": 5
+  "fields": {
+    "bp_manufacturer": "Febco"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 5
 },
 {
-    "fields": {
-        "bp_manufacturer": "Hersey"
-    },
-    "model": "webapp.bpmanufacturer",
-    "pk": 6
+  "fields": {
+    "bp_manufacturer": "Hersey"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 6
 },
 {
-    "fields": {
-        "customer_code": "Residental\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 1
+  "fields": {
+    "customer_code": "Residental\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 1
 },
 {
-    "fields": {
-        "customer_code": "Governmental\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 2
+  "fields": {
+    "customer_code": "Governmental\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 2
 },
 {
-    "fields": {
-        "customer_code": "Commercial\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 3
+  "fields": {
+    "customer_code": "Commercial\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 3
 },
 {
-    "fields": {
-        "customer_code": "Industrial\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 4
+  "fields": {
+    "customer_code": "Industrial\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 4
 },
 {
-    "fields": {
-        "customer_code": "Trailer Park\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 5
+  "fields": {
+    "customer_code": "Trailer Park\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 5
 },
 {
-    "fields": {
-        "customer_code": "Multifamily\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 6
+  "fields": {
+    "customer_code": "Multifamily\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 6
 },
 {
-    "fields": {
-        "customer_code": "Irrigation\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 7
+  "fields": {
+    "customer_code": "Irrigation\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 7
 },
 {
-    "fields": {
-        "customer_code": "Fire\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 8
+  "fields": {
+    "customer_code": "Fire\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 8
 },
 {
-    "fields": {
-        "customer_code": "Other\n"
-    },
-    "model": "webapp.customercode",
-    "pk": 9
+  "fields": {
+    "customer_code": "Other\n"
+  },
+  "model": "webapp.customercode",
+  "pk": 9
 },
 {
-    "fields": {
-        "customer_code": "Potable"
-    },
-    "model": "webapp.customercode",
-    "pk": 10
+  "fields": {
+    "customer_code": "Potable"
+  },
+  "model": "webapp.customercode",
+  "pk": 10
 },
 {
-    "fields": {
-        "hazard_type": "Denied or Restricted Access\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 1
+  "fields": {
+    "hazard_type": "Denied or Restricted Access\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 1
 },
 {
-    "fields": {
-        "hazard_type": "Irrigation System\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 2
+  "fields": {
+    "hazard_type": "Irrigation System\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 2
 },
 {
-    "fields": {
-        "hazard_type": "Ice Maker\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 3
+  "fields": {
+    "hazard_type": "Ice Maker\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 3
 },
 {
-    "fields": {
-        "hazard_type": "Hose Bibs\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 4
+  "fields": {
+    "hazard_type": "Hose Bibs\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 4
 },
 {
-    "fields": {
-        "hazard_type": "Grease Trap\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 5
+  "fields": {
+    "hazard_type": "Grease Trap\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 5
 },
 {
-    "fields": {
-        "hazard_type": "Garbage Disposal\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 6
+  "fields": {
+    "hazard_type": "Garbage Disposal\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 6
 },
 {
-    "fields": {
-        "hazard_type": "Mop Sink\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 7
+  "fields": {
+    "hazard_type": "Mop Sink\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 7
 },
 {
-    "fields": {
-        "hazard_type": "Exterminator\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 8
+  "fields": {
+    "hazard_type": "Exterminator\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 8
 },
 {
-    "fields": {
-        "hazard_type": "Recreation Grounds\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 9
+  "fields": {
+    "hazard_type": "Recreation Grounds\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 9
 },
 {
-    "fields": {
-        "hazard_type": "Equipment Repair\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 10
+  "fields": {
+    "hazard_type": "Equipment Repair\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 10
 },
 {
-    "fields": {
-        "hazard_type": "Landscape Nursery\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 11
+  "fields": {
+    "hazard_type": "Landscape Nursery\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 11
 },
 {
-    "fields": {
-        "hazard_type": "Nursery\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 12
+  "fields": {
+    "hazard_type": "Nursery\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 12
 },
 {
-    "fields": {
-        "hazard_type": "Garbage Can Washer\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 13
+  "fields": {
+    "hazard_type": "Garbage Can Washer\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 13
 },
 {
-    "fields": {
-        "hazard_type": "Trailer Park\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 14
+  "fields": {
+    "hazard_type": "Trailer Park\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 14
 },
 {
-    "fields": {
-        "hazard_type": "Beauty Salon\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 15
+  "fields": {
+    "hazard_type": "Beauty Salon\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 15
 },
 {
-    "fields": {
-        "hazard_type": "Industrial Fluids\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 16
+  "fields": {
+    "hazard_type": "Industrial Fluids\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 16
 },
 {
-    "fields": {
-        "hazard_type": "Irrigation and Pool\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 17
+  "fields": {
+    "hazard_type": "Irrigation and Pool\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 17
 },
 {
-    "fields": {
-        "hazard_type": "Auto Repair\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 18
+  "fields": {
+    "hazard_type": "Auto Repair\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 18
 },
 {
-    "fields": {
-        "hazard_type": "Caterer\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 19
+  "fields": {
+    "hazard_type": "Caterer\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 19
 },
 {
-    "fields": {
-        "hazard_type": "NHP\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 20
+  "fields": {
+    "hazard_type": "NHP\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 20
 },
 {
-    "fields": {
-        "hazard_type": "Farm\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 21
+  "fields": {
+    "hazard_type": "Farm\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 21
 },
 {
-    "fields": {
-        "hazard_type": "Agriculture\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 22
+  "fields": {
+    "hazard_type": "Agriculture\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 22
 },
 {
-    "fields": {
-        "hazard_type": "Dialysis Center\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 23
+  "fields": {
+    "hazard_type": "Dialysis Center\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 23
 },
 {
-    "fields": {
-        "hazard_type": "Funeral Home\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 24
+  "fields": {
+    "hazard_type": "Funeral Home\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 24
 },
 {
-    "fields": {
-        "hazard_type": "Hospital\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 25
+  "fields": {
+    "hazard_type": "Hospital\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 25
 },
 {
-    "fields": {
-        "hazard_type": "Motel\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 26
+  "fields": {
+    "hazard_type": "Motel\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 26
 },
 {
-    "fields": {
-        "hazard_type": "No Address\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 27
+  "fields": {
+    "hazard_type": "No Address\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 27
 },
 {
-    "fields": {
-        "hazard_type": "Fire Sprinkler System\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 28
+  "fields": {
+    "hazard_type": "Fire Sprinkler System\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 28
 },
 {
-    "fields": {
-        "hazard_type": "De-ionized Water System\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 29
+  "fields": {
+    "hazard_type": "De-ionized Water System\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 29
 },
 {
-    "fields": {
-        "hazard_type": "Chiller System\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 30
+  "fields": {
+    "hazard_type": "Chiller System\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 30
 },
 {
-    "fields": {
-        "hazard_type": "Coffee Urn\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 31
+  "fields": {
+    "hazard_type": "Coffee Urn\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 31
 },
 {
-    "fields": {
-        "hazard_type": "Compressors, Water Cooled\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 32
+  "fields": {
+    "hazard_type": "Compressors, Water Cooled\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 32
 },
 {
-    "fields": {
-        "hazard_type": "Condenser\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 33
+  "fields": {
+    "hazard_type": "Condenser\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 33
 },
 {
-    "fields": {
-        "hazard_type": "Cooking Kettle\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 34
+  "fields": {
+    "hazard_type": "Cooking Kettle\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 34
 },
 {
-    "fields": {
-        "hazard_type": "Fountain, Ornamental\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 35
+  "fields": {
+    "hazard_type": "Fountain, Ornamental\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 35
 },
 {
-    "fields": {
-        "hazard_type": "Degreasing Equipment\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 36
+  "fields": {
+    "hazard_type": "Degreasing Equipment\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 36
 },
 {
-    "fields": {
-        "hazard_type": "Bedpan Washer\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 37
+  "fields": {
+    "hazard_type": "Bedpan Washer\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 37
 },
 {
-    "fields": {
-        "hazard_type": "Dental Cuspidor (Spit Sink)\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 38
+  "fields": {
+    "hazard_type": "Dental Cuspidor (Spit Sink)\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 38
 },
 {
-    "fields": {
-        "hazard_type": "Jail/Prison\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 39
+  "fields": {
+    "hazard_type": "Jail/Prison\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 39
 },
 {
-    "fields": {
-        "hazard_type": "Digester\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 40
+  "fields": {
+    "hazard_type": "Digester\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 40
 },
 {
-    "fields": {
-        "hazard_type": "Dishwasher\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 41
+  "fields": {
+    "hazard_type": "Dishwasher\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 41
 },
 {
-    "fields": {
-        "hazard_type": "Distillation Equipment\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 42
+  "fields": {
+    "hazard_type": "Distillation Equipment\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 42
 },
 {
-    "fields": {
-        "hazard_type": "Dye Vats\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 43
+  "fields": {
+    "hazard_type": "Dye Vats\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 43
 },
 {
-    "fields": {
-        "hazard_type": "Cooling Tower\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 44
+  "fields": {
+    "hazard_type": "Cooling Tower\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 44
 },
 {
-    "fields": {
-        "hazard_type": "Fireline\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 45
+  "fields": {
+    "hazard_type": "Fireline\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 45
 },
 {
-    "fields": {
-        "hazard_type": "Video Rental\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 46
+  "fields": {
+    "hazard_type": "Video Rental\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 46
 },
 {
-    "fields": {
-        "hazard_type": "Fertilizer Injector\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 47
+  "fields": {
+    "hazard_type": "Fertilizer Injector\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 47
 },
 {
-    "fields": {
-        "hazard_type": "Fermentation Tank\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 48
+  "fields": {
+    "hazard_type": "Fermentation Tank\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 48
 },
 {
-    "fields": {
-        "hazard_type": "Child Care Facility\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 49
+  "fields": {
+    "hazard_type": "Child Care Facility\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 49
 },
 {
-    "fields": {
-        "hazard_type": "Group Home\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 50
+  "fields": {
+    "hazard_type": "Group Home\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 50
 },
 {
-    "fields": {
-        "hazard_type": "Fraternal Hall\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 51
+  "fields": {
+    "hazard_type": "Fraternal Hall\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 51
 },
 {
-    "fields": {
-        "hazard_type": "Bottle Washer\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 52
+  "fields": {
+    "hazard_type": "Bottle Washer\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 52
 },
 {
-    "fields": {
-        "hazard_type": "Office\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 53
+  "fields": {
+    "hazard_type": "Office\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 53
 },
 {
-    "fields": {
-        "hazard_type": "Boiler Feed Line\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 54
+  "fields": {
+    "hazard_type": "Boiler Feed Line\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 54
 },
 {
-    "fields": {
-        "hazard_type": "Aspirator\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 55
+  "fields": {
+    "hazard_type": "Aspirator\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 55
 },
 {
-    "fields": {
-        "hazard_type": "Autopsy Table\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 56
+  "fields": {
+    "hazard_type": "Autopsy Table\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 56
 },
 {
-    "fields": {
-        "hazard_type": "Auxiliary Water System (Well)\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 57
+  "fields": {
+    "hazard_type": "Auxiliary Water System (Well)\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 57
 },
 {
-    "fields": {
-        "hazard_type": "Auxiliary Water System (Surf. Water)\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 58
+  "fields": {
+    "hazard_type": "Auxiliary Water System (Surf. Water)\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 58
 },
 {
-    "fields": {
-        "hazard_type": "Baptismal Font\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 59
+  "fields": {
+    "hazard_type": "Baptismal Font\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 59
 },
 {
-    "fields": {
-        "hazard_type": "Solar System\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 60
+  "fields": {
+    "hazard_type": "Solar System\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 60
 },
 {
-    "fields": {
-        "hazard_type": "Veterinarian\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 61
+  "fields": {
+    "hazard_type": "Veterinarian\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 61
 },
 {
-    "fields": {
-        "hazard_type": "Church Rec Center\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 62
+  "fields": {
+    "hazard_type": "Church Rec Center\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 62
 },
 {
-    "fields": {
-        "hazard_type": "Overhead Spray Hose\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 63
+  "fields": {
+    "hazard_type": "Overhead Spray Hose\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 63
 },
 {
-    "fields": {
-        "hazard_type": "Nursing Home\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 64
+  "fields": {
+    "hazard_type": "Nursing Home\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 64
 },
 {
-    "fields": {
-        "hazard_type": "Vacant\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 65
+  "fields": {
+    "hazard_type": "Vacant\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 65
 },
 {
-    "fields": {
-        "hazard_type": "Medical Facility\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 66
+  "fields": {
+    "hazard_type": "Medical Facility\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 66
 },
 {
-    "fields": {
-        "hazard_type": "Mechanic Shop\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 67
+  "fields": {
+    "hazard_type": "Mechanic Shop\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 67
 },
 {
-    "fields": {
-        "hazard_type": "Convenience Store\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 68
+  "fields": {
+    "hazard_type": "Convenience Store\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 68
 },
 {
-    "fields": {
-        "hazard_type": "Sewer Plant\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 69
+  "fields": {
+    "hazard_type": "Sewer Plant\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 69
 },
 {
-    "fields": {
-        "hazard_type": "Commercial Multi-tenant\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 70
+  "fields": {
+    "hazard_type": "Commercial Multi-tenant\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 70
 },
 {
-    "fields": {
-        "hazard_type": "Laundromat\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 71
+  "fields": {
+    "hazard_type": "Laundromat\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 71
 },
 {
-    "fields": {
-        "hazard_type": "Chiropractor/Health Clinic\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 72
+  "fields": {
+    "hazard_type": "Chiropractor/Health Clinic\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 72
 },
 {
-    "fields": {
-        "hazard_type": "Autoclaves\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 73
+  "fields": {
+    "hazard_type": "Autoclaves\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 73
 },
 {
-    "fields": {
-        "hazard_type": "Starch Tanks\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 74
+  "fields": {
+    "hazard_type": "Starch Tanks\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 74
 },
 {
-    "fields": {
-        "hazard_type": "Steam Cleaner\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 75
+  "fields": {
+    "hazard_type": "Steam Cleaner\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 75
 },
 {
-    "fields": {
-        "hazard_type": "Steam Table\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 76
+  "fields": {
+    "hazard_type": "Steam Table\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 76
 },
 {
-    "fields": {
-        "hazard_type": "Product Manufacturing\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 77
+  "fields": {
+    "hazard_type": "Product Manufacturing\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 77
 },
 {
-    "fields": {
-        "hazard_type": "Water Softener\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 78
+  "fields": {
+    "hazard_type": "Water Softener\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 78
 },
 {
-    "fields": {
-        "hazard_type": "Deli/bakery\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 79
+  "fields": {
+    "hazard_type": "Deli/bakery\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 79
 },
 {
-    "fields": {
-        "hazard_type": "Frost proof HB\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 80
+  "fields": {
+    "hazard_type": "Frost proof HB\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 80
 },
 {
-    "fields": {
-        "hazard_type": "Assisted Living\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 81
+  "fields": {
+    "hazard_type": "Assisted Living\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 81
 },
 {
-    "fields": {
-        "hazard_type": "Governmental\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 82
+  "fields": {
+    "hazard_type": "Governmental\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 82
 },
 {
-    "fields": {
-        "hazard_type": "Pool\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 83
+  "fields": {
+    "hazard_type": "Pool\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 83
 },
 {
-    "fields": {
-        "hazard_type": "Bar and Grill\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 84
+  "fields": {
+    "hazard_type": "Bar and Grill\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 84
 },
 {
-    "fields": {
-        "hazard_type": "Bank\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 85
+  "fields": {
+    "hazard_type": "Bank\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 85
 },
 {
-    "fields": {
-        "hazard_type": "Car Wash\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 86
+  "fields": {
+    "hazard_type": "Car Wash\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 86
 },
 {
-    "fields": {
-        "hazard_type": "Recreation Center\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 87
+  "fields": {
+    "hazard_type": "Recreation Center\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 87
 },
 {
-    "fields": {
-        "hazard_type": "Lab Sink\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 88
+  "fields": {
+    "hazard_type": "Lab Sink\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 88
 },
 {
-    "fields": {
-        "hazard_type": "Welder, Water Cooled\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 89
+  "fields": {
+    "hazard_type": "Welder, Water Cooled\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 89
 },
 {
-    "fields": {
-        "hazard_type": "Bathrooms\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 90
+  "fields": {
+    "hazard_type": "Bathrooms\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 90
 },
 {
-    "fields": {
-        "hazard_type": "Water tower\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 91
+  "fields": {
+    "hazard_type": "Water tower\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 91
 },
 {
-    "fields": {
-        "hazard_type": "Steam line\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 92
+  "fields": {
+    "hazard_type": "Steam line\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 92
 },
 {
-    "fields": {
-        "hazard_type": "Restrooms\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 93
+  "fields": {
+    "hazard_type": "Restrooms\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 93
 },
 {
-    "fields": {
-        "hazard_type": "Processing\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 94
+  "fields": {
+    "hazard_type": "Processing\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 94
 },
 {
-    "fields": {
-        "hazard_type": "Eye wash shower\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 95
+  "fields": {
+    "hazard_type": "Eye wash shower\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 95
 },
 {
-    "fields": {
-        "hazard_type": "Breakroom\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 96
+  "fields": {
+    "hazard_type": "Breakroom\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 96
 },
 {
-    "fields": {
-        "hazard_type": "Dry Cleaners\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 97
+  "fields": {
+    "hazard_type": "Dry Cleaners\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 97
 },
 {
-    "fields": {
-        "hazard_type": "Pressure Cooker\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 98
+  "fields": {
+    "hazard_type": "Pressure Cooker\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 98
 },
 {
-    "fields": {
-        "hazard_type": "X-Ray Equipment\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 99
+  "fields": {
+    "hazard_type": "X-Ray Equipment\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 99
 },
 {
-    "fields": {
-        "hazard_type": "Storage Center\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 100
+  "fields": {
+    "hazard_type": "Storage Center\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 100
 },
 {
-    "fields": {
-        "hazard_type": "Sterilizing Equipment\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 101
+  "fields": {
+    "hazard_type": "Sterilizing Equipment\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 101
 },
 {
-    "fields": {
-        "hazard_type": "Irrigation\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 102
+  "fields": {
+    "hazard_type": "Irrigation\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 102
 },
 {
-    "fields": {
-        "hazard_type": "Auxiliary Water\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 103
+  "fields": {
+    "hazard_type": "Auxiliary Water\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 103
 },
 {
-    "fields": {
-        "hazard_type": "Home Owners Association\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 104
+  "fields": {
+    "hazard_type": "Home Owners Association\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 104
 },
 {
-    "fields": {
-        "hazard_type": "Radiator Flushing Equipment\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 105
+  "fields": {
+    "hazard_type": "Radiator Flushing Equipment\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 105
 },
 {
-    "fields": {
-        "hazard_type": "Multi-Family\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 106
+  "fields": {
+    "hazard_type": "Multi-Family\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 106
 },
 {
-    "fields": {
-        "hazard_type": "Potato Peeler\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 107
+  "fields": {
+    "hazard_type": "Potato Peeler\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 107
 },
 {
-    "fields": {
-        "hazard_type": "Pipette Washer\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 108
+  "fields": {
+    "hazard_type": "Pipette Washer\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 108
 },
 {
-    "fields": {
-        "hazard_type": "Photostat Equipment\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 109
+  "fields": {
+    "hazard_type": "Photostat Equipment\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 109
 },
 {
-    "fields": {
-        "hazard_type": "Photo Rinse Sinks\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 110
+  "fields": {
+    "hazard_type": "Photo Rinse Sinks\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 110
 },
 {
-    "fields": {
-        "hazard_type": "Photo Film Washer\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 111
+  "fields": {
+    "hazard_type": "Photo Film Washer\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 111
 },
 {
-    "fields": {
-        "hazard_type": "Photo Developer (Automatic)\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 112
+  "fields": {
+    "hazard_type": "Photo Developer (Automatic)\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 112
 },
 {
-    "fields": {
-        "hazard_type": "Barber Shop\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 113
+  "fields": {
+    "hazard_type": "Barber Shop\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 113
 },
 {
-    "fields": {
-        "hazard_type": "Grocery Store\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 114
+  "fields": {
+    "hazard_type": "Grocery Store\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 114
 },
 {
-    "fields": {
-        "hazard_type": "Food Processing\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 115
+  "fields": {
+    "hazard_type": "Food Processing\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 115
 },
 {
-    "fields": {
-        "hazard_type": "Pharmacy\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 116
+  "fields": {
+    "hazard_type": "Pharmacy\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 116
 },
 {
-    "fields": {
-        "hazard_type": "Restaurant\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 117
+  "fields": {
+    "hazard_type": "Restaurant\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 117
 },
 {
-    "fields": {
-        "hazard_type": "Expansion Tank\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 118
+  "fields": {
+    "hazard_type": "Expansion Tank\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 118
 },
 {
-    "fields": {
-        "hazard_type": "Movie Theater\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 119
+  "fields": {
+    "hazard_type": "Movie Theater\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 119
 },
 {
-    "fields": {
-        "hazard_type": "Retail\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 120
+  "fields": {
+    "hazard_type": "Retail\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 120
 },
 {
-    "fields": {
-        "hazard_type": "School\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 121
+  "fields": {
+    "hazard_type": "School\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 121
 },
 {
-    "fields": {
-        "hazard_type": "Industrial\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 122
+  "fields": {
+    "hazard_type": "Industrial\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 122
 },
 {
-    "fields": {
-        "hazard_type": "Church\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 123
+  "fields": {
+    "hazard_type": "Church\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 123
 },
 {
-    "fields": {
-        "hazard_type": "Doctors Office\n"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 124
+  "fields": {
+    "hazard_type": "Doctors Office\n"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 124
 },
 {
-    "fields": {
-        "hazard_type": "Kitchenette"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 125
+  "fields": {
+    "hazard_type": "Kitchenette"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 125
 },
 {
-    "fields": {
-        "hazard_type": "Foaming Station"
-    },
-    "model": "webapp.hazardtype",
-    "pk": 126
+  "fields": {
+    "hazard_type": "Foaming Station"
+  },
+  "model": "webapp.hazardtype",
+  "pk": 126
 },
 {
-    "fields": {
-        "test_manufacturer": "Wilkins"
-    },
-    "model": "webapp.testmanufacturer",
-    "pk": 1
+  "fields": {
+    "test_manufacturer": "Wilkins"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 1
 },
 {
-    "fields": {
-        "test_manufacturer": "Midwest"
-    },
-    "model": "webapp.testmanufacturer",
-    "pk": 2
+  "fields": {
+    "test_manufacturer": "Midwest"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 2
 },
 {
-    "fields": {
-        "test_manufacturer": "Watts"
-    },
-    "model": "webapp.testmanufacturer",
-    "pk": 3
+  "fields": {
+    "test_manufacturer": "Watts"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 3
 },
 {
-    "fields": {
-        "ic_point": "Yard"
-    },
-    "model": "webapp.icpointtype",
-    "pk": 1
+  "fields": {
+    "ic_point": "Yard"
+  },
+  "model": "webapp.icpointtype",
+  "pk": 1
 },
 {
-    "fields": {
-        "ic_point": "Building"
-    },
-    "model": "webapp.icpointtype",
-    "pk": 2
+  "fields": {
+    "ic_point": "Building"
+  },
+  "model": "webapp.icpointtype",
+  "pk": 2
 },
 {
-    "fields": {
-        "assembly_location": "At Meter"
-    },
-    "model": "webapp.assemblylocation",
-    "pk": 1
+  "fields": {
+    "assembly_location": "At Meter"
+  },
+  "model": "webapp.assemblylocation",
+  "pk": 1
 },
 {
-    "fields": {
-        "assembly_location": "Internal"
-    },
-    "model": "webapp.assemblylocation",
-    "pk": 2
+  "fields": {
+    "assembly_location": "Internal"
+  },
+  "model": "webapp.assemblylocation",
+  "pk": 2
 },
 {
-    "fields": {
-        "assembly_status": "Installed"
-    },
-    "model": "webapp.assemblystatus",
-    "pk": 1
+  "fields": {
+    "assembly_status": "Installed"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 1
 },
 {
-    "fields": {
-        "assembly_status": "Replaced"
-    },
-    "model": "webapp.assemblystatus",
-    "pk": 2
+  "fields": {
+    "assembly_status": "Replaced"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 2
 },
 {
-    "fields": {
-        "assembly_status": "Due Install"
-    },
-    "model": "webapp.assemblystatus",
-    "pk": 3
+  "fields": {
+    "assembly_status": "Due Install"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 3
 },
 {
-    "fields": {
-        "assembly_status": "Due Replace"
-    },
-    "model": "webapp.assemblystatus",
-    "pk": 4
+  "fields": {
+    "assembly_status": "Due Replace"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 4
 },
 {
-    "fields": {
-        "assembly_status": "Not Required"
-    },
-    "model": "webapp.assemblystatus",
-    "pk": 5
+  "fields": {
+    "assembly_status": "Not Required"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 5
 },
 {
-    "fields": {
-        "letter_type": "Test Due Date",
-        "template": ""
-    },
-    "model": "webapp.lettertype",
-    "pk": 1
+  "fields": {
+    "letter_type": "Test Due Date",
+    "template": ""
+  },
+  "model": "webapp.lettertype",
+  "pk": 1
 },
 {
-    "fields": {
-        "letter_type": "Install Due Date",
-        "template": ""
-    },
-    "model": "webapp.lettertype",
-    "pk": 2
+  "fields": {
+    "letter_type": "Install Due Date",
+    "template": ""
+  },
+  "model": "webapp.lettertype",
+  "pk": 2
 },
 {
-    "fields": {
-        "floors_count": "1"
-    },
-    "model": "webapp.floorscount",
-    "pk": 1
+  "fields": {
+    "floors_count": "1"
+  },
+  "model": "webapp.floorscount",
+  "pk": 1
 },
 {
-    "fields": {
-        "floors_count": "2"
-    },
-    "model": "webapp.floorscount",
-    "pk": 2
+  "fields": {
+    "floors_count": "2"
+  },
+  "model": "webapp.floorscount",
+  "pk": 2
 },
 {
-    "fields": {
-        "floors_count": "3 or more"
-    },
-    "model": "webapp.floorscount",
-    "pk": 3
+  "fields": {
+    "floors_count": "3 or more"
+  },
+  "model": "webapp.floorscount",
+  "pk": 3
 },
 {
-    "fields": {
-        "special": "A"
-    },
-    "model": "webapp.special",
-    "pk": 1
+  "fields": {
+    "special": "A"
+  },
+  "model": "webapp.special",
+  "pk": 1
 },
 {
-    "fields": {
-        "special": "B"
-    },
-    "model": "webapp.special",
-    "pk": 2
+  "fields": {
+    "special": "B"
+  },
+  "model": "webapp.special",
+  "pk": 2
 },
 {
-    "fields": {
-        "special": "C"
-    },
-    "model": "webapp.special",
-    "pk": 3
+  "fields": {
+    "special": "C"
+  },
+  "model": "webapp.special",
+  "pk": 3
 },
 {
-    "fields": {
-        "special": "D"
-    },
-    "model": "webapp.special",
-    "pk": 4
+  "fields": {
+    "special": "D"
+  },
+  "model": "webapp.special",
+  "pk": 4
 },
 {
-    "fields": {
-        "special": "E"
-    },
-    "model": "webapp.special",
-    "pk": 5
+  "fields": {
+    "special": "E"
+  },
+  "model": "webapp.special",
+  "pk": 5
 },
 {
-    "fields": {
-        "orientation": "Horizontal"
-    },
-    "model": "webapp.orientation",
-    "pk": 1
+  "fields": {
+    "orientation": "Horizontal"
+  },
+  "model": "webapp.orientation",
+  "pk": 1
 },
 {
-    "fields": {
-        "orientation": "Vertical"
-    },
-    "model": "webapp.orientation",
-    "pk": 2
+  "fields": {
+    "orientation": "Vertical"
+  },
+  "model": "webapp.orientation",
+  "pk": 2
 },
 {
-    "fields": {
-        "site_status": "Active"
-    },
-    "model": "webapp.sitestatus",
-    "pk": 1
+  "fields": {
+    "site_status": "Active"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 1
 },
 {
-    "fields": {
-        "site_status": "Suspended"
-    },
-    "model": "webapp.sitestatus",
-    "pk": 2
+  "fields": {
+    "site_status": "Suspended"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 2
 },
 {
-    "fields": {
-        "site_status": "Disconnected"
-    },
-    "model": "webapp.sitestatus",
-    "pk": 3
+  "fields": {
+    "site_status": "Disconnected"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 3
+},
+{
+  "fields": {
+    "text": "<h2>Main page</h2><p>After you log in, you are on the main page, where you can see list of all available sites. As super administrator you have access to every site stored in the system. </p><p><img src=\"/uploads/article/main_page_super.png\"></p><p>You can filter sites, using filters located above the site list - just type or select requred values and press the \"Apply Filters\" button. To remove filtering - clear text filter fields and select \"All\" value in dropdown fields and press \"Apply Filters\" button. </p><p>To the right of each site there are \"Detail\" and \"Assign\" links. The \"Detail\" link opens Site Detail page. The \"Assign\" link opens menu whith to choices: \"Assign Surveyor\" leading to Inspection add form and \"Grant Test Permission\" leading to Test Permission add form.</p><p>At the top of the page there is main menu. Its central part differs for different pages. On the Site List page it has only one link \"Add Site\" which opens site adding form. Other menu links  available on every page. \"BFP\" link leads directly to the main page. \"Menu\" is a dropdown from where you can access different parts of the system.<br></p><p><img src=\"/uploads/article/Menu.png\"></p><ul><li>\"Administration\" link opens main administration interface available only to super administrators. <strong>Any data can be added, edited or deleted from there.</strong></li><li>\"PWS\" link opens list of PWS, from where you can add or edit them.</li><li>\"Customers\" link opens list of customers, from where they can be added or edited.</li><li>\"Sites\" link leads to the main (site list) page</li><li>\"Inspections\" link leads to the Inspection list from where inspections can be edited. Note, inspections can only be added from Site List or Site Detail pages via \"Assign Surveyor\" link.</li><li>\"Test Permissions\" link is similar to \"Inspections\" but opens Test Permissions list page</li><li>\"Letters\" link opens Letter list page. Currently it's not fully functional - you can see old letters, but can not add and send new ones.</li><li>\"Users\" link opens User list page, where you can see all the system users, grouped by their type. Users can be added or edited from here. As super administrator you may also add or edit users via Administration interface. This separate interface needed mostly for administrators as they should be able to add their employees to the system, but can not access the main Administrations interface. </li><li>\"Import\" should open Import page where data from MS Excel files can be imported, but currently it does nothing, as the import feature is not available yet.</li><li>\"Batch Update\" opens Batch Update page, where you can set multiple sites' next survey date or due install/test date. </li></ul><h2><br></h2><h2>Site Detail page</h2><p>This page can be accessed from main (site list) page via \"Detail\" links for each site in the list.<br></p><p><img src=\"/uploads/article/site_detail_admin.png\"></p>Here you can see all of the selected site details like address, meter data, water supplies present and so on. Below Surveys for this site are present for each water supply type. If there is no some water supply type present on the site, you will see \"not present\" message like following:<p><img src=\"/uploads/article/not_present.png\"></p><p>In another case you will be able to add and browse surveys for this site. Note, that surveys are added for the active service type. So if you are at the \"Potable\" tab then \"Add Survey\" button will add surveys with \"potable\" service type. </p><p>\"Detail\" link to the right of each survey allows you to browse that survey details, while \"Add Hazard\" link is a shortcut for adding more hazards to selected survey. </p><p>In the central part of the top menu you can see different links. \"Edit\" link opens editing form for the site. \"Assign\" link is similar to \"Assing link\" on the main page: it opens menu with two choices, one for assigning surveyor and another one for granting test permission. \"Site List\" link just returns you back to the main page.</p><h2><br></h2><h2>Site Add/Edit form</h2><p>This form is used for adding/editing sites. Fields are grouped by meaning. </p><p><img src=\"/uploads/article/site_form.png\">The only special thing about this form is the customer field. When you click \"Select Customer\" button a modal is opened with customer list and filters. This is made in order to make it easier and faster to select a customer. To select one just click green \"Select\" button to the right of the customer. To hide the modal without making selection, click anywhere outside it on the page (dark-gray).</p><p><img src=\"/uploads/article/site_customer_filters.png\"></p><p><br></p><h2>Survey Detail page</h2><p>Similar to the Site Detail page, this one has survey detail part at the top and hazards list below. This page can be accessed via detail links in the survey list on the Site Detail page. From here you can edit survey via link in the top menu, add and browse hazards. \"Add Test\" link to the right of each hazard is a shortcut for creating new Test for selected Hazard.<br></p><p><img src=\"/uploads/article/survey_detail.png\"></p><p><br></p><h2>Hazard Detail page</h2><p>Hazard contais data related to hazard itself like location and hazard type and to bfp-device installed for that hazard. </p><p><br></p>",
+    "title": "Super Admin Help"
+  },
+  "model": "webapp.statictext",
+  "pk": 2
 }
 ]

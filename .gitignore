@@ -6,6 +6,7 @@ virtualenv
 settings_local.py
 settings_test.py
 *.bak
-static
-uploads
+bigsurvey/static
+uploads/*
+!uploads/article
 testres.xml

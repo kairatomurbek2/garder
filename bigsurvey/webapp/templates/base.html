@@ -64,7 +64,6 @@
                     {% if perms.webapp.change_site %}
                         <li><a id="batch_update_menu_link" href="{% url 'webapp:batch_update' %}">{% trans "Batch Update" %}</a></li>
                     {% endif %}
-                    <li><a id="help_menu_link" href="{% url 'webapp:help' %}">{% trans "Help" %}</a></li>
                 </ul>
             </div>
         </li>
@@ -77,6 +76,7 @@
     </div>
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
+            <li><a id="help_menu_link" href="{% url 'webapp:help' %}">{% trans "Help" %}</a></li>
             <li><a href="{% url 'accounts:logout' %}">{% trans "Log Out" %}</a></li>
         </ul>
     </div>

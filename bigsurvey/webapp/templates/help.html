@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{% static 'css/custom/help.css' %}"/>
 {% endblock %}
 {% block content %}
-    {{ help.title }}
-    {{ help.text|safe }}
+    <div class="uk-margin-large-left uk-margin-large-right">
+    {% for help_item in help %}
+    {{ help_item.title }}
+    {{ help_item.text|safe }}
+    {% endfor %}
+    </div>
 {% endblock %}

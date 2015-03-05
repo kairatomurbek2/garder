@@ -22,7 +22,7 @@
                 <th>{% trans "Address" %}</th>
                 <th>{% trans "ZIP" %}</th>
                 <th>{% trans "Code" %}</th>
-                <th class="uk-text-center table-border-left" colspan="3">{% trans "Actions" %}</th>
+                <th class="uk-text-center table-border-left" colspan="2">{% trans "Actions" %}</th>
             </tr>
             </thead>
             <tbody>
@@ -40,9 +40,6 @@
                     </td>
                     <td class="uk-text-center">
                         <a href="{% url 'webapp:customer_edit' customer.pk %}" id="customer_{{ customer.pk }}_edit_link">{% trans "Edit" %}</a>
-                    </td>
-                    <td class="uk-text-center">
-                        <a href="#">{% trans "Letter" %}</a>
                     </td>
                 </tr>
             {% endfor %}

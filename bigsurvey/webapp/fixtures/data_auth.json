@@ -349,6 +349,11 @@
         "letter"
       ],
       [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
         "add_lettertype",
         "webapp",
         "lettertype"
@@ -607,6 +612,11 @@
         "delete_special",
         "webapp",
         "special"
+      ],
+      [
+        "change_statictext",
+        "webapp",
+        "statictext"
       ],
       [
         "access_to_all_surveys",
@@ -878,6 +888,26 @@
         "letter"
       ],
       [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "add_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "browse_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "change_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
         "access_to_batch_update",
         "webapp",
         "site"
@@ -1128,7 +1158,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-02-25T07:15:17Z",
+    "last_login": "2015-03-05T10:00:30Z",
     "groups": [],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",
@@ -1146,7 +1176,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": true,
-    "last_login": "2015-02-25T07:15:38Z",
+    "last_login": "2015-03-05T08:48:11Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -1154,7 +1184,7 @@
     ],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$huwUpvbDKKsr$nRLO1lT/SaSQFV86xd9whUhpVECJW5D22g6/s7txc1M=",
-    "email": "",
+    "email": "mlebas@gmail.com",
     "date_joined": "2015-02-25T06:38:29Z"
   },
   "model": "auth.user",
