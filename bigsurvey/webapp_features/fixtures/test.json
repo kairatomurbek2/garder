@@ -4146,7 +4146,6 @@
 },
 {
   "fields": {
-    "due_date": "2015-01-15",
     "given_date": "2015-01-15",
     "given_by": [
       "admin"
@@ -4163,7 +4162,6 @@
 },
 {
   "fields": {
-    "due_date": "2015-04-30",
     "given_date": "2015-01-22",
     "given_by": [
       "root"
@@ -4180,7 +4178,6 @@
 },
 {
   "fields": {
-    "due_date": "2015-05-31",
     "given_date": "2015-01-26",
     "given_by": [
       "admin"
@@ -4197,7 +4194,6 @@
 },
 {
   "fields": {
-    "due_date": "2020-12-12",
     "given_date": "2015-02-12",
     "given_by": [
       "root"
