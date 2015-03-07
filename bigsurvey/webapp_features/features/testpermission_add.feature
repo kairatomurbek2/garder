@@ -23,7 +23,6 @@ Feature: Test Permission adding
     Given I logged in as "root"
     And I open "testpermission_add" page for site with pk "1"
     And I select "tester_without_pws" from "given_to"
-    And I fill in "due_date" with "2015-06-01"
     When I submit "testpermission" form
     Then I should be at "home" page
     And I should see "testpermission adding success" message
@@ -32,14 +31,13 @@ Feature: Test Permission adding
   Scenario: Incorrect Test Permission adding
     Given I logged in as "root"
     And I open "testpermission_add" page for site with pk "1"
-    And I fill in "due_date" with "not a valid date"
     When I submit "testpermission" form
     Then I should be at "testpermission_add" page for site with pk "1"
     And I should see "testpermission adding error" message
     And I should see following validation error messages on following fields
       | field    | error_message           |
       | given_to | This field is required. |
-      | due_date | Enter a valid date.     |
+
 
   Scenario: "Given to" list contains only Testers
     Given I logged in as "root"

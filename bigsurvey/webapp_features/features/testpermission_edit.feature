@@ -22,7 +22,7 @@ Feature: Test Permission editing
   Scenario: Correct Test Permission editing
     Given I logged in as "root"
     And I open "testpermission_edit" page with pk "1"
-    And I fill in "due_date" with "2016-01-01"
+    And I fill in "notes" with "some new note"
     When I submit "testpermission" form
     Then I should be at "home" page
     And I should see "testpermission editing success" message
