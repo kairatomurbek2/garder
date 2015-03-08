@@ -6,8 +6,12 @@
 {% endblock %}
 {% block content %}
     <div class="uk-margin-large-left uk-margin-large-right">
-    {% for help_item in help %}
-    {{ help_item.title }}
+    {% for help_item in user_help %}
+    {{ help_item.text|safe }}
+    {% endfor %}
+    <br/>
+    <br/>
+    {% for help_item in for_all_help %}
     {{ help_item.text|safe }}
     {% endfor %}
     </div>

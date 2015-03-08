@@ -860,5 +860,6 @@ class HelpView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HelpView, self).get_context_data(**kwargs)
-        context['help'] = models.StaticText.objects.all()
+        context['user_help'] = models.StaticText.objects.filter(group__in=self.request.user.groups.all())
+        context['for_all_help'] = models.StaticText.objects.filter(group=None)
         return context

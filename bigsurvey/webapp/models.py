@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext as _
 from main.parameters import *
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class SourceType(models.Model):
@@ -608,7 +608,7 @@ class Inspection(models.Model):
 
 class StaticText(models.Model):
     title = models.CharField(max_length=20, verbose_name=_('Title'))
-    key = models.CharField(null=True, blank=True, max_length=20, verbose_name=_('Key'))
+    group = models.ForeignKey(Group, blank=True, null=True, verbose_name=_('Group'), related_name="static_texts")
     text = models.TextField(null=True, blank=True, verbose_name=_('Text'))
 
     def __unicode__(self):

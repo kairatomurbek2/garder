@@ -82,8 +82,10 @@
             </tbody>
         </table>
     </div>
+    {% if perms.webapp.browse_test %}
     <h3 class="uk-text-center">{% trans "Tests" %}</h3>
     <div>
         {% include 'test_list.html' %}
     </div>
+    {% endif %}
 {% endblock %}
