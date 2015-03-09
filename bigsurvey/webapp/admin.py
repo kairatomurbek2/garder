@@ -23,6 +23,7 @@ class EmployeeAdmin(UserAdmin):
 class StaticTextAdminForm(forms.ModelForm):
     class Meta:
         model = StaticText
+        fields = ['title', 'group', 'text']
         widgets = {
             'text': RedactorEditor(allow_image_upload=True, allow_file_upload=False),
         }

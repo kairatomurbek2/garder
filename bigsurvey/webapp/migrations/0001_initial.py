@@ -8,6 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('auth', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -87,11 +88,11 @@ class Migration(migrations.Migration):
                 ('address2', models.CharField(max_length=100, null=True, verbose_name='Address 2', blank=True)),
                 ('apt', models.CharField(max_length=15, null=True, verbose_name='Customer Apt', blank=True)),
                 ('city', models.CharField(max_length=30, verbose_name='City')),
-                ('state', models.CharField(max_length=2, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
-                ('zip', models.CharField(max_length=10, verbose_name='ZIP')),
+                ('state', models.CharField(blank=True, max_length=2, null=True, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
+                ('zip', models.CharField(max_length=10, null=True, verbose_name='ZIP', blank=True)),
                 ('phone', models.CharField(max_length=15, null=True, verbose_name='Phone', blank=True)),
                 ('fax', models.CharField(max_length=15, null=True, verbose_name='Fax', blank=True)),
-                ('email', models.CharField(max_length=15, null=True, verbose_name='Email', blank=True)),
+                ('email', models.EmailField(max_length=15, null=True, verbose_name='Email', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
             ],
             options={
@@ -223,12 +224,12 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateField(auto_now_add=True, verbose_name='Send Date')),
-                ('customer', models.ForeignKey(related_name='letters', verbose_name='Customer', to='webapp.Customer')),
+                ('hazard', models.ForeignKey(related_name='letters', verbose_name='Hazard', blank=True, to='webapp.Hazard', null=True)),
             ],
             options={
                 'verbose_name': 'Letter',
                 'verbose_name_plural': 'Letters',
-                'permissions': (('browse_letter', 'Can browse Letter'),),
+                'permissions': (('browse_letter', 'Can browse Letter'), ('send_letter', 'Can send Letter')),
             },
             bases=(models.Model,),
         ),
@@ -284,6 +285,7 @@ class Migration(migrations.Migration):
                 ('number', models.CharField(max_length=15, verbose_name='Number')),
                 ('name', models.CharField(max_length=50, verbose_name='Name')),
                 ('city', models.CharField(max_length=30, null=True, verbose_name='City', blank=True)),
+                ('office_address', models.CharField(max_length=50, null=True, verbose_name='Office Address', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
             ],
             options={
@@ -315,8 +317,8 @@ class Migration(migrations.Migration):
                 ('address2', models.CharField(max_length=100, null=True, verbose_name='Address 2', blank=True)),
                 ('apt', models.CharField(max_length=15, null=True, verbose_name='Apt', blank=True)),
                 ('city', models.CharField(max_length=30, verbose_name='City')),
-                ('state', models.CharField(max_length=2, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
-                ('zip', models.CharField(max_length=10, verbose_name='ZIP')),
+                ('state', models.CharField(blank=True, max_length=2, null=True, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
+                ('zip', models.CharField(max_length=10, null=True, verbose_name='ZIP', blank=True)),
                 ('meter_number', models.CharField(max_length=20, null=True, verbose_name='Meter Number', blank=True)),
                 ('meter_size', models.CharField(max_length=15, null=True, verbose_name='Meter Size', blank=True)),
                 ('meter_reading', models.FloatField(null=True, verbose_name='Meter Reading', blank=True)),
@@ -328,6 +330,7 @@ class Migration(migrations.Migration):
                 ('is_backflow', models.BooleanField(default=False, verbose_name='Is Backflow Present', choices=[(True, b'Yes'), (False, b'No')])),
                 ('next_survey_date', models.DateField(null=True, verbose_name='Next Survey Date', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
+                ('last_survey_date', models.DateField(null=True, verbose_name='Last survey date', blank=True)),
                 ('customer', models.ForeignKey(related_name='sites', verbose_name='Customer', to='webapp.Customer')),
                 ('floors', models.ForeignKey(related_name='sites', verbose_name='Building Height', blank=True, to='webapp.FloorsCount', null=True)),
                 ('interconnection_point', models.ForeignKey(related_name='sites', verbose_name='Interconnection Point', blank=True, to='webapp.ICPointType', null=True)),
@@ -336,7 +339,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site',
                 'verbose_name_plural': 'Sites',
-                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Has access to all Sites'), ('access_to_pws_sites', "Has access to PWS's Sites"), ('access_to_survey_sites', 'Has access to Sites that he inspects'), ('access_to_test_sites', 'Has access to Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site')),
+                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Has access to all Sites'), ('access_to_pws_sites', "Has access to PWS's Sites"), ('access_to_survey_sites', 'Has access to Sites that he inspects'), ('access_to_test_sites', 'Has access to Sites that he tests'), ('access_to_import', 'Can import Sites from Excel file'), ('assign_surveyor', 'Can assign Surveyor to Site'), ('assign_tester', 'Can assign Tester to Site'), ('commit_site', 'Can commit Site'), ('access_to_batch_update', 'Has access to batch update')),
             },
             bases=(models.Model,),
         ),
@@ -402,6 +405,20 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Special',
                 'verbose_name_plural': 'Special',
                 'permissions': (('browse_special', 'Can browse Special'),),
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='StaticText',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=20, verbose_name='Title')),
+                ('text', models.TextField(null=True, verbose_name='Text', blank=True)),
+                ('group', models.ForeignKey(related_name='static_texts', verbose_name='Group', blank=True, to='auth.Group', null=True)),
+            ],
+            options={
+                'verbose_name': 'Static Text',
+                'verbose_name_plural': 'Static Text',
             },
             bases=(models.Model,),
         ),
@@ -502,7 +519,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('given_date', models.DateField(auto_now_add=True, verbose_name='Given Date')),
-                ('due_date', models.DateField(verbose_name='Due Date')),
                 ('is_active', models.BooleanField(default=True, verbose_name='Is Active')),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
                 ('given_by', models.ForeignKey(related_name='test_perms_given', verbose_name='Given By', blank=True, to=settings.AUTH_USER_MODEL, null=True)),
@@ -572,8 +588,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='letter',
-            name='survey',
-            field=models.ForeignKey(related_name='letters', verbose_name='Survey', blank=True, to='webapp.Survey', null=True),
+            name='site',
+            field=models.ForeignKey(related_name='letters', verbose_name='Site', blank=True, to='webapp.Site', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

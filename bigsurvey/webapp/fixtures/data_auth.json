@@ -614,7 +614,17 @@
         "special"
       ],
       [
+        "add_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
         "change_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
+        "delete_statictext",
         "webapp",
         "statictext"
       ],
@@ -1158,7 +1168,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-03-05T10:00:30Z",
+    "last_login": "2015-03-09T08:23:55Z",
     "groups": [],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",
@@ -1176,7 +1186,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": true,
-    "last_login": "2015-03-05T08:48:11Z",
+    "last_login": "2015-03-07T10:36:06Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -1321,6 +1331,94 @@
   },
   "model": "auth.user",
   "pk": 8
+},
+{
+  "fields": {
+    "username": "superadmin",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": true,
+    "last_login": "2015-03-09T08:27:52Z",
+    "groups": [
+      [
+        "SuperAdministrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$LNSutMhDegPh$bgtyDoC3pYQT9UnPf83fRsJqdvBPK1HHxpG3wSrRyfQ=",
+    "email": "",
+    "date_joined": "2015-03-09T08:25:27Z"
+  },
+  "model": "auth.user",
+  "pk": 9
+},
+{
+  "fields": {
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-03-09T08:28:03Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$pSRcLZF3TG6r$4beq8sY3SP77G3LvA+PGAjgfjePI/HJLevfsioCFSmA=",
+    "email": "",
+    "date_joined": "2015-03-09T08:25:54Z"
+  },
+  "model": "auth.user",
+  "pk": 10
+},
+{
+  "fields": {
+    "username": "surveyor",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-03-09T08:26:54Z",
+    "groups": [
+      [
+        "Surveyors"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$rYjaSB5KEZFP$jCp0ThU6kN26o0KTSGulfwl34M7sd1aXj39Pj6UfJjk=",
+    "email": "",
+    "date_joined": "2015-03-09T08:26:54Z"
+  },
+  "model": "auth.user",
+  "pk": 11
+},
+{
+  "fields": {
+    "username": "tester",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-03-09T08:27:26Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 12
 },
 {
   "fields": {
@@ -1473,5 +1571,81 @@
   },
   "model": "webapp.employee",
   "pk": 8
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "superadmin"
+    ],
+    "address": "super address"
+  },
+  "model": "webapp.employee",
+  "pk": 9
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": 1,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "admin"
+    ],
+    "address": "admin address"
+  },
+  "model": "webapp.employee",
+  "pk": 10
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": 1,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "surveyor"
+    ],
+    "address": "surveyor address"
+  },
+  "model": "webapp.employee",
+  "pk": 11
+},
+{
+  "fields": {
+    "city": "",
+    "fax": "",
+    "certificate": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "tester"
+    ],
+    "address": "tester address"
+  },
+  "model": "webapp.employee",
+  "pk": 12
 }
 ]
