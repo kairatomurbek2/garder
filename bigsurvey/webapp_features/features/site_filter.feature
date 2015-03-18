@@ -124,4 +124,3 @@ Feature: Filtration
       | text    |
       | Chikago |
       | Boston  |
-      | Houston |
