@@ -81,6 +81,7 @@ class FilterUtils(object):
 
 
 class SiteFilter(django_filters.FilterSet):
+    pws = django_filters.ChoiceFilter(choices=FilterUtils.Choices.pws(), label=_('PWS'))
     customer = django_filters.CharFilter(label=_('Customer Name or Account'), action=FilterUtils.Filter.customer)
     city = django_filters.CharFilter(lookup_type='icontains', label=_('Site City'))
     address = django_filters.CharFilter(lookup_type='icontains', label=_('Site Address'), name='address1')
@@ -93,6 +94,7 @@ class SiteFilter(django_filters.FilterSet):
     class Meta:
         models = models.Site
         fields = [
+            'pws',
             'customer',
             'city',
             'address1',

@@ -6,54 +6,50 @@
         <table class="uk-table">
             <thead>
             <tr class="table-border-bottom">
-                <th colspan="6" class="uk-text-center uk-text-large uk-text-primary">
+                <th class="uk-text-center uk-text-large uk-text-primary">
                     {% trans "Filters" %}
                 </th>
             </tr>
             </thead>
             <tbody>
-            <tr class="uk-text-right">
+            <tr class="uk-text-center">
                 <td>
-                    {{ customer_filter.form.number.label }}:
-                </td>
-                <td>
+                    {{ customer_filter.form.number.label }}
                     {{ customer_filter.form.number|add_class:"uk-width-1-1" }}
                 </td>
+            </tr>
+            <tr class="uk-text-center">
                 <td>
                     {{ customer_filter.form.name.label }}
-                </td>
-                <td>
                     {{ customer_filter.form.name|add_class:"uk-width-1-1" }}
                 </td>
+            </tr>
+            <tr class="uk-text-center">
                 <td>
                     {{ customer_filter.form.code.label }}
-                </td>
-                <td>
                     {{ customer_filter.form.code|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
-            <tr class="table-border-bottom uk-text-right">
-                <td>
-                    {{ customer_filter.form.city.label }}
-                </td>
+            <tr class="uk-text-center">
                 <td id="cust_filter_city">
+                    {{ customer_filter.form.city.label }}
                     {{ customer_filter.form.city|add_class:"uk-width-1-1" }}
                 </td>
+            </tr>
+            <tr class="uk-text-center">
                 <td>
                     {{ customer_filter.form.address.label }}
-                </td>
-                <td>
                     {{ customer_filter.form.address|add_class:"uk-width-1-1" }}
                 </td>
-                <td>
-                    {{ customer_filter.form.zip.label }}
-                </td>
+            </tr>
+            <tr class="uk-text-center">
                 <td id="cust_filter_zip">
+                    {{ customer_filter.form.zip.label }}
                     {{ customer_filter.form.zip|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
             <tr>
-                <td colspan="6">
+                <td>
                     <button class="uk-button uk-button-primary uk-align-center" type="submit">
                         {% trans "Apply Filters" %}
                     </button>
