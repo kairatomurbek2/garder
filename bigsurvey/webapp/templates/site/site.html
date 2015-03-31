@@ -14,7 +14,6 @@
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
                     <li><a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">{% trans "Assign Surveyor" %}</a></li>
-                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}" id="site_{{ site.pk }}_testpermission_add_link">{% trans "Grant Test Permission" %}</a></li>
                 </ul>
             </div>
         </li>
@@ -26,7 +25,7 @@
 {% endblock %}
 {% block content %}
     <div class="uk-modal" id="commit_site">
-        {% include "site_commit_popup.html" %}
+        {% include "site/site_commit_popup.html" %}
     </div>
     <div id="site_detail" class="wrapper">
         {% include 'messages.html' %}

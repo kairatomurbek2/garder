@@ -6,7 +6,7 @@ from webapp.models import Survey
 register = template.Library()
 
 
-@register.inclusion_tag('hazard_list.html', takes_context=True)
+@register.inclusion_tag('hazard/hazard_list.html', takes_context=True)
 def include_hazards(context, service_type, survey_pk=0):
     if survey_pk > 0:
         survey = Survey.objects.get(pk=survey_pk)

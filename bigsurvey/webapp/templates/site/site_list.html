@@ -7,7 +7,7 @@
 </div>
 <div class="uk-grid">
 <div class="wrapper uk-width-1-5">
-{% include 'site_filters.html' %}
+{% include 'site/site_filters.html' %}
 </div>
 <div class="wrapper uk-width-4-5">
     {% paginate %}
@@ -89,7 +89,6 @@
                             <div class="uk-dropdown uk-dropdown-small">
                                 <ul class="uk-nav uk-nav-dropdown">
                                     <li><a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">{% trans "Assign Surveyor" %}</a></li>
-                                    <li><a href="{% url 'webapp:testpermission_add' site.pk %}" id="site_{{ site.pk }}_testpermission_add_link">{% trans "Grant Test Permission" %}</a></li>
                                 </ul>
                             </div>
 

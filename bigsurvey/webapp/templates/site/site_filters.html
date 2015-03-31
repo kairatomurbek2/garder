@@ -21,8 +21,14 @@
             {% endif %}
             <tr class="uk-text-center">
                 <td>
-                    {{ site_filter.form.customer.label }}
-                    {{ site_filter.form.customer|add_class:"uk-width-1-1" }}
+                    {{ site_filter.form.customer_name.label }}
+                    {{ site_filter.form.customer_name|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ site_filter.form.customer_account.label }}
+                    {{ site_filter.form.customer_account|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
             <tr class="uk-text-center">

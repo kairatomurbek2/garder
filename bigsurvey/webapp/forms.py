@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.utils.translation import ugettext as _
-from django.utils import timezone
 import models
 from main.parameters import Groups
 
@@ -34,7 +33,8 @@ class SiteForm(forms.ModelForm):
 
 
 class SurveyForm(forms.ModelForm):
-    surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor), empty_label=None)
+    surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
+                                      empty_label=None)
 
     class Meta:
         model = models.Survey
@@ -65,12 +65,6 @@ class InspectionForm(forms.ModelForm):
     class Meta:
         model = models.Inspection
         exclude = ('assigned_by', 'site')
-
-
-class TestPermissionForm(forms.ModelForm):
-    class Meta:
-        model = models.TestPermission
-        exclude = ('given_by', 'site')
 
 
 class EmployeeForm(forms.ModelForm):

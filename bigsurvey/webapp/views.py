@@ -6,10 +6,8 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
-import mixins
-import models
-import forms
-from filters import SiteFilter, CustomerFilter
+from webapp import mixins, models, forms
+from webapp.filters import SiteFilter, CustomerFilter
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS
 from django.views.decorators.csrf import csrf_exempt
 
@@ -51,12 +49,6 @@ class HomeView(BaseTemplateView):
 
     def _get_sites(self, user):
         sites = []
-        if user.has_perm('webapp.access_to_test_sites'):
-            permissions = models.TestPermission.objects.filter(given_to=user, is_active=True)
-            sites = self._filter_sites_by_related(permissions)
-        if user.has_perm('webapp.access_to_survey_sites'):
-            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
-            sites = self._filter_sites_by_related(inspections)
         if user.has_perm('webapp.access_to_pws_sites'):
             sites = models.Site.objects.filter(pws=user.employee.pws)
         if user.has_perm('webapp.access_to_all_sites'):
@@ -73,7 +65,7 @@ class HomeView(BaseTemplateView):
 
 
 class SiteDetailView(BaseTemplateView):
-    template_name = 'site.html'
+    template_name = 'site/site.html'
     permission = 'webapp.browse_site'
 
     def get_context_data(self, **kwargs):
@@ -92,8 +84,6 @@ class SiteDetailView(BaseTemplateView):
         site = models.Site.objects.get(pk=kwargs['pk'])
         if user.has_perm('webapp.access_to_survey_sites'):
             models.Inspection.objects.filter(site=site, assigned_to=user, is_active=True).update(is_active=False)
-        else:
-            models.TestPermission.objects.filter(site=site, given_to=user, is_active=True).update(is_active=False)
         return redirect(reverse("webapp:home"))
 
     @csrf_exempt
@@ -150,7 +140,7 @@ class SiteEditView(SiteBaseFormView, UpdateView):
 
 
 class BatchUpdateView(BaseTemplateView):
-    template_name = 'site_batch_update.html'
+    template_name = 'site/site_batch_update.html'
     permission = 'webapp.access_to_batch_update'
     filter_class = SiteFilter
     form_class = forms.BatchUpdateForm
@@ -212,7 +202,7 @@ class BatchUpdateView(BaseTemplateView):
 
 
 class PWSListView(BaseTemplateView):
-    template_name = 'pws_list.html'
+    template_name = 'pws/pws_list.html'
     permission = 'webapp.browse_pws'
 
     def get_context_data(self, **kwargs):
@@ -243,7 +233,7 @@ class PWSEditView(PWSBaseFormView, UpdateView):
 
 
 class CustomerListView(BaseTemplateView):
-    template_name = 'customer_list.html'
+    template_name = 'customer/customer_list.html'
     permission = 'webapp.browse_customer'
 
     def get_context_data(self, **kwargs):
@@ -261,7 +251,7 @@ class CustomerListView(BaseTemplateView):
 
 
 class CustomerDetailView(BaseTemplateView):
-    template_name = 'customer.html'
+    template_name = 'customer/customer.html'
     permission = 'webapp.browse_customer'
 
     def get_context_data(self, **kwargs):
@@ -295,7 +285,7 @@ class CustomerEditView(CustomerBaseFormView, UpdateView):
 
 
 class SurveyDetailView(BaseTemplateView):
-    template_name = 'survey.html'
+    template_name = 'survey/survey.html'
     permission = 'webapp.browse_survey'
 
     def get_context_data(self, **kwargs):
@@ -415,7 +405,7 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
 
 
 class HazardDetailView(BaseTemplateView):
-    template_name = 'hazard.html'
+    template_name = 'hazard/hazard.html'
     permission = 'webapp.browse_hazard'
 
     def get_context_data(self, **kwargs):
@@ -562,7 +552,7 @@ class TestEditView(TestBaseFormView, UpdateView):
 
 class InspectionListView(BaseTemplateView):
     permission = 'webapp.browse_inspection'
-    template_name = 'inspection_list.html'
+    template_name = 'inspection/inspection_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(InspectionListView, self).get_context_data(**kwargs)
@@ -636,85 +626,9 @@ class InspectionEditView(InspectionBaseFormView, UpdateView):
         return form
 
 
-class TestPermissionListView(BaseTemplateView):
-    permission = 'webapp.browse_testpermission'
-    template_name = 'testpermission_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(TestPermissionListView, self).get_context_data(**kwargs)
-        context['testpermission_list'] = self._get_testpermissions()
-        return context
-
-    def _get_testpermissions(self):
-        testpermissions = []
-        if self.request.user.has_perm('webapp.access_to_pws_testpermissions'):
-            testpermissions = models.TestPermission.objects.filter(site__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_testpermissions'):
-            testpermissions = models.TestPermission.objects.all()
-        return testpermissions
-
-
-class TestPermissionBaseFormView(BaseFormView):
-    model = models.TestPermission
-    form_class = forms.TestPermissionForm
-    template_name = 'testpermission_form.html'
-
-    def get_success_url(self):
-        return reverse('webapp:home')
-
-    def get_form(self, form_class):
-        form = super(TestPermissionBaseFormView, self).get_form(form_class)
-        form.fields['given_to'].queryset = self._get_queryset_for_given_to_field()
-        return form
-
-    def _get_queryset_for_given_to_field(self):
-        queryset = []
-        if self.request.user.has_perm('webapp.access_to_pws_testpermissions'):
-            queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_testpermissions'):
-            queryset = models.User.objects.filter(groups__name=Groups.tester)
-        return queryset
-
-
-class TestPermissionAddView(TestPermissionBaseFormView, CreateView):
-    permission = 'webapp.add_testpermission'
-    success_message = Messages.TestPermission.adding_success
-    error_message = Messages.TestPermission.adding_error
-
-    def get_form(self, form_class):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
-            raise Http404
-        return super(TestPermissionAddView, self).get_form(form_class)
-
-    def form_valid(self, form):
-        form.instance.given_by = self.request.user
-        form.instance.site = self._get_site()
-        form.instance.is_active = True
-        return super(TestPermissionAddView, self).form_valid(form)
-
-    def _get_site(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
-            raise Http404
-        return site
-
-
-class TestPermissionEditView(TestPermissionBaseFormView, UpdateView):
-    permission = 'webapp.change_testpermission'
-    success_message = Messages.TestPermission.editing_success
-    error_message = Messages.TestPermission.editing_error
-
-    def get_form(self, form_class):
-        form = super(TestPermissionEditView, self).get_form(form_class)
-        if not mixins.TestPermissionObjectMixin.has_perm(self.request, form.instance):
-            raise Http404
-        return form
-
-
 class UserListView(BaseTemplateView):
     permission = 'webapp.browse_user'
-    template_name = 'user_list.html'
+    template_name = 'user/user_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(UserListView, self).get_context_data(**kwargs)
@@ -831,7 +745,7 @@ class UserEditView(UserBaseFormView):
 
 
 class LetterListView(BaseTemplateView):
-    template_name = "letter_list.html"
+    template_name = "letter/letter_list.html"
     permission = 'webapp.browse_letter'
 
     def get_context_data(self, **kwargs):
@@ -847,7 +761,7 @@ class LetterSendView(BaseFormView):
 
 
 class LetterDetailView(BaseTemplateView):
-    template_name = "letter_detail.html"
+    template_name = "letter/letter_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(LetterDetailView, self).get_context_data(**kwargs)
@@ -863,3 +777,23 @@ class HelpView(BaseTemplateView):
         context['user_help'] = models.StaticText.objects.filter(group__in=self.request.user.groups.all())
         context['for_all_help'] = models.StaticText.objects.filter(group=None)
         return context
+
+
+class SurveyListView(BaseTemplateView):
+    pass
+
+
+class HazardListView(BaseTemplateView):
+    pass
+
+
+class TestListView(BaseTemplateView):
+    pass
+
+
+class TestDetailView(BaseTemplateView):
+    pass
+
+
+class UserDetailView(BaseTemplateView):
+    pass

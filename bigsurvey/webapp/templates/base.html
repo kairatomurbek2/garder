@@ -24,14 +24,31 @@
     <ul class="uk-navbar-nav">
         <li>
             <a href="{% url 'webapp:home' %}">
-                {% trans "BFP" %}
+                <b>{% trans "BACKFLOW SOFTWARE SOLUTIONS" %}</b>
             </a>
         </li>
+        {% if perms.webapp.browse_site %}
+            <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+        {% endif %}
+        {% if perms.webapp.browse_survey %}
+            <li><a>{% trans "Surveys" %}</a></li>
+        {% endif %}
+        {% if perms.webapp.browse_test %}
+            <li><a>{% trans "Tests" %}</a></li>
+        {% endif %}
+        {% if perms.webapp.browse_letter %}
+            <li><a id="letters_menu_link" href="{% url 'webapp:letter_list' %}">{% trans "Letters" %}</a></li>
+        {% endif %}
+        {% if perms.webapp.browse_user %}
+            <li><a>{% trans "Testers" %}</a></li>
+        {% endif %}
+        {% if perms.webapp.browse_report %}
+            <li><a>{% trans "Reports" %}</a></li>
+        {% endif %}
         <li class="uk-parent" data-uk-dropdown="" id="bfp_menu">
             <a href="#">
-                {% trans "Menu" %}
+                {% trans "More..." %}
             </a>
-
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
                     {% if perms.webapp.access_to_adminpanel %}
@@ -42,18 +59,6 @@
                     {% endif %}
                     {% if perms.webapp.browse_customer %}
                         <li><a id="customers_menu_link" href="{% url "webapp:customer_list" %}">{% trans "Customers" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_site %}
-                        <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_inspection %}
-                        <li><a id="inspections_menu_link" href="{% url 'webapp:inspection_list' %}">{% trans "Inspections" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_testpermission %}
-                        <li><a id="testpermissions_menu_link" href="{% url 'webapp:testpermission_list' %}">{% trans "Test Permissions" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_letter %}
-                        <li><a id="letters_menu_link" href="{% url 'webapp:letter_list' %}">{% trans "Letters" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_user %}
                         <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>
@@ -68,14 +73,10 @@
             </div>
         </li>
     </ul>
-    <div class="uk-navbar-center">
-        <ul class="uk-navbar-nav" id="page_menu">
-            {% block menu %}
-            {% endblock %}
-        </ul>
-    </div>
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">
+            {% block menu %}
+            {% endblock %}
             <li><a id="help_menu_link" href="{% url 'webapp:help' %}">{% trans "Help" %}</a></li>
             <li><a href="{% url 'accounts:logout' %}">{% trans "Log Out" %}</a></li>
         </ul>

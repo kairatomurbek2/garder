@@ -5,7 +5,7 @@
         {% autopaginate customer_filter.qs as filtered_customers 20 %}
         <div class="uk-grid">
             <div class="wrapper uk-width-1-5">
-                {% include "customer_filters.html" %}
+                {% include "customer/customer_filters.html" %}
             </div>
             <div class="wrapper uk-width-4-5">
                 {% paginate %}

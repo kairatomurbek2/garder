@@ -6,7 +6,6 @@ import models
 from django import forms
 from redactor.widgets import RedactorEditor
 from webapp.models import StaticText
-from main.settings import MEDIA_ROOT
 
 
 class EmployeeInline(admin.StackedInline):
@@ -33,6 +32,20 @@ class StaticTextAdmin(admin.ModelAdmin):
     form = StaticTextAdminForm
 
 
+class SurveyAdminForm(forms.ModelForm):
+    class Meta:
+        model = models.Survey
+
+    def __init__(self, *args, **kwargs):
+        super(SurveyAdminForm, self).__init__(*args, **kwargs)
+        self.fields['hazards'].queryset = models.Hazard.objects.filter(site=self.instance.site)
+
+
+class SurveyAdmin(admin.ModelAdmin):
+    form = SurveyAdminForm
+    filter_horizontal = ("hazards",)
+
+
 admin.site.unregister(User)
 admin.site.register(User, EmployeeAdmin)
 admin.site.register(models.AssemblyLocation)
@@ -57,11 +70,11 @@ admin.site.register(models.SiteType)
 admin.site.register(models.SiteUse)
 admin.site.register(models.SourceType)
 admin.site.register(models.Special)
-admin.site.register(models.Survey)
+admin.site.register(models.Survey, SurveyAdmin)
 admin.site.register(models.SurveyType)
 admin.site.register(models.Test)
 admin.site.register(models.TestManufacturer)
-admin.site.register(models.TestPermission)
+admin.site.register(models.TestModel)
 admin.site.register(models.AssemblyStatus)
 admin.site.register(models.SiteStatus)
 admin.site.register(models.StaticText, StaticTextAdmin)

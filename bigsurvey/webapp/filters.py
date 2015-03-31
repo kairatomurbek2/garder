@@ -44,9 +44,16 @@ class FilterUtils(object):
 
     class Filter(object):
         @staticmethod
-        def customer(sites, value):
+        def customer_name(sites, value):
             if value:
-                customers = models.Customer.objects.filter(number__icontains=value) | models.Customer.objects.filter(name__icontains=value)
+                customers = models.Customer.objects.filter(name__icontains=value)
+                return sites.filter(customer__in=customers)
+            return sites
+
+        @staticmethod
+        def customer_account(sites, value):
+            if value:
+                customers = models.Customer.objects.filter(number__icontains=value)
                 return sites.filter(customer__in=customers)
             return sites
 
@@ -82,14 +89,21 @@ class FilterUtils(object):
 
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterUtils.Choices.pws(), label=_('PWS'))
-    customer = django_filters.CharFilter(label=_('Customer Name or Account'), action=FilterUtils.Filter.customer)
+    customer_name = django_filters.CharFilter(label=_('Customer Name'),
+                                              action=FilterUtils.Filter.customer_name)
+    customer_account = django_filters.CharFilter(label=_('Customer Account'),
+                                                 action=FilterUtils.Filter.customer_account)
     city = django_filters.CharFilter(lookup_type='icontains', label=_('Site City'))
     address = django_filters.CharFilter(lookup_type='icontains', label=_('Site Address'), name='address1')
     site_type = django_filters.ChoiceFilter(choices=FilterUtils.Choices.site_type(), label=_('Site Type'))
     site_use = django_filters.ChoiceFilter(choices=FilterUtils.Choices.site_use(), label=_('Site Use'))
     status = django_filters.ChoiceFilter(choices=FilterUtils.Choices.site_status(), label=_('Site Status'))
-    next_survey_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES, action=FilterUtils.Filter.next_date, label=_('Next Survey Date'))
-    last_survey_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES, action=FilterUtils.Filter.last_date, label=_('Last Survey older than'))
+    next_survey_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
+                                                   action=FilterUtils.Filter.next_date,
+                                                   label=_('Next Survey Date'))
+    last_survey_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
+                                                   action=FilterUtils.Filter.last_date,
+                                                   label=_('Last Survey older than'))
 
     class Meta:
         models = models.Site

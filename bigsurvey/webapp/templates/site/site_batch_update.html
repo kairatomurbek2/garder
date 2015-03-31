@@ -7,8 +7,12 @@
     <script src="{% static 'js/custom/batch_update.js' %}"></script>
 {% endblock %}
 {% block content %}
+    <div class="uk-grid">
+    <div class="wrapper uk-width-1-5">
+    {% include 'site/site_filters.html' %}
+    </div>
+    <div class="wrapper uk-width-4-5">
     {% autopaginate site_filter.qs as filtered_sites 50 %}
-    {% include 'site_filters.html' %}
     {% paginate %}
     <div class="wrapper">
         {% include 'messages.html' %}
@@ -88,4 +92,6 @@
         </form>
     </div>
     {% paginate %}
+    </div>
+    </div>
 {% endblock %}

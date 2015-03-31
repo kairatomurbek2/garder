@@ -229,6 +229,20 @@ class FloorsCount(models.Model):
         )
 
 
+class TestModel(models.Model):
+    model = models.CharField(max_length=20, verbose_name=_("Test Model"))
+
+    def __unicode__(self):
+        return u"%s" % self.model
+
+    class Meta:
+        verbose_name = _('Test Model')
+        verbose_name_plural = _('Test Models')
+        permissions = (
+            ('browse_testmodel', _('Can browse Test Models')),
+        )
+
+
 class Special(models.Model):
     special = models.CharField(max_length=5, verbose_name=_("Special"))
 
@@ -326,10 +340,16 @@ class Employee(models.Model):
     phone1 = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Phone 1"))
     phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
     fax = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Fax"))
-    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees",
-                            help_text=_("Should be specified for remote administrators to grant them data access"))
-    certificate = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"),
-                                   help_text=_("May be specified for testers"))
+    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
+    cert_number = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"))
+    cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
+    cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
+    test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
+                                 related_name=_("testers"))
+    test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
+                                   related_name=_("testers"))
+    test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial")),
+    test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
     company = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Company"))
 
     def __unicode__(self):
@@ -396,8 +416,54 @@ class Site(models.Model):
         )
 
 
+class Hazard(models.Model):
+    site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="hazards")
+    location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
+    location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
+    hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
+    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
+                                          related_name="hazards")
+    assembly_status = models.ForeignKey(AssemblyStatus, null=True, blank=True, verbose_name=_("Assembly Status"),
+                                        related_name="hazards")
+    installed_properly = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Installed Properly"))
+    installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
+    install_date = models.DateField(blank=True, null=True, verbose_name=_("Install Date"))
+    replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
+    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
+                                    related_name="hazards")
+    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'),
+                                        related_name='hazards_p')
+    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'),
+                                         related_name='hazards_r')
+    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
+                                related_name="hazards")
+    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
+                                     related_name="hazards")
+    model_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Model No."))
+    serial_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Serial No."))
+    due_install_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
+    is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
+    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+
+    def __unicode__(self):
+        return u"%s, %s" % (self.pk, self.hazard_type)
+
+    class Meta:
+        verbose_name = _("Hazard")
+        verbose_name_plural = _("Hazards")
+        permissions = (
+            ('browse_hazard', _('Can browse Hazard')),
+            ('access_to_all_hazards', _('Has access to all Hazards')),
+            ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
+            ('access_to_own_hazards', _('Has access to own Hazards')),
+            ('access_to_site_hazards', _('Has access to Site\'s Hazards')),
+            ('change_all_info_about_hazard', _('Can change all information about Hazard')),
+        )
+
+
 class Survey(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="surveys")
+    hazards = models.ManyToManyField(Hazard, verbose_name=_("Hazards"), related_name="surveys", null=True, blank=True,)
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="surveys")
     survey_date = models.DateField(verbose_name=_("Survey Date"))
     survey_type = models.ForeignKey(SurveyType, blank=True, null=True, verbose_name=_("Survey Type"),
@@ -432,56 +498,9 @@ class Survey(models.Model):
         )
 
 
-class Hazard(models.Model):
-    survey = models.ForeignKey(Survey, verbose_name=_("Survey"), related_name="hazards")
-    location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
-    location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
-    hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
-    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
-                                          related_name="hazards")
-    assembly_status = models.ForeignKey(AssemblyStatus, null=True, blank=True, verbose_name=_("Assembly Status"),
-                                        related_name="hazards")
-    installed_properly = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Installed Properly"))
-    installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
-    install_date = models.DateField(blank=True, null=True, verbose_name=_("Install Date"))
-    replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
-    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
-                                    related_name="hazards")
-    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'),
-                                        related_name='hazards_p')
-    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'),
-                                         related_name='hazards_r')
-    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
-                                related_name="hazards")
-    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
-                                     related_name="hazards")
-    model_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Model No."))
-    serial_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Serial No."))
-    due_install_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
-    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    def __unicode__(self):
-        return u"%s, %s" % (self.pk, self.hazard_type)
-
-    class Meta:
-        verbose_name = _("Hazard")
-        verbose_name_plural = _("Hazards")
-        permissions = (
-            ('browse_hazard', _('Can browse Hazard')),
-            ('access_to_all_hazards', _('Has access to all Hazards')),
-            ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
-            ('access_to_own_hazards', _('Has access to own Hazards')),
-            ('access_to_site_hazards', _('Has access to Site\'s Hazards')),
-            ('change_all_info_about_hazard', _('Can change all information about Hazard')),
-        )
-
-
 class Test(models.Model):
     bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"),
                                   related_name="tests")
-    test_serial_number = models.CharField(max_length=20, verbose_name=_("Test Serial No."))
-    test_manufacturer = models.ForeignKey(TestManufacturer, verbose_name=_("Test Manufacturer"), related_name="tests")
-    last_calibration_date = models.DateField(verbose_name=_("Last Calibration Date"))
     tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")
     test_date = models.DateField(verbose_name=_("Test Date"), auto_now_add=True)
     next_test_date = models.DateField(null=True, blank=True, verbose_name=_("Next Test Date"))
@@ -526,7 +545,6 @@ class Test(models.Model):
 
 class Letter(models.Model):
     site = models.ForeignKey(Site, blank=True, null=True, verbose_name=_("Site"), related_name="letters")
-    hazard = models.ForeignKey(Hazard, blank=True, null=True, verbose_name=_("Hazard"), related_name="letters")
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
     date = models.DateField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
@@ -559,28 +577,6 @@ class Licence(models.Model):
         verbose_name_plural = "Licences"
         permissions = (
             ('browse_licence', _('Can browse Licence')),
-        )
-
-
-class TestPermission(models.Model):
-    site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="test_perms")
-    given_to = models.ForeignKey(User, verbose_name=_("Given To"), related_name='test_perms_granted')
-    given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"),
-                                 related_name='test_perms_given')
-    given_date = models.DateField(verbose_name=_("Given Date"), auto_now_add=True)
-    is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
-    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    def __unicode__(self):
-        return u"%s %s, %s" % (self.given_to.first_name, self.given_to.last_name, self.given_date)
-
-    class Meta:
-        verbose_name = "Test Permission"
-        verbose_name_plural = "Test Permissions"
-        permissions = (
-            ('browse_testpermission', _('Can browse Test Permission')),
-            ('access_to_all_testpermissions', _('Has access to all Test Permissions')),
-            ('access_to_pws_testpermissions', _('Has access to PWS\'s Test Permissions')),
         )
 
 
