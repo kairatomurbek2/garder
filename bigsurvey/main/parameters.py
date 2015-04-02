@@ -1,6 +1,11 @@
 from django.utils.translation import ugettext as _
 
 
+class ServiceTypes(object):
+    potable = "potable"
+    fire = "fire"
+    irrigation = "irrigation"
+
 YESNO_CHOICES = (
     (True, "Yes"),
     (False, "No"),

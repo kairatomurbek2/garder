@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from webapp import mixins, models, forms
 from webapp.filters import SiteFilter, CustomerFilter
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -48,12 +48,14 @@ class HomeView(BaseTemplateView):
         return context
 
     def _get_sites(self, user):
-        sites = []
-        if user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.objects.filter(pws=user.employee.pws)
         if user.has_perm('webapp.access_to_all_sites'):
-            sites = models.Site.objects.all()
-        return sites
+            return models.Site.objects.all()
+        if user.has_perm('webapp.access_to_pws_sites'):
+            return models.Site.objects.filter(pws=user.employee.pws)
+        if user.has_perm('webapp.access_to_survey_sites'):
+            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
+            return self._filter_sites_by_related(inspections)
+        return []
 
     def _get_site_filter(self, queryset):
         return self.filter_class(self.request.GET, queryset=queryset)
@@ -69,15 +71,24 @@ class SiteDetailView(BaseTemplateView):
     permission = 'webapp.browse_site'
 
     def get_context_data(self, **kwargs):
-        context = super(SiteDetailView, self).get_context_data(**kwargs)
-        context['site'] = self._get_site()
-        return context
-
-    def _get_site(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         if not mixins.SiteObjectMixin.has_perm(self.request, site):
             raise Http404
-        return site
+        surveys_potable = site.surveys.filter(service_type__service_type=ServiceTypes.potable)
+        surveys_fire = site.surveys.filter(service_type__service_type=ServiceTypes.fire)
+        surveys_irrigation = site.surveys.filter(service_type__service_type=ServiceTypes.irrigation)
+        hazards_potable = site.hazards.filter(service_type__service_type=ServiceTypes.potable, is_present=True)
+        hazards_fire = site.hazards.filter(service_type__service_type=ServiceTypes.fire, is_present=True)
+        hazards_irrigation = site.hazards.filter(service_type__service_type=ServiceTypes.irrigation, is_present=True)
+        context = super(SiteDetailView, self).get_context_data(**kwargs)
+        context['site'] = site
+        context['surv_p'] = surveys_potable
+        context['surv_f'] = surveys_fire
+        context['surv_i'] = surveys_irrigation
+        context['haz_p'] = hazards_potable
+        context['haz_f'] = hazards_fire
+        context['haz_i'] = hazards_irrigation
+        return context
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
@@ -92,7 +103,7 @@ class SiteDetailView(BaseTemplateView):
 
 
 class SiteBaseFormView(BaseFormView):
-    template_name = 'site_form.html'
+    template_name = 'site/site_form.html'
     form_class = forms.SiteForm
     model = models.Site
     filter_class = CustomerFilter
@@ -212,7 +223,7 @@ class PWSListView(BaseTemplateView):
 
 
 class PWSBaseFormView(BaseFormView):
-    template_name = 'pws_form.html'
+    template_name = 'pws/pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS
 
@@ -264,7 +275,7 @@ class CustomerDetailView(BaseTemplateView):
 
 
 class CustomerBaseFormView(BaseFormView):
-    template_name = 'customer_form.html'
+    template_name = 'customer/customer_form.html'
     form_class = forms.CustomerForm
     model = models.Customer
 
@@ -289,33 +300,43 @@ class SurveyDetailView(BaseTemplateView):
     permission = 'webapp.browse_survey'
 
     def get_context_data(self, **kwargs):
-        context = super(SurveyDetailView, self).get_context_data(**kwargs)
-        context['survey'] = self._get_survey()
-        return context
-
-    def _get_survey(self):
         survey = models.Survey.objects.get(pk=self.kwargs['pk'])
         if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
             raise Http404
-        return survey
+        context = super(SurveyDetailView, self).get_context_data(**kwargs)
+        context['survey'] = survey
+        context['hazards'] = survey.hazards.all()
+        context['service'] = survey.service_type.service_type
+        return context
 
 
 class SurveyBaseFormView(BaseFormView):
-    template_name = 'survey_form.html'
+    template_name = 'survey/survey_form.html'
     form_class = forms.SurveyForm
     model = models.Survey
 
     def get_form(self, form_class):
         form = super(SurveyBaseFormView, self).get_form(form_class)
         form.fields['surveyor'].queryset = self._get_queryset_for_surveyor_field()
+        form.fields['hazards'].queryset = self._get_queryset_for_hazards_field(form.instance)
         return form
+
+    def _get_queryset_for_hazards_field(self, survey):
+        if survey.site:
+            site = survey.site
+        else:
+            site = models.Site.objects.get(pk=self.kwargs['pk'])
+        return site.hazards.all()
 
     def _get_queryset_for_surveyor_field(self):
         queryset = []
         if self.request.user.has_perm('webapp.access_to_own_surveys'):
             queryset = models.User.objects.filter(pk=self.request.user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_surveys'):
-            queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
+            queryset = models.User.objects.filter(
+                groups__name=Groups.surveyor,
+                employee__pws=self.request.user.employee.pws
+            )
         if self.request.user.has_perm('webapp.access_to_all_surveys'):
             queryset = models.User.objects.filter(groups__name=Groups.surveyor)
         return queryset
@@ -348,6 +369,12 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         survey = site.surveys.latest('survey_date')
         site.last_survey_date = survey.survey_date
         site.save()
+        for hazard in site.hazards.all():
+            if hazard in form.instance.hazards.all():
+                hazard.is_present = True
+            else:
+                hazard.is_present = False
+            hazard.save()
         return HttpResponseRedirect(self.get_success_url())
 
     def _get_site(self):
@@ -395,6 +422,12 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
         survey = site.surveys.latest('survey_date')
         site.last_survey_date = survey.survey_date
         site.save()
+        for hazard in site.hazards.all():
+            if hazard in form.instance.hazards.all():
+                hazard.is_present = True
+            else:
+                hazard.is_present = False
+            hazard.save()
         return HttpResponseRedirect(self.get_success_url())
 
     def _get_site(self):
@@ -426,7 +459,7 @@ class HazardDetailView(BaseTemplateView):
 
 
 class HazardBaseFormView(BaseFormView):
-    template_name = 'hazard_form.html'
+    template_name = 'hazard/hazard_form.html'
     form_class = forms.HazardForm
     form_class_for_tester = forms.HazardFormForTester
     model = models.Hazard
@@ -442,24 +475,19 @@ class HazardAddView(HazardBaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(HazardAddView, self).get_context_data(**kwargs)
-        context['survey_pk'] = self.kwargs['pk']
+        context['site_pk'] = self.kwargs['pk']
         return context
 
     def get_form(self, form_class):
-        survey = models.Survey.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not mixins.SiteObjectMixin.has_perm(self.request, site):
             raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
     def form_valid(self, form):
-        form.instance.survey = self._get_survey()
+        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         return super(HazardAddView, self).form_valid(form)
-
-    def _get_survey(self):
-        survey = models.Survey.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
-            raise Http404
-        return survey
 
 
 class HazardEditView(HazardBaseFormView, UpdateView):
@@ -489,7 +517,7 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
 
 class TestBaseFormView(BaseFormView):
-    template_name = 'test_form.html'
+    template_name = 'test/test_form.html'
     form_class = forms.TestForm
     model = models.Test
 
@@ -528,14 +556,8 @@ class TestAddView(TestBaseFormView, CreateView):
         return super(TestAddView, self).get_form(form_class)
 
     def form_valid(self, form):
-        form.instance.bp_device = self._get_bp_device()
+        form.instance.bp_device = models.Hazard.objects.get(pk=self.kwargs['pk'])
         return super(TestAddView, self).form_valid(form)
-
-    def _get_bp_device(self):
-        hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        if not mixins.HazardObjectMixin.has_perm(self.request, hazard):
-            raise Http404
-        return hazard
 
 
 class TestEditView(TestBaseFormView, UpdateView):
@@ -571,7 +593,7 @@ class InspectionListView(BaseTemplateView):
 class InspectionBaseFormView(BaseFormView):
     model = models.Inspection
     form_class = forms.InspectionForm
-    template_name = 'inspection_form.html'
+    template_name = 'inspection/inspection_form.html'
 
     def get_success_url(self):
         return reverse('webapp:home')
@@ -657,7 +679,7 @@ class UserBaseFormView(BaseFormView):
     employee_model = models.Employee
     employee_form_class = forms.EmployeeForm
     employee_object = None
-    template_name = 'user_form.html'
+    template_name = 'user/user_form.html'
 
     def get(self, request, *args, **kwargs):
         user_form = self.get_user_form()

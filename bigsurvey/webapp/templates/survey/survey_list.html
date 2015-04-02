@@ -1,13 +1,11 @@
 {% load i18n %}
 {% load boolean_yes_no %}
 {% if perms.webapp.add_survey %}
-    {% if perms.webapp.add_many_surveys_per_site or countlte0 %}
-        <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}" id="site_{{ site.pk }}_service_{{ service }}_survey_add_link">
-                <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
-            </a>
-        </div>
-    {% endif %}
+    <div class="padding-top">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}" id="site_{{ site.pk }}_service_{{ service }}_survey_add_link">
+            <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
+        </a>
+    </div>
 {% endif %}
 {% if surveys %}
     <div class="wrapper">
@@ -49,22 +47,17 @@
                     <td class="table-border-left uk-text-center">
                         <a href="{% url "webapp:survey_detail" survey.pk %}" id="survey_{{ survey.pk }}_detail_link">{% trans "Detail" %}</a>
                     </td>
-                    <td class="uk-text-center">
-                        <a href="{% url "webapp:hazard_add" survey.pk %}" id="survey_{{ survey.pk }}_add_hazard_link">{% trans "Add Hazard" %}</a>
-                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
     {% if perms.webapp.add_survey %}
-        {% if perms.webapp.add_many_surveys_per_site or countlte0 %}
-            <div class="padding-top">
-                <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}">
-                    <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
-                </a>
-            </div>
-        {% endif %}
+        <div class="padding-top">
+            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}">
+                <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
+            </a>
+        </div>
     {% endif %}
 {% endif %}
 

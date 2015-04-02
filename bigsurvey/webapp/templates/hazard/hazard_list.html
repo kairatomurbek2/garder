@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load boolean_yes_no %}
-{% if perms.webapp.add_hazard %}
+{% if perms.webapp.add_hazard and site %}
     <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' survey.pk %}" id="survey_{{ survey.pk }}_hazard_add_link">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}" id="site_{{ site.pk }}_hazard_add_link">
             <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
         </a>
     </div>
@@ -17,9 +17,6 @@
                 </th>
                 <th>
                     {% trans "Site" %}
-                </th>
-                <th>
-                    {% trans "Survey" %}
                 </th>
                 <th>
                     {% trans "Location" %}
@@ -48,10 +45,7 @@
                         {{ forloop.counter }}
                     </td>
                     <td>
-                        {{ hazard.survey.site }}
-                    </td>
-                    <td>
-                        {{ hazard.survey }}
+                        {{ hazard.site }}
                     </td>
                     <td>
                         {{ hazard.location1 }}
@@ -75,11 +69,11 @@
             </tbody>
         </table>
     </div>
-    {% if perms.webapp.add_hazard %}
-        <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' survey.pk %}">
-                <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
-            </a>
-        </div>
-    {% endif %}
+    {% if perms.webapp.add_hazard and site %}
+    <div class="padding-top">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}">
+            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
+        </a>
+    </div>
+{% endif %}
 {% endif %}

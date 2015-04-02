@@ -407,10 +407,8 @@ class Site(models.Model):
             ('access_to_all_sites', _('Has access to all Sites')),
             ('access_to_pws_sites', _('Has access to PWS\'s Sites')),
             ('access_to_survey_sites', _('Has access to Sites that he inspects')),
-            ('access_to_test_sites', _('Has access to Sites that he tests')),
             ('access_to_import', _('Can import Sites from Excel file')),
             ('assign_surveyor', _('Can assign Surveyor to Site')),
-            ('assign_tester', _('Can assign Tester to Site')),
             ('commit_site', _('Can commit Site')),
             ('access_to_batch_update', _('Has access to batch update')),
         )
@@ -420,6 +418,7 @@ class Hazard(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="hazards")
     location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
+    service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="hazards")
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
     assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
                                           related_name="hazards")
@@ -446,7 +445,7 @@ class Hazard(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.pk, self.hazard_type)
+        return u"%s, %s" % (self.hazard_type, self.location1)
 
     class Meta:
         verbose_name = _("Hazard")
@@ -494,7 +493,6 @@ class Survey(models.Model):
             ('access_to_all_surveys', _('Has access to all Surveys')),
             ('access_to_pws_surveys', _('Has access to PWS\'s Surveys')),
             ('access_to_own_surveys', _('Has access to own Surveys')),
-            ('add_many_surveys_per_site', _('Can add many Surveys per Site'))
         )
 
 
@@ -539,7 +537,6 @@ class Test(models.Model):
             ('access_to_all_tests', _('Has access to all Tests')),
             ('access_to_pws_tests', _('Has access to PWS\'s Tests')),
             ('access_to_own_tests', _('Has access to own Tests')),
-            ('add_many_tests_per_hazard', _('Can add many Tests per Hazard'))
         )
 
 

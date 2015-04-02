@@ -62,6 +62,6 @@
     </div>
     <h3 class="uk-text-center">{% trans "Hazards" %}</h3>
     <div>
-        {% include_hazards survey.service_type survey.pk %}
+        {% include "hazard/hazard_list.html" %}
     </div>
 {% endblock %}

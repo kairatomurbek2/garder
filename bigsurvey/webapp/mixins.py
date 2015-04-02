@@ -30,9 +30,7 @@ class SiteObjectMixin(ObjectMixin):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_sites') or \
                request.user.has_perm('webapp.access_to_pws_sites') and obj.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(assigned_to=request.user, is_active=True) or \
-               request.user.has_perm('webapp.access_to_test_sites') and obj.test_perms.filter(given_to=request.user,
-                                                                                              is_active=True)
+               request.user.has_perm('webapp.access_to_survey_sites') and obj.inspections.filter(assigned_to=request.user, is_active=True)
 
 
 class SurveyObjectMixin(ObjectMixin):

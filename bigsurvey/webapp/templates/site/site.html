@@ -7,13 +7,16 @@
     {% if perms.webapp.change_site %}
         <li><a href="{% url 'webapp:site_edit' site.pk %}" id="site_{{ site.pk }}_edit_link">{% trans "Edit" %}</a></li>
     {% endif %}
-    {% if perms.webapp.assign_surveyor or perms.webapp.assign_tester %}
+    {% if perms.webapp.assign_surveyor %}
         <li class="uk-parent" data-uk-dropdown="">
             <a href="#" id="assign_link">{% trans "Assign" %}</a>
-
             <div class="uk-dropdown uk-dropdown-navbar">
                 <ul class="uk-nav uk-nav-navbar">
-                    <li><a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">{% trans "Assign Surveyor" %}</a></li>
+                    <li>
+                        <a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">
+                            {% trans "Assign Surveyor" %}
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -101,66 +104,139 @@
         </table>
     </div>
     <h3 class="uk-text-center">{% if perms.webapp.browse_survey %}{% trans "Surveys" %}{% else %}{% trans "Hazards" %}{% endif %}</h3>
+
     <div id="tab_control" class="uk-tab-center">
-        <ul class="uk-tab" data-uk-tab="{connect:'#services'}">
+        <ul class="uk-tab" data-uk-tab="{connect:'#rel_data'}">
+            {% if perms.webapp.browse_survey %}
             <li class="uk-active">
-                <a href="#" id="potable_link">{% trans "Potable" %}</a>
+                <a href="#" id="surveys">{% trans "Surveys" %}</a>
             </li>
+            {% endif %}
+            {% if perms.webapp.browse_hazard %}
             <li>
-                <a href="#" id="fire_link">{% trans "Fire" %}</a>
+                <a href="#" id="hazards">{% trans "Hazards" %}</a>
             </li>
-            <li>
-                <a href="#" id="irrigation_link">{% trans "Irrigation" %}</a>
-            </li>
+            {% endif %}
         </ul>
     </div>
     <div id="tab_content">
-        <ul class="uk-switcher uk-margin" id="services">
+        <ul class="uk-switcher uk-margin" id="rel_data">
+        {% if perms.webapp.browse_survey %}
             <li>
-                <div id="potable_content">
-                    {% if site.potable_present %}
-                        {% if perms.webapp.browse_survey %}
-                            {% include_surveys 'potable' %}
-                        {% else %}
-                            {% include_hazards 'potable' %}
-                        {% endif %}
-                    {% else %}
-                        <h4 class="padding-top uk-text-center">
-                            {% trans "Potable water supply is not present" %}
-                        </h4>
-                    {% endif %}
+                <div id="surveys_content">
+
+                    <div id="stab_control" class="uk-tab-center">
+                        <ul class="uk-tab" data-uk-tab="{connect:'#sservices'}">
+                            <li class="uk-active">
+                                <a href="#" id="spotable_link">{% trans "Potable" %}</a>
+                            </li>
+                            <li>
+                                <a href="#" id="sfire_link">{% trans "Fire" %}</a>
+                            </li>
+                            <li>
+                                <a href="#" id="sirrigation_link">{% trans "Irrigation" %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="stab_content">
+                        <ul class="uk-switcher uk-margin" id="sservices">
+                            <li>
+                                <div id="spotable_content">
+                                    {% if site.potable_present %}
+                                        {% include_surveys 'potable' %}
+                                    {% else %}
+                                        <h4 class="padding-top uk-text-center">
+                                            {% trans "Potable water supply is not present" %}
+                                        </h4>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <div id="sfire_content">
+                                    {% if site.fire_present %}
+                                        {% include_surveys 'fire' %}
+                                    {% else %}
+                                        <h4 class="padding-top uk-text-center">
+                                            {% trans "Fire water supply is not present" %}
+                                        </h4>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <div id="sirrigation_content">
+                                    {% if site.irrigation_present %}
+                                        {% include_surveys 'irrigation' %}
+                                    {% else %}
+                                        <h4 class="padding-top uk-text-center">
+                                            {% trans "Irrigation water supply is not present" %}
+                                        </h4>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </li>
+        {% endif %}
+        {% if perms.webapp.browse_hazard %}
             <li>
-                <div id="fire_content">
-                    {% if site.fire_present %}
-                        {% if perms.webapp.browse_survey %}
-                            {% include_surveys 'fire' %}
-                        {% else %}
-                            {% include_hazards 'fire' %}
-                        {% endif %}
-                    {% else %}
-                        <h4 class="padding-top uk-text-center">
-                            {% trans "Fire water supply is not present" %}
-                        </h4>
-                    {% endif %}
+                <div id="hazards_content">
+                    <div id="htab_control" class="uk-tab-center">
+                        <ul class="uk-tab" data-uk-tab="{connect:'#hservices'}">
+                            <li class="uk-active">
+                                <a href="#" id="hpotable_link">{% trans "Potable" %}</a>
+                            </li>
+                            <li>
+                                <a href="#" id="hfire_link">{% trans "Fire" %}</a>
+                            </li>
+                            <li>
+                                <a href="#" id="hirrigation_link">{% trans "Irrigation" %}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="htab_content">
+                        <ul class="uk-switcher uk-margin" id="hservices">
+                            <li>
+                                <div id="hpotable_content">
+                                    {% if site.potable_present %}
+                                        {% include_hazards 'potable' %}
+                                    {% else %}
+                                        <h4 class="padding-top uk-text-center">
+                                            {% trans "Potable water supply is not present" %}
+                                        </h4>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <div id="hfire_content">
+                                    {% if site.fire_present %}
+                                        {% include_hazards 'fire' %}
+                                    {% else %}
+                                        <h4 class="padding-top uk-text-center">
+                                            {% trans "Fire water supply is not present" %}
+                                        </h4>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li>
+                                <div id="hirrigation_content">
+                                    {% if site.irrigation_present %}
+                                        {% include_hazards 'irrigation' %}
+                                    {% else %}
+                                        <h4 class="padding-top uk-text-center">
+                                            {% trans "Irrigation water supply is not present" %}
+                                        </h4>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </li>
-            <li>
-                <div id="irrigation_content">
-                    {% if site.irrigation_present %}
-                        {% if perms.webapp.browse_survey %}
-                            {% include_surveys 'irrigation' %}
-                        {% else %}
-                            {% include_hazards 'irrigation' %}
-                        {% endif %}
-                    {% else %}
-                        <h4 class="padding-top uk-text-center">
-                            {% trans "Irrigation water supply is not present" %}
-                        </h4>
-                    {% endif %}
-                </div>
-            </li>
+        {% endif %}
         </ul>
     </div>
+
 {% endblock %}
