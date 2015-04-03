@@ -345,7 +345,7 @@ class Employee(models.Model):
     cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
     cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
     test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
-                                 related_name=_("testers"))
+                                          related_name=_("testers"))
     test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
                                    related_name=_("testers"))
     test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial")),
@@ -501,7 +501,6 @@ class Test(models.Model):
                                   related_name="tests")
     tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")
     test_date = models.DateField(verbose_name=_("Test Date"), auto_now_add=True)
-    next_test_date = models.DateField(null=True, blank=True, verbose_name=_("Next Test Date"))
     cv1_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("CV1 Leaked"))
     cv1_gauge_pressure = models.FloatField(blank=True, null=True, verbose_name=_("CV1 Gauge Pressure"))
     cv1_maintenance = models.BooleanField(default=False, choices=YESNO_CHOICES, verbose_name=_("CV1 Maintenance"))

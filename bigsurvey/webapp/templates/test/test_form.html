@@ -20,11 +20,11 @@
                         {{ form.tester.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.next_test_date.id_for_label }}">{{ form.next_test_date.label }}</label>
+                        <label for="{{ form.test_result.id_for_label }}">{{ form.test_result.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {% render_field form.next_test_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}'  %}
-                        {{ form.next_test_date.errors }}
+                        {% render_field form.test_result|add_class:'uk-width-1-1' %}
+                        {{ form.test_result.errors }}
                     </td>
                 </tr>
                 {% if hazard.service_type.service_type == 'potable' %}

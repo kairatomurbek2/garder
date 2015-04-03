@@ -51,7 +51,7 @@ class FilterChoices(object):
     @staticmethod
     def surveyor():
         choices = [('', _('All'))]
-        surveyors = models.User.objects.filter(groups__name=Groups.surveyor).order_by('last_name', 'first_name')
+        surveyors = models.User.objects.filter(groups__name=Groups.surveyor).order_by('username')
         for user in surveyors:
             choices.append((user.pk, user.username))
         return choices
@@ -62,6 +62,32 @@ class FilterChoices(object):
         for survey_type in models.SurveyType.objects.all():
             choices.append((survey_type.pk, survey_type.survey_type))
         return choices
+
+    @staticmethod
+    def hazard_type():
+        choices = [('', _('All'))]
+        for hazard_type in models.HazardType.objects.all():
+            choices.append((hazard_type.pk, hazard_type.hazard_type))
+        return choices
+
+    @staticmethod
+    def bp_type():
+        choices = [('', _('All'))]
+        for bp_type in models.BPType.objects.all():
+            choices.append((bp_type.pk, bp_type.bp_type))
+        return choices
+
+    @staticmethod
+    def tester():
+        choices = [('', _('All'))]
+        testers = models.User.objects.filter(groups__name=Groups.tester).order_by('username')
+        for user in testers:
+            choices.append((user.pk, user.username))
+        return choices
+
+    @staticmethod
+    def test_result():
+        return [('', _('All')), (True, _('Passed')), (False, _('Failed'))]
 
 
 class FilterActions(object):
@@ -127,16 +153,62 @@ class FilterActions(object):
             return surveys
 
         @staticmethod
-        def surveyor(surveys, value):
+        def site_address(surveys, value):
             if value:
-                return surveys.filter(surveyor__id=value)
+                return surveys.filter(site__address1__icontains=value)
+            return surveys
+
+    class Test(object):
+        @staticmethod
+        def pws(surveys, value):
+            if value:
+                return surveys.filter(bp_device__site__pws__id=value)
+            return surveys
+
+        @staticmethod
+        def site_city(surveys, value):
+            if value:
+                return surveys.filter(bp_device__site__city__icontains=value)
+            return surveys
+
+        @staticmethod
+        def customer_account(surveys, value):
+            if value:
+                return surveys.filter(bp_device__site__customer__number__icontains=value)
             return surveys
 
         @staticmethod
         def site_address(surveys, value):
             if value:
-                return surveys.filter(site__address1__icontains=value)
+                return surveys.filter(bp_device__site__address1__icontains=value)
             return surveys
+
+        @staticmethod
+        def service_type(surveys, value):
+            if value:
+                return surveys.filter(bp_device__service_type__id=value)
+            return surveys
+
+        @staticmethod
+        def hazard_type(tests, value):
+            if value:
+                return tests.filter(bp_device__hazard_type__id=value)
+            return tests
+
+        @staticmethod
+        def bp_type(tests, value):
+            if value:
+                return tests.filter(bp_device__bp_type_present__id=value)
+            return tests
+
+        @staticmethod
+        def test_result(tests, value):
+            if value:
+                if value == 'False':
+                    tests = tests.filter(test_result=False)
+                else:
+                    tests = tests.filter(test_result=True)
+            return tests
 
 
 class SiteFilter(django_filters.FilterSet):
@@ -157,20 +229,6 @@ class SiteFilter(django_filters.FilterSet):
                                                    action=FilterActions.Site.last_date,
                                                    label=_('Last Survey older than'))
 
-    class Meta:
-        models = models.Site
-        fields = [
-            'pws',
-            'customer',
-            'city',
-            'address1',
-            'site_use',
-            'site_type',
-            'status',
-            'next_survey_date',
-            'last_survey_date',
-        ]
-
 
 class CustomerFilter(django_filters.FilterSet):
     number = django_filters.CharFilter(label=_('Account Number'), lookup_type='icontains')
@@ -179,16 +237,6 @@ class CustomerFilter(django_filters.FilterSet):
     city = django_filters.CharFilter(label=_('City'), lookup_type='icontains')
     address = django_filters.CharFilter(label=_('Address'), lookup_type='icontains', name='address1')
     zip = django_filters.CharFilter(label=_('ZIP'), lookup_type='icontains')
-
-    class Meta:
-        models = models.Customer
-        fields = [
-            'number'
-            'name'
-            'city'
-            'address1'
-            'zip'
-        ]
 
 
 class SurveyFilter(django_filters.FilterSet):
@@ -199,15 +247,21 @@ class SurveyFilter(django_filters.FilterSet):
     service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'))
     survey_date = django_filters.DateRangeFilter(label=_('Survey Date'))
     survey_type = django_filters.ChoiceFilter(choices=FilterChoices.survey_type(), label=_('Survey Type'))
-    surveyor = django_filters.ChoiceFilter(choices=FilterChoices.surveyor(), label=_('Surveyor'),
-                                           action=FilterActions.Survey.surveyor)
+    surveyor = django_filters.ChoiceFilter(choices=FilterChoices.surveyor(), label=_('Surveyor'))
 
-    class Meta:
-        models = models.Survey
-        fields = [
-            'site',
-            'service_type',
-            'survey_date',
-            'survey_type',
-            'surveyor'
-        ]
+
+class TestFilter(django_filters.FilterSet):
+    pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.Test.pws)
+    customer = django_filters.CharFilter(label=_('Customer Account'), action=FilterActions.Test.customer_account)
+    city = django_filters.CharFilter(label=_('Site City'), action=FilterActions.Test.site_city)
+    address = django_filters.CharFilter(label=_('Site Address'), action=FilterActions.Test.site_address)
+    service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'),
+                                               action=FilterActions.Test.service_type)
+    hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'),
+                                              action=FilterActions.Test.hazard_type)
+    bp_type = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'),
+                                          action=FilterActions.Test.bp_type)
+    test_date = django_filters.DateRangeFilter(label=_('Test Date'))
+    tester = django_filters.ChoiceFilter(choices=FilterChoices.tester(), label=_('Tester'))
+    test_result = django_filters.ChoiceFilter(choices=FilterChoices.test_result(), label=_('Test Result'),
+                                              action=FilterActions.Test.test_result)

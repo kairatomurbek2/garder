@@ -1,140 +1,110 @@
+{% extends 'base.html' %}
 {% load i18n %}
 {% load boolean_yes_no %}
 {% load valve_leaked_choices %}
 {% load valve_opened_choices %}
 {% load test_result_choices %}
-<div class="wrapper">
-    {% if perms.webapp.add_test %}
-            <div class="padding-top">
-                <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}" id="hazard_{{ hazard.pk }}_test_add_link">
-                    <i class="uk-icon-plus"></i> {% trans "Add Test" %}
-                </a>
-            </div>
-    {% endif %}
-    {% if hazard.tests.all %}
-        {% for test in hazard.tests.all %}
-            <div class="padding-top">
-                <h4 class="uk-align-center uk-text-center">
-                    <button class="uk-button uk-text-primary" data-uk-toggle="{target:'#test-{{ test.pk }}'}">
-                        {{ test.test_date }}, {{ test.test_result|test_result }}
-                    </button>
-                    <a href="{% url "webapp:test_edit" test.pk %}" id="test_{{ test.pk }}_edit_link">({% trans "Edit" %})</a>
-                </h4>
-            </div>
-            <div id="test-{{ test.pk }}" class="uk-panel uk-panel-box uk-hidden">
-                <table class="uk-table table-fixed">
+{% load pagination_tags %}
+{% block content %}
+    {% autopaginate test_filter.qs as filtered_tests 50 %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+    </div>
+    <div class="uk-grid">
+        <div class="wrapper uk-width-1-5">
+            {% include 'test/test_filters.html' %}
+        </div>
+        <div class="wrapper uk-width-4-5">
+            {% paginate %}
+            <div class="wrapper">
+                <table class="uk-table uk-table-hover">
+                    <thead>
+                    <tr class="table-border-bottom">
+                        <th class="table-border-right uk-text-center uk-width-1-10">
+                            {% trans "No." %}
+                        </th>
+                        <th>
+                            {% trans "PWS" %}
+                        </th>
+                        <th>
+                            {% trans "Customer Account" %}
+                        </th>
+                        <th>
+                            {% trans "Site City" %}
+                        </th>
+                        <th>
+                            {% trans "Site Address" %}
+                        </th>
+                        <th>
+                            {% trans "Service Type" %}
+                        </th>
+                        <th>
+                            {% trans "Hazard Type" %}
+                        </th>
+                        <th>
+                            {% trans "BP Type" %}
+                        </th>
+                        <th>
+                            {% trans "Test Date" %}
+                        </th>
+                        <th>
+                            {% trans "Tester" %}
+                        </th>
+                        <th>
+                            {% trans "Test Result" %}
+                        </th>
+                        <th class="uk-text-center table-border-left uk-width-1-10">
+                            {% trans "Actions" %}
+                        </th>
+                    </tr>
+                    </thead>
                     <tbody>
-                    <tr class="table-border-bottom">
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Date" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_date }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Next Test Date" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.next_test_date }}</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    <tr>
-                        <td class="uk-text-right uk-text-muted">{% trans "Tester" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.tester.first_name }} {{ test.tester.last_name }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Certificate" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.tester.employee.certificate }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Serial No." %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_serial_number }}</td>
-                    </tr>
-                    <tr class="table-border-bottom">
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Manufacturer" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_manufacturer }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Last Calibration Date" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.last_calibration_date }}</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    {% ifequal hazard.survey.service_type.service_type 'potable' %}
+                    {% for test in filtered_tests %}
                         <tr>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV1 Leaked" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv1_leaked|valve_leaked }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV1 Gauge Pressure" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv1_gauge_pressure }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV1 Maintenance" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv1_maintenance }}</td>
+                            <td class="uk-text-center table-border-right">
+                                {{ forloop.counter }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.site.pws.number }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.site.customer.number }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.site.city }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.site.address1 }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.service_type }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.hazard_type }}
+                            </td>
+                            <td>
+                                {{ test.bp_device.bp_type_present }}
+                            </td>
+                            <td>
+                                {{ test.test_date }}
+                            </td>
+                            <td>
+                                {{ test.tester }}
+                            </td>
+                            <td>
+                                {{ test.test_result|test_result }}
+                            </td>
+                            <td class="table-border-left uk-text-center">
+                                <a href="{% url "webapp:hazard_detail" test.bp_device.pk %}" id="hazard_{{ test.bp_device.pk }}_detail_link">
+                                    {% trans "Detail" %}
+                                </a>
+                            </td>
                         </tr>
-                        <tr class="table-border-bottom">
-                            <td class="uk-text-right uk-text-muted">{% trans "CV1 Maintenance Pressure" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv1_maintenance_pressure }}</td>
-                            <td colspan="4"></td>
-                        </tr>
-                        <tr>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV2 Leaked" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv2_leaked|valve_leaked }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV2 Gauge Pressure" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv2_gauge_pressure }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV2 Maintenance" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv2_maintenance }}</td>
-                        </tr>
-                        <tr class="table-border-bottom">
-                            <td class="uk-text-right uk-text-muted">{% trans "CV2 Maintenance Pressure" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv2_maintenance_pressure }}</td>
-                            <td colspan="4"></td>
-                        </tr>
-                        <tr>
-                            <td class="uk-text-right uk-text-muted">{% trans "RV Opened" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.rv_opened }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "RV Pressure 1" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.rv_psi1 }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "RV Pressure 2" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.rv_psi2 }}</td>
-                        </tr>
-                        <tr class="table-border-bottom">
-                            <td class="uk-text-right uk-text-muted">{% trans "RV Maintenance" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.rv_maintenance }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "Outlet SOV Leaked" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.outlet_sov_leaked }}</td>
-                            <td colspan="2"></td>
-                        </tr>
-                    {% endifequal %}
-                    {% ifequal hazard.survey.service_type.service_type 'fire' %}
-                        <tr class="table-border-bottom">
-                            <td class="uk-text-right uk-text-muted">{% trans "PVB Opened" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.pvb_opened }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "PVB Open Pressure" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.pvb_open_pressure }}</td>
-                            <td colspan="2"></td>
-                        </tr>
-                    {% endifequal %}
-                    {% ifequal hazard.survey.service_type.service_type 'irrigation' %}
-                        <tr class="table-border-bottom">
-                            <td class="uk-text-right uk-text-muted">{% trans "CV Leaked" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv_leaked }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV Held Pressure" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv_help_pressure }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV Maintenance" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv_maintenance }}</td>
-                        </tr>
-                        <tr>
-                            <td class="uk-text-right uk-text-muted">{% trans "CV PSI" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.cv_psi }}</td>
-                            <td class="uk-text-right uk-text-muted">{% trans "Air Inlet PSI" %}</td>
-                            <td class="uk-text-center uk-text-primary">{{ test.air_inlet_psi }}</td>
-                            <td colspan="2"></td>
-                        </tr>
-                    {% endifequal %}
-                    <tr class="table-border-bottom">
-                        <td colspan="2"></td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Result" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_result|test_result }}</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    <tr>
-                        <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
-                        <td class="uk-text-center uk-text-primary" colspan="5">{{ test.notes }}</td>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
-        {% endfor %}
-        {% if perms.webapp.add_test %}
-            <div class="padding-top">
-                <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}">
-                    <i class="uk-icon-plus"></i> {% trans "Add Test" %}
-                </a>
-            </div>
-        {% endif %}
-    {% endif %}
-</div>
+            {% paginate %}
+        </div>
+    </div>
+{% endblock %}

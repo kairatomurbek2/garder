@@ -37,13 +37,12 @@ class BaseFormView(BaseView, ModelFormMixin, ProcessFormView):
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
-    filter_class = filters.SiteFilter
 
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
         sites = self._get_sites(user)
-        context['site_filter'] = self._get_site_filter(queryset=sites)
+        context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites)
         return context
 
     def _get_sites(self, user):
@@ -55,9 +54,6 @@ class HomeView(BaseTemplateView):
             inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
             return self._filter_sites_by_related(inspections)
         return []
-
-    def _get_site_filter(self, queryset):
-        return self.filter_class(self.request.GET, queryset=queryset)
 
     @staticmethod
     def _filter_sites_by_related(related):
@@ -323,9 +319,11 @@ class SurveyBaseFormView(BaseFormView):
     def _get_queryset_for_hazards_field(self, survey):
         try:
             site = survey.site
+            service_type = survey.service_type
         except:
             site = models.Site.objects.get(pk=self.kwargs['pk'])
-        return site.hazards.all()
+            service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
+        return site.hazards.filter(service_type=service_type)
 
     def _get_queryset_for_surveyor_field(self):
         queryset = []
@@ -428,12 +426,6 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
                 hazard.is_present = False
             hazard.save()
         return HttpResponseRedirect(self.get_success_url())
-
-    def _get_site(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
-            raise Http404
-        return site
 
 
 class HazardDetailView(BaseTemplateView):
@@ -802,28 +794,22 @@ class HelpView(BaseTemplateView):
 
 class SurveyListView(BaseTemplateView):
     template_name = 'survey/survey_list.html'
-    filter_class = filters.SurveyFilter
+    permission = "webapp.browse_survey"
 
     def get_context_data(self, **kwargs):
-        if self.request.user.has_perm("webapp.browse_survey"):
-            context = super(SurveyListView, self).get_context_data(**kwargs)
-            surveys = self._get_survey_list()
-            context['survey_filter'] = self._get_filter(queryset=surveys)
-            return context
-        else:
-            raise Http404
+        context = super(SurveyListView, self).get_context_data(**kwargs)
+        surveys = self._get_survey_list()
+        context['survey_filter'] = filters.SurveyFilter(self.request.GET, queryset=surveys)
+        return context
 
     def _get_survey_list(self):
         user = self.request.user
         if user.has_perm("webapp.access_to_all_surveys"):
             return models.Survey.objects.all()
         if user.has_perm("webapp.access_to_pws_surveys"):
-            return models.Survey.objects.filter(site__pws=user.pws)
+            return models.Survey.objects.filter(site__pws=user.employee.pws)
         if user.has_perm("webapp.access_to_own_surveys"):
             return models.Survey.objects.filter(surveyor=user)
-
-    def _get_filter(self, queryset):
-        return self.filter_class(self.request.GET, queryset=queryset)
 
 
 class HazardListView(BaseTemplateView):
@@ -831,7 +817,23 @@ class HazardListView(BaseTemplateView):
 
 
 class TestListView(BaseTemplateView):
-    pass
+    template_name = 'test/test_list.html'
+    permission = "webapp.browse_test"
+
+    def get_context_data(self, **kwargs):
+        context = super(TestListView, self).get_context_data(**kwargs)
+        tests = self._get_test_list()
+        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
+        return context
+
+    def _get_test_list(self):
+        user = self.request.user
+        if user.has_perm('webapp.access_to_all_tests'):
+            return models.Test.objects.all()
+        if user.has_perm("webapp.access_to_pws_tests"):
+            return models.Test.objects.filter(bp_device__site__pws=user.employee.pws)
+        if user.has_perm('webapp.access_to_own_tests'):
+            return models.Test.objects.filter(tester=user)
 
 
 class TestDetailView(BaseTemplateView):

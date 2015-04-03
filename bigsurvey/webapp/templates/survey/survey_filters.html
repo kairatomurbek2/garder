@@ -55,12 +55,14 @@
                     {{ survey_filter.form.survey_type|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
+            {% if perms.webapp.access_to_pws_surveys or perms.webapp.access_to_all_surveys %}
             <tr class="uk-text-center">
                 <td>
                     {{ survey_filter.form.surveyor.label }}
                     {{ survey_filter.form.surveyor|add_class:"uk-width-1-1" }}
                 </td>
             </tr>
+            {% endif %}
             <tr>
                 <td>
                     <button class="uk-button uk-button-primary uk-align-center" type="submit">
