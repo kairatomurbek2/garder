@@ -1,13 +1,18 @@
+{% extends 'base.html' %}
 {% load i18n %}
-{% load boolean_yes_no %}
-{% if perms.webapp.add_survey %}
-    <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}" id="site_{{ site.pk }}_service_{{ service }}_survey_add_link">
-            <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
-        </a>
-    </div>
-{% endif %}
-{% if surveys %}
+{% load pagination_tags %}
+{% load widget_tweaks %}
+{% block content %}
+{% autopaginate survey_filter.qs as filtered_surveys 50 %}
+<div class="wrapper">
+    {% include 'messages.html' %}
+</div>
+<div class="uk-grid">
+<div class="wrapper uk-width-1-5">
+{% include 'survey/survey_filters.html' %}
+</div>
+<div class="wrapper uk-width-4-5">
+    {% paginate %}
     <div class="wrapper">
         <table class="uk-table uk-table-hover">
             <thead>
@@ -16,24 +21,57 @@
                     {% trans "No." %}
                 </th>
                 <th>
+                    {% trans "PWS" %}
+                </th>
+                <th>
+                    {% trans "Customer Account" %}
+                </th>
+                <th>
+                    {% trans "Site City" %}
+                </th>
+                <th>
+                    {% trans "Site Address" %}
+                </th>
+                <th>
+                    {% trans "Service Type" %}
+                </th>
+                <th>
+                    {% trans "Survey Type" %}
+                </th>
+                <th>
                     {% trans "Survey Date" %}
                 </th>
                 <th>
                     {% trans "Surveyor" %}
                 </th>
-                <th>
-                    {% trans "Survey Type" %}
-                </th>
-                <th colspan="2" class="uk-text-center table-border-left uk-width-2-10">
+                <th class="uk-text-center table-border-left uk-width-1-10">
                     {% trans "Actions" %}
                 </th>
             </tr>
             </thead>
             <tbody>
-            {% for survey in surveys %}
+            {% for survey in filtered_surveys %}
                 <tr>
                     <td class="uk-text-center table-border-right">
                         {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ survey.site.pws.number }}
+                    </td>
+                    <td>
+                        {{ survey.site.customer.number }}
+                    </td>
+                    <td>
+                        {{ survey.site.city }}
+                    </td>
+                    <td>
+                        {{ survey.site.address1 }}
+                    </td>
+                    <td>
+                        {{ survey.service_type }}
+                    </td>
+                    <td>
+                        {{ survey.survey_type }}
                     </td>
                     <td>
                         {{ survey.survey_date }}
@@ -41,23 +79,17 @@
                     <td>
                         {{ survey.surveyor }}
                     </td>
-                    <td>
-                        {{ survey.survey_type }}
-                    </td>
                     <td class="table-border-left uk-text-center">
-                        <a href="{% url "webapp:survey_detail" survey.pk %}" id="survey_{{ survey.pk }}_detail_link">{% trans "Detail" %}</a>
+                        <a href="{% url "webapp:survey_detail" survey.pk %}" id="survey_{{ survey.pk }}_detail_link">
+                            {% trans "Detail" %}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    {% if perms.webapp.add_survey %}
-        <div class="padding-top">
-            <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}">
-                <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
-            </a>
-        </div>
-    {% endif %}
-{% endif %}
-
+    {% paginate %}
+</div>
+</div>
+{% endblock %}

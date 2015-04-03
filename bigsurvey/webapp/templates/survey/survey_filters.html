@@ -1,0 +1,74 @@
+{% load i18n %}
+{% load widget_tweaks %}
+<form action="" method="get" name="survey_filter" class="uk-form">
+    <div class="wrapper">
+        <table class="uk-table">
+            <thead>
+            <tr class="table-border-bottom">
+                <th class="uk-text-center uk-text-large uk-text-primary">
+                    {% trans "Filters" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if perms.webapp.access_to_all_surveys %}
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.pws.label }}
+                    {{ survey_filter.form.pws|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            {% endif %}
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.customer.label }}
+                    {{ survey_filter.form.customer|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.city.label }}
+                    {{ survey_filter.form.city|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.address.label }}
+                    {{ survey_filter.form.address|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.service_type.label }}
+                    {{ survey_filter.form.service_type|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.survey_date.label }}
+                    {{ survey_filter.form.survey_date|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.survey_type.label }}
+                    {{ survey_filter.form.survey_type|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ survey_filter.form.surveyor.label }}
+                    {{ survey_filter.form.surveyor|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                        {% trans "Apply Filters" %}
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>

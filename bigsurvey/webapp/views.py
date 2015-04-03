@@ -6,8 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
-from webapp import mixins, models, forms
-from webapp.filters import SiteFilter, CustomerFilter
+from webapp import mixins, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
 from django.views.decorators.csrf import csrf_exempt
 
@@ -38,7 +37,7 @@ class BaseFormView(BaseView, ModelFormMixin, ProcessFormView):
 class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
-    filter_class = SiteFilter
+    filter_class = filters.SiteFilter
 
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -106,7 +105,7 @@ class SiteBaseFormView(BaseFormView):
     template_name = 'site/site_form.html'
     form_class = forms.SiteForm
     model = models.Site
-    filter_class = CustomerFilter
+    filter_class = filters.CustomerFilter
 
     def get_context_data(self, **kwargs):
         context = super(SiteBaseFormView, self).get_context_data(**kwargs)
@@ -153,7 +152,7 @@ class SiteEditView(SiteBaseFormView, UpdateView):
 class BatchUpdateView(BaseTemplateView):
     template_name = 'site/site_batch_update.html'
     permission = 'webapp.access_to_batch_update'
-    filter_class = SiteFilter
+    filter_class = filters.SiteFilter
     form_class = forms.BatchUpdateForm
 
     def get_context_data(self, **kwargs):
@@ -258,7 +257,7 @@ class CustomerListView(BaseTemplateView):
         return models.Customer.objects.all()
 
     def _get_customer_filter(self, queryset):
-        return CustomerFilter(self.request.GET, queryset=queryset)
+        return filters.CustomerFilter(self.request.GET, queryset=queryset)
 
 
 class CustomerDetailView(BaseTemplateView):
@@ -322,9 +321,9 @@ class SurveyBaseFormView(BaseFormView):
         return form
 
     def _get_queryset_for_hazards_field(self, survey):
-        if survey.site:
+        try:
             site = survey.site
-        else:
+        except:
             site = models.Site.objects.get(pk=self.kwargs['pk'])
         return site.hazards.all()
 
@@ -802,7 +801,29 @@ class HelpView(BaseTemplateView):
 
 
 class SurveyListView(BaseTemplateView):
-    pass
+    template_name = 'survey/survey_list.html'
+    filter_class = filters.SurveyFilter
+
+    def get_context_data(self, **kwargs):
+        if self.request.user.has_perm("webapp.browse_survey"):
+            context = super(SurveyListView, self).get_context_data(**kwargs)
+            surveys = self._get_survey_list()
+            context['survey_filter'] = self._get_filter(queryset=surveys)
+            return context
+        else:
+            raise Http404
+
+    def _get_survey_list(self):
+        user = self.request.user
+        if user.has_perm("webapp.access_to_all_surveys"):
+            return models.Survey.objects.all()
+        if user.has_perm("webapp.access_to_pws_surveys"):
+            return models.Survey.objects.filter(site__pws=user.pws)
+        if user.has_perm("webapp.access_to_own_surveys"):
+            return models.Survey.objects.filter(surveyor=user)
+
+    def _get_filter(self, queryset):
+        return self.filter_class(self.request.GET, queryset=queryset)
 
 
 class HazardListView(BaseTemplateView):

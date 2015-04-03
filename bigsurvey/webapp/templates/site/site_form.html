@@ -22,6 +22,7 @@
                         <label for="{{ form.customer.id_for_label }}">{{ form.customer.label }}</label>
                     </td>
                     <td class="uk-width-1-6">
+                        <input id="selected_customer_name" type="text" class="uk-width-4-6" disabled/>
                         <button name="select_customer" type="button" class="uk-button uk-button-primary"
                                 data-uk-modal="{target: '#customer_select'}">
                             {% trans "Select Customer" %}
@@ -40,7 +41,7 @@
                         <label for="{{ form.connect_date.id_for_label }}">{{ form.connect_date.label }}</label>
                     </td>
                     <td class="uk-width-1-6">
-                        {% render_field form.connect_date class="uk-width-1-1" data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                        {% render_field form.connect_date class="uk-width-1-1" data-uk-datepicker="" %}
                         {{ form.connect_date.errors }}
                     </td>
                 </tr>

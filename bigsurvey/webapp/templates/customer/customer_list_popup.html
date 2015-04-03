@@ -28,8 +28,8 @@
                     {% for customer in filtered_customers %}
                         <tr>
                             <td class="table-border-right uk-text-center">{{ customer.pk }}</td>
-                            <td>{{ customer.number }}</td>
-                            <td>{{ customer.name }}</td>
+                            <td data-id="customer_{{ customer.pk }}_number">{{ customer.number }}</td>
+                            <td data-id="customer_{{ customer.pk }}_name">{{ customer.name }}</td>
                             <td>{{ customer.city }}</td>
                             <td>{{ customer.address1 }}</td>
                             <td>{{ customer.email }}</td>
@@ -69,6 +69,9 @@
     });
     fill_customer_field = function(){
         $("#id_customer").val($(this).attr("data-id"));
+        var cust_name = "customer_" + $(this).attr("data-id") + "_name";
+        var cust_number = "customer_" + $(this).attr("data-id") + "_number";
+        $("#selected_customer_name").val($('[data-id='+cust_number+']').html() + ', ' + $('[data-id='+cust_name+']').html());
     };
     ajax_paginate = function(e){
         e.preventDefault();
