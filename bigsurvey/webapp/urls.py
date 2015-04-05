@@ -10,8 +10,6 @@ urlpatterns = patterns(
     url(r'^site/(?P<pk>\d+)/send-letter/$', views.LetterSendView.as_view(), name="letter_send"),
     url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/add-survey/$', views.SurveyAddView.as_view(), name="survey_add"),
     url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/add-hazard/$', views.HazardAddView.as_view(), name="hazard_add"),
-    url(r'^site/(?P<pk>\d+)/assign/$', views.InspectionAddView.as_view(), name="inspection_add"),
-    url(r'^inspection/$', views.InspectionListView.as_view(), name="inspection_list"),
 
     url(r'^batch_update/$', views.BatchUpdateView.as_view(), name='batch_update'),
 

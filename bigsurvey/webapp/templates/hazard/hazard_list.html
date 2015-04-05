@@ -1,79 +1,55 @@
+{% extends 'base.html' %}
 {% load i18n %}
 {% load boolean_yes_no %}
-{% if perms.webapp.add_hazard and site %}
-    <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}" id="site_{{ site.pk }}_hazard_add_link">
-            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
-        </a>
+{% load pagination_tags %}
+{% load widget_tweaks %}
+{% block content %}
+{% autopaginate hazard_filter.qs as filtered_hazards 50 %}
+<div class="uk-grid">
+    <div class="wrapper uk-width-1-5">
+        {% include 'hazard/hazard_filters.html' %}
     </div>
-{% endif %}
-{% if hazards %}
-    <div class="wrapper">
+    <div class="wrapper uk-width-4-5">
+        {% paginate %}
         <table class="uk-table uk-table-hover">
             <thead>
             <tr class="table-border-bottom">
-                <th class="table-border-right uk-text-center">
-                    {% trans "No." %}
-                </th>
-                <th>
-                    {% trans "Site" %}
-                </th>
-                <th>
-                    {% trans "Location" %}
-                </th>
-                <th>
-                    {% trans "Assembly Status" %}
-                </th>
-                <th>
-                    {% trans "Due Install/Test" %}
-                </th>
-                {% if perms.webapp.add_test %}
-                    <th colspan="2" class="uk-text-center table-border-left">
-                        {% trans "Actions" %}
-                    </th>
-                {% else %}
-                    <th class="uk-text-center table-border-left">
-                        {% trans "Actions" %}
-                    </th>
-                {% endif %}
+                <th class="table-border-right uk-text-center">{% trans "No." %}</th>
+                <th>{% trans "PWS" %}</th>
+                <th>{% trans "Customer Account" %}</th>
+                <th>{% trans "Site City" %}</th>
+                <th>{% trans "Site Address" %}</th>
+                <th>{% trans "Service Type" %}</th>
+                <th>{% trans "Hazard Type" %}</th>
+                <th>{% trans "Assembly Status" %}</th>
+                <th>{% trans "BP Type Present" %}</th>
+                <th>{% trans "Due Install/Test Date" %}</th>
+                <th class="uk-text-center table-border-left">{% trans "Actions" %}</th>
             </tr>
             </thead>
             <tbody>
-            {% for hazard in hazards %}
+            {% for hazard in filtered_hazards %}
                 <tr>
-                    <td class="uk-text-center table-border-right">
-                        {{ forloop.counter }}
-                    </td>
-                    <td>
-                        {{ hazard.site }}
-                    </td>
-                    <td>
-                        {{ hazard.location1 }}
-                    </td>
-                    <td>
-                        {{ hazard.assembly_status }}
-                    </td>
-                    <td>
-                        {{ hazard.due_install_test_date }}
-                    </td>
+                    <td class="uk-text-center table-border-right">{{ forloop.counter }}</td>
+                    <td>{{ hazard.site.pws.number }}</td>
+                    <td>{{ hazard.site.customer.number }}</td>
+                    <td>{{ hazard.site.city }}</td>
+                    <td>{{ hazard.site.address }}</td>
+                    <td>{{ hazard.service_type }}</td>
+                    <td>{{ hazard.hazard_type }}</td>
+                    <td>{{ hazard.assembly_status }}</td>
+                    <td>{{ hazard.bp_type_present }}</td>
+                    <td>{{ hazard.due_install_test_date }}</td>
                     <td class="table-border-left uk-text-center">
-                        <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
+                        <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">
+                            {% trans "Detail" %}
+                        </a>
                     </td>
-                    {% if perms.webapp.add_test %}
-                    <td class="uk-text-center">
-                        <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
-                    </td>
-                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        {% paginate %}
     </div>
-    {% if perms.webapp.add_hazard and site %}
-    <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}">
-            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
-        </a>
-    </div>
-{% endif %}
-{% endif %}
+</div>
+{% endblock %}

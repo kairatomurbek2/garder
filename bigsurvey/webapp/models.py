@@ -406,10 +406,7 @@ class Site(models.Model):
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),
             ('access_to_pws_sites', _('Has access to PWS\'s Sites')),
-            ('access_to_survey_sites', _('Has access to Sites that he inspects')),
             ('access_to_import', _('Can import Sites from Excel file')),
-            ('assign_surveyor', _('Can assign Surveyor to Site')),
-            ('commit_site', _('Can commit Site')),
             ('access_to_batch_update', _('Has access to batch update')),
         )
 
@@ -454,8 +451,6 @@ class Hazard(models.Model):
             ('browse_hazard', _('Can browse Hazard')),
             ('access_to_all_hazards', _('Has access to all Hazards')),
             ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
-            ('access_to_own_hazards', _('Has access to own Hazards')),
-            ('access_to_site_hazards', _('Has access to Site\'s Hazards')),
             ('change_all_info_about_hazard', _('Can change all information about Hazard')),
         )
 
@@ -573,28 +568,6 @@ class Licence(models.Model):
         verbose_name_plural = "Licences"
         permissions = (
             ('browse_licence', _('Can browse Licence')),
-        )
-
-
-class Inspection(models.Model):
-    site = models.ForeignKey(Site, verbose_name=_("Site"), related_name='inspections')
-    assigned_to = models.ForeignKey(User, verbose_name=_("Assigned To"), related_name='inspections')
-    assigned_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Assigned By"),
-                                    related_name='inspects_assigned')
-    assigned_date = models.DateField(verbose_name=_("Assigned Date"), auto_now_add=True)
-    is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
-    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    def __unicode__(self):
-        return u"%s %s, %s" % (self.assigned_to.first_name, self.assigned_to.last_name, self.assigned_date)
-
-    class Meta:
-        verbose_name = "Inspection"
-        verbose_name_plural = "Inspections"
-        permissions = (
-            ('browse_inspection', _('Can browse Inspection')),
-            ('access_to_all_inspections', _('Has access to all Inspections')),
-            ('access_to_pws_inspections', _('Has access to PWS\'s Inspections')),
         )
 
 

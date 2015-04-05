@@ -1,0 +1,79 @@
+{% load i18n %}
+{% load boolean_yes_no %}
+{% if perms.webapp.add_hazard and site %}
+    <div class="padding-top">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}" id="site_{{ site.pk }}_hazard_add_link">
+            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
+        </a>
+    </div>
+{% endif %}
+{% if hazards %}
+    <div class="wrapper">
+        <table class="uk-table uk-table-hover">
+            <thead>
+            <tr class="table-border-bottom">
+                <th class="table-border-right uk-text-center">
+                    {% trans "No." %}
+                </th>
+                <th>
+                    {% trans "Site" %}
+                </th>
+                <th>
+                    {% trans "Location" %}
+                </th>
+                <th>
+                    {% trans "Assembly Status" %}
+                </th>
+                <th>
+                    {% trans "Due Install/Test" %}
+                </th>
+                {% if perms.webapp.add_test %}
+                    <th colspan="2" class="uk-text-center table-border-left">
+                        {% trans "Actions" %}
+                    </th>
+                {% else %}
+                    <th class="uk-text-center table-border-left">
+                        {% trans "Actions" %}
+                    </th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for hazard in hazards %}
+                <tr>
+                    <td class="uk-text-center table-border-right">
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        {{ hazard.site }}
+                    </td>
+                    <td>
+                        {{ hazard.location1 }}
+                    </td>
+                    <td>
+                        {{ hazard.assembly_status }}
+                    </td>
+                    <td>
+                        {{ hazard.due_install_test_date }}
+                    </td>
+                    <td class="table-border-left uk-text-center">
+                        <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
+                    </td>
+                    {% if perms.webapp.add_test %}
+                    <td class="uk-text-center">
+                        <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if perms.webapp.add_hazard and site %}
+    <div class="padding-top">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}">
+            <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
+        </a>
+    </div>
+{% endif %}
+{% endif %}

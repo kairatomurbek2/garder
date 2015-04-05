@@ -50,15 +50,7 @@ class HomeView(BaseTemplateView):
             return models.Site.objects.all()
         if user.has_perm('webapp.access_to_pws_sites'):
             return models.Site.objects.filter(pws=user.employee.pws)
-        if user.has_perm('webapp.access_to_survey_sites'):
-            inspections = models.Inspection.objects.filter(assigned_to=user, is_active=True)
-            return self._filter_sites_by_related(inspections)
         return []
-
-    @staticmethod
-    def _filter_sites_by_related(related):
-        site_pks = [obj.site.pk for obj in related]
-        return models.Site.objects.filter(pk__in=site_pks)
 
 
 class SiteDetailView(BaseTemplateView):
@@ -84,17 +76,6 @@ class SiteDetailView(BaseTemplateView):
         context['haz_f'] = hazards_fire
         context['haz_i'] = hazards_irrigation
         return context
-
-    def post(self, request, *args, **kwargs):
-        user = self.request.user
-        site = models.Site.objects.get(pk=kwargs['pk'])
-        if user.has_perm('webapp.access_to_survey_sites'):
-            models.Inspection.objects.filter(site=site, assigned_to=user, is_active=True).update(is_active=False)
-        return redirect(reverse("webapp:home"))
-
-    @csrf_exempt
-    def dispatch(self, *args, **kwargs):
-        return super(SiteDetailView, self).dispatch(*args, **kwargs)
 
 
 class SiteBaseFormView(BaseFormView):
@@ -563,82 +544,6 @@ class TestEditView(TestBaseFormView, UpdateView):
         return form
 
 
-class InspectionListView(BaseTemplateView):
-    permission = 'webapp.browse_inspection'
-    template_name = 'inspection/inspection_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(InspectionListView, self).get_context_data(**kwargs)
-        context['inspection_list'] = self._get_inspections()
-        return context
-
-    def _get_inspections(self):
-        inspections = []
-        if self.request.user.has_perm('webapp.access_to_pws_inspections'):
-            inspections = models.Inspection.objects.filter(site__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_inspections'):
-            inspections = models.Inspection.objects.all()
-        return inspections
-
-
-class InspectionBaseFormView(BaseFormView):
-    model = models.Inspection
-    form_class = forms.InspectionForm
-    template_name = 'inspection/inspection_form.html'
-
-    def get_success_url(self):
-        return reverse('webapp:home')
-
-    def get_form(self, form_class):
-        form = super(InspectionBaseFormView, self).get_form(form_class)
-        form.fields['assigned_to'].queryset = self._get_queryset_for_assigned_to_field()
-        return form
-
-    def _get_queryset_for_assigned_to_field(self):
-        queryset = []
-        if self.request.user.has_perm('webapp.access_to_pws_inspections'):
-            queryset = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
-        if self.request.user.has_perm('webapp.access_to_all_inspections'):
-            queryset = models.User.objects.filter(groups__name=Groups.surveyor)
-        return queryset
-
-
-class InspectionAddView(InspectionBaseFormView, CreateView):
-    permission = 'webapp.add_inspection'
-    success_message = Messages.Inspection.adding_success
-    error_message = Messages.Inspection.adding_error
-
-    def get_form(self, form_class):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
-            raise Http404
-        return super(InspectionAddView, self).get_form(form_class)
-
-    def form_valid(self, form):
-        form.instance.assigned_by = self.request.user
-        form.instance.site = self._get_site()
-        form.instance.is_active = True
-        return super(InspectionAddView, self).form_valid(form)
-
-    def _get_site(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
-            raise Http404
-        return site
-
-
-class InspectionEditView(InspectionBaseFormView, UpdateView):
-    permission = 'webapp.change_inspection'
-    success_message = Messages.Inspection.editing_success
-    error_message = Messages.Inspection.editing_error
-
-    def get_form(self, form_class):
-        form = super(InspectionEditView, self).get_form(form_class)
-        if not mixins.InspectionObjectMixin.has_perm(self.request, form.instance):
-            raise Http404
-        return form
-
-
 class UserListView(BaseTemplateView):
     permission = 'webapp.browse_user'
     template_name = 'user/user_list.html'
@@ -813,7 +718,21 @@ class SurveyListView(BaseTemplateView):
 
 
 class HazardListView(BaseTemplateView):
-    pass
+    template_name = 'hazard/hazard_list.html'
+    permission = "webapp.browse_hazard"
+
+    def get_context_data(self, **kwargs):
+        context = super(HazardListView, self).get_context_data(**kwargs)
+        hazards = self._get_hazard_list()
+        context['hazard_filter'] = filters.HazardFilter(self.request.GET, queryset=hazards)
+        return context
+
+    def _get_hazard_list(self):
+        user = self.request.user
+        if user.has_perm('webapp.access_to_all_hazards'):
+            return models.Hazard.objects.all()
+        if user.has_perm('webapp.access_to_pws_hazards'):
+            return models.Hazard.objects.filter(site__pws=user.employee.pws)
 
 
 class TestListView(BaseTemplateView):

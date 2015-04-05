@@ -7,23 +7,6 @@
     {% if perms.webapp.change_site %}
         <li><a href="{% url 'webapp:site_edit' site.pk %}" id="site_{{ site.pk }}_edit_link">{% trans "Edit" %}</a></li>
     {% endif %}
-    {% if perms.webapp.assign_surveyor %}
-        <li class="uk-parent" data-uk-dropdown="">
-            <a href="#" id="assign_link">{% trans "Assign" %}</a>
-            <div class="uk-dropdown uk-dropdown-navbar">
-                <ul class="uk-nav uk-nav-navbar">
-                    <li>
-                        <a href="{% url 'webapp:inspection_add' site.pk %}" id="site_{{ site.pk }}_inspection_add_link">
-                            {% trans "Assign Surveyor" %}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    {% endif %}
-    {% if perms.webapp.commit_site %}
-        <li><a href="#" data-uk-modal="{target: '#commit_site'}" id="commit_site_menu_button">{% trans "Commit" %}</a></li>
-    {% endif %}
     <li><a href="{% url "webapp:home" %}">{% trans "Site List" %}</a></li>
 {% endblock %}
 {% block content %}

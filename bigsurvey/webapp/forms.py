@@ -73,12 +73,6 @@ class TestForm(forms.ModelForm):
         exclude = ('bp_device',)
 
 
-class InspectionForm(forms.ModelForm):
-    class Meta:
-        model = models.Inspection
-        exclude = ('assigned_by', 'site')
-
-
 class EmployeeForm(forms.ModelForm):
     class Meta:
         model = models.Employee

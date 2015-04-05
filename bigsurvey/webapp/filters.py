@@ -87,7 +87,14 @@ class FilterChoices(object):
 
     @staticmethod
     def test_result():
-        return [('', _('All')), (True, _('Passed')), (False, _('Failed'))]
+        return [('', _('All')), (1, _('Passed')), (0, _('Failed'))]
+
+    @staticmethod
+    def assembly_status():
+        choices = [('', _('All'))]
+        for assembly_status in models.AssemblyStatus.objects.all():
+            choices.append((assembly_status.pk, assembly_status.assembly_status))
+        return choices
 
 
 class FilterActions(object):
@@ -160,34 +167,34 @@ class FilterActions(object):
 
     class Test(object):
         @staticmethod
-        def pws(surveys, value):
+        def pws(tests, value):
             if value:
-                return surveys.filter(bp_device__site__pws__id=value)
-            return surveys
+                return tests.filter(bp_device__site__pws__id=value)
+            return tests
 
         @staticmethod
-        def site_city(surveys, value):
+        def site_city(tests, value):
             if value:
-                return surveys.filter(bp_device__site__city__icontains=value)
-            return surveys
+                return tests.filter(bp_device__site__city__icontains=value)
+            return tests
 
         @staticmethod
-        def customer_account(surveys, value):
+        def customer_account(tests, value):
             if value:
-                return surveys.filter(bp_device__site__customer__number__icontains=value)
-            return surveys
+                return tests.filter(bp_device__site__customer__number__icontains=value)
+            return tests
 
         @staticmethod
-        def site_address(surveys, value):
+        def site_address(tests, value):
             if value:
-                return surveys.filter(bp_device__site__address1__icontains=value)
-            return surveys
+                return tests.filter(bp_device__site__address1__icontains=value)
+            return tests
 
         @staticmethod
-        def service_type(surveys, value):
+        def service_type(tests, value):
             if value:
-                return surveys.filter(bp_device__service_type__id=value)
-            return surveys
+                return tests.filter(bp_device__service_type__id=value)
+            return tests
 
         @staticmethod
         def hazard_type(tests, value):
@@ -204,11 +211,33 @@ class FilterActions(object):
         @staticmethod
         def test_result(tests, value):
             if value:
-                if value == 'False':
-                    tests = tests.filter(test_result=False)
-                else:
-                    tests = tests.filter(test_result=True)
+                return tests.filter(test_result=value)
             return tests
+
+    class Hazard(object):
+        @staticmethod
+        def pws(hazards, value):
+            if value:
+                return hazards.filter(site__pws__id=value)
+            return hazards
+
+        @staticmethod
+        def site_city(hazards, value):
+            if value:
+                return hazards.filter(site__city__icontains=value)
+            return hazards
+
+        @staticmethod
+        def customer_account(hazards, value):
+            if value:
+                return hazards.filter(site__customer__number__icontains=value)
+            return hazards
+
+        @staticmethod
+        def site_address(hazards, value):
+            if value:
+                return hazards.filter(site__address1__icontains=value)
+            return hazards
 
 
 class SiteFilter(django_filters.FilterSet):
@@ -265,3 +294,15 @@ class TestFilter(django_filters.FilterSet):
     tester = django_filters.ChoiceFilter(choices=FilterChoices.tester(), label=_('Tester'))
     test_result = django_filters.ChoiceFilter(choices=FilterChoices.test_result(), label=_('Test Result'),
                                               action=FilterActions.Test.test_result)
+
+
+class HazardFilter(django_filters.FilterSet):
+    pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.Hazard.pws)
+    customer = django_filters.CharFilter(label=_('Customer Account'), action=FilterActions.Hazard.customer_account)
+    city = django_filters.CharFilter(label=_('Site City'), action=FilterActions.Hazard.site_city)
+    address = django_filters.CharFilter(label=_('Site Address'), action=FilterActions.Hazard.site_address)
+    service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'))
+    hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'))
+    assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))
+    bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'))
+    due_install_test_date = django_filters.DateRangeFilter(label=_('Due Install/Test Date'))

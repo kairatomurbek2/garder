@@ -1,0 +1,80 @@
+{% load i18n %}
+{% load widget_tweaks %}
+<form action="" method="get" name="hazard_filter" class="uk-form">
+    <div class="wrapper">
+        <table class="uk-table">
+            <thead>
+            <tr class="table-border-bottom">
+                <th class="uk-text-center uk-text-large uk-text-primary">
+                    {% trans "Filters" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if perms.webapp.access_to_all_hazards %}
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.pws.label }}
+                    {{ hazard_filter.form.pws|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            {% endif %}
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.customer.label }}
+                    {{ hazard_filter.form.customer|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.city.label }}
+                    {{ hazard_filter.form.city|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.address.label }}
+                    {{ hazard_filter.form.address|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.service_type.label }}
+                    {{ hazard_filter.form.service_type|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.hazard_type.label }}
+                    {{ hazard_filter.form.hazard_type|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.assembly_status.label }}
+                    {{ hazard_filter.form.assembly_status|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.bp_type_present.label }}
+                    {{ hazard_filter.form.bp_type_present|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr class="uk-text-center">
+                <td>
+                    {{ hazard_filter.form.due_install_test_date.label }}
+                    {{ hazard_filter.form.due_install_test_date|add_class:"uk-width-1-1" }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                        {% trans "Apply Filters" %}
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
