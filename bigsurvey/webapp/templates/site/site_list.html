@@ -76,13 +76,11 @@
                 <td>
                     {{ site.next_survey_date }}
                 </td>
-                {% if perms.webapp.browse_site %}
-                    <td class="uk-text-center table-border-left">
-                        <a href="{% url 'webapp:site_detail' site.pk %}" id="site_{{ site.pk }}_detail_link">
-                            {% trans "Detail" %}
-                        </a>
-                    </td>
-                {% endif %}
+                <td class="uk-text-center table-border-left">
+                    <a href="{% url 'webapp:site_detail' site.pk %}" id="site_{{ site.pk }}_detail_link">
+                        {% trans "Detail" %}
+                    </a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

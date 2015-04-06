@@ -25,6 +25,7 @@ urlpatterns = patterns(
     url(r'^test/$', views.TestListView.as_view(), name="test_list"),
     url(r'^test/(?P<pk>\d+)/$', views.TestDetailView.as_view(), name="test_detail"),
     url(r'^test/(?P<pk>\d+)/edit/$', views.TestEditView.as_view(), name="test_edit"),
+    url(r'^testers/$', views.TesterListView.as_view(), name="tester_list"),
 
     url(r'^letter/$', views.LetterListView.as_view(), name="letter_list"),
     url(r'^letter/(?P<pk>\d+)/$', views.LetterDetailView.as_view(), name="letter_detail"),

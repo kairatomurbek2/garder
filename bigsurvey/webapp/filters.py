@@ -96,6 +96,24 @@ class FilterChoices(object):
             choices.append((assembly_status.pk, assembly_status.assembly_status))
         return choices
 
+    @staticmethod
+    def test_manufacturer():
+        choices = [('', _('All'))]
+        for test_manufacturer in models.TestManufacturer.objects.all():
+            choices.append((test_manufacturer.pk, test_manufacturer.test_manufacturer))
+        return choices
+
+    @staticmethod
+    def test_model():
+        choices = [('', _('All'))]
+        for model in models.TestModel.objects.all():
+            choices.append((model.pk, model.model))
+        return choices
+
+    @staticmethod
+    def yesno():
+        return [('', _('All')), (1, _('Yes')), (0, _('No'))]
+
 
 class FilterActions(object):
     class Site(object):
@@ -210,7 +228,7 @@ class FilterActions(object):
 
         @staticmethod
         def test_result(tests, value):
-            if value:
+            if value != '':
                 return tests.filter(test_result=value)
             return tests
 
@@ -238,6 +256,78 @@ class FilterActions(object):
             if value:
                 return hazards.filter(site__address1__icontains=value)
             return hazards
+
+    class User(object):
+        @staticmethod
+        def pws(testers, value):
+            if value:
+                return testers.filter(employee__pws=value)
+            return testers
+
+        @staticmethod
+        def name(testers, value):
+            if value:
+                return testers.filter(first_name__icontains=value) | testers.filter(last_name__icontains=value)
+            return testers
+
+        @staticmethod
+        def company(testers, value):
+            if value:
+                return testers.filter(employee__company__icontains=value)
+            return testers
+
+        @staticmethod
+        def cert_number(testers, value):
+            if value:
+                return testers.filter(employee__cert_number__icontains=value)
+            return testers
+
+        @staticmethod
+        def cert_active(testers, value):
+            if value != '':
+                current_date = datetime.now().date()
+                certified_testers = testers.filter(employee__cert_expires__gte=current_date,
+                                                   employee__cert_date__lte=current_date)
+                if value:
+                    return certified_testers
+                else:
+                    return testers.exclude(id__in=certified_testers)
+            return testers
+
+        @staticmethod
+        def test_manufacturer(testers, value):
+            if value:
+                return testers.filter(employee__test_manufacturer=value)
+            return testers
+
+        @staticmethod
+        def test_model(testers, value):
+            if value:
+                return testers.filter(employee__test_model=value)
+            return testers
+
+        @staticmethod
+        def test_serial(testers, value):
+            if value:
+                return testers.filter(employee__test_serial__icontains=value)
+            return testers
+
+        @staticmethod
+        def test_last_cert(testers, value):
+            current_date = datetime.now().date()
+            dates = {
+                'week': current_date - timedelta(weeks=1),
+                'month': current_date - timedelta(days=30),
+                '2months': current_date - timedelta(days=30 * 2),
+                '3months': current_date - timedelta(days=30 * 3),
+                '6months': current_date - timedelta(days=30 * 6),
+                'year': current_date - timedelta(days=365),
+            }
+            if value == 'never':
+                return testers.filter(employee__test_last_cert=None)
+            if value in dates:
+                return testers.filter(employee__test_last_cert__gt=dates[value])
+            return testers
 
 
 class SiteFilter(django_filters.FilterSet):
@@ -306,3 +396,22 @@ class HazardFilter(django_filters.FilterSet):
     assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))
     bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'))
     due_install_test_date = django_filters.DateRangeFilter(label=_('Due Install/Test Date'))
+
+
+class TesterFilter(django_filters.FilterSet):
+    pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.User.pws)
+    username = django_filters.CharFilter(label=_('Username'), lookup_type="icontains")
+    name = django_filters.CharFilter(label=_('Name or Surname'), action=FilterActions.User.name)
+    company = django_filters.CharFilter(label=_('Company'), action=FilterActions.User.company)
+    cert_number = django_filters.CharFilter(label=_('Certificate Number'), action=FilterActions.User.cert_number)
+    cert_active = django_filters.ChoiceFilter(label=_('Certificate Active'), choices=FilterChoices.yesno(),
+                                              action=FilterActions.User.cert_active)
+    test_manufacturer = django_filters.ChoiceFilter(label=_('Test Manufacturer'),
+                                                    choices=FilterChoices.test_manufacturer(),
+                                                    action=FilterActions.User.test_manufacturer)
+    test_model = django_filters.ChoiceFilter(label=_('Test Model'), choices=FilterChoices.test_model(),
+                                             action=FilterActions.User.test_model)
+    test_serial = django_filters.CharFilter(label=_('Test Kit Serial'), action=FilterActions.User.test_serial)
+    test_last_cert = django_filters.ChoiceFilter(label=_('Test Kit Last Calibrated'),
+                                                 choices=PAST_DATE_FILTER_CHOICES,
+                                                 action=FilterActions.User.test_last_cert)
