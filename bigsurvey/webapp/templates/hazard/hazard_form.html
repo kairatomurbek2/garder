@@ -29,7 +29,7 @@
                                 <label for="{{ form.due_install_test_date.id_for_label }}">{{ form.due_install_test_date.label }}</label>
                             </td>
                             <td class="uk-width-1-3">
-                                {% render_field form.due_install_test_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                                {{ form.due_install_test_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                                 {{ form.due_install_test_date.errors }}
                             </td>
                         {% endif %}
@@ -88,14 +88,14 @@
                         <label for="{{ form.install_date.id_for_label }}">{{ form.install_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {% render_field form.install_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                        {{ form.install_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ form.install_date.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.replace_date.id_for_label }}">{{ form.replace_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {% render_field form.replace_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                        {{ form.replace_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ form.replace_date.errors }}
                     </td>
                 </tr>

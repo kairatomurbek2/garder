@@ -22,7 +22,7 @@
                         <label for="{{ form.survey_date.id_for_label }}">{{ form.survey_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {% render_field form.survey_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                        {{ form.survey_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ form.survey_date.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">

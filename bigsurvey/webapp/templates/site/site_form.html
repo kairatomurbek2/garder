@@ -41,7 +41,7 @@
                         <label for="{{ form.connect_date.id_for_label }}">{{ form.connect_date.label }}</label>
                     </td>
                     <td class="uk-width-1-6">
-                        {% render_field form.connect_date class="uk-width-1-1" data-uk-datepicker="" %}
+                        {{ form.connect_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ form.connect_date.errors }}
                     </td>
                 </tr>
@@ -170,7 +170,7 @@
                         <label for="{{ form.next_survey_date.id_for_label }}">{{ form.next_survey_date.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
-                        {% render_field form.next_survey_date|add_class:'uk-width-1-1' data-uk-datepicker='{weekstart:0, format:'YYYY-MM-DD'}' %}
+                        {{ form.next_survey_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ form.next_survey_date.errors }}
                     </td>
                 </tr>
