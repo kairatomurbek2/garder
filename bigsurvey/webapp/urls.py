@@ -23,7 +23,6 @@ urlpatterns = patterns(
     url(r'^hazard/(?P<pk>\d+)/add-test/$', views.TestAddView.as_view(), name="test_add"),
 
     url(r'^test/$', views.TestListView.as_view(), name="test_list"),
-    url(r'^test/(?P<pk>\d+)/$', views.TestDetailView.as_view(), name="test_detail"),
     url(r'^test/(?P<pk>\d+)/edit/$', views.TestEditView.as_view(), name="test_edit"),
     url(r'^testers/$', views.TesterListView.as_view(), name="tester_list"),
 
@@ -45,8 +44,4 @@ urlpatterns = patterns(
     url(r'^user/(?P<pk>\d+)/edit/$', views.UserEditView.as_view(), name="user_edit"),
 
     url(r'^help/$', views.HelpView.as_view(), name="help"),
-
-    # reports
-    # import
-    # testers
 )

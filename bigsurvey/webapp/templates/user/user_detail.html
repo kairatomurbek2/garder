@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block menu %}
+    <li><a href="{% url 'webapp:user_edit' selected_user.pk %}" id="user_{{ selected_user.pk }}_edit_link">{% trans "Edit" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div id="selected_user_detail" class="wrapper">
+        {% include 'messages.html' %}
+        <table class="uk-table">
+            <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Username" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.username }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "First Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.first_name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Last Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.last_name }}</td>
+            </tr>
+            <tr class="table-border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.pws.number }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Groups" %}</td>
+                <td class="uk-text-center uk-text-primary">
+                    {% for group in selected_user.groups.all %}
+                        {{ group.name }},
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.city }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "State" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.state }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "ZIP" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.zip }}</td>
+            </tr>
+            <tr class="table-border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Address" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.address }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Phone Numbers" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.phone1 }}, {{ selected_user.employee.phone2 }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Email" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.email }}</td>
+            </tr>
+            {% if is_tester %}
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Certificate Number" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.cert_number }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Certificate Date" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.cert_date }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Certificate Expires" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.cert_expires }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Test Kit Manufacturer" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.test_manufacturer }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Test Kit Model" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.test_model }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Test Kit Serial" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.test_serial }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Test Kit Last Calibration" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.test_last_cert }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Tester Company" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.company }}</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

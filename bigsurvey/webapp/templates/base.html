@@ -56,12 +56,13 @@
         {% if perms.webapp.browse_report %}
             <li><a>{% trans "Reports" %}</a></li>
         {% endif %}
+        {% if perms.webapp.browse_customer %}
         <li class="uk-parent" data-uk-dropdown="" id="bfp_menu">
             <a href="#">
                 {% trans "More..." %}
             </a>
             <div class="uk-dropdown uk-dropdown-navbar">
-                <ul class="uk-nav uk-nav-navbar">
+                <ul class="uk-nav uk-nav-navbar" id="more_menu_links">
                     {% if perms.webapp.access_to_adminpanel %}
                         <li><a id="admin_menu_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
                     {% endif %}
@@ -83,6 +84,7 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
     </ul>
     <div class="uk-navbar-flip">
         <ul class="uk-navbar-nav">

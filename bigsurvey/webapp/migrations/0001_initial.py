@@ -125,7 +125,6 @@ class Migration(migrations.Migration):
                 ('zip', models.CharField(max_length=10, null=True, verbose_name='ZIP', blank=True)),
                 ('phone1', models.CharField(max_length=20, null=True, verbose_name='Phone 1', blank=True)),
                 ('phone2', models.CharField(max_length=20, null=True, verbose_name='Phone 2', blank=True)),
-                ('email', models.CharField(max_length=50, null=True, verbose_name='Email', blank=True)),
                 ('cert_number', models.CharField(max_length=30, null=True, verbose_name='Cert. Number', blank=True)),
                 ('cert_date', models.DateField(null=True, verbose_name='Cert. Date', blank=True)),
                 ('cert_expires', models.DateField(null=True, verbose_name='Cert. Expires', blank=True)),

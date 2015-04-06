@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from webapp import mixins, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 
 class BaseView(mixins.PermissionRequiredMixin):
@@ -59,7 +59,7 @@ class SiteDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+        if not mixins.SiteObjectMixin.has_perm(self.request.user, site):
             raise Http404
         surveys_potable = site.surveys.filter(service_type__service_type=ServiceTypes.potable)
         surveys_fire = site.surveys.filter(service_type__service_type=ServiceTypes.fire)
@@ -120,7 +120,7 @@ class SiteEditView(SiteBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(SiteEditView, self).get_form(form_class)
-        if not mixins.SiteObjectMixin.has_perm(self.request, form.instance):
+        if not mixins.SiteObjectMixin.has_perm(self.request.user, form.instance):
             raise Http404
         form.initial['customer'] = form.instance.customer.pk
         return form
@@ -277,7 +277,7 @@ class SurveyDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         survey = models.Survey.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
+        if not mixins.SurveyObjectMixin.has_perm(self.request.user, survey):
             raise Http404
         context = super(SurveyDetailView, self).get_context_data(**kwargs)
         context['survey'] = survey
@@ -357,7 +357,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
 
     def _get_site(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+        if not mixins.SiteObjectMixin.has_perm(self.request.user, site):
             raise Http404
         return site
 
@@ -365,7 +365,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
 
     def get_form(self, form_class):
-        if not mixins.SiteObjectMixin.has_perm(self.request, self._get_site()):
+        if not mixins.SiteObjectMixin.has_perm(self.request.user, self._get_site()):
             raise Http404
         if not self._service_type_on_site_exists():
             raise Http404
@@ -390,7 +390,7 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(SurveyEditView, self).get_form(form_class)
-        if not mixins.SurveyObjectMixin.has_perm(self.request, form.instance):
+        if not mixins.SurveyObjectMixin.has_perm(self.request.user, form.instance):
             raise Http404
         return form
 
@@ -421,7 +421,7 @@ class HazardDetailView(BaseTemplateView):
 
     def _get_hazard(self):
         hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        if not mixins.HazardObjectMixin.has_perm(self.request, hazard):
+        if not mixins.HazardObjectMixin.has_perm(self.request.user, hazard):
             raise Http404
         return hazard
 
@@ -452,7 +452,7 @@ class HazardAddView(HazardBaseFormView, CreateView):
 
     def get_form(self, form_class):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+        if not mixins.SiteObjectMixin.has_perm(self.request.user, site):
             raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
@@ -475,7 +475,7 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(HazardEditView, self).get_form(form_class)
-        if not mixins.HazardObjectMixin.has_perm(self.request, form.instance):
+        if not mixins.HazardObjectMixin.has_perm(self.request.user, form.instance):
             raise Http404
         form.fields['assembly_status'].queryset = self._get_queryset_for_assembly_status_field()
         return form
@@ -523,7 +523,7 @@ class TestAddView(TestBaseFormView, CreateView):
     error_message = Messages.Test.adding_error
 
     def get_form(self, form_class):
-        if not mixins.HazardObjectMixin.has_perm(self.request, models.Hazard.objects.get(pk=self.kwargs['pk'])):
+        if not mixins.HazardObjectMixin.has_perm(self.request.user, models.Hazard.objects.get(pk=self.kwargs['pk'])):
             raise Http404
         return super(TestAddView, self).get_form(form_class)
 
@@ -539,7 +539,7 @@ class TestEditView(TestBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(TestEditView, self).get_form(form_class)
-        if not mixins.TestObjectMixin.has_perm(self.request, form.instance):
+        if not mixins.TestObjectMixin.has_perm(self.request.user, form.instance):
             raise Http404
         return form
 
@@ -641,19 +641,19 @@ class UserEditView(UserBaseFormView):
 
     def get(self, request, *args, **kwargs):
         response = super(UserEditView, self).get(request, *args, **kwargs)
-        if not mixins.UserObjectMixin.has_perm(self.request, self.user_object):
+        if not mixins.UserObjectMixin.has_perm(self.request.user, self.user_object):
             raise Http404
         return response
 
     def post(self, request, *args, **kwargs):
         user = self.user_model.objects.get(pk=self.kwargs['pk'])
-        if not mixins.UserObjectMixin.has_perm(self.request, user):
+        if not mixins.UserObjectMixin.has_perm(self.request.user, user):
             raise Http404
         return super(UserEditView, self).post(request, *args, **kwargs)
 
     def get_user_form(self):
         self.user_object = self.user_model.objects.get(pk=self.kwargs['pk'])
-        if not mixins.UserObjectMixin.has_perm(self.request, self.user_object):
+        if not mixins.UserObjectMixin.has_perm(self.request.user, self.user_object):
             raise Http404
         return self.user_form_class(instance=self.user_object, **self.get_form_kwargs())
 
@@ -773,9 +773,16 @@ class TesterListView(BaseTemplateView):
             return models.User.objects.filter(groups__name=Groups.tester, employee__pws=user.employee.pws)
 
 
-class TestDetailView(BaseTemplateView):
-    pass
-
-
 class UserDetailView(BaseTemplateView):
-    pass
+    template_name = "user/user_detail.html"
+    permission = "webapp.browse_user"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetailView, self).get_context_data(**kwargs)
+        selected_user = User.objects.get(pk=kwargs['pk'])
+        if mixins.UserObjectMixin.has_perm(self.request.user, selected_user):
+            context['selected_user'] = selected_user
+            if Group.objects.get(name=Groups.tester) in selected_user.groups.all():
+                context['is_tester'] = True
+            return context
+        raise Http404

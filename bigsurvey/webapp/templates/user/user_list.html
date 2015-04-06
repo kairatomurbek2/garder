@@ -21,7 +21,7 @@
                         <th>{% trans "State" %}</th>
                         <th>{% trans "City" %}</th>
                         <th>{% trans "PWS" %}</th>
-                        <th class="uk-text-center table-border-left uk-width-1-14">{% trans "Actions" %}</th>
+                        <th colspan="2" class="uk-text-center table-border-left uk-width-1-10">{% trans "Actions" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -36,6 +36,9 @@
                             <td>{{ user.employee.pws }}</td>
                             <td class="uk-text-center table-border-left">
                                 <a href="{% url 'webapp:user_edit' user.pk %}" id="user_{{ user.pk }}_edit_link">{% trans "Edit" %}</a>
+                            </td>
+                            <td class="uk-text-center">
+                                <a href="{% url 'webapp:user_detail' user.pk %}" id="user_{{ user.pk }}_detail_link">{% trans "Detail" %}</a>
                             </td>
                         </tr>
                     {% endfor %}
