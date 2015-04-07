@@ -2086,5 +2086,41 @@
   },
   "model": "webapp.sitestatus",
   "pk": 3
+},
+{
+  "fields": {
+    "text": "<p>Here could be illustrated help for Super Administrators.</p>",
+    "group": 1,
+    "title": "Super Admin Help"
+  },
+  "model": "webapp.statictext",
+  "pk": 2
+},
+{
+  "fields": {
+    "text": "<p>Here could be illustrated help for Administrators.</p>",
+    "group": 2,
+    "title": "Admin Help"
+  },
+  "model": "webapp.statictext",
+  "pk": 3
+},
+{
+  "fields": {
+    "text": "<p>Here could be illustrated help for Surveyors.</p>",
+    "group": 3,
+    "title": "Surveyor Help"
+  },
+  "model": "webapp.statictext",
+  "pk": 4
+},
+{
+  "fields": {
+    "text": "<p>Here could be illustrated help for Testers.</p>",
+    "group": 4,
+    "title": "Tester Help"
+  },
+  "model": "webapp.statictext",
+  "pk": 5
 }
 ]

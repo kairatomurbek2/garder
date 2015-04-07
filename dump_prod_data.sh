@@ -7,6 +7,6 @@ FIXTURE_DIR=webapp/fixtures
 ./manage.py dumpdata webapp.employee auth --exclude=auth.permission --natural-foreign --indent 2 > ${FIXTURE_DIR}/data_auth.json
 for data_type in "customer" "pws" "site" "survey" "hazard" "letter"
 do
-   ./manage.py dumpdata webapp.${data_type} --indent=2 > ${FIXTURE_DIR}/dumpdata_${data_type}.json
+   ./manage.py dumpdata webapp.${data_type} --indent=2 > ${FIXTURE_DIR}/data_${data_type}.json
 done
 deactivate

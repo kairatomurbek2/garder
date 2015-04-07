@@ -2,7 +2,663 @@
 {
   "fields": {
     "name": "SuperAdministrators",
-    "permissions": []
+    "permissions": [
+      [
+        "add_user",
+        "auth",
+        "user"
+      ],
+      [
+        "change_user",
+        "auth",
+        "user"
+      ],
+      [
+        "delete_user",
+        "auth",
+        "user"
+      ],
+      [
+        "add_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "browse_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "change_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "delete_assemblylocation",
+        "webapp",
+        "assemblylocation"
+      ],
+      [
+        "add_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "browse_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "change_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "delete_assemblystatus",
+        "webapp",
+        "assemblystatus"
+      ],
+      [
+        "add_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "browse_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "change_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "delete_bpmanufacturer",
+        "webapp",
+        "bpmanufacturer"
+      ],
+      [
+        "add_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "browse_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "change_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "delete_bpsize",
+        "webapp",
+        "bpsize"
+      ],
+      [
+        "add_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "browse_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "change_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "delete_bptype",
+        "webapp",
+        "bptype"
+      ],
+      [
+        "add_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "browse_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "change_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "delete_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "add_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "browse_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "change_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "delete_customercode",
+        "webapp",
+        "customercode"
+      ],
+      [
+        "access_to_adminpanel",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_all_users",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "browse_user",
+        "webapp",
+        "employee"
+      ],
+      [
+        "change_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "delete_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "browse_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "change_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "delete_floorscount",
+        "webapp",
+        "floorscount"
+      ],
+      [
+        "access_to_all_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "delete_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "browse_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "change_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "delete_hazardtype",
+        "webapp",
+        "hazardtype"
+      ],
+      [
+        "add_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "browse_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "change_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "delete_icpointtype",
+        "webapp",
+        "icpointtype"
+      ],
+      [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "delete_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "add_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "browse_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "change_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "delete_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "add_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "browse_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "change_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "delete_licence",
+        "webapp",
+        "licence"
+      ],
+      [
+        "add_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "browse_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "change_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "delete_orientation",
+        "webapp",
+        "orientation"
+      ],
+      [
+        "add_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "browse_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "change_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "delete_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "add_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "browse_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "change_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "delete_servicetype",
+        "webapp",
+        "servicetype"
+      ],
+      [
+        "access_to_all_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_batch_update",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_import",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "delete_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "browse_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "change_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "delete_sitestatus",
+        "webapp",
+        "sitestatus"
+      ],
+      [
+        "add_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "browse_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "change_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "delete_sitetype",
+        "webapp",
+        "sitetype"
+      ],
+      [
+        "add_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "browse_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "change_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "delete_siteuse",
+        "webapp",
+        "siteuse"
+      ],
+      [
+        "add_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "browse_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "change_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "delete_sourcetype",
+        "webapp",
+        "sourcetype"
+      ],
+      [
+        "add_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "browse_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "change_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "delete_special",
+        "webapp",
+        "special"
+      ],
+      [
+        "add_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
+        "change_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
+        "delete_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
+        "access_to_all_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "delete_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "browse_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "change_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "delete_surveytype",
+        "webapp",
+        "surveytype"
+      ],
+      [
+        "access_to_all_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "delete_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "browse_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "change_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "delete_testmanufacturer",
+        "webapp",
+        "testmanufacturer"
+      ],
+      [
+        "add_testmodel",
+        "webapp",
+        "testmodel"
+      ],
+      [
+        "browse_testmodel",
+        "webapp",
+        "testmodel"
+      ],
+      [
+        "change_testmodel",
+        "webapp",
+        "testmodel"
+      ],
+      [
+        "delete_testmodel",
+        "webapp",
+        "testmodel"
+      ]
+    ]
   },
   "model": "auth.group",
   "pk": 1
@@ -10,7 +666,163 @@
 {
   "fields": {
     "name": "Administrators",
-    "permissions": []
+    "permissions": [
+      [
+        "add_user",
+        "auth",
+        "user"
+      ],
+      [
+        "change_user",
+        "auth",
+        "user"
+      ],
+      [
+        "add_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "browse_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "change_customer",
+        "webapp",
+        "customer"
+      ],
+      [
+        "access_to_pws_users",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "browse_user",
+        "webapp",
+        "employee"
+      ],
+      [
+        "change_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "access_to_batch_update",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_import",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_pws_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ]
+    ]
   },
   "model": "auth.group",
   "pk": 2
@@ -18,7 +830,63 @@
 {
   "fields": {
     "name": "Surveyors",
-    "permissions": []
+    "permissions": [
+      [
+        "access_to_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_own_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ]
+    ]
   },
   "model": "auth.group",
   "pk": 3
@@ -26,7 +894,53 @@
 {
   "fields": {
     "name": "Testers",
-    "permissions": []
+    "permissions": [
+      [
+        "access_to_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_own_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ]
+    ]
   },
   "model": "auth.group",
   "pk": 4
@@ -39,7 +953,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-03-09T08:23:55Z",
+    "last_login": "2015-04-07T08:56:24Z",
     "groups": [],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",
@@ -255,7 +1169,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-03-09T08:26:54Z",
+    "last_login": "2015-04-07T08:55:53Z",
     "groups": [
       [
         "Surveyors"
@@ -277,7 +1191,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-03-09T08:27:26Z",
+    "last_login": "2015-04-07T08:56:00Z",
     "groups": [
       [
         "Testers"
@@ -294,17 +1208,23 @@
 {
   "fields": {
     "city": "",
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "root"
     ],
-    "address": "IT-Attractor"
+    "address": "IT-Attractor",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 1
@@ -312,17 +1232,23 @@
 {
   "fields": {
     "city": "",
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "dvillien"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 2
@@ -330,18 +1256,23 @@
 {
   "fields": {
     "city": "",
-    
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "jjdahl"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 3
@@ -349,18 +1280,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "jlebas"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 4
@@ -368,18 +1304,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "knijoka"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 5
@@ -387,18 +1328,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "mlebas"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 6
@@ -406,18 +1352,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "ndecoteau"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 7
@@ -425,18 +1376,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "rleblanc"
     ],
-    "address": "USA"
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 8
@@ -444,18 +1400,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "superadmin"
     ],
-    "address": "super address"
+    "address": "super address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 9
@@ -463,18 +1424,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": 1,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "admin"
     ],
-    "address": "admin address"
+    "address": "admin address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 10
@@ -482,18 +1448,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": 1,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "surveyor"
     ],
-    "address": "surveyor address"
+    "address": "surveyor address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 11
@@ -501,18 +1472,23 @@
 {
   "fields": {
     "city": "",
-
-    
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": null,
+    "test_last_cert": null,
     "user": [
       "tester"
     ],
-    "address": "tester address"
+    "address": "tester address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 12
