@@ -19,10 +19,20 @@ class Connector(object):
         self.cnxn = pyodbc.connect(ACCESS_CON_STR)
         self.cursor = self.cnxn.cursor()
 
+    def _connect_another(self):
+        #required for dumping hazards for surveys (many-to-many relation)
+        self.cnxn2 = pyodbc.connect(ACCESS_CON_STR)
+        self.cursor2 = self.cnxn2.cursor()
+
     def _disconnect(self):
         self.cursor.close()
         del self.cursor
         self.cnxn.close()
+
+    def _disconnect_another(self):
+        self.cursor2.close()
+        del self.cursor2
+        self.cnxn2.close()
 
     def _execute(self, sql):
         try:
@@ -113,12 +123,12 @@ class Preloader(Connector):
     def _preload_hazards(self):
         print "======== PRELOADING HAZARDS ========"
         sqls = (
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey ) SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID FROM Surveys, ALL_SURVEYS WHERE ((Int([ALL_SURVEYS].[old_id])=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE ((Int([ALL_SURVEYS].[old_id])=[Surveys].[SurveyID]));",
             "UPDATE BackflowDevices, ALL_SURVEYS, ALL_HAZARDS SET ALL_HAZARDS.assembly_location = [BackflowDevices].[AssemblyLocation], ALL_HAZARDS.installed_properly = [BackflowDevices].[InstalledProperly], ALL_HAZARDS.installer = [BackflowDevices].[Installer], ALL_HAZARDS.install_date = [BackflowDevices].[InstallDate], ALL_HAZARDS.replace_date = [BackflowDevices].[ReplaceDate], ALL_HAZARDS.orientation = [BackflowDevices].[Orientation], ALL_HAZARDS.bp_type_present = [BackflowDevices].[TypeBPProvided], ALL_HAZARDS.bp_size = [BackflowDevices].[BPSize], ALL_HAZARDS.bp_manufacturer = [BackflowDevices].[Manufacturer], ALL_HAZARDS.model_no = [BackflowDevices].[ModelNo], ALL_HAZARDS.serial_no = [BackflowDevices].[SerialNo] WHERE (((BackflowDevices.SurveyID)=Int([ALL_SURVEYS].[old_id])) AND ((ALL_SURVEYS.ID)=Int([ALL_HAZARDS].[survey])));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey ) SELECT Surveys.Hazard2, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID FROM Surveys, ALL_SURVEYS WHERE (([Hazard2] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey ) SELECT Surveys.Hazard3, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID FROM Surveys, ALL_SURVEYS WHERE (([Hazard3] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey ) SELECT Surveys.Hazard4, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID FROM Surveys, ALL_SURVEYS WHERE (([Hazard4] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey ) SELECT Surveys.Hazard5, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID FROM Surveys, ALL_SURVEYS WHERE (([Hazard5] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard2, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard2] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard3, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard3] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard4, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard4] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard5, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard5] Is Not Null) AND ((Int([ALL_SURVEYS].[old_id]))=[Surveys].[SurveyID]));",
             "UPDATE ALL_HAZARDS, Pvals, hazardreassignment SET ALL_HAZARDS.hazard_type = [hazardreassignment].[Point to] WHERE (((Int([hazard_type]))=[hazardreassignment].[Pval_ID] And [hazardreassignment].[Point to] Is Not Null));",
             "INSERT INTO Pvals ( Pval, Field, [User], [Last Update], ActivityStatus ) SELECT hazarddelete.Pval, 'Hazard_Type' AS Expr1, 'MegaUser' AS Expr2, #1/1/2010# AS Expr4, -1 AS Expr3 FROM hazarddelete WHERE (((hazarddelete.Delete)='y'));",
             "UPDATE Pvals SET Pvals.Pval = 'Landscape Nursery' WHERE (((Pvals.Pval) Like 'Landscape Nursery%'));",
@@ -149,7 +159,7 @@ class Formatter(Connector):
         "pws": ("ALL_PWS", ["Number", "Name", "City", "WaterSource"]),
         "letters": ("ALL_LETTERS", ["Site", ("LetterDate", "date")]),
         "surveys": ("ALL_SURVEYS", ["site", "service_type", ("survey_date", "date"), "survey_type", "surveyor", ("metered", "yesno"), ("pump_present", "yesno"), ("additives_present", "yesno"), ("cc_present", "yesno"), ("protected", "yesno"), ("aux_water", "yesno"), "detector_manufacturer", "detector_model", "special", "detector_serial", "notes", "old_id"]),
-        "hazards": ("ALL_HAZARDS", ["survey", "location1", "location2", "hazard_type", "assembly_location", "assembly_status", ("installed_properly", "yesno"), "installer", ("install_date", "date"), ("replace_date", "date"), "orientation", "bp_type_present", "bp_type_required", "bp_size", "bp_manufacturer", "model_no", "serial_no", ("due_install_test_date", "date")])
+        "hazards": ("ALL_HAZARDS", ["site", "survey", "service_type", "location1", "location2", "hazard_type", "assembly_location", "assembly_status", ("installed_properly", "yesno"), "installer", ("install_date", "date"), ("replace_date", "date"), "orientation", "bp_type_present", "bp_type_required", "bp_size", "bp_manufacturer", "model_no", "serial_no", ("due_install_test_date", "date")])
     }
 
     def _create_database(self):
@@ -255,17 +265,17 @@ class Dumper(Connector):
     TEMPLATES = {
         'site': BASE_TEMPLATE % ('{"status":1,"customer":%s,"pws":%s,"connect_date":null,"address1":"%s","address2":"","apt":"%s","city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,"meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,"is_due_install":%s,"is_backflow":%s,"next_survey_date":null,"notes":""}', '"webapp.site"', '%s'),
         'customer': BASE_TEMPLATE % ('{"number":"%s","name":"%s","code":%s,"address1":"%s","address2":"%s","city":"%s","state":"%s","zip":"%s","phone":"","fax":"","email":"","notes":""}', '"webapp.customer"', '%s'),
-        'survey': BASE_TEMPLATE % ('{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s"}', '"webapp.survey"', '%s'),
-        'hazard': BASE_TEMPLATE % ('{"survey":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,"assembly_status":%s,"installed_properly":%s,"installer":null,"install_date":null,"replace_date":null,"orientation":%s,"bp_type_present":%s,"bp_type_required":%s,"bp_size":%s,"manufacturer":%s,"model_no":"%s","serial_no":"%s","due_install_test_date":null,"notes":""}', '"webapp.hazard"', '%s'),
+        'survey': BASE_TEMPLATE % ('{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}', '"webapp.survey"', '%s'),
+        'hazard': BASE_TEMPLATE % ('{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,"assembly_status":%s,"installed_properly":%s,"installer":null,"install_date":null,"replace_date":null,"orientation":%s,"bp_type_present":%s,"bp_type_required":%s,"bp_size":%s,"manufacturer":%s,"model_no":"%s","serial_no":"%s","due_install_test_date":null,"is_present":true,"notes":""}', '"webapp.hazard"', '%s'),
         'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
-        'letter': BASE_TEMPLATE % ('{"site":%s,"hazard":null,"letter_type":1,"date":"%s","user":2}', '"webapp.letter"', '%s'),
+        'letter': BASE_TEMPLATE % ('{"site":%s,"letter_type":1,"date":"%s","user":2}', '"webapp.letter"', '%s'),
     }
     SQL_STRS = {
         'dump_sites':'select Customer, PWS, address1, apt, city, state, zip, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading, route, potable, fire, irrigation, is_due_install, is_backflow, ID from ALL_SITES',
         'dump_customers':'select AccountNumber, CustomerName, Code, Address1, Address2, City, State, Zip, ID from ALL_CUSTOMERS',
-        'dump_surveys':'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, ID from ALL_SURVEYS',
+        'dump_surveys':'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, \'hph\', ID from ALL_SURVEYS',
         'dump_pwss':'select Number, Name, WaterSource, ID from ALL_PWS',
-        'dump_hazards':'select survey, hazard_type, assembly_location, assembly_status, installed_properly, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, ID from ALL_HAZARDS',
+        'dump_hazards':'select site, service_type, hazard_type, assembly_location, assembly_status, installed_properly, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, ID from ALL_HAZARDS',
         'dump_letters':'select site, letterdate, ID from ALL_LETTERS',
     }
     DATA_TYPES = [
@@ -285,14 +295,15 @@ class Dumper(Connector):
         'survey': [(1, "webapp.servicetype"),
                    (3, "auth.user"),
                    (13, "webapp.special")],
-        'hazard': [(1, "webapp.hazardtype"),
-                   (2, "webapp.assemblylocation"),
-                   (3, "webapp.assemblystatus"),
-                   (5, "webapp.orientation"),
-                   (6, "webapp.bptype"),
+        'hazard': [(1, "webapp.servicetype"),
+                   (2, "webapp.hazardtype"),
+                   (3, "webapp.assemblylocation"),
+                   (4, "webapp.assemblystatus"),
+                   (6, "webapp.orientation"),
                    (7, "webapp.bptype"),
-                   (8, "webapp.bpsize"),
-                   (9, "webapp.bpmanufacturer")],
+                   (8, "webapp.bptype"),
+                   (9, "webapp.bpsize"),
+                   (10, "webapp.bpmanufacturer")],
         'pws': [(2, "webapp.sourcetype"),],
         'letter': []
     }
@@ -302,6 +313,7 @@ class Dumper(Connector):
         formatter.prepare_db()
         self.jsoner = Jsoner()
         self._connect()
+        self._connect_another()
 
     def dump(self):
         full = codecs.open("data_full.json", 'w', 'utf-8')
@@ -338,6 +350,17 @@ class Dumper(Connector):
         full.write(']')
         full.close()
         self._disconnect()
+        self._disconnect_another()
+
+    def _get_hazards_for_survey(self, survey_id):
+        sql_str = 'select ID from ALL_HAZARDS where ALL_HAZARDS.survey = \'%s\';' % survey_id
+        self.cursor2.execute(sql_str)
+        hazard_ids = []
+        row = self.cursor2.fetchone()
+        while row:
+            hazard_ids.append(str(row[0]))
+            row = self.cursor2.fetchone()
+        return ",".join(hazard_ids)
 
     def replace_nones(self, string):
         return string.replace("None", "null").replace("False", "false").replace("True", "true").replace('"null"', 'null')
@@ -354,6 +377,7 @@ class Dumper(Connector):
         #and for survey
         if data_type == "survey" and row[2]:
             row[2] = ('%s' % row[2])[:10]
+            row[15] = self._get_hazards_for_survey(row[16])
         #and replacing blank values on site.meter_reading with Nulls
         if data_type == "site" and row[13]=="":
             row[13] = ('null')

@@ -35,6 +35,7 @@ class StaticTextAdmin(admin.ModelAdmin):
 class SurveyAdminForm(forms.ModelForm):
     class Meta:
         model = models.Survey
+        exclude = []
 
     def __init__(self, *args, **kwargs):
         super(SurveyAdminForm, self).__init__(*args, **kwargs)
