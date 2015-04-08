@@ -28,7 +28,7 @@ def hover_on_menu(step):
 
 @step('I click "([-_a-z0-9]+)" menu link')
 def click_menu_link(step, link_name):
-    step.given('I hover on "menu" link')
+    step.given('I hover on "more" link')
     link = helper.find(Xpath.Pattern.menu_item % link_name)
     helper.check_element_exists(link, '"%s" link is not in menu' % link_name)
     link.click()
