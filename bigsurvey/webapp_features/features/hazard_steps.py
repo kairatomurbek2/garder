@@ -1,8 +1,10 @@
 from common_steps import *
 from lettuce import *
 from settings import *
-from webapp.models import Hazard
 
+@step('I open "hazard_list" page')
+def open_hazard_list_page(step):
+    step.given('I click "hazards_menu" link')
 
 @step('I directly open "hazard_detail" page with pk "(\d+)"')
 def directly_open_hazard_detail_page(step, pk):
@@ -11,12 +13,7 @@ def directly_open_hazard_detail_page(step, pk):
 
 @step('I open "hazard_detail" page with pk "(\d+)"')
 def open_hazard_detail_page(step, pk):
-    survey = Hazard.objects.get(pk=pk).survey
-    if world.user.has_perm('webapp.browse_survey'):
-        step.given('I open "survey_detail" page with pk "%s"' % survey.pk)
-    else:
-        step.given('I open "site_detail" page with pk "%s"' % survey.site.pk)
-        step.given('I click "%s" link' % survey.service_type.service_type)
+    step.given('I open "hazard_list" page')
     step.given('I click "hazard_%s_detail" link' % pk)
 
 

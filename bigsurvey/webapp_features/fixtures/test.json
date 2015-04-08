@@ -2685,7 +2685,6 @@
 {
   "fields": {
     "replace_date": null,
-    "due_install_test_date": "2015-05-31",
     "bp_type_required": null,
     "orientation": null,
     "bp_type_present": null,
@@ -2693,13 +2692,16 @@
     "notes": "",
     "serial_no": "",
     "location2": "",
+    "site": 5,
     "assembly_status": 3,
     "assembly_location": 2,
-    "model_no": "",
-    "survey": 2,
-    "installer": "",
     "installed_properly": false,
+    "model_no": "",
     "hazard_type": 40,
+    "is_present": true,
+    "due_install_test_date": "2015-05-31",
+    "service_type": 4,
+    "installer": "",
     "location1": "Seattle",
     "bp_size": null,
     "manufacturer": null
@@ -2710,7 +2712,6 @@
 {
   "fields": {
     "replace_date": null,
-    "due_install_test_date": null,
     "bp_type_required": null,
     "orientation": null,
     "bp_type_present": null,
@@ -2718,13 +2719,16 @@
     "notes": "",
     "serial_no": "",
     "location2": "",
+    "site": 10,
     "assembly_status": 1,
     "assembly_location": 2,
-    "model_no": "",
-    "survey": 1,
-    "installer": "",
     "installed_properly": false,
+    "model_no": "",
     "hazard_type": 14,
+    "is_present": true,
+    "due_install_test_date": null,
+    "service_type": 2,
+    "installer": "",
     "location1": "Washington",
     "bp_size": null,
     "manufacturer": null
@@ -2735,7 +2739,6 @@
 {
   "fields": {
     "replace_date": null,
-    "due_install_test_date": null,
     "bp_type_required": null,
     "orientation": null,
     "bp_type_present": null,
@@ -2743,13 +2746,16 @@
     "notes": "",
     "serial_no": "",
     "location2": "",
+    "site": 5,
     "assembly_status": null,
     "assembly_location": null,
-    "model_no": "",
-    "survey": 1,
-    "installer": "",
     "installed_properly": false,
+    "model_no": "",
     "hazard_type": 1,
+    "is_present": true,
+    "due_install_test_date": null,
+    "service_type": 3,
+    "installer": "",
     "location1": "White House",
     "bp_size": null,
     "manufacturer": null
@@ -2762,7 +2768,7 @@
     "name": "Testers",
     "permissions": [
       [
-        "access_to_site_hazards",
+        "access_to_pws_hazards",
         "webapp",
         "hazard"
       ],
@@ -2777,17 +2783,12 @@
         "hazard"
       ],
       [
-        "access_to_test_sites",
+        "access_to_pws_sites",
         "webapp",
         "site"
       ],
       [
         "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "commit_site",
         "webapp",
         "site"
       ],
@@ -2821,7 +2822,7 @@
     "name": "Surveyors",
     "permissions": [
       [
-        "access_to_own_hazards",
+        "access_to_pws_hazards",
         "webapp",
         "hazard"
       ],
@@ -2846,17 +2847,12 @@
         "hazard"
       ],
       [
-        "access_to_survey_sites",
+        "access_to_pws_sites",
         "webapp",
         "site"
       ],
       [
         "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "commit_site",
         "webapp",
         "site"
       ],
@@ -2960,26 +2956,6 @@
         "hazard"
       ],
       [
-        "access_to_pws_inspections",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "add_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "browse_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "change_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
         "add_letter",
         "webapp",
         "letter"
@@ -2990,7 +2966,7 @@
         "letter"
       ],
       [
-        "change_letter",
+        "send_letter",
         "webapp",
         "letter"
       ],
@@ -3015,16 +2991,6 @@
         "site"
       ],
       [
-        "assign_surveyor",
-        "webapp",
-        "site"
-      ],
-      [
-        "assign_tester",
-        "webapp",
-        "site"
-      ],
-      [
         "browse_site",
         "webapp",
         "site"
@@ -3035,17 +3001,7 @@
         "site"
       ],
       [
-        "commit_site",
-        "webapp",
-        "site"
-      ],
-      [
         "access_to_pws_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "add_many_surveys_per_site",
         "webapp",
         "survey"
       ],
@@ -3070,11 +3026,6 @@
         "test"
       ],
       [
-        "add_many_tests_per_hazard",
-        "webapp",
-        "test"
-      ],
-      [
         "add_test",
         "webapp",
         "test"
@@ -3088,26 +3039,6 @@
         "change_test",
         "webapp",
         "test"
-      ],
-      [
-        "access_to_pws_testpermissions",
-        "webapp",
-        "testpermission"
-      ],
-      [
-        "add_testpermission",
-        "webapp",
-        "testpermission"
-      ],
-      [
-        "browse_testpermission",
-        "webapp",
-        "testpermission"
-      ],
-      [
-        "change_testpermission",
-        "webapp",
-        "testpermission"
       ]
     ]
   },
@@ -3118,51 +3049,6 @@
   "fields": {
     "name": "SuperAdministrators",
     "permissions": [
-      [
-        "add_logentry",
-        "admin",
-        "logentry"
-      ],
-      [
-        "change_logentry",
-        "admin",
-        "logentry"
-      ],
-      [
-        "delete_logentry",
-        "admin",
-        "logentry"
-      ],
-      [
-        "add_group",
-        "auth",
-        "group"
-      ],
-      [
-        "change_group",
-        "auth",
-        "group"
-      ],
-      [
-        "delete_group",
-        "auth",
-        "group"
-      ],
-      [
-        "add_permission",
-        "auth",
-        "permission"
-      ],
-      [
-        "change_permission",
-        "auth",
-        "permission"
-      ],
-      [
-        "delete_permission",
-        "auth",
-        "permission"
-      ],
       [
         "add_user",
         "auth",
@@ -3177,36 +3063,6 @@
         "delete_user",
         "auth",
         "user"
-      ],
-      [
-        "add_contenttype",
-        "contenttypes",
-        "contenttype"
-      ],
-      [
-        "change_contenttype",
-        "contenttypes",
-        "contenttype"
-      ],
-      [
-        "delete_contenttype",
-        "contenttypes",
-        "contenttype"
-      ],
-      [
-        "add_session",
-        "sessions",
-        "session"
-      ],
-      [
-        "change_session",
-        "sessions",
-        "session"
-      ],
-      [
-        "delete_session",
-        "sessions",
-        "session"
       ],
       [
         "add_assemblylocation",
@@ -3359,11 +3215,6 @@
         "employee"
       ],
       [
-        "access_to_pws_users",
-        "webapp",
-        "employee"
-      ],
-      [
         "add_employee",
         "webapp",
         "employee"
@@ -3405,21 +3256,6 @@
       ],
       [
         "access_to_all_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "access_to_own_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "access_to_pws_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "access_to_site_hazards",
         "webapp",
         "hazard"
       ],
@@ -3489,36 +3325,6 @@
         "icpointtype"
       ],
       [
-        "access_to_all_inspections",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "access_to_pws_inspections",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "add_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "browse_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "change_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
-        "delete_inspection",
-        "webapp",
-        "inspection"
-      ],
-      [
         "add_letter",
         "webapp",
         "letter"
@@ -3529,12 +3335,12 @@
         "letter"
       ],
       [
-        "change_letter",
+        "delete_letter",
         "webapp",
         "letter"
       ],
       [
-        "delete_letter",
+        "send_letter",
         "webapp",
         "letter"
       ],
@@ -3654,32 +3460,7 @@
         "site"
       ],
       [
-        "access_to_pws_sites",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_survey_sites",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_test_sites",
-        "webapp",
-        "site"
-      ],
-      [
         "add_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "assign_surveyor",
-        "webapp",
-        "site"
-      ],
-      [
-        "assign_tester",
         "webapp",
         "site"
       ],
@@ -3690,11 +3471,6 @@
       ],
       [
         "change_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "commit_site",
         "webapp",
         "site"
       ],
@@ -3804,22 +3580,22 @@
         "special"
       ],
       [
+        "add_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
+        "change_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
+        "delete_statictext",
+        "webapp",
+        "statictext"
+      ],
+      [
         "access_to_all_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "access_to_own_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "access_to_pws_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "add_many_surveys_per_site",
         "webapp",
         "survey"
       ],
@@ -3869,21 +3645,6 @@
         "test"
       ],
       [
-        "access_to_own_tests",
-        "webapp",
-        "test"
-      ],
-      [
-        "access_to_pws_tests",
-        "webapp",
-        "test"
-      ],
-      [
-        "add_many_tests_per_hazard",
-        "webapp",
-        "test"
-      ],
-      [
         "add_test",
         "webapp",
         "test"
@@ -3924,34 +3685,24 @@
         "testmanufacturer"
       ],
       [
-        "access_to_all_testpermissions",
+        "add_testmodel",
         "webapp",
-        "testpermission"
+        "testmodel"
       ],
       [
-        "access_to_pws_testpermissions",
+        "browse_testmodel",
         "webapp",
-        "testpermission"
+        "testmodel"
       ],
       [
-        "add_testpermission",
+        "change_testmodel",
         "webapp",
-        "testpermission"
+        "testmodel"
       ],
       [
-        "browse_testpermission",
+        "delete_testmodel",
         "webapp",
-        "testpermission"
-      ],
-      [
-        "change_testpermission",
-        "webapp",
-        "testpermission"
-      ],
-      [
-        "delete_testpermission",
-        "webapp",
-        "testpermission"
+        "testmodel"
       ]
     ]
   },
@@ -3966,7 +3717,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-03-04T11:19:56Z",
+    "last_login": "2015-04-08T06:17:44.796Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -4114,148 +3865,32 @@
 },
 {
   "fields": {
-    "assigned_by": [
-      "root"
-    ],
-    "notes": "fas",
-    "is_active": true,
-    "site": 2,
-    "assigned_to": [
-      "surveyor"
-    ],
-    "assigned_date": "2015-01-15"
-  },
-  "model": "webapp.inspection",
-  "pk": 1
-},
-{
-  "fields": {
-    "assigned_by": [
-      "root"
-    ],
-    "notes": "",
-    "is_active": true,
-    "site": 10,
-    "assigned_to": [
-      "surveyor"
-    ],
-    "assigned_date": "2015-01-22"
-  },
-  "model": "webapp.inspection",
-  "pk": 2
-},
-{
-  "fields": {
-    "given_date": "2015-01-15",
-    "given_by": [
-      "admin"
-    ],
-    "notes": "notes\r\n",
-    "is_active": true,
-    "site": 1,
-    "given_to": [
-      "tester"
-    ]
-  },
-  "model": "webapp.testpermission",
-  "pk": 1
-},
-{
-  "fields": {
-    "given_date": "2015-01-22",
-    "given_by": [
-      "root"
-    ],
-    "notes": "",
-    "is_active": true,
-    "site": 6,
-    "given_to": [
-      "tester"
-    ]
-  },
-  "model": "webapp.testpermission",
-  "pk": 2
-},
-{
-  "fields": {
-    "given_date": "2015-01-26",
-    "given_by": [
-      "admin"
-    ],
-    "notes": "",
-    "is_active": true,
-    "site": 10,
-    "given_to": [
-      "tester"
-    ]
-  },
-  "model": "webapp.testpermission",
-  "pk": 3
-},
-{
-  "fields": {
-    "given_date": "2015-02-12",
-    "given_by": [
-      "root"
-    ],
-    "notes": "",
-    "is_active": true,
-    "site": 1,
-    "given_to": [
-      "tester"
-    ]
-  },
-  "model": "webapp.testpermission",
-  "pk": 4
-},
-{
-  "fields": {
-    "given_by": [
-      "root"
-    ],
-    "end_date": "2015-04-30",
-    "notes": "",
-    "is_active": true,
-    "given_to": [
-      "admin"
-    ],
-    "start_date": "2015-01-01"
-  },
-  "model": "webapp.licence",
-  "pk": 1
-},
-{
-  "fields": {
     "outlet_sov_leaked": false,
     "rv_psi1": null,
     "rv_psi2": null,
     "cv2_maintenance": false,
     "pvb_open_pressure": null,
     "cv2_leaked": false,
-    "cv_held_pressure": null,
-    "rv_maintenance": false,
     "test_result": false,
+    "rv_maintenance": false,
     "pvb_opened": false,
-    "last_calibration_date": "2015-01-27",
     "cv_maintenance": false,
     "cv2_gauge_pressure": null,
     "tester": [
       "tester"
     ],
     "cv1_maintenance": false,
-    "cv_leaked": false,
+    "air_inlet_psi": null,
     "cv2_maintenance_pressure": null,
-    "test_serial_number": "123",
+    "cv_held_pressure": null,
     "cv_psi": null,
-    "test_manufacturer": 3,
     "cv1_gauge_pressure": null,
     "rv_opened": false,
     "cv1_maintenance_pressure": null,
     "cv1_leaked": false,
     "bp_device": 1,
-    "next_test_date": null,
+    "cv_leaked": false,
     "notes": "",
-    "air_inlet_psi": null,
     "test_date": "2015-01-27"
   },
   "model": "webapp.test",
@@ -4269,30 +3904,26 @@
     "cv2_maintenance": false,
     "pvb_open_pressure": null,
     "cv2_leaked": false,
-    "cv_held_pressure": null,
-    "rv_maintenance": false,
     "test_result": false,
+    "rv_maintenance": false,
     "pvb_opened": false,
-    "last_calibration_date": "2015-01-27",
     "cv_maintenance": false,
     "cv2_gauge_pressure": null,
     "tester": [
       "tester"
     ],
     "cv1_maintenance": false,
-    "cv_leaked": false,
+    "air_inlet_psi": null,
     "cv2_maintenance_pressure": null,
-    "test_serial_number": "456",
+    "cv_held_pressure": null,
     "cv_psi": null,
-    "test_manufacturer": 1,
     "cv1_gauge_pressure": null,
     "rv_opened": false,
     "cv1_maintenance_pressure": null,
     "cv1_leaked": false,
     "bp_device": 2,
-    "next_test_date": null,
+    "cv_leaked": false,
     "notes": "",
-    "air_inlet_psi": null,
     "test_date": "2015-01-27"
   },
   "model": "webapp.test",
@@ -4303,6 +3934,7 @@
     "detector_manufacturer": "",
     "detector_model": "",
     "pump_present": false,
+    "hazards": [],
     "survey_type": 4,
     "cc_present": false,
     "site": 5,
@@ -4327,6 +3959,7 @@
     "detector_manufacturer": "",
     "detector_model": "",
     "pump_present": false,
+    "hazards": [],
     "survey_type": 6,
     "cc_present": false,
     "site": 10,
@@ -4349,18 +3982,23 @@
 {
   "fields": {
     "city": "root city",
-    "fax": "",
-    "certificate": null,
     "pws": null,
     "zip": "root zip",
     "phone2": "",
+    "cert_number": null,
     "company": "root company",
     "phone1": "root phone",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "AK",
+    "test_last_cert": null,
     "user": [
       "root"
     ],
-    "address": "root address"
+    "address": "root address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 1
@@ -4368,18 +4006,23 @@
 {
   "fields": {
     "city": "tester city",
-    "fax": "",
-    "certificate": "",
     "pws": 9,
     "zip": "tester zip",
     "phone2": "",
+    "cert_number": null,
     "company": "tester company",
     "phone1": "tester phone",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "AL",
+    "test_last_cert": null,
     "user": [
       "tester"
     ],
-    "address": "tester address"
+    "address": "tester address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 2
@@ -4387,18 +4030,23 @@
 {
   "fields": {
     "city": "surveyor city",
-    "fax": "",
-    "certificate": null,
     "pws": 9,
     "zip": "survey zip",
     "phone2": "",
+    "cert_number": null,
     "company": "surveyor company",
     "phone1": "surveyor phone",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "AR",
+    "test_last_cert": null,
     "user": [
       "surveyor"
     ],
-    "address": "surveyor address"
+    "address": "surveyor address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 3
@@ -4406,18 +4054,23 @@
 {
   "fields": {
     "city": "admin city",
-    "fax": "",
-    "certificate": null,
     "pws": 9,
     "zip": "admin zip",
     "phone2": "",
+    "cert_number": null,
     "company": "admin company",
     "phone1": "admin phone",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "KY",
+    "test_last_cert": null,
     "user": [
       "admin"
     ],
-    "address": "admin address"
+    "address": "admin address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 4
@@ -4425,18 +4078,23 @@
 {
   "fields": {
     "city": "superadmin city",
-    "fax": "",
-    "certificate": null,
     "pws": null,
     "zip": "supadm zip",
     "phone2": "",
+    "cert_number": null,
     "company": "superadmin company",
     "phone1": "superadmin phone",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "CO",
+    "test_last_cert": null,
     "user": [
       "superadmin"
     ],
-    "address": "superadmin address"
+    "address": "superadmin address",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 5
@@ -4444,18 +4102,23 @@
 {
   "fields": {
     "city": "",
-    "fax": "",
-    "certificate": "",
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "AR",
+    "test_last_cert": null,
     "user": [
       "surveyor_without_pws"
     ],
-    "address": ""
+    "address": "",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 10
@@ -4463,18 +4126,23 @@
 {
   "fields": {
     "city": "",
-    "fax": "",
-    "certificate": "",
     "pws": null,
     "zip": "",
     "phone2": "",
+    "cert_number": null,
     "company": "",
     "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
     "state": "OK",
+    "test_last_cert": null,
     "user": [
       "tester_without_pws"
     ],
-    "address": ""
+    "address": "",
+    "cert_date": null,
+    "test_manufacturer": null
   },
   "model": "webapp.employee",
   "pk": 11

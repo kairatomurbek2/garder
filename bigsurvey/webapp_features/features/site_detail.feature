@@ -104,22 +104,3 @@ Feature: Site detail
       | potable    | Add Survey    |
       | fire       | Add Survey    |
       | irrigation | Add Survey    |
-
-  @commit
-  Scenario Outline: Site committing
-    Given I logged in as "<role>"
-    When I open "site_detail" page with pk "10"
-    And I commit site
-    Then I should be at "site_list" page
-    And I should not see following
-      | text               |
-      | VALVE, Gabe Newell |
-    And I directly open "site_detail" page with pk "10"
-    And I should see "Not Found"
-    And I logout
-    And Uncommit sites
-
-    Examples:
-      | role     |
-      | surveyor |
-      | tester   |

@@ -41,7 +41,7 @@
         {% endif %}
         {% if perms.webapp.browse_hazard %}
             <li>
-                <a href="{% url "webapp:hazard_list" %}">
+                <a id="hazards_menu_link" href="{% url "webapp:hazard_list" %}">
                 {% if perms.webapp.change_all_info_about_hazard %}
                     {% trans "Hazards" %}
                 {% else %}

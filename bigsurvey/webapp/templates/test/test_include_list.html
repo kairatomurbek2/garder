@@ -25,28 +25,13 @@
                 <table class="uk-table table-fixed">
                     <tbody>
                     <tr class="table-border-bottom">
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Date" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_date }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Next Test Date" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.next_test_date }}</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    <tr>
                         <td class="uk-text-right uk-text-muted">{% trans "Tester" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.tester.first_name }} {{ test.tester.last_name }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Certificate" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.tester.employee.certificate }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Serial No." %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_serial_number }}</td>
+                        <td class="uk-text-center uk-text-primary">
+                            {{ test.tester.first_name }} {{ test.tester.last_name }}
+                        </td>
+                        <td colspan="4"></td>
                     </tr>
-                    <tr class="table-border-bottom">
-                        <td class="uk-text-right uk-text-muted">{% trans "Test Manufacturer" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.test_manufacturer }}</td>
-                        <td class="uk-text-right uk-text-muted">{% trans "Last Calibration Date" %}</td>
-                        <td class="uk-text-center uk-text-primary">{{ test.last_calibration_date }}</td>
-                        <td colspan="2"></td>
-                    </tr>
-                    {% ifequal hazard.survey.service_type.service_type 'potable' %}
+                    {% if hazard.service_type.service_type == 'potable' or hazard.service_type.service_type == 'fire' %}
                         <tr>
                             <td class="uk-text-right uk-text-muted">{% trans "CV1 Leaked" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv1_leaked|valve_leaked }}</td>
@@ -88,8 +73,8 @@
                             <td class="uk-text-center uk-text-primary">{{ test.outlet_sov_leaked }}</td>
                             <td colspan="2"></td>
                         </tr>
-                    {% endifequal %}
-                    {% ifequal hazard.survey.service_type.service_type 'fire' %}
+                    {% endif %}
+                    {% ifequal hazard.service_type.service_type 'fire' %}
                         <tr class="table-border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "PVB Opened" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.pvb_opened }}</td>
@@ -98,7 +83,7 @@
                             <td colspan="2"></td>
                         </tr>
                     {% endifequal %}
-                    {% ifequal hazard.survey.service_type.service_type 'irrigation' %}
+                    {% ifequal hazard.service_type.service_type 'irrigation' %}
                         <tr class="table-border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "CV Leaked" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv_leaked }}</td>
@@ -110,9 +95,10 @@
                         <tr>
                             <td class="uk-text-right uk-text-muted">{% trans "CV PSI" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv_psi }}</td>
+                            <td class="uk-text-right uk-text-muted">{% trans "Air Inlet Opened" %}</td>
+                            <td class="uk-text-center uk-text-primary">{{ test.air_inlet_opened }}</td>
                             <td class="uk-text-right uk-text-muted">{% trans "Air Inlet PSI" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.air_inlet_psi }}</td>
-                            <td colspan="2"></td>
                         </tr>
                     {% endifequal %}
                     <tr class="table-border-bottom">

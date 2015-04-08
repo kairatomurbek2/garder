@@ -27,7 +27,7 @@
                         {{ form.test_result.errors }}
                     </td>
                 </tr>
-                {% if hazard.service_type.service_type == 'potable' %}
+                {% if hazard.service_type.service_type == 'potable' or hazard.service_type.service_type == 'fire' %}
                     <tr>
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ form.cv1_leaked.id_for_label }}">{{ form.cv1_leaked.label }}</label>
@@ -162,14 +162,14 @@
                             {{ form.cv_leaked.errors }}
                         </td>
                         <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv_help_pressure.id_for_label }}">{{ form.cv_help_pressure.label }}</label>
+                            <label for="{{ form.cv_held_pressure.id_for_label }}">{{ form.cv_held_pressure.label }}</label>
                         </td>
                         <td class="uk-width-1-3">
-                            {% render_field form.cv_help_pressure|add_class:'uk-width-1-1' %}
+                            {% render_field form.cv_held_pressure|add_class:'uk-width-1-1' %}
                             {{ form.cv_help_pressure.errors }}
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="table-border-bottom">
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ form.cv_maintenance.id_for_label }}">{{ form.cv_maintenance.label }}</label>
                         </td>
@@ -186,6 +186,13 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.air_inlet_opened.id_for_label }}">{{ form.air_inlet_opened.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {% render_field form.air_inlet_opened|add_class:'uk-width-1-1' %}
+                            {{ form.air_inlet_opened.errors }}
+                        </td>
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ form.air_inlet_psi.id_for_label }}">{{ form.air_inlet_psi.label }}</label>
                         </td>

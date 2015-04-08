@@ -18,6 +18,9 @@
                 {% trans "No." %}
             </th>
             <th>
+                {% trans "PWS" %}
+            </th>
+            <th>
                 {% trans "Address" %}
             </th>
             <th>
@@ -51,6 +54,9 @@
             <tr>
                 <td class="uk-text-center table-border-right">
                     {{ forloop.counter }}
+                </td>
+                <td>
+                    {{ site.pws.number }}
                 </td>
                 <td>
                     {{ site.city }}, {{ site.address1 }}

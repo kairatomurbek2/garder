@@ -37,7 +37,7 @@ class SurveyObjectMixin(ObjectMixin):
     def has_perm(user, obj):
         return user.has_perm('webapp.access_to_all_surveys') or \
                user.has_perm('webapp.access_to_pws_surveys') and obj.site.pws == user.employee.pws or \
-               user.has_perm('webapp.access_to_own_surveys') and obj.surveyor == user
+               user.has_perm('webapp.access_to_own_surveys') and obj.surveyor == user and obj.site.pws == user.employee.pws
 
 
 class HazardObjectMixin(ObjectMixin):
@@ -51,8 +51,8 @@ class TestObjectMixin(ObjectMixin):
     @staticmethod
     def has_perm(user, obj):
         return user.has_perm('webapp.access_to_all_tests') or \
-               user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.survey.site.pws == user.employee.pws or \
-               user.has_perm('webapp.access_to_own_tests') and obj.tester == user
+               user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.site.pws == user.employee.pws or \
+               user.has_perm('webapp.access_to_own_tests') and obj.tester == user and obj.bp_device.site.pws == user.employee.pws
 
 
 class UserObjectMixin(ObjectMixin):

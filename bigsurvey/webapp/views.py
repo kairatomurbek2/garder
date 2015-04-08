@@ -174,15 +174,7 @@ class BatchUpdateView(BaseTemplateView):
 
     def _batch_update_hazards(self, date, site_pks):
         for site_pk in site_pks:
-            self._batch_update_hazards_for_site(date, site_pk)
-
-    def _batch_update_hazards_for_site(self, date, site_pk):
-        for service_type in models.ServiceType.objects.all():
-            try:
-                survey = models.Survey.objects.filter(site__pk=site_pk, service_type=service_type).latest('survey_date')
-                survey.hazards.update(due_install_test_date=date)
-            except models.Survey.DoesNotExist:
-                pass
+            models.Site.objects.get(pk=site_pk).hazards.update(due_install_test_date=date)
 
     def get_success_url(self):
         return reverse('webapp:batch_update')
@@ -496,11 +488,6 @@ class TestBaseFormView(BaseFormView):
     def get_success_url(self):
         return reverse('webapp:hazard_detail', args=(self.kwargs['pk'],))
 
-    def get_context_data(self, **kwargs):
-        context = super(TestBaseFormView, self).get_context_data(**kwargs)
-        context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        return context
-
     def get_form(self, form_class):
         form = super(TestBaseFormView, self).get_form(form_class)
         form.fields['tester'].queryset = self._get_queryset_for_tester_field()
@@ -508,12 +495,14 @@ class TestBaseFormView(BaseFormView):
 
     def _get_queryset_for_tester_field(self):
         queryset = []
+        user = self.request.user
         if self.request.user.has_perm('webapp.access_to_own_tests'):
-            queryset = models.User.objects.filter(pk=self.request.user.pk)
+            queryset = models.User.objects.filter(pk=user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_tests'):
-            queryset = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
+            queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin],
+                                                  employee__pws=user.employee.pws)
         if self.request.user.has_perm('webapp.access_to_all_tests'):
-            queryset = models.User.objects.filter(groups__name=Groups.tester)
+            queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin])
         return queryset
 
 
@@ -521,6 +510,11 @@ class TestAddView(TestBaseFormView, CreateView):
     permission = 'webapp.add_test'
     success_message = Messages.Test.adding_success
     error_message = Messages.Test.adding_error
+
+    def get_context_data(self, **kwargs):
+        context = super(TestAddView, self).get_context_data(**kwargs)
+        context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        return context
 
     def get_form(self, form_class):
         if not mixins.HazardObjectMixin.has_perm(self.request.user, models.Hazard.objects.get(pk=self.kwargs['pk'])):
@@ -536,6 +530,11 @@ class TestEditView(TestBaseFormView, UpdateView):
     permission = 'webapp.change_test'
     success_message = Messages.Test.editing_success
     error_message = Messages.Test.editing_error
+
+    def get_context_data(self, **kwargs):
+        context = super(TestEditView, self).get_context_data(**kwargs)
+        context['hazard'] = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
+        return context
 
     def get_form(self, form_class):
         form = super(TestEditView, self).get_form(form_class)
@@ -714,7 +713,7 @@ class SurveyListView(BaseTemplateView):
         if user.has_perm("webapp.access_to_pws_surveys"):
             return models.Survey.objects.filter(site__pws=user.employee.pws)
         if user.has_perm("webapp.access_to_own_surveys"):
-            return models.Survey.objects.filter(surveyor=user)
+            return models.Survey.objects.filter(surveyor=user, site__pws=user.employee.pws)
 
 
 class HazardListView(BaseTemplateView):
@@ -732,7 +731,7 @@ class HazardListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_hazards'):
             return models.Hazard.objects.all()
         if user.has_perm('webapp.access_to_pws_hazards'):
-            return models.Hazard.objects.filter(site__pws=user.employee.pws)
+            return models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True)
 
 
 class TestListView(BaseTemplateView):
@@ -752,7 +751,7 @@ class TestListView(BaseTemplateView):
         if user.has_perm("webapp.access_to_pws_tests"):
             return models.Test.objects.filter(bp_device__site__pws=user.employee.pws)
         if user.has_perm('webapp.access_to_own_tests'):
-            return models.Test.objects.filter(tester=user)
+            return models.Test.objects.filter(tester=user, bp_device__site__pws=user.employee.pws)
 
 
 class TesterListView(BaseTemplateView):
