@@ -61,7 +61,7 @@
         {% for tester in filtered_testers %}
             <tr>
                 <td class="uk-text-center table-border-right">
-                    {{ forloop.counter }}
+                    {{ tester.pk }}
                 </td>
                 <td>
                     {{ tester.employee.pws.number }}

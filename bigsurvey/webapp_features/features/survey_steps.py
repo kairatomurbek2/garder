@@ -24,7 +24,8 @@ def directly_open_survey_add_page_for_site(step, site_pk, service_type):
 @step('I open "survey_add" page for site with pk "(\d+)" and service "([a-z]+)"')
 def open_survey_add_page_for_site(step, site_pk, service_type):
     step.given('I open "site_detail" page with pk "%s"' % site_pk)
-    step.given('I click "%s" link' % service_type)
+    click_element_by_xpath(Xpath.Pattern.site_surveys_button)
+    step.given('I click "s%s" link' % service_type)
     step.given('I click "site_%s_service_%s_survey_add" link' % (site_pk, service_type))
 
 

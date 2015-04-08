@@ -2,7 +2,7 @@
 {% load boolean_yes_no %}
 {% if perms.webapp.add_hazard and site %}
     <div class="padding-top">
-        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}" id="site_{{ site.pk }}_hazard_add_link">
+        <a class="uk-align-center uk-text-center" href="{% url 'webapp:hazard_add' site.pk service %}" id="site_{{ service }}_hazard_add_link">
             <i class="uk-icon-plus"></i> {% trans "Add Hazard" %}
         </a>
     </div>
@@ -42,7 +42,7 @@
             {% for hazard in hazards %}
                 <tr>
                     <td class="uk-text-center table-border-right">
-                        {{ forloop.counter }}
+                        {{ hazard.pk }}
                     </td>
                     <td>
                         {{ hazard.site }}

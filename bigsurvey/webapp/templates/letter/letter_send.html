@@ -21,7 +21,7 @@
             <tbody>
             {% for pws in pws_list %}
                 <tr>
-                    <td class="table-border-right uk-text-center">{{ forloop.counter }}</td>
+                    <td class="table-border-right uk-text-center">{{ pws.pk }}</td>
                     <td>{{ pws.number }}</td>
                     <td>{{ pws.name }}</td>
                     <td>{{ pws.city }}</td>

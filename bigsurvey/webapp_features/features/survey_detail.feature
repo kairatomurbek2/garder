@@ -30,6 +30,5 @@ Feature: Survey Detail
       | Hazards      |
       | Detail       |
       | Add Test     |
-      | Add Hazard   |
       | Edit         |
       | Back to Site |

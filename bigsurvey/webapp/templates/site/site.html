@@ -88,12 +88,12 @@
         <ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#rel_data'}">
             {% if perms.webapp.browse_survey %}
             <li class="uk-active">
-                <a href="#" id="surveys" class="uk-text-large">{% trans "Surveys" %}</a>
+                <a href="#" id="surveys_button" class="uk-text-large">{% trans "Surveys" %}</a>
             </li>
             {% endif %}
             {% if perms.webapp.browse_hazard %}
             <li>
-                <a href="#" id="hazards" class="uk-text-large">{% trans "Hazards" %}</a>
+                <a href="#" id="hazards_button" class="uk-text-large">{% trans "Hazards" %}</a>
             </li>
             {% endif %}
         </ul>

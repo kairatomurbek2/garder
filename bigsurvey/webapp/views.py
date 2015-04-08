@@ -446,12 +446,25 @@ class HazardAddView(HazardBaseFormView, CreateView):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         if not mixins.SiteObjectMixin.has_perm(self.request.user, site):
             raise Http404
+        if not self._service_type_on_site_exists():
+            raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
     def form_valid(self, form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         return super(HazardAddView, self).form_valid(form)
+
+    def _service_type_on_site_exists(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        service_type = self.kwargs['service']
+        if service_type == 'potable' and site.potable_present:
+            return True
+        if service_type == 'fire' and site.fire_present:
+            return True
+        if service_type == 'irrigation' and site.irrigation_present:
+            return True
+        return False
 
 
 class HazardEditView(HazardBaseFormView, UpdateView):

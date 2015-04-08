@@ -53,7 +53,7 @@
         {% for site in filtered_sites %}
             <tr>
                 <td class="uk-text-center table-border-right">
-                    {{ forloop.counter }}
+                    {{ site.pk }}
                 </td>
                 <td>
                     {{ site.pws.number }}

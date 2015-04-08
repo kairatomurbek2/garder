@@ -35,7 +35,7 @@ class SiteForm(forms.ModelForm):
 class SurveyForm(forms.ModelForm):
     surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
                                       empty_label=None)
-    hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all())
+    hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all(), required=False)
 
     class Meta:
         model = models.Survey
@@ -45,7 +45,7 @@ class SurveyForm(forms.ModelForm):
 class HazardForm(forms.ModelForm):
     class Meta:
         model = models.Hazard
-        exclude = ('site', 'service_type')
+        exclude = ('site', 'service_type', 'is_present')
 
 
 class HazardFormForTester(forms.ModelForm):
@@ -59,9 +59,8 @@ class HazardFormForTester(forms.ModelForm):
             'location2',
             'notes',
             'due_install_test_date',
-            'installer',
-            'installed_properly',
             'bp_type_required',
+            'is_present',
         )
 
 

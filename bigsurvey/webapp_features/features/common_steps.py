@@ -171,3 +171,8 @@ def check_value_from_checkbox(step, value, checkbox_name):
 def check_multiple_values_from_checkbox(step, checkbox_name):
     for row in step.hashes:
         step.given('I check "%s" from "%s"' % (row['value'], checkbox_name))
+
+
+def click_element_by_xpath(xpath):
+    element = helper.find(xpath)
+    element.click()

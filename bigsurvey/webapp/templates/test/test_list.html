@@ -62,7 +62,7 @@
                     {% for test in filtered_tests %}
                         <tr>
                             <td class="uk-text-center table-border-right">
-                                {{ forloop.counter }}
+                                {{ test.pk }}
                             </td>
                             <td>
                                 {{ test.bp_device.site.pws.number }}

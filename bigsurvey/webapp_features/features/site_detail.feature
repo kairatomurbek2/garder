@@ -14,9 +14,9 @@ Feature: Site detail
     | admin    | 3  | see      |
     | admin    | 4  | not see  |
     | surveyor | 3  | see      |
-    | surveyor | 2  | not see  |
+    | surveyor | 4  | not see  |
     | tester   | 3  | see      |
-    | tester   | 6  | not see  |
+    | tester   | 9  | not see  |
 
 
   Scenario: Root is opening site detail page
@@ -25,9 +25,9 @@ Feature: Site detail
     Then I should see following
       | text        |
       | Gabe Newell |
-      | Assign      |
       | Edit        |
-      | Commit      |
+      | Surveys     |
+      | Hazards     |
     And I should see following text in following services
       | service    | text                             |
       | potable    | Jan. 26, 2015                    |
@@ -45,9 +45,9 @@ Feature: Site detail
     Then I should see following
       | text        |
       | Gabe Newell |
-      | Assign      |
       | Edit        |
-      | Commit      |
+      | Surveys     |
+      | Hazards     |
     And I should see following text in following services
       | service    | text                             |
       | potable    | Jan. 26, 2015                    |
@@ -65,20 +65,19 @@ Feature: Site detail
     Then I should see following
       | text        |
       | Gabe Newell |
-      | Commit      |
+      | Surveys     |
+      | Hazards     |
     And I should not see following
-      | text            |
-      | Assign Surveyor |
-      | Assign Tester   |
-      | Edit Site       |
+      | text |
+      | Edit |
     And I should see following text in following services
       | service    | text                             |
       | potable    | Jan. 26, 2015                    |
+      | potable    | Add Survey                       |
       | fire       | Fire water supply is not present |
       | irrigation | Add Survey                       |
     And I should not see following text in following services
       | service | text       |
-      | potable | Add Survey |
       | fire    | Add Survey |
 
 
@@ -88,19 +87,12 @@ Feature: Site detail
     Then I should see following
       | text        |
       | Gabe Newell |
-      | Commit      |
+      | Hazards     |
     And I should not see following
-      | text            |
-      | Assign Surveyor |
-      | Assign Tester   |
-      | Edit Site       |
-    And I should see following text in following services
+      | text    |
+      | Edit    |
+      | Surveys |
+    And I should see following text in following hazard services
       | service | text                             |
       | potable | Seattle                          |
       | fire    | Fire water supply is not present |
-    And I should not see following text in following services
-      | service    | text          |
-      | potable    | Jan. 26, 2015 |
-      | potable    | Add Survey    |
-      | fire       | Add Survey    |
-      | irrigation | Add Survey    |

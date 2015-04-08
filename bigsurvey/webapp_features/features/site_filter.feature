@@ -58,23 +58,23 @@ Feature: Filtration
   Scenario: Filtration by site_type field while logged in as tester
     Given I logged in as "tester"
     And I open "site_list" page
-    When I select "Governmental" from "site_type"
+    When I select "Offices" from "site_type"
     And I submit "site_filter" form
     Then I should see following
       | text     |
-      | New York |
+      | Seattle  |
     And I should not see following
       | text    |
-      | Seattle |
+      | Chikago |
 
 
   Scenario: Filtration by city and customer fields while logged in as root
     Given I logged in as "root"
     And I open "site_list" page
     When I fill in following fields with following values
-      | field    | value  |
-      | city     | new    |
-      | customer | amanda |
+      | field         | value  |
+      | city          | new    |
+      | customer_name | amanda |
     And I submit "site_filter" form
     Then I should see following
       | text      |

@@ -32,7 +32,7 @@
             <tbody>
             {% for customer in filtered_customers %}
                 <tr>
-                    <td class="table-border-right uk-text-center">{{ forloop.counter }}</td>
+                    <td class="table-border-right uk-text-center">{{ customer.pk }}</td>
                     <td>{{ customer.number }}</td>
                     <td>{{ customer.name }}</td>
                     <td>{{ customer.city }}</td>

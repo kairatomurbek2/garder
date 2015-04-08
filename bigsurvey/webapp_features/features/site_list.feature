@@ -35,7 +35,7 @@ Feature: Site list
     When I open "site_list" page
     Then I should see following
       | text       |
-      | First Site |
+      | Ancoridge  |
       | Seattle    |
     And I should not see following
       | text        |
@@ -43,20 +43,19 @@ Feature: Site list
       | Boston      |
       | Houston     |
       | Washington  |
-      | Ancoridge   |
+      | First Site  |
 
   Scenario: Tester is opening site list page
     Given I logged in as "tester"
     When I open "site_list" page
     Then I should see following
+      | text       |
+      | Ancoridge  |
+      | Seattle    |
+    And I should not see following
       | text        |
       | Second Site |
-      | New York    |
-      | Seattle     |
-    And I should not see following
-      | text       |
-      | First Site |
-      | Boston     |
-      | Houston    |
-      | Washington |
-      | Ancoridge  |
+      | Boston      |
+      | Houston     |
+      | Washington  |
+      | First Site  |

@@ -48,7 +48,7 @@
             {% for survey in surveys %}
                 <tr>
                     <td class="uk-text-center table-border-right">
-                        {{ forloop.counter }}
+                        {{ survey.pk }}
                     </td>
                     <td>
                         {{ survey.site.pws.number }}

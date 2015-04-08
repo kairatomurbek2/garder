@@ -30,7 +30,7 @@
             <tbody>
             {% for hazard in filtered_hazards %}
                 <tr>
-                    <td class="uk-text-center table-border-right">{{ forloop.counter }}</td>
+                    <td class="uk-text-center table-border-right">{{ hazard.pk }}</td>
                     <td>{{ hazard.site.pws.number }}</td>
                     <td>{{ hazard.site.customer.number }}</td>
                     <td>{{ hazard.site.city }}</td>

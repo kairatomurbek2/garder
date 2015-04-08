@@ -5,7 +5,7 @@ Feature: Menu
   Scenario: Root Menu
     Given I logged in as "root"
     And I open "home" page
-    When I hover on "menu" link
+    When I hover on "more" link
     Then I should see following menu links
       | link            |
       | admin           |
@@ -14,23 +14,27 @@ Feature: Menu
       | letters         |
       | import          |
       | sites           |
-      | inspections     |
-      | testpermissions |
+      | surveys         |
+      | tests           |
+      | hazards         |
+      | testers         |
       | users           |
 
 
   Scenario: Admin Menu
     Given I logged in as "admin"
     When I open "home" page
-    When I hover on "menu" link
+    When I hover on "more" link
     Then I should see following menu links
       | link            |
       | customers       |
       | letters         |
       | import          |
       | sites           |
-      | inspections     |
-      | testpermissions |
+      | surveys         |
+      | tests           |
+      | hazards         |
+      | testers         |
       | users           |
     And I should not see following menu links
       | link  |
@@ -41,29 +45,30 @@ Feature: Menu
   Scenario: Surveyor Menu
     Given I logged in as "surveyor"
     When I open "home" page
-    When I hover on "menu" link
     Then I should see following menu links
-      | link  |
-      | sites |
+      | link    |
+      | sites   |
+      | surveys |
+      | hazards |
     And I should not see following menu links
       | link            |
-      | admin           |
+      | tests           |
       | pws             |
       | customers       |
       | letters         |
       | import          |
-      | inspections     |
-      | testpermissions |
       | users           |
+      | testers         |
 
 
   Scenario: Tester Menu
     Given I logged in as "tester"
     When I open "home" page
-    When I hover on "menu" link
     Then I should see following menu links
-      | link  |
-      | sites |
+      | link    |
+      | sites   |
+      | tests   |
+      | hazards |
     And I should not see following menu links
       | link            |
       | admin           |
@@ -71,6 +76,6 @@ Feature: Menu
       | customers       |
       | letters         |
       | import          |
-      | inspections     |
-      | testpermissions |
       | users           |
+      | surveys         |
+      | testers         |

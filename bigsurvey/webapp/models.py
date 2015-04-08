@@ -456,7 +456,7 @@ class Hazard(models.Model):
 
 class Survey(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="surveys")
-    hazards = models.ManyToManyField(Hazard, verbose_name=_("Hazards"), related_name="surveys", null=True, blank=True,)
+    hazards = models.ManyToManyField(Hazard, verbose_name=_("Hazards"), related_name="surveys", blank=True, null=True)
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="surveys")
     survey_date = models.DateField(verbose_name=_("Survey Date"))
     survey_type = models.ForeignKey(SurveyType, blank=True, null=True, verbose_name=_("Survey Type"),
@@ -514,7 +514,7 @@ class Test(models.Model):
     cv_leaked = models.BooleanField(choices=VALVE_LEAKED_CHOICES, default=False, verbose_name=_("CV Leaked"))
     cv_held_pressure = models.FloatField(null=True, blank=True, verbose_name=_("CV Held Pressure"))
     cv_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CV Maintenance"))
-    air_inlet_opened = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Air Inlet Opened"))
+    air_inlet_opened = models.BooleanField(choices=YESNO_CHOICES, default=True, verbose_name=_("Air Inlet Opened"))
     air_inlet_psi = models.FloatField(null=True, blank=True, verbose_name=_("Air Inlet PSI"))
     cv_psi = models.FloatField(null=True, blank=True, verbose_name=_("CV PSI"))
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))

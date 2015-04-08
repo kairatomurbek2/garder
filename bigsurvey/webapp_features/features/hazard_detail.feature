@@ -11,12 +11,12 @@ Feature: Hazard Detail
     | role     | pk | reaction |
     | root     | 1  | not see  |
     | root     | 2  | not see  |
-    | admin    | 1  | not see  |
-    | admin    | 2  | see      |
-    | surveyor | 1  | not see  |
-    | surveyor | 2  | see      |
-    | tester   | 1  | not see  |
-    | tester   | 2  | see      |
+    | admin    | 2  | not see  |
+    | admin    | 1  | see      |
+    | surveyor | 2  | not see  |
+    | surveyor | 1  | see      |
+    | tester   | 2  | not see  |
+    | tester   | 1  | see      |
 
 
   Scenario: Hazard detail page elements
@@ -30,6 +30,6 @@ Feature: Hazard Detail
       | Installer             |
       | Feb. 18, 2015         |
       | Edit                  |
-      | Menu                  |
+      | More...               |
       | Add Test              |
       | Jan. 27, 2015, Failed |

@@ -3,25 +3,28 @@ Feature: Hazard Add
 
   Scenario Outline: Hazard Add page access
     Given I logged in as "<role>"
-    When I directly open "hazard_add" page for survey with pk "<pk>"
+    When I directly open "hazard_add" page for site with pk "<pk>" and service "<service>"
     Then I should <reaction> "Not Found"
     And I logout
 
   Examples:
-    | role     | pk | reaction |
-    | root     | 1  | not see  |
-    | root     | 2  | not see  |
-    | admin    | 1  | see      |
-    | admin    | 2  | not see  |
-    | surveyor | 1  | see      |
-    | surveyor | 2  | not see  |
-    | tester   | 1  | see      |
-    | tester   | 2  | see      |
+    | role     | pk | service | reaction |
+    | root     | 1  | potable | see      |
+    | root     | 5  | fire    | not see  |
+    | root     | 10 | potable | not see  |
+    | admin    | 5  | fire    | see      |
+    | admin    | 10 | potable | not see  |
+    | admin    | 10 | fire    | see      |
+    | surveyor | 10 | potable | not see  |
+    | surveyor | 10 | fire    | see      |
+    | surveyor | 5  | potable | see      |
+    | tester   | 5  | potable | see      |
+    | tester   | 10 | potable | see      |
 
 
   Scenario: Correct hazard adding
     Given I logged in as "root"
-    When I open "hazard_add" page for survey with pk "1"
+    When I open "hazard_add" page for site with pk "5" and service "fire"
     And I fill in following fields with following values
       | field     | value    |
       | location1 | backyard |
@@ -36,9 +39,9 @@ Feature: Hazard Add
 
   Scenario: Incorrect hazard adding
     Given I logged in as "root"
-    When I open "hazard_add" page for survey with pk "1"
+    When I open "hazard_add" page for site with pk "5" and service "fire"
     And I submit "hazard" form
-    Then I should be at "hazard_add" page for survey with pk "1"
+    Then I should be at "hazard_add" page for survey with pk "5" and service "fire"
     And I should see "hazard adding error" message
     And I should see following validation error messages on following fields
       | field       | error_message          |
