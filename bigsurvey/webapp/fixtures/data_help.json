@@ -1,7 +1,7 @@
 [
 {
   "fields": {
-    "text": "Here could be illustrated help for Super Administrators",
+    "text": "<p>Here could be illustrated help for Super Administrators.</p>",
     "group": 1,
     "title": "Super Admin Help"
   },
@@ -10,7 +10,7 @@
 },
 {
   "fields": {
-    "text": "Here could be illustrated help for Administrators",
+    "text": "<p>Here could be illustrated help for Administrators.</p>",
     "group": 2,
     "title": "Admin Help"
   },
@@ -19,7 +19,7 @@
 },
 {
   "fields": {
-    "text": "Here could be illustrated help for Surveyors",
+    "text": "<p>Here could be illustrated help for Surveyors.</p>",
     "group": 3,
     "title": "Surveyor Help"
   },
@@ -28,7 +28,7 @@
 },
 {
   "fields": {
-    "text": "Here could be illustrated help for Testers",
+    "text": "<p>Here could be illustrated help for Testers.</p>",
     "group": 4,
     "title": "Tester Help"
   },

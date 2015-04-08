@@ -1,11 +1,122 @@
 [
-{"fields":{"number":"LA1111005","name":"FARMERVILLE","city":"","water_source":3,"notes":""},"model":"webapp.pws","pk":1},
-{"fields":{"number":"LA1055171","name":"LPWD NORTH PRODUCTION FACILITY","city":"","water_source":3,"notes":""},"model":"webapp.pws","pk":2},
-{"fields":{"number":"LA1055172","name":"LPWDN PURCHASE WEST SCOTT","city":"","water_source":3,"notes":""},"model":"webapp.pws","pk":3},
-{"fields":{"number":"LA1055191","name":"LPWDN NORTH REGION","city":"","water_source":3,"notes":""},"model":"webapp.pws","pk":4},
-{"fields":{"number":"LA1055192","name":"LPWDN SOUTH REGION","city":"","water_source":3,"notes":""},"model":"webapp.pws","pk":5},
-{"fields":{"number":"LA1095002","name":"ST JOHN WATER DISTRICT #2","city":"","water_source":null,"notes":""},"model":"webapp.pws","pk":6},
-{"fields":{"number":"LA1095003","name":"ST JOHN WATER DISTRICT #1","city":"","water_source":null,"notes":""},"model":"webapp.pws","pk":7},
-{"fields":{"number":"LA1095006","name":"PLEASURE BEND WATER SUPPLY","city":"","water_source":null,"notes":""},"model":"webapp.pws","pk":8},
-{"fields":{"number":"LA1125006","name":"ST FRANCISVILLE","city":"","water_source":null,"notes":""},"model":"webapp.pws","pk":9},
-{"fields":{"number":"LA1063004","name":"DENHAM SPRINGS","city":"","water_source":2,"notes":""},"model":"webapp.pws","pk":10}]
+{
+  "fields": {
+    "city": "",
+    "name": "FARMERVILLE",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1111005",
+    "water_source": 3
+  },
+  "model": "webapp.pws",
+  "pk": 1
+},
+{
+  "fields": {
+    "city": "",
+    "name": "LPWD NORTH PRODUCTION FACILITY",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1055171",
+    "water_source": 3
+  },
+  "model": "webapp.pws",
+  "pk": 2
+},
+{
+  "fields": {
+    "city": "",
+    "name": "LPWDN PURCHASE WEST SCOTT",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1055172",
+    "water_source": 3
+  },
+  "model": "webapp.pws",
+  "pk": 3
+},
+{
+  "fields": {
+    "city": "",
+    "name": "LPWDN NORTH REGION",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1055191",
+    "water_source": 3
+  },
+  "model": "webapp.pws",
+  "pk": 4
+},
+{
+  "fields": {
+    "city": "",
+    "name": "LPWDN SOUTH REGION",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1055192",
+    "water_source": 3
+  },
+  "model": "webapp.pws",
+  "pk": 5
+},
+{
+  "fields": {
+    "city": "",
+    "name": "ST JOHN WATER DISTRICT #2",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1095002",
+    "water_source": null
+  },
+  "model": "webapp.pws",
+  "pk": 6
+},
+{
+  "fields": {
+    "city": "",
+    "name": "ST JOHN WATER DISTRICT #1",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1095003",
+    "water_source": null
+  },
+  "model": "webapp.pws",
+  "pk": 7
+},
+{
+  "fields": {
+    "city": "",
+    "name": "PLEASURE BEND WATER SUPPLY",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1095006",
+    "water_source": null
+  },
+  "model": "webapp.pws",
+  "pk": 8
+},
+{
+  "fields": {
+    "city": "",
+    "name": "ST FRANCISVILLE",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1125006",
+    "water_source": null
+  },
+  "model": "webapp.pws",
+  "pk": 9
+},
+{
+  "fields": {
+    "city": "",
+    "name": "DENHAM SPRINGS",
+    "office_address": null,
+    "notes": "",
+    "number": "LA1063004",
+    "water_source": 2
+  },
+  "model": "webapp.pws",
+  "pk": 10
+}
+]

@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bigsurvey',
         'USER': 'root',
-        'PASSWORD': 'v1jyb2#njh'
+        'PASSWORD': '1qaz@WSX'
     }
 }
 
