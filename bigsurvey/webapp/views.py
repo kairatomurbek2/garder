@@ -340,7 +340,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         site.last_survey_date = survey.survey_date
         site.save()
         for hazard in site.hazards.all():
-            if hazard in form.instance.hazards.all():
+            if hazard in survey.hazards.all():
                 hazard.is_present = True
             else:
                 hazard.is_present = False
@@ -393,7 +393,7 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
         site.last_survey_date = survey.survey_date
         site.save()
         for hazard in site.hazards.all():
-            if hazard in form.instance.hazards.all():
+            if hazard in survey.hazards.all():
                 hazard.is_present = True
             else:
                 hazard.is_present = False

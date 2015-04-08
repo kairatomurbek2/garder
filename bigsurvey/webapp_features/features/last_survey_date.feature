@@ -16,6 +16,7 @@ Feature: last survey date
     When I open "survey_add" page for site with pk "10" and service "potable"
     And I fill in "survey_date" with "2015-01-27"
     And I select "surveyor" from "surveyor"
+    And I select "Trailer Park" from "hazards"
     And I submit "survey" form
     And I open "site_list" page
     Then I should see following
