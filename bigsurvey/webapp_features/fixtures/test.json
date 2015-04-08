@@ -2698,7 +2698,7 @@
     "installed_properly": false,
     "model_no": "",
     "hazard_type": 40,
-    "is_present": false,
+    "is_present": true,
     "due_install_test_date": "2015-05-31",
     "service_type": 4,
     "installer": "",
