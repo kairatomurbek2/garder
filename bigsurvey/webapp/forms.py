@@ -45,7 +45,7 @@ class SurveyForm(forms.ModelForm):
 class HazardForm(forms.ModelForm):
     class Meta:
         model = models.Hazard
-        exclude = ('site', 'service_type', 'is_present')
+        exclude = ('site', 'service_type', 'is_present',)
 
 
 class HazardFormForTester(forms.ModelForm):
