@@ -94,7 +94,7 @@
             </thead>
             <tbody>
             {% for site in filtered_sites %}
-                <tr>
+                <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}">
                     <td>
                         {{ site.pws.number }}
                     </td>
@@ -179,3 +179,13 @@
     </div>
     {% paginate %}
 </div>
+<style>
+    .clickable-row {
+        cursor: pointer;
+    }
+</style>
+<script>
+    $('.clickable-row').click(function (e) {
+        window.document.location = $(this).data("href");
+    });
+</script>
