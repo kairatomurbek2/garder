@@ -332,15 +332,9 @@ class FilterActions(object):
 
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
-    customer_name = django_filters.CharFilter(label=_('Customer Name'),
-                                              action=FilterActions.Site.customer_name)
-    customer_account = django_filters.CharFilter(label=_('Customer Account'),
-                                                 action=FilterActions.Site.customer_account)
-    city = django_filters.CharFilter(lookup_type='icontains', label=_('Site City'))
     address = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address'), name='address1')
     site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
-    status = django_filters.ChoiceFilter(choices=FilterChoices.site_status(), label=_('Site Status'))
     next_survey_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
                                                    action=FilterActions.Site.next_date,
                                                    label=_('Next Survey Date'))

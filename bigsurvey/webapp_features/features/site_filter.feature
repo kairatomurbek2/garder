@@ -2,27 +2,6 @@
 Feature: Filtration
 
 
-  Scenario: Filtration by city field while logged in as root
-    Given I logged in as "root"
-    And I open "site_list" page
-    When I fill in "city" with "on"
-    And I submit "site_filter" form
-    Then I should see following
-      | text        |
-      | Second Site |
-      | Houston     |
-      | Boston      |
-      | Washington  |
-    And I should not see following
-      | text       |
-      | First Site |
-      | Ancoridge  |
-      | New York   |
-      | IKW182     |
-      | Chikago    |
-      | Seattle    |
-
-
   Scenario: Filtration by address1 field while logged in as root
     Given I logged in as "root"
     And I open "site_list" page
@@ -66,22 +45,6 @@ Feature: Filtration
     And I should not see following
       | text    |
       | Chikago |
-
-
-  Scenario: Filtration by city and customer fields while logged in as root
-    Given I logged in as "root"
-    And I open "site_list" page
-    When I fill in following fields with following values
-      | field         | value  |
-      | city          | new    |
-      | customer_name | amanda |
-    And I submit "site_filter" form
-    Then I should see following
-      | text      |
-      | Manhattan |
-    And I should not see following
-      | text  |
-      | 80192 |
 
 
   Scenario: Filtration by site use and type while logged in as root
