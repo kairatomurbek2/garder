@@ -61,8 +61,8 @@ Feature: Filtration
     When I select "Offices" from "site_type"
     And I submit "site_filter" form
     Then I should see following
-      | text     |
-      | Seattle  |
+      | text    |
+      | Seattle |
     And I should not see following
       | text    |
       | Chikago |
@@ -80,8 +80,8 @@ Feature: Filtration
       | text      |
       | Manhattan |
     And I should not see following
-      | text       |
-      | Washington |
+      | text  |
+      | 80192 |
 
 
   Scenario: Filtration by site use and type while logged in as root
@@ -124,3 +124,13 @@ Feature: Filtration
       | text    |
       | Chikago |
       | Boston  |
+
+  Scenario: Filtration by seq route
+    Given I logged in as "root"
+    And I open "site_list" page
+    When I fill in "route" with "ROUTE-123"
+    And I submit "site_filter" form
+    Then I should see following
+      | text       |
+      | Seattle    |
+      | Washington |

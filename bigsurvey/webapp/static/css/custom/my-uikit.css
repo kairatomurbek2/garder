@@ -6,12 +6,8 @@
     width: 7.142%;
 }
 
-.big-table {
-    width: 3000px;
-}
-
-.scrollable {
-    overflow: scroll;
+.uk-width-1-6 {
+    width: 4.666%;
 }
 
 .table-fixed {
@@ -20,20 +16,4 @@
 
 .alert-margin-top {
     margin-top: 10px;
-}
-
-.message-wrapper:last-child {
-    margin-bottom: 10px;
-}
-
-.table-border-left {
-    border-left: solid 1px darkgray
-}
-
-.table-border-right {
-    border-right: solid 1px darkgray
-}
-
-.table-border-bottom {
-    border-bottom: solid 1px darkgray
 }
