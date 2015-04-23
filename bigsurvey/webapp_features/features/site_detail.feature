@@ -23,11 +23,16 @@ Feature: Site detail
     Given I logged in as "root"
     When I open "site_detail" page with pk "10"
     Then I should see following
-      | text        |
-      | Gabe Newell |
-      | Edit        |
-      | Surveys     |
-      | Hazards     |
+      | text                 |
+      | Gabe Newell          |
+      | Edit                 |
+      | Surveys              |
+      | Hazards              |
+      | 98, South Jackson st |
+      | 75/2                 |
+      | 7269                 |
+      | VALVE-APT            |
+      | 127, Universe st     |
     And I should see following text in following services
       | service    | text                             |
       | potable    | Jan. 26, 2015                    |
