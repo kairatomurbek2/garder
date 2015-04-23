@@ -1,35 +1,35 @@
 [
 {
   "fields": {
-    "city": "Second PWS city",
-    "name": "Second PWS",
+    "city": "",
+    "name": "FARMERVILLE",
     "office_address": null,
-    "notes": "Quisque lorem magna, tincidunt in tempor at, placerat ut augue. Duis mattis massa luctus dui blandit auctor. Donec erat tellus, varius at vulputate in, finibus quis lacus. Proin in dui sit amet ex dignissim molestie eget volutpat nibh. Proin vel iaculis l",
-    "number": "PWS2",
-    "water_source": 2
+    "notes": "",
+    "number": "LA1111005",
+    "water_source": 3
   },
   "model": "webapp.pws",
   "pk": 1
 },
 {
   "fields": {
-    "city": "First PWS city",
-    "name": "First PWS",
+    "city": "",
+    "name": "LPWD NORTH PRODUCTION FACILITY",
     "office_address": null,
-    "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id feugiat urna, in convallis dui. Fusce in luctus quam. In pellentesque porta nisi ut vulputate. Sed dignissim dolor felis, eget pellentesque dolor iaculis ut. Mauris at convallis odio. Mauris c",
-    "number": "PWS1",
-    "water_source": 1
+    "notes": "",
+    "number": "LA1055171",
+    "water_source": 3
   },
   "model": "webapp.pws",
   "pk": 2
 },
 {
   "fields": {
-    "city": "Third PWS city",
-    "name": "Third PWS",
+    "city": "",
+    "name": "LPWDN PURCHASE WEST SCOTT",
     "office_address": null,
-    "notes": "This is test notes",
-    "number": "PWS3",
+    "notes": "",
+    "number": "LA1055172",
     "water_source": 3
   },
   "model": "webapp.pws",
@@ -37,11 +37,11 @@
 },
 {
   "fields": {
-    "city": "Houston",
-    "name": "Houston PWS",
+    "city": "",
+    "name": "LPWDN NORTH REGION",
     "office_address": null,
     "notes": "",
-    "number": "XOL852",
+    "number": "LA1055191",
     "water_source": 3
   },
   "model": "webapp.pws",
@@ -49,11 +49,11 @@
 },
 {
   "fields": {
-    "city": "Ancoridge",
-    "name": "Alaska Central PWS",
+    "city": "",
+    "name": "LPWDN SOUTH REGION",
     "office_address": null,
     "notes": "",
-    "number": "AL202",
+    "number": "LA1055192",
     "water_source": 3
   },
   "model": "webapp.pws",
@@ -61,86 +61,62 @@
 },
 {
   "fields": {
-    "city": "Washington",
-    "name": "White House PWS",
+    "city": "",
+    "name": "ST JOHN WATER DISTRICT #2",
     "office_address": null,
     "notes": "",
-    "number": "DOC121",
-    "water_source": 3
+    "number": "LA1095002",
+    "water_source": null
   },
   "model": "webapp.pws",
   "pk": 6
 },
 {
   "fields": {
-    "city": "Los Angeles",
-    "name": "Los Angeles Beach System",
+    "city": "",
+    "name": "ST JOHN WATER DISTRICT #1",
     "office_address": null,
     "notes": "",
-    "number": "LA200",
-    "water_source": 2
+    "number": "LA1095003",
+    "water_source": null
   },
   "model": "webapp.pws",
   "pk": 7
 },
 {
   "fields": {
-    "city": "Boston",
-    "name": "MIT Public Water System",
+    "city": "",
+    "name": "PLEASURE BEND WATER SUPPLY",
     "office_address": null,
     "notes": "",
-    "number": "KSL12",
-    "water_source": 2
+    "number": "LA1095006",
+    "water_source": null
   },
   "model": "webapp.pws",
   "pk": 8
 },
 {
   "fields": {
-    "city": "Chikago",
-    "name": "North USA PWS",
+    "city": "",
+    "name": "ST FRANCISVILLE",
     "office_address": null,
     "notes": "",
-    "number": "NUI812",
-    "water_source": 1
+    "number": "LA1125006",
+    "water_source": null
   },
   "model": "webapp.pws",
   "pk": 9
 },
 {
   "fields": {
-    "city": "Seattle",
-    "name": "South Western PWS",
+    "city": "",
+    "name": "DENHAM SPRINGS",
     "office_address": null,
     "notes": "",
-    "number": "SW12",
+    "number": "LA1063004",
     "water_source": 2
   },
   "model": "webapp.pws",
   "pk": 10
-},
-{
-  "fields": {
-    "city": "Bishkek",
-    "name": "NEW PWS",
-    "office_address": null,
-    "notes": "",
-    "number": "PWS123456",
-    "water_source": 2
-  },
-  "model": "webapp.pws",
-  "pk": 11
-},
-{
-  "fields": {
-    "city": "Bishkek",
-    "name": "NEW PWS",
-    "office_address": null,
-    "notes": "",
-    "number": "PWS123456",
-    "water_source": 2
-  },
-  "model": "webapp.pws",
-  "pk": 12
 }
 ]
