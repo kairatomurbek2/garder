@@ -30,28 +30,6 @@ Feature: Pagination
     Then I delete test sites
 
 
-  @site_pagination_with_filters
-  Scenario: Site pagination
-    Given I logged in as "root"
-    And I generate test sites
-    And I open "site_list" page
-    And I fill in "city" with "TestCity"
-    When I submit "site_filter" form
-    Then I should see following
-      | text       |
-      | TestCity0  |
-      | TestCity49 |
-    And I should not see following
-      | text       |
-      | TestCity50 |
-    When I turn to the "2" page
-    Then I should see following
-      | text       |
-      | TestCity50 |
-      | TestCity99 |
-    Then I delete test sites
-
-
   @customer_pagination
   Scenario: Customer pagination
     Given I logged in as "root"
