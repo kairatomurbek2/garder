@@ -372,6 +372,7 @@ class Site(models.Model):
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))
     address1 = models.CharField(max_length=100, verbose_name=_("Address 1"))
     address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"))
+    street_number = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Street Number'))
     apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Apt"))
     city = models.CharField(max_length=30, verbose_name=_("City"))
     state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"))

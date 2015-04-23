@@ -337,7 +337,7 @@ class SiteFilter(django_filters.FilterSet):
     customer_account = django_filters.CharFilter(label=_('Customer Account'),
                                                  action=FilterActions.Site.customer_account)
     city = django_filters.CharFilter(lookup_type='icontains', label=_('Site City'))
-    address = django_filters.CharFilter(lookup_type='icontains', label=_('Site Address'), name='address1')
+    address = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address'), name='address1')
     site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
     status = django_filters.ChoiceFilter(choices=FilterChoices.site_status(), label=_('Site Status'))
@@ -347,6 +347,7 @@ class SiteFilter(django_filters.FilterSet):
     last_survey_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
                                                    action=FilterActions.Site.last_date,
                                                    label=_('Last Survey older than'))
+    route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='exact')
 
 
 class CustomerFilter(django_filters.FilterSet):
@@ -362,7 +363,7 @@ class SurveyFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.Survey.pws)
     customer = django_filters.CharFilter(label=_('Customer Account'), action=FilterActions.Survey.customer_account)
     city = django_filters.CharFilter(label=_('Site City'), action=FilterActions.Survey.site_city)
-    address = django_filters.CharFilter(label=_('Site Address'), action=FilterActions.Survey.site_address)
+    address = django_filters.CharFilter(label=_('Service Address'), action=FilterActions.Survey.site_address)
     service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'))
     survey_date = django_filters.DateRangeFilter(label=_('Survey Date'))
     survey_type = django_filters.ChoiceFilter(choices=FilterChoices.survey_type(), label=_('Survey Type'))
@@ -373,7 +374,7 @@ class TestFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.Test.pws)
     customer = django_filters.CharFilter(label=_('Customer Account'), action=FilterActions.Test.customer_account)
     city = django_filters.CharFilter(label=_('Site City'), action=FilterActions.Test.site_city)
-    address = django_filters.CharFilter(label=_('Site Address'), action=FilterActions.Test.site_address)
+    address = django_filters.CharFilter(label=_('Service Address'), action=FilterActions.Test.site_address)
     service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'),
                                                action=FilterActions.Test.service_type)
     hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'),
@@ -390,7 +391,7 @@ class HazardFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.Hazard.pws)
     customer = django_filters.CharFilter(label=_('Customer Account'), action=FilterActions.Hazard.customer_account)
     city = django_filters.CharFilter(label=_('Site City'), action=FilterActions.Hazard.site_city)
-    address = django_filters.CharFilter(label=_('Site Address'), action=FilterActions.Hazard.site_address)
+    address = django_filters.CharFilter(label=_('Service Address'), action=FilterActions.Hazard.site_address)
     service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'))
     hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'))
     assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))

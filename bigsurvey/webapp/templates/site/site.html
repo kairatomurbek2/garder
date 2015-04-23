@@ -23,11 +23,12 @@
                 <td class="uk-text-center uk-text-primary">{{ site.connect_date }}</td>
             </tr>
             <tr class="table-border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Mailing Address" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.customer.address1 }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Site Use" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.site_use }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Site Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.site_type }}</td>
-                <td colspan="2"></td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
@@ -38,10 +39,10 @@
                 <td class="uk-text-center uk-text-primary">{{ site.zip }}</td>
             </tr>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Street Address" %}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Service Address" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.address1 }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Street Number" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ site.address2 }}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.street_number }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Appartment" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.apt }}</td>
             </tr>

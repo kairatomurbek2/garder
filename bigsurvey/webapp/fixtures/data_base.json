@@ -1009,13 +1009,6 @@
 },
 {
   "fields": {
-    "customer_code": "Potable"
-  },
-  "model": "webapp.customercode",
-  "pk": 10
-},
-{
-  "fields": {
     "hazard_type": "Denied or Restricted Access\n"
   },
   "model": "webapp.hazardtype",
@@ -1881,20 +1874,6 @@
   },
   "model": "webapp.hazardtype",
   "pk": 124
-},
-{
-  "fields": {
-    "hazard_type": "Kitchenette"
-  },
-  "model": "webapp.hazardtype",
-  "pk": 125
-},
-{
-  "fields": {
-    "hazard_type": "Foaming Station"
-  },
-  "model": "webapp.hazardtype",
-  "pk": 126
 },
 {
   "fields": {

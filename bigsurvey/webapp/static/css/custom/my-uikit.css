@@ -6,6 +6,14 @@
     width: 7.142%;
 }
 
+.big-table {
+    width: 3000px;
+}
+
+.scrollable {
+    overflow: scroll;
+}
+
 .table-fixed {
     table-layout: fixed;
 }
