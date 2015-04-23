@@ -12,172 +12,170 @@
     </div>
     <div class="wrapper uk-width-4-5">
         {% paginate %}
-        <div class="scrollable">
-            <table class="uk-table big-table uk-table-hover">
-                <thead>
-                <tr class="table-border-bottom">
-                    <th>
-                        {% trans "PWSID" %}
-                    </th>
-                    <th>
-                        {% trans "Account Number" %}
-                    </th>
-                    <th>
-                        {% trans "Customer Code" %}
-                    </th>
-                    <th>
-                        {% trans "Customer Name" %}
-                    </th>
-                    <th>
-                        {% trans "Service Street Number" %}
-                    </th>
-                    <th>
-                        {% trans "Service Street Address" %}
-                    </th>
-                    <th>
-                        {% trans "Service Address 2" %}
-                    </th>
-                    <th>
-                        {% trans "Site Apt" %}
-                    </th>
-                    <th>
-                        {% trans "Service Town" %}
-                    </th>
-                    <th>
-                        {% trans "Service State" %}
-                    </th>
-                    <th>
-                        {% trans "Service Zip" %}
-                    </th>
-                    <th>
-                        {% trans "Customer Address 1" %}
-                    </th>
-                    <th>
-                        {% trans "Customer Address 2" %}
-                    </th>
-                    <th>
-                        {% trans "Customer Apt" %}
-                    </th>
-                    <th>
-                        {% trans "Customer City" %}
-                    </th>
-                    <th>
-                        {% trans "Customer State" %}
-                    </th>
-                    <th>
-                        {% trans "Customer Zip" %}
-                    </th>
-                    <th>
-                        {% trans "Seq. Route" %}
-                    </th>
-                    <th>
-                        {% trans "Meter Number" %}
-                    </th>
-                    <th>
-                        {% trans "Meter Size" %}
-                    </th>
-                    <th>
-                        {% trans "Meter Reading" %}
-                    </th>
-                    <th>
-                        {% trans "Connect Date" %}
-                    </th>
-                    <th>
-                        {% trans "Next Survey Date" %}
-                    </th>
-                    <th>
-                        {% trans "Last Survey Date" %}
-                    </th>
-                    <th class="uk-text-center table-border-left">
-                        {% trans "Actions" %}
-                    </th>
+        <table class="uk-table big-table uk-table-hover">
+            <thead>
+            <tr class="table-border-bottom">
+                <th>
+                    {% trans "PWSID" %}
+                </th>
+                <th>
+                    {% trans "Account Number" %}
+                </th>
+                <th>
+                    {% trans "Customer Code" %}
+                </th>
+                <th>
+                    {% trans "Customer Name" %}
+                </th>
+                <th>
+                    {% trans "Service Street Number" %}
+                </th>
+                <th>
+                    {% trans "Service Street Address" %}
+                </th>
+                <th>
+                    {% trans "Service Address 2" %}
+                </th>
+                <th>
+                    {% trans "Site Apt" %}
+                </th>
+                <th>
+                    {% trans "Service Town" %}
+                </th>
+                <th>
+                    {% trans "Service State" %}
+                </th>
+                <th>
+                    {% trans "Service Zip" %}
+                </th>
+                <th>
+                    {% trans "Customer Address 1" %}
+                </th>
+                <th>
+                    {% trans "Customer Address 2" %}
+                </th>
+                <th>
+                    {% trans "Customer Apt" %}
+                </th>
+                <th>
+                    {% trans "Customer City" %}
+                </th>
+                <th>
+                    {% trans "Customer State" %}
+                </th>
+                <th>
+                    {% trans "Customer Zip" %}
+                </th>
+                <th>
+                    {% trans "Seq. Route" %}
+                </th>
+                <th>
+                    {% trans "Meter Number" %}
+                </th>
+                <th>
+                    {% trans "Meter Size" %}
+                </th>
+                <th>
+                    {% trans "Meter Reading" %}
+                </th>
+                <th>
+                    {% trans "Connect Date" %}
+                </th>
+                <th>
+                    {% trans "Next Survey Date" %}
+                </th>
+                <th>
+                    {% trans "Last Survey Date" %}
+                </th>
+                <th class="uk-text-center table-border-left">
+                    {% trans "Actions" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for site in filtered_sites %}
+                <tr>
+                    <td>
+                        {{ site.pws.number }}
+                    </td>
+                    <td>
+                        {{ site.customer.number }}
+                    </td>
+                    <td>
+                        {{ site.customer.code }}
+                    </td>
+                    <td>
+                        {{ site.customer.name }}
+                    </td>
+                    <td>
+                        {{ site.street_number }}
+                    </td>
+                    <td>
+                        {{ site.address1 }}
+                    </td>
+                    <td>
+                        {{ site.address2 }}
+                    </td>
+                    <td>
+                        {{ site.apt }}
+                    </td>
+                    <td>
+                        {{ site.city }}
+                    </td>
+                    <td>
+                        {{ site.state }}
+                    </td>
+                    <td>
+                        {{ site.zip }}
+                    </td>
+                    <td>
+                        {{ site.customer.address1 }}
+                    </td>
+                    <td>
+                        {{ site.customer.address2 }}
+                    </td>
+                    <td>
+                        {{ site.customer.apt }}
+                    </td>
+                    <td>
+                        {{ site.customer.city }}
+                    </td>
+                    <td>
+                        {{ site.customer.state }}
+                    </td>
+                    <td>
+                        {{ site.customer.zip }}
+                    </td>
+                    <td>
+                        {{ site.route }}
+                    </td>
+                    <td>
+                        {{ site.meter_number }}
+                    </td>
+                    <td>
+                        {{ site.meter_size }}
+                    </td>
+                    <td>
+                        {{ site.meter_reading }}
+                    </td>
+                    <td>
+                        {{ site.connect_date }}
+                    </td>
+                    <td>
+                        {{ site.next_survey_date }}
+                    </td>
+                    <td>
+                        {{ site.last_survey_date }}
+                    </td>
+                    <td class="uk-text-center table-border-left">
+                        <a href="{% url 'webapp:site_detail' site.pk %}" id="site_{{ site.pk }}_detail_link">
+                            {% trans "Detail" %}
+                        </a>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for site in filtered_sites %}
-                    <tr>
-                        <td>
-                            {{ site.pws.number }}
-                        </td>
-                        <td>
-                            {{ site.customer.number }}
-                        </td>
-                        <td>
-                            {{ site.customer.code }}
-                        </td>
-                        <td>
-                            {{ site.customer.name }}
-                        </td>
-                        <td>
-                            {{ site.street_number }}
-                        </td>
-                        <td>
-                            {{ site.address1 }}
-                        </td>
-                        <td>
-                            {{ site.address2 }}
-                        </td>
-                        <td>
-                            {{ site.apt }}
-                        </td>
-                        <td>
-                            {{ site.city }}
-                        </td>
-                        <td>
-                            {{ site.state }}
-                        </td>
-                        <td>
-                            {{ site.zip }}
-                        </td>
-                        <td>
-                            {{ site.customer.address1 }}
-                        </td>
-                        <td>
-                            {{ site.customer.address2 }}
-                        </td>
-                        <td>
-                            {{ site.customer.apt }}
-                        </td>
-                        <td>
-                            {{ site.customer.city }}
-                        </td>
-                        <td>
-                            {{ site.customer.state }}
-                        </td>
-                        <td>
-                            {{ site.customer.zip }}
-                        </td>
-                        <td>
-                            {{ site.route }}
-                        </td>
-                        <td>
-                            {{ site.meter_number }}
-                        </td>
-                        <td>
-                            {{ site.meter_size }}
-                        </td>
-                        <td>
-                            {{ site.meter_reading }}
-                        </td>
-                        <td>
-                            {{ site.connect_date }}
-                        </td>
-                        <td>
-                            {{ site.next_survey_date }}
-                        </td>
-                        <td>
-                            {{ site.last_survey_date }}
-                        </td>
-                        <td class="uk-text-center table-border-left">
-                            <a href="{% url 'webapp:site_detail' site.pk %}" id="site_{{ site.pk }}_detail_link">
-                                {% trans "Detail" %}
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% paginate %}
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+    {% paginate %}
 </div>
