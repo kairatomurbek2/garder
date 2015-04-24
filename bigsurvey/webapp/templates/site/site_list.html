@@ -12,7 +12,7 @@
     </div>
     <div class="wrapper uk-width-4-5">
         {% paginate %}
-        <table class="uk-table big-table uk-table-hover">
+        <table class="uk-table big-table uk-table-hover fixed-headers">
             <thead>
             <tr class="table-border-bottom">
                 <th>
@@ -176,8 +176,8 @@
             {% endfor %}
             </tbody>
         </table>
+        {% paginate %}
     </div>
-    {% paginate %}
 </div>
 <style>
     .clickable-row {
@@ -185,7 +185,19 @@
     }
 </style>
 <script>
+
     $('.clickable-row').click(function (e) {
         window.document.location = $(this).data("href");
+    });
+    $('.fixed-headers').floatThead();
+    var filters = $('.fixed-filters');
+    var topCss = parseInt(filters.css('top'));
+    $(document).scroll(function (e) {
+        var offsetTop = filters.offset().top;
+        if (offsetTop > topCss) {
+            filters.css('top', 0);
+        } else {
+            filters.css('top', topCss + 'px');
+        }
     });
 </script>

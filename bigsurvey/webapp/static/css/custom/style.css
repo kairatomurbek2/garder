@@ -57,10 +57,20 @@ tr.bottom-half {
 .fixed {
     position: fixed;
     background: #ffffff;
+    z-index: 10000;
 }
 
 .fixed-filters {
     top: 56px;
     left: 0;
     width: 20%;
+    height: 100%;
+}
+
+.fixed-headers thead tr {
+    height: 40px;
+}
+
+.fixed-headers thead tr th {
+    background-color: #ffffff;
 }
