@@ -53,3 +53,14 @@ tr.bottom-half {
 .table-border-bottom {
     border-bottom: solid 1px darkgray
 }
+
+.fixed {
+    position: fixed;
+    background: #ffffff;
+}
+
+.fixed-filters {
+    top: 56px;
+    left: 0;
+    width: 20%;
+}
