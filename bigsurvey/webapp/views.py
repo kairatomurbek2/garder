@@ -98,10 +98,16 @@ class SiteBaseFormView(BaseFormView):
     def _get_customer_filter(self, queryset):
         return self.filter_class(self.request.GET, queryset=queryset)
 
+    def get_form_class(self):
+        if self.request.user.has_perm('webapp.change_all_info_about_site'):
+            return self.form_class
+        return self.form_class_for_surveyor
+
     def get_form(self, form_class):
         form = super(SiteBaseFormView, self).get_form(form_class)
-        if not self.request.user.has_perm('webapp.access_to_all_sites'):
-            form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+        if self.request.user.has_perm('webapp.change_all_info_about_site'):
+            if not self.request.user.has_perm('webapp.access_to_all_sites'):
+                form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
         return form
 
     def get_success_url(self):

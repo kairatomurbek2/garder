@@ -14,6 +14,7 @@ Feature: Site editing
     | admin    | 3  | see      |
     | admin    | 4  | not see  |
     | surveyor | 3  | see      |
+    | surveyor | 4  | not see  |
     | tester   | 3  | see      |
 
 
@@ -28,6 +29,14 @@ Feature: Site editing
     And I should see "site editing success" message
     And I should see "20/12 Central Square"
 
+  Scenario: Site editing by surveyor
+    Given I logged in as "surveyor"
+    When I open "site_edit" page with pk "4"
+    Then I should see only 3 following fields in "site" form
+      | field              |
+      | potable_present    |
+      | fire_present       |
+      | irrigation_present |
 
   Scenario: Incorrect site editing
     Given I logged in as "root"

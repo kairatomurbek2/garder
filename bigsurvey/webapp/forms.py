@@ -35,7 +35,7 @@ class SiteForm(forms.ModelForm):
 class SiteFormForSurveyor(forms.ModelForm):
     class Meta:
         model = models.Site
-        fields = ('is_potable_present', 'is_fire_present', 'is_irrigation_present')
+        fields = ('potable_present', 'fire_present', 'irrigation_present')
 
 
 class SurveyForm(forms.ModelForm):

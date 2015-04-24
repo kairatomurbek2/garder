@@ -100,3 +100,5 @@ class Xpath:
         site_surveys_button = '//a[@id="surveys_button"]'
 
     more_link = './/li[@id="bfp_menu"]/a'
+    form_element = './/input|.//textarea|.//select'
+    csrfmiddlewaretoken = './/input[@name="csrfmiddlewaretoken"]'

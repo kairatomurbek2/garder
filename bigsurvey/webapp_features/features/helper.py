@@ -12,6 +12,15 @@ def find(xpath, context=None):
     return elem
 
 
+def find_multiple(xpath, context=None):
+    context = context or world.browser
+    try:
+        elems = context.find_elements_by_xpath(xpath)
+    except NoSuchElementException:
+        elems = []
+    return elems
+
+
 def check_element_exists(elem, assert_message):
     assert elem, assert_message
 

@@ -72,9 +72,7 @@ Feature: Site detail
       | Gabe Newell |
       | Surveys     |
       | Hazards     |
-    And I should not see following
-      | text |
-      | Edit |
+      | Edit        |
     And I should see following text in following services
       | service    | text                             |
       | potable    | Jan. 26, 2015                    |

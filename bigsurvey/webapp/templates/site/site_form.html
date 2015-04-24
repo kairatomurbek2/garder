@@ -17,6 +17,7 @@
             {% csrf_token %}
             <table class="uk-table">
                 <tbody>
+                {% if perms.webapp.change_all_info_about_site %}
                 <tr class="table-border-bottom">
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.customer.id_for_label }}">{{ form.customer.label }}</label>
@@ -126,8 +127,8 @@
                         {{ form.interconnection_point.errors }}
                     </td>
                 </tr>
+                {% endif %}
                 <tr>
-
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.potable_present.id_for_label }}">{{ form.potable_present.label }}</label>
                     </td>
@@ -150,7 +151,7 @@
                         {{ form.irrigation_present.errors }}
                     </td>
                 </tr>
-
+                {% if perms.webapp.change_all_info_about_site %}
                 <tr class="table-border-bottom">
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.is_due_install.id_for_label }}">{{ form.is_due_install.label }}</label>
@@ -175,9 +176,6 @@
                     </td>
                 </tr>
                 <tr>
-
-                </tr>
-                <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
                     </td>
@@ -186,6 +184,7 @@
                         {{ form.notes.errors }}
                     </td>
                 </tr>
+                {% endif %}
                 <tr>
                     <td colspan="6">
                         <button type="submit"

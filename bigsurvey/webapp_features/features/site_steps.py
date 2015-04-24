@@ -153,3 +153,19 @@ def hover_on_menu(step):
     helper.check_element_exists(assign_link, 'Assign link was not found')
     actions = ActionChains(world.browser)
     actions.move_to_element(assign_link).perform()
+
+
+@step('I should see only (\d+) following fields in "(.*)" form')
+def check_fields_in_form(step, count, form_name):
+    form = helper.find(Xpath.Pattern.form % form_name)
+    form_elements = helper.find_multiple(Xpath.form_element, form)
+    length = len(form_elements)
+    if helper.find(Xpath.csrfmiddlewaretoken, form):
+        length -= 1
+    count = int(count)
+    assert length == count, 'Expected %s elements, but found %s' % (count, length)
+    for row in step.hashes:
+        form_element = helper.find(Xpath.Pattern.input % row['field']) or \
+                       helper.find(Xpath.Pattern.textarea % row['field']) or \
+                       helper.find(Xpath.Pattern.select % row['field'])
+        helper.check_element_exists(form_element, 'Element with name "%s" was not found in the form "%s"' % (row['field'], form_name))

@@ -2381,9 +2381,10 @@
     "potable_present": false,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 1,
     "customer": 1,
     "is_backflow": false,
-    "site_use": 1,
+    "street_number": null,
     "connect_date": "2015-01-15",
     "route": null,
     "meter_size": null,
@@ -2405,20 +2406,21 @@
     "zip": "First zip",
     "state": "AK",
     "fire_present": false,
-    "status": 1,
+    "status": null,
     "pws": 2,
     "address1": "First Site address",
     "address2": "",
-    "meter_number": null,
+    "meter_number": "",
     "potable_present": false,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 3,
     "customer": 1,
     "is_backflow": false,
-    "site_use": 3,
+    "street_number": "",
     "connect_date": "2015-01-15",
-    "route": null,
-    "meter_size": null,
+    "route": "",
+    "meter_size": "",
     "interconnection_point": 1,
     "irrigation_present": false,
     "notes": ""
@@ -2445,9 +2447,10 @@
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 6,
     "customer": 2,
     "is_backflow": false,
-    "site_use": 6,
+    "street_number": null,
     "connect_date": "2015-01-22",
     "route": null,
     "meter_size": null,
@@ -2477,9 +2480,10 @@
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 5,
     "customer": 3,
     "is_backflow": false,
-    "site_use": 5,
+    "street_number": null,
     "connect_date": "2015-01-22",
     "route": null,
     "meter_size": null,
@@ -2509,9 +2513,10 @@
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 3,
     "customer": 4,
     "is_backflow": false,
-    "site_use": 3,
+    "street_number": null,
     "connect_date": "2015-01-22",
     "route": "ROUTE-123",
     "meter_size": null,
@@ -2541,9 +2546,10 @@
     "potable_present": false,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 7,
     "customer": 4,
     "is_backflow": false,
-    "site_use": 7,
+    "street_number": null,
     "connect_date": null,
     "route": null,
     "meter_size": null,
@@ -2573,9 +2579,10 @@
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 1,
     "customer": 5,
     "is_backflow": false,
-    "site_use": 1,
+    "street_number": null,
     "connect_date": "2015-01-22",
     "route": null,
     "meter_size": null,
@@ -2605,9 +2612,10 @@
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 5,
     "customer": 6,
     "is_backflow": false,
-    "site_use": 5,
+    "street_number": null,
     "connect_date": null,
     "route": null,
     "meter_size": null,
@@ -2637,9 +2645,10 @@
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 5,
     "customer": 7,
     "is_backflow": false,
-    "site_use": 5,
+    "street_number": null,
     "connect_date": null,
     "route": "",
     "meter_size": "",
@@ -2664,15 +2673,15 @@
     "status": 1,
     "pws": 9,
     "address1": "98, South Jackson st",
-    "street_number": "7269",
     "address2": "",
     "meter_number": null,
     "potable_present": true,
     "meter_reading": null,
     "is_due_install": false,
+    "site_use": 1,
     "customer": 8,
     "is_backflow": false,
-    "site_use": 1,
+    "street_number": "7269",
     "connect_date": null,
     "route": "ROUTE-123",
     "meter_size": null,
@@ -2858,6 +2867,11 @@
         "site"
       ],
       [
+        "change_site",
+        "webapp",
+        "site"
+      ],
+      [
         "access_to_own_surveys",
         "webapp",
         "survey"
@@ -2993,6 +3007,11 @@
       ],
       [
         "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_all_info_about_site",
         "webapp",
         "site"
       ],
@@ -3471,6 +3490,11 @@
         "site"
       ],
       [
+        "change_all_info_about_site",
+        "webapp",
+        "site"
+      ],
+      [
         "change_site",
         "webapp",
         "site"
@@ -3718,7 +3742,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-04-08T11:20:18.332Z",
+    "last_login": "2015-04-24T09:35:38.789Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -3762,7 +3786,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-04-08T11:19:33.656Z",
+    "last_login": "2015-04-24T09:34:32.927Z",
     "groups": [
       [
         "Surveyors"
@@ -3784,7 +3808,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-04-08T11:19:28.871Z",
+    "last_login": "2015-04-24T09:34:17.546Z",
     "groups": [
       [
         "Administrators"
