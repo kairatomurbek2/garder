@@ -28,4 +28,4 @@ def clear_cookies(scenario):
 @after.each_scenario
 def take_screenshot(scenario):
     if scenario.failed:
-        world.browser.get_screenshot_as_file('~/failed_%s.png' % int(time.time()))
+        world.browser.get_screenshot_as_file('/home/itattractor/screens/failed_%s.png' % int(time.time()))

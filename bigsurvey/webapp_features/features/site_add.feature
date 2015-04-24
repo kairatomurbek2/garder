@@ -35,6 +35,14 @@ Feature: Site adding
     When I submit "site" form
     Then I should be at "site_list" page
     And I should see "site adding success" message
+    And I should see following
+      | text                |
+      | Moscow              |
+      | Red Square, Cremlin |
+      | Mike Doe            |
+      | Agricultural        |
+      | Grocery Store       |
+
 
 
   Scenario: Incorrect site adding
