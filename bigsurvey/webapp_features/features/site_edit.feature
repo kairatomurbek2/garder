@@ -24,7 +24,7 @@ Feature: Site editing
       | field    | value                |
       | address1 | 20/12 Central Square |
     When I submit "site" form
-    Then I should be at "site_list" page
+    Then I should be at "site_detail" page with pk "4"
     And I should see "site editing success" message
     And I should see "20/12 Central Square"
 

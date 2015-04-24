@@ -32,6 +32,12 @@ class SiteForm(forms.ModelForm):
         exclude = ('customer',)
 
 
+class SiteFormForSurveyor(forms.ModelForm):
+    class Meta:
+        model = models.Site
+        fields = ('is_potable_present', 'is_fire_present', 'is_irrigation_present')
+
+
 class SurveyForm(forms.ModelForm):
     surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
                                       empty_label=None)
@@ -129,7 +135,6 @@ class BatchUpdateForm(forms.Form):
 
 
 class LetterSendForm(forms.ModelForm):
-
     class Meta:
         model = models.Letter
         exclude = ('user',)

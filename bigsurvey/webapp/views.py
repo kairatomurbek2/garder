@@ -81,6 +81,7 @@ class SiteDetailView(BaseTemplateView):
 class SiteBaseFormView(BaseFormView):
     template_name = 'site/site_form.html'
     form_class = forms.SiteForm
+    form_class_for_surveyor = forms.SiteFormForSurveyor
     model = models.Site
     filter_class = filters.CustomerFilter
 
@@ -104,7 +105,7 @@ class SiteBaseFormView(BaseFormView):
         return form
 
     def get_success_url(self):
-        return reverse('webapp:home')
+        return reverse('webapp:site_detail', args=(self.object.pk,))
 
 
 class SiteAddView(SiteBaseFormView, CreateView):

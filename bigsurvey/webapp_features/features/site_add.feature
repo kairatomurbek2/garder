@@ -33,7 +33,6 @@ Feature: Site adding
     And I open select customer modal
     And I select customer with pk "3"
     When I submit "site" form
-    Then I should be at "site_list" page
     And I should see "site adding success" message
     And I should see following
       | text                |
@@ -42,7 +41,6 @@ Feature: Site adding
       | Mike Doe            |
       | Agricultural        |
       | Grocery Store       |
-
 
 
   Scenario: Incorrect site adding
