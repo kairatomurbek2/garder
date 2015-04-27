@@ -74,3 +74,7 @@ tr.bottom-half {
 .fixed-headers thead tr th {
     background-color: #ffffff;
 }
+
+.color-coding {
+    color: #6c0015;
+}
