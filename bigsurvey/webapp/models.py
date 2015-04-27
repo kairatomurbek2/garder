@@ -13,6 +13,7 @@ class SourceType(models.Model):
     class Meta:
         verbose_name = _('Source Type')
         verbose_name_plural = _('Source Types')
+        ordering = ('source_type',)
         permissions = (
             ('browse_sourcetype', _('Can browse Source Type')),
         )
@@ -27,6 +28,7 @@ class SiteType(models.Model):
     class Meta:
         verbose_name = _('Site Type')
         verbose_name_plural = _('Site Types')
+        ordering = ('site_type',)
         permissions = (
             ('browse_sitetype', _('Can browse Site Type')),
         )
@@ -41,6 +43,7 @@ class SiteUse(models.Model):
     class Meta:
         verbose_name = _('Site Use')
         verbose_name_plural = _('Site Use Types')
+        ordering = ('site_use',)
         permissions = (
             ('browse_siteuse', _('Can browse Site Use')),
         )
@@ -55,6 +58,7 @@ class ServiceType(models.Model):
     class Meta:
         verbose_name = _('Service Type')
         verbose_name_plural = _('Service Types')
+        ordering = ('service_type',)
         permissions = (
             ('browse_servicetype', _('Can browse Service Type')),
         )
@@ -69,6 +73,7 @@ class SurveyType(models.Model):
     class Meta:
         verbose_name = _('Survey Type')
         verbose_name_plural = _('Survey Types')
+        ordering = ('survey_type',)
         permissions = (
             ('browse_surveytype', _('Can browse Survey Type')),
         )
@@ -83,6 +88,7 @@ class BPType(models.Model):
     class Meta:
         verbose_name = _('BFP Type')
         verbose_name_plural = _('BFP Types')
+        ordering = ('bp_type',)
         permissions = (
             ('browse_bptype', _('Can browse BP Type')),
         )
@@ -97,6 +103,7 @@ class BPSize(models.Model):
     class Meta:
         verbose_name = _('BFP Size')
         verbose_name_plural = _('BFP Sizes')
+        ordering = ('bp_size',)
         permissions = (
             ('browse_bpsize', _('Can browse BP Size')),
         )
@@ -111,6 +118,7 @@ class BPManufacturer(models.Model):
     class Meta:
         verbose_name = _('BFP Manufacturer')
         verbose_name_plural = _('BFP Manufacturers')
+        ordering = ('bp_manufacturer',)
         permissions = (
             ('browse_bpmanufacturer', _('Can browse BP Manufacturer')),
         )
@@ -125,6 +133,7 @@ class CustomerCode(models.Model):
     class Meta:
         verbose_name = _('Customer Code')
         verbose_name_plural = _('Customer Codes')
+        ordering = ('customer_code',)
         permissions = (
             ('browse_customercode', _('Can browse Customer Code')),
         )
@@ -139,6 +148,7 @@ class HazardType(models.Model):
     class Meta:
         verbose_name = _('Hazard Type')
         verbose_name_plural = _('Hazard Types')
+        ordering = ('hazard_type',)
         permissions = (
             ('browse_hazardtype', _('Can browse Hazard Type')),
         )
@@ -153,6 +163,7 @@ class TestManufacturer(models.Model):
     class Meta:
         verbose_name = _('Test Manufacturer')
         verbose_name_plural = _('Test Manufacturers')
+        ordering = ('test_manufacturer',)
         permissions = (
             ('browse_testmanufacturer', _('Can browse Test Manufacturer')),
         )
@@ -167,6 +178,7 @@ class ICPointType(models.Model):
     class Meta:
         verbose_name = _('Interconnection Point Type')
         verbose_name_plural = _('Interconnection Point Types')
+        ordering = ('ic_point',)
         permissions = (
             ('browse_icpointtype', _('Can browse Interconnection Point Type')),
         )
@@ -181,6 +193,7 @@ class AssemblyLocation(models.Model):
     class Meta:
         verbose_name = _('Assembly Location')
         verbose_name_plural = _('Assembly Locations')
+        ordering = ('assembly_location',)
         permissions = (
             ('browse_assemblylocation', _('Can browse Assembly Location')),
         )
@@ -195,6 +208,7 @@ class AssemblyStatus(models.Model):
     class Meta:
         verbose_name = _('Assembly Status')
         verbose_name_plural = _('Assembly Statuses')
+        ordering = ('assembly_status',)
         permissions = (
             ('browse_assemblystatus', _('Can browse Assembly Status')),
         )
@@ -210,6 +224,7 @@ class LetterType(models.Model):
     class Meta:
         verbose_name = _('Letter Type')
         verbose_name_plural = _('Letter Types')
+        ordering = ('letter_type',)
         permissions = (
             ('browse_lettertype', _('Can browse Letter Type')),
         )
@@ -224,6 +239,7 @@ class FloorsCount(models.Model):
     class Meta:
         verbose_name = _('Floors Count')
         verbose_name_plural = _('Floors Count')
+        ordering = ('floors_count',)
         permissions = (
             ('browse_floorscount', _('Can browse Floors Count')),
         )
@@ -238,6 +254,7 @@ class TestModel(models.Model):
     class Meta:
         verbose_name = _('Test Model')
         verbose_name_plural = _('Test Models')
+        ordering = ('model',)
         permissions = (
             ('browse_testmodel', _('Can browse Test Models')),
         )
@@ -252,6 +269,7 @@ class Special(models.Model):
     class Meta:
         verbose_name = _('Special')
         verbose_name_plural = _('Special')
+        ordering = ('special',)
         permissions = (
             ('browse_special', _('Can browse Special')),
         )
@@ -266,6 +284,7 @@ class Orientation(models.Model):
     class Meta:
         verbose_name = _('Orientation Type')
         verbose_name_plural = _('Orientation Types')
+        ordering = ('orientation',)
         permissions = (
             ('browse_orientation', _('Can browse Orientation Type')),
         )
@@ -280,6 +299,7 @@ class SiteStatus(models.Model):
     class Meta:
         verbose_name = _('Site Status')
         verbose_name_plural = _('Site Status')
+        ordering = ('site_status',)
         permissions = (
             ('browse_sitestatus', _('Can browse Site Status')),
         )
@@ -326,6 +346,7 @@ class PWS(models.Model):
     class Meta:
         verbose_name = _('Public Water System')
         verbose_name_plural = _('Public Water Systems')
+        ordering = ('number',)
         permissions = (
             ('browse_pws', _('Can browse Public Water System')),
         )

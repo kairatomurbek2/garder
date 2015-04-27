@@ -16,35 +16,35 @@ class FilterChoices(object):
     @staticmethod
     def site_use():
         choices = [('', _('All'))]
-        for site_use in models.SiteUse.objects.all().order_by('site_use'):
+        for site_use in models.SiteUse.objects.all():
             choices.append((site_use.pk, site_use.site_use))
         return choices
 
     @staticmethod
     def site_type():
         choices = [('', _('All'))]
-        for site_type in models.SiteType.objects.all().order_by('site_type'):
+        for site_type in models.SiteType.objects.all():
             choices.append((site_type.pk, site_type.site_type))
         return choices
 
     @staticmethod
     def pws():
         choices = [('', _('All'))]
-        for pws in models.PWS.objects.all().order_by('name'):
+        for pws in models.PWS.objects.all():
             choices.append((pws.pk, pws.number))
         return choices
 
     @staticmethod
     def customer_code():
         choices = [('', _('All'))]
-        for customer_code in models.CustomerCode.objects.all().order_by('customer_code'):
+        for customer_code in models.CustomerCode.objects.all():
             choices.append((customer_code.pk, customer_code.customer_code))
         return choices
 
     @staticmethod
     def service_type():
         choices = [('', _('All'))]
-        for service_type in models.ServiceType.objects.all().order_by('service_type'):
+        for service_type in models.ServiceType.objects.all():
             choices.append((service_type.pk, service_type.service_type))
         return choices
 
