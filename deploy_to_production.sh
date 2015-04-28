@@ -1,5 +1,5 @@
 #!/bin/bash
 
 . virtualenv/bin/activate
-fab production_env deploy:$1
+fab production_env deploy_production:$1
 deactivate
