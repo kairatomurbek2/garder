@@ -10,6 +10,13 @@ def demo_env():
     env.project_path = '/home/itattractor/bigsurvey'
 
 
+def production_env():
+    env.hosts = ['192.241.215.140']
+    env.user = 'bigsurvey'
+    env.password = 'XDMVMktKsFdDpxD'
+    env.project_path = '/home/bigsurvey/projects/bigsurvey'
+
+
 def check_env_parameters():
     if not env.get('hosts'):
         raise Exception('Env parameters are not set')
