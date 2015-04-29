@@ -118,18 +118,6 @@ class FilterChoices(object):
 class FilterActions(object):
     class Site(object):
         @staticmethod
-        def customer_name(sites, value):
-            if value:
-                return sites.filter(customer__name__icontains=value)
-            return sites
-
-        @staticmethod
-        def customer_account(sites, value):
-            if value:
-                return sites.filter(customer__number__icontains=value)
-            return sites
-
-        @staticmethod
         def next_date(sites, value):
             current_date = datetime.now()
             dates = {
@@ -174,7 +162,7 @@ class FilterActions(object):
         @staticmethod
         def customer_account(surveys, value):
             if value:
-                return surveys.filter(site__customer__number__icontains=value)
+                return surveys.filter(site__number__icontains=value)
             return surveys
 
         @staticmethod
@@ -199,7 +187,7 @@ class FilterActions(object):
         @staticmethod
         def customer_account(tests, value):
             if value:
-                return tests.filter(bp_device__site__customer__number__icontains=value)
+                return tests.filter(bp_device__site__number__icontains=value)
             return tests
 
         @staticmethod
@@ -248,7 +236,7 @@ class FilterActions(object):
         @staticmethod
         def customer_account(hazards, value):
             if value:
-                return hazards.filter(site__customer__number__icontains=value)
+                return hazards.filter(site__number__icontains=value)
             return hazards
 
         @staticmethod
@@ -332,6 +320,7 @@ class FilterActions(object):
 
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
+    number = django_filters.CharFilter(lookup_type='icontains', label=_('Account Number'), name='number')
     address = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address'), name='address1')
     site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
@@ -342,15 +331,6 @@ class SiteFilter(django_filters.FilterSet):
                                                    action=FilterActions.Site.last_date,
                                                    label=_('Last Survey older than'))
     route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='exact')
-
-
-class CustomerFilter(django_filters.FilterSet):
-    number = django_filters.CharFilter(label=_('Account Number'), lookup_type='icontains')
-    name = django_filters.CharFilter(label=_('Customer Name'), lookup_type='icontains')
-    code = django_filters.ChoiceFilter(label=_('Customer Code'), choices=FilterChoices.customer_code())
-    city = django_filters.CharFilter(label=_('City'), lookup_type='icontains')
-    address = django_filters.CharFilter(label=_('Address'), lookup_type='icontains', name='address1')
-    zip = django_filters.CharFilter(label=_('ZIP'), lookup_type='icontains')
 
 
 class SurveyFilter(django_filters.FilterSet):

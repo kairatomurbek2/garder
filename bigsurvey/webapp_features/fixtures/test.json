@@ -2068,158 +2068,6 @@
 },
 {
   "fields": {
-    "city": "First Customer city",
-    "fax": null,
-    "code": 1,
-    "name": "First Customer name",
-    "zip": "First",
-    "address1": "First Customer address",
-    "address2": "",
-    "number": "Customer1",
-    "apt": "",
-    "phone": "",
-    "state": "AL",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 1
-},
-{
-  "fields": {
-    "city": "Houston",
-    "fax": null,
-    "code": 3,
-    "name": "John Smith",
-    "zip": "52901",
-    "address1": "15, Washington St",
-    "address2": "",
-    "number": "ZXC2",
-    "apt": "",
-    "phone": "",
-    "state": "TX",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 2
-},
-{
-  "fields": {
-    "city": "Ancoridge",
-    "fax": null,
-    "code": 4,
-    "name": "Mike Doe",
-    "zip": "29021",
-    "address1": "10, New St",
-    "address2": "",
-    "number": "SJK472",
-    "apt": "",
-    "phone": "",
-    "state": "AK",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 3
-},
-{
-  "fields": {
-    "city": "Washington",
-    "fax": null,
-    "code": 2,
-    "name": "Amanda James",
-    "zip": "90192",
-    "address1": "White House",
-    "address2": "",
-    "number": "QAZ2WSX",
-    "apt": "",
-    "phone": "",
-    "state": "DC",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 4
-},
-{
-  "fields": {
-    "city": "Los Angeles",
-    "fax": null,
-    "code": 1,
-    "name": "Jane Asperson",
-    "zip": "18212",
-    "address1": "176, Beach Avenue",
-    "address2": "177, Beach Avenue",
-    "number": "IKW182",
-    "apt": "",
-    "phone": "",
-    "state": "CA",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 5
-},
-{
-  "fields": {
-    "city": "Boston",
-    "fax": null,
-    "code": 4,
-    "name": "Matt Asperson",
-    "zip": "19212",
-    "address1": "18, Park St",
-    "address2": "",
-    "number": "MIA281",
-    "apt": "",
-    "phone": "",
-    "state": "MA",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 6
-},
-{
-  "fields": {
-    "city": "Chikago",
-    "fax": null,
-    "code": 2,
-    "name": "Giles Corey",
-    "zip": "19021",
-    "address1": "128, River Groove",
-    "address2": "",
-    "number": "OIK182",
-    "apt": "",
-    "phone": "",
-    "state": "IL",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 7
-},
-{
-  "fields": {
-    "city": "Seattle",
-    "fax": null,
-    "code": 3,
-    "name": "Gabe Newell",
-    "zip": "12382",
-    "address1": "127, Universe st",
-    "address2": "",
-    "number": "VALVE",
-    "apt": "VALVE-APT",
-    "phone": "",
-    "state": "WA",
-    "notes": "",
-    "email": null
-  },
-  "model": "webapp.customer",
-  "pk": 8
-},
-{
-  "fields": {
     "city": "Second PWS city",
     "name": "Second PWS",
     "office_address": null,
@@ -2382,7 +2230,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 1,
-    "customer": 1,
     "is_backflow": false,
     "street_number": null,
     "connect_date": "2015-01-15",
@@ -2390,7 +2237,19 @@
     "meter_size": null,
     "interconnection_point": 1,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "First Customer city",
+    "contact_fax": null,
+    "cust_code": 1,
+    "cust_name": "First Customer name",
+    "cust_zip": "First",
+    "cust_address1": "First Customer address",
+    "cust_address2": "",
+    "cust_number": "Customer1",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "AL",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 1
@@ -2415,7 +2274,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 3,
-    "customer": 1,
     "is_backflow": false,
     "street_number": "",
     "connect_date": "2015-01-15",
@@ -2423,7 +2281,19 @@
     "meter_size": "",
     "interconnection_point": 1,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "First Customer city",
+    "contact_fax": null,
+    "cust_code": 1,
+    "cust_name": "First Customer name",
+    "cust_zip": "First",
+    "cust_address1": "First Customer address",
+    "cust_address2": "",
+    "cust_number": "Customer1",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "AL",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 2
@@ -2448,7 +2318,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 6,
-    "customer": 2,
     "is_backflow": false,
     "street_number": null,
     "connect_date": "2015-01-22",
@@ -2456,7 +2325,19 @@
     "meter_size": null,
     "interconnection_point": 2,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Houston",
+    "contact_fax": null,
+    "cust_code": 3,
+    "cust_name": "John Smith",
+    "cust_zip": "52901",
+    "cust_address1": "15, Washington St",
+    "cust_address2": "",
+    "cust_number": "ZXC2",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "TX",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 3
@@ -2481,7 +2362,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 5,
-    "customer": 3,
     "is_backflow": false,
     "street_number": null,
     "connect_date": "2015-01-22",
@@ -2489,7 +2369,19 @@
     "meter_size": null,
     "interconnection_point": 2,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Ancoridge",
+    "contact_fax": null,
+    "cust_code": 4,
+    "cust_name": "Mike Doe",
+    "cust_zip": "29021",
+    "cust_address1": "10, New St",
+    "cust_address2": "",
+    "cust_number": "SJK472",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "AK",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 4
@@ -2514,7 +2406,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 3,
-    "customer": 4,
     "is_backflow": false,
     "street_number": null,
     "connect_date": "2015-01-22",
@@ -2522,7 +2413,19 @@
     "meter_size": null,
     "interconnection_point": 1,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Washington",
+    "contact_fax": null,
+    "cust_code": 2,
+    "cust_name": "Amanda James",
+    "cust_zip": "90192",
+    "cust_address1": "White House",
+    "cust_address2": "",
+    "cust_number": "QAZ2WSX",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "DC",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 5
@@ -2547,7 +2450,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 7,
-    "customer": 4,
     "is_backflow": false,
     "street_number": null,
     "connect_date": null,
@@ -2555,7 +2457,19 @@
     "meter_size": null,
     "interconnection_point": 2,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Washington",
+    "contact_fax": null,
+    "cust_code": 2,
+    "cust_name": "Amanda James",
+    "cust_zip": "90192",
+    "cust_address1": "White House",
+    "cust_address2": "",
+    "cust_number": "QAZ2WSX",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "DC",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 6
@@ -2580,7 +2494,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 1,
-    "customer": 5,
     "is_backflow": false,
     "street_number": null,
     "connect_date": "2015-01-22",
@@ -2588,7 +2501,19 @@
     "meter_size": null,
     "interconnection_point": 2,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Los Angeles",
+    "contact_fax": null,
+    "cust_code": 1,
+    "cust_name": "Jane Asperson",
+    "cust_zip": "18212",
+    "cust_address1": "176, Beach Avenue",
+    "cust_address2": "177, Beach Avenue",
+    "cust_number": "IKW182",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "CA",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 7
@@ -2613,7 +2538,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 5,
-    "customer": 6,
     "is_backflow": false,
     "street_number": null,
     "connect_date": null,
@@ -2621,7 +2545,19 @@
     "meter_size": null,
     "interconnection_point": 2,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Boston",
+    "contact_fax": null,
+    "cust_code": 4,
+    "cust_name": "Matt Asperson",
+    "cust_zip": "19212",
+    "cust_address1": "18, Park St",
+    "cust_address2": "",
+    "cust_number": "MIA281",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "MA",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 8
@@ -2646,7 +2582,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 5,
-    "customer": 7,
     "is_backflow": false,
     "street_number": null,
     "connect_date": null,
@@ -2654,7 +2589,19 @@
     "meter_size": "",
     "interconnection_point": 1,
     "irrigation_present": false,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Chikago",
+    "contact_fax": null,
+    "cust_code": 2,
+    "cust_name": "Giles Corey",
+    "cust_zip": "19021",
+    "cust_address1": "128, River Groove",
+    "cust_address2": "",
+    "cust_number": "OIK182",
+    "cust_apt": "",
+    "contact_phone": "",
+    "cust_state": "IL",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 9
@@ -2679,7 +2626,6 @@
     "meter_reading": null,
     "is_due_install": false,
     "site_use": 1,
-    "customer": 8,
     "is_backflow": false,
     "street_number": "7269",
     "connect_date": null,
@@ -2687,7 +2633,19 @@
     "meter_size": null,
     "interconnection_point": 1,
     "irrigation_present": true,
-    "notes": ""
+    "notes": "",
+    "cust_city": "Seattle",
+    "contact_fax": null,
+    "cust_code": 3,
+    "cust_name": "Gabe Newell",
+    "cust_zip": "12382",
+    "cust_address1": "127, Universe st",
+    "cust_address2": "",
+    "cust_number": "VALVE",
+    "cust_apt": "VALVE-APT",
+    "contact_phone": "",
+    "cust_state": "WA",
+    "contact_email": null
   },
   "model": "webapp.site",
   "pk": 10
@@ -2909,21 +2867,6 @@
         "change_user",
         "auth",
         "user"
-      ],
-      [
-        "add_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "browse_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "change_customer",
-        "webapp",
-        "customer"
       ],
       [
         "access_to_pws_users",
@@ -3183,26 +3126,6 @@
         "delete_bptype",
         "webapp",
         "bptype"
-      ],
-      [
-        "add_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "browse_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "change_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "delete_customer",
-        "webapp",
-        "customer"
       ],
       [
         "add_customercode",

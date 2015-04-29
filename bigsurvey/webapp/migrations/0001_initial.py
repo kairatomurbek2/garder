@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('assembly_location', models.CharField(max_length=20, verbose_name='Assembly Location')),
             ],
             options={
+                'ordering': ('assembly_location',),
                 'verbose_name': 'Assembly Location',
                 'verbose_name_plural': 'Assembly Locations',
                 'permissions': (('browse_assemblylocation', 'Can browse Assembly Location'),),
@@ -33,6 +34,7 @@ class Migration(migrations.Migration):
                 ('assembly_status', models.CharField(max_length=20, verbose_name='Assembly Status')),
             ],
             options={
+                'ordering': ('assembly_status',),
                 'verbose_name': 'Assembly Status',
                 'verbose_name_plural': 'Assembly Statuses',
                 'permissions': (('browse_assemblystatus', 'Can browse Assembly Status'),),
@@ -46,6 +48,7 @@ class Migration(migrations.Migration):
                 ('bp_manufacturer', models.CharField(max_length=30, verbose_name='BFP Manufacturer')),
             ],
             options={
+                'ordering': ('bp_manufacturer',),
                 'verbose_name': 'BFP Manufacturer',
                 'verbose_name_plural': 'BFP Manufacturers',
                 'permissions': (('browse_bpmanufacturer', 'Can browse BP Manufacturer'),),
@@ -59,6 +62,7 @@ class Migration(migrations.Migration):
                 ('bp_size', models.CharField(max_length=10, verbose_name='BFP Size')),
             ],
             options={
+                'ordering': ('bp_size',),
                 'verbose_name': 'BFP Size',
                 'verbose_name_plural': 'BFP Sizes',
                 'permissions': (('browse_bpsize', 'Can browse BP Size'),),
@@ -72,33 +76,10 @@ class Migration(migrations.Migration):
                 ('bp_type', models.CharField(max_length=10, verbose_name='BFP Type')),
             ],
             options={
+                'ordering': ('bp_type',),
                 'verbose_name': 'BFP Type',
                 'verbose_name_plural': 'BFP Types',
                 'permissions': (('browse_bptype', 'Can browse BP Type'),),
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='Customer',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('number', models.CharField(unique=True, max_length=15, verbose_name='Number')),
-                ('name', models.CharField(max_length=50, verbose_name='Name')),
-                ('address1', models.CharField(max_length=100, verbose_name='Address 1')),
-                ('address2', models.CharField(max_length=100, null=True, verbose_name='Address 2', blank=True)),
-                ('apt', models.CharField(max_length=15, null=True, verbose_name='Customer Apt', blank=True)),
-                ('city', models.CharField(max_length=30, verbose_name='City')),
-                ('state', models.CharField(blank=True, max_length=2, null=True, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
-                ('zip', models.CharField(max_length=10, null=True, verbose_name='ZIP', blank=True)),
-                ('phone', models.CharField(max_length=15, null=True, verbose_name='Phone', blank=True)),
-                ('fax', models.CharField(max_length=15, null=True, verbose_name='Fax', blank=True)),
-                ('email', models.EmailField(max_length=15, null=True, verbose_name='Email', blank=True)),
-                ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
-            ],
-            options={
-                'verbose_name': 'Customer',
-                'verbose_name_plural': 'Customers',
-                'permissions': (('browse_customer', 'Can browse Customer'),),
             },
             bases=(models.Model,),
         ),
@@ -109,6 +90,7 @@ class Migration(migrations.Migration):
                 ('customer_code', models.CharField(max_length=20, verbose_name='Customer Code')),
             ],
             options={
+                'ordering': ('customer_code',),
                 'verbose_name': 'Customer Code',
                 'verbose_name_plural': 'Customer Codes',
                 'permissions': (('browse_customercode', 'Can browse Customer Code'),),
@@ -128,9 +110,9 @@ class Migration(migrations.Migration):
                 ('cert_number', models.CharField(max_length=30, null=True, verbose_name='Cert. Number', blank=True)),
                 ('cert_date', models.DateField(null=True, verbose_name='Cert. Date', blank=True)),
                 ('cert_expires', models.DateField(null=True, verbose_name='Cert. Expires', blank=True)),
-                ('test_serial', models.CharField(max_length=20, null=True, verbose_name='Test Serial', blank=True)),
                 ('test_last_cert', models.DateField(null=True, verbose_name='Last Cert.', blank=True)),
                 ('company', models.CharField(max_length=30, null=True, verbose_name='Company', blank=True)),
+                ('test_serial', models.CharField(max_length=20, null=True, verbose_name='Test Serial', blank=True)),
             ],
             options={
                 'verbose_name': 'Employee',
@@ -146,6 +128,7 @@ class Migration(migrations.Migration):
                 ('floors_count', models.CharField(max_length=10, verbose_name='Floors Count')),
             ],
             options={
+                'ordering': ('floors_count',),
                 'verbose_name': 'Floors Count',
                 'verbose_name_plural': 'Floors Count',
                 'permissions': (('browse_floorscount', 'Can browse Floors Count'),),
@@ -187,6 +170,7 @@ class Migration(migrations.Migration):
                 ('hazard_type', models.CharField(max_length=50, verbose_name='Hazard Type')),
             ],
             options={
+                'ordering': ('hazard_type',),
                 'verbose_name': 'Hazard Type',
                 'verbose_name_plural': 'Hazard Types',
                 'permissions': (('browse_hazardtype', 'Can browse Hazard Type'),),
@@ -200,6 +184,7 @@ class Migration(migrations.Migration):
                 ('ic_point', models.CharField(max_length=20, verbose_name='Interconnection Point')),
             ],
             options={
+                'ordering': ('ic_point',),
                 'verbose_name': 'Interconnection Point Type',
                 'verbose_name_plural': 'Interconnection Point Types',
                 'permissions': (('browse_icpointtype', 'Can browse Interconnection Point Type'),),
@@ -227,6 +212,7 @@ class Migration(migrations.Migration):
                 ('template', models.TextField(max_length=2000, null=True, verbose_name='Letter Template', blank=True)),
             ],
             options={
+                'ordering': ('letter_type',),
                 'verbose_name': 'Letter Type',
                 'verbose_name_plural': 'Letter Types',
                 'permissions': (('browse_lettertype', 'Can browse Letter Type'),),
@@ -258,6 +244,7 @@ class Migration(migrations.Migration):
                 ('orientation', models.CharField(max_length=15, verbose_name='Orientation')),
             ],
             options={
+                'ordering': ('orientation',),
                 'verbose_name': 'Orientation Type',
                 'verbose_name_plural': 'Orientation Types',
                 'permissions': (('browse_orientation', 'Can browse Orientation Type'),),
@@ -275,6 +262,7 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
             ],
             options={
+                'ordering': ('number',),
                 'verbose_name': 'Public Water System',
                 'verbose_name_plural': 'Public Water Systems',
                 'permissions': (('browse_pws', 'Can browse Public Water System'),),
@@ -288,6 +276,7 @@ class Migration(migrations.Migration):
                 ('service_type', models.CharField(max_length=20, verbose_name='Service Type')),
             ],
             options={
+                'ordering': ('service_type',),
                 'verbose_name': 'Service Type',
                 'verbose_name_plural': 'Service Types',
                 'permissions': (('browse_servicetype', 'Can browse Service Type'),),
@@ -301,6 +290,7 @@ class Migration(migrations.Migration):
                 ('connect_date', models.DateField(null=True, verbose_name='Connect Date', blank=True)),
                 ('address1', models.CharField(max_length=100, verbose_name='Address 1')),
                 ('address2', models.CharField(max_length=100, null=True, verbose_name='Address 2', blank=True)),
+                ('street_number', models.CharField(max_length=100, null=True, verbose_name='Street Number', blank=True)),
                 ('apt', models.CharField(max_length=15, null=True, verbose_name='Apt', blank=True)),
                 ('city', models.CharField(max_length=30, verbose_name='City')),
                 ('state', models.CharField(blank=True, max_length=2, null=True, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
@@ -317,7 +307,18 @@ class Migration(migrations.Migration):
                 ('next_survey_date', models.DateField(null=True, verbose_name='Next Survey Date', blank=True)),
                 ('notes', models.TextField(max_length=255, null=True, verbose_name='Notes', blank=True)),
                 ('last_survey_date', models.DateField(null=True, verbose_name='Last survey date', blank=True)),
-                ('customer', models.ForeignKey(related_name='sites', verbose_name='Customer', to='webapp.Customer')),
+                ('cust_number', models.CharField(max_length=15, verbose_name='Number')),
+                ('cust_name', models.CharField(max_length=50, verbose_name='Name')),
+                ('cust_address1', models.CharField(max_length=100, null=True, verbose_name='Address 1', blank=True)),
+                ('cust_address2', models.CharField(max_length=100, null=True, verbose_name='Address 2', blank=True)),
+                ('cust_apt', models.CharField(max_length=15, null=True, verbose_name='Customer Apt', blank=True)),
+                ('cust_city', models.CharField(max_length=30, null=True, verbose_name='City', blank=True)),
+                ('cust_state', models.CharField(blank=True, max_length=2, null=True, verbose_name='State', choices=[(b'AL', b'Alabama'), (b'AK', b'Alaska'), (b'AZ', b'Arizona'), (b'AR', b'Arkansas'), (b'CA', b'California'), (b'CO', b'Colorado'), (b'CT', b'Connecticut'), (b'DE', b'Delaware'), (b'DC', b'District of Columbia'), (b'FL', b'Florida'), (b'GA', b'Georgia'), (b'HI', b'Hawaii'), (b'ID', b'Idaho'), (b'IL', b'Illinois'), (b'IN', b'Indiana'), (b'IA', b'Iowa'), (b'KS', b'Kansas'), (b'KY', b'Kentucky'), (b'LA', b'Louisiana'), (b'ME', b'Maine'), (b'MD', b'Maryland'), (b'MA', b'Massachusetts'), (b'MI', b'Michigan'), (b'MN', b'Minnesota'), (b'MS', b'Mississippi'), (b'MO', b'Missouri'), (b'MT', b'Montana'), (b'NE', b'Nebraska'), (b'NV', b'Nevada'), (b'NH', b'New Hampshire'), (b'NJ', b'New Jersey'), (b'NM', b'New Mexico'), (b'NY', b'New York'), (b'NC', b'North Carolina'), (b'ND', b'North Dakota'), (b'OH', b'Ohio'), (b'OK', b'Oklahoma'), (b'OR', b'Oregon'), (b'PA', b'Pennsylvania'), (b'RI', b'Rhode Island'), (b'SC', b'South Carolina'), (b'SD', b'South Dakota'), (b'TN', b'Tennessee'), (b'TX', b'Texas'), (b'UT', b'Utah'), (b'VT', b'Vermont'), (b'VA', b'Virginia'), (b'WA', b'Washington'), (b'WV', b'West Virginia'), (b'WI', b'Wisconsin'), (b'WY', b'Wyoming')])),
+                ('cust_zip', models.CharField(max_length=10, null=True, verbose_name='ZIP', blank=True)),
+                ('contact_phone', models.CharField(max_length=15, null=True, verbose_name='Phone', blank=True)),
+                ('contact_fax', models.CharField(max_length=15, null=True, verbose_name='Fax', blank=True)),
+                ('contact_email', models.EmailField(max_length=15, null=True, verbose_name='Email', blank=True)),
+                ('cust_code', models.ForeignKey(related_name='customers', verbose_name='Customer Code', to='webapp.CustomerCode')),
                 ('floors', models.ForeignKey(related_name='sites', verbose_name='Building Height', blank=True, to='webapp.FloorsCount', null=True)),
                 ('interconnection_point', models.ForeignKey(related_name='sites', verbose_name='Interconnection Point', blank=True, to='webapp.ICPointType', null=True)),
                 ('pws', models.ForeignKey(related_name='sites', verbose_name='PWS', to='webapp.PWS')),
@@ -325,7 +326,7 @@ class Migration(migrations.Migration):
             options={
                 'verbose_name': 'Site',
                 'verbose_name_plural': 'Sites',
-                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Has access to all Sites'), ('access_to_pws_sites', "Has access to PWS's Sites"), ('access_to_import', 'Can import Sites from Excel file'), ('access_to_batch_update', 'Has access to batch update')),
+                'permissions': (('browse_site', 'Can browse Site'), ('access_to_all_sites', 'Has access to all Sites'), ('access_to_pws_sites', "Has access to PWS's Sites"), ('access_to_import', 'Can import Sites from Excel file'), ('access_to_batch_update', 'Has access to batch update'), ('change_all_info_about_site', 'Can change all information about Site')),
             },
             bases=(models.Model,),
         ),
@@ -336,6 +337,7 @@ class Migration(migrations.Migration):
                 ('site_status', models.CharField(max_length=15, verbose_name='Site Status')),
             ],
             options={
+                'ordering': ('site_status',),
                 'verbose_name': 'Site Status',
                 'verbose_name_plural': 'Site Status',
                 'permissions': (('browse_sitestatus', 'Can browse Site Status'),),
@@ -349,6 +351,7 @@ class Migration(migrations.Migration):
                 ('site_type', models.CharField(max_length=50, verbose_name='Site Type')),
             ],
             options={
+                'ordering': ('site_type',),
                 'verbose_name': 'Site Type',
                 'verbose_name_plural': 'Site Types',
                 'permissions': (('browse_sitetype', 'Can browse Site Type'),),
@@ -362,6 +365,7 @@ class Migration(migrations.Migration):
                 ('site_use', models.CharField(max_length=30, verbose_name='Site Use')),
             ],
             options={
+                'ordering': ('site_use',),
                 'verbose_name': 'Site Use',
                 'verbose_name_plural': 'Site Use Types',
                 'permissions': (('browse_siteuse', 'Can browse Site Use'),),
@@ -375,6 +379,7 @@ class Migration(migrations.Migration):
                 ('source_type', models.CharField(max_length=50, verbose_name='Source Type')),
             ],
             options={
+                'ordering': ('source_type',),
                 'verbose_name': 'Source Type',
                 'verbose_name_plural': 'Source Types',
                 'permissions': (('browse_sourcetype', 'Can browse Source Type'),),
@@ -388,6 +393,7 @@ class Migration(migrations.Migration):
                 ('special', models.CharField(max_length=5, verbose_name='Special')),
             ],
             options={
+                'ordering': ('special',),
                 'verbose_name': 'Special',
                 'verbose_name_plural': 'Special',
                 'permissions': (('browse_special', 'Can browse Special'),),
@@ -443,6 +449,7 @@ class Migration(migrations.Migration):
                 ('survey_type', models.CharField(max_length=20, verbose_name='Survey Type')),
             ],
             options={
+                'ordering': ('survey_type',),
                 'verbose_name': 'Survey Type',
                 'verbose_name_plural': 'Survey Types',
                 'permissions': (('browse_surveytype', 'Can browse Survey Type'),),
@@ -472,6 +479,7 @@ class Migration(migrations.Migration):
                 ('cv_leaked', models.BooleanField(default=False, verbose_name='CV Leaked', choices=[(True, b'Leaked'), (False, b'Closed')])),
                 ('cv_held_pressure', models.FloatField(null=True, verbose_name='CV Held Pressure', blank=True)),
                 ('cv_maintenance', models.BooleanField(default=False, verbose_name='CV Maintenance', choices=[(True, b'Yes'), (False, b'No')])),
+                ('air_inlet_opened', models.BooleanField(default=True, verbose_name='Air Inlet Opened', choices=[(True, b'Yes'), (False, b'No')])),
                 ('air_inlet_psi', models.FloatField(null=True, verbose_name='Air Inlet PSI', blank=True)),
                 ('cv_psi', models.FloatField(null=True, verbose_name='CV PSI', blank=True)),
                 ('test_result', models.BooleanField(default=False, verbose_name='Test Result', choices=[(True, b'Passed'), (False, b'Failed')])),
@@ -493,6 +501,7 @@ class Migration(migrations.Migration):
                 ('test_manufacturer', models.CharField(max_length=20, verbose_name='Test Manufacturer')),
             ],
             options={
+                'ordering': ('test_manufacturer',),
                 'verbose_name': 'Test Manufacturer',
                 'verbose_name_plural': 'Test Manufacturers',
                 'permissions': (('browse_testmanufacturer', 'Can browse Test Manufacturer'),),
@@ -506,6 +515,7 @@ class Migration(migrations.Migration):
                 ('model', models.CharField(max_length=20, verbose_name='Test Model')),
             ],
             options={
+                'ordering': ('model',),
                 'verbose_name': 'Test Model',
                 'verbose_name_plural': 'Test Models',
                 'permissions': (('browse_testmodel', 'Can browse Test Models'),),
@@ -618,12 +628,6 @@ class Migration(migrations.Migration):
             model_name='employee',
             name='user',
             field=models.OneToOneField(to=settings.AUTH_USER_MODEL),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='customer',
-            name='code',
-            field=models.ForeignKey(related_name='customers', verbose_name='Customer Code', to='webapp.CustomerCode'),
             preserve_default=True,
         ),
     ]

@@ -60,7 +60,7 @@
         {% if perms.webapp.browse_report %}
             <li><a>{% trans "Reports" %}</a></li>
         {% endif %}
-        {% if perms.webapp.browse_customer %}
+        {% if perms.webapp.browse_user %}
         <li class="uk-parent" data-uk-dropdown="" id="bfp_menu">
             <a href="#">
                 {% trans "More..." %}
@@ -72,9 +72,6 @@
                     {% endif %}
                     {% if perms.webapp.browse_pws %}
                         <li><a id="pws_menu_link" href="{% url "webapp:pws_list" %}">{% trans "PWS" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_customer %}
-                        <li><a id="customers_menu_link" href="{% url "webapp:customer_list" %}">{% trans "Customers" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_user %}
                         <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>

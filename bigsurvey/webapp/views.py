@@ -83,20 +83,6 @@ class SiteBaseFormView(BaseFormView):
     form_class = forms.SiteForm
     form_class_for_surveyor = forms.SiteFormForSurveyor
     model = models.Site
-    filter_class = filters.CustomerFilter
-
-    def get_context_data(self, **kwargs):
-        context = super(SiteBaseFormView, self).get_context_data(**kwargs)
-        customers = self._get_customers()
-        context['customer_filter'] = self._get_customer_filter(queryset=customers)
-        return context
-
-    @staticmethod
-    def _get_customers():
-        return models.Customer.objects.all()
-
-    def _get_customer_filter(self, queryset):
-        return self.filter_class(self.request.GET, queryset=queryset)
 
     def get_form_class(self):
         if self.request.user.has_perm('webapp.change_all_info_about_site'):
@@ -129,7 +115,6 @@ class SiteEditView(SiteBaseFormView, UpdateView):
         form = super(SiteEditView, self).get_form(form_class)
         if not mixins.SiteObjectMixin.has_perm(self.request.user, form.instance):
             raise Http404
-        form.initial['customer'] = form.instance.customer.pk
         return form
 
 
@@ -216,58 +201,6 @@ class PWSEditView(PWSBaseFormView, UpdateView):
     permission = 'webapp.change_pws'
     success_message = Messages.PWS.editing_success
     error_message = Messages.PWS.editing_error
-
-
-class CustomerListView(BaseTemplateView):
-    template_name = 'customer/customer_list.html'
-    permission = 'webapp.browse_customer'
-
-    def get_context_data(self, **kwargs):
-        context = super(CustomerListView, self).get_context_data(**kwargs)
-        customers = self._get_customers()
-        context['customer_filter'] = self._get_customer_filter(queryset=customers)
-        return context
-
-    @staticmethod
-    def _get_customers():
-        return models.Customer.objects.all()
-
-    def _get_customer_filter(self, queryset):
-        return filters.CustomerFilter(self.request.GET, queryset=queryset)
-
-
-class CustomerDetailView(BaseTemplateView):
-    template_name = 'customer/customer.html'
-    permission = 'webapp.browse_customer'
-
-    def get_context_data(self, **kwargs):
-        context = super(CustomerDetailView, self).get_context_data(**kwargs)
-        context['customer'] = self._get_customer()
-        return context
-
-    def _get_customer(self):
-        return models.Customer.objects.get(pk=self.kwargs['pk'])
-
-
-class CustomerBaseFormView(BaseFormView):
-    template_name = 'customer/customer_form.html'
-    form_class = forms.CustomerForm
-    model = models.Customer
-
-    def get_success_url(self):
-        return reverse('webapp:customer_list')
-
-
-class CustomerAddView(CustomerBaseFormView, CreateView):
-    permission = 'webapp.add_customer'
-    success_message = Messages.Customer.adding_success
-    error_message = Messages.Customer.adding_error
-
-
-class CustomerEditView(CustomerBaseFormView, UpdateView):
-    permission = 'webapp.change_customer'
-    success_message = Messages.Customer.editing_success
-    error_message = Messages.Customer.editing_error
 
 
 class SurveyDetailView(BaseTemplateView):

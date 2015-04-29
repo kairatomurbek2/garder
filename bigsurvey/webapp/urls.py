@@ -33,11 +33,6 @@ urlpatterns = patterns(
     url(r'^pws/add/$', views.PWSAddView.as_view(), name="pws_add"),
     url(r'^pws/(?P<pk>\d+)/edit/$', views.PWSEditView.as_view(), name="pws_edit"),
 
-    url(r'^customer/$', views.CustomerListView.as_view(), name="customer_list"),
-    url(r'^customer/add/$', views.CustomerAddView.as_view(), name="customer_add"),
-    url(r'^customer/(?P<pk>\d+)/$', views.CustomerDetailView.as_view(), name="customer_detail"),
-    url(r'^customer/(?P<pk>\d+)/edit/$', views.CustomerEditView.as_view(), name="customer_edit"),
-
     url(r'^user/$', views.UserListView.as_view(), name="user_list"),
     url(r'^user/add/$', views.UserAddView.as_view(), name="user_add"),
     url(r'^user/(?P<pk>\d+)/$', views.UserDetailView.as_view(), name="user_detail"),

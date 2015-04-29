@@ -115,38 +115,6 @@ def check_site_editing_error_message(step):
     step.given('I should see "%s"' % Messages.Site.editing_error)
 
 
-@step('I open select customer modal')
-def open_customer_selector(step):
-    step.given('I click "%s" button' % 'select_customer')
-
-
-@step('I select customer with pk "(\d+)"')
-def select_customer(step, pk):
-    wait = WebDriverWait(world.browser, 10)
-    select_button = wait.until(
-        expected_conditions.visibility_of_element_located(
-            (By.XPATH, Xpath.Pattern.customer_select_button % pk)
-        )
-    )
-    helper.check_element_exists(select_button, 'Customer select button with pk "%s" was not found' % pk)
-    select_button.click()
-
-
-@step('I commit site')
-def commit_site(step):
-    commit_dialog_button = helper.find(Xpath.commit_dialog_button)
-    helper.check_element_exists(commit_dialog_button, 'Commit dialog button was not found')
-    commit_dialog_button.click()
-    wait = WebDriverWait(world.browser, 10)
-    commit_button = wait.until(
-        expected_conditions.visibility_of_element_located(
-            (By.XPATH, Xpath.Pattern.button % 'commit_site')
-        )
-    )
-    helper.check_element_exists(commit_button, 'Commit dialog button was not found')
-    commit_button.click()
-
-
 @step('I hover on "assign" link')
 def hover_on_menu(step):
     assign_link = helper.find(Xpath.Pattern.link % 'assign')

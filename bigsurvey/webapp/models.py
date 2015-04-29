@@ -305,32 +305,6 @@ class SiteStatus(models.Model):
         )
 
 
-class Customer(models.Model):
-    number = models.CharField(max_length=15, unique=True, verbose_name=_("Number"))
-    name = models.CharField(max_length=50, verbose_name=_("Name"))
-    code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
-    address1 = models.CharField(max_length=100, verbose_name=_("Address 1"))
-    address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"))
-    apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Apt"))
-    city = models.CharField(max_length=30, verbose_name=_("City"))
-    state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"))
-    zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("ZIP"))
-    phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"))
-    fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"))
-    email = models.EmailField(max_length=15, blank=True, null=True, verbose_name=_("Email"))
-    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    def __unicode__(self):
-        return u"%s, %s" % (self.name, self.city)
-
-    class Meta:
-        verbose_name = _('Customer')
-        verbose_name_plural = _('Customers')
-        permissions = (
-            ('browse_customer', _('Can browse Customer')),
-        )
-
-
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -388,7 +362,6 @@ class Employee(models.Model):
 
 class Site(models.Model):
     status = models.ForeignKey(SiteStatus, null=True, blank=True, verbose_name=_("Status"), related_name="sites")
-    customer = models.ForeignKey(Customer, verbose_name=_("Customer"), related_name="sites")
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites")
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))
     address1 = models.CharField(max_length=100, verbose_name=_("Address 1"))
@@ -416,6 +389,18 @@ class Site(models.Model):
     next_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Next Survey Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
     last_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Last survey date"))
+    cust_number = models.CharField(max_length=15, verbose_name=_("Number"))
+    cust_name = models.CharField(max_length=50, verbose_name=_("Name"))
+    cust_code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
+    cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 1"))
+    cust_address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"))
+    cust_apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Apt"))
+    cust_city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
+    cust_state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"))
+    cust_zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("ZIP"))
+    contact_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"))
+    contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"))
+    contact_email = models.EmailField(max_length=15, blank=True, null=True, verbose_name=_("Email"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.city, self.address1)

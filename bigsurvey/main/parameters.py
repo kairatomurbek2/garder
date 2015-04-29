@@ -87,12 +87,6 @@ class Messages:
         editing_success = _('PWS was successfully updated')
         editing_error = _('Error while submitting form')
 
-    class Customer:
-        adding_success = _('Customer was successfully added')
-        adding_error = _('Error while submitting form')
-        editing_success = _('Customer was successfully updated')
-        editing_error = _('Error while submitting form')
-
     class Survey:
         adding_success = _('Survey was successfully added')
         adding_error = _('Error while submitting form')

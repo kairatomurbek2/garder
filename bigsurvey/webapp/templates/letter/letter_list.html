@@ -13,7 +13,7 @@
             <thead>
             <tr class="table-border-bottom">
                 <th class="table-border-right uk-text-center">{% trans "No." %}</th>
-                <th>{% trans "Customer" %}</th>
+                <th>{% trans " Customer Account" %}</th>
                 <th>{% trans "Sender" %}</th>
                 <th>{% trans "Hazard" %}</th>
                 <th>{% trans "Type" %}</th>
@@ -25,7 +25,11 @@
             {% for letter in letters %}
                 <tr>
                     <td class="table-border-right uk-text-center">{{ letter.pk }}</td>
-                    <td>{{ letter.site.customer }}</td>
+                    <td>
+                        <a href="{% url "webapp:site_detail" letter.site.pk %}">
+                            {{ letter.site.cust_number }}
+                        </a>
+                    </td>
                     <td>{{ letter.user.username }}</td>
                     <td>{% if letter.hazard %}
                         {{ letter.hazard }}

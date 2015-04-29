@@ -10,7 +10,6 @@ Feature: Menu
       | link            |
       | admin           |
       | pws             |
-      | customers       |
       | letters         |
       | import          |
       | sites           |
@@ -27,7 +26,6 @@ Feature: Menu
     When I hover on "more" link
     Then I should see following menu links
       | link            |
-      | customers       |
       | letters         |
       | import          |
       | sites           |
@@ -54,7 +52,6 @@ Feature: Menu
       | link            |
       | tests           |
       | pws             |
-      | customers       |
       | letters         |
       | import          |
       | users           |
@@ -73,7 +70,6 @@ Feature: Menu
       | link            |
       | admin           |
       | pws             |
-      | customers       |
       | letters         |
       | import          |
       | users           |

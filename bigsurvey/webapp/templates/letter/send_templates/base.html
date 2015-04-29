@@ -4,15 +4,15 @@
         <td>{{ letter.date }}</td>
     </tr>
     <tr>
-        <td>{{ letter.site.customer.name }}</td>
-        <td>{% trans "Account No." %}: {{ letter.site.customer.number }}</td>
+        <td>{{ letter.site.cust_name }}</td>
+        <td>{% trans "Account No." %}: {{ letter.site.cust_number }}</td>
     </tr>
     <tr>
-        <td>{{ letter.site.customer.address1 }}</td>
+        <td>{{ letter.site.cust_address1 }}</td>
         <td>{% trans "Assembly" %}: {{ letter.hazard.bp_type_required }}</td>
     </tr>
     <tr>
-        <td>{{ letter.site.customer.city }}, {{ letter.site.customer.state }}, {{ letter.site.customer.zip }}</td>
+        <td>{{ letter.site.cust_city }}, {{ letter.site.cust_state }}, {{ letter.site.cust_zip }}</td>
         <td>{% trans "Test Due Date" %}: {{ letter.hazard.due_install_test_date }}</td>
     </tr>
     <tr>

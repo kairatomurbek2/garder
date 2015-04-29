@@ -12,30 +12,23 @@
 {% block content %}
     <div id="site_detail" class="wrapper">
         {% include 'messages.html' %}
+        <h2 class="uk-text-center">{% trans "Site" %}: {{ site.address1 }}, {{ site.street_number }}</h2>
+        <h3 class="uk-text-center">{% trans "Account Number" %}: {{ site.cust_number }}</h3>
         <table class="uk-table">
             <tbody>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Customer" %}</td>
-                <td class="uk-text-center color-coding">{{ site.customer.name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Account Number" %}</td>
+                <td class="uk-text-center color-coding">{{ site.cust_number }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
                 <td class="uk-text-center color-coding">{{ site.pws.name }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Connect Date" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.connect_date }}</td>
-            </tr>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Mailing Address" %}</td>
-                <td class="uk-text-center color-coding">{{ site.customer.address1 }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Mailing Address Appartment Number" %}</td>
-                <td class="uk-text-center color-coding">{{ site.customer.apt }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Mailing Address 2" %}</td>
-                <td class="uk-text-center color-coding">{{ site.customer.address2 }}</td>
             </tr>
             <tr class="table-border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Site Use" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.site_use }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Site Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.site_type }}</td>
-                <td colspan="2"></td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
@@ -46,11 +39,11 @@
                 <td class="uk-text-center uk-text-primary">{{ site.zip }}</td>
             </tr>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Service Street Address" %}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Service Address" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.address1 }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Service Address Street Number" %}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Service Street Number" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.street_number }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Service Address Appartment Number" %}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Service Appartment" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.apt }}</td>
             </tr>
             <tr class="table-border-bottom">
@@ -60,6 +53,37 @@
                 <td class="uk-text-center uk-text-primary">{{ site.floors }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Interconnection Point" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.interconnection_point }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Name" %}</td>
+                <td class="uk-text-center color-coding">{{ site.cust_name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Mailing Address" %}</td>
+                <td class="uk-text-center color-coding">{{ site.cust_address1 }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Code" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.cust_code }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Appartment Number" %}</td>
+                <td class="uk-text-center color-coding">{{ site.cust_apt }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Address 2" %}</td>
+                <td class="uk-text-center color-coding">{{ site.cust_address2 }}</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer City" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.cust_city }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer State" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.cust_state }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer ZIP" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.cust_zip }}</td>
+            </tr>
+            <tr class="table-border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Phone" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.contact_phone }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Fax" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.contact_fax }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Customer Email" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.contact_email }}</td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Meter Number" %}</td>
