@@ -119,26 +119,6 @@
         "bptype"
       ],
       [
-        "add_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "browse_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "change_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "delete_customer",
-        "webapp",
-        "customer"
-      ],
-      [
         "add_customercode",
         "webapp",
         "customercode"
@@ -683,21 +663,6 @@
         "user"
       ],
       [
-        "add_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "browse_customer",
-        "webapp",
-        "customer"
-      ],
-      [
-        "change_customer",
-        "webapp",
-        "customer"
-      ],
-      [
         "access_to_pws_users",
         "webapp",
         "employee"
@@ -963,7 +928,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-04-08T16:02:35Z",
+    "last_login": "2015-04-30T08:14:19Z",
     "groups": [],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",

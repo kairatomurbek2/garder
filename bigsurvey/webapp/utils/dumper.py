@@ -56,7 +56,6 @@ class Connector(object):
 class Preloader(Connector):    
     def preload(self):
         self._connect()
-        self._preload_customers()
         self._preload_pws()
         self._preload_sites()
         self._preload_surveys()
@@ -67,24 +66,6 @@ class Preloader(Connector):
     def _execute_list(self, sqls):
         for sql in sqls:
             self._execute(sql)
-
-    def _preload_customers(self):
-        print_header("PRELOADING CUSTOMERS")
-        sqls = (
-            "INSERT INTO ALL_CUSTOMERS ( CustomerName, AccountNumber, City, Code, Zip, Address1, Address2, State ) SELECT Services.CustomerName, Services.AccountNumber, Services.CustomerCity, Services.CustomerCode, Services.CustomerZip, Services.CustomerAddress1, Services.CustomerAddress2, Services.CustomerState FROM Services;",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.Address1 = [ALL_CUSTOMERS].[Address2] WHERE (ALL_CUSTOMERS.Address1='' or Address1 is Null);",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.Address2 = '' WHERE (ALL_CUSTOMERS.Address2=Address1);",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.CustomerName = Replace(CustomerName,'\"','''') WHERE (((ALL_CUSTOMERS.CustomerName) Like '%\"%'));",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.Address1 = Replace(Address1,'\\','/') WHERE (((ALL_CUSTOMERS.Address1) Like '%\\%'));",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.CustomerName = Replace(CustomerName,'\\','/') WHERE (((ALL_CUSTOMERS.CustomerName) Like '%\\%'));",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.Code = '200' WHERE (Code='13025');",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.State = '227' WHERE ([ALL_CUSTOMERS].[State] is null);",
-            "UPDATE ALL_CUSTOMERS, Pvals SET ALL_CUSTOMERS.Code = [Pvals].[Pval] WHERE ([Pvals].[Pval_ID]=Int([ALL_CUSTOMERS].[Code]));",
-            "UPDATE ALL_CUSTOMERS, Pvals SET ALL_CUSTOMERS.State = [Pvals].[Pval] WHERE ([Pvals].[Pval_ID]=Int([ALL_CUSTOMERS].[State]));",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.Address1 = 'No address available' WHERE (([Address1]='' Or [Address1] Is Null));",
-            "UPDATE ALL_CUSTOMERS SET ALL_CUSTOMERS.Zip = '123456789' WHERE (([Zip]='' Or [Zip] Is Null));",
-        )
-        self._execute_list(sqls)
     
     def _preload_pws(self):
         print "======== PRELOADING PWS ========"
@@ -97,21 +78,30 @@ class Preloader(Connector):
     def _preload_sites(self):
         print "======== PRELOADING SITES ========"
         sqls = (
-            "INSERT INTO ALL_SITES ( Customer, PWS, address1, address2, apt, city, state, zip, Route, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading, potable, fire, irrigation, is_due_install, is_backflow ) SELECT ALL_CUSTOMERS.ID, ALL_PWS.ID, Services.ServiceStreetAddress, Services.ServiceStreetNumber, Services.SiteApt, Services.ServiceTown, Services.Service_State, Services.ServiceZip, Services.Route, Services.SiteUse, Services.SiteType, Services.NumberofFloors, Services.InterconnectionPoint, Services.MeterNumber, Services.MeterSize, Services.MeterReading, Services.PotablePresent, Services.FirePresent, Services.IrrigationPresent, Services.IsDueInstall, Services.IsBackflow FROM ALL_PWS INNER JOIN (ALL_CUSTOMERS INNER JOIN Services ON ALL_CUSTOMERS.AccountNumber = Services.AccountNumber) ON ALL_PWS.Number = Services.PWSID;",
+            "INSERT INTO ALL_SITES ( PWS, address1, address2, apt, city, state, zip, Route, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading, potable, fire, irrigation, is_due_install, is_backflow, CustomerName, AccountNumber, CustCity, Code, CustZip, CustAddress1, CustAddress2, CustState ) SELECT ALL_PWS.ID, Services.ServiceStreetAddress, Services.ServiceStreetNumber, Services.SiteApt, Services.ServiceTown, Services.Service_State, Services.ServiceZip, Services.Route, Services.SiteUse, Services.SiteType, Services.NumberofFloors, Services.InterconnectionPoint, Services.MeterNumber, Services.MeterSize, Services.MeterReading, Services.PotablePresent, Services.FirePresent, Services.IrrigationPresent, Services.IsDueInstall, Services.IsBackflow, Services.CustomerName, Services.AccountNumber, Services.CustomerCity, Services.CustomerCode, Services.CustomerZip, Services.CustomerAddress1, Services.CustomerAddress2, Services.CustomerState FROM ALL_PWS INNER JOIN Services ON ALL_PWS.Number = Services.PWSID;",
             "UPDATE ALL_SITES, Pvals SET ALL_SITES.state = [Pval] WHERE (([Pval_ID]=Int([state])));",
             "UPDATE ALL_SITES, Pvals SET ALL_SITES.site_use = [Pval] WHERE (((Pvals.[Pval_ID])=Int([site_use])));",
             "UPDATE ALL_SITES, Pvals SET ALL_SITES.site_type = [Pval] WHERE (((Pvals.[Pval_ID])=Int([site_type])));",
             "UPDATE ALL_SITES, Pvals SET ALL_SITES.floors = [Pval] WHERE (((Pvals.[Pval_ID])=Int([ALL_SITES].[floors])));",
             "UPDATE ALL_SITES SET ALL_SITES.meter_number = 'N/M' WHERE (((ALL_SITES.meter_number)='N\\M'));",
             "UPDATE ALL_SITES SET ALL_SITES.meter_size = Replace([meter_size],'\"','''''') WHERE (((ALL_SITES.meter_size) Like '%\"%'));",
-            "UPDATE ALL_SITES SET ALL_SITES.city = 'LA PLACE' WHERE ((ALL_SITES.city is null or ALL_SITES.city=''));",
+            "UPDATE ALL_SITES SET ALL_SITES.city = 'Unknown' WHERE ((ALL_SITES.city is null or ALL_SITES.city=''));",
+			"UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = [ALL_SITES].[CustAddress2] WHERE (ALL_SITES.CustAddress1='' or CustAddress1 is Null);",
+            "UPDATE ALL_SITES SET ALL_SITES.CustAddress2 = '' WHERE (ALL_SITES.CustAddress2=CustAddress1);",
+            "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\"','''') WHERE (((ALL_SITES.CustomerName) Like '%\"%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = Replace(CustAddress1,'\\','/') WHERE (((ALL_SITES.CustAddress1) Like '%\\%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\\','/') WHERE (((ALL_SITES.CustomerName) Like '%\\%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.Code = '200' WHERE (Code='13025');",
+            "UPDATE ALL_SITES, Pvals SET ALL_SITES.Code = [Pvals].[Pval] WHERE ([Pvals].[Pval_ID]=Int([ALL_SITES].[Code]));",
+            "UPDATE ALL_SITES, Pvals SET ALL_SITES.CustState = [Pvals].[Pval] WHERE ([Pvals].[Pval_ID]=Int([ALL_SITES].[CustState]));",
+            "UPDATE ALL_SITES SET ALL_SITES.meter_reading = 0 WHERE (meter_reading='' or meter_reading is null);",
         )
         self._execute_list(sqls)
 
     def _preload_surveys(self):
         print "======== PRELOADING SURVEYS ========"
         sqls = (
-            "INSERT INTO ALL_SURVEYS ( site, service_type, Surveyor, survey_date, Metered, pump_present, additives_present, cc_present, Protected, aux_water, detector_manufacturer, detector_model, detector_serial, Notes, Special, old_id ) SELECT ALL_SITES.ID, Surveys.Type, LCase([Surveyor]) AS LS, Surveys.SurveyDate, IIf(LCase([Metered])='yes',-1,0) AS mtr, IIf(LCase([PumpPresent])='yes',-1,0) AS pmp, IIf(LCase([Additives])='yes',-1,0) AS adt, IIf(LCase([CCPresent])='yes',-1,0) AS ccp, IIf(LCase([Protected])='yes',-1,0) AS prt, IIf(LCase([AuxWater])='yes',-1,0) AS auw, Surveys.DetectorManufacturer, Surveys.DetectorModelNo, Surveys.DetectorSerialNo, Surveys.Notes, Surveys.Special, Surveys.SurveyID FROM ALL_CUSTOMERS, Surveys, ALL_SITES WHERE ((Int([Customer])=[ALL_CUSTOMERS].[ID] And [ALL_CUSTOMERS].[AccountNumber]=[Surveys].[AccountNumber]));",
+            "INSERT INTO ALL_SURVEYS ( site, service_type, Surveyor, survey_date, Metered, pump_present, additives_present, cc_present, Protected, aux_water, detector_manufacturer, detector_model, detector_serial, Notes, Special, old_id ) SELECT ALL_SITES.ID, Surveys.Type, LCase([Surveyor]) AS LS, Surveys.SurveyDate, IIf(LCase([Metered])='yes',-1,0) AS mtr, IIf(LCase([PumpPresent])='yes',-1,0) AS pmp, IIf(LCase([Additives])='yes',-1,0) AS adt, IIf(LCase([CCPresent])='yes',-1,0) AS ccp, IIf(LCase([Protected])='yes',-1,0) AS prt, IIf(LCase([AuxWater])='yes',-1,0) AS auw, Surveys.DetectorManufacturer, Surveys.DetectorModelNo, Surveys.DetectorSerialNo, Surveys.Notes, Surveys.Special, Surveys.SurveyID FROM Surveys, ALL_SITES WHERE ([ALL_SITES].[AccountNumber]=[Surveys].[AccountNumber]);",
             "UPDATE ALL_SURVEYS, Pvals SET ALL_SURVEYS.service_type = [Pval] WHERE (((Pvals.[Pval_ID])=Int([service_type])));",
             "UPDATE ALL_SURVEYS, Pvals SET ALL_SURVEYS.detector_manufacturer = [Pval] WHERE (((Pvals.[Pval_ID])=Int([detector_manufacturer])));",
             "UPDATE ALL_SURVEYS, Pvals SET ALL_SURVEYS.special = [Pval] WHERE (((Pvals.[Pval_ID])=Int([special])));",
@@ -145,7 +135,7 @@ class Preloader(Connector):
     def _preload_letters(self):
         print "======== PRELOADING LETTERS ========"
         sqls = (
-            "INSERT INTO ALL_LETTERS ( LetterDate, Site ) SELECT Letters.LetterDate, ALL_SITES.ID FROM ALL_SITES, Letters, ALL_CUSTOMERS WHERE (((Letters.AccountNumber)=[ALL_CUSTOMERS].[AccountNumber] and Int(ALL_SITES.Customer)=ALL_CUSTOMERS.ID));",
+            "INSERT INTO ALL_LETTERS ( LetterDate, Site ) SELECT Letters.LetterDate, ALL_SITES.ID FROM ALL_SITES, Letters WHERE ([Letters].[AccountNumber]=[ALL_SITES].[AccountNumber]);",
         )
         self._execute_list(sqls)
 
@@ -154,8 +144,7 @@ class Formatter(Connector):
     CREATE_TABLE_PATTERN = "create table %s (ID autoincrement(1, 1) constraint %s_pk primary key, %s);"
     FIELD_PATTERN = "[%s] %s %s"
     TABLES = {
-        "customers": ("ALL_CUSTOMERS", ["CustomerName", "AccountNumber", "City", "Code", "Zip", "Address1", "Address2", "State"]),
-        "sites": ("ALL_SITES", ["Customer", "PWS", ("connect_date", "date"), "address1", "address2", "apt", "city", "state", "zip", "site_use", "site_type", "floors", "ic_point", ("potable", "yesno"), ("fire", "yesno"), ("irrigation", "yesno"), ("is_due_install", "yesno"), ("is_backflow", "yesno"), "route", "meter_number", "meter_size", "meter_reading"]),
+        "sites": ("ALL_SITES", ["Customer", "PWS", ("connect_date", "date"), "address1", "address2", "apt", "city", "state", "zip", "site_use", "site_type", "floors", "ic_point", ("potable", "yesno"), ("fire", "yesno"), ("irrigation", "yesno"), ("is_due_install", "yesno"), ("is_backflow", "yesno"), "route", "meter_number", "meter_size", "meter_reading", "CustomerName", "AccountNumber", "CustCity", "Code", "CustZip", "CustAddress1", "CustAddress2", "CustState"]),
         "pws": ("ALL_PWS", ["Number", "Name", "City", "WaterSource"]),
         "letters": ("ALL_LETTERS", ["Site", ("LetterDate", "date")]),
         "surveys": ("ALL_SURVEYS", ["site", "service_type", ("survey_date", "date"), "survey_type", "surveyor", ("metered", "yesno"), ("pump_present", "yesno"), ("additives_present", "yesno"), ("cc_present", "yesno"), ("protected", "yesno"), ("aux_water", "yesno"), "detector_manufacturer", "detector_model", "special", "detector_serial", "notes", "old_id"]),
@@ -263,23 +252,20 @@ class Jsoner(object):
 
 class Dumper(Connector):
     TEMPLATES = {
-        'site': BASE_TEMPLATE % ('{"status":1,"customer":%s,"pws":%s,"connect_date":null,"address1":"%s","address2":"","apt":"%s","city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,"meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,"is_due_install":%s,"is_backflow":%s,"next_survey_date":null,"notes":""}', '"webapp.site"', '%s'),
-        'customer': BASE_TEMPLATE % ('{"number":"%s","name":"%s","code":%s,"address1":"%s","address2":"%s","city":"%s","state":"%s","zip":"%s","phone":"","fax":"","email":"","notes":""}', '"webapp.customer"', '%s'),
+        'site': BASE_TEMPLATE % ('{"status":1,"pws":%s,"connect_date":null,"address1":"%s","street_number":"%s","address2":"","apt":"%s","city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,"meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,"is_due_install":%s,"is_backflow":%s,"next_survey_date":null,"cust_number":"%s","cust_name":"%s","cust_code":%s,"cust_address1":"%s","cust_address2":"%s","cust_city":"%s","cust_state":"%s","cust_zip":"%s","contact_phone":"","contact_fax":"","contact_email":"","notes":""}', '"webapp.site"', '%s'),
         'survey': BASE_TEMPLATE % ('{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}', '"webapp.survey"', '%s'),
         'hazard': BASE_TEMPLATE % ('{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,"assembly_status":%s,"installed_properly":%s,"installer":null,"install_date":null,"replace_date":null,"orientation":%s,"bp_type_present":%s,"bp_type_required":%s,"bp_size":%s,"manufacturer":%s,"model_no":"%s","serial_no":"%s","due_install_test_date":null,"is_present":true,"notes":""}', '"webapp.hazard"', '%s'),
         'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
         'letter': BASE_TEMPLATE % ('{"site":%s,"letter_type":1,"date":"%s","user":2}', '"webapp.letter"', '%s'),
     }
     SQL_STRS = {
-        'dump_sites':'select Customer, PWS, address1, apt, city, state, zip, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading, route, potable, fire, irrigation, is_due_install, is_backflow, ID from ALL_SITES',
-        'dump_customers':'select AccountNumber, CustomerName, Code, Address1, Address2, City, State, Zip, ID from ALL_CUSTOMERS',
+        'dump_sites':'select PWS, address1, address2, apt, city, state, zip, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading, route, potable, fire, irrigation, is_due_install, is_backflow, AccountNumber, CustomerName, Code, CustAddress1, CustAddress2, CustCity, CustState, CustZip, ID from ALL_SITES',
         'dump_surveys':'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, \'hph\', ID from ALL_SURVEYS',
         'dump_pwss':'select Number, Name, WaterSource, ID from ALL_PWS',
         'dump_hazards':'select site, service_type, hazard_type, assembly_location, assembly_status, installed_properly, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, ID from ALL_HAZARDS',
         'dump_letters':'select site, letterdate, ID from ALL_LETTERS',
     }
     DATA_TYPES = [
-        'customer',
         'pws',
         'site',
         'survey',
@@ -290,8 +276,8 @@ class Dumper(Connector):
         'site': [(7, "webapp.siteuse"),
                  (8, "webapp.sitetype"),
                  (9, "webapp.floorscount"),
-                 (10, "webapp.icpointtype")],
-        'customer': [(2, "webapp.customercode"),],
+                 (10, "webapp.icpointtype"),
+	         (22, "webapp.customercode")],
         'survey': [(1, "webapp.servicetype"),
                    (3, "auth.user"),
                    (13, "webapp.special")],
