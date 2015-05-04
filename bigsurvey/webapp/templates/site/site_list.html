@@ -88,9 +88,6 @@
                 <th>
                     {% trans "Last Survey Date" %}
                 </th>
-                <th class="uk-text-center table-border-left">
-                    {% trans "Actions" %}
-                </th>
             </tr>
             </thead>
             <tbody>
@@ -167,11 +164,6 @@
                     </td>
                     <td>
                         {{ site.last_survey_date }}
-                    </td>
-                    <td class="uk-text-center table-border-left">
-                        <a href="{% url 'webapp:site_detail' site.pk %}" id="site_{{ site.pk }}_detail_link">
-                            {% trans "Detail" %}
-                        </a>
                     </td>
                 </tr>
             {% endfor %}
