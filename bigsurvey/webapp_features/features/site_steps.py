@@ -26,7 +26,8 @@ def directly_open_site_detail_page(step, pk):
 @step('I open "site_detail" page with pk "(\d+)"')
 def open_site_detail_page(step, pk):
     step.given('I open "site_list" page')
-    step.given('I click "site_%s_detail" link' % pk)
+    helper.find(Xpath.Pattern.site_detail_link % pk).click()
+    #step.given('I click "site_%s_detail" link' % pk)
 
 
 @step('I directly open "site_add" page')

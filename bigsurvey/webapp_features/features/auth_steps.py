@@ -50,6 +50,11 @@ def check_home_page(step):
     step.given('I should be at "%s"' % get_url(Urls.home))
 
 
+@step('I should be at "tester home" page')
+def check_tester_home_page(step):
+    step.given('I should be at "%s"' % get_url(Urls.tester_home))
+
+
 @step('I should be at "login" page')
 def check_login_page(step):
     step.given('I should be at "%s"' % get_url(Urls.login))

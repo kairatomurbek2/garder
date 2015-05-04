@@ -44,18 +44,3 @@ Feature: Site list
       | Houston     |
       | Washington  |
       | First Site  |
-
-  Scenario: Tester is opening site list page
-    Given I logged in as "tester"
-    When I open "site_list" page
-    Then I should see following
-      | text       |
-      | Ancoridge  |
-      | Seattle    |
-    And I should not see following
-      | text        |
-      | Second Site |
-      | Boston      |
-      | Houston     |
-      | Washington  |
-      | First Site  |

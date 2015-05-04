@@ -15,8 +15,6 @@ Feature: Site detail
     | admin    | 4  | not see  |
     | surveyor | 3  | see      |
     | surveyor | 4  | not see  |
-    | tester   | 3  | see      |
-    | tester   | 9  | not see  |
 
 
   Scenario: Root is opening site detail page
@@ -86,8 +84,11 @@ Feature: Site detail
 
   Scenario: Tester is opening site detail page
     Given I logged in as "tester"
-    When I open "site_detail" page with pk "10"
-    Then I should see following
+    When I select "North USA PWS" from "pws"
+    And I fill in "cust_number" with "VALVE"
+    And I submit "tester-site-search" form
+    Then I should be at "site_detail" page with pk "10"
+    And I should see following
       | text        |
       | Gabe Newell |
       | Hazards     |

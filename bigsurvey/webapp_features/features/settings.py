@@ -1,6 +1,8 @@
 from main.parameters import Messages
 
 
+Messages = Messages
+
 BASE_URL = 'http://127.0.0.1:8000'
 
 
@@ -10,6 +12,7 @@ def get_url(url):
 
 class Urls:
     home = '/'
+    tester_home = '/tester-home/'
     login = '/accounts/login/'
     logout = '/accounts/logout/'
     site_list = '/'
@@ -91,6 +94,7 @@ class Xpath:
         link = './/a[@id="%s_link"]'
         pagination_link = './/a[@data-action="pagination"][@data-id="%s"]'
         survey_detail = '//div[@id="spotable_content"]//table/tbody/tr[%s]//a'
+        site_detail_link = './/tr[@class="clickable-row"][@data-id="%s"]'
         survey_edit_link = '//*[@class="uk-navbar-flip"]//a[1]'
         site_hazards_button = '//a[@id="hazards_button"]'
         site_surveys_button = '//a[@id="surveys_button"]'

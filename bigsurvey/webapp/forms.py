@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 import models
-from main.parameters import Groups
+from main.parameters import Groups, Messages
 
 
 class PWSForm(forms.ModelForm):
@@ -124,3 +125,17 @@ class LetterSendForm(forms.ModelForm):
     class Meta:
         model = models.Letter
         exclude = ('user',)
+
+
+class TesterSiteSearchForm(forms.Form):
+    pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), required=False)
+    cust_number = forms.CharField(label=_('Customer Number'), required=False)
+
+    site = None
+
+    def clean(self):
+        try:
+            self.site = models.Site.objects.get(pws=self.cleaned_data['pws'], cust_number=self.cleaned_data['cust_number'])
+        except models.Site.DoesNotExist:
+            raise ValidationError(Messages.Site.not_found)
+        return super(TesterSiteSearchForm, self).clean()

@@ -92,7 +92,7 @@
             </thead>
             <tbody>
             {% for site in filtered_sites %}
-                <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}">
+                <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}" data-id="{{ site.pk }}">
                     <td>
                         {{ site.pws.number }}
                     </td>

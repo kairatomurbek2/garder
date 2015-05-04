@@ -412,6 +412,7 @@ class Site(models.Model):
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),
             ('access_to_pws_sites', _('Has access to PWS\'s Sites')),
+            ('access_to_site_by_customer_account', _('Has access to Site through Customer Account')),
             ('access_to_import', _('Can import Sites from Excel file')),
             ('access_to_batch_update', _('Has access to batch update')),
             ('change_all_info_about_site', _('Can change all information about Site')),

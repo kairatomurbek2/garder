@@ -76,6 +76,7 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('Site was successfully updated')
         editing_error = _('Error while submitting form')
+        not_found = _('Site was not found')
 
     class BatchUpdate:
         success = _('Batch update successfully performed')

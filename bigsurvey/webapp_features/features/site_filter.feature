@@ -34,19 +34,6 @@ Feature: Filtration
       | Los Angeles |
 
 
-  Scenario: Filtration by site_type field while logged in as tester
-    Given I logged in as "tester"
-    And I open "site_list" page
-    When I select "Offices" from "site_type"
-    And I submit "site_filter" form
-    Then I should see following
-      | text    |
-      | Seattle |
-    And I should not see following
-      | text    |
-      | Chikago |
-
-
   Scenario: Filtration by site use and type while logged in as root
     Given I logged in as "root"
     And I open "site_list" page

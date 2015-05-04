@@ -4,6 +4,7 @@ from webapp import views
 urlpatterns = patterns(
     '',
     url(r'^$', views.HomeView.as_view(), name="home"),
+    url(r'^tester-home/$', views.TesterHomeView.as_view(), name="tester-home"),
     url(r'^site/add/$', views.SiteAddView.as_view(), name="site_add"),
     url(r'^site/(?P<pk>\d+)/$', views.SiteDetailView.as_view(), name="site_detail"),
     url(r'^site/(?P<pk>\d+)/edit/$', views.SiteEditView.as_view(), name="site_edit"),
