@@ -61,7 +61,7 @@ tr.bottom-half {
 }
 
 .fixed-filters {
-    top: 56px;
+    top: 60px;
     left: 0;
     width: 20%;
     height: 100%;
@@ -77,4 +77,19 @@ tr.bottom-half {
 
 .color-coding {
     color: #6c0015;
+}
+
+.fixed-navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000000;
+}
+
+.navbar-hack {
+    width: 100%;
+    height: 40px;
+}
+
+.pagination-wrapper {
+    width: 100%;
 }

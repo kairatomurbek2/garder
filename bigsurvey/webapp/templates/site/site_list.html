@@ -11,7 +11,8 @@
         {% include 'site/site_filters.html' %}
     </div>
     <div class="wrapper uk-width-4-5">
-        {% paginate %}
+        <div class="pagination-wrapper">{% paginate %}</div>
+
         <table class="uk-table big-table uk-table-hover fixed-headers">
             <thead>
             <tr class="table-border-bottom">
@@ -176,7 +177,7 @@
             {% endfor %}
             </tbody>
         </table>
-        {% paginate %}
+        <div class="pagination-wrapper">{% paginate %}</div>
     </div>
 </div>
 <style>
@@ -185,19 +186,45 @@
     }
 </style>
 <script>
-
     $('.clickable-row').click(function (e) {
         window.document.location = $(this).data("href");
     });
+
     $('.fixed-headers').floatThead();
+
     var filters = $('.fixed-filters');
-    var topCss = parseInt(filters.css('top'));
+    var navbar = $('nav.uk-navbar');
+    var navbarHeight = parseInt(navbar.height());
+    var navbarWidth = parseInt(navbar.width());
+    var paginationWrapper = $('.pagination-wrapper');
+
+    var defaultTop = parseInt(filters.css('top'));
+    var lastScrollLeft = 0;
+    var documentScrollLeft;
+
     $(document).scroll(function (e) {
-        var offsetTop = filters.offset().top;
-        if (offsetTop > topCss) {
-            filters.css('top', 0);
-        } else {
-            filters.css('top', topCss + 'px');
+        setFiltersOffset();
+        documentScrollLeft = $(document).scrollLeft();
+        if (lastScrollLeft != documentScrollLeft) {
+            scrollPagination();
+            lastScrollLeft = documentScrollLeft;
         }
     });
+
+    function scrollPagination() {
+        paginationWrapper.css('margin-left', documentScrollLeft + 'px');
+    }
+
+
+    function setFiltersOffset() {
+        var offsetTop = filters.offset().top;
+        if (offsetTop > defaultTop + navbarHeight) {
+            filters.css('top', 0);
+            navbar.hide();
+        } else {
+            filters.css('top', defaultTop + 'px');
+            navbar.show();
+        }
+    }
+
 </script>

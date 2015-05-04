@@ -24,7 +24,7 @@
     {% endblock %}
 </head>
 <body>
-<nav class="uk-navbar">
+<nav class="uk-navbar fixed-navbar">
     <ul class="uk-navbar-nav">
         <li>
             <a href="{% url 'webapp:home' %}">
@@ -96,6 +96,7 @@
         </ul>
     </div>
 </nav>
+<div class="navbar-hack"></div>
 {% block content %}
 {% endblock %}
 </body>
