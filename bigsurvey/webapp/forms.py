@@ -121,10 +121,12 @@ class BatchUpdateForm(forms.Form):
     date = forms.DateField(label=_('Select date'))
 
 
-class LetterSendForm(forms.ModelForm):
+class LetterForm(forms.ModelForm):
+    hazard = forms.ModelChoiceField(models.Hazard.objects.all(), empty_label=None, required=True)
+
     class Meta:
         model = models.Letter
-        exclude = ('user',)
+        fields = ('letter_type', 'hazard')
 
 
 class TesterSiteSearchForm(forms.Form):

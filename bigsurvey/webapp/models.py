@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from main.parameters import *
 from django.contrib.auth.models import User, Group
+from ckeditor.fields import RichTextField
 
 
 class SourceType(models.Model):
@@ -216,7 +217,7 @@ class AssemblyStatus(models.Model):
 
 class LetterType(models.Model):
     letter_type = models.CharField(max_length=20, verbose_name=_("Letter Type"))
-    template = models.TextField(max_length=2000, blank=True, null=True, verbose_name=_('Letter Template'))
+    template = RichTextField(blank=True, null=True, verbose_name=_('Letter Template'))
 
     def __unicode__(self):
         return u"%s" % self.letter_type
@@ -450,7 +451,7 @@ class Hazard(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.hazard_type, self.location1)
+        return u"%s, %s" % (self.hazard_type, self.service_type)
 
     class Meta:
         verbose_name = _("Hazard")
@@ -545,9 +546,11 @@ class Test(models.Model):
 
 class Letter(models.Model):
     site = models.ForeignKey(Site, blank=True, null=True, verbose_name=_("Site"), related_name="letters")
+    hazard = models.ForeignKey(Hazard, blank=True, null=True, verbose_name=_("Hazard"), related_name="letters")
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
     date = models.DateField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
+    rendered_body = models.TextField(null=True, blank=True, verbose_name=_("Letter Content"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.date, self.letter_type)
@@ -583,7 +586,7 @@ class Licence(models.Model):
 class StaticText(models.Model):
     title = models.CharField(max_length=20, verbose_name=_('Title'))
     group = models.ForeignKey(Group, blank=True, null=True, verbose_name=_('Group'), related_name="static_texts")
-    text = models.TextField(null=True, blank=True, verbose_name=_('Text'))
+    text = RichTextField(null=True, blank=True, verbose_name=_('Text'))
 
     def __unicode__(self):
         return u"%s" % self.title

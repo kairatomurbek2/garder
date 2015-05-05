@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% block menu %}
+    <li><a href="{% url 'webapp:home' %}" id="return_to_site_link">{% trans "Cancel" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <form class="uk-form" method="post" name="letter_generate_form">
+            {% csrf_token %}
+            <table class="uk-table uk-table-hover table-fixed">
+                <thead>
+                    <tr class="table-border-bottom">
+                        <th class="uk-text-bold uk-text-center" colspan="4">
+                            {% trans "Site" %}: {{ site }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="uk-text-right uk-text-bold">{% trans "Letter Type" %}:</td>
+                        <td class="uk-text-left">{{ form.letter_type }}</td>
+                        <td class="uk-text-right uk-text-bold">{% trans "Hazard" %}:</td>
+                        <td class="uk-text-left">{{ form.hazard }}</td>
+                    </tr>
+                    <tr class="table-border-bottom">
+                        <td colspan="2" class="uk-text-center">
+                            {{ form.letter_type.errors }}
+                        </td>
+                        <td colspan="2" class="uk-text-center">
+                            {{ form.hazard.errors }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit" name="submit_letter" class="uk-align-center">{% trans "Generate Letter" %}</button>
+        </form>
+    </div>
+{% endblock %}

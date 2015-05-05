@@ -7,6 +7,9 @@
     {% if perms.webapp.change_site %}
         <li><a href="{% url 'webapp:site_edit' site.pk %}" id="site_{{ site.pk }}_edit_link">{% trans "Edit" %}</a></li>
     {% endif %}
+    {% if perms.webapp.send_letter %}
+        <li><a href="{% url 'webapp:letter_add' site.pk %}" id="site_{{ site.pk }}_letter_link">{% trans "New Letter" %}</a></li>
+    {% endif %}
     <li><a href="{% url "webapp:home" %}">{% trans "Site List" %}</a></li>
 {% endblock %}
 {% block content %}

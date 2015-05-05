@@ -1,11 +1,19 @@
-{% include "letter/send_templates/pool.html" %}
-<hr/>
-{% include "letter/send_templates/air_gap.html" %}
-<hr/>
-{% include "letter/send_templates/due_install_first.html" %}
-<hr/>
-{% include "letter/send_templates/due_install_second.html" %}
-<hr/>
-{% include "letter/send_templates/annual_test_first.html" %}
-<hr/>
-{% include "letter/send_templates/annual_test_second.html" %}
+{% extends "base.html" %}
+{% load i18n %}
+{% block menu %}
+    <li><a href="{% url "webapp:letter_edit" letter.pk %}">{% trans "Edit" %}</a></li>
+    <li><a href="{% url "webapp:letter_pdf" letter.pk %}">{% trans "Get PDF" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div id="letter_detail" class="wrapper">
+    {% include 'messages.html' %}
+    <div class="wrapper uk-width-4-5 uk-align-center">
+        <form method="post" class="uk-form uk-align-right">
+            <label for="send_from">{% trans "From" %}: </label>
+            <input type="text" name="send_from" id="send_from" value="{{ letter.user.email }}"/>
+            <button type="submit" name="send" class="uk-button uk-button-primary">{% trans "Send" %}</button>
+        </form>
+        {{ letter.rendered_body|safe }}
+    </div>
+    </div>
+{% endblock %}

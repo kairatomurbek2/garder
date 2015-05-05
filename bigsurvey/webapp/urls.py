@@ -8,7 +8,7 @@ urlpatterns = patterns(
     url(r'^site/add/$', views.SiteAddView.as_view(), name="site_add"),
     url(r'^site/(?P<pk>\d+)/$', views.SiteDetailView.as_view(), name="site_detail"),
     url(r'^site/(?P<pk>\d+)/edit/$', views.SiteEditView.as_view(), name="site_edit"),
-    url(r'^site/(?P<pk>\d+)/send-letter/$', views.LetterSendView.as_view(), name="letter_send"),
+    url(r'^site/(?P<pk>\d+)/add-letter/$', views.LetterAddView.as_view(), name="letter_add"),
     url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/add-survey/$', views.SurveyAddView.as_view(), name="survey_add"),
     url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/add-hazard/$', views.HazardAddView.as_view(), name="hazard_add"),
 
@@ -29,6 +29,8 @@ urlpatterns = patterns(
 
     url(r'^letter/$', views.LetterListView.as_view(), name="letter_list"),
     url(r'^letter/(?P<pk>\d+)/$', views.LetterDetailView.as_view(), name="letter_detail"),
+    url(r'^letter/(?P<pk>\d+)/edit/$', views.LetterEditView.as_view(), name="letter_edit"),
+    url(r'^letter/(?P<pk>\d+)/pdf/$', views.LetterPDFView.as_view(), name="letter_pdf"),
 
     url(r'^pws/$', views.PWSListView.as_view(), name="pws_list"),
     url(r'^pws/add/$', views.PWSAddView.as_view(), name="pws_add"),

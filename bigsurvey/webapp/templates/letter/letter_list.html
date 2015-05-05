@@ -13,12 +13,15 @@
             <thead>
             <tr class="table-border-bottom">
                 <th class="table-border-right uk-text-center">{% trans "No." %}</th>
-                <th>{% trans " Customer Account" %}</th>
-                <th>{% trans "Sender" %}</th>
+                <th>{% trans "Customer Account" %}</th>
+                <th>{% trans "Customer Name" %}</th>
+                <th>{% trans "Customer Email" %}</th>
                 <th>{% trans "Hazard" %}</th>
                 <th>{% trans "Type" %}</th>
+                <th>{% trans "Created By" %}</th>
+                <th>{% trans "Send From" %}</th>
                 <th>{% trans "Date" %}</th>
-                <th class="uk-text-center table-border-left">{% trans "Actions" %}</th>
+                <th colspan="2" class="uk-text-center table-border-left">{% trans "Actions" %}</th>
             </tr>
             </thead>
             <tbody>
@@ -30,15 +33,21 @@
                             {{ letter.site.cust_number }}
                         </a>
                     </td>
-                    <td>{{ letter.user.username }}</td>
-                    <td>{% if letter.hazard %}
-                        {{ letter.hazard }}
-                    {% endif %}</td>
+                    <td>{{ letter.site.cust_name }}</td>
+                    <td>{{ letter.site.contact_email }}</td>
+                    <td>{{ letter.hazard }}</td>
                     <td>{{ letter.letter_type }}</td>
+                    <td>{{ letter.user.username }}</td>
+                    <td>{{ letter.user.email }}</td>
                     <td>{{ letter.date }}</td>
                     <td class="uk-text-center table-border-left">
                         <a id="letter_{{ letter.pk }}_detail_link" href="{% url 'webapp:letter_detail' letter.pk %}">
                             {% trans "Show" %}
+                        </a>
+                    </td>
+                    <td>
+                        <a id="letter_{{ letter.pk }}_pdf_link" href="{% url 'webapp:letter_pdf' letter.pk %}">
+                            {% trans "PDF" %}
                         </a>
                     </td>
                 </tr>

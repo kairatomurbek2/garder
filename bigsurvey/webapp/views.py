@@ -1,14 +1,17 @@
 from collections import OrderedDict
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView
+from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from webapp import mixins, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
 from django.contrib.auth.models import User
+from django.template import Template, Context
+from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm
 
 
@@ -644,19 +647,73 @@ class LetterListView(BaseTemplateView):
         return context
 
 
-class LetterSendView(BaseFormView):
-    template_name = "letter_send.html"
-    form_class = forms.LetterSendForm
-    permission = 'webapp.send_letter'
+class LetterBaseFormView(BaseFormView):
+    template_name = "letter/letter_form.html"
+    form_class = forms.LetterForm
+    model = models.Letter
+
+    def get_success_url(self):
+        return reverse("webapp:letter_detail", args=(self.object.pk,))
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        response = super(LetterBaseFormView, self).form_valid(form)
+        self.object.rendered_body = LetterRenderer.render(self.object)
+        self.object.save()
+        return response
+
+
+class LetterAddView(LetterBaseFormView, CreateView):
+    permission = "webapp.letter_send"
+    success_message = Messages.Letter.adding_success
+    error_message = Messages.Letter.adding_error
+
+    def get_form(self, form_class):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form = super(LetterBaseFormView, self).get_form(form_class)
+        form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super(LetterAddView, self).get_context_data(**kwargs)
+        context['site'] = models.Site.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def form_valid(self, form):
+        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        return super(LetterAddView, self).form_valid(form)
+
+
+class LetterEditView(LetterBaseFormView, UpdateView):
+    permission = "webapp.letter_send"
+    success_message = Messages.Letter.editing_success
+    error_message = Messages.Letter.editing_error
+
+    def get_form(self, form_class):
+        form = super(LetterBaseFormView, self).get_form(form_class)
+        site = form.instance.site
+        form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super(LetterEditView, self).get_context_data(**kwargs)
+        context['site'] = context['form'].instance.site
+        return context
 
 
 class LetterDetailView(BaseTemplateView):
     template_name = "letter/letter_detail.html"
+    permission = 'webapp.send_letter'
 
     def get_context_data(self, **kwargs):
         context = super(LetterDetailView, self).get_context_data(**kwargs)
         context['letter'] = models.Letter.objects.get(pk=kwargs['pk'])
         return context
+
+
+class LetterPDFView(BaseTemplateView):
+    template_name = "letter/pdf.html"
+    permission = 'webapp.send_letter'
 
 
 class HelpView(BaseTemplateView):
