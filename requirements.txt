@@ -4,6 +4,7 @@ MySQL-python==1.2.5
 Pillow==2.7.0
 South==1.0.2
 argparse==1.2.1
+django-ckeditor==4.4.7
 django-extensions==1.4.9
 django-pagination==1.0.7
 django-filter==0.9.1
