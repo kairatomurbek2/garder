@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'widget_tweaks',
     'pagination',
-    'redactor',
+    'ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -111,8 +111,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 MEDIA_URL = '/uploads/'
 
-REDACTOR_OPTIONS = {'lang': 'en'}
-REDACTOR_UPLOAD = 'article'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Image', 'Table', '-', 'Link', 'Unlink'],
+            ['Undo', 'Redo'],
+            ['Source']
+        ]
+    }
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
 try:

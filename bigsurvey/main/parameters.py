@@ -123,3 +123,11 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('User was successfully updated')
         editing_error = _('Error while submitting form')
+
+    class Letter:
+        adding_success = _('Letter was successfully created')
+        adding_error = _('Error while submitting form')
+        editing_success = _('Letter was successfully updated')
+        editing_error = _('Error while submitting form')
+        send_success = _('Letter was successfully sent')
+        send_error = _('Error while sending letter')
