@@ -1,43 +1,55 @@
 {% extends 'base.html' %}
 {% load pagination_tags %}
 {% load i18n %}
-{% load staticfiles %}
+{% load boolean_yes_no %}
 {% block menu %}
 {% endblock %}
 {% block content %}
-    {% autopaginate letters 50 %}
-    {% paginate %}
-    <div class="wrapper">
+    {% autopaginate letter_filter.qs as filtered_letters 50 %}
+    <div class="uk-grid">
+    <div class="wrapper uk-width-1-5">
+        {% include "letter/letter_filters.html" %}
+    </div>
+    <div class="wrapper uk-width-4-5">
+        {% paginate %}
         {% include 'messages.html' %}
         <table class="uk-table uk-table-hover">
             <thead>
             <tr class="table-border-bottom">
                 <th class="table-border-right uk-text-center">{% trans "No." %}</th>
+                {% if perms.webapp.full_letter_access %}
+                    <th>{% trans "PWS" %}</th>
+                {% endif %}
                 <th>{% trans "Customer Account" %}</th>
-                <th>{% trans "Customer Name" %}</th>
                 <th>{% trans "Customer Email" %}</th>
-                <th>{% trans "Hazard" %}</th>
-                <th>{% trans "Type" %}</th>
+                <th>{% trans "Service Type" %}</th>
+                <th>{% trans "Hazard Type" %}</th>
+                <th>{% trans "Letter Type" %}</th>
                 <th>{% trans "Created By" %}</th>
+                <th>{% trans "Already Sent" %}</th>
                 <th>{% trans "Send From" %}</th>
                 <th>{% trans "Date" %}</th>
                 <th colspan="2" class="uk-text-center table-border-left">{% trans "Actions" %}</th>
             </tr>
             </thead>
             <tbody>
-            {% for letter in letters %}
+            {% for letter in filtered_letters %}
                 <tr>
                     <td class="table-border-right uk-text-center">{{ letter.pk }}</td>
+                    {% if perms.webapp.full_letter_access %}
+                        <td>{{ letter.site.pws.number }}</td>
+                    {% endif %}
                     <td>
                         <a href="{% url "webapp:site_detail" letter.site.pk %}">
                             {{ letter.site.cust_number }}
                         </a>
                     </td>
-                    <td>{{ letter.site.cust_name }}</td>
                     <td>{{ letter.site.contact_email }}</td>
-                    <td>{{ letter.hazard }}</td>
+                    <td>{{ letter.hazard.service_type }}</td>
+                    <td>{{ letter.hazard.hazard_type }}</td>
                     <td>{{ letter.letter_type }}</td>
                     <td>{{ letter.user.username }}</td>
+                    <td>{{ letter.already_sent|yn }}</td>
                     <td>{{ letter.user.email }}</td>
                     <td>{{ letter.date }}</td>
                     <td class="uk-text-center table-border-left">
@@ -54,6 +66,7 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
     {% paginate %}
+    </div>
+    </div>
 {% endblock %}

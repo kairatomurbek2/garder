@@ -21,7 +21,7 @@ class LetterRenderer(object):
         site = letter.site
         hazard = letter.hazard
         replacements = {
-            Placeholders.letter_date: unicode(letter.date),
+            Placeholders.letter_date: letter.date,
             Placeholders.site_address: site.address1,
             Placeholders.site_city: site.city,
             Placeholders.cust_name: site.cust_name,
@@ -30,13 +30,17 @@ class LetterRenderer(object):
             Placeholders.cust_state: site.cust_state,
             Placeholders.cust_zip: site.cust_zip,
             Placeholders.account_number: site.cust_number,
-            Placeholders.assembly_type: unicode(hazard.bp_type_required),
+            Placeholders.assembly_type: hazard.bp_type_required,
             Placeholders.contact_email: letter.user.email,
-            Placeholders.due_date: unicode(hazard.due_install_test_date),
+            Placeholders.due_date: hazard.due_install_test_date,
             Placeholders.pp_address: "Plumber Packet Address",
             Placeholders.pp_location: "Plumber Packet Location",
         }
         template = letter.letter_type.template
+        warnings = []
         for key in replacements.keys():
-            template = template.replace(key, replacements[key])
-        return template
+            replacement = replacements[key]
+            if replacement is None or replacement == "":
+                warnings.append("Warning: %s has no value in database" % key)
+            template = template.replace(key, unicode(replacement))
+        return template, warnings

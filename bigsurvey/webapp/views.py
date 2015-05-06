@@ -1,21 +1,31 @@
 from collections import OrderedDict
-from django.views.generic import TemplateView, CreateView, UpdateView, FormView
-from django.views.generic.base import TemplateResponseMixin
+from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
 from django.http import Http404, HttpResponseRedirect
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
-from webapp import mixins, models, forms, filters
+from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
 from django.contrib.auth.models import User
-from django.template import Template, Context
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
-class BaseView(mixins.PermissionRequiredMixin):
+class PermissionRequiredMixin(View):
+    permission = None
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        if self.permission and not self.request.user.has_perm(self.permission):
+            raise Http404
+        return super(PermissionRequiredMixin, self).dispatch(*args, **kwargs)
+
+
+class BaseView(PermissionRequiredMixin):
     pass
 
 
@@ -82,7 +92,7 @@ class SiteDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+        if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
         surveys_potable = site.surveys.filter(service_type__service_type=ServiceTypes.potable)
         surveys_fire = site.surveys.filter(service_type__service_type=ServiceTypes.fire)
@@ -136,7 +146,7 @@ class SiteEditView(SiteBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(SiteEditView, self).get_form(form_class)
-        if not mixins.SiteObjectMixin.has_perm(self.request, form.instance):
+        if not perm_checkers.SitePermChecker.has_perm(self.request, form.instance):
             raise Http404
         return form
 
@@ -232,7 +242,7 @@ class SurveyDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         survey = models.Survey.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SurveyObjectMixin.has_perm(self.request, survey):
+        if not perm_checkers.SurveyPermChecker.has_perm(self.request, survey):
             raise Http404
         context = super(SurveyDetailView, self).get_context_data(**kwargs)
         context['survey'] = survey
@@ -312,7 +322,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
 
     def _get_site(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+        if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
         return site
 
@@ -320,7 +330,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
 
     def get_form(self, form_class):
-        if not mixins.SiteObjectMixin.has_perm(self.request, self._get_site()):
+        if not perm_checkers.SitePermChecker.has_perm(self.request, self._get_site()):
             raise Http404
         if not self._service_type_on_site_exists():
             raise Http404
@@ -345,7 +355,7 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(SurveyEditView, self).get_form(form_class)
-        if not mixins.SurveyObjectMixin.has_perm(self.request, form.instance):
+        if not perm_checkers.SurveyPermChecker.has_perm(self.request, form.instance):
             raise Http404
         return form
 
@@ -376,7 +386,7 @@ class HazardDetailView(BaseTemplateView):
 
     def _get_hazard(self):
         hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        if not mixins.HazardObjectMixin.has_perm(self.request, hazard):
+        if not perm_checkers.HazardPermChecker.has_perm(self.request, hazard):
             raise Http404
         return hazard
 
@@ -407,7 +417,7 @@ class HazardAddView(HazardBaseFormView, CreateView):
 
     def get_form(self, form_class):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not mixins.SiteObjectMixin.has_perm(self.request, site):
+        if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
         if not self._service_type_on_site_exists():
             raise Http404
@@ -443,7 +453,7 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(HazardEditView, self).get_form(form_class)
-        if not mixins.HazardObjectMixin.has_perm(self.request, form.instance):
+        if not perm_checkers.HazardPermChecker.has_perm(self.request, form.instance):
             raise Http404
         form.fields['assembly_status'].queryset = self._get_queryset_for_assembly_status_field()
         return form
@@ -493,7 +503,7 @@ class TestAddView(TestBaseFormView, CreateView):
         return context
 
     def get_form(self, form_class):
-        if not mixins.HazardObjectMixin.has_perm(self.request, models.Hazard.objects.get(pk=self.kwargs['pk'])):
+        if not perm_checkers.HazardPermChecker.has_perm(self.request, models.Hazard.objects.get(pk=self.kwargs['pk'])):
             raise Http404
         return super(TestAddView, self).get_form(form_class)
 
@@ -514,7 +524,7 @@ class TestEditView(TestBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(TestEditView, self).get_form(form_class)
-        if not mixins.TestObjectMixin.has_perm(self.request, form.instance):
+        if not perm_checkers.TestPermChecker.has_perm(self.request, form.instance):
             raise Http404
         return form
 
@@ -624,19 +634,19 @@ class UserEditView(UserBaseFormView):
 
     def get(self, request, *args, **kwargs):
         response = super(UserEditView, self).get(request, *args, **kwargs)
-        if not mixins.UserObjectMixin.has_perm(self.request, self.user_object):
+        if not perm_checkers.UserPermChecker.has_perm(self.request, self.user_object):
             raise Http404
         return response
 
     def post(self, request, *args, **kwargs):
         user = self.user_model.objects.get(pk=self.kwargs['pk'])
-        if not mixins.UserObjectMixin.has_perm(self.request, user):
+        if not perm_checkers.UserPermChecker.has_perm(self.request, user):
             raise Http404
         return super(UserEditView, self).post(request, *args, **kwargs)
 
     def get_user_form(self):
         self.user_object = self.user_model.objects.get(pk=self.kwargs['pk'])
-        if not mixins.UserObjectMixin.has_perm(self.request, self.user_object):
+        if not perm_checkers.UserPermChecker.has_perm(self.request, self.user_object):
             raise Http404
         return self.user_form_class(instance=self.user_object, **self.get_form_kwargs())
 
@@ -651,8 +661,17 @@ class LetterListView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(LetterListView, self).get_context_data(**kwargs)
-        context['letters'] = models.Letter.objects.all()
+        letter_filter = filters.LetterFilter(self.request.GET, queryset=self._get_letter_list())
+        context['letter_filter'] = letter_filter
         return context
+
+    def _get_letter_list(self):
+        if self.request.user.has_perm('webapp.full_letter_access'):
+            return models.Letter.objects.all()
+        elif self.request.user.has_perm('webapp.pws_letter_access'):
+            return models.Letter.objects.filter(site__pws=self.request.user.employee.pws)
+        else:
+            raise Http404
 
 
 class LetterBaseFormView(BaseFormView):
@@ -666,21 +685,25 @@ class LetterBaseFormView(BaseFormView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         response = super(LetterBaseFormView, self).form_valid(form)
-        self.object.rendered_body = LetterRenderer.render(self.object)
+        self.object.rendered_body, warnings = LetterRenderer.render(self.object)
+        for warning in warnings:
+            messages.warning(self.request, warning)
         self.object.save()
         return response
 
 
 class LetterAddView(LetterBaseFormView, CreateView):
-    permission = "webapp.letter_send"
+    permission = "webapp.send_letter"
     success_message = Messages.Letter.adding_success
     error_message = Messages.Letter.adding_error
 
     def get_form(self, form_class):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
-        form = super(LetterBaseFormView, self).get_form(form_class)
-        form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
-        return form
+        if perm_checkers.SitePermChecker.has_perm(self.request, site):
+            form = super(LetterBaseFormView, self).get_form(form_class)
+            form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
+            return form
+        raise Http404
 
     def get_context_data(self, **kwargs):
         context = super(LetterAddView, self).get_context_data(**kwargs)
@@ -693,15 +716,18 @@ class LetterAddView(LetterBaseFormView, CreateView):
 
 
 class LetterEditView(LetterBaseFormView, UpdateView):
-    permission = "webapp.letter_send"
+    permission = "webapp.send_letter"
     success_message = Messages.Letter.editing_success
     error_message = Messages.Letter.editing_error
 
     def get_form(self, form_class):
         form = super(LetterBaseFormView, self).get_form(form_class)
-        site = form.instance.site
-        form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
-        return form
+        if perm_checkers.LetterPermChecker.has_perm(self.request, form.instance):
+            site = form.instance.site
+            form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
+            return form
+        else:
+            raise Http404
 
     def get_context_data(self, **kwargs):
         context = super(LetterEditView, self).get_context_data(**kwargs)
@@ -711,15 +737,18 @@ class LetterEditView(LetterBaseFormView, UpdateView):
 
 class LetterDetailView(BaseTemplateView):
     template_name = "letter/letter_detail.html"
-    permission = 'webapp.send_letter'
+    permission = 'webapp.browse_letter'
 
     def get_context_data(self, **kwargs):
         context = super(LetterDetailView, self).get_context_data(**kwargs)
-        context['letter'] = models.Letter.objects.get(pk=kwargs['pk'])
-        return context
+        letter = models.Letter.objects.get(pk=kwargs['pk'])
+        if perm_checkers.LetterPermChecker.has_perm(self.request, letter):
+            context['letter'] = letter
+            return context
+        raise Http404
 
 
-class LetterPDFView(BaseTemplateView):
+class LetterPDFView(BaseView):
     template_name = "letter/pdf.html"
     permission = 'webapp.send_letter'
 
@@ -817,7 +846,7 @@ class UserDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
         selected_user = User.objects.get(pk=kwargs['pk'])
-        if mixins.UserObjectMixin.has_perm(self.request, selected_user):
+        if perm_checkers.UserPermChecker.has_perm(self.request, selected_user):
             context['selected_user'] = selected_user
             if Group.objects.get(name=Groups.tester) in selected_user.groups.all():
                 context['is_tester'] = True

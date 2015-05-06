@@ -114,6 +114,13 @@ class FilterChoices(object):
     def yesno():
         return [('', _('All')), (1, _('Yes')), (0, _('No'))]
 
+    @staticmethod
+    def letter_type():
+        choices = [('', _('All'))]
+        for letter_type in models.LetterType.objects.all():
+            choices.append((letter_type.pk, letter_type.letter_type))
+        return choices
+
 
 class FilterActions(object):
     class Site(object):
@@ -317,6 +324,61 @@ class FilterActions(object):
                 return testers.filter(employee__test_last_cert__gt=dates[value])
             return testers
 
+    class Letter(object):
+        @staticmethod
+        def pws(letters, value):
+            if value:
+                return letters.filter(site__pws__pk=value)
+            return letters
+
+        @staticmethod
+        def customer(letters, value):
+            if value:
+                return letters.filter(site__cust_number__icontains=value)
+            return letters
+        
+        @staticmethod
+        def customer_email(letters, value):
+            if value:
+                return letters.filter(site__contact_email__icontains=value)
+            return letters
+        
+        @staticmethod
+        def service_type(letters, value):
+            if value:
+                return letters.filter(hazard__service_type__pk=value)
+            return letters
+        
+        @staticmethod
+        def hazard_type(letters, value):
+            if value:
+                return letters.filter(hazard__hazard_type__pk=value)
+            return letters
+        
+        @staticmethod
+        def letter_type(letters, value):
+            if value:
+                return letters.filter(letter_type__pk=value)
+            return letters
+        
+        @staticmethod
+        def user(letters, value):
+            if value:
+                return letters.filter(user__username__icontains=value)
+            return letters
+        
+        @staticmethod
+        def date_gt(letters, value):
+            if value:
+                return letters.filter(date__gte=value)
+            return letters
+
+        @staticmethod
+        def date_lt(letters, value):
+            if value:
+                return letters.filter(date__lte=value)
+            return letters
+
 
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
@@ -390,3 +452,20 @@ class TesterFilter(django_filters.FilterSet):
     test_last_cert = django_filters.ChoiceFilter(label=_('Test Kit Last Calibrated'),
                                                  choices=PAST_DATE_FILTER_CHOICES,
                                                  action=FilterActions.User.test_last_cert)
+
+
+class LetterFilter(django_filters.FilterSet):
+    pws = django_filters.ChoiceFilter(label=_("PWS"), choices=FilterChoices.pws(),
+                                      action=FilterActions.Letter.pws)
+    customer = django_filters.CharFilter(label=_("Customer Account"), action=FilterActions.Letter.customer)
+    customer_email = django_filters.CharFilter(label=_("Customer Email"), action=FilterActions.Letter.customer_email)
+    service_type = django_filters.ChoiceFilter(label=_("Service Type"), choices=FilterChoices.service_type(),
+                                               action=FilterActions.Letter.service_type)
+    hazard_type = django_filters.ChoiceFilter(label=_("Hazard Type"), choices=FilterChoices.hazard_type(),
+                                              action=FilterActions.Letter.hazard_type)
+    letter_type = django_filters.ChoiceFilter(label=_("Letter Type"), choices=FilterChoices.letter_type(),
+                                              action=FilterActions.Letter.letter_type)
+    user = django_filters.CharFilter(label=_("Username"), action=FilterActions.Letter.user)
+    already_sent = django_filters.BooleanFilter(label=_("Already Sent"))
+    date_gt = django_filters.DateFilter(label=_(""), action=FilterActions.Letter.date_gt)
+    date_lt = django_filters.DateFilter(label=_(""), action=FilterActions.Letter.date_lt)

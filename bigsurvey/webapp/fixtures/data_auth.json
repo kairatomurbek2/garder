@@ -269,7 +269,17 @@
         "letter"
       ],
       [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
         "delete_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "full_letter_access",
         "webapp",
         "letter"
       ],
@@ -714,6 +724,16 @@
       ],
       [
         "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "pws_letter_access",
         "webapp",
         "letter"
       ],

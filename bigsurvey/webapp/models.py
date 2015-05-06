@@ -401,7 +401,7 @@ class Site(models.Model):
     cust_zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("ZIP"))
     contact_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"))
     contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"))
-    contact_email = models.EmailField(max_length=15, blank=True, null=True, verbose_name=_("Email"))
+    contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Email"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.city, self.address1)
@@ -575,6 +575,7 @@ class Letter(models.Model):
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
     date = models.DateField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
+    already_sent = models.BooleanField(default=False, verbose_name="Already Sent")
     rendered_body = models.TextField(null=True, blank=True, verbose_name=_("Letter Content"))
 
     def __unicode__(self):
@@ -586,6 +587,8 @@ class Letter(models.Model):
         permissions = (
             ('browse_letter', _('Can browse Letter')),
             ('send_letter', _('Can send Letter')),
+            ('pws_letter_access', _('Has access to pws letters')),
+            ('full_letter_access', _('Has access to all letters'))
         )
 
 
