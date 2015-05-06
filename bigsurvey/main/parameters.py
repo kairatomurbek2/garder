@@ -6,6 +6,7 @@ class ServiceTypes(object):
     fire = "fire"
     irrigation = "irrigation"
 
+
 YESNO_CHOICES = (
     (True, "Yes"),
     (False, "No"),
@@ -13,7 +14,7 @@ YESNO_CHOICES = (
 
 VALVE_LEAKED_CHOICES = (
     (True, "Leaked"),
-    (False, "Closed"),
+    (False, "Closed Tight"),
 )
 
 VALVE_OPENED_CHOICES = (
@@ -25,6 +26,17 @@ TEST_RESULT_CHOICES = (
     (True, "Passed"),
     (False, "Failed"),
 )
+
+CLEANED_REPLACED_CHOICES = (
+    (True, "Cleaned only"),
+    (False, "Replaced")
+)
+
+class Details:
+    cv1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 18]
+    rv = [1, 10, 3, 11, 5, 6, 12, 4, 18]
+    cv2 = cv1
+    pvb = [1, 2, 13, 14, 15, 16, 17, 12, 4, 18]
 
 STATES = (
     ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),
@@ -105,6 +117,9 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('Test was successfully updated')
         editing_error = _('Error while submitting form')
+        air_inlet_not_provided = _('You should either set "Air Inlet Did not open" or provide "Air Inlet psi"')
+        rv_not_provided = _('You should either set "Relief Valve Did not open" or provide "Relief Valve psi"')
+        cv_not_provided = _('You should either set "Check Valve Did not open" or provide "Check Valve psi"')
 
     class Inspection:
         adding_success = _('Inspection was successfully added')

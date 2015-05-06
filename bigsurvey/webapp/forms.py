@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 import models
-from main.parameters import Groups, Messages
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES
 
 
 class PWSForm(forms.ModelForm):
@@ -59,10 +59,71 @@ class HazardFormForTester(forms.ModelForm):
 
 class TestForm(forms.ModelForm):
     tester = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.tester), empty_label=None)
+    cv1_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
+    cv2_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
+    outlet_sov_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
+    cv1_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
+    rv_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
+    cv2_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
+    pvb_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
+    rv_did_not_open = forms.BooleanField(initial=False, required=False)
+    air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
+    cv_leaked = forms.BooleanField(initial=False, required=False)
+    cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.cv1), required=False)
+    rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.rv), required=False)
+    cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.cv2), required=False)
+    pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.pvb), required=False)
+    test_result = forms.ChoiceField(widget=forms.RadioSelect, choices=TEST_RESULT_CHOICES)
+
+    def __init__(self, **kwargs):
+        super(TestForm, self).__init__(**kwargs)
+        self._custom_errors = []
+
+    def _clean_relief_valve(self):
+        rv_did_not_open = self.cleaned_data.get('rv_did_not_open', False)
+        if rv_did_not_open:
+            self.cleaned_data.pop('rv_psi1', None)
+            self.instance.rv_psi1 = None
+            self.instance.rv_opened = False
+        else:
+            self.instance.rv_opened = True
+            rv_psi1 = self.cleaned_data.get('rv_psi1')
+            if rv_psi1 is None:
+                self._custom_errors.append(ValidationError(Messages.Test.rv_not_provided))
+
+    def _clean_air_inlet(self):
+        air_inlet_did_not_open = self.cleaned_data.get('air_inlet_did_not_open', False)
+        if air_inlet_did_not_open:
+            self.cleaned_data.pop('air_inlet_psi', None)
+            self.instance.air_inlet_psi = None
+            self.instance.air_inlet_opened = False
+        else:
+            self.instance.air_inlet_opened = True
+            air_inlet_psi = self.cleaned_data.get('air_inlet_psi')
+            if air_inlet_psi is None:
+                self._custom_errors.append(ValidationError(Messages.Test.air_inlet_not_provided))
+
+    def _clean_cv_leaked(self):
+        cv_leaked = self.cleaned_data.get('cv_leaked', False)
+        if cv_leaked:
+            self.cleaned_data.pop('cv_held_pressure', None)
+            self.instance.cv_held_pressure = None
+        else:
+            cv_held_pressure = self.cleaned_data.get('cv_held_pressure')
+            if cv_held_pressure is None:
+                self._custom_errors.append(ValidationError(Messages.Test.cv_not_provided))
+
+    def clean(self):
+        self._clean_relief_valve()
+        self._clean_air_inlet()
+        self._clean_cv_leaked()
+        if self._custom_errors:
+            raise ValidationError(self._custom_errors)
+        return super(TestForm, self).clean()
 
     class Meta:
         model = models.Test
-        exclude = ('bp_device',)
+        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened')
 
 
 class EmployeeForm(forms.ModelForm):

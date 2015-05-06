@@ -1,3 +1,67 @@
+@font-face {
+    font-family: FontAwesome;
+    src: url(../fonts/fontawesome-webfont.eot);
+    src: url(../fonts/fontawesome-webfont.eot?#iefix) format("embedded-opentype"), url(../fonts/fontawesome-webfont.woff2) format('woff2'), url(../fonts/fontawesome-webfont.woff) format("woff"), url(../fonts/fontawesome-webfont.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal
+}
+
+.uk-form input[type=checkbox], .uk-form input[type=radio] {
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    border: 1px solid #aaa;
+    overflow: hidden;
+    margin-top: -4px;
+    vertical-align: middle;
+    -webkit-appearance: none;
+    outline: 0;
+    background: 0 0
+}
+
+.uk-form input[type=checkbox]:before, .uk-form input[type=radio]:before {
+    display: block
+}
+
+.uk-form input[type=radio] {
+    border-radius: 50%;
+}
+
+.uk-form input[type=radio]:checked:before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin: 1.5px auto 0;
+    border-radius: 50%;
+    background: #00a8e6
+}
+
+.uk-form input[type=checkbox]:checked:before, .uk-form input[type=checkbox]:indeterminate:before {
+    content: "\f00c";
+    font-family: FontAwesome;
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    line-height: 11px;
+    color: #00a8e6
+}
+
+.uk-form input[type=checkbox]:indeterminate:before {
+    content: "\f068"
+}
+
+.uk-form input[type=checkbox]:disabled, .uk-form input[type=radio]:disabled {
+    border-color: #ddd
+}
+
+.uk-form input[type=radio]:disabled:checked:before {
+    background-color: #aaa
+}
+
+.uk-form input[type=checkbox]:disabled:checked:before, .uk-form input[type=checkbox]:disabled:indeterminate:before {
+    color: #aaa
+}
+
 .uk-width-1-7 {
     width: 14.285%;
 }
@@ -6,8 +70,12 @@
     width: 7.142%;
 }
 
-.uk-width-1-6 {
-    width: 4.666%;
+.uk-text-uppercase {
+    text-transform: uppercase;
+}
+
+.uk-text-underline {
+    text-decoration: underline;
 }
 
 .table-fixed {

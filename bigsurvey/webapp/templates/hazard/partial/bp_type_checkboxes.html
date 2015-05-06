@@ -1,0 +1,14 @@
+{% for bp_type in bp_types %}
+    <label>
+        <input type="checkbox" name="bp_type" {% if bp_type == current_bp_type %}checked{% endif %}>
+        {{ bp_type }}
+    </label>
+{% endfor %}
+<script>
+    $(document).ready(function () {
+        $('input[name="bp_type"]').click(function (e) {
+            e.preventDefault();
+            return false;
+        })
+    });
+</script>

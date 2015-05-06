@@ -518,6 +518,14 @@ class TestEditView(TestBaseFormView, UpdateView):
             raise Http404
         return form
 
+    def get_initial(self):
+        initial = {}
+        if not self.object.air_inlet_opened:
+            initial['air_inlet_did_not_open'] = True
+        if not self.object.rv_opened:
+            initial['rv_did_not_open'] = True
+        return initial
+
 
 class UserListView(BaseTemplateView):
     permission = 'webapp.browse_user'

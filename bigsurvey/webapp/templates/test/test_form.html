@@ -1,223 +1,302 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% load i18n %}
+{% load hazards_helper %}
+{% load form_helper %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="wrapper">
         {% include 'messages.html' %}
-        <form class="uk-form" method="post" name="test">
-            {% csrf_token %}
-            <table class="uk-table">
-                <tbody>
-                <tr class="table-border-bottom">
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.tester.id_for_label }}">{{ form.tester.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {% render_field form.tester|add_class:'uk-width-1-1' %}
-                        {{ form.tester.errors }}
-                    </td>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.test_result.id_for_label }}">{{ form.test_result.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {% render_field form.test_result|add_class:'uk-width-1-1' %}
-                        {{ form.test_result.errors }}
-                    </td>
-                </tr>
-                {% if hazard.service_type.service_type == 'potable' or hazard.service_type.service_type == 'fire' %}
+        {% if form.non_field_errors %}
+            <div class="alert-margin-top uk-alert uk-alert-danger" data-uk-alert>
+                <a href="" class="uk-alert-close uk-close"></a>
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <div class="test-report-wrapper">
+            <h3 class="uk-text-uppercase uk-text-center uk-text-bold">{% trans 'Test and Maintenance report' %}</h3>
+
+            <p class="uk-text-uppercase uk-text-center">{% trans 'Backflow Prevention Assemblies' %}</p>
+
+            <form class="uk-form" method="post" name="test">
+                {% csrf_token %}
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label">{% trans 'Customer' %}: </p>
+                    <span class="test-report-form-data">{{ hazard.site.cust_name }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label">{% trans 'Street Address' %}: </p>
+                    <span class="test-report-form-data">{{ hazard.site.address1 }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label">{% trans 'Mailing Address' %}: </p>
+                    <span class="test-report-form-data">{{ hazard.site.cust_address1 }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label">{% trans 'Location of Assembly' %}: </p>
+                    <span class="test-report-form-data">{{ hazard.assembly_location }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label">{% trans 'Assembly Type' %}: </p>
+                    <span class="test-report-form-data-bp-types">{% render_bp_type_checkboxes hazard.bp_type_present %}</span>
+
+                    <p class="test-report-form-label-size">{% trans 'Size' %}: </p>
+                    <span class="test-report-form-data-size">{{ hazard.bp_size }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label-1-3">{% trans 'Manufacturer' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ hazard.manufacturer }}</span>
+
+                    <p class="test-report-form-label-1-3">{% trans 'Model no.' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ hazard.model_no }}</span>
+
+                    <p class="test-report-form-label-1-3">{% trans 'Serial no.' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ hazard.serial_no }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label-1-3">{% trans 'Test Kit Manuf.' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ request.user.employee.test_manufacturer }}</span>
+
+                    <p class="test-report-form-label-1-3">{% trans 'Serial Number' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ request.user.employee.test_serial }}</span>
+
+                    <p class="test-report-form-label-1-3">{% trans 'Date Calibrated' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ request.user.employee.test_last_cert }}</span>
+                </div>
+
+                <table class="uk-table bordered-all">
+                    <thead>
                     <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv1_leaked.id_for_label }}">{{ form.cv1_leaked.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv1_leaked|add_class:'uk-width-1-1' %}
-                            {{ form.cv1_leaked.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv1_gauge_pressure.id_for_label }}">{{ form.cv1_gauge_pressure.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv1_gauge_pressure|add_class:'uk-width-1-1' %}
-                            {{ form.cv1_gauge_pressure.errors }}
-                        </td>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Check Valve #1' %}
+                        </th>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Relief Valve' %}
+                        </th>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Check Valve #2' %}
+                        </th>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Pressure Vacuum Breaker' %}
+                        </th>
                     </tr>
-                    <tr class="table-border-bottom">
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv1_maintenance.id_for_label }}">{{ form.cv1_maintenance.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv1_maintenance|add_class:'uk-width-1-1' %}
-                            {{ form.cv1_maintenance.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv1_maintenance_pressure.id_for_label }}">{{ form.cv1_maintenance_pressure.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv1_maintenance_pressure|add_class:'uk-width-1-1' %}
-                            {{ form.cv1_maintenance_pressure.errors }}
-                        </td>
-                    </tr>
+                    </thead>
+                    <tbody>
                     <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv2_leaked.id_for_label }}">{{ form.cv2_leaked.label }}</label>
+                        <td>
+                            {% render_radiobuttons form.cv1_leaked %}
                         </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv2_leaked|add_class:'uk-width-1-1' %}
-                            {{ form.cv2_leaked.errors }}
+                        <td>
+                            <p class="rv_psi1">
+                                {% trans 'Opened at' %}
+                                {{ form.rv_psi1|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
+
+                            <p>{% trans 'Did not open' %} {{ form.rv_did_not_open }}</p>
                         </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv2_gauge_pressure.id_for_label }}">{{ form.cv2_gauge_pressure.label }}</label>
+                        <td>
+                            {% render_radiobuttons form.cv2_leaked %}
                         </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv2_gauge_pressure|add_class:'uk-width-1-1' %}
-                            {{ form.cv2_gauge_pressure.errors }}
-                        </td>
-                    </tr>
-                    <tr class="table-border-bottom">
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv2_maintenance.id_for_label }}">{{ form.cv2_maintenance.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv2_maintenance|add_class:'uk-width-1-1' %}
-                            {{ form.cv2_maintenance.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv2_maintenance_pressure.id_for_label }}">{{ form.cv2_maintenance_pressure.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv2_maintenance_pressure|add_class:'uk-width-1-1' %}
-                            {{ form.cv2_maintenance_pressure.errors }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.rv_opened.id_for_label }}">{{ form.rv_opened.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.rv_opened|add_class:'uk-width-1-1' %}
-                            {{ form.rv_opened.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.rv_psi1.id_for_label }}">{{ form.rv_psi1.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.rv_psi1|add_class:'uk-width-1-1' %}
-                            {{ form.rv_psi1.errors }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.rv_psi2.id_for_label }}">{{ form.rv_psi2.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.rv_psi2|add_class:'uk-width-1-1' %}
-                            {{ form.rv_psi2.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.rv_maintenance.id_for_label }}">{{ form.rv_maintenance.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.rv_maintenance|add_class:'uk-width-1-1' %}
-                            {{ form.rv_maintenance.errors }}
-                        </td>
-                    </tr>
-                    <tr class="table-border-bottom">
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.outlet_sov_leaked.id_for_label }}">{{ form.outlet_sov_leaked.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.outlet_sov_leaked|add_class:'uk-width-1-1' %}
-                            {{ form.outlet_sov_leaked.errors }}
-                        </td>
-                    </tr>
-                {% endif %}
-                {% if hazard.service_type.service_type == 'fire' %}
-                    <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.pvb_opened.id_for_label }}">{{ form.pvb_opened.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.pvb_opened|add_class:'uk-width-1-1' %}
-                            {{ form.pvb_opened.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.pvb_open_pressure.id_for_label }}">{{ form.pvb_open_pressure.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.pvb_open_pressure|add_class:'uk-width-1-1' %}
-                            {{ form.pvb_open_pressure.errors }}
-                        </td>
-                    </tr>
-                {% endif %}
-                {% if hazard.service_type.service_type == 'irrigation' %}
-                    <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv_leaked.id_for_label }}">{{ form.cv_leaked.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv_leaked|add_class:'uk-width-1-1' %}
-                            {{ form.cv_leaked.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv_held_pressure.id_for_label }}">{{ form.cv_held_pressure.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv_held_pressure|add_class:'uk-width-1-1' %}
-                            {{ form.cv_help_pressure.errors }}
-                        </td>
-                    </tr>
-                    <tr class="table-border-bottom">
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv_maintenance.id_for_label }}">{{ form.cv_maintenance.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv_maintenance|add_class:'uk-width-1-1' %}
-                            {{ form.cv_maintenance.errors }}
-                        </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.cv_psi.id_for_label }}">{{ form.cv_psi.label }}</label>
-                        </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.cv_psi|add_class:'uk-width-1-1' %}
-                            {{ form.cv_psi.errors }}
+                        <td>
+                            <p>{% trans 'Air Inlet: Did not open' %} {{ form.air_inlet_did_not_open }}</p>
+
+                            <p class="air_inlet_psi">
+                                {% trans 'Opened at' %}
+                                {{ form.air_inlet_psi|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
                         </td>
                     </tr>
                     <tr>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.air_inlet_opened.id_for_label }}">{{ form.air_inlet_opened.label }}</label>
+                        <td>
+                            <p>{% trans 'Gauge pressure accross' %}</p>
+
+                            <p class="cv1_gauge_pressure">
+                                {% trans 'Check valve' %}
+                                {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
                         </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.air_inlet_opened|add_class:'uk-width-1-1' %}
-                            {{ form.air_inlet_opened.errors }}
+                        <td>
+                            <p>{% trans 'Outlet shut-off Valve' %}</p>
+                            {% render_radiobuttons form.outlet_sov_leaked %}
                         </td>
-                        <td class="uk-width-1-6 uk-text-right">
-                            <label for="{{ form.air_inlet_psi.id_for_label }}">{{ form.air_inlet_psi.label }}</label>
+                        <td>
+                            <p>{% trans 'Gauge pressure accross' %}</p>
+
+                            <p class="cv2_gauge_pressure">
+                                {% trans 'Check valve' %}
+                                {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
                         </td>
-                        <td class="uk-width-1-3">
-                            {% render_field form.air_inlet_psi|add_class:'uk-width-1-1' %}
-                            {{ form.air_inlet_psi.errors }}
+                        <td>
+                            <p>{% trans 'Check Valve: Leaked' %} {{ form.cv_leaked }}</p>
+
+                            <p class="cv_held_pressure">
+                                {% trans 'Or held at' %}
+                                {{ form.cv_held_pressure|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
                         </td>
                     </tr>
-                {% endif %}
-                <tr>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
-                    </td>
-                    <td class="uk-width-5-6" colspan="3">
-                        {% render_field form.notes|add_class:'uk-width-1-1' %}
-                        {{ form.notes.errors }}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+                    <tr>
+                        <td>
+                            {% render_radiobuttons form.cv1_cleaned %}
+                            <div class="second-level-ul">
+                                {% render_checkboxes form.cv1_replaced_details %}
+                            </div>
+                        </td>
+                        <td>
+                            {% render_radiobuttons form.rv_cleaned %}
+                            <div class="second-level-ul">
+                                {% render_checkboxes form.rv_replaced_details %}
+                            </div>
+                        </td>
+                        <td>
+                            {% render_radiobuttons form.cv2_cleaned %}
+                            <div class="second-level-ul">
+                                {% render_checkboxes form.cv2_replaced_details %}
+                            </div>
+                        </td>
+                        <td>
+                            {% render_radiobuttons form.pvb_cleaned %}
+                            <div class="second-level-ul">
+                                {% render_checkboxes form.pvb_replaced_details %}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                {% trans 'Gauge pressure accross' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}
+                                {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {% trans 'Relief valve opened at' %}
+                            </p>
+
+                            <p>
+                                {{ form.rv_psi2|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {% trans 'Gauge pressure accross' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}
+                                {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {% trans 'Air Inlet' %}
+                                {{ form.air_inlet_psi|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}
+                                {{ form.cv_psi|add_class:'uk-form-small' }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="uk-grid">
+                    <div class="uk-width-1-5">
+                        <h4 style="display: inline-block;">{% trans 'The Assembly' %}:</h4>
+                    </div>
+                    {% for test_result in form.test_result %}
+                        <div class="uk-width-1-5">
+                            {{ test_result.tag }} <label for="{{ test_result.id_for_label }}"><span style="font-size: 20px;">{{ test_result.choice_label }}</span></label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <h4 class="uk-text-uppercase uk-text-bold">{% trans 'Note: All repairs/replacement shall be completed within five (5) days.' %}</h4>
+                <div class="uk-grid">
+                    <div class="uk-width-1-6">{% trans 'Remarks' %}:</div>
+                    <div class="uk-width-5-6">{{ form.notes|add_class:'uk-width-1-1'|attr:'rows:5' }}</div>
+                </div>
+                <p>{% trans 'I hereby certify that this data is accurate and reflects the proper operation and maintenance of the backflow preventer unit.' %}</p>
+
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label-1-3">{% trans 'Tester' %}: </p>
+                    <span class="test-report-form-data-1-3" style="border: none">{{ form.tester }}</span>
+                    <p class="test-report-form-label-1-3">{% trans 'Date' %}</p>
+                    <span class="test-report-form-data-1-3">
+                        {% if object %}
+                            {{ object.test_date }}
+                        {% else %}
+                            {% now 'N j, Y' %}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="test-report-form-label-1-3">{% trans 'Certification Number' %}: </p>
+                    <span class="test-report-form-data-1-3">{{ object.tester.employee.cert_number }}</span>
+                </div>
+
+                <button type="submit" class="uk-button uk-button-primary uk-float-right" style="margin: 20px 0">{% trans "Submit" %}</button>
+            </form>
+        </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var checkboxChangedTrigger = function (checkbox, input) {
+            if (checkbox.is(':checked')) {
+                input.attr('disabled', true);
+            } else {
+                input.removeAttr('disabled');
+            }
+        };
+
+        var listenCheckbox = function (checkbox, input) {
+            checkboxChangedTrigger(checkbox, input);
+            checkbox.click(function () {
+                checkboxChangedTrigger(checkbox, input)
+            });
+        };
+
+        var radioChangedTrigger = function (radio, checkboxes) {
+            if (radio.filter(':checked').val() == 'True') {
+                checkboxes.attr('disabled', true);
+            } else {
+                checkboxes.removeAttr('disabled');
+            }
+        };
+
+        var listenRadio = function (radio, checkboxes) {
+            radioChangedTrigger(radio, checkboxes);
+            radio.click(function () {
+                radioChangedTrigger(radio, checkboxes);
+            });
+        };
+
+        $(document).ready(function () {
+            listenCheckbox($('input[name="rv_did_not_open"]'), $('input[name="rv_psi1"]'));
+            listenCheckbox($('input[name="air_inlet_did_not_open"]'), $('input[name="air_inlet_psi"]'));
+            listenCheckbox($('input[name="cv_leaked"]'), $('input[name="cv_held_pressure"]'));
+            listenRadio($('input[name="cv1_cleaned"]'), $('input[name="cv1_replaced_details"]'));
+            listenRadio($('input[name="rv_cleaned"]'), $('input[name="rv_replaced_details"]'));
+            listenRadio($('input[name="cv2_cleaned"]'), $('input[name="cv2_replaced_details"]'));
+            listenRadio($('input[name="pvb_cleaned"]'), $('input[name="pvb_replaced_details"]'));
+        });
+    </script>
 {% endblock %}

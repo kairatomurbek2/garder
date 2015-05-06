@@ -1,0 +1,128 @@
+[
+{
+    "fields": {
+        "detail": "Rubber Parts Kit"
+    },
+    "model": "webapp.detail",
+    "pk": 1
+},
+{
+    "fields": {
+        "detail": "C.V. Assembly"
+    },
+    "model": "webapp.detail",
+    "pk": 2
+},
+{
+    "fields": {
+        "detail": "Disk"
+    },
+    "model": "webapp.detail",
+    "pk": 3
+},
+{
+    "fields": {
+        "detail": "O-Rings"
+    },
+    "model": "webapp.detail",
+    "pk": 4
+},
+{
+    "fields": {
+        "detail": "Seat"
+    },
+    "model": "webapp.detail",
+    "pk": 5
+},
+{
+    "fields": {
+        "detail": "Spring"
+    },
+    "model": "webapp.detail",
+    "pk": 6
+},
+{
+    "fields": {
+        "detail": "Stem/Guide"
+    },
+    "model": "webapp.detail",
+    "pk": 7
+},
+{
+    "fields": {
+        "detail": "Retainer"
+    },
+    "model": "webapp.detail",
+    "pk": 8
+},
+{
+    "fields": {
+        "detail": "Lock Nuts"
+    },
+    "model": "webapp.detail",
+    "pk": 9
+},
+{
+    "fields": {
+        "detail": "R.V. Assembly"
+    },
+    "model": "webapp.detail",
+    "pk": 10
+},
+{
+    "fields": {
+        "detail": "Diaphragm(s)"
+    },
+    "model": "webapp.detail",
+    "pk": 11
+},
+{
+    "fields": {
+        "detail": "Guide"
+    },
+    "model": "webapp.detail",
+    "pk": 12
+},
+{
+    "fields": {
+        "detail": "Disk Air Inlet"
+    },
+    "model": "webapp.detail",
+    "pk": 13
+},
+{
+    "fields": {
+        "detail": "Disk, Check Valve"
+    },
+    "model": "webapp.detail",
+    "pk": 14
+},
+{
+    "fields": {
+        "detail": "Seat, Check Valve"
+    },
+    "model": "webapp.detail",
+    "pk": 15
+},
+{
+    "fields": {
+        "detail": "Spring, Air Inlet"
+    },
+    "model": "webapp.detail",
+    "pk": 16
+},
+{
+    "fields": {
+        "detail": "Spring, Check Valve"
+    },
+    "model": "webapp.detail",
+    "pk": 17
+},
+{
+    "fields": {
+        "detail": "Other"
+    },
+    "model": "webapp.detail",
+    "pk": 18
+}
+]

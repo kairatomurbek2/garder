@@ -1,0 +1,6 @@
+<ul class="form-ul">
+    {% for radiobutton in radiobuttons %}
+        <li>{{ radiobutton.tag }} <label for="{{ radiobutton.id_for_label }}"><span class="form-ul-label">{{ radiobutton.choice_label }}</span></label></li>
+    {% endfor %}
+    {{ radiobuttons.errors }}
+</ul>

@@ -500,6 +500,23 @@ class Survey(models.Model):
         )
 
 
+class DetailManager(models.Manager):
+    def get_details_by_pks(self, pks):
+        sorted_details = self.none()
+        for pk in pks:
+            sorted_details |= self.filter(pk=pk)
+        return sorted_details
+
+
+class Detail(models.Model):
+    detail = models.CharField(max_length=100, verbose_name=_('Detail'))
+
+    objects = DetailManager()
+
+    def __unicode__(self):
+        return u'%s' % self.detail
+
+
 class Test(models.Model):
     bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"),
                                   related_name="tests")
@@ -529,6 +546,14 @@ class Test(models.Model):
     cv_psi = models.FloatField(null=True, blank=True, verbose_name=_("CV PSI"))
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+    cv1_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV1 Cleaned or Replaced"))
+    cv2_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV2 Cleaned or Replaced"))
+    rv_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("RV Cleaned or Replaced"))
+    pvb_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("PVB Cleaned or Replaced"))
+    cv1_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv1_replacements')
+    cv2_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv2_replacements')
+    rv_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='rv_replacements')
+    pvb_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='pvb_replacements')
 
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)
