@@ -42,5 +42,8 @@ class LetterRenderer(object):
             replacement = replacements[key]
             if replacement is None or replacement == "":
                 warnings.append("Warning: %s has no value in database" % key)
-            template = template.replace(key, unicode(replacement))
-        return template, warnings
+            else:
+                template = template.replace(key, unicode(replacement))
+        letter.rendered_body = template
+        letter.save()
+        return warnings

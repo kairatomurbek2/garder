@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load staticfiles %}
+{% load widget_tweaks %}
 {% block menu %}
     <li><a href="{% url 'webapp:home' %}" id="return_to_site_link">{% trans "Cancel" %}</a></li>
 {% endblock %}
@@ -20,15 +21,13 @@
                 <tbody>
                     <tr>
                         <td class="uk-text-right uk-text-bold">{% trans "Letter Type" %}:</td>
-                        <td class="uk-text-left">{{ form.letter_type }}</td>
-                        <td class="uk-text-right uk-text-bold">{% trans "Hazard" %}:</td>
-                        <td class="uk-text-left">{{ form.hazard }}</td>
-                    </tr>
-                    <tr class="table-border-bottom">
-                        <td colspan="2" class="uk-text-center">
+                        <td class="uk-text-left">
+                            {{ form.letter_type|add_class:"uk-width-1-1" }}
                             {{ form.letter_type.errors }}
                         </td>
-                        <td colspan="2" class="uk-text-center">
+                        <td class="uk-text-right uk-text-bold">{% trans "Hazard" %}:</td>
+                        <td class="uk-text-left">
+                            {{ form.hazard|add_class:"uk-width-1-1" }}
                             {{ form.hazard.errors }}
                         </td>
                     </tr>

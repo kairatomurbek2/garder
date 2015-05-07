@@ -1,17 +1,29 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block menu %}
-    <li><a href="{% url "webapp:letter_edit" letter.pk %}">{% trans "Edit" %}</a></li>
-    <li><a href="{% url "webapp:letter_pdf" letter.pk %}">{% trans "Get PDF" %}</a></li>
+    <li><a href="{% url "webapp:letter_edit" letter.pk %}" id="letter_{{ letter.pk }}_edit_link">
+        {% trans "Edit" %}
+    </a></li>
+    <li><a href="{% url "webapp:letter_pdf" letter.pk %}" id="letter_{{ letter.pk }}_pdf_link">
+        {% trans "Get PDF" %}
+    </a></li>
 {% endblock %}
 {% block content %}
     <div id="letter_detail" class="wrapper">
     {% include 'messages.html' %}
     <div class="wrapper uk-width-4-5 uk-align-center">
         <form method="post" class="uk-form uk-align-right">
-            <label for="send_from">{% trans "From" %}: </label>
-            <input type="text" name="send_from" id="send_from" value="{{ letter.user.email }}"/>
-            <button type="submit" name="send" class="uk-button uk-button-primary">{% trans "Send" %}</button>
+            <p>
+                <label for="send_from">{% trans "From" %}: </label>
+                <input type="text" name="send_from" id="send_from" value="{{ letter.user.email }}"/>
+            </p>
+            <p>
+                <label for="send_to">{% trans "To" %}: </label>
+                <input type="text" name="send_to" id="send_to" value="{{ letter.site.contact_email }}"/>
+            </p>
+            <p>
+                <button type="submit" name="send" class="uk-button uk-button-primary">{% trans "Send" %}</button>
+            </p>
         </form>
         {{ letter.rendered_body|safe }}
     </div>

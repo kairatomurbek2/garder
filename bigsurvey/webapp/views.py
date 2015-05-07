@@ -13,6 +13,7 @@ from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext_lazy as _
 
 
 class PermissionRequiredMixin(View):
@@ -685,10 +686,9 @@ class LetterBaseFormView(BaseFormView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         response = super(LetterBaseFormView, self).form_valid(form)
-        self.object.rendered_body, warnings = LetterRenderer.render(self.object)
+        warnings = LetterRenderer.render(self.object)
         for warning in warnings:
             messages.warning(self.request, warning)
-        self.object.save()
         return response
 
 
@@ -726,8 +726,7 @@ class LetterEditView(LetterBaseFormView, UpdateView):
             site = form.instance.site
             form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
             return form
-        else:
-            raise Http404
+        raise Http404
 
     def get_context_data(self, **kwargs):
         context = super(LetterEditView, self).get_context_data(**kwargs)
@@ -742,6 +741,12 @@ class LetterDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(LetterDetailView, self).get_context_data(**kwargs)
         letter = models.Letter.objects.get(pk=kwargs['pk'])
+        warnings = LetterRenderer.render(letter)
+        if warnings:
+            for warning in warnings:
+                messages.warning(self.request, warning)
+        else:
+            messages.success(self.request, _("All required data is present!"))
         if perm_checkers.LetterPermChecker.has_perm(self.request, letter):
             context['letter'] = letter
             return context

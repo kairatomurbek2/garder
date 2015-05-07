@@ -852,6 +852,31 @@
         "hazard"
       ],
       [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "pws_letter_access",
+        "webapp",
+        "letter"
+      ],
+      [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
         "access_to_pws_sites",
         "webapp",
         "site"

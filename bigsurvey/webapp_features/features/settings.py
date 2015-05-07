@@ -33,13 +33,12 @@ class Urls:
     user_list = '/user/'
     user_add = '/user/add/'
     user_edit = '/user/%s/edit/'
-    inspection_list = '/inspection/'
-    inspection_add = '/site/%s/assign/'
-    inspection_edit = '/inspection/%s/edit/'
-    testpermission_list = '/testpermission/'
-    testpermission_add = '/site/%s/grant/'
-    testpermission_edit = '/testpermission/%s/edit/'
     batch_update = '/batch_update/'
+    letter_list = '/letter/'
+    letter_detail = '/letter/%s/'
+    letter_edit = '/letter/%s/edit/'
+    letter_add = '/site/%s/add-letter/'
+    letter_pdf = '/letter/%s/pdf/'
 
 
 class Logins:

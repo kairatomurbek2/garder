@@ -2441,7 +2441,7 @@
         "address2": "",
         "cust_number": "QAZ2WSX",
         "meter_number": null,
-        "contact_email": null,
+        "contact_email": "amanda_j@hotmail.com",
         "potable_present": true,
         "meter_reading": null,
         "is_due_install": false,
@@ -3616,6 +3616,31 @@
         "hazard"
       ],
       [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "pws_letter_access",
+        "webapp",
+        "letter"
+      ],
+      [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
         "access_to_pws_sites",
         "webapp",
         "site"
@@ -4157,5 +4182,31 @@
     },
     "model": "webapp.employee",
     "pk": 11
+},
+{
+  "fields": {
+    "already_sent": false,
+    "rendered_body": "<p><strong>2015-05-05&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Amanda James</td>\r\n\t\t\t<td>Account No.: QAZ2WSX</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>White House</td>\r\n\t\t\t<td>Assembly: HBVB</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Washington, DC, 90192</td>\r\n\t\t\t<td>Test Due Date: 2015-05-22</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: White House</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Washington, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of Washington will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to thesomeq@gmail.com.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at thesomeq@gmail.com.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, _______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n",
+    "site": 5,
+    "hazard": 3,
+    "user": 1,
+    "date": "2015-05-03",
+    "letter_type": 1
+  },
+  "model": "webapp.letter",
+  "pk": 1
+},
+{
+  "fields": {
+    "already_sent": false,
+    "rendered_body": "<p><strong>2015-05-05&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Gabe Newell</td>\r\n\t\t\t<td>Account No.: VALVE</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>127, Universe st</td>\r\n\t\t\t<td>Assembly: None</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Seattle, WA, 12382</td>\r\n\t\t\t<td>Test Due Date: None</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: 98, South Jackson st</p>\r\n\r\n<p style=\"text-align: right;\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Seattle is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of Seattle has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the Seattle Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at Plumber Packet Address.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at thesomeq@gmail.com.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at thesomeq@gmail.com.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n",
+    "site": 10,
+    "hazard": 2,
+    "user": 1,
+    "date": "2015-05-05",
+    "letter_type": 6
+  },
+  "model": "webapp.letter",
+  "pk": 2
 }
 ]
