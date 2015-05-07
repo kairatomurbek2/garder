@@ -741,16 +741,26 @@ class LetterDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(LetterDetailView, self).get_context_data(**kwargs)
         letter = models.Letter.objects.get(pk=kwargs['pk'])
-        warnings = LetterRenderer.render(letter)
-        if warnings:
-            for warning in warnings:
-                messages.warning(self.request, warning)
+        if not letter.already_sent:
+            warnings = LetterRenderer.render(letter)
+            if warnings:
+                for warning in warnings:
+                    messages.warning(self.request, warning)
+            else:
+                messages.success(self.request, _("All required data is present!"))
         else:
-            messages.success(self.request, _("All required data is present!"))
+            messages.info(
+                self.request,
+                _("This letter has been sent already. \
+                If you have changed site or hazard data from this letter and want to send it again, please, \
+                open the letter in edit mode and submit the form to regenerate letter content.")
+            )
         if perm_checkers.LetterPermChecker.has_perm(self.request, letter):
             context['letter'] = letter
             return context
         raise Http404
+
+
 
 
 class LetterPDFView(BaseView):

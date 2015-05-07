@@ -1,5 +1,8 @@
 @test_add
 Feature: Test adding
+  Scenario: Empty Scenario For Test Purposes
+    When I logged in as "root"
+    Then I logout
 #
 #
 #  Scenario Outline: Test adding page access

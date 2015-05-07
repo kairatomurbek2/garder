@@ -1,5 +1,8 @@
-#@test_edit
-#Feature: Test editing
+@test_edit
+Feature: Test editing
+  Scenario: Empty Scenario For Test Purposes
+    When I logged in as "root"
+    Then I logout
 #
 #
 #  Scenario Outline: Test editing page access
