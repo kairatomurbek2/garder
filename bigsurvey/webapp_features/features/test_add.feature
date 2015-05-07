@@ -1,5 +1,5 @@
-#@test_add
-#Feature: Test adding
+@test_add
+Feature: Test adding
 #
 #
 #  Scenario Outline: Test adding page access
