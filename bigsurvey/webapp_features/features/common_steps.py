@@ -1,6 +1,7 @@
 import helper
 from lettuce import *
 from settings import *
+from django.core.management import call_command
 
 
 @step('I open "(http.*)"')
@@ -171,6 +172,11 @@ def check_value_from_checkbox(step, value, checkbox_name):
 def check_multiple_values_from_checkbox(step, checkbox_name):
     for row in step.hashes:
         step.given('I check "%s" from "%s"' % (row['value'], checkbox_name))
+
+
+@step('I reset database')
+def reset_database(step):
+    call_command('restore_db', interactive=False, verbosity=1)
 
 
 def click_element_by_xpath(xpath):
