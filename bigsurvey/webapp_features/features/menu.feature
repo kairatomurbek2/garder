@@ -47,12 +47,12 @@ Feature: Menu
       | link    |
       | sites   |
       | surveys |
+      | letters |
       | hazards |
     And I should not see following menu links
       | link            |
       | tests           |
       | pws             |
-      | letters         |
       | import          |
       | users           |
       | testers         |
