@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
 from django.views.generic.edit import ModelFormMixin, ProcessFormView
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import EmailMessage
+from webapp.utils.pdf_generator import PDFGenerator
 
 
 class PermissionRequiredMixin(View):
@@ -806,6 +807,17 @@ class LetterDetailView(BaseTemplateView, FormView):
 class LetterPDFView(BaseView):
     template_name = "letter/pdf.html"
     permission = 'webapp.send_letter'
+
+    def get(self, request, *args, **kwargs):
+        letter = models.Letter.objects.get(pk=kwargs['pk'])
+        pdf = PDFGenerator.generate_letter(letter)
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = u'attachment; filename="%s_%s_%s.pdf"' % (
+            letter.date,
+            letter.letter_type.letter_type,
+            letter.site.cust_number
+        )
+        return response
 
 
 class HelpView(BaseTemplateView):
