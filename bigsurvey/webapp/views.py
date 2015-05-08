@@ -753,6 +753,9 @@ class LetterDetailView(BaseTemplateView, FormView):
             self._set_messages(letter)
             context = super(LetterDetailView, self).get_context_data(**kwargs)
             context['letter'] = letter
+            # for some reason (maybe inheritance issue)
+            # default get_form method is not called in super's get_context_data
+            # so here it's done manually with our own method _get_form
             if not context.get('form'):
                 context['form'] = self._get_form(letter)
             return context
