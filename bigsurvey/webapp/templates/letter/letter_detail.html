@@ -16,11 +16,6 @@
         <form method="post" class="uk-form uk-align-right">
             {% csrf_token %}
             <p>
-                <label for="send_from">{% trans "From" %}: </label>
-                {{ form.send_from|add_class:"uk-width-1-1" }}
-                {{ form.send_from.errors }}
-            </p>
-            <p>
                 <label for="send_to">{% trans "To" %}: </label>
                 {{ form.send_to|add_class:"uk-width-1-1" }}
                 {{ form.send_to.errors }}

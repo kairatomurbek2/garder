@@ -8,14 +8,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
-from main.settings import DEFAULT_FROM_EMAIL
 from django.contrib.auth.models import User
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMessage
 
 
 class PermissionRequiredMixin(View):
@@ -775,13 +774,8 @@ class LetterDetailView(BaseTemplateView, FormView):
             )
 
     def _get_form(self, letter):
-        send_from_init = unicode(DEFAULT_FROM_EMAIL)
-        send_to_init = ""
-        if letter.site.contact_email:
-            send_to_init = unicode(letter.site.contact_email)
         return self.form_class(initial={
-            'send_from': send_from_init,
-            'send_to': send_to_init
+            'send_to': "" or unicode(letter.site.contact_email)
         })
 
     def form_valid(self, form):

@@ -208,5 +208,4 @@ class TesterSiteSearchForm(forms.Form):
 
 
 class LetterSendForm(forms.Form):
-    send_from = forms.EmailField(required=True)
     send_to = forms.EmailField(required=True)
