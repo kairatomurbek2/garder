@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% load i18n %}
 {% block menu %}
     <li><a href="{% url "webapp:letter_edit" letter.pk %}" id="letter_{{ letter.pk }}_edit_link">
@@ -13,13 +14,16 @@
     {% include 'messages.html' %}
     <div class="wrapper uk-width-4-5 uk-align-center">
         <form method="post" class="uk-form uk-align-right">
+            {% csrf_token %}
             <p>
                 <label for="send_from">{% trans "From" %}: </label>
-                <input type="text" name="send_from" id="send_from" value="{{ letter.user.email }}"/>
+                {{ form.send_from|add_class:"uk-width-1-1" }}
+                {{ form.send_from.errors }}
             </p>
             <p>
                 <label for="send_to">{% trans "To" %}: </label>
-                <input type="text" name="send_to" id="send_to" value="{{ letter.site.contact_email }}"/>
+                {{ form.send_to|add_class:"uk-width-1-1" }}
+                {{ form.send_to.errors }}
             </p>
             <p>
                 <button type="submit" name="send" class="uk-button uk-button-primary">{% trans "Send" %}</button>

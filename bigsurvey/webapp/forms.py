@@ -198,7 +198,15 @@ class TesterSiteSearchForm(forms.Form):
 
     def clean(self):
         try:
-            self.site = models.Site.objects.get(pws=self.cleaned_data['pws'], cust_number=self.cleaned_data['cust_number'])
+            self.site = models.Site.objects.get(
+                pws=self.cleaned_data['pws'],
+                cust_number=self.cleaned_data['cust_number']
+            )
         except models.Site.DoesNotExist:
             raise ValidationError(Messages.Site.not_found)
         return super(TesterSiteSearchForm, self).clean()
+
+
+class LetterSendForm(forms.Form):
+    send_from = forms.EmailField(required=True)
+    send_to = forms.EmailField(required=True)

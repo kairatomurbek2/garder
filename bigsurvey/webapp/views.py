@@ -8,12 +8,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
+from main.settings import DEFAULT_FROM_EMAIL
 from django.contrib.auth.models import User
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.core.mail import send_mail, EmailMessage
 
 
 class PermissionRequiredMixin(View):
@@ -687,8 +689,11 @@ class LetterBaseFormView(BaseFormView):
         form.instance.user = self.request.user
         response = super(LetterBaseFormView, self).form_valid(form)
         warnings = LetterRenderer.render(self.object)
-        for warning in warnings:
-            messages.warning(self.request, warning)
+        if warnings:
+            for warning in warnings:
+                messages.warning(self.request, warning)
+        else:
+            messages.success(self.request, _("All required data is present!"))
         return response
 
 
@@ -734,13 +739,26 @@ class LetterEditView(LetterBaseFormView, UpdateView):
         return context
 
 
-class LetterDetailView(BaseTemplateView):
+class LetterDetailView(BaseTemplateView, FormView):
     template_name = "letter/letter_detail.html"
     permission = 'webapp.browse_letter'
+    form_class = forms.LetterSendForm
+    success_url = 'webapp:letter_list'
+    success_message = Messages.Letter.send_success
+    error_message = Messages.Letter.send_error
 
     def get_context_data(self, **kwargs):
-        context = super(LetterDetailView, self).get_context_data(**kwargs)
-        letter = models.Letter.objects.get(pk=kwargs['pk'])
+        letter = models.Letter.objects.get(pk=self.kwargs['pk'])
+        if perm_checkers.LetterPermChecker.has_perm(self.request, letter):
+            self._set_messages(letter)
+            context = super(LetterDetailView, self).get_context_data(**kwargs)
+            context['letter'] = letter
+            if not context.get('form'):
+                context['form'] = self._get_form(letter)
+            return context
+        raise Http404
+
+    def _set_messages(self, letter):
         if not letter.already_sent:
             warnings = LetterRenderer.render(letter)
             if warnings:
@@ -755,12 +773,40 @@ class LetterDetailView(BaseTemplateView):
                 If you have changed site or hazard data from this letter and want to send it again, please, \
                 open the letter in edit mode and submit the form to regenerate letter content.")
             )
-        if perm_checkers.LetterPermChecker.has_perm(self.request, letter):
-            context['letter'] = letter
-            return context
-        raise Http404
 
+    def _get_form(self, letter):
+        send_from_init = unicode(DEFAULT_FROM_EMAIL)
+        send_to_init = ""
+        if letter.site.contact_email:
+            send_to_init = unicode(letter.site.contact_email)
+        return self.form_class(initial={
+            'send_from': send_from_init,
+            'send_to': send_to_init
+        })
 
+    def form_valid(self, form):
+        letter = models.Letter.objects.get(pk=self.kwargs['pk'])
+        self._send_email(letter, form)
+        return HttpResponseRedirect(reverse(self.success_url))
+
+    def _send_email(self, letter, form):
+        msg = EmailMessage(
+            letter.letter_type.header,
+            letter.rendered_body,
+            to=[form.cleaned_data['send_to']]
+        )
+        msg.content_subtype = 'html'
+        try:
+            msg.send()
+            messages.success(self.request, self.success_message)
+            letter.already_sent = True
+            letter.save()
+        except:
+            messages.error(self.request, self.error_message)
+
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super(LetterDetailView, self).form_invalid(form)
 
 
 class LetterPDFView(BaseView):

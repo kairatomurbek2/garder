@@ -127,8 +127,10 @@ CKEDITOR_CONFIGS = {
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+EMAIL_HOST = "smtp.gmail.com"
 
-try:
-    from settings_local import *
-except ImportError:
-    pass
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+from settings_local import *

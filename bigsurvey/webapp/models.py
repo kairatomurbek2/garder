@@ -217,7 +217,10 @@ class AssemblyStatus(models.Model):
 
 class LetterType(models.Model):
     letter_type = models.CharField(max_length=20, verbose_name=_("Letter Type"))
-    template = RichTextField(blank=True, null=True, verbose_name=_('Letter Template'))
+    template = RichTextField(blank=False, null=False, default=_('Default Letter Template'),
+                             verbose_name=_('Letter Template'))
+    header = models.CharField(blank=False, null=False, default=_('Backflow Prevention Services Notification'),
+                              verbose_name=_('Letter Header'), max_length=150)
 
     def __unicode__(self):
         return u"%s" % self.letter_type
