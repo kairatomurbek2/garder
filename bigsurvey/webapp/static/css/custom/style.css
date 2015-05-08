@@ -2,6 +2,18 @@ div.wrapper {
     padding: 10px 20px 0 20px;
 }
 
+.inline-block {
+    display: inline-block;
+}
+
+.border-none {
+    border: none;
+}
+
+.margin-top-bottom-20 {
+    margin: 20px 0;
+}
+
 tr.top-half {
     border: 2px solid #dddddd;
     border-bottom: none;
@@ -178,4 +190,22 @@ ul.form-ul {
 
 .second-level-ul {
     padding-left: 20px;
+}
+
+.test-result-choices {
+    font-size: 20px;
+}
+
+.two-columns-list {
+    overflow: hidden;
+}
+
+.two-columns-list > li {
+    list-style-type: none;
+    float: left;
+    display: inline;
+    width: 50%;
+    border-bottom: 1px solid darkgray;
+    height: 80px;
+    padding-top: 20px;
 }

@@ -11,10 +11,12 @@
                         <p class="uk-text-danger">{{ form.non_field_errors }}</p>
                     {% endif %}
                     <div class="uk-form-row">
+                        <p>{% trans 'PWS' %}</p>
                         {{ form.pws.errors }}
                         {{ form.pws|add_class:'uk-width-1-1' }}
                     </div>
                     <div class="uk-form-row">
+                        <p>{% trans 'Customer Number' %}</p>
                         {{ form.cust_number.errors }}
                         {{ form.cust_number|add_class:'uk-width-1-1' }}
                     </div>

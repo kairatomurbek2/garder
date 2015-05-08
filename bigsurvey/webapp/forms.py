@@ -1,9 +1,10 @@
+import os
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES, EXCEL_EXTENSIONS
 
 
 class PWSForm(forms.ModelForm):
@@ -57,15 +58,19 @@ class HazardFormForTester(forms.ModelForm):
         )
 
 
+def coerce_to_bool(value):
+    return value == 'True'
+
+
 class TestForm(forms.ModelForm):
     tester = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.tester), empty_label=None)
     cv1_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
     cv2_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
     outlet_sov_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
-    cv1_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
-    rv_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
-    cv2_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
-    pvb_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, initial=True)
+    cv1_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
+    rv_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
+    cv2_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
+    pvb_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
@@ -113,10 +118,43 @@ class TestForm(forms.ModelForm):
             if cv_held_pressure is None:
                 self._custom_errors.append(ValidationError(Messages.Test.cv_not_provided))
 
+    def _clean_cv1_cleaned(self):
+        cv1_cleaned = self.cleaned_data.get('cv1_cleaned')
+        if not cv1_cleaned:
+            cv1_replaced_details = self.cleaned_data.get('cv1_replaced_details')
+            print cv1_replaced_details
+            if not cv1_replaced_details:
+                self._custom_errors.append(ValidationError(Messages.Test.cv1_replaced_details_not_provided))
+
+    def _clean_rv_cleaned(self):
+        rv_cleaned = self.cleaned_data.get('rv_cleaned')
+        if not rv_cleaned:
+            rv_replaced_details = self.cleaned_data.get('rv_replaced_details')
+            if not rv_replaced_details:
+                self._custom_errors.append(ValidationError(Messages.Test.rv_replaced_details_not_provided))
+
+    def _clean_cv2_cleaned(self):
+        cv2_cleaned = self.cleaned_data.get('cv2_cleaned')
+        if not cv2_cleaned:
+            cv2_replaced_details = self.cleaned_data.get('cv2_replaced_details')
+            if not cv2_replaced_details:
+                self._custom_errors.append(ValidationError(Messages.Test.cv2_replaced_details_not_provided))
+
+    def _clean_pvb_cleaned(self):
+        pvb_cleaned = self.cleaned_data.get('pvb_cleaned')
+        if not pvb_cleaned:
+            pvb_replaced_details = self.cleaned_data.get('pvb_replaced_details')
+            if not pvb_replaced_details:
+                self._custom_errors.append(ValidationError(Messages.Test.pvb_replaced_details_not_provided))
+
     def clean(self):
         self._clean_relief_valve()
         self._clean_air_inlet()
         self._clean_cv_leaked()
+        self._clean_cv1_cleaned()
+        self._clean_rv_cleaned()
+        self._clean_cv2_cleaned()
+        self._clean_pvb_cleaned()
         if self._custom_errors:
             raise ValidationError(self._custom_errors)
         return super(TestForm, self).clean()
@@ -209,3 +247,47 @@ class TesterSiteSearchForm(forms.Form):
 
 class LetterSendForm(forms.Form):
     send_to = forms.EmailField(required=True)
+
+
+def validate_excel_file(file):
+    name, ext = os.path.splitext(file.name)
+    if ext not in EXCEL_EXTENSIONS:
+        raise ValidationError(Messages.extension_not_allowed % {'allowed_extensions': ', '.join(EXCEL_EXTENSIONS)})
+
+
+class ImportForm(forms.Form):
+    file = forms.FileField(validators=[validate_excel_file])
+
+
+class ImportMappingsForm(forms.Form):
+    model_field = forms.CharField(widget=forms.HiddenInput)
+    excel_field = forms.ChoiceField(required=False)
+
+
+class BaseImportMappingsFormSet(forms.BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            raise ValidationError(Messages.Site.required_fields_not_filled)
+        excel_fields = []
+        for form in self.forms:
+            excel_field = form.cleaned_data.get('excel_field')
+            if excel_field and excel_field in excel_fields:
+                raise forms.ValidationError(Messages.Site.duplicate_excel_fields)
+            excel_fields.append(excel_field)
+
+    def set_model_fields_labels(self, labels):
+        for form, label in zip(self.forms, labels):
+            form.fields.get('model_field').label = label
+
+    def set_model_fields_help_texts(self, help_texts):
+        for form, help_text in zip(self.forms, help_texts):
+            form.fields.get('model_field').help_text = help_text
+
+    def set_required_model_fields(self, required_fields):
+        for form in self.forms:
+            if form.initial.get('model_field') in required_fields:
+                form.fields.get('excel_field').required = True
+
+    def set_excel_field_choices(self, choices):
+        for form in self.forms:
+            form.fields.get('excel_field').choices = [('', '----------')] + choices

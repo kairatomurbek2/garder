@@ -2687,7 +2687,7 @@
         "replace_date": null,
         "bp_type_required": null,
         "orientation": null,
-        "bp_type_present": null,
+        "bp_type_present": 6,
         "install_date": "2015-02-18",
         "notes": "",
         "serial_no": "",
@@ -3700,11 +3700,6 @@
         "hazard"
       ],
       [
-        "access_to_pws_sites",
-        "webapp",
-        "site"
-      ],
-      [
         "access_to_site_by_customer_account",
         "webapp",
         "site"
@@ -3898,31 +3893,43 @@
         "outlet_sov_leaked": false,
         "rv_psi1": null,
         "rv_psi2": null,
+        "rv_replaced_details": [],
         "cv2_maintenance": false,
+        "cv2_cleaned": true,
         "pvb_open_pressure": null,
+        "cv2_replaced_details": [],
         "cv2_leaked": false,
         "test_result": false,
         "rv_maintenance": false,
+        "cv1_replaced_details": [
+            2
+        ],
         "pvb_opened": false,
         "cv_maintenance": false,
+        "pvb_replaced_details": [
+            16
+        ],
         "cv2_gauge_pressure": null,
+        "pvb_cleaned": false,
         "tester": [
             "tester"
         ],
         "cv1_maintenance": false,
-        "air_inlet_opened": true,
-        "cv_leaked": false,
+        "cv1_cleaned": false,
+        "air_inlet_opened": false,
+        "cv_leaked": true,
         "cv2_maintenance_pressure": null,
         "cv_held_pressure": null,
         "cv_psi": null,
         "cv1_gauge_pressure": null,
         "rv_opened": false,
         "cv1_maintenance_pressure": null,
-        "cv1_leaked": false,
+        "cv1_leaked": true,
         "bp_device": 1,
         "air_inlet_psi": null,
         "notes": "",
-        "test_date": "2015-01-27"
+        "test_date": "2015-01-27",
+        "rv_cleaned": true
     },
     "model": "webapp.test",
     "pk": 1
@@ -3932,18 +3939,25 @@
         "outlet_sov_leaked": false,
         "rv_psi1": null,
         "rv_psi2": null,
+        "rv_replaced_details": [],
         "cv2_maintenance": false,
+        "cv2_cleaned": true,
         "pvb_open_pressure": null,
+        "cv2_replaced_details": [],
         "cv2_leaked": false,
         "test_result": false,
         "rv_maintenance": false,
+        "cv1_replaced_details": [],
         "pvb_opened": false,
         "cv_maintenance": false,
+        "pvb_replaced_details": [],
         "cv2_gauge_pressure": null,
+        "pvb_cleaned": true,
         "tester": [
             "tester"
         ],
         "cv1_maintenance": false,
+        "cv1_cleaned": true,
         "air_inlet_opened": true,
         "cv_leaked": false,
         "cv2_maintenance_pressure": null,
@@ -3956,7 +3970,8 @@
         "bp_device": 2,
         "air_inlet_psi": null,
         "notes": "",
-        "test_date": "2015-01-27"
+        "test_date": "2015-01-27",
+        "rv_cleaned": true
     },
     "model": "webapp.test",
     "pk": 2
@@ -4045,10 +4060,10 @@
         "pws": 9,
         "zip": "tester zip",
         "phone2": "",
-        "cert_number": null,
+        "cert_number": "qwerty132",
         "company": "tester company",
         "phone1": "tester phone",
-        "test_serial": null,
+        "test_serial": "",
         "cert_expires": null,
         "test_model": null,
         "state": "AL",

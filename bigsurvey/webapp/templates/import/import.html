@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block content %}
+    <div class="wrapper">
+        <div class="uk-grid">
+            <div class="uk-width-1-2 uk-container-center">
+                <form class="uk-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="uk-form-row">
+                        {{ form.file.errors }}
+                        {{ form.file }}
+                    </div>
+                    <div class="uk-form-row">
+                        <button type="submit" class="uk-button uk-button-primary">{% trans 'Submit' %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

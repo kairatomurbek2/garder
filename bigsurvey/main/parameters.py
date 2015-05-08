@@ -32,11 +32,13 @@ CLEANED_REPLACED_CHOICES = (
     (False, "Replaced")
 )
 
+
 class Details:
     cv1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 18]
     rv = [1, 10, 3, 11, 5, 6, 12, 4, 18]
     cv2 = cv1
     pvb = [1, 2, 13, 14, 15, 16, 17, 12, 4, 18]
+
 
 STATES = (
     ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),
@@ -81,14 +83,20 @@ class Groups:
 
 ADMIN_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]
 
+EXCEL_EXTENSIONS = ['.xls', '.xlsx']
+
 
 class Messages:
+    extension_not_allowed = _('File extension is not allowed. Allowed extensions: %(allowed_extensions)s')
+
     class Site:
         adding_success = _('Site was successfully added')
         adding_error = _('Error while submitting form')
         editing_success = _('Site was successfully updated')
         editing_error = _('Error while submitting form')
         not_found = _('Site was not found')
+        required_fields_not_filled = _('Please fill in all required fields marked by asterisk')
+        duplicate_excel_fields = _('You have selected the same Excel field more than once')
 
     class BatchUpdate:
         success = _('Batch update successfully performed')
@@ -120,6 +128,10 @@ class Messages:
         air_inlet_not_provided = _('You should either set "Air Inlet Did not open" or provide "Air Inlet psi"')
         rv_not_provided = _('You should either set "Relief Valve Did not open" or provide "Relief Valve psi"')
         cv_not_provided = _('You should either set "Check Valve Did not open" or provide "Check Valve psi"')
+        cv1_replaced_details_not_provided = _('You should provide details you have replaced for Check Valve 1')
+        cv2_replaced_details_not_provided = _('You should provide details you have replaced for Relief Valve')
+        rv_replaced_details_not_provided = _('You should provide details you have replaced for Check Valve 2')
+        pvb_replaced_details_not_provided = _('You should provide details you have replaced for Pressure Vacuum Breaker')
 
     class Inspection:
         adding_success = _('Inspection was successfully added')

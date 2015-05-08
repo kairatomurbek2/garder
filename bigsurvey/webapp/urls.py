@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from webapp import views
 
+
 urlpatterns = patterns(
     '',
     url(r'^$', views.HomeView.as_view(), name="home"),
@@ -40,6 +41,10 @@ urlpatterns = patterns(
     url(r'^user/add/$', views.UserAddView.as_view(), name="user_add"),
     url(r'^user/(?P<pk>\d+)/$', views.UserDetailView.as_view(), name="user_detail"),
     url(r'^user/(?P<pk>\d+)/edit/$', views.UserEditView.as_view(), name="user_edit"),
+
+    url(r'^import/$', views.ImportView.as_view(), name="import"),
+    url(r'^import-mappings/$', views.ImportMappingsRenderView.as_view(), name="import-mappings-render"),
+    url(r'^import-mappings-process/$', views.ImportMappingsProcessView.as_view(), name="import-mappings-process"),
 
     url(r'^help/$', views.HelpView.as_view(), name="help"),
 )
