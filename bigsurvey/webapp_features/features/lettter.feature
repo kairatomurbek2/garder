@@ -29,7 +29,6 @@ Feature: Letter Viewing and Sending
     | text                  |
     | thesomeq@gmail.com    |
     | Send                  |
-    | From:                 |
     | To:                   |
     | 2015-05-03            |
     | {AssemblyType}        |
