@@ -1035,7 +1035,8 @@ class ImportMappingsFormsetMixin(object):
         context = super(ImportMappingsFormsetMixin, self).get_context_data(**kwargs)
         context['formset'] = self.formset
         context['rows_count'] = (self.formset.total_form_count() - 1) / 2 + 1
-        context['example_rows'] = self.get_excel_first_several_rows()
+        # context['example_rows'] = self.get_excel_first_several_rows()
+        context['excel_fields'] = self.get_excel_file_headers_as_choices()
         return context
 
 

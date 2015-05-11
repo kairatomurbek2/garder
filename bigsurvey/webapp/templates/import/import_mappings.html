@@ -42,8 +42,39 @@
                 <button type="submit" class="uk-button uk-button-primary margin-top-bottom-20 uk-float-right">{% trans 'Submit' %}</button>
             </form>
         </div>
-        <div class="uk-width-1-3">
-
+        <div class="uk-width-1-3" style="padding-top: 20px;">
+            <ul class="unselected-fields">
+                {% for value, field_name in excel_fields %}
+                    <li data-value="{{ value }}">
+                        {{ field_name }}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var excel_fields_selector = 'select[name*="excel_field"]';
+        var unselected_fields_selector = '.unselected-fields';
+        $(document).ready(function () {
+            $(excel_fields_selector).each(function () {
+                $(this).data('previous', $(this).val());
+            });
+
+            $(excel_fields_selector).change(function () {
+                var val = $(this).val();
+                var prev_val = $(this).data('previous');
+                $(unselected_fields_selector).find('li[data-value="' + prev_val + '"]').show();
+                if (val === '') {
+                } else {
+                    $(unselected_fields_selector).find('li[data-value="' + val + '"]').hide();
+                    $(excel_fields_selector).not(this).filter(function () {
+                        return $(this).val() === val;
+                    }).val('');
+                }
+                $(this).data('previous', val);
+            });
+        });
+    </script>
 {% endblock %}
