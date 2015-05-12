@@ -1,10 +1,12 @@
 from collections import OrderedDict
 import time
 import os
+from django.conf import settings
 
 from django.core.files.storage import default_storage
+from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
-from django.forms import formset_factory
+from django.forms import formset_factory, ModelChoiceField
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -22,7 +24,7 @@ from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GR
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
-from webapp.utils.excel_parser import ExcelParser
+from webapp.utils.excel_parser import ExcelParser, DateFormatError
 
 
 class PermissionRequiredMixin(View):
@@ -937,17 +939,39 @@ class ImportView(BaseFormView):
     template_name = 'import/import.html'
     form_class = ImportForm
 
+    def get_form(self, form_class):
+        form = super(ImportView, self).get_form(form_class)
+        if self.request.user.has_perm('webapp.access_to_all_sites'):
+            form.fields['pws'] = ModelChoiceField(queryset=models.PWS.objects.all())
+        return form
+
     def form_valid(self, form):
+        self._delete_previous_tmp_files()
         filename = self._save_tmp_file(form.cleaned_data.get('file'))
         self.request.session['import_filename'] = filename
-        self.request.session.pop('cached_excel_headers', None)
+        try:
+            self.request.session['import_pws_pk'] = form.cleaned_data['pws'].pk
+        except KeyError:
+            self.request.session['import_pws_pk'] = self.request.user.employee.pws.pk
+        self._delete_cached_data()
         return super(ImportView, self).form_valid(form)
+
+    def _delete_previous_tmp_files(self):
+        prefix = '%s-' % self.request.user.pk
+        files = os.listdir(settings.MEDIA_ROOT)
+        for file in files:
+            if file.startswith(prefix):
+                os.unlink(os.path.join(settings.MEDIA_ROOT, file))
 
     def _save_tmp_file(self, file):
         name, ext = os.path.splitext(file.name)
         new_filename = '%s-%s%s' % (self.request.user.pk, int(time.time()), ext)
         default_storage.save(new_filename, file)
         return new_filename
+
+    def _delete_cached_data(self):
+        self.request.session.pop('cached_excel_headers', None)
+        self.request.session.pop('cached_excel_example_rows', None)
 
     def get_success_url(self):
         return reverse('webapp:import-mappings-render')
@@ -961,45 +985,43 @@ class ImportMappingsFormsetMixin(object):
 
     EXAMPLE_ROWS_COUNT = 3
 
-    exclude_site_model_fields = ['id']
+    exclude_site_model_fields = ['id', 'pws']
 
     def __init__(self):
         self.formset = None
         self.excel_parser = None
 
-    def get_site_model_fields_names(self):
+    def get_site_model_fields_list(self):
         field_names = []
         for field in models.Site._meta.fields:
             if field.name not in self.exclude_site_model_fields:
-                field_names.append({'model_field': field.name})
+                field_names.append(field.name)
         return field_names
 
-    def get_site_model_fields_labels(self):
+    def get_site_model_fields_labels(self, fields_list):
         field_labels = []
         for field in models.Site._meta.fields:
-            if field.name not in self.exclude_site_model_fields:
+            if field.name in fields_list:
                 field_labels.append(field.verbose_name)
         return field_labels
 
-    def get_site_model_fields_help_texts(self):
+    def get_site_model_fields_help_texts(self, fields_list):
         field_help_texts = []
         for field in models.Site._meta.fields:
-            if field.name not in self.exclude_site_model_fields:
+            if field.name in fields_list:
                 field_help_texts.append(field.help_text)
         return field_help_texts
 
-    def get_site_model_required_fields(self):
+    def get_site_model_required_fields(self, fields_list):
         required_fields = []
         for field in models.Site._meta.fields:
-            if field.name not in self.exclude_site_model_fields and (not field.null and field.default == NOT_PROVIDED):
+            if field.name in fields_list and (not field.null and field.default == NOT_PROVIDED):
                 required_fields.append(field.name)
         return required_fields
 
     def get_excel_field_headers_as_choices(self):
         if 'cached_excel_headers' in self.request.session:
             return self.request.session['cached_excel_headers']
-        if not self.excel_parser:
-            self._create_excel_parser()
         headers = self.excel_parser.get_headers_as_choices()
         self.request.session['cached_excel_headers'] = headers
         return headers
@@ -1007,28 +1029,27 @@ class ImportMappingsFormsetMixin(object):
     def get_excel_example_rows(self, rows_count=EXAMPLE_ROWS_COUNT):
         if 'cached_excel_example_rows' in self.request.session:
             return self.request.session['cached_excel_example_rows']
-        if not self.excel_parser:
-            self._create_excel_parser()
         example_rows = self.excel_parser.get_example_rows(rows_count, self.get_excel_field_headers_as_choices())
         self.request.session['cached_excel_example_rows'] = example_rows
         return example_rows
 
-    def _create_excel_parser(self):
+    def get_formset(self):
         self.excel_parser = ExcelParser(self.request.session['import_filename'])
 
-    def get_formset(self):
         formset_class = formset_factory(form=self.form_class, formset=self.base_formset_class, extra=0)
 
-        model_fields_for_form = self.get_site_model_fields_names()
+        model_fields_list = self.get_site_model_fields_list()
+
+        model_fields_for_form = [{'model_field': field_name} for field_name in model_fields_list]
         formset = formset_class(initial=model_fields_for_form, data=self.get_formset_data())
 
-        model_fields_labels = self.get_site_model_fields_labels()
+        model_fields_labels = self.get_site_model_fields_labels(model_fields_list)
         formset.set_model_fields_labels(model_fields_labels)
 
-        model_fields_help_texts = self.get_site_model_fields_help_texts()
+        model_fields_help_texts = self.get_site_model_fields_help_texts(model_fields_list)
         formset.set_model_fields_help_texts(model_fields_help_texts)
 
-        model_required_fields = self.get_site_model_required_fields()
+        model_required_fields = self.get_site_model_required_fields(model_fields_list)
         formset.set_required_model_fields(model_required_fields)
 
         excel_field_choices = self.get_excel_field_headers_as_choices()
@@ -1057,7 +1078,14 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
     def post(self, request, *args, **kwargs):
         self.formset = self.get_formset()
         if self.formset.is_valid():
-            pass
+            mappings = self.formset.get_mappings()
+            try:
+                self.excel_parser.check_constraints(mappings)
+                self.excel_parser.parse_and_save(mappings, self.request.session['import_pws_pk'])
+                return redirect('webapp:home')
+            except (IntegrityError, DateFormatError) as e:
+                self.formset.add_error(str(e))
+                return self.render_to_response(self.get_context_data())
         else:
             return self.render_to_response(self.get_context_data())
 

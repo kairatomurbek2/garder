@@ -18,6 +18,7 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = models.Site
+        exclude = []
 
 
 class SiteFormForSurveyor(forms.ModelForm):
@@ -265,6 +266,9 @@ class ImportMappingsForm(forms.Form):
 
 
 class BaseImportMappingsFormSet(forms.BaseFormSet):
+    def add_error(self, error_message):
+        self._non_form_errors.append(error_message)
+
     def clean(self):
         if any(self.errors):
             raise ValidationError(Messages.Site.required_fields_not_filled)
@@ -287,6 +291,17 @@ class BaseImportMappingsFormSet(forms.BaseFormSet):
         for form in self.forms:
             if form.initial.get('model_field') in required_fields:
                 form.fields.get('excel_field').required = True
+
+    def get_mappings(self):
+        mappings = {}
+        for form in self.forms:
+            try:
+                model_field = form.cleaned_data.get('model_field')
+                excel_field = form.cleaned_data.get('excel_field')
+                mappings[model_field] = int(excel_field)
+            except ValueError:
+                pass
+        return mappings
 
     def set_excel_field_choices(self, choices):
         for form in self.forms:

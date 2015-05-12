@@ -5,8 +5,9 @@
     <div class="uk-grid">
         <div class="uk-width-1-1">
             <h2>{% trans 'Example rows' %}</h2>
+
             <div class="uk-overflow-container">
-                <table>
+                <table class="uk-table bordered-all">
                     <thead>
                     <tr>
                         {% for column_index, field_name in excel_field_headers %}

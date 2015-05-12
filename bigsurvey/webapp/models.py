@@ -365,7 +365,7 @@ class Employee(models.Model):
 
 
 class Site(models.Model):
-    pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", help_text=_("PWS which Site belongs"))
+    pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", help_text=_("PWS which Site belongs"), db_index=True)
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"), help_text=_("Connection date of Site"))
     address1 = models.CharField(max_length=100, verbose_name=_("Address 1"), help_text=_("Main Address of Site"))
     address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"), help_text=_("Secondary Address of Site if exists"))
@@ -393,7 +393,7 @@ class Site(models.Model):
     next_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Next Survey Date"), help_text=_("Next Survey Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"), help_text=_("Notes"))
     last_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Last Survey Date"), help_text=_("Last Survey Date"))
-    cust_number = models.CharField(max_length=15, verbose_name=_("Number"), help_text=_("Customer's Number"))
+    cust_number = models.CharField(max_length=15, verbose_name=_("Number"), help_text=_("Customer's Number"), db_index=True)
     cust_name = models.CharField(max_length=50, verbose_name=_("Name"), help_text=_("Customer's Name"))
     cust_code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers", help_text=_("Customer's Code"))
     cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 1"), help_text=_("Customer's Main Address"))
@@ -412,6 +412,7 @@ class Site(models.Model):
     class Meta:
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
+        unique_together = 'pws', 'cust_number'
         permissions = (
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),

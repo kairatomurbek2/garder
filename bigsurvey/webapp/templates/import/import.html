@@ -8,9 +8,17 @@
                 <form class="uk-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="uk-form-row">
+                        <p>{% trans 'Select File' %}</p>
                         {{ form.file.errors }}
                         {{ form.file }}
                     </div>
+                    {% if form.pws %}
+                        <div class="uk-form-row">
+                            <p>{% trans 'Select PWS' %}</p>
+                            {{ form.pws.errors }}
+                            {{ form.pws }}
+                        </div>
+                    {% endif %}
                     <div class="uk-form-row">
                         <button type="submit" class="uk-button uk-button-primary">{% trans 'Submit' %}</button>
                     </div>

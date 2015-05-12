@@ -30,4 +30,7 @@ def get_formset_index(row_index, col_index):
 
 @register.assignment_tag()
 def get_form(formset, index):
-    return formset.forms[int(index)]
+    try:
+        return formset.forms[int(index)]
+    except IndexError:
+        pass
