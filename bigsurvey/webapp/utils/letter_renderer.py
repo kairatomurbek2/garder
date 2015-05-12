@@ -20,6 +20,7 @@ class LetterRenderer(object):
     def render(letter):
         site = letter.site
         hazard = letter.hazard
+        warnings = []
         replacements = {
             Placeholders.letter_date: letter.date,
             Placeholders.site_address: site.address1,
@@ -30,14 +31,16 @@ class LetterRenderer(object):
             Placeholders.cust_state: site.cust_state,
             Placeholders.cust_zip: site.cust_zip,
             Placeholders.account_number: site.cust_number,
-            Placeholders.assembly_type: hazard.bp_type_required,
             Placeholders.contact_email: letter.user.email,
-            Placeholders.due_date: hazard.due_install_test_date,
             Placeholders.pp_address: "Plumber Packet Address",
             Placeholders.pp_location: "Plumber Packet Location",
         }
+        if hazard:
+            replacements[Placeholders.assembly_type] = hazard.bp_type_required
+            replacements[Placeholders.due_date] = hazard.due_install_test_date
+        else:
+            warnings.append("Warning: Letter has no Hazard specified. Was it imported?")
         template = letter.letter_type.template
-        warnings = []
         for key in replacements.keys():
             replacement = replacements[key]
             if replacement is None or replacement == "":
