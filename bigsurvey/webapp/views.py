@@ -995,7 +995,7 @@ class ImportMappingsFormsetMixin(object):
                 required_fields.append(field.name)
         return required_fields
 
-    def get_excel_file_headers_as_choices(self):
+    def get_excel_field_headers_as_choices(self):
         if 'cached_excel_headers' in self.request.session:
             return self.request.session['cached_excel_headers']
         if not self.excel_parser:
@@ -1004,10 +1004,14 @@ class ImportMappingsFormsetMixin(object):
         self.request.session['cached_excel_headers'] = headers
         return headers
 
-    def get_excel_first_several_rows(self, rows=EXAMPLE_ROWS_COUNT):
+    def get_excel_example_rows(self, rows_count=EXAMPLE_ROWS_COUNT):
+        if 'cached_excel_example_rows' in self.request.session:
+            return self.request.session['cached_excel_example_rows']
         if not self.excel_parser:
             self._create_excel_parser()
-        return self.excel_parser.get_first_several_rows(rows, self.get_excel_file_headers_as_choices())
+        example_rows = self.excel_parser.get_example_rows(rows_count, self.get_excel_field_headers_as_choices())
+        self.request.session['cached_excel_example_rows'] = example_rows
+        return example_rows
 
     def _create_excel_parser(self):
         self.excel_parser = ExcelParser(self.request.session['import_filename'])
@@ -1027,7 +1031,7 @@ class ImportMappingsFormsetMixin(object):
         model_required_fields = self.get_site_model_required_fields()
         formset.set_required_model_fields(model_required_fields)
 
-        excel_field_choices = self.get_excel_file_headers_as_choices()
+        excel_field_choices = self.get_excel_field_headers_as_choices()
         formset.set_excel_field_choices(excel_field_choices)
         return formset
 
@@ -1035,8 +1039,8 @@ class ImportMappingsFormsetMixin(object):
         context = super(ImportMappingsFormsetMixin, self).get_context_data(**kwargs)
         context['formset'] = self.formset
         context['rows_count'] = (self.formset.total_form_count() - 1) / 2 + 1
-        # context['example_rows'] = self.get_excel_first_several_rows()
-        context['excel_fields'] = self.get_excel_file_headers_as_choices()
+        context['excel_example_rows'] = self.get_excel_example_rows()
+        context['excel_field_headers'] = self.get_excel_field_headers_as_choices()
         return context
 
 

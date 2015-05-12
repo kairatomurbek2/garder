@@ -33,5 +33,5 @@ def take_screenshot(scenario):
             world.browser.get_screenshot_as_file('/home/itattractor/screens/failed_%s.png' % timestamp)
             with open('/home/itattractor/html_sources/failed_%s.txt' % timestamp, 'w') as f:
                 f.write(world.browser.page_source)
-        except:
+        except (IOError, UnicodeDecodeError, UnicodeEncodeError):
             pass

@@ -17,7 +17,14 @@ class ExcelParser(object):
                 headers.append((column_number, cell.value))
         return headers
 
-    def get_first_several_rows(self, rows, headers):
-        start_row = self.headers_row_number + 1
-        for row_number in xrange(rows):
-            actual_row_number = start_row + self.headers_row_number
+    def get_example_rows(self, rows_count, headers):
+        example_rows = []
+        start_row_number = self.headers_row_number + 1
+        for row_number in xrange(rows_count):
+            actual_row_number = start_row_number + row_number
+            row = []
+            for column_number, field_name in headers:
+                cell = self.sheet.cell(actual_row_number, column_number)
+                row.append(cell.value)
+            example_rows.append(row)
+        return example_rows
