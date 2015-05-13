@@ -5,6 +5,11 @@
 {% block scripts %}
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="{% static "js/custom/google_map.js" %}"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            getLocation();
+        }
+    </script>
 {% endblock %}
 {% block menu %}
     {% if hazard.pk %}
@@ -69,9 +74,6 @@
                         <td class="uk-width-5-6" colspan="3">
                             <div id="mapholder" style="height: 250px;"></div><br/>
                             <p id="notification"></p>
-                            <script type="text/javascript">
-                                getLocation();
-                            </script>
                         </td>
                     </tr>
                     <tr class="table-border-bottom">

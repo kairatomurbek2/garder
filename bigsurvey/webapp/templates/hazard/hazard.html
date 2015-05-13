@@ -6,6 +6,11 @@
 {% block scripts %}
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
     <script src="{% static "js/custom/google_map.js" %}"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            showDetailMap();
+        }
+    </script>
 {% endblock %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">{% trans "Edit" %}</a></li>
@@ -42,9 +47,6 @@
                 <td colspan="5">
                     <div id="mapholder" style="height: 250px;"></div><br/>
                     <p id="notification"></p>
-                    <script type="text/javascript">
-                        showDetailMap();
-                    </script>
                 </td>
             </tr>
             <tr class="table-border-bottom">
