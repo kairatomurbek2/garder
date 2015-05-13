@@ -25,6 +25,7 @@ from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GR
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
+from webapp.utils import photo_util
 from webapp.utils.excel_parser import ExcelParser, DateFormatError
 
 
@@ -417,6 +418,15 @@ class HazardBaseFormView(BaseFormView):
 
     def get_success_url(self):
         return reverse('webapp:hazard_detail', args=(self.object.pk,))
+
+    def form_valid(self, form):
+        self.object = form.save()
+        if self.request.FILES.get('photo'):
+            photo_thumb = photo_util.create_thumbnail(self.object.photo)
+            self.object.photo_thumb.save(self.object.photo.name, photo_thumb)
+        if self.success_message:
+            messages.success(self.request, self.success_message)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class HazardAddView(HazardBaseFormView, CreateView):

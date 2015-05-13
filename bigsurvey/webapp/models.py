@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 from main.parameters import *
 from django.contrib.auth.models import User, Group
 from ckeditor.fields import RichTextField
+from utils import photo_util
 
 
 class SourceType(models.Model):
@@ -309,6 +310,21 @@ class SiteStatus(models.Model):
         )
 
 
+class Regulation(models.Model):
+    name = models.CharField(max_length=50, verbose_name=_("Regulation Type"))
+
+    def __unicode__(self):
+        return u"%s" % self.name
+
+    class Meta:
+        verbose_name = _('Regulation Type')
+        verbose_name_plural = _('Regulation Types')
+        ordering = ('name',)
+        permissions = (
+            ('browse_regulation', _('Can browse Regulation Type')),
+        )
+
+
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -428,6 +444,15 @@ class Hazard(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="hazards")
     location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
+    latitude = models.FloatField(blank=True, null=True, default=0, verbose_name=_("Latitude"))
+    longitude = models.FloatField(blank=True, null=True, default=0, verbose_name=_("Longitude"))
+    regulation_type = models.ForeignKey(Regulation, verbose_name=_("Regulation"),
+                                        null=True, blank=True, related_name="hazards")
+    photo = models.ImageField(blank=True, null=True, default=None,
+                              upload_to=photo_util.rename,
+                              verbose_name=_('Photo'))
+    photo_thumb = models.ImageField(blank=True, null=True, default=None, upload_to='photo/thumb/',
+                                    verbose_name=_('Photo Thumbnail'))
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="hazards")
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
     assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),

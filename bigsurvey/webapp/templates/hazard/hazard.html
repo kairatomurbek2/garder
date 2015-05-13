@@ -2,6 +2,11 @@
 {% load i18n %}
 {% load boolean_yes_no %}
 {% load hazards_for_services %}
+{% load staticfiles %}
+{% block scripts %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="{% static "js/custom/google_map.js" %}"></script>
+{% endblock %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">{% trans "Edit" %}</a></li>
     <li><a href="{% url 'webapp:site_detail' hazard.site.pk %}">{% trans "Back to Site" %}</a></li>
@@ -19,11 +24,34 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Hazard Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.hazard_type }}</td>
             </tr>
-            <tr class="table-border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Location 1" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.location1 }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Location 2" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.location2 }}</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr class="table-border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Description" %}</td>
+                <td class="uk-text-center uk-text-primary" colspan="5">{{ hazard.notes }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">
+                            <label>{% trans "Geolocation" %}</label>
+                </td>
+                <td colspan="5">
+                    <div id="mapholder" style="height: 250px;"></div><br/>
+                    <p id="notification"></p>
+                    <script type="text/javascript">
+                        showDetailMap();
+                    </script>
+                </td>
+            </tr>
+            <tr class="table-border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Latitude" %}</td>
+                <td class="uk-text-center uk-text-primary" id="latitude">{{ hazard.latitude }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Longitude" %}</td>
+                <td class="uk-text-center uk-text-primary" id="longitude">{{ hazard.longitude }}</td>
                 <td colspan="2"></td>
             </tr>
             <tr>
@@ -58,16 +86,6 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Serial No." %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.serial_no }}</td>
             </tr>
-            {% if fire %}
-                <tr class="table-border-bottom">
-                    <td class="uk-text-right uk-text-muted">{% trans "Detector Manufacturer" %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ hazard.detector_manufacturer }}</td>
-                    <td class="uk-text-right uk-text-muted">{% trans "Detector Model" %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ hazard.detector_model }}</td>
-                    <td class="uk-text-right uk-text-muted">{% trans "Detector Serial No." %}</td>
-                    <td class="uk-text-center uk-text-primary">{{ hazard.detector_serial_no }}</td>
-                </tr>
-            {% endif %}
             <tr class="table-border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "BP Type Required" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.bp_type_required }}</td>
@@ -76,8 +94,18 @@
                 <td colspan="2"></td>
             </tr>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
-                <td class="uk-text-center uk-text-primary" colspan="5">{{ hazard.notes }}</td>
+                <td></td>
+                <td class="uk-text-right uk-text-muted">{% trans "Photo" %}</td>
+                    <td class="uk-text-center uk-text-primary" colspan="2">
+                        {% if hazard.photo %}
+                            <a href="{{ hazard.photo.url }}" target="_blank">
+                                <img src="{{ hazard.photo_thumb.url }}"/>
+                            </a>
+                        {% else %}
+                            <span>{% trans "No photo available" %}</span>
+                        {% endif %}
+                    </td>
+                <td colspan="2"></td>
             </tr>
             </tbody>
         </table>
