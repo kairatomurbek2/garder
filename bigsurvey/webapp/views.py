@@ -1,4 +1,5 @@
 from collections import OrderedDict
+import json
 import time
 import os
 from django.conf import settings
@@ -1062,6 +1063,8 @@ class ImportMappingsFormsetMixin(object):
         context['rows_count'] = (self.formset.total_form_count() - 1) / 2 + 1
         context['excel_example_rows'] = self.get_excel_example_rows()
         context['excel_field_headers'] = self.get_excel_field_headers_as_choices()
+        if 'import_mappings' in self.request.session:
+            context['import_mappings'] = json.dumps(self.request.session['import_mappings'])
         return context
 
 
@@ -1079,6 +1082,7 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
         self.formset = self.get_formset()
         if self.formset.is_valid():
             mappings = self.formset.get_mappings()
+            self.request.session['import_mappings'] = mappings
             try:
                 self.excel_parser.check_constraints(mappings)
                 self.excel_parser.parse_and_save(mappings, self.request.session['import_pws_pk'])

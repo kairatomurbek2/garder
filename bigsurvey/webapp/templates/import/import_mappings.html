@@ -2,80 +2,84 @@
 {% load i18n %}
 {% load form_helper %}
 {% block content %}
-    <div class="uk-grid">
-        <div class="uk-width-1-1">
-            <h2>{% trans 'Example rows' %}</h2>
+    <div class="wrapper">
+        <div class="uk-grid">
+            <div class="uk-width-1-1">
+                <h2>{% trans 'Example rows' %}</h2>
 
-            <div class="uk-overflow-container">
-                <table class="uk-table bordered-all">
-                    <thead>
-                    <tr>
-                        {% for column_index, field_name in excel_field_headers %}
-                            <th>{{ field_name }}</th>
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for row in excel_example_rows %}
+                <div class="uk-overflow-container">
+                    <table class="uk-table bordered-all">
+                        <thead>
                         <tr>
-                            {% for value in row %}
-                                <td>{{ value }}</td>
+                            {% for column_index, field_name in excel_field_headers %}
+                                <th>{{ field_name }}</th>
                             {% endfor %}
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for row in excel_example_rows %}
+                            <tr>
+                                {% for value in row %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="uk-grid">
-        <div class="uk-width-2-3">
-            {% if formset.non_form_errors %}
-                <div class="alert-margin-top uk-alert uk-alert-danger" data-uk-alert>
-                    <a href="" class="uk-alert-close uk-close"></a>
-                    {{ formset.non_form_errors }}
-                </div>
-            {% endif %}
-            <form class="uk-form" method="post" action="{% url 'webapp:import-mappings-process' %}">
-                {% csrf_token %}
-                {{ formset.management_form }}
+        <div class="uk-grid">
+            <div class="uk-width-2-3">
+                {% if formset.non_form_errors %}
+                    <div class="alert-margin-top uk-alert uk-alert-danger" data-uk-alert>
+                        <a href="" class="uk-alert-close uk-close"></a>
+                        {{ formset.non_form_errors }}
+                    </div>
+                {% endif %}
+                <button type="button" class="uk-button uk-button-danger" data-action="reset">{% trans 'Reset' %}</button>
+                <button type="button" class="uk-button uk-button-success" data-action="populate">{% trans 'Populate from cache' %}</button>
+                <form class="uk-form" method="post" action="{% url 'webapp:import-mappings-process' %}">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
 
-                <table class="uk-table">
-                    <tbody>
-                    {% for row_index in rows_count|xrange_filter %}
-                        <tr>
-                            {% for col_index in '01'|make_list %}
-                                {% get_formset_index row_index col_index as index %}
-                                {% get_form formset index as form %}
-                                <td>
-                                    {{ form.model_field }}
-                                    {{ form.model_field.label }}
-                                    {% if form.fields.excel_field.required %}
-                                        <span class="uk-text-danger">*</span>
-                                    {% endif %}
-                                    <br>
-                                    <span class="uk-text-muted">{{ form.model_field.help_text }}</span>
-                                </td>
-                                <td>
-                                    {{ form.excel_field }}
-                                    {{ form.excel_field.errors }}
-                                </td>
-                            {% endfor %}
-                        </tr>
+                    <table class="uk-table">
+                        <tbody>
+                        {% for row_index in rows_count|xrange_filter %}
+                            <tr>
+                                {% for col_index in '01'|make_list %}
+                                    {% get_formset_index row_index col_index as index %}
+                                    {% get_form formset index as form %}
+                                    <td>
+                                        {{ form.model_field }}
+                                        {{ form.model_field.label }}
+                                        {% if form.fields.excel_field.required %}
+                                            <span class="uk-text-danger">*</span>
+                                        {% endif %}
+                                        <br>
+                                        <span class="uk-text-muted">{{ form.model_field.help_text }}</span>
+                                    </td>
+                                    <td>
+                                        {{ form.excel_field }}
+                                        {{ form.excel_field.errors }}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="submit" class="uk-button uk-button-primary margin-top-bottom-20 uk-float-right">{% trans 'Submit' %}</button>
+                </form>
+            </div>
+            <div class="uk-width-1-3" style="padding-top: 20px;">
+                <ul class="unselected-fields">
+                    {% for value, field_name in excel_field_headers %}
+                        <li data-value="{{ value }}">
+                            {{ field_name }}
+                        </li>
                     {% endfor %}
-                    </tbody>
-                </table>
-                <button type="submit" class="uk-button uk-button-primary margin-top-bottom-20 uk-float-right">{% trans 'Submit' %}</button>
-            </form>
-        </div>
-        <div class="uk-width-1-3" style="padding-top: 20px;">
-            <ul class="unselected-fields">
-                {% for value, field_name in excel_field_headers %}
-                    <li data-value="{{ value }}">
-                        {{ field_name }}
-                    </li>
-                {% endfor %}
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -83,24 +87,63 @@
     <script>
         var excel_fields_selector = 'select[name*="excel_field"]';
         var unselected_fields_selector = '.unselected-fields';
+
+        var cached_mappings;
+        {% if import_mappings %}
+            cached_mappings = JSON.parse('{{ import_mappings|safe }}');
+        {% else %}
+            cached_mappings = null;
+        {% endif %}
+
+        var selectChangedTrigger = function (select) {
+            var val = select.val();
+            var prev_val = select.data('previous');
+            $(unselected_fields_selector).find('li[data-value="' + prev_val + '"]').show();
+            if (val === '') {
+            } else {
+                $(unselected_fields_selector).find('li[data-value="' + val + '"]').hide();
+                $(excel_fields_selector).not(select).filter(function () {
+                    return $(this).val() === val;
+                }).val('').data('previous', '');
+            }
+            $(this).data('previous', val);
+        };
+
+        var resetMappings = function () {
+            $(excel_fields_selector).val('');
+            $(unselected_fields_selector).find('li').show();
+        };
+
+        var populateMappings = function () {
+            if (cached_mappings) {
+                for (var key in cached_mappings) {
+                    if (cached_mappings.hasOwnProperty(key)) {
+                        var val = cached_mappings[key];
+                        var select = $('input[value="' + key + '"]').parent('td').next().find(excel_fields_selector);
+                        select.val(val);
+                        selectChangedTrigger(select);
+                    }
+                }
+            }
+        };
+
         $(document).ready(function () {
-            $(excel_fields_selector).each(function () {
-                $(this).data('previous', $(this).val());
-            });
+            $(excel_fields_selector).data('previous', $(this).val());
 
             $(excel_fields_selector).change(function () {
-                var val = $(this).val();
-                var prev_val = $(this).data('previous');
-                $(unselected_fields_selector).find('li[data-value="' + prev_val + '"]').show();
-                if (val === '') {
-                } else {
-                    $(unselected_fields_selector).find('li[data-value="' + val + '"]').hide();
-                    $(excel_fields_selector).not(this).filter(function () {
-                        return $(this).val() === val;
-                    }).val('');
-                }
-                $(this).data('previous', val);
+                selectChangedTrigger($(this));
             });
+
+            $('button[data-action="reset"]').click(function () {
+                resetMappings();
+            });
+
+            $('button[data-action="populate"]').click(function () {
+                resetMappings();
+                populateMappings();
+            });
+
+            populateMappings();
         });
     </script>
 {% endblock %}
