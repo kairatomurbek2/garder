@@ -1,11 +1,15 @@
+import json
 import os
 from datetime import datetime
+import subprocess
+
 from django.conf import settings
-from django.core.exceptions import MultipleObjectsReturned
+from django.core.management import call_command
 from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 import xlrd
 from xlrd.biffh import XL_CELL_NUMBER
+
 from main.parameters import Messages
 from webapp import models
 
@@ -84,21 +88,29 @@ class ExcelParser(object):
                 if field_name == self.CUST_NUMBER_FIELD_NAME:
                     if value in cust_numbers:
                         raise IntegrityError(
-                            Messages.Site.duplicate_cust_numbers % (self.prettify_cell_index(cust_numbers[value][0], cust_numbers[value][1]), self.prettify_cell_index(row_number, column_number)))
+                            Messages.Import.duplicate_cust_numbers % (self.prettify_cell_index(cust_numbers[value][0], cust_numbers[value][1]), self.prettify_cell_index(row_number, column_number)))
                     cust_numbers[value] = (row_number, column_number)
                 if field_name in self.DATE_FIELDS:
                     if not self._is_empty(value):
                         try:
                             datetime.strptime(str(value), self.DATE_FORMAT)
                         except ValueError:
-                            raise DateFormatError(Messages.Site.incorrect_date_format % (self.prettify_cell_index(row_number, column_number), self.DATE_FORMAT))
+                            raise DateFormatError(Messages.Import.incorrect_date_format % (self.prettify_cell_index(row_number, column_number), self.DATE_FORMAT))
                 if field_name in self.FOREIGN_KEY_FIELDS:
                     foreign_key_model = model_field.rel.to
                     available_values = foreign_key_model.objects.values_list('pk', flat=True).order_by('pk')
                     if not self._is_empty(value) and value not in available_values:
-                        raise IntegrityError(Messages.Site.foreign_key_error % (self.prettify_cell_index(row_number, column_number), ', '.join(map(str, available_values)), value))
+                        raise IntegrityError(Messages.Import.foreign_key_error % (self.prettify_cell_index(row_number, column_number), ', '.join(map(str, available_values)), value))
                 if self._is_empty(value) and (not model_field.null and model_field.default == NOT_PROVIDED):
-                    raise IntegrityError(Messages.Site.required_value_is_empty % self.prettify_cell_index(row_number, column_number))
+                    raise IntegrityError(Messages.Import.required_value_is_empty % self.prettify_cell_index(row_number, column_number))
+
+    def parse_and_save_in_background(self, mappings, pws_pk):
+        filename_option = '--filename=%s' % self.filename
+        pws_pk_option = '--pws_pk=%d' % pws_pk
+        json_mappings = json.dumps(json.dumps(mappings, separators=(',', ':')))
+        mappings_option = '--mappings=%s' % json_mappings
+        command = '%s %s %s %s %s %s' % (settings.PYTHON_EXECUTABLE, settings.MANAGE_PY, 'parse_excel', filename_option, pws_pk_option, mappings_option)
+        subprocess.Popen(command, shell=True)
 
     def parse_and_save(self, mappings, pws_pk):
         self.open()

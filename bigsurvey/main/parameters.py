@@ -95,12 +95,15 @@ class Messages:
         editing_success = _('Site was successfully updated')
         editing_error = _('Error while submitting form')
         not_found = _('Site was not found')
+
+    class Import:
         required_fields_not_filled = _('Please fill in all required fields marked by asterisk')
         duplicate_excel_fields = _('You have selected the same Excel field more than once')
         foreign_key_error = _('Incorrect value in %s cell. Available values are %s, but found %s')
         required_value_is_empty = _('Found empty value in %s cell, please fill in this cell')
         incorrect_date_format = _('Date in %s cell does not match "%s" format')
         duplicate_cust_numbers = _('Duplicate Customer Numbers found in %s and %s cells')
+        import_was_started = _('Import was started. It will be completed within 5 minutes')
 
     class BatchUpdate:
         success = _('Batch update successfully performed')

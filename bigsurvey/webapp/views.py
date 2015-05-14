@@ -1095,7 +1095,8 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
             self.request.session['import_mappings'] = mappings
             try:
                 self.excel_parser.check_constraints(mappings)
-                self.excel_parser.parse_and_save(mappings, self.request.session['import_pws_pk'])
+                self.excel_parser.parse_and_save_in_background(mappings, self.request.session['import_pws_pk'])
+                messages.info(self.request, Messages.Import.import_was_started)
                 return redirect('webapp:home')
             except (IntegrityError, DateFormatError) as e:
                 self.formset.add_error(str(e))

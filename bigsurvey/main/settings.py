@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -132,5 +133,9 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
+
+PYTHON_EXECUTABLE = os.path.join(os.path.dirname(BASE_DIR), 'virtualenv', 'bin', 'python')
+
+MANAGE_PY = os.path.join(BASE_DIR, 'manage.py')
 
 from settings_local import *

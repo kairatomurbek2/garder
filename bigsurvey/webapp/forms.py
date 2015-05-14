@@ -271,12 +271,12 @@ class BaseImportMappingsFormSet(forms.BaseFormSet):
 
     def clean(self):
         if any(self.errors):
-            raise ValidationError(Messages.Site.required_fields_not_filled)
+            raise ValidationError(Messages.Import.required_fields_not_filled)
         excel_fields = []
         for form in self.forms:
             excel_field = form.cleaned_data.get('excel_field')
             if excel_field and excel_field in excel_fields:
-                raise forms.ValidationError(Messages.Site.duplicate_excel_fields)
+                raise forms.ValidationError(Messages.Import.duplicate_excel_fields)
             excel_fields.append(excel_field)
 
     def set_model_fields_labels(self, labels):

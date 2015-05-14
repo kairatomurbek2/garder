@@ -16,94 +16,92 @@
         </div>
         <div class="wrapper uk-width-4-5">
             {% paginate %}
-            <div class="wrapper">
-                <table class="uk-table uk-table-hover">
-                    <thead>
-                    <tr class="table-border-bottom">
-                        <th class="table-border-right uk-text-center uk-width-1-10">
-                            {% trans "No." %}
-                        </th>
-                        <th>
-                            {% trans "PWS" %}
-                        </th>
-                        <th>
-                            {% trans "Customer Account" %}
-                        </th>
-                        <th>
-                            {% trans "Site City" %}
-                        </th>
-                        <th>
-                            {% trans "Service Address" %}
-                        </th>
-                        <th>
-                            {% trans "Service Type" %}
-                        </th>
-                        <th>
-                            {% trans "Hazard Type" %}
-                        </th>
-                        <th>
-                            {% trans "BP Type" %}
-                        </th>
-                        <th>
-                            {% trans "Test Date" %}
-                        </th>
-                        <th>
-                            {% trans "Tester" %}
-                        </th>
-                        <th>
-                            {% trans "Test Result" %}
-                        </th>
-                        <th class="uk-text-center table-border-left uk-width-1-10">
-                            {% trans "Actions" %}
-                        </th>
+            <table class="uk-table uk-table-hover">
+                <thead>
+                <tr class="table-border-bottom">
+                    <th class="table-border-right uk-text-center uk-width-1-10">
+                        {% trans "No." %}
+                    </th>
+                    <th>
+                        {% trans "PWS" %}
+                    </th>
+                    <th>
+                        {% trans "Customer Account" %}
+                    </th>
+                    <th>
+                        {% trans "Site City" %}
+                    </th>
+                    <th>
+                        {% trans "Service Address" %}
+                    </th>
+                    <th>
+                        {% trans "Service Type" %}
+                    </th>
+                    <th>
+                        {% trans "Hazard Type" %}
+                    </th>
+                    <th>
+                        {% trans "BP Type" %}
+                    </th>
+                    <th>
+                        {% trans "Test Date" %}
+                    </th>
+                    <th>
+                        {% trans "Tester" %}
+                    </th>
+                    <th>
+                        {% trans "Test Result" %}
+                    </th>
+                    <th class="uk-text-center table-border-left uk-width-1-10">
+                        {% trans "Actions" %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for test in filtered_tests %}
+                    <tr>
+                        <td class="uk-text-center table-border-right">
+                            {{ test.pk }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.site.pws.number }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.site.cust_number }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.site.city }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.site.address1 }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.service_type }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.hazard_type }}
+                        </td>
+                        <td>
+                            {{ test.bp_device.bp_type_present }}
+                        </td>
+                        <td>
+                            {{ test.test_date }}
+                        </td>
+                        <td>
+                            {{ test.tester }}
+                        </td>
+                        <td>
+                            {{ test.test_result|test_result }}
+                        </td>
+                        <td class="table-border-left uk-text-center">
+                            <a href="{% url "webapp:hazard_detail" test.bp_device.pk %}" id="hazard_{{ test.bp_device.pk }}_detail_link">
+                                {% trans "Detail" %}
+                            </a>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    {% for test in filtered_tests %}
-                        <tr>
-                            <td class="uk-text-center table-border-right">
-                                {{ test.pk }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.site.pws.number }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.site.cust_number }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.site.city }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.site.address1 }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.service_type }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.hazard_type }}
-                            </td>
-                            <td>
-                                {{ test.bp_device.bp_type_present }}
-                            </td>
-                            <td>
-                                {{ test.test_date }}
-                            </td>
-                            <td>
-                                {{ test.tester }}
-                            </td>
-                            <td>
-                                {{ test.test_result|test_result }}
-                            </td>
-                            <td class="table-border-left uk-text-center">
-                                <a href="{% url "webapp:hazard_detail" test.bp_device.pk %}" id="hazard_{{ test.bp_device.pk }}_detail_link">
-                                    {% trans "Detail" %}
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                {% endfor %}
+                </tbody>
+            </table>
             {% paginate %}
         </div>
     </div>

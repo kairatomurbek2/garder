@@ -3,14 +3,11 @@
 {% load widget_tweaks %}
 {% load staticfiles %}
 {% autopaginate site_filter.qs as filtered_sites 50 %}
-<div class="wrapper">
-    {% include 'messages.html' %}
-</div>
 <div class="uk-grid">
-    <div class="wrapper uk-width-1-5 uk-margin-right">
-        {% include 'site/site_filters.html' %}
-    </div>
-    <div class="wrapper uk-width-3-5 uk-margin-left">
+    {% include 'site/site_filters.html' %}
+
+    <div class="uk-width-4-5" style="margin-left: 260px; padding-top: 10px;">
+        {% include 'messages.html' %}
         <div class="pagination-wrapper">{% paginate %}</div>
 
         <table class="uk-table big-table uk-table-hover fixed-headers">
@@ -182,12 +179,6 @@
     }
 </style>
 <script>
-    $('.clickable-row').click(function (e) {
-        window.document.location = $(this).data("href");
-    });
-
-    $('.fixed-headers').floatThead();
-
     var filters = $('.fixed-filters');
     var navbar = $('nav.uk-navbar');
     var navbarHeight = parseInt(navbar.height());
@@ -198,8 +189,15 @@
     var lastScrollLeft = 0;
     var documentScrollLeft;
 
+    $('.clickable-row').click(function (e) {
+        window.document.location = $(this).data("href");
+    });
+
+    $('.fixed-headers').floatThead({
+        scrollingTop: navbarHeight
+    });
+
     $(document).scroll(function (e) {
-        setFiltersOffset();
         documentScrollLeft = $(document).scrollLeft();
         if (lastScrollLeft != documentScrollLeft) {
             scrollPagination();
@@ -209,18 +207,6 @@
 
     function scrollPagination() {
         paginationWrapper.css('margin-left', documentScrollLeft + 'px');
-    }
-
-
-    function setFiltersOffset() {
-        var offsetTop = filters.offset().top;
-        if (offsetTop > defaultTop + navbarHeight) {
-            filters.css('top', 0);
-            navbar.hide();
-        } else {
-            filters.css('top', defaultTop + 'px');
-            navbar.show();
-        }
     }
 
 </script>
