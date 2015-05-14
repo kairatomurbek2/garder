@@ -45,8 +45,9 @@ class ExcelParser(object):
         headers = []
         for column_number in xrange(self.sheet.ncols):
             cell = self.sheet.cell(self.headers_row_number, column_number)
-            if cell.value:
-                headers.append((column_number, cell.value))
+            value = self._get_cell_value(cell)
+            if not self._is_empty(value):
+                headers.append((column_number, value))
         return headers
 
     def get_example_rows(self, rows_count, headers):

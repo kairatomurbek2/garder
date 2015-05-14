@@ -138,4 +138,6 @@ PYTHON_EXECUTABLE = os.path.join(os.path.dirname(BASE_DIR), 'virtualenv', 'bin',
 
 MANAGE_PY = os.path.join(BASE_DIR, 'manage.py')
 
+STUB_FILES_DIR = os.path.join(BASE_DIR, 'stub-files')
+
 from settings_local import *

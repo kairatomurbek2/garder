@@ -5,6 +5,8 @@ Messages = Messages
 
 BASE_URL = 'http://127.0.0.1:8000'
 
+DELIMITER = ' :: '
+
 
 def get_url(url):
     return BASE_URL + url
@@ -39,6 +41,9 @@ class Urls:
     letter_edit = '/letter/%s/edit/'
     letter_add = '/site/%s/add-letter/'
     letter_pdf = '/letter/%s/pdf/'
+    import_page = '/import/'
+    import_mappings = '/import-mappings/'
+    import_mappings_process = '/import-mappings-process/'
 
 
 class Logins:
@@ -69,6 +74,7 @@ class Xpath:
         # Common
         form = './/form[@name="%s"]'
         input = './/input[@name="%s"]'
+        file_input = './/input[@type="file"][@name="%s"]'
         textarea = './/textarea[@name="%s"]'
         select = './/select[@name="%s"]'
         option_by_value = './/option[@value="%s"]'
@@ -94,6 +100,7 @@ class Xpath:
         pagination_link = './/a[@data-action="pagination"][@data-id="%s"]'
         survey_detail = '//div[@id="spotable_content"]//table/tbody/tr[%s]//a'
         site_detail_link = './/tr[@class="clickable-row"][@data-id="%s"]'
+        select_by_model_field = './/input[@value="%s"]/../following-sibling::td/select'
         survey_edit_link = '//*[@class="uk-navbar-flip"]//a[1]'
         site_hazards_button = '//a[@id="hazards_button"]'
         site_surveys_button = '//a[@id="surveys_button"]'
@@ -101,3 +108,28 @@ class Xpath:
     more_link = './/li[@id="bfp_menu"]/a'
     form_element = './/input|.//textarea|.//select'
     csrfmiddlewaretoken = './/input[@name="csrfmiddlewaretoken"]'
+    import_mappings_form_errors = './/div[contains(@class, "uk-alert-danger")]/ul/li'
+
+
+import_mappings = {
+    "cust_city": 18,
+    "city": 8,
+    "cust_code": 2,
+    "zip": 10,
+    "street_number": 5,
+    "meter_number": 12,
+    "connect_date": 3,
+    "route": 11,
+    "meter_size": 13,
+    "cust_number": 0,
+    "apt": 7,
+    "cust_zip": 20,
+    "state": 9,
+    "meter_reading": 14,
+    "address1": 6,
+    "cust_address1": 16,
+    "cust_name": 15,
+    "cust_state": 19,
+    "cust_address2": 17,
+    "next_survey_date": 4
+}

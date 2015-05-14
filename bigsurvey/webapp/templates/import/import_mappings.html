@@ -39,7 +39,7 @@
                 {% endif %}
                 <button type="button" class="uk-button uk-button-danger" data-action="reset">{% trans 'Reset' %}</button>
                 <button type="button" class="uk-button uk-button-success" data-action="populate">{% trans 'Populate from cache' %}</button>
-                <form class="uk-form" method="post" action="{% url 'webapp:import-mappings-process' %}">
+                <form class="uk-form" method="post" action="{% url 'webapp:import-mappings-process' %}" name="import-mappings">
                     {% csrf_token %}
                     {{ formset.management_form }}
 
@@ -72,6 +72,7 @@
                 </form>
             </div>
             <div class="uk-width-1-3" style="padding-top: 20px;">
+                <h3>{% trans 'Unselected Fields' %}</h3>
                 <ul class="unselected-fields">
                     {% for value, field_name in excel_field_headers %}
                         <li data-value="{{ value }}">

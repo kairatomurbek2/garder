@@ -5,7 +5,7 @@
     <div class="wrapper">
         <div class="uk-grid">
             <div class="uk-width-1-2 uk-container-center">
-                <form class="uk-form" method="post" enctype="multipart/form-data">
+                <form class="uk-form" method="post" enctype="multipart/form-data" name="import">
                     {% csrf_token %}
                     <div class="uk-form-row">
                         <p>{% trans 'Select File' %}</p>

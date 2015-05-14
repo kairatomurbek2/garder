@@ -1,6 +1,6 @@
 from common_steps import *
 from lettuce import *
-from settings import *
+from data import *
 from webapp.models import Survey
 
 

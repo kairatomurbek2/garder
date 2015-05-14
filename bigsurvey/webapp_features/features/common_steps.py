@@ -1,6 +1,9 @@
+import os
+from django.conf import settings
+import time
 import helper
 from lettuce import *
-from settings import *
+from data import *
 from django.core.management import call_command
 
 
@@ -72,6 +75,14 @@ def fill_in_textfield(step, field_name, value):
     helper.check_element_exists(field, 'Field "%s" was not found' % field_name)
     field.clear()
     field.send_keys(value)
+
+
+@step('I fill in file input "([-_a-z0-9]+)" with "(.*)"')
+def fill_in_file_field(step, field_name, filename):
+    field = helper.find(Xpath.Pattern.file_input % field_name)
+    helper.check_element_exists(field, 'File field "%s" was not found' % field_name)
+    full_filepath = os.path.join(settings.STUB_FILES_DIR, filename)
+    field.send_keys(full_filepath)
 
 
 @step('I fill in following fields with following values')
@@ -177,6 +188,16 @@ def check_multiple_values_from_checkbox(step, checkbox_name):
 @step('I reset database')
 def reset_database(step):
     call_command('restore_db', interactive=False, verbosity=1)
+
+
+@step('I wait for (\d+) seconds?')
+def wait_seconds(step, seconds):
+    time.sleep(float(seconds))
+
+
+@step('I refresh page')
+def refresh_page(step):
+    world.browser.refresh()
 
 
 def click_element_by_xpath(xpath):

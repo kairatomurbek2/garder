@@ -1,7 +1,7 @@
 from selenium.webdriver import ActionChains
 from common_steps import *
 from lettuce import *
-from settings import *
+from data import *
 
 
 @step('I should see following menu links')
@@ -36,5 +36,5 @@ def click_menu_link(step, link_name):
 @step('I click "([-_a-z0-9]+)" outer menu link')
 def click_outer_menu_link(step, link_name):
     link = helper.find(Xpath.Pattern.menu_item % link_name)
-    helper.check_element_exists(link, '"%s" link is not in menu' % link_name)
+    helper.check_element_exists(link, '"%s" link is not in outer menu' % link_name)
     link.click()

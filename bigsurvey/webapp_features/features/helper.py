@@ -1,6 +1,6 @@
 from lettuce import *
 from selenium.common.exceptions import *
-from settings import *
+from data import *
 
 
 def find(xpath, context=None):
@@ -43,3 +43,17 @@ def check_text_doesnt_exist(text, assert_message, context=None):
     context = context or world.browser
     elem = find(Xpath.Pattern.text_inside_element % text, context)
     check_element_doesnt_exist(elem, assert_message)
+
+
+def check_text_exists_inside_element(xpath, text, assert_message, context=None):
+    context = context or world.browser
+    elem = find(xpath, context)
+    check_element_exists(elem, 'Element with xpath "%s" was not found' % xpath)
+    assert text in elem.text, assert_message
+
+
+def check_text_doesnt_exist_inside_element(xpath, text, assert_message, context=None):
+    context = context or world.browser
+    elem = find(xpath, context)
+    check_element_exists(elem, 'Element with xpath "%s" was not found' % xpath)
+    assert text not in elem.text, assert_message

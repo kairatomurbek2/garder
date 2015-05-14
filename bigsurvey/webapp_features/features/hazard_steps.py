@@ -1,6 +1,6 @@
 from common_steps import *
 from lettuce import *
-from settings import *
+from data import *
 
 @step('I open "hazard_list" page')
 def open_hazard_list_page(step):

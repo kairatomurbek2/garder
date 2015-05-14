@@ -11,3 +11,4 @@ testres.xml
 erd.png
 bigsurvey/uploads/*
 !bigsurvey/uploads/.gitkeep
+.~*

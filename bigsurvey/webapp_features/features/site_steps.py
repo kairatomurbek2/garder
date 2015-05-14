@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from common_steps import *
 from lettuce import *
-from settings import *
+from data import *
 
 
 @step('I directly open "site_list" page')
