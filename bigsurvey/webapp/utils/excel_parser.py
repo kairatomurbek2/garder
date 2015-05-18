@@ -14,6 +14,10 @@ from main.parameters import Messages
 from webapp import models
 
 
+NUMBER_OF_LETTERS_IN_ENGLISH_ALPHABET = 26
+FINISHED = 100
+
+
 class DateFormatError(Exception):
     pass
 
@@ -30,33 +34,34 @@ class ExcelParser(object):
         self.filename = filename
         self.book = None
         self.sheet = None
+        self.headers = []
         self.headers_row_number = headers_row_number
-
-    def _open(self):
-        self.book = xlrd.open_workbook(os.path.join(settings.MEDIA_ROOT, self.filename))
-        self.sheet = self.book.sheet_by_index(0)
 
     def open(self):
         if not self.sheet:
-            self._open()
+            self.book = xlrd.open_workbook(self.filename)
+            self.sheet = self.book.sheet_by_index(0)
 
-    def get_headers_as_choices(self):
+    def _parse_headers(self):
         self.open()
-        headers = []
         for column_number in xrange(self.sheet.ncols):
             cell = self.sheet.cell(self.headers_row_number, column_number)
             value = self._get_cell_value(cell)
             if not self._is_empty(value):
-                headers.append((column_number, value))
-        return headers
+                self.headers.append((column_number, value))
 
-    def get_example_rows(self, rows_count, headers):
+    def get_headers_as_choices(self):
+        if not self.headers:
+            self._parse_headers()
+        return self.headers
+
+    def get_example_rows(self, rows_count):
         self.open()
         example_rows = []
         start_row_number = self.headers_row_number + 1
         for row_number in xrange(start_row_number, start_row_number + rows_count):
             row = []
-            for column_number, field_name in headers:
+            for column_number, field_name in self.headers:
                 cell = self.sheet.cell(row_number, column_number)
                 row.append(self._get_cell_value(cell))
             example_rows.append(row)
@@ -68,10 +73,10 @@ class ExcelParser(object):
         return cell.value
 
     def prettify_cell_index(self, row_number, col_number):
-        if col_number < 26:
+        if col_number < NUMBER_OF_LETTERS_IN_ENGLISH_ALPHABET:
             col_in_letters = chr(col_number + ord('A'))
         else:
-            col_in_letters = chr((col_number - 1) / 26 + ord('A')) + chr(col_number % 26 + ord('A'))
+            col_in_letters = chr((col_number - 1) / NUMBER_OF_LETTERS_IN_ENGLISH_ALPHABET + ord('A')) + chr(col_number % NUMBER_OF_LETTERS_IN_ENGLISH_ALPHABET + ord('A'))
         return '%s%s' % (col_in_letters, row_number + 1)
 
     def _is_empty(self, value):
@@ -105,20 +110,25 @@ class ExcelParser(object):
                 if self._is_empty(value) and (not model_field.null and model_field.default == NOT_PROVIDED):
                     raise IntegrityError(Messages.Import.required_value_is_empty % self.prettify_cell_index(row_number, column_number))
 
-    def parse_and_save_in_background(self, mappings, pws_pk):
+    def parse_and_save_in_background(self, mappings, pws_pk, import_progress_pk):
         filename_option = '--filename=%s' % self.filename
         pws_pk_option = '--pws_pk=%d' % pws_pk
         json_mappings = json.dumps(json.dumps(mappings, separators=(',', ':')))
         mappings_option = '--mappings=%s' % json_mappings
-        command = '%s %s %s %s %s %s' % (settings.PYTHON_EXECUTABLE, settings.MANAGE_PY, 'parse_excel', filename_option, pws_pk_option, mappings_option)
+        import_progress_option = '--import_progress_pk=%d' % import_progress_pk
+        command = '%s %s %s %s %s %s %s' % (settings.PYTHON_EXECUTABLE, settings.MANAGE_PY, 'parse_excel', filename_option, pws_pk_option, mappings_option, import_progress_option)
         subprocess.Popen(command, shell=True)
 
-    def parse_and_save(self, mappings, pws_pk):
+    def parse_and_save(self, mappings, pws_pk, import_progress_pk):
         self.open()
+        import_progress = models.ImportProgress.objects.get(pk=import_progress_pk)
+        approximate_total_count = self.sheet.nrows
         start_row_number = self.headers_row_number + 1
         new_sites = []
+        new_sites_counter = 0
         counter = 0
         for row_number in xrange(start_row_number, self.sheet.nrows):
+            counter += 1
             cust_number_column_number = mappings['cust_number']
             cust_number_cell = self.sheet.cell(row_number, cust_number_column_number)
             cust_number = self._get_cell_value(cust_number_cell)
@@ -142,9 +152,14 @@ class ExcelParser(object):
                 site.save()
             else:
                 new_sites.append(site)
-                counter += 1
-                if counter == 1000:
+                new_sites_counter += 1
+                if new_sites_counter == 1000:
                     models.Site.objects.bulk_create(new_sites)
-                    counter = 0
+                    new_sites_counter = 0
                     new_sites = []
+            if counter % 1000 == 0:
+                import_progress.progress = int(100. * counter / approximate_total_count)
+                import_progress.save()
         models.Site.objects.bulk_create(new_sites)
+        import_progress.progress = FINISHED
+        import_progress.save()

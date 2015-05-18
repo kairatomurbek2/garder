@@ -94,7 +94,7 @@ tr.bottom-half {
 .fixed-navbar {
     position: fixed;
     width: 100%;
-    z-index: 1000000;
+    z-index: 1000;
 }
 
 .navbar-hack {
@@ -196,16 +196,7 @@ ul.form-ul {
     font-size: 20px;
 }
 
-.two-columns-list {
-    overflow: hidden;
-}
-
-.two-columns-list > li {
-    list-style-type: none;
-    float: left;
-    display: inline;
-    width: 50%;
-    border-bottom: 1px solid darkgray;
-    height: 80px;
-    padding-top: 20px;
+.example-rows-table td, .example-rows-table th {
+    font-size: 12px;
+    padding: 2px;
 }

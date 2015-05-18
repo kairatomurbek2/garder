@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load form_helper %}
+{% load staticfiles %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/components/progress.min.css' %}">
+{% endblock %}
 {% block content %}
     <div class="wrapper">
         <div class="uk-grid">
@@ -8,11 +12,15 @@
                 <h2>{% trans 'Example rows' %}</h2>
 
                 <div class="uk-overflow-container">
-                    <table class="uk-table bordered-all">
+                    <table class="uk-table bordered-all example-rows-table">
                         <thead>
                         <tr>
                             {% for column_index, field_name in excel_field_headers %}
-                                <th>{{ field_name }}</th>
+                                <th data-value="{{ column_index }}">
+                                    {{ field_name }}
+                                    <br>
+                                    <span class="model_field uk-text-danger">{% trans 'None' %}</span>
+                                </th>
                             {% endfor %}
                         </tr>
                         </thead>
@@ -37,9 +45,12 @@
                         {{ formset.non_form_errors }}
                     </div>
                 {% endif %}
-                <button type="button" class="uk-button uk-button-danger" data-action="reset">{% trans 'Reset' %}</button>
-                <button type="button" class="uk-button uk-button-success" data-action="populate">{% trans 'Populate from cache' %}</button>
                 <form class="uk-form" method="post" action="{% url 'webapp:import-mappings-process' %}" name="import-mappings">
+                    <button type="submit" class="uk-button uk-button-primary" data-uk-modal="{target:'#excel-validation',bgclose:false,keyboard:false}">{% trans 'Submit' %}</button>
+                    <button type="button" class="uk-button uk-button-danger" data-action="reset">{% trans 'Reset' %}</button>
+                    {% if import_mappings %}
+                        <button type="button" class="uk-button uk-button-success" data-action="populate">{% trans 'Populate choices from previous import' %}</button>
+                    {% endif %}
                     {% csrf_token %}
                     {{ formset.management_form }}
 
@@ -68,7 +79,6 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    <button type="submit" class="uk-button uk-button-primary margin-top-bottom-20 uk-float-right">{% trans 'Submit' %}</button>
                 </form>
             </div>
             <div class="uk-width-1-3" style="padding-top: 20px;">
@@ -80,15 +90,34 @@
                         </li>
                     {% endfor %}
                 </ul>
+                <p class="uk-text-muted">
+                    {% blocktrans %}
+                        Note: Field, related to PWS (like "PWSID") may not be selected, because You have selected PWS in previous step.
+                    {% endblocktrans %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="excel-validation" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <div class="uk-modal-spinner" style="top: auto"></div>
+            <p class="uk-text-center uk-text-primary">{% trans 'Please wait while the file is being checked.' %}</p>
+        </div>
+    </div>
+    <div id="import-processing" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <div class="uk-modal-spinner" style="top: auto"></div>
+            <p class="uk-text-center uk-text-primary">{% trans 'Import was started. Below you can see the progress.' %}</p>
+
+            <div class="uk-progress uk-progress-striped uk-active">
+                <div class="uk-progress-bar" style="width: 0;">0%</div>
             </div>
         </div>
     </div>
 {% endblock %}
 {% block scripts %}
     <script>
-        var excel_fields_selector = 'select[name*="excel_field"]';
-        var unselected_fields_selector = '.unselected-fields';
-
+        var none_text = '{% trans 'None' %}';
         var cached_mappings;
         {% if import_mappings %}
             cached_mappings = JSON.parse('{{ import_mappings|safe }}');
@@ -96,55 +125,23 @@
             cached_mappings = null;
         {% endif %}
 
-        var selectChangedTrigger = function (select) {
-            var val = select.val();
-            var prev_val = select.data('previous');
-            $(unselected_fields_selector).find('li[data-value="' + prev_val + '"]').show();
-            if (val === '') {
-            } else {
-                $(unselected_fields_selector).find('li[data-value="' + val + '"]').hide();
-                $(excel_fields_selector).not(select).filter(function () {
-                    return $(this).val() === val;
-                }).val('').data('previous', '');
-            }
-            $(this).data('previous', val);
-        };
-
-        var resetMappings = function () {
-            $(excel_fields_selector).val('');
-            $(unselected_fields_selector).find('li').show();
-        };
-
-        var populateMappings = function () {
-            if (cached_mappings) {
-                for (var key in cached_mappings) {
-                    if (cached_mappings.hasOwnProperty(key)) {
-                        var val = cached_mappings[key];
-                        var select = $('input[value="' + key + '"]').parent('td').next().find(excel_fields_selector);
-                        select.val(val);
-                        selectChangedTrigger(select);
-                    }
-                }
-            }
-        };
-
-        $(document).ready(function () {
-            $(excel_fields_selector).data('previous', $(this).val());
-
-            $(excel_fields_selector).change(function () {
-                selectChangedTrigger($(this));
+        {% if import_progress_pk %}
+            $(document).ready(function () {
+                UIkit.modal('#import-processing').show();
+                var url = '{% url 'webapp:import-progress' import_progress_pk %}';
+                setInterval(function () {
+                    $.ajax(url, {
+                        success: function (response) {
+                            var percentage = response + '%';
+                            $('#import-processing').find('.uk-progress-bar').css('width', percentage).text(percentage);
+                            if (response == '100') {
+                                window.location.href = '{% url 'webapp:home' %}';
+                            }
+                        }
+                    })
+                }, 1000);
             });
-
-            $('button[data-action="reset"]').click(function () {
-                resetMappings();
-            });
-
-            $('button[data-action="populate"]').click(function () {
-                resetMappings();
-                populateMappings();
-            });
-
-            populateMappings();
-        });
+        {% endif %}
     </script>
+    <script src="{% static 'js/custom/import.js' %}"></script>
 {% endblock %}

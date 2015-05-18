@@ -1,5 +1,4 @@
 @import
-@wip
 Feature: Import from Excel files
 
   Scenario Outline: Import page access
@@ -24,8 +23,7 @@ Feature: Import from Excel files
     Then I should be at "import_mappings" page
     When I fill in mappings
     And I submit "import-mappings" form
-    Then I should be at "home" page
-    And I should see "import was started" message
+    Then I should be at "import_mappings" page
     When I wait for 5 seconds
     And I refresh page
     Then I should see following
@@ -69,5 +67,5 @@ Feature: Import from Excel files
     | file                         | message                 | params                                 |
     | incorrect_date_format.xlsx   | incorrect date format   | D6 :: %Y%m%d                           |
     | duplicate_cust_numbers.xlsx  | duplicate cust numbers  | A6 :: A10                              |
-    | foreign_key_error.xlsx      | foreign key error       | C7 :: 1, 2, 3, 4, 5, 6, 7, 8, 9 :: 100 |
+    | foreign_key_error.xlsx       | foreign key error       | C7 :: 1, 2, 3, 4, 5, 6, 7, 8, 9 :: 100 |
     | required_value_is_empty.xlsx | required value is empty | A4                                     |

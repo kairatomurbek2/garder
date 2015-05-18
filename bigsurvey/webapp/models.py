@@ -651,3 +651,7 @@ class StaticText(models.Model):
     class Meta:
         verbose_name = _("Static Text")
         verbose_name_plural = _("Static Text")
+
+
+class ImportProgress(models.Model):
+    progress = models.IntegerField(default=0)

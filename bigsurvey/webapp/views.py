@@ -9,7 +9,7 @@ from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
-from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -26,7 +26,7 @@ from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
 from webapp.utils import photo_util
-from webapp.utils.excel_parser import ExcelParser, DateFormatError
+from webapp.utils.excel_parser import ExcelParser, DateFormatError, FINISHED
 
 
 class PermissionRequiredMixin(View):
@@ -985,7 +985,7 @@ class ImportView(BaseFormView):
         self.request.session.pop('cached_excel_example_rows', None)
 
     def get_success_url(self):
-        return reverse('webapp:import-mappings-render')
+        return reverse('webapp:import-mappings')
 
 
 class ImportMappingsFormsetMixin(object):
@@ -1040,12 +1040,12 @@ class ImportMappingsFormsetMixin(object):
     def get_excel_example_rows(self, rows_count=EXAMPLE_ROWS_COUNT):
         if 'cached_excel_example_rows' in self.request.session:
             return self.request.session['cached_excel_example_rows']
-        example_rows = self.excel_parser.get_example_rows(rows_count, self.get_excel_field_headers_as_choices())
+        example_rows = self.excel_parser.get_example_rows(rows_count)
         self.request.session['cached_excel_example_rows'] = example_rows
         return example_rows
 
     def get_formset(self):
-        self.excel_parser = ExcelParser(self.request.session['import_filename'])
+        self.excel_parser = ExcelParser(os.path.join(settings.MEDIA_ROOT, self.request.session['import_filename']))
 
         formset_class = formset_factory(form=self.form_class, formset=self.base_formset_class, extra=0)
 
@@ -1064,7 +1064,9 @@ class ImportMappingsFormsetMixin(object):
         formset.set_required_model_fields(model_required_fields)
 
         excel_field_choices = self.get_excel_field_headers_as_choices()
-        formset.set_excel_field_choices(excel_field_choices)
+        sorted_excel_field_choices = sorted(excel_field_choices, key=lambda item: item[1])
+        formset.set_excel_field_choices(sorted_excel_field_choices)
+
         return formset
 
     def get_context_data(self, **kwargs):
@@ -1075,6 +1077,7 @@ class ImportMappingsFormsetMixin(object):
         context['excel_field_headers'] = self.get_excel_field_headers_as_choices()
         if 'import_mappings' in self.request.session:
             context['import_mappings'] = json.dumps(self.request.session['import_mappings'])
+        context['import_progress_pk'] = self.request.session.pop('import_progress_pk', None)
         return context
 
 
@@ -1095,9 +1098,10 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
             self.request.session['import_mappings'] = mappings
             try:
                 self.excel_parser.check_constraints(mappings)
-                self.excel_parser.parse_and_save_in_background(mappings, self.request.session['import_pws_pk'])
-                messages.info(self.request, Messages.Import.import_was_started)
-                return redirect('webapp:home')
+                import_progress = models.ImportProgress.objects.create()
+                self.request.session['import_progress_pk'] = import_progress.pk
+                self.excel_parser.parse_and_save_in_background(mappings, self.request.session['import_pws_pk'], import_progress.pk)
+                return redirect('webapp:import-mappings')
             except (IntegrityError, DateFormatError) as e:
                 self.formset.add_error(str(e))
                 return self.render_to_response(self.get_context_data())
@@ -1106,3 +1110,19 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
 
     def get_formset_data(self):
         return self.request.POST
+
+
+class ImportProgressView(BaseTemplateView):
+    permission = 'webapp.access_to_import'
+
+    def get(self, request, *args, **kwargs):
+        import_progress_pk = kwargs.pop('pk')
+        try:
+            import_progress = models.ImportProgress.objects.get(pk=import_progress_pk)
+            progress = import_progress.progress
+            if import_progress.progress == FINISHED:
+                import_progress.delete()
+                del self.request.session['import_progress_pk']
+        except models.ImportProgress.DoesNotExist:
+            progress = FINISHED
+        return JsonResponse(progress, safe=False)
