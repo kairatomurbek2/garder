@@ -5,7 +5,7 @@ Feature: Site adding
   Scenario Outline: Site adding page access
     Given I logged in as "<role>"
     When I directly open "site_add" page
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
   Examples:
     | role     | reaction |

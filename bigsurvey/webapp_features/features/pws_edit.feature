@@ -5,7 +5,7 @@ Feature: PWS editing
   Scenario Outline: PWS editing page access
     Given I logged in as "<role>"
     When I directly open "pws_edit" page with pk "6"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
   Examples:
     | role     | reaction |

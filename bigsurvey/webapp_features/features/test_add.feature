@@ -8,7 +8,7 @@ Feature: Test adding
 #  Scenario Outline: Test adding page access
 #    Given I logged in as "<role>"
 #    When I directly open "test_add" page for hazard with pk "<pk>"
-#    Then I should <reaction> "Not Found"
+#    Then I should <reaction> "Page not found"
 #    And I logout
 #  Examples:
 #    | role     | pk | reaction |

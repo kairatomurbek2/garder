@@ -5,7 +5,7 @@ Feature: PWS adding
   Scenario Outline: PWS adding page access
     Given I logged in as "<role>"
     When I directly open "pws_add" page
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
   Examples:
     | role     | reaction |

@@ -5,7 +5,7 @@ Feature: Letter List
   Scenario Outline: Letter List Page Access
     Given I logged in as "<role>"
     When I directly open "letter_list" page
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
   Examples:
     | role     | reaction |

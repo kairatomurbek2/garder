@@ -4,7 +4,7 @@ Feature: Hazard Edit
   Scenario Outline: Hazard Edit page access
     Given I logged in as "<role>"
     When I directly open "hazard_edit" page with pk "<pk>"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
 
   Examples:

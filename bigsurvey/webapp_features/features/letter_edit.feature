@@ -5,7 +5,7 @@ Feature: Letter Editing
   Scenario Outline: Letter Edit Page Access
     Given I logged in as "<role>"
     When I directly open "letter_edit" page with pk "<pk>"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
     Examples:
     | role     | pk | reaction |

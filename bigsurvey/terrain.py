@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 from django.core.management import call_command
 from lettuce import before, after, world
 from selenium import webdriver
@@ -28,10 +29,10 @@ def clear_cookies(scenario):
 @after.each_scenario
 def take_screenshot(scenario):
     if scenario.failed:
-        timestamp = int(time.time())
+        date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
         try:
-            world.browser.get_screenshot_as_file('/home/itattractor/screens/failed_%s.png' % timestamp)
-            with open('/home/itattractor/html_sources/failed_%s.txt' % timestamp, 'w') as f:
+            world.browser.get_screenshot_as_file('/tmp/failed_%s.png' % date)
+            with open('/tmp/failed_%s.txt' % date, 'w') as f:
                 f.write(world.browser.page_source)
         except (IOError, UnicodeDecodeError, UnicodeEncodeError):
             pass

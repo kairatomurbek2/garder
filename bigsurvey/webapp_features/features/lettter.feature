@@ -6,7 +6,7 @@ Feature: Letter Viewing and Sending
   Scenario Outline: Letter Detail Page Access
     Given I logged in as "<role>"
     When I directly open "letter_detail" page with pk "<pk>"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
     Examples:
     | role     | pk | reaction |

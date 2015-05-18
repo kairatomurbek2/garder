@@ -59,6 +59,8 @@ class ExcelParser(object):
         self.open()
         example_rows = []
         start_row_number = self.headers_row_number + 1
+        if rows_count + start_row_number > self.sheet.nrows:
+            rows_count = self.sheet.nrows - start_row_number
         for row_number in xrange(start_row_number, start_row_number + rows_count):
             row = []
             for column_number, field_name in self.headers:
@@ -121,6 +123,7 @@ class ExcelParser(object):
 
     def parse_and_save(self, mappings, pws_pk, import_progress_pk):
         self.open()
+        sites_for_delete_pks = list(models.Site.objects.filter(pws__pk=pws_pk).values_list('pk', flat=True))
         import_progress = models.ImportProgress.objects.get(pk=import_progress_pk)
         approximate_total_count = self.sheet.nrows
         start_row_number = self.headers_row_number + 1
@@ -134,6 +137,7 @@ class ExcelParser(object):
             cust_number = self._get_cell_value(cust_number_cell)
             try:
                 site = models.Site.objects.get(pws__pk=pws_pk, cust_number=cust_number)
+                sites_for_delete_pks.remove(site.pk)
             except models.Site.DoesNotExist:
                 site = models.Site()
                 setattr(site, self.FOREIGN_KEY_PATTERN % self.PWS_FIELD_NAME, pws_pk)
@@ -161,5 +165,6 @@ class ExcelParser(object):
                 import_progress.progress = int(100. * counter / approximate_total_count)
                 import_progress.save()
         models.Site.objects.bulk_create(new_sites)
+        models.Site.objects.filter(pk__in=sites_for_delete_pks).delete()
         import_progress.progress = FINISHED
         import_progress.save()

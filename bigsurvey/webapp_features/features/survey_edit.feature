@@ -4,7 +4,7 @@ Feature: Survey Edit
   Scenario Outline: Survey Edit page access
     Given I logged in as "<role>"
     When I directly open "survey_edit" page with pk "<pk>"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
 
   Examples:

@@ -2,7 +2,7 @@
 
 . virtualenv/bin/activate
 cd bigsurvey
-RUN_TEST_COMMAND="./manage.py harvest webapp_features/features --settings=main.settings_test --with-xunit --xunit-file=../testres.xml"
+RUN_TEST_COMMAND="./manage.py harvest webapp_features/features --settings=main.settings_test --debug-mode --with-xunit --xunit-file=../testres.xml"
 for var in ${@}
 do
     RUN_TEST_COMMAND=${RUN_TEST_COMMAND}" -t ${var}"

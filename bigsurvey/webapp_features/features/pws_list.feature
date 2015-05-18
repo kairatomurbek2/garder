@@ -5,7 +5,7 @@ Feature: PWS list
   Scenario Outline: PWS list page access
     Given I logged in as "<role>"
     When I directly open "pws_list" page
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
   Examples:
     | role     | reaction |

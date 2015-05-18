@@ -4,7 +4,7 @@ Feature: Hazard Add
   Scenario Outline: Hazard Add page access
     Given I logged in as "<role>"
     When I directly open "hazard_add" page for site with pk "<pk>" and service "<service>"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
 
   Examples:

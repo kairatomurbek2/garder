@@ -5,7 +5,7 @@ Feature: Letter Adding
   Scenario Outline: Letter Add Page Access
     Given I logged in as "<role>"
     When I directly open "letter_add" page for site with pk "<pk>"
-    Then I should <reaction> "Not Found"
+    Then I should <reaction> "Page not found"
     And I logout
     Examples:
     | role     | pk | reaction |
