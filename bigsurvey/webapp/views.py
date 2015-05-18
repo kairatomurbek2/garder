@@ -2,8 +2,8 @@ from collections import OrderedDict
 import json
 import time
 import os
-from django.conf import settings
 
+from django.conf import settings
 from django.core.files.storage import default_storage
 from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
@@ -1124,5 +1124,8 @@ class ImportProgressView(BaseTemplateView):
                 del self.request.session['import_progress_pk']
         except (models.ImportProgress.DoesNotExist, KeyError):
             progress = FINISHED
-            self.request.session.pop('import_progress_pk', None)
+            try:
+                del self.request.session['import_progress_pk']
+            except KeyError:
+                pass
         return JsonResponse(progress, safe=False)

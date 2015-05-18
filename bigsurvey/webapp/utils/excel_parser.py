@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime
 import subprocess
+from bulk_update.helper import bulk_update
 
 from django.conf import settings
 from django.core.management import call_command
@@ -129,6 +130,8 @@ class ExcelParser(object):
         start_row_number = self.headers_row_number + 1
         new_sites = []
         new_sites_counter = 0
+        changed_sites = []
+        changed_sites_counter = 0
         counter = 0
         for row_number in xrange(start_row_number, self.sheet.nrows):
             counter += 1
@@ -153,7 +156,12 @@ class ExcelParser(object):
                         value = None
                 setattr(site, field_name, value)
             if site.pk:
-                site.save()
+                changed_sites.append(site)
+                changed_sites_counter += 1
+                if changed_sites_counter == 1000:
+                    bulk_update(changed_sites)
+                    changed_sites_counter = 0
+                    changed_sites = []
             else:
                 new_sites.append(site)
                 new_sites_counter += 1
@@ -165,6 +173,7 @@ class ExcelParser(object):
                 import_progress.progress = int(100. * counter / approximate_total_count)
                 import_progress.save()
         models.Site.objects.bulk_create(new_sites)
+        bulk_update(changed_sites)
         models.Site.objects.filter(pk__in=sites_for_delete_pks).delete()
         import_progress.progress = FINISHED
         import_progress.save()
