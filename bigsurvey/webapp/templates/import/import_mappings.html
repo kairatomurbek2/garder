@@ -104,7 +104,7 @@
             <p class="uk-text-center uk-text-primary">{% trans 'Please wait while the file is being checked.' %}</p>
         </div>
     </div>
-    <div id="import-processing" class="uk-modal">
+    <div id="import-progress" class="uk-modal">
         <div class="uk-modal-dialog">
             <div class="uk-modal-spinner" style="top: auto"></div>
             <p class="uk-text-center uk-text-primary">{% trans 'Import was started. Below you can see the progress.' %}</p>
@@ -114,6 +114,7 @@
             </div>
         </div>
     </div>
+    <div id="import-progress-modal-opener" class="uk-hidden" data-uk-modal="{target:'#import-progress',bgclose:false,keyboard:false}"></div>
 {% endblock %}
 {% block scripts %}
     <script>
@@ -125,15 +126,15 @@
             cached_mappings = null;
         {% endif %}
 
-        {% if import_progress_pk %}
+        {% if request.session.import_progress_pk %}
             $(document).ready(function () {
-                UIkit.modal('#import-processing').show();
-                var url = '{% url 'webapp:import-progress' import_progress_pk %}';
+                $('#import-progress-modal-opener').click();
+                var url = '{% url 'webapp:import-progress' %}';
                 setInterval(function () {
                     $.ajax(url, {
                         success: function (response) {
                             var percentage = response + '%';
-                            $('#import-processing').find('.uk-progress-bar').css('width', percentage).text(percentage);
+                            $('#import-progress').find('.uk-progress-bar').css('width', percentage).text(percentage);
                             if (response == '100') {
                                 window.location.href = '{% url 'webapp:home' %}';
                             }

@@ -46,7 +46,7 @@ urlpatterns = patterns(
     url(r'^import/$', views.ImportView.as_view(), name="import"),
     url(r'^import-mappings/$', views.ImportMappingsRenderView.as_view(), name="import-mappings"),
     url(r'^import-mappings-process/$', views.ImportMappingsProcessView.as_view(), name="import-mappings-process"),
-    url(r'^import-progress/(?P<pk>\d+)/$', views.ImportProgressView.as_view(), name="import-progress"),
+    url(r'^import-progress/$', views.ImportProgressView.as_view(), name="import-progress"),
 
     url(r'^help/$', views.HelpView.as_view(), name="help"),
 )

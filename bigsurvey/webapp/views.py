@@ -1077,7 +1077,6 @@ class ImportMappingsFormsetMixin(object):
         context['excel_field_headers'] = self.get_excel_field_headers_as_choices()
         if 'import_mappings' in self.request.session:
             context['import_mappings'] = json.dumps(self.request.session['import_mappings'])
-        context['import_progress_pk'] = self.request.session.pop('import_progress_pk', None)
         return context
 
 
@@ -1116,13 +1115,14 @@ class ImportProgressView(BaseTemplateView):
     permission = 'webapp.access_to_import'
 
     def get(self, request, *args, **kwargs):
-        import_progress_pk = kwargs.pop('pk')
         try:
+            import_progress_pk = self.request.session['import_progress_pk']
             import_progress = models.ImportProgress.objects.get(pk=import_progress_pk)
             progress = import_progress.progress
             if import_progress.progress == FINISHED:
                 import_progress.delete()
                 del self.request.session['import_progress_pk']
-        except models.ImportProgress.DoesNotExist:
+        except (models.ImportProgress.DoesNotExist, KeyError):
             progress = FINISHED
+            self.request.session.pop('import_progress_pk', None)
         return JsonResponse(progress, safe=False)
