@@ -172,8 +172,10 @@ class ExcelParser(object):
             if counter % 1000 == 0:
                 import_progress.progress = int(100. * counter / approximate_total_count)
                 import_progress.save()
-        models.Site.objects.bulk_create(new_sites)
-        bulk_update(changed_sites)
+        if new_sites_counter:
+            models.Site.objects.bulk_create(new_sites)
+        if changed_sites_counter:
+            bulk_update(changed_sites)
         models.Site.objects.filter(pk__in=sites_for_delete_pks).delete()
         import_progress.progress = FINISHED
         import_progress.save()
