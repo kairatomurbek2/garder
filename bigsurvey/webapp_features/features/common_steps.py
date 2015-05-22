@@ -172,10 +172,24 @@ def check_multiple_options_in_select_doesnt_exist(step):
         step.given('I should not see "%s" option in "%s" select' % (pair['option'], pair['select']))
 
 
+@step('I choose "(.*)" from "([-_a-z0-9]+)"')
+def choose_value_from_radiobutton(step, value, radiobutton_name):
+    radiobutton = helper.find(Xpath.Pattern.radiobutton_by_value % (radiobutton_name, value))
+    helper.check_element_exists(radiobutton, 'Radiobutton "%s" with value "%s" was not found' % (radiobutton_name, value))
+    radiobutton.click()
+
+
 @step('I check "(.*)" from "([-_a-z0-9]+)"')
 def check_value_from_checkbox(step, value, checkbox_name):
     checkbox = helper.find(Xpath.Pattern.checkbox_by_value % (checkbox_name, value))
     helper.check_element_exists(checkbox, 'Checkbox "%s" with value "%s" was not found' % (checkbox_name, value))
+    checkbox.click()
+
+
+@step('I check "([-_a-z0-9]+)"')
+def check_single_checkbox(step, checkbox_name):
+    checkbox = helper.find(Xpath.Pattern.checkbox_by_name % checkbox_name)
+    helper.check_element_exists(checkbox, 'Checkbox "%s" was not found' % checkbox_name)
     checkbox.click()
 
 

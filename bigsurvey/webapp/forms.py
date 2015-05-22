@@ -1,8 +1,10 @@
 import os
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
+
 import models
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES, EXCEL_EXTENSIONS
 
@@ -75,10 +77,10 @@ class TestForm(forms.ModelForm):
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
-    cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.cv1), required=False)
-    rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.rv), required=False)
-    cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.cv2), required=False)
-    pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.get_details_by_pks(Details.pvb), required=False)
+    cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.cv1), required=False)
+    rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.rv), required=False)
+    cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.cv2), required=False)
+    pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.pvb), required=False)
     test_result = forms.ChoiceField(widget=forms.RadioSelect, choices=TEST_RESULT_CHOICES)
 
     def __init__(self, **kwargs):
@@ -162,7 +164,7 @@ class TestForm(forms.ModelForm):
 
     class Meta:
         model = models.Test
-        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened')
+        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened', 'paid')
 
 
 class EmployeeForm(forms.ModelForm):

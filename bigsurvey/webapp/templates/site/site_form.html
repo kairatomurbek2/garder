@@ -18,7 +18,7 @@
             <table class="uk-table">
                 <tbody>
                 {% if perms.webapp.change_all_info_about_site %}
-                <tr class="table-border-bottom">
+                <tr class="border-bottom">
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.cust_number.id_for_label }}">Account Number</label>
                     </td>
@@ -65,7 +65,7 @@
                     </td>
                 </tr>
 
-                <tr class="table-border-bottom">
+                <tr class="border-bottom">
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
                     </td>
@@ -147,7 +147,7 @@
                     </td>
                 </tr>
                 {% if perms.webapp.change_all_info_about_site %}
-                <tr class="table-border-bottom">
+                <tr class="border-bottom">
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.is_due_install.id_for_label }}">{{ form.is_due_install.label }}</label>
                     </td>
@@ -232,7 +232,7 @@
                         {{ form.cust_zip.errors }}
                     </td>
                 </tr>
-                <tr class="table-border-bottom">
+                <tr class="border-bottom">
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.contact_phone.id_for_label }}">{{ form.contact_phone.label }}</label>
                     </td>

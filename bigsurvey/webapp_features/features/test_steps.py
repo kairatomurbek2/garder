@@ -27,6 +27,17 @@ def open_test_edit_page(step, pk):
     step.given('I click "test_%s_edit" link' % pk)
 
 
+@step('I directly open "unpaid_test_list" page')
+def directly_open_unpaid_test_list_page(step):
+    step.given('I open "%s"' % get_url(Urls.unpaid_test_list))
+
+
+@step('I open "unpaid_test_list" page')
+def open_unpaid_test_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "unpaid_tests" menu link')
+
+
 @step('I should be at "test_add" page for hazard with pk "(\d+)"')
 def check_test_add_page(step, hazard_pk):
     step.given('I should be at "%s"' % get_url(Urls.test_add % hazard_pk))

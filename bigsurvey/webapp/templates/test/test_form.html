@@ -23,47 +23,47 @@
             <form class="uk-form" method="post" name="test">
                 {% csrf_token %}
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label">{% trans 'Customer' %}: </p>
-                    <span class="test-report-form-data">{{ hazard.site.cust_name }}</span>
+                    <p class="inline-width-1-5">{% trans 'Customer' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.site.cust_name }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label">{% trans 'Street Address' %}: </p>
-                    <span class="test-report-form-data">{{ hazard.site.address1 }}</span>
+                    <p class="inline-width-1-5">{% trans 'Street Address' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.site.address1 }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label">{% trans 'Mailing Address' %}: </p>
-                    <span class="test-report-form-data">{{ hazard.site.cust_address1 }}</span>
+                    <p class="inline-width-1-5">{% trans 'Mailing Address' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.site.cust_address1 }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label">{% trans 'Location of Assembly' %}: </p>
-                    <span class="test-report-form-data">{{ hazard.assembly_location }}</span>
+                    <p class="inline-width-1-5">{% trans 'Location of Assembly' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.assembly_location }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label">{% trans 'Assembly Type' %}: </p>
-                    <span class="test-report-form-data-bp-types">{% render_bp_type_checkboxes hazard.bp_type_present %}</span>
+                    <p class="inline-width-1-5">{% trans 'Assembly Type' %}: </p>
+                    <span class="inline-width-3-5">{% render_bp_type_checkboxes hazard.bp_type_present %}</span>
 
-                    <p class="test-report-form-label-size">{% trans 'Size' %}: </p>
-                    <span class="test-report-form-data-size">{{ hazard.bp_size }}</span>
+                    <p class="inline-width-1-15">{% trans 'Size' %}: </p>
+                    <span class="inline-width-2-15 border-bottom">{{ hazard.bp_size }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label-1-3">{% trans 'Manufacturer' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ hazard.manufacturer }}</span>
+                    <p class="inline-width-1-6">{% trans 'Manufacturer' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ hazard.manufacturer }}</span>
 
-                    <p class="test-report-form-label-1-3">{% trans 'Model no.' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ hazard.model_no }}</span>
+                    <p class="inline-width-1-6">{% trans 'Model no.' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ hazard.model_no }}</span>
 
-                    <p class="test-report-form-label-1-3">{% trans 'Serial no.' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ hazard.serial_no }}</span>
+                    <p class="inline-width-1-6">{% trans 'Serial no.' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ hazard.serial_no }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label-1-3">{% trans 'Test Kit Manuf.' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ request.user.employee.test_manufacturer }}</span>
+                    <p class="inline-width-1-6">{% trans 'Test Kit Manuf.' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_manufacturer }}</span>
 
-                    <p class="test-report-form-label-1-3">{% trans 'Serial Number' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ request.user.employee.test_serial }}</span>
+                    <p class="inline-width-1-6">{% trans 'Serial Number' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_serial }}</span>
 
-                    <p class="test-report-form-label-1-3">{% trans 'Date Calibrated' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ request.user.employee.test_last_cert }}</span>
+                    <p class="inline-width-1-6">{% trans 'Date Calibrated' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_last_cert }}</span>
                 </div>
 
                 <table class="uk-table bordered-all">
@@ -177,7 +177,7 @@
 
                             <p>
                                 {% trans 'Check valve' %}
-                                {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
+                                {{ form.cv1_maintenance_pressure|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
                         </td>
@@ -198,26 +198,32 @@
 
                             <p>
                                 {% trans 'Check valve' %}
-                                {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
+                                {{ form.cv2_maintenance_pressuref|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
                         </td>
                         <td>
                             <p>
                                 {% trans 'Air Inlet' %}
-                                {{ form.air_inlet_psi|add_class:'uk-form-small' }}
+                                {{ form.air_inlet_retest_psi|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
 
                             <p>
                                 {% trans 'Check valve' %}
-                                {{ form.cv_psi|add_class:'uk-form-small' }}
+                                {{ form.cv_retest_psi|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <div class="uk-grid">
+                    <div class="uk-width-1-5"></div>
+                    <div class="uk-width-1-5">
+                        {{ form.test_result.errors }}
+                    </div>
+                </div>
                 <div class="uk-grid">
                     <div class="uk-width-1-5">
                         <h4 class="inline-block">{% trans 'The Assembly' %}:</h4>
@@ -229,6 +235,7 @@
                     {% endfor %}
                 </div>
                 <h4 class="uk-text-uppercase uk-text-bold">{% trans 'Note: All repairs/replacement shall be completed within five (5) days.' %}</h4>
+
                 <div class="uk-grid">
                     <div class="uk-width-1-6">{% trans 'Remarks' %}:</div>
                     <div class="uk-width-5-6">{{ form.notes|add_class:'uk-width-1-1'|attr:'rows:5' }}</div>
@@ -236,10 +243,11 @@
                 <p>{% trans 'I hereby certify that this data is accurate and reflects the proper operation and maintenance of the backflow preventer unit.' %}</p>
 
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label-1-3">{% trans 'Tester' %}: </p>
-                    <span class="test-report-form-data-1-3" class="border-none">{{ form.tester }}</span>
-                    <p class="test-report-form-label-1-3">{% trans 'Date' %}</p>
-                    <span class="test-report-form-data-1-3">
+                    <p class="inline-width-1-6">{% trans 'Tester' %}: </p>
+                    <span class="inline-width-1-6" class="border-none">{{ form.tester }}</span>
+
+                    <p class="inline-width-1-6">{% trans 'Date' %}</p>
+                    <span class="inline-width-1-6 border-bottom">
                         {% if object %}
                             {{ object.test_date }}
                         {% else %}
@@ -248,8 +256,8 @@
                     </span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="test-report-form-label-1-3">{% trans 'Certification Number' %}: </p>
-                    <span class="test-report-form-data-1-3">{{ object.tester.employee.cert_number }}</span>
+                    <p class="inline-width-1-6">{% trans 'Certification Number' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ object.tester.employee.cert_number }}</span>
                 </div>
 
                 <button type="submit" class="uk-button uk-button-primary uk-float-right margin-top-bottom-20">{% trans "Submit" %}</button>

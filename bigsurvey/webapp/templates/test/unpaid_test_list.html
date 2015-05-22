@@ -6,7 +6,7 @@
 {% load test_result_choices %}
 {% load pagination_tags %}
 {% block content %}
-    {% autopaginate test_filter.qs as filtered_tests 50 %}
+    {% autopaginate test_filter.qs as unpaid_tests 50 %}
     <div class="wrapper">
         {% include 'messages.html' %}
     </div>
@@ -52,13 +52,13 @@
                     <th>
                         {% trans "Test Result" %}
                     </th>
-                    <th class="uk-text-center border-left uk-width-1-10">
+                    <th class="uk-text-center border-left uk-width-1-10" colspan="2">
                         {% trans "Actions" %}
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for test in filtered_tests %}
+                {% for test in unpaid_tests %}
                     <tr>
                         <td class="uk-text-center border-right">
                             {{ test.pk }}
@@ -94,8 +94,13 @@
                             {{ test.test_result|test_result }}
                         </td>
                         <td class="border-left uk-text-center">
-                            <a href="{% url "webapp:hazard_detail" test.bp_device.pk %}" id="hazard_{{ test.bp_device.pk }}_detail_link">
+                            <a href="{% url "webapp:test_edit" test.pk %}" id="test_{{ test.pk }}_edit_link">
                                 {% trans "Detail" %}
+                            </a>
+                        </td>
+                        <td class="uk-text-center">
+                            <a href="#pay-modal" data-uk-modal>
+                                {% trans 'Pay' %}
                             </a>
                         </td>
                     </tr>
@@ -103,6 +108,21 @@
                 </tbody>
             </table>
             {% paginate %}
+        </div>
+    </div>
+    <div id="pay-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <ul class="uk-tab payment-types" data-uk-tab data-uk-switcher="{connect:'#tabs-content'}">
+                <li class="uk-width-1-2"><a>{% trans "Pay via Paypal account" %}</a></li>
+                <li class="uk-width-1-2"><a>{% trans "Pay directly via Credit Card" %}</a></li>
+            </ul>
+
+            <!-- This is the container of the content items -->
+            <ul id="tabs-content" class="uk-switcher">
+                <li>For Paypal</li>
+                <li>For Credit Card</li>
+            </ul>
         </div>
     </div>
 {% endblock %}

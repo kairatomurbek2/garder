@@ -6,31 +6,8 @@ div.wrapper {
     display: inline-block;
 }
 
-.border-none {
-    border: none;
-}
-
 .margin-top-bottom-20 {
     margin: 20px 0;
-}
-
-tr.top-half {
-    border: 2px solid #dddddd;
-    border-bottom: none;
-}
-
-tr.bottom-half {
-    border: 2px solid #dddddd;
-    border-top: none;
-}
-
-.actions-wrapper {
-    padding-left: 8px;
-    padding-top: 10px;
-}
-
-.actions-wrapper li {
-    list-style-type: none;
 }
 
 .errorlist {
@@ -46,24 +23,28 @@ tr.bottom-half {
     width: 3500px;
 }
 
-.scrollable {
-    overflow: scroll;
-}
-
 .message-wrapper:last-child {
     margin-bottom: 10px;
 }
 
-.table-border-left {
-    border-left: solid 1px darkgray
+.border-none, .border-none td, .border-none th {
+    border: none;
 }
 
-.table-border-right {
-    border-right: solid 1px darkgray
+.border-top, .border-top td, .border-top th {
+    border-top: 1px solid #a9a9a9;
 }
 
-.table-border-bottom {
-    border-bottom: solid 1px darkgray
+.border-left, .border-left td, .border-left th {
+    border-left: 1px solid #a9a9a9;
+}
+
+.border-right, .border-right td, .border-right th {
+    border-right: 1px solid #a9a9a9;
+}
+
+.border-bottom, .border-bottom td, .border-bottom th {
+    border-bottom: 1px solid #a9a9a9;
 }
 
 .fixed {
@@ -111,44 +92,44 @@ tr.bottom-half {
     margin: 0 auto;
 }
 
-.test-report-form-label {
+.inline-width-1-5 {
     display: inline-block;
-    width: 20%;
+    width: 19%;
 }
 
-.test-report-form-label-size {
+.inline-width-2-5 {
     display: inline-block;
-    width: 5%;
-    margin-top: 0;
+    width: 39%;
 }
 
-.test-report-form-label-1-3 {
+.inline-width-3-5 {
     display: inline-block;
-    width: 10%;
-    margin-top: 0;
+    width: 59%;
 }
 
-.test-report-form-data {
+.inline-width-4-5 {
     display: inline-block;
     width: 79%;
-    border-bottom: 1px solid #444;
 }
 
-.test-report-form-data-1-3 {
+.inline-width-1-15 {
     display: inline-block;
-    width: 20%;
-    border-bottom: 1px solid #444;
+    width: 6%;
 }
 
-.test-report-form-data-size {
+.inline-width-2-15 {
     display: inline-block;
     width: 13%;
-    border-bottom: 1px solid #444;
 }
 
-.test-report-form-data-bp-types {
+.inline-width-1-3 {
     display: inline-block;
-    width: 60%;
+    width: 33%;
+}
+
+.inline-width-1-6 {
+    display: inline-block;
+    width: 16%;
 }
 
 ul.form-ul {
@@ -163,31 +144,6 @@ ul.form-ul {
     border: 1px solid #a9a9a9;
 }
 
-.bordered-left td {
-    border-left: 1px solid #a9a9a9;
-}
-
-.bordered-right td {
-    border-right: 1px solid #a9a9a9;
-}
-
-.bordered-top td {
-    border-top: 1px solid #a9a9a9;
-}
-
-.bordered-bottom td {
-    border-bottom: 1px solid #a9a9a9;
-}
-
-.not-bordered td {
-    border: none
-}
-
-.form-ul-label {
-    /*display: inline-block;
-    width: 130px;*/
-}
-
 .second-level-ul {
     padding-left: 20px;
 }
@@ -199,4 +155,8 @@ ul.form-ul {
 .example-rows-table td, .example-rows-table th {
     font-size: 12px;
     padding: 2px;
+}
+
+.payment-types li {
+    width: 49%;
 }

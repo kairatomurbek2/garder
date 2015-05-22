@@ -11,8 +11,8 @@
                 </a>
             </div>
     {% endif %}
-    {% if hazard.tests.all %}
-        {% for test in hazard.tests.all %}
+    {% if hazard.paid_tests %}
+        {% for test in hazard.paid_tests %}
             <div class="padding-top">
                 <h4 class="uk-align-center uk-text-center">
                     <button class="uk-button uk-text-primary" data-uk-toggle="{target:'#test-{{ test.pk }}'}">
@@ -24,7 +24,7 @@
             <div id="test-{{ test.pk }}" class="uk-panel uk-panel-box uk-hidden">
                 <table class="uk-table table-fixed">
                     <tbody>
-                    <tr class="table-border-bottom">
+                    <tr class="border-bottom">
                         <td class="uk-text-right uk-text-muted">{% trans "Tester" %}</td>
                         <td class="uk-text-center uk-text-primary">
                             {{ test.tester.first_name }} {{ test.tester.last_name }}
@@ -40,7 +40,7 @@
                             <td class="uk-text-right uk-text-muted">{% trans "CV1 Maintenance" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv1_maintenance }}</td>
                         </tr>
-                        <tr class="table-border-bottom">
+                        <tr class="border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "CV1 Maintenance Pressure" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv1_maintenance_pressure }}</td>
                             <td colspan="4"></td>
@@ -53,7 +53,7 @@
                             <td class="uk-text-right uk-text-muted">{% trans "CV2 Maintenance" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv2_maintenance }}</td>
                         </tr>
-                        <tr class="table-border-bottom">
+                        <tr class="border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "CV2 Maintenance Pressure" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv2_maintenance_pressure }}</td>
                             <td colspan="4"></td>
@@ -66,7 +66,7 @@
                             <td class="uk-text-right uk-text-muted">{% trans "RV Pressure 2" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.rv_psi2 }}</td>
                         </tr>
-                        <tr class="table-border-bottom">
+                        <tr class="border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "RV Maintenance" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.rv_maintenance }}</td>
                             <td class="uk-text-right uk-text-muted">{% trans "Outlet SOV Leaked" %}</td>
@@ -75,7 +75,7 @@
                         </tr>
                     {% endif %}
                     {% ifequal hazard.service_type.service_type 'fire' %}
-                        <tr class="table-border-bottom">
+                        <tr class="border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "PVB Opened" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.pvb_opened }}</td>
                             <td class="uk-text-right uk-text-muted">{% trans "PVB Open Pressure" %}</td>
@@ -84,7 +84,7 @@
                         </tr>
                     {% endifequal %}
                     {% ifequal hazard.service_type.service_type 'irrigation' %}
-                        <tr class="table-border-bottom">
+                        <tr class="border-bottom">
                             <td class="uk-text-right uk-text-muted">{% trans "CV Leaked" %}</td>
                             <td class="uk-text-center uk-text-primary">{{ test.cv_leaked }}</td>
                             <td class="uk-text-right uk-text-muted">{% trans "CV Held Pressure" %}</td>
@@ -101,7 +101,7 @@
                             <td class="uk-text-center uk-text-primary">{{ test.air_inlet_psi }}</td>
                         </tr>
                     {% endifequal %}
-                    <tr class="table-border-bottom">
+                    <tr class="border-bottom">
                         <td colspan="2"></td>
                         <td class="uk-text-right uk-text-muted">{% trans "Test Result" %}</td>
                         <td class="uk-text-center uk-text-primary">{{ test.test_result|test_result }}</td>

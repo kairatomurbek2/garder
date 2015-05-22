@@ -406,7 +406,7 @@ class HazardDetailView(BaseTemplateView):
         return hazard
 
     def _is_tests_count_lte0(self, hazard):
-        tests_count = models.Test.objects.filter(bp_device=hazard, tester=self.request.user).count()
+        tests_count = models.Test.objects.filter(bp_device=hazard, tester=self.request.user, paid=True).count()
         return tests_count <= 0
 
 
@@ -904,12 +904,34 @@ class TestListView(BaseTemplateView):
 
     def _get_test_list(self):
         user = self.request.user
+        paid_tests = models.Test.objects.filter(paid=True)
         if user.has_perm('webapp.access_to_all_tests'):
-            return models.Test.objects.all()
+            return paid_tests
         if user.has_perm("webapp.access_to_pws_tests"):
-            return models.Test.objects.filter(bp_device__site__pws=user.employee.pws)
+            return paid_tests.filter(bp_device__site__pws=user.employee.pws)
         if user.has_perm('webapp.access_to_own_tests'):
-            return models.Test.objects.filter(tester=user, bp_device__site__pws=user.employee.pws)
+            return paid_tests.filter(tester=user)
+
+
+class UnpaidTestListView(BaseTemplateView):
+    template_name = 'test/unpaid_test_list.html'
+    permission = 'webapp.browse_test'
+
+    def get_context_data(self, **kwargs):
+        context = super(UnpaidTestListView, self).get_context_data(**kwargs)
+        tests = self._get_test_list()
+        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
+        return context
+
+    def _get_test_list(self):
+        user = self.request.user
+        paid_tests = models.Test.objects.filter(paid=False)
+        if user.has_perm('webapp.access_to_all_tests'):
+            return paid_tests
+        if user.has_perm("webapp.access_to_pws_tests"):
+            return paid_tests.filter(bp_device__site__pws=user.employee.pws)
+        if user.has_perm('webapp.access_to_own_tests'):
+            return paid_tests.filter(tester=user)
 
 
 class TesterListView(BaseTemplateView):

@@ -21,9 +21,12 @@ def check_menu_links_dont_exist(step):
 @step('I hover on "more" link')
 def hover_on_menu(step):
     menu = helper.find(Xpath.more_link)
-    helper.check_element_exists(menu, 'Menu link was not found')
-    actions = ActionChains(world.browser)
-    actions.move_to_element(menu).perform()
+    try:
+        helper.check_element_exists(menu, '"More" menu link was not found')
+        actions = ActionChains(world.browser)
+        actions.move_to_element(menu).perform()
+    except AssertionError:
+        pass
 
 
 @step('I click "([-_a-z0-9]+)" menu link')
@@ -32,6 +35,7 @@ def click_menu_link(step, link_name):
     link = helper.find(Xpath.Pattern.menu_item % link_name)
     helper.check_element_exists(link, '"%s" link is not in menu' % link_name)
     link.click()
+
 
 @step('I click "([-_a-z0-9]+)" outer menu link')
 def click_outer_menu_link(step, link_name):

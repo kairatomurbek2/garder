@@ -11,7 +11,7 @@
         {% include 'messages.html' %}
         <table class="uk-table">
             <tbody>
-            <tr class="table-border-bottom">
+            <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.site.pws }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Site" %}</td>
@@ -19,7 +19,7 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Service Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.service_type }}</td>
             </tr>
-            <tr class="table-border-bottom">
+            <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Surveyor" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.surveyor }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Survey Date" %}</td>
@@ -35,7 +35,7 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Additives Present" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.additives_present|yn }}</td>
             </tr>
-            <tr class="table-border-bottom">
+            <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "CC Present" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ survey.cc_present|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Auxiliary Water" %}</td>
@@ -44,7 +44,7 @@
                 <td class="uk-text-center uk-text-primary">{{ survey.special }}</td>
             </tr>
             {% ifequal survey.service_type.service_type 'fire' %}
-                <tr class="table-border-bottom">
+                <tr class="border-bottom">
                     <td class="uk-text-right uk-text-muted">{% trans "Detector Manufacturer" %}</td>
                     <td class="uk-text-center uk-text-primary">{{ survey.detector_manufacturer }}</td>
                     <td class="uk-text-right uk-text-muted">{% trans "Detector Model" %}</td>

@@ -2118,5 +2118,12 @@
   },
   "model": "webapp.sitestatus",
   "pk": 3
+},
+{
+  "fields": {
+    "site_status": "Inactive"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 4
 }
 ]

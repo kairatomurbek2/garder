@@ -169,7 +169,7 @@ class FilterActions(object):
         @staticmethod
         def customer_account(surveys, value):
             if value:
-                return surveys.filter(site__number__icontains=value)
+                return surveys.filter(site__cust_number__iexact=value)
             return surveys
 
         @staticmethod
@@ -194,7 +194,7 @@ class FilterActions(object):
         @staticmethod
         def customer_account(tests, value):
             if value:
-                return tests.filter(bp_device__site__number__icontains=value)
+                return tests.filter(bp_device__site__cust_number__iexact=value)
             return tests
 
         @staticmethod

@@ -482,6 +482,10 @@ class Hazard(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.hazard_type, self.service_type)
 
+    @property
+    def paid_tests(self):
+        return self.tests.filter(paid=True)
+
     class Meta:
         verbose_name = _("Hazard")
         verbose_name_plural = _("Hazards")
@@ -529,18 +533,8 @@ class Survey(models.Model):
         )
 
 
-class DetailManager(models.Manager):
-    def get_details_by_pks(self, pks):
-        sorted_details = self.none()
-        for pk in pks:
-            sorted_details |= self.filter(pk=pk)
-        return sorted_details
-
-
 class Detail(models.Model):
     detail = models.CharField(max_length=100, verbose_name=_('Detail'))
-
-    objects = DetailManager()
 
     def __unicode__(self):
         return u'%s' % self.detail
@@ -572,7 +566,9 @@ class Test(models.Model):
     cv_maintenance = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CV Maintenance"))
     air_inlet_opened = models.BooleanField(choices=YESNO_CHOICES, default=True, verbose_name=_("Air Inlet Opened"))
     air_inlet_psi = models.FloatField(null=True, blank=True, verbose_name=_("Air Inlet PSI"))
+    air_inlet_retest_psi = models.FloatField(null=True, blank=True, verbose_name=_("Air Inlet Retest PSI"))
     cv_psi = models.FloatField(null=True, blank=True, verbose_name=_("CV PSI"))
+    cv_retest_psi = models.FloatField(null=True, blank=True, verbose_name=_("CV Retest PSI"))
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
     cv1_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV1 Cleaned or Replaced"))
@@ -583,6 +579,7 @@ class Test(models.Model):
     cv2_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv2_replacements')
     rv_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='rv_replacements')
     pvb_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='pvb_replacements')
+    paid = models.BooleanField(default=False, verbose_name=_('Was test paid?'))
 
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)

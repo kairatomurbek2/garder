@@ -1,11 +1,9 @@
 import json
-import os
 from datetime import datetime
 import subprocess
-from bulk_update.helper import bulk_update
 
+from bulk_update.helper import bulk_update
 from django.conf import settings
-from django.core.management import call_command
 from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 import xlrd
@@ -133,6 +131,7 @@ class ExcelParser(object):
         changed_sites = []
         changed_sites_counter = 0
         counter = 0
+        active_status = models.SiteStatus.objects.get(site_status__iexact='Active')
         for row_number in xrange(start_row_number, self.sheet.nrows):
             counter += 1
             cust_number_column_number = mappings['cust_number']
@@ -144,6 +143,7 @@ class ExcelParser(object):
             except models.Site.DoesNotExist:
                 site = models.Site()
                 setattr(site, self.FOREIGN_KEY_PATTERN % self.PWS_FIELD_NAME, pws_pk)
+            site.status = active_status
             for field_name, column_number in mappings.items():
                 cell = self.sheet.cell(row_number, column_number)
                 value = self._get_cell_value(cell)
@@ -176,6 +176,7 @@ class ExcelParser(object):
             models.Site.objects.bulk_create(new_sites)
         if changed_sites_counter:
             bulk_update(changed_sites)
-        models.Site.objects.filter(pk__in=sites_for_delete_pks).delete()
+        inactive_status = models.SiteStatus.objects.get(site_status__iexact='Inactive')
+        models.Site.objects.filter(pk__in=sites_for_delete_pks).update(status=inactive_status)
         import_progress.progress = FINISHED
         import_progress.save()
