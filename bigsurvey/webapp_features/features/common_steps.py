@@ -186,7 +186,7 @@ def check_value_from_checkbox(step, value, checkbox_name):
     checkbox.click()
 
 
-@step('I check "([-_a-z0-9]+)"')
+@step('I check "([-_a-z0-9]+)"$')
 def check_single_checkbox(step, checkbox_name):
     checkbox = helper.find(Xpath.Pattern.checkbox_by_name % checkbox_name)
     helper.check_element_exists(checkbox, 'Checkbox "%s" was not found' % checkbox_name)
