@@ -5,7 +5,7 @@
 {% load test_result_choices %}
 <div class="wrapper">
     {% if perms.webapp.add_test %}
-            <div class="padding-top">
+            <div class="padding-top-10">
                 <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}" id="hazard_{{ hazard.pk }}_test_add_link">
                     <i class="uk-icon-plus"></i> {% trans "Add Test" %}
                 </a>
@@ -13,7 +13,7 @@
     {% endif %}
     {% if hazard.paid_tests %}
         {% for test in hazard.paid_tests %}
-            <div class="padding-top">
+            <div class="padding-top-10">
                 <h4 class="uk-align-center uk-text-center">
                     <button class="uk-button uk-text-primary" data-uk-toggle="{target:'#test-{{ test.pk }}'}">
                         {{ test.test_date }}, {{ test.test_result|test_result }}
@@ -116,7 +116,7 @@
             </div>
         {% endfor %}
         {% if perms.webapp.add_test %}
-            <div class="padding-top">
+            <div class="padding-top-10">
                 <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}">
                     <i class="uk-icon-plus"></i> {% trans "Add Test" %}
                 </a>

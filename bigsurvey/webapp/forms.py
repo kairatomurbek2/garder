@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -6,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES, EXCEL_EXTENSIONS
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES, EXCEL_EXTENSIONS, CREDIT_CARD_TYPE_CHOICES
 
 
 class PWSForm(forms.ModelForm):
@@ -308,3 +309,11 @@ class BaseImportMappingsFormSet(forms.BaseFormSet):
     def set_excel_field_choices(self, choices):
         for form in self.forms:
             form.fields.get('excel_field').choices = [('', '----------')] + choices
+
+
+class PaypalCreditCardForm(forms.Form):
+    type = forms.ChoiceField(choices=CREDIT_CARD_TYPE_CHOICES)
+    number = forms.IntegerField()
+    cvv2 = forms.IntegerField(max_value=9999)
+    expire_month = forms.ChoiceField(choices=((i, i) for i in xrange(1, 13)))
+    expire_year = forms.ChoiceField(choices=((i, i) for i in xrange(datetime.now().year, datetime.now().year + 20)))

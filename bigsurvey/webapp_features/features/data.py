@@ -1,15 +1,14 @@
+from django.conf import settings
 from main.parameters import Messages
 
 
 Messages = Messages
 
-BASE_URL = 'http://127.0.0.1:8000'
-
 DELIMITER = ' :: '
 
 
 def get_url(url):
-    return BASE_URL + url
+    return settings.HOST + url
 
 
 class Urls:

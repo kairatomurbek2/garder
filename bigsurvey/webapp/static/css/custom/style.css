@@ -14,13 +14,21 @@ div.wrapper {
     margin: 20px 0;
 }
 
+.margin-left-200 {
+    margin-left: 200px;
+}
+
 .errorlist {
     margin: 0;
     color: #d85030;
 }
 
-.padding-top {
+.padding-top-10 {
     padding-top: 10px;
+}
+
+.padding-top-20 {
+    padding-top: 20px;
 }
 
 .big-table {
@@ -163,4 +171,14 @@ ul.form-ul {
 
 .payment-types li {
     width: 49%;
+}
+
+.paypal-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.auto-modal-spinner {
+    top: auto;
 }

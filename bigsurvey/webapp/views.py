@@ -20,9 +20,11 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import EmailMessage
 import paypalrestsdk
+from paypalrestsdk.exceptions import ConnectionError
 
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
+from webapp.exceptions import PaymentWasNotCreatedError
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
@@ -922,6 +924,7 @@ class UnpaidTestListView(BaseTemplateView):
         context = super(UnpaidTestListView, self).get_context_data(**kwargs)
         tests = self._get_test_list()
         context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
+        context['credit_card_form'] = forms.PaypalCreditCardForm()
         return context
 
     def _get_test_list(self):
@@ -968,8 +971,24 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
 
     def post(self, request, *args, **kwargs):
         test = self.get_test()
+        payment = self.get_payment(test)
+        try:
+            if payment.create():
+                for link in payment.links:
+                    if link['rel'] == 'approval_url':
+                        approval_url = link['href']
+                        break
+                response = {'status': 'success', 'approval_url': approval_url}
+            else:
+                print payment.error
+                raise PaymentWasNotCreatedError
+        except (ConnectionError, PaymentWasNotCreatedError):
+            response = {'status': 'error', 'message': Messages.Test.payment_failed}
+        return JsonResponse(response)
+
+    def get_payment(self, test):
         price = self.get_test_price(test)
-        payment = paypalrestsdk.Payment({
+        return paypalrestsdk.Payment({
             "intent": "sale",
             "payer": {
                 "payment_method": "paypal"
@@ -988,21 +1007,63 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
                 }
             ]
         })
-        if payment.create():
-            for link in payment.links:
-                if link['rel'] == 'approval_url':
-                    approval_url = link['href']
-                    break
-            response = {'status': 'success', 'approval_url': approval_url}
-        else:
-            print payment.error
-            response = {'status': 'error', 'message': Messages.Test.payment_failed}
-        return JsonResponse(response)
 
 
 class TestPayCreditCardView(BaseView, TestPaymentMixin):
     def post(self, request, *args, **kwargs):
-        pass
+        credit_card_form = forms.PaypalCreditCardForm(self.request.POST)
+        if credit_card_form.is_valid():
+            test = self.get_test()
+            data = credit_card_form.cleaned_data
+            payment = self.get_payment(test, data)
+            if payment.create():
+                pass
+            else:
+                pass
+        else:
+            return render(self.request, 'test/credit_card_form.html', {'credit_card_form': credit_card_form})
+
+    def get_payment(self, test, data):
+        price = self.get_test_price(test)
+        return paypalrestsdk.Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "credit_card",
+                "funding_instruments": [
+                    {
+                        "credit_card": {
+                            "type": data['type'],
+                            "number": data['number'],
+                            "expire_month": data['expire_month'],
+                            "expire_year": data['expire_year'],
+                            "cvv2": data['cvv2'],
+                            "first_name": self.request.user.first_name,
+                            "last_name": self.request.user.last_name,
+                        }
+                    }
+                ]
+            },
+            "transactions": [
+                {
+                    "item_list": {
+                        "items": [
+                            {
+                                "name": "Payment for test",
+                                "sku": "payment-for-test",
+                                "price": "%.2f" % price,
+                                "currency": "USD",
+                                "quantity": 1
+                            }
+                        ]
+                    },
+                    "amount": {
+                        "total": "%.2f" % price,
+                        "currency": "USD"
+                    },
+                    "description": "Payment for test #%s" % test.pk
+                }
+            ]
+        })
 
 
 class TesterListView(BaseTemplateView):

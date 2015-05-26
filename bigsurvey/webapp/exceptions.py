@@ -1,0 +1,2 @@
+class PaymentWasNotCreatedError(Exception):
+    pass

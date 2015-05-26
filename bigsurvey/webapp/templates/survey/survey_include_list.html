@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load boolean_yes_no %}
 {% if perms.webapp.add_survey %}
-    <div class="padding-top">
+    <div class="padding-top-10">
         <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}" id="site_{{ site.pk }}_service_{{ service }}_survey_add_link">
             <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
         </a>
@@ -85,7 +85,7 @@
         </table>
     </div>
     {% if perms.webapp.add_survey %}
-        <div class="padding-top">
+        <div class="padding-top-10">
             <a class="uk-align-center uk-text-center" href="{% url 'webapp:survey_add' site.pk service %}">
                 <i class="uk-icon-plus"></i> {% trans "Add Survey" %}
             </a>

@@ -85,6 +85,13 @@ ADMIN_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]
 
 EXCEL_EXTENSIONS = ['.xls', '.xlsx']
 
+CREDIT_CARD_TYPE_CHOICES = (
+    ('visa', 'Visa'),
+    ('mastercard', 'MasterCard'),
+    ('amex', 'Amex'),
+    ('discover', 'Discover'),
+)
+
 
 class Messages:
     extension_not_allowed = _('File extension is not allowed. Allowed extensions: %(allowed_extensions)s')
