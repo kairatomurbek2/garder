@@ -99,7 +99,7 @@
                             </a>
                         </td>
                         <td class="uk-text-center">
-                            <a href="#pay-modal" data-uk-modal>
+                            <a href="#pay-modal" data-uk-modal data-test-pk="{{ test.pk }}" data-action="pay">
                                 {% trans 'Pay' %}
                             </a>
                         </td>
@@ -118,11 +118,62 @@
                 <li class="uk-width-1-2"><a>{% trans "Pay directly via Credit Card" %}</a></li>
             </ul>
 
-            <!-- This is the container of the content items -->
             <ul id="tabs-content" class="uk-switcher">
-                <li>For Paypal</li>
-                <li>For Credit Card</li>
+                <li>
+                    <div data-content="errors" class="hidden">
+                        <ul class="errorlist"></ul>
+                    </div>
+                    <div data-content="step-1">
+                        <h3>{% trans 'Step' %} 1</h3>
+                        <a data-content="paypal-payment-creation-link">{% trans 'Click here to create a payment' %}</a>
+                    </div>
+                    <div data-content="step-2" class="hidden">
+                        <h3>{% trans 'Step' %} 2</h3>
+                        <a data-content="paypal-approval-link">{% trans 'Click here to confirm payment on PayPal site' %}</a>
+                    </div>
+                </li>
+                <li></li>
             </ul>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var url = '{% url 'webapp:test_pay_paypal' 0 %}';
+        $(document).ready(function () {
+
+
+            $('[data-action="pay"]').click(function () {
+                var test_pk = $(this).data('test-pk');
+                var actual_url = url.replace(0, test_pk);
+                $('a[data-content="paypal-payment-creation-link"]').attr('href', actual_url);
+            });
+
+            $('a[data-content="paypal-payment-creation-link"]').click(function (e) {
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+
+                $.ajax(url, {
+                    method: 'post',
+                    success: function (response) {
+                        if (response.status == 'success') {
+                            $('[data-content="step-1"]').hide();
+                            $('[data-content="errors"]').hide();
+                            $('[data-content="step-2"]').show();
+                            $('a[data-content="paypal-approval-link"]').attr('href', response.approval_url);
+                        } else if (response.status == 'error') {
+                            $('[data-content="errors"]')
+                                    .show()
+                                    .find('ul')
+                                    .empty()
+                                    .append($('<li>').text(response.message));
+                        }
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
 {% endblock %}

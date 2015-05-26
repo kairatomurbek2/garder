@@ -6,6 +6,10 @@ div.wrapper {
     display: inline-block;
 }
 
+.hidden {
+    display: none;
+}
+
 .margin-top-bottom-20 {
     margin: 20px 0;
 }

@@ -19,6 +19,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import EmailMessage
+import paypalrestsdk
 
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
@@ -932,6 +933,76 @@ class UnpaidTestListView(BaseTemplateView):
             return paid_tests.filter(bp_device__site__pws=user.employee.pws)
         if user.has_perm('webapp.access_to_own_tests'):
             return paid_tests.filter(tester=user)
+
+
+class TestPaymentMixin(object):
+    def get_test(self):
+        return models.Test.objects.get(pk=self.kwargs['pk'])
+
+    def get_test_price(self, test):
+        """
+        This method is used to calculate test's price
+        :param test:
+        :rtype: float
+        """
+        return 10.00
+
+
+class TestPayPaypalView(BaseView, TestPaymentMixin):
+    def get(self, request, *args, **kwargs):
+        success = int(self.request.GET['success'])
+        if success:
+            payment_id = self.request.GET['paymentId']
+            payer_id = self.request.GET['PayerID']
+            payment = paypalrestsdk.Payment.find(payment_id)
+            if payment.execute({'payer_id': payer_id}):
+                test = self.get_test()
+                test.paid = True
+                test.save()
+                messages.success(self.request, Messages.Test.payment_successful % test.pk)
+            else:
+                messages.error(self.request, Messages.Test.payment_failed)
+        else:
+            messages.error(self.request, Messages.Test.payment_cancelled)
+        return redirect(reverse('webapp:unpaid_test_list'))
+
+    def post(self, request, *args, **kwargs):
+        test = self.get_test()
+        price = self.get_test_price(test)
+        payment = paypalrestsdk.Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": "%s%s?success=1" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,))),
+                "cancel_url": "%s%s?success=0" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,)))
+            },
+            "transactions": [
+                {
+                    "amount": {
+                        "total": "%.2f" % price,
+                        "currency": "USD"
+                    },
+                    "description": "Payment for test #%s" % test.pk
+                }
+            ]
+        })
+        if payment.create():
+            for link in payment.links:
+                if link['rel'] == 'approval_url':
+                    approval_url = link['href']
+                    break
+            response = {'status': 'success', 'approval_url': approval_url}
+        else:
+            print payment.error
+            response = {'status': 'error', 'message': Messages.Test.payment_failed}
+        return JsonResponse(response)
+
+
+class TestPayCreditCardView(BaseView, TestPaymentMixin):
+    def post(self, request, *args, **kwargs):
+        pass
 
 
 class TesterListView(BaseTemplateView):

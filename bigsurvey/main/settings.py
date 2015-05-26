@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import paypalrestsdk
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -140,4 +141,15 @@ MANAGE_PY = os.path.join(BASE_DIR, 'manage.py')
 
 STUB_FILES_DIR = os.path.join(BASE_DIR, 'stub-files')
 
+PAYPAL_MODE = 'sandbox'
+PAYPAL_CLIENT_ID = 'ARuglQBjPQQo6bUYpukNqLmFgPxQlg7Vb4zt0l0Gl6CAnX67uJGYYlMF_E5RDCKHTvOIyk3oRhFWkzuS'
+PAYPAL_CLIENT_SECRET = 'EHUCx5wjMgFkQzqkhsWUtfG6-pzlvS72kaGafHmPu2-hfGE6ubLmS_yW9s0E_Hpq1YyNOGMFa4LPHA3G'
+
 from settings_local import *
+
+
+paypalrestsdk.configure({
+    'mode': PAYPAL_MODE,
+    'client_id': PAYPAL_CLIENT_ID,
+    'client_secret': PAYPAL_CLIENT_SECRET,
+})

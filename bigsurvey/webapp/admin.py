@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext as _
-import models
 from django import forms
 from redactor.widgets import RedactorEditor
-from webapp.models import StaticText
+
+import models
 
 
 class EmployeeInline(admin.StackedInline):
@@ -21,7 +21,7 @@ class EmployeeAdmin(UserAdmin):
 
 class StaticTextAdminForm(forms.ModelForm):
     class Meta:
-        model = StaticText
+        model = models.StaticText
         fields = ['title', 'group', 'text']
         widgets = {
             'text': RedactorEditor(allow_image_upload=True, allow_file_upload=False),
