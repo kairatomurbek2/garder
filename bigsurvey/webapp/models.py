@@ -584,6 +584,10 @@ class Test(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)
 
+    @property
+    def price(self):
+        return 10.00
+
     class Meta:
         verbose_name = _("Test")
         verbose_name_plural = _("Tests")

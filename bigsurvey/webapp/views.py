@@ -938,20 +938,7 @@ class UnpaidTestListView(BaseTemplateView):
             return paid_tests.filter(tester=user)
 
 
-class TestPaymentMixin(object):
-    def get_test(self):
-        return models.Test.objects.get(pk=self.kwargs['pk'])
-
-    def get_test_price(self, test):
-        """
-        This method is used to calculate test's price
-        :param test:
-        :rtype: float
-        """
-        return 10.00
-
-
-class TestPayPaypalView(BaseView, TestPaymentMixin):
+class TestPayPaypalView(BaseView):
     SUCCESS = 'success'
     CANCEL = 'cancel'
 
@@ -962,7 +949,7 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
             payer_id = self.request.GET['PayerID']
             payment = paypalrestsdk.Payment.find(payment_id)
             if payment.execute({'payer_id': payer_id}):
-                test = self.get_test()
+                test = models.Test.objects.get(pk=self.kwargs['pk'])
                 test.paid = True
                 test.save()
                 messages.success(self.request, Messages.Test.payment_successful % test.pk)
@@ -973,7 +960,7 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
         return redirect(reverse('webapp:unpaid_test_list'))
 
     def post(self, request, *args, **kwargs):
-        test = self.get_test()
+        test = models.Test.objects.get(pk=self.kwargs['pk'])
         payment = self.get_payment(test)
         try:
             if payment.create():
@@ -989,7 +976,6 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
         return JsonResponse(response)
 
     def get_payment(self, test):
-        price = self.get_test_price(test)
         return paypalrestsdk.Payment({
             "intent": "sale",
             "payer": {
@@ -1002,64 +988,7 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
             "transactions": [
                 {
                     "amount": {
-                        "total": "%.2f" % price,
-                        "currency": "USD"
-                    },
-                    "description": "Payment for test #%s" % test.pk
-                }
-            ]
-        })
-
-
-class TestPayCreditCardView(BaseView, TestPaymentMixin):
-    def post(self, request, *args, **kwargs):
-        credit_card_form = forms.PaypalCreditCardForm(self.request.POST)
-        if credit_card_form.is_valid():
-            test = self.get_test()
-            data = credit_card_form.cleaned_data
-            payment = self.get_payment(test, data)
-            if payment.create():
-                pass
-            else:
-                pass
-        else:
-            return render(self.request, 'test/credit_card_form.html', {'credit_card_form': credit_card_form})
-
-    def get_payment(self, test, data):
-        price = self.get_test_price(test)
-        return paypalrestsdk.Payment({
-            "intent": "sale",
-            "payer": {
-                "payment_method": "credit_card",
-                "funding_instruments": [
-                    {
-                        "credit_card": {
-                            "type": data['type'],
-                            "number": data['number'],
-                            "expire_month": data['expire_month'],
-                            "expire_year": data['expire_year'],
-                            "cvv2": data['cvv2'],
-                            "first_name": self.request.user.first_name,
-                            "last_name": self.request.user.last_name,
-                        }
-                    }
-                ]
-            },
-            "transactions": [
-                {
-                    "item_list": {
-                        "items": [
-                            {
-                                "name": "Payment for test",
-                                "sku": "payment-for-test",
-                                "price": "%.2f" % price,
-                                "currency": "USD",
-                                "quantity": 1
-                            }
-                        ]
-                    },
-                    "amount": {
-                        "total": "%.2f" % price,
+                        "total": "%.2f" % test.price,
                         "currency": "USD"
                     },
                     "description": "Payment for test #%s" % test.pk
