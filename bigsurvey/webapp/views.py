@@ -952,9 +952,12 @@ class TestPaymentMixin(object):
 
 
 class TestPayPaypalView(BaseView, TestPaymentMixin):
+    SUCCESS = 'success'
+    CANCEL = 'cancel'
+
     def get(self, request, *args, **kwargs):
-        success = int(self.request.GET['success'])
-        if success:
+        action = self.request.GET['action']
+        if action == self.SUCCESS:
             payment_id = self.request.GET['paymentId']
             payer_id = self.request.GET['PayerID']
             payment = paypalrestsdk.Payment.find(payment_id)
@@ -974,15 +977,14 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
         payment = self.get_payment(test)
         try:
             if payment.create():
+                # we need to find approval_url and redirect user to this url
                 for link in payment.links:
                     if link['rel'] == 'approval_url':
                         approval_url = link['href']
-                        break
                 response = {'status': 'success', 'approval_url': approval_url}
             else:
-                print payment.error
-                raise PaymentWasNotCreatedError
-        except (ConnectionError, PaymentWasNotCreatedError):
+                raise PaymentWasNotCreatedError(payment.error)
+        except (ConnectionError, PaymentWasNotCreatedError, NameError):
             response = {'status': 'error', 'message': Messages.Test.payment_failed}
         return JsonResponse(response)
 
@@ -994,8 +996,8 @@ class TestPayPaypalView(BaseView, TestPaymentMixin):
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "%s%s?success=1" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,))),
-                "cancel_url": "%s%s?success=0" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,)))
+                "return_url": "%s%s?action=%s" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,)), self.SUCCESS),
+                "cancel_url": "%s%s?action=%s" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,)), self.CANCEL)
             },
             "transactions": [
                 {

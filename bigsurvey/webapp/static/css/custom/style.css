@@ -181,4 +181,6 @@ ul.form-ul {
 
 .auto-modal-spinner {
     top: auto;
+    -moz-animation: uk-rotate 2s infinite linear;
+    -o-animation: uk-rotate 2s infinite linear;
 }
