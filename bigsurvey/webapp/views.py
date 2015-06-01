@@ -916,18 +916,8 @@ class TestListView(BaseTemplateView):
             return paid_tests.filter(tester=user)
 
 
-class UnpaidTestListView(BaseTemplateView):
-    template_name = 'test/unpaid_test_list.html'
-    permission = 'webapp.browse_test'
-
-    def get_context_data(self, **kwargs):
-        context = super(UnpaidTestListView, self).get_context_data(**kwargs)
-        tests = self._get_test_list()
-        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
-        context['credit_card_form'] = forms.PaypalCreditCardForm()
-        return context
-
-    def _get_test_list(self):
+class UnpaidTestMixin(object):
+    def get_unpaid_tests(self):
         user = self.request.user
         paid_tests = models.Test.objects.filter(paid=False)
         if user.has_perm('webapp.access_to_all_tests'):
@@ -938,7 +928,19 @@ class UnpaidTestListView(BaseTemplateView):
             return paid_tests.filter(tester=user)
 
 
-class TestPayPaypalView(BaseView):
+class UnpaidTestView(BaseTemplateView, UnpaidTestMixin):
+    template_name = 'test/unpaid_test_list.html'
+    permission = 'webapp.browse_test'
+
+    def get_context_data(self, **kwargs):
+        context = super(UnpaidTestView, self).get_context_data(**kwargs)
+        tests = self.get_unpaid_tests()
+        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
+        context['payment_form'] = forms.PaymentForm(queryset=tests)
+        return context
+
+
+class TestPayPaypalView(BaseView, UnpaidTestMixin):
     SUCCESS = 'success'
     CANCEL = 'cancel'
 
@@ -949,10 +951,9 @@ class TestPayPaypalView(BaseView):
             payer_id = self.request.GET['PayerID']
             payment = paypalrestsdk.Payment.find(payment_id)
             if payment.execute({'payer_id': payer_id}):
-                test = models.Test.objects.get(pk=self.kwargs['pk'])
-                test.paid = True
-                test.save()
-                messages.success(self.request, Messages.Test.payment_successful % test.pk)
+                test_pks = self.request.GET['tests'].split(',')
+                models.Test.objects.filter(pk__in=test_pks).update(paid=True)
+                messages.success(self.request, Messages.Test.payment_successful)
             else:
                 messages.error(self.request, Messages.Test.payment_failed)
         else:
@@ -960,38 +961,57 @@ class TestPayPaypalView(BaseView):
         return redirect(reverse('webapp:unpaid_test_list'))
 
     def post(self, request, *args, **kwargs):
-        test = models.Test.objects.get(pk=self.kwargs['pk'])
-        payment = self.get_payment(test)
-        try:
-            if payment.create():
-                # we need to find approval_url and redirect user to this url
-                for link in payment.links:
-                    if link['rel'] == 'approval_url':
-                        approval_url = link['href']
-                response = {'status': 'success', 'approval_url': approval_url}
-            else:
-                raise PaymentWasNotCreatedError(payment.error)
-        except (ConnectionError, PaymentWasNotCreatedError, NameError):
-            response = {'status': 'error', 'message': Messages.Test.payment_failed}
+        payment_form = forms.PaymentForm(self.request.POST, queryset=self.get_unpaid_tests())
+        if payment_form.is_valid():
+            payment = self.get_payment(payment_form.cleaned_data['tests'])
+            try:
+                if payment.create():
+                    # we need to find approval_url and redirect user to this url
+                    for link in payment.links:
+                        if link['rel'] == 'approval_url':
+                            approval_url = link['href']
+                    response = {'status': 'success', 'approval_url': approval_url, 'total_amount': payment.transactions[0]['amount']['total']}
+                else:
+                    raise PaymentWasNotCreatedError(payment.error)
+            except (ConnectionError, PaymentWasNotCreatedError, NameError):
+                response = {'status': 'error', 'message': Messages.Test.payment_failed}
+        else:
+            response = payment_form.errors
         return JsonResponse(response)
 
-    def get_payment(self, test):
+    def get_payment(self, tests):
+        total_amount = sum((test.price for test in tests))
+        items = [
+            {
+                "quantity": 1,
+                "name": "Payment for test #%s" % test.pk,
+                "price": "%.2f" % test.price,
+                "currency": "USD"
+            }
+            for test in tests
+        ]
+
+        test_pks = ','.join((str(test.pk) for test in tests))
+
         return paypalrestsdk.Payment({
             "intent": "sale",
             "payer": {
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "%s%s?action=%s" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,)), self.SUCCESS),
-                "cancel_url": "%s%s?action=%s" % (settings.HOST, reverse('webapp:test_pay_paypal', args=(test.pk,)), self.CANCEL)
+                "return_url": "%s%s?action=%s&tests=%s" % (settings.HOST, reverse('webapp:test_pay_paypal'), self.SUCCESS, test_pks),
+                "cancel_url": "%s%s?action=%s&tests=%s" % (settings.HOST, reverse('webapp:test_pay_paypal'), self.CANCEL, test_pks)
             },
             "transactions": [
                 {
+                    "item_list": {
+                        "items": items
+                    },
                     "amount": {
-                        "total": "%.2f" % test.price,
+                        "total": "%.2f" % total_amount,
                         "currency": "USD"
                     },
-                    "description": "Payment for test #%s" % test.pk
+                    "description": "Payment for tests"
                 }
             ]
         })

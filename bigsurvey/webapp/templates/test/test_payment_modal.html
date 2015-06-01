@@ -1,0 +1,20 @@
+{% load i18n staticfiles %}
+<div id="pay-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+
+        <div class="uk-modal-spinner hidden" data-content="spinner"></div>
+        <div class="uk-alert uk-alert-danger hidden" data-content="error-alert" data-uk-alert>
+            <p data-content="error-message"></p>
+        </div>
+        <div data-content="step-1">
+            <h3>{% trans 'Step' %} 1</h3>
+            <a href="{% url 'webapp:test_pay_paypal' %}" data-content="creation-link">{% trans 'Click here to create a payment' %}</a>
+        </div>
+        <div data-content="step-2" class="hidden">
+            <h3>{% trans 'Step' %} 2</h3>
+            <h3>{% trans 'Total amount:' %} <span class="uk-text-success">$<span data-content="total-amount"></span></span></h3>
+            <a data-content="approval-link"><img src="{% static 'img/paypal-button.png' %}"></a>
+        </div>
+    </div>
+</div>

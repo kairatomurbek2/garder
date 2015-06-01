@@ -146,7 +146,7 @@ class Messages:
         cv2_replaced_details_not_provided = _('You should provide details you have replaced for Relief Valve')
         rv_replaced_details_not_provided = _('You should provide details you have replaced for Check Valve 2')
         pvb_replaced_details_not_provided = _('You should provide details you have replaced for Pressure Vacuum Breaker')
-        payment_successful = _('Payment for test #%s was completed successfully. Test is visible on the site now.')
+        payment_successful = _('Payment was completed successfully. Test(s) is(are) now visible on the site.')
         payment_failed = _('Some errors happened during the payment. Please try again later.')
         payment_cancelled = _('You have cancelled payment. You can pay later.')
 

@@ -6,6 +6,7 @@
 {% load test_result_choices %}
 {% load pagination_tags %}
 {% load staticfiles %}
+{% load common %}
 {% block content %}
     {% autopaginate test_filter.qs as unpaid_tests 50 %}
     <div class="wrapper">
@@ -17,9 +18,11 @@
         </div>
         <div class="wrapper uk-width-4-5">
             {% paginate %}
+            <button class="uk-button uk-button-primary" data-action="pay" disabled="disabled">{% trans 'Pay for selected tests' %}</button>
             <table class="uk-table uk-table-hover">
                 <thead>
                 <tr class="border-bottom">
+                    <th class="border-right"></th>
                     <th class="border-right uk-text-center uk-width-1-10">
                         {% trans "No." %}
                     </th>
@@ -53,7 +56,10 @@
                     <th>
                         {% trans "Test Result" %}
                     </th>
-                    <th class="uk-text-center border-left uk-width-1-10" colspan="2">
+                    <th>
+                        {% trans 'Price' %}
+                    </th>
+                    <th class="uk-text-center border-left uk-width-1-10">
                         {% trans "Actions" %}
                     </th>
                 </tr>
@@ -61,6 +67,9 @@
                 <tbody>
                 {% for test in unpaid_tests %}
                     <tr>
+                        <td class="uk-text-center border-right">
+                            <input type="checkbox" name="tests" value="{{ test.pk }}">
+                        </td>
                         <td class="uk-text-center border-right">
                             {{ test.pk }}
                         </td>
@@ -94,18 +103,12 @@
                         <td>
                             {{ test.test_result|test_result }}
                         </td>
+                        <td>
+                            {{ test.price }}
+                        </td>
                         <td class="border-left uk-text-center">
                             <a href="{% url "webapp:test_edit" test.pk %}" id="test_{{ test.pk }}_edit_link">
                                 {% trans "Detail" %}
-                            </a>
-                        </td>
-                        <td class="uk-text-center">
-                            <a href="#pay-modal"
-                               data-uk-modal
-                               data-action="pay"
-                               data-paypal-url="{% url 'webapp:test_pay_paypal' test.pk %}"
-                               data-credit-card-url="{% url 'webapp:test_pay_credit_card' test.pk %}">
-                                {% trans 'Pay' %}
                             </a>
                         </td>
                     </tr>
@@ -115,24 +118,7 @@
             {% paginate %}
         </div>
     </div>
-    <div id="pay-modal" class="uk-modal">
-        <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
-
-            <div class="uk-modal-spinner hidden" data-content="spinner"></div>
-            <div class="uk-alert uk-alert-danger hidden" data-content="error-alert" data-uk-alert>
-                <p data-content="error-message"></p>
-            </div>
-            <div data-content="step-1">
-                <h3>{% trans 'Step' %} 1</h3>
-                <a data-content="creation-link">{% trans 'Click here to create a payment' %}</a>
-            </div>
-            <div data-content="step-2" class="hidden">
-                <h3>{% trans 'Step' %} 2</h3>
-                <a data-content="approval-link"><img src="{% static 'img/paypal-button.png' %}"></a>
-            </div>
-        </div>
-    </div>
+    {% include 'test/test_payment_modal.html' %}
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/custom/paypal.js' %}"></script>

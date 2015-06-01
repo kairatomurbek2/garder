@@ -1,4 +1,6 @@
 var selectors = {
+    modal: '#pay-modal',
+    tests: 'input[name="tests"]',
     payButton: '[data-action="pay"]',
     spinner: '[data-content="spinner"]',
     errorAlert: '[data-content="error-alert"]',
@@ -6,7 +8,8 @@ var selectors = {
     step1: '[data-content="step-1"]',
     step2: '[data-content="step-2"]',
     creationLink: '[data-content="creation-link"]',
-    approvalLink: '[data-content="approval-link"]'
+    approvalLink: '[data-content="approval-link"]',
+    totalAmount: '[data-content="total-amount"]'
 };
 
 var hideElementWithDelay = function (element, delay, hidingDuration) {
@@ -17,41 +20,94 @@ var hideElementWithDelay = function (element, delay, hidingDuration) {
     }, delay);
 };
 
+var getSelectedTests = function () {
+    var selectedTests = [];
+    $(selectors.tests).filter(':checked').each(function () {
+        selectedTests.push($(this).val());
+    });
+    return selectedTests;
+};
+
+var resetModal = function () {
+    $(selectors.step1).show().fadeTo('fast', 1);
+    $(selectors.step2).fadeTo('fast', 1).hide();
+    $(selectors.spinner).hide();
+    $(selectors.errorAlert).hide();
+    $(selectors.errorMessage).text('');
+    $(selectors.approvalLink).removeAttr('href');
+    $(selectors.totalAmount).text('');
+};
+
+var setPayButtonState = function () {
+    if ($(selectors.tests).filter(':checked').size() > 0) {
+        $(selectors.payButton).removeAttr('disabled');
+    } else {
+        $(selectors.payButton).attr('disabled', 'disabled');
+    }
+};
+
+var isProcessing = false;
+
 $(document).ready(function () {
+    setPayButtonState();
+    $(selectors.tests).click(setPayButtonState);
+
+    $(selectors.modal).on('hide.uk.modal', function () {
+        isProcessing = false;
+        resetModal();
+    });
+
     $(selectors.payButton).click(function () {
-        var paypalUrl = $(this).data('paypal-url');
-        $(selectors.creationLink).attr('href', paypalUrl);
+        var selectedTests = getSelectedTests();
+        if (!$.isEmptyObject(selectedTests)) {
+            var modal = UIkit.modal(selectors.modal);
+            modal.show();
+        }
     });
 
     $(selectors.creationLink).click(function (e) {
         e.preventDefault();
 
-        var url = $(this).attr('href');
+        if (!isProcessing) {
+            isProcessing = true;
 
-        $(selectors.step1).fadeTo('fast', 0.5);
-        $(selectors.creationLink).removeAttr('href');
-        $(selectors.spinner).show();
+            var selectedTests = getSelectedTests();
 
-        $.ajax(url, {
-            method: 'post',
-            success: function (response) {
-                if (response.status == 'success') {
-                    $(selectors.step1).hide();
-                    $(selectors.errorAlert).hide();
-                    $(selectors.step2).show();
-                    $(selectors.approvalLink).attr('href', response.approval_url);
-                } else if (response.status == 'error') {
-                    $(selectors.step1).fadeTo('fast', 1);
-                    $(selectors.errorAlert)
-                        .show()
-                        .find(selectors.errorMessage)
-                        .text(response.message);
-                    hideElementWithDelay($(selectors.errorAlert));
-                    $(selectors.creationLink).attr('href', url);
+            var url = $(this).attr('href');
+
+            $(selectors.step1).fadeTo('fast', 0.5);
+            $(selectors.spinner).show();
+
+            $.ajax(url, {
+                method: 'post',
+                data: {
+                    'tests': selectedTests
+                },
+                traditional: true,
+                success: function (response) {
+                    if (!isProcessing) {
+                        resetModal();
+                        return;
+                    }
+                    if (response.status == 'success') {
+                        $(selectors.step1).hide();
+                        $(selectors.errorAlert).hide();
+                        $(selectors.step2).show();
+                        $(selectors.totalAmount).text(response.total_amount);
+                        $(selectors.approvalLink).attr('href', response.approval_url);
+                    } else if (response.status == 'error') {
+                        $(selectors.step1).fadeTo('fast', 1);
+                        $(selectors.errorAlert)
+                            .show()
+                            .find(selectors.errorMessage)
+                            .text(response.message);
+                        hideElementWithDelay($(selectors.errorAlert));
+                    }
+                    $(selectors.spinner).hide();
+                    isProcessing = false;
                 }
-                $(selectors.spinner).hide();
-            }
-        });
+            });
+        }
 
         return false;
     });

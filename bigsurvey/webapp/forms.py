@@ -1,13 +1,12 @@
-import os
-from datetime import datetime
-
 from django import forms
+
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, VALVE_OPENED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES, EXCEL_EXTENSIONS, CREDIT_CARD_TYPE_CHOICES
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES
+from webapp.validators import validate_excel_file
 
 
 class PWSForm(forms.ModelForm):
@@ -253,12 +252,6 @@ class LetterSendForm(forms.Form):
     send_to = forms.EmailField(required=True)
 
 
-def validate_excel_file(file):
-    name, ext = os.path.splitext(file.name)
-    if ext not in EXCEL_EXTENSIONS:
-        raise ValidationError(Messages.extension_not_allowed % {'allowed_extensions': ', '.join(EXCEL_EXTENSIONS)})
-
-
 class ImportForm(forms.Form):
     file = forms.FileField(validators=[validate_excel_file])
 
@@ -311,9 +304,10 @@ class BaseImportMappingsFormSet(forms.BaseFormSet):
             form.fields.get('excel_field').choices = [('', '----------')] + choices
 
 
-class PaypalCreditCardForm(forms.Form):
-    type = forms.ChoiceField(choices=CREDIT_CARD_TYPE_CHOICES)
-    number = forms.IntegerField()
-    cvv2 = forms.IntegerField(max_value=9999)
-    expire_month = forms.ChoiceField(choices=((i, i) for i in xrange(1, 13)))
-    expire_year = forms.ChoiceField(choices=((i, i) for i in xrange(datetime.now().year, datetime.now().year + 20)))
+class PaymentForm(forms.Form):
+    tests = forms.ModelMultipleChoiceField(queryset=models.Test.objects.none(), widget=forms.CheckboxSelectMultiple)
+
+    def __init__(self, *args, **kwargs):
+        queryset = kwargs.pop('queryset', models.Test.objects.none())
+        super(PaymentForm, self).__init__(*args, **kwargs)
+        self.fields['tests'].queryset = queryset
