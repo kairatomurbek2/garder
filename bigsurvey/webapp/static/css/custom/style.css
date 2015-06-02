@@ -62,7 +62,7 @@ div.wrapper {
 .fixed {
     position: fixed;
     background: #ffffff;
-    z-index: 10000;
+    z-index: 999;
 }
 
 .fixed-filters {
