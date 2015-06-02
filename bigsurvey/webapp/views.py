@@ -892,7 +892,8 @@ class HazardListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_hazards'):
             return models.Hazard.objects.all()
         if user.has_perm('webapp.access_to_pws_hazards'):
-            return models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True)
+            return (models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) |
+                    models.Hazard.objects.filter(tests__tester=user)).distinct()
 
 
 class TestListView(BaseTemplateView):

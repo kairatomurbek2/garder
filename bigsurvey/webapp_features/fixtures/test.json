@@ -1,6 +1,1131 @@
 [
 {
     "fields": {
+        "name": "SuperAdministrators",
+        "permissions": [
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "delete_user",
+                "auth",
+                "user"
+            ],
+            [
+                "add_assemblylocation",
+                "webapp",
+                "assemblylocation"
+            ],
+            [
+                "browse_assemblylocation",
+                "webapp",
+                "assemblylocation"
+            ],
+            [
+                "change_assemblylocation",
+                "webapp",
+                "assemblylocation"
+            ],
+            [
+                "delete_assemblylocation",
+                "webapp",
+                "assemblylocation"
+            ],
+            [
+                "add_assemblystatus",
+                "webapp",
+                "assemblystatus"
+            ],
+            [
+                "browse_assemblystatus",
+                "webapp",
+                "assemblystatus"
+            ],
+            [
+                "change_assemblystatus",
+                "webapp",
+                "assemblystatus"
+            ],
+            [
+                "delete_assemblystatus",
+                "webapp",
+                "assemblystatus"
+            ],
+            [
+                "add_bpmanufacturer",
+                "webapp",
+                "bpmanufacturer"
+            ],
+            [
+                "browse_bpmanufacturer",
+                "webapp",
+                "bpmanufacturer"
+            ],
+            [
+                "change_bpmanufacturer",
+                "webapp",
+                "bpmanufacturer"
+            ],
+            [
+                "delete_bpmanufacturer",
+                "webapp",
+                "bpmanufacturer"
+            ],
+            [
+                "add_bpsize",
+                "webapp",
+                "bpsize"
+            ],
+            [
+                "browse_bpsize",
+                "webapp",
+                "bpsize"
+            ],
+            [
+                "change_bpsize",
+                "webapp",
+                "bpsize"
+            ],
+            [
+                "delete_bpsize",
+                "webapp",
+                "bpsize"
+            ],
+            [
+                "add_bptype",
+                "webapp",
+                "bptype"
+            ],
+            [
+                "browse_bptype",
+                "webapp",
+                "bptype"
+            ],
+            [
+                "change_bptype",
+                "webapp",
+                "bptype"
+            ],
+            [
+                "delete_bptype",
+                "webapp",
+                "bptype"
+            ],
+            [
+                "add_customercode",
+                "webapp",
+                "customercode"
+            ],
+            [
+                "browse_customercode",
+                "webapp",
+                "customercode"
+            ],
+            [
+                "change_customercode",
+                "webapp",
+                "customercode"
+            ],
+            [
+                "delete_customercode",
+                "webapp",
+                "customercode"
+            ],
+            [
+                "access_to_adminpanel",
+                "webapp",
+                "employee"
+            ],
+            [
+                "access_to_all_users",
+                "webapp",
+                "employee"
+            ],
+            [
+                "add_employee",
+                "webapp",
+                "employee"
+            ],
+            [
+                "browse_user",
+                "webapp",
+                "employee"
+            ],
+            [
+                "change_employee",
+                "webapp",
+                "employee"
+            ],
+            [
+                "delete_employee",
+                "webapp",
+                "employee"
+            ],
+            [
+                "add_floorscount",
+                "webapp",
+                "floorscount"
+            ],
+            [
+                "browse_floorscount",
+                "webapp",
+                "floorscount"
+            ],
+            [
+                "change_floorscount",
+                "webapp",
+                "floorscount"
+            ],
+            [
+                "delete_floorscount",
+                "webapp",
+                "floorscount"
+            ],
+            [
+                "access_to_all_hazards",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "add_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "browse_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_all_info_about_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "delete_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "add_hazardtype",
+                "webapp",
+                "hazardtype"
+            ],
+            [
+                "browse_hazardtype",
+                "webapp",
+                "hazardtype"
+            ],
+            [
+                "change_hazardtype",
+                "webapp",
+                "hazardtype"
+            ],
+            [
+                "delete_hazardtype",
+                "webapp",
+                "hazardtype"
+            ],
+            [
+                "add_icpointtype",
+                "webapp",
+                "icpointtype"
+            ],
+            [
+                "browse_icpointtype",
+                "webapp",
+                "icpointtype"
+            ],
+            [
+                "change_icpointtype",
+                "webapp",
+                "icpointtype"
+            ],
+            [
+                "delete_icpointtype",
+                "webapp",
+                "icpointtype"
+            ],
+            [
+                "add_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "browse_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "change_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "delete_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "full_letter_access",
+                "webapp",
+                "letter"
+            ],
+            [
+                "send_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "add_lettertype",
+                "webapp",
+                "lettertype"
+            ],
+            [
+                "browse_lettertype",
+                "webapp",
+                "lettertype"
+            ],
+            [
+                "change_lettertype",
+                "webapp",
+                "lettertype"
+            ],
+            [
+                "delete_lettertype",
+                "webapp",
+                "lettertype"
+            ],
+            [
+                "add_licence",
+                "webapp",
+                "licence"
+            ],
+            [
+                "browse_licence",
+                "webapp",
+                "licence"
+            ],
+            [
+                "change_licence",
+                "webapp",
+                "licence"
+            ],
+            [
+                "delete_licence",
+                "webapp",
+                "licence"
+            ],
+            [
+                "add_orientation",
+                "webapp",
+                "orientation"
+            ],
+            [
+                "browse_orientation",
+                "webapp",
+                "orientation"
+            ],
+            [
+                "change_orientation",
+                "webapp",
+                "orientation"
+            ],
+            [
+                "delete_orientation",
+                "webapp",
+                "orientation"
+            ],
+            [
+                "add_pws",
+                "webapp",
+                "pws"
+            ],
+            [
+                "browse_pws",
+                "webapp",
+                "pws"
+            ],
+            [
+                "change_pws",
+                "webapp",
+                "pws"
+            ],
+            [
+                "delete_pws",
+                "webapp",
+                "pws"
+            ],
+            [
+                "add_servicetype",
+                "webapp",
+                "servicetype"
+            ],
+            [
+                "browse_servicetype",
+                "webapp",
+                "servicetype"
+            ],
+            [
+                "change_servicetype",
+                "webapp",
+                "servicetype"
+            ],
+            [
+                "delete_servicetype",
+                "webapp",
+                "servicetype"
+            ],
+            [
+                "access_to_all_sites",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_batch_update",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_import",
+                "webapp",
+                "site"
+            ],
+            [
+                "add_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "browse_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "change_all_info_about_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "change_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "delete_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "add_sitestatus",
+                "webapp",
+                "sitestatus"
+            ],
+            [
+                "browse_sitestatus",
+                "webapp",
+                "sitestatus"
+            ],
+            [
+                "change_sitestatus",
+                "webapp",
+                "sitestatus"
+            ],
+            [
+                "delete_sitestatus",
+                "webapp",
+                "sitestatus"
+            ],
+            [
+                "add_sitetype",
+                "webapp",
+                "sitetype"
+            ],
+            [
+                "browse_sitetype",
+                "webapp",
+                "sitetype"
+            ],
+            [
+                "change_sitetype",
+                "webapp",
+                "sitetype"
+            ],
+            [
+                "delete_sitetype",
+                "webapp",
+                "sitetype"
+            ],
+            [
+                "add_siteuse",
+                "webapp",
+                "siteuse"
+            ],
+            [
+                "browse_siteuse",
+                "webapp",
+                "siteuse"
+            ],
+            [
+                "change_siteuse",
+                "webapp",
+                "siteuse"
+            ],
+            [
+                "delete_siteuse",
+                "webapp",
+                "siteuse"
+            ],
+            [
+                "add_sourcetype",
+                "webapp",
+                "sourcetype"
+            ],
+            [
+                "browse_sourcetype",
+                "webapp",
+                "sourcetype"
+            ],
+            [
+                "change_sourcetype",
+                "webapp",
+                "sourcetype"
+            ],
+            [
+                "delete_sourcetype",
+                "webapp",
+                "sourcetype"
+            ],
+            [
+                "add_special",
+                "webapp",
+                "special"
+            ],
+            [
+                "browse_special",
+                "webapp",
+                "special"
+            ],
+            [
+                "change_special",
+                "webapp",
+                "special"
+            ],
+            [
+                "delete_special",
+                "webapp",
+                "special"
+            ],
+            [
+                "add_statictext",
+                "webapp",
+                "statictext"
+            ],
+            [
+                "change_statictext",
+                "webapp",
+                "statictext"
+            ],
+            [
+                "delete_statictext",
+                "webapp",
+                "statictext"
+            ],
+            [
+                "access_to_all_surveys",
+                "webapp",
+                "survey"
+            ],
+            [
+                "add_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "browse_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "change_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "delete_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "add_surveytype",
+                "webapp",
+                "surveytype"
+            ],
+            [
+                "browse_surveytype",
+                "webapp",
+                "surveytype"
+            ],
+            [
+                "change_surveytype",
+                "webapp",
+                "surveytype"
+            ],
+            [
+                "delete_surveytype",
+                "webapp",
+                "surveytype"
+            ],
+            [
+                "access_to_all_tests",
+                "webapp",
+                "test"
+            ],
+            [
+                "add_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "browse_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "change_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "delete_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "add_testmanufacturer",
+                "webapp",
+                "testmanufacturer"
+            ],
+            [
+                "browse_testmanufacturer",
+                "webapp",
+                "testmanufacturer"
+            ],
+            [
+                "change_testmanufacturer",
+                "webapp",
+                "testmanufacturer"
+            ],
+            [
+                "delete_testmanufacturer",
+                "webapp",
+                "testmanufacturer"
+            ],
+            [
+                "add_testmodel",
+                "webapp",
+                "testmodel"
+            ],
+            [
+                "browse_testmodel",
+                "webapp",
+                "testmodel"
+            ],
+            [
+                "change_testmodel",
+                "webapp",
+                "testmodel"
+            ],
+            [
+                "delete_testmodel",
+                "webapp",
+                "testmodel"
+            ]
+        ]
+    },
+    "model": "auth.group",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Administrators",
+        "permissions": [
+            [
+                "add_user",
+                "auth",
+                "user"
+            ],
+            [
+                "change_user",
+                "auth",
+                "user"
+            ],
+            [
+                "access_to_pws_users",
+                "webapp",
+                "employee"
+            ],
+            [
+                "add_employee",
+                "webapp",
+                "employee"
+            ],
+            [
+                "browse_user",
+                "webapp",
+                "employee"
+            ],
+            [
+                "change_employee",
+                "webapp",
+                "employee"
+            ],
+            [
+                "access_to_pws_hazards",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "add_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "browse_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_all_info_about_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "add_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "browse_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "change_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "pws_letter_access",
+                "webapp",
+                "letter"
+            ],
+            [
+                "send_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "access_to_batch_update",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_import",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_pws_sites",
+                "webapp",
+                "site"
+            ],
+            [
+                "add_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "browse_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "change_all_info_about_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "change_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_pws_surveys",
+                "webapp",
+                "survey"
+            ],
+            [
+                "add_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "browse_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "change_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "access_to_pws_tests",
+                "webapp",
+                "test"
+            ],
+            [
+                "add_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "browse_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "change_test",
+                "webapp",
+                "test"
+            ]
+        ]
+    },
+    "model": "auth.group",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "Surveyors",
+        "permissions": [
+            [
+                "access_to_pws_hazards",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "add_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "browse_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_all_info_about_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "add_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "browse_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "change_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "pws_letter_access",
+                "webapp",
+                "letter"
+            ],
+            [
+                "send_letter",
+                "webapp",
+                "letter"
+            ],
+            [
+                "access_to_pws_sites",
+                "webapp",
+                "site"
+            ],
+            [
+                "browse_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "change_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_own_surveys",
+                "webapp",
+                "survey"
+            ],
+            [
+                "add_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "browse_survey",
+                "webapp",
+                "survey"
+            ],
+            [
+                "change_survey",
+                "webapp",
+                "survey"
+            ]
+        ]
+    },
+    "model": "auth.group",
+    "pk": 3
+},
+{
+    "fields": {
+        "name": "Testers",
+        "permissions": [
+            [
+                "access_to_pws_hazards",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "browse_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "change_hazard",
+                "webapp",
+                "hazard"
+            ],
+            [
+                "access_to_site_by_customer_account",
+                "webapp",
+                "site"
+            ],
+            [
+                "browse_site",
+                "webapp",
+                "site"
+            ],
+            [
+                "access_to_own_tests",
+                "webapp",
+                "test"
+            ],
+            [
+                "add_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "browse_test",
+                "webapp",
+                "test"
+            ],
+            [
+                "change_test",
+                "webapp",
+                "test"
+            ]
+        ]
+    },
+    "model": "auth.group",
+    "pk": 4
+},
+{
+    "fields": {
+        "username": "root",
+        "first_name": "root",
+        "last_name": "root",
+        "is_active": true,
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2015-06-01T10:39:04Z",
+        "groups": [
+            [
+                "SuperAdministrators"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$u9z9TV8pJf6r$ARP9lroecfgLdtEcUbYrgWCrti36AwnvEZ3I0ThseE8=",
+        "email": "thesomeq@gmail.com",
+        "date_joined": "2015-01-12T06:14:02Z"
+    },
+    "model": "auth.user",
+    "pk": 1
+},
+{
+    "fields": {
+        "username": "tester",
+        "first_name": "tester",
+        "last_name": "tester",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-06-01T10:38:48Z",
+        "groups": [
+            [
+                "Testers"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$f1AektJQFT9r$JThfdyKIkuljMhpViPjrV3FHOwD7wviP4FygzknllYY=",
+        "email": "",
+        "date_joined": "2015-01-15T10:53:43Z"
+    },
+    "model": "auth.user",
+    "pk": 2
+},
+{
+    "fields": {
+        "username": "surveyor",
+        "first_name": "surveyor",
+        "last_name": "surveyor",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-04-24T09:34:32Z",
+        "groups": [
+            [
+                "Surveyors"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$I4iwX5QbCR4Y$5QMZNxhNEET9GCF3jscIPQFlTCkMXcAVjr9wnAAg+io=",
+        "email": "",
+        "date_joined": "2015-01-15T10:55:12Z"
+    },
+    "model": "auth.user",
+    "pk": 3
+},
+{
+    "fields": {
+        "username": "admin",
+        "first_name": "admin",
+        "last_name": "admin",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-05-04T09:23:09Z",
+        "groups": [
+            [
+                "Administrators"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
+        "email": "",
+        "date_joined": "2015-01-15T10:55:45Z"
+    },
+    "model": "auth.user",
+    "pk": 4
+},
+{
+    "fields": {
+        "username": "superadmin",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": true,
+        "last_login": "2015-02-16T10:56:26Z",
+        "groups": [
+            [
+                "SuperAdministrators"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$2fUYcI9umPgG$Agziyt/ksLMXYFuIUHq80qTVWaI1MfHFsZJ900JBSP8=",
+        "email": "",
+        "date_joined": "2015-01-27T05:36:46Z"
+    },
+    "model": "auth.user",
+    "pk": 5
+},
+{
+    "fields": {
+        "username": "tester_without_pws",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-02-17T08:53:58Z",
+        "groups": [
+            [
+                "Testers"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$9aPtgV8Ggjfn$IfA9z9levvZAKCBIgWGJs3K9nppQXwEuKryj7X4HsMk=",
+        "email": "",
+        "date_joined": "2015-02-17T08:53:58Z"
+    },
+    "model": "auth.user",
+    "pk": 9
+},
+{
+    "fields": {
+        "username": "surveyor_without_pws",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-02-17T08:54:19Z",
+        "groups": [
+            [
+                "Surveyors"
+            ]
+        ],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$12000$9xjIZttWgXf3$ldgZo6WFFIKvS76jUlhGORudXumALnBNqWw6z7jAROY=",
+        "email": "",
+        "date_joined": "2015-02-17T08:54:19Z"
+    },
+    "model": "auth.user",
+    "pk": 10
+},
+{
+    "fields": {
         "source_type": "Public Water Supply and Private Well"
     },
     "model": "webapp.sourcetype",
@@ -1960,52 +3085,58 @@
     "pk": 5
 },
 {
-  "fields": {
-    "letter_type": "Air Gap",
-    "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity}, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of {ServiceCity} will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {ContactEmail}.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, _______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
-  },
-  "model": "webapp.lettertype",
-  "pk": 1
+    "fields": {
+        "header": "Backflow Prevention Services Notification",
+        "letter_type": "Air Gap",
+        "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity}, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of {ServiceCity} will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {ContactEmail}.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, _______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
+    },
+    "model": "webapp.lettertype",
+    "pk": 1
 },
 {
-  "fields": {
-    "letter_type": "Pool",
-    "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity}, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of {ServiceCity} will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {ContactEmail}.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, ______________________________________, agree to maintain an air gap when filling my swimming pool and agree that a backflow preventer will be required should I not comply with the pool filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
-  },
-  "model": "webapp.lettertype",
-  "pk": 2
+    "fields": {
+        "header": "Backflow Prevention Services Notification",
+        "letter_type": "Pool",
+        "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity}, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of {ServiceCity} will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {ContactEmail}.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, ______________________________________, agree to maintain an air gap when filling my swimming pool and agree that a backflow preventer will be required should I not comply with the pool filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
+    },
+    "model": "webapp.lettertype",
+    "pk": 2
 },
 {
-  "fields": {
-    "letter_type": "Due Install First",
-    "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing a cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH).&nbsp; Part of the mandate establishes who is required to install a backflow preventer for the protection of the potable water supply system.&nbsp; In accordance with the minimum standards established by DHH, your account is required to have a backflow prevention assembly installed. <u>The assembly must be tested upon installation and annually thereafter.</u></p>\r\n\r\n<p>In accordance with state plumbing regulations, the assembly must be installed by a Master Plumber who has a Water Supply Protection Specialist (WSPS) endorsement on their license or a Journeyman Plumber with the WSPS endorsement working for a Master Plumber.&nbsp; For your convenience, we have attached a list of local plumbers possessing the WSPS endorsement.&nbsp; You may choose a plumber from this list or any state approved WSPS endorsed plumber.&nbsp; Per state regulations, the cost of the backflow preventer installation and testing must be borne by the<br />\r\ncustomer.</p>\r\n\r\n<p><em>Prior to the installation of the backflow preventer, please have your selected plumber pick up a &quot;Plumber&rsquo;s Packet for Backflow Preventer Installation&quot; from <u>{PlumberPacketLocation}</u> located at <u>{PlumberPacketAddress}</u>.</em></p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service for non-compliant customers.</u>&nbsp; Please have the backflow preventer installed and tested by the above stated Test Due Date and email a copy of the test report to {ContactEmail}.&nbsp; In the event that the required backflow preventer is already installed, please email a copy of the test report to the email address provided.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, ______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
-  },
-  "model": "webapp.lettertype",
-  "pk": 3
+    "fields": {
+        "header": "Backflow Prevention Services Notification",
+        "letter_type": "Due Install First",
+        "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing a cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH).&nbsp; Part of the mandate establishes who is required to install a backflow preventer for the protection of the potable water supply system.&nbsp; In accordance with the minimum standards established by DHH, your account is required to have a backflow prevention assembly installed. <u>The assembly must be tested upon installation and annually thereafter.</u></p>\r\n\r\n<p>In accordance with state plumbing regulations, the assembly must be installed by a Master Plumber who has a Water Supply Protection Specialist (WSPS) endorsement on their license or a Journeyman Plumber with the WSPS endorsement working for a Master Plumber.&nbsp; For your convenience, we have attached a list of local plumbers possessing the WSPS endorsement.&nbsp; You may choose a plumber from this list or any state approved WSPS endorsed plumber.&nbsp; Per state regulations, the cost of the backflow preventer installation and testing must be borne by the<br />\r\ncustomer.</p>\r\n\r\n<p><em>Prior to the installation of the backflow preventer, please have your selected plumber pick up a &quot;Plumber&rsquo;s Packet for Backflow Preventer Installation&quot; from <u>{PlumberPacketLocation}</u> located at <u>{PlumberPacketAddress}</u>.</em></p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service for non-compliant customers.</u>&nbsp; Please have the backflow preventer installed and tested by the above stated Test Due Date and email a copy of the test report to {ContactEmail}.&nbsp; In the event that the required backflow preventer is already installed, please email a copy of the test report to the email address provided.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, ______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
+    },
+    "model": "webapp.lettertype",
+    "pk": 3
 },
 {
-  "fields": {
-    "letter_type": "Annual Test First",
-    "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>In accordance with State regulations and the City of {ServiceCity} backflow prevention program, all backflow preventers must be tested annually.&nbsp; According to our records, it is now time for your backflow preventer to be tested.&nbsp; Only Water Supply Protection Specialist (WSPS) plumbers or DHH Approved General Testers can perform this task.&nbsp; For your convenience, we have attached a list of local testers previously approved by the City of {ServiceCity}.&nbsp; You may choose a tester from this list or any state approved tester.&nbsp; However, the selected tester not on the previously approved list must obtain a Plumbers Packet from City Hall located at {PlumberPacketAddress} prior to performing the test.</p>\r\n\r\n<p>Please have the backflow preventer tested by the above stated Test Due Date and send a copy of the test report to {ContactEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n"
-  },
-  "model": "webapp.lettertype",
-  "pk": 4
+    "fields": {
+        "header": "Backflow Prevention Services Notification",
+        "letter_type": "Annual Test First",
+        "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>In accordance with State regulations and the City of {ServiceCity} backflow prevention program, all backflow preventers must be tested annually.&nbsp; According to our records, it is now time for your backflow preventer to be tested.&nbsp; Only Water Supply Protection Specialist (WSPS) plumbers or DHH Approved General Testers can perform this task.&nbsp; For your convenience, we have attached a list of local testers previously approved by the City of {ServiceCity}.&nbsp; You may choose a tester from this list or any state approved tester.&nbsp; However, the selected tester not on the previously approved list must obtain a Plumbers Packet from City Hall located at {PlumberPacketAddress} prior to performing the test.</p>\r\n\r\n<p>Please have the backflow preventer tested by the above stated Test Due Date and send a copy of the test report to {ContactEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n"
+    },
+    "model": "webapp.lettertype",
+    "pk": 4
 },
 {
-  "fields": {
-    "letter_type": "Due Install Second",
-    "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p style=\"text-align:right\"><u><strong>2-nd Notice</strong></u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter. is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of {ServiceCity} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the City of {ServiceCity} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at {PlumberPacketAddress}.</p>\r\n\r\n<div>\r\n<div>\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service for non-compliant customers.</u>&nbsp; Please have the backflow preventer installed and tested by the above stated Test Due Date and email a copy of the test report to {ContactEmail}.</p>\r\n</div>\r\n</div>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, ______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
-  },
-  "model": "webapp.lettertype",
-  "pk": 5
+    "fields": {
+        "header": "Backflow Prevention Services Notification",
+        "letter_type": "Due Install Second",
+        "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p style=\"text-align:right\"><u><strong>2-nd Notice</strong></u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter. is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of {ServiceCity} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the City of {ServiceCity} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at {PlumberPacketAddress}.</p>\r\n\r\n<div>\r\n<div>\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service for non-compliant customers.</u>&nbsp; Please have the backflow preventer installed and tested by the above stated Test Due Date and email a copy of the test report to {ContactEmail}.</p>\r\n</div>\r\n</div>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, ______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n"
+    },
+    "model": "webapp.lettertype",
+    "pk": 5
 },
 {
-  "fields": {
-    "letter_type": "Annual Test Second",
-    "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p style=\"text-align: right;\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of {ServiceCity} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the {ServiceCity} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at {PlumberPacketAddress}.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at {ContactEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n"
-  },
-  "model": "webapp.lettertype",
-  "pk": 6
+    "fields": {
+        "header": "Backflow Prevention Services Notification",
+        "letter_type": "Annual Test Second",
+        "template": "<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceAddress}</p>\r\n\r\n<p style=\"text-align: right;\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of {ServiceCity} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the {ServiceCity} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at {PlumberPacketAddress}.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at {ContactEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at {ContactEmail}.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n"
+    },
+    "model": "webapp.lettertype",
+    "pk": 6
 },
 {
     "fields": {
@@ -2248,6 +3379,174 @@
     },
     "model": "webapp.pws",
     "pk": 12
+},
+{
+    "fields": {
+        "city": "root city",
+        "pws": null,
+        "zip": "root zip",
+        "phone2": "",
+        "cert_number": null,
+        "company": "root company",
+        "phone1": "root phone",
+        "test_serial": null,
+        "cert_expires": null,
+        "test_model": null,
+        "state": "AK",
+        "test_last_cert": null,
+        "user": [
+            "root"
+        ],
+        "address": "root address",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 1
+},
+{
+    "fields": {
+        "city": "tester city",
+        "pws": 9,
+        "zip": "tester zip",
+        "phone2": "",
+        "cert_number": "qwerty132",
+        "company": "tester company",
+        "phone1": "tester phone",
+        "test_serial": "",
+        "cert_expires": null,
+        "test_model": null,
+        "state": "AL",
+        "test_last_cert": null,
+        "user": [
+            "tester"
+        ],
+        "address": "tester address",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 2
+},
+{
+    "fields": {
+        "city": "surveyor city",
+        "pws": 9,
+        "zip": "survey zip",
+        "phone2": "",
+        "cert_number": null,
+        "company": "surveyor company",
+        "phone1": "surveyor phone",
+        "test_serial": null,
+        "cert_expires": null,
+        "test_model": null,
+        "state": "AR",
+        "test_last_cert": null,
+        "user": [
+            "surveyor"
+        ],
+        "address": "surveyor address",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 3
+},
+{
+    "fields": {
+        "city": "admin city",
+        "pws": 9,
+        "zip": "admin zip",
+        "phone2": "",
+        "cert_number": null,
+        "company": "admin company",
+        "phone1": "admin phone",
+        "test_serial": null,
+        "cert_expires": null,
+        "test_model": null,
+        "state": "KY",
+        "test_last_cert": null,
+        "user": [
+            "admin"
+        ],
+        "address": "admin address",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 4
+},
+{
+    "fields": {
+        "city": "superadmin city",
+        "pws": null,
+        "zip": "supadm zip",
+        "phone2": "",
+        "cert_number": null,
+        "company": "superadmin company",
+        "phone1": "superadmin phone",
+        "test_serial": null,
+        "cert_expires": null,
+        "test_model": null,
+        "state": "CO",
+        "test_last_cert": null,
+        "user": [
+            "superadmin"
+        ],
+        "address": "superadmin address",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 5
+},
+{
+    "fields": {
+        "city": "",
+        "pws": null,
+        "zip": "",
+        "phone2": "",
+        "cert_number": null,
+        "company": "",
+        "phone1": "",
+        "test_serial": null,
+        "cert_expires": null,
+        "test_model": null,
+        "state": "AR",
+        "test_last_cert": null,
+        "user": [
+            "surveyor_without_pws"
+        ],
+        "address": "",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 10
+},
+{
+    "fields": {
+        "city": "",
+        "pws": null,
+        "zip": "",
+        "phone2": "",
+        "cert_number": null,
+        "company": "",
+        "phone1": "",
+        "test_serial": null,
+        "cert_expires": null,
+        "test_model": null,
+        "state": "OK",
+        "test_last_cert": null,
+        "user": [
+            "tester_without_pws"
+        ],
+        "address": "",
+        "cert_date": null,
+        "test_manufacturer": null
+    },
+    "model": "webapp.employee",
+    "pk": 11
 },
 {
     "fields": {
@@ -2691,1209 +3990,153 @@
 },
 {
     "fields": {
-        "replace_date": null,
-        "bp_type_required": null,
         "orientation": null,
-        "bp_type_present": 6,
-        "install_date": "2015-02-18",
-        "notes": "",
+        "photo": "",
         "serial_no": "",
-        "location2": "",
         "site": 5,
+        "replace_date": null,
+        "hazard_type": 40,
+        "longitude": 0.0,
+        "installed_properly": false,
+        "installer": "",
+        "photo_thumb": "",
+        "is_present": true,
+        "bp_type_present": 6,
+        "service_type": 4,
+        "bp_size": null,
+        "model_no": "",
+        "bp_type_required": null,
+        "location2": "",
+        "location1": "Seattle",
+        "latitude": 0.0,
+        "manufacturer": null,
+        "regulation_type": null,
+        "notes": "",
+        "install_date": "2015-02-18",
         "assembly_status": 3,
         "assembly_location": 2,
-        "installed_properly": false,
-        "model_no": "",
-        "hazard_type": 40,
-        "is_present": true,
-        "due_install_test_date": "2015-05-31",
-        "service_type": 4,
-        "installer": "",
-        "location1": "Seattle",
-        "bp_size": null,
-        "manufacturer": null
+        "due_install_test_date": "2015-05-31"
     },
     "model": "webapp.hazard",
     "pk": 1
 },
 {
     "fields": {
-        "replace_date": null,
-        "bp_type_required": null,
         "orientation": null,
-        "bp_type_present": null,
-        "install_date": null,
-        "notes": "",
+        "photo": "",
         "serial_no": "",
-        "location2": "",
         "site": 10,
+        "replace_date": null,
+        "hazard_type": 14,
+        "longitude": 0.0,
+        "installed_properly": false,
+        "installer": "",
+        "photo_thumb": "",
+        "is_present": true,
+        "bp_type_present": null,
+        "service_type": 3,
+        "bp_size": null,
+        "model_no": "",
+        "bp_type_required": null,
+        "location2": "",
+        "location1": "Washington",
+        "latitude": 0.0,
+        "manufacturer": null,
+        "regulation_type": null,
+        "notes": "",
+        "install_date": null,
         "assembly_status": 1,
         "assembly_location": 2,
-        "installed_properly": false,
-        "model_no": "",
-        "hazard_type": 14,
-        "is_present": true,
-        "due_install_test_date": null,
-        "service_type": 3,
-        "installer": "",
-        "location1": "Washington",
-        "bp_size": null,
-        "manufacturer": null
+        "due_install_test_date": null
     },
     "model": "webapp.hazard",
     "pk": 2
 },
 {
     "fields": {
-        "replace_date": null,
-        "bp_type_required": null,
         "orientation": null,
-        "bp_type_present": null,
-        "install_date": null,
-        "notes": "",
+        "photo": "",
         "serial_no": "",
-        "location2": "",
         "site": 5,
+        "replace_date": null,
+        "hazard_type": 1,
+        "longitude": 0.0,
+        "installed_properly": false,
+        "installer": "",
+        "photo_thumb": "",
+        "is_present": true,
+        "bp_type_present": null,
+        "service_type": 3,
+        "bp_size": null,
+        "model_no": "",
+        "bp_type_required": null,
+        "location2": "",
+        "location1": "White House",
+        "latitude": 0.0,
+        "manufacturer": null,
+        "regulation_type": null,
+        "notes": "",
+        "install_date": null,
         "assembly_status": null,
         "assembly_location": null,
-        "installed_properly": false,
-        "model_no": "",
-        "hazard_type": 1,
-        "is_present": true,
-        "due_install_test_date": null,
-        "service_type": 3,
-        "installer": "",
-        "location1": "White House",
-        "bp_size": null,
-        "manufacturer": null
+        "due_install_test_date": null
     },
     "model": "webapp.hazard",
     "pk": 3
 },
 {
-  "fields": {
-    "name": "SuperAdministrators",
-    "permissions": [
-      [
-        "add_user",
-        "auth",
-        "user"
-      ],
-      [
-        "change_user",
-        "auth",
-        "user"
-      ],
-      [
-        "delete_user",
-        "auth",
-        "user"
-      ],
-      [
-        "add_assemblylocation",
-        "webapp",
-        "assemblylocation"
-      ],
-      [
-        "browse_assemblylocation",
-        "webapp",
-        "assemblylocation"
-      ],
-      [
-        "change_assemblylocation",
-        "webapp",
-        "assemblylocation"
-      ],
-      [
-        "delete_assemblylocation",
-        "webapp",
-        "assemblylocation"
-      ],
-      [
-        "add_assemblystatus",
-        "webapp",
-        "assemblystatus"
-      ],
-      [
-        "browse_assemblystatus",
-        "webapp",
-        "assemblystatus"
-      ],
-      [
-        "change_assemblystatus",
-        "webapp",
-        "assemblystatus"
-      ],
-      [
-        "delete_assemblystatus",
-        "webapp",
-        "assemblystatus"
-      ],
-      [
-        "add_bpmanufacturer",
-        "webapp",
-        "bpmanufacturer"
-      ],
-      [
-        "browse_bpmanufacturer",
-        "webapp",
-        "bpmanufacturer"
-      ],
-      [
-        "change_bpmanufacturer",
-        "webapp",
-        "bpmanufacturer"
-      ],
-      [
-        "delete_bpmanufacturer",
-        "webapp",
-        "bpmanufacturer"
-      ],
-      [
-        "add_bpsize",
-        "webapp",
-        "bpsize"
-      ],
-      [
-        "browse_bpsize",
-        "webapp",
-        "bpsize"
-      ],
-      [
-        "change_bpsize",
-        "webapp",
-        "bpsize"
-      ],
-      [
-        "delete_bpsize",
-        "webapp",
-        "bpsize"
-      ],
-      [
-        "add_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "browse_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "change_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "delete_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "add_customercode",
-        "webapp",
-        "customercode"
-      ],
-      [
-        "browse_customercode",
-        "webapp",
-        "customercode"
-      ],
-      [
-        "change_customercode",
-        "webapp",
-        "customercode"
-      ],
-      [
-        "delete_customercode",
-        "webapp",
-        "customercode"
-      ],
-      [
-        "access_to_adminpanel",
-        "webapp",
-        "employee"
-      ],
-      [
-        "access_to_all_users",
-        "webapp",
-        "employee"
-      ],
-      [
-        "add_employee",
-        "webapp",
-        "employee"
-      ],
-      [
-        "browse_user",
-        "webapp",
-        "employee"
-      ],
-      [
-        "change_employee",
-        "webapp",
-        "employee"
-      ],
-      [
-        "delete_employee",
-        "webapp",
-        "employee"
-      ],
-      [
-        "add_floorscount",
-        "webapp",
-        "floorscount"
-      ],
-      [
-        "browse_floorscount",
-        "webapp",
-        "floorscount"
-      ],
-      [
-        "change_floorscount",
-        "webapp",
-        "floorscount"
-      ],
-      [
-        "delete_floorscount",
-        "webapp",
-        "floorscount"
-      ],
-      [
-        "access_to_all_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "add_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "delete_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "add_hazardtype",
-        "webapp",
-        "hazardtype"
-      ],
-      [
-        "browse_hazardtype",
-        "webapp",
-        "hazardtype"
-      ],
-      [
-        "change_hazardtype",
-        "webapp",
-        "hazardtype"
-      ],
-      [
-        "delete_hazardtype",
-        "webapp",
-        "hazardtype"
-      ],
-      [
-        "add_icpointtype",
-        "webapp",
-        "icpointtype"
-      ],
-      [
-        "browse_icpointtype",
-        "webapp",
-        "icpointtype"
-      ],
-      [
-        "change_icpointtype",
-        "webapp",
-        "icpointtype"
-      ],
-      [
-        "delete_icpointtype",
-        "webapp",
-        "icpointtype"
-      ],
-      [
-        "add_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "browse_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "change_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "delete_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "full_letter_access",
-        "webapp",
-        "letter"
-      ],
-      [
-        "send_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "add_lettertype",
-        "webapp",
-        "lettertype"
-      ],
-      [
-        "browse_lettertype",
-        "webapp",
-        "lettertype"
-      ],
-      [
-        "change_lettertype",
-        "webapp",
-        "lettertype"
-      ],
-      [
-        "delete_lettertype",
-        "webapp",
-        "lettertype"
-      ],
-      [
-        "add_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "browse_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "change_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "delete_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "add_orientation",
-        "webapp",
-        "orientation"
-      ],
-      [
-        "browse_orientation",
-        "webapp",
-        "orientation"
-      ],
-      [
-        "change_orientation",
-        "webapp",
-        "orientation"
-      ],
-      [
-        "delete_orientation",
-        "webapp",
-        "orientation"
-      ],
-      [
-        "add_pws",
-        "webapp",
-        "pws"
-      ],
-      [
-        "browse_pws",
-        "webapp",
-        "pws"
-      ],
-      [
-        "change_pws",
-        "webapp",
-        "pws"
-      ],
-      [
-        "delete_pws",
-        "webapp",
-        "pws"
-      ],
-      [
-        "add_servicetype",
-        "webapp",
-        "servicetype"
-      ],
-      [
-        "browse_servicetype",
-        "webapp",
-        "servicetype"
-      ],
-      [
-        "change_servicetype",
-        "webapp",
-        "servicetype"
-      ],
-      [
-        "delete_servicetype",
-        "webapp",
-        "servicetype"
-      ],
-      [
-        "access_to_all_sites",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_batch_update",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_import",
-        "webapp",
-        "site"
-      ],
-      [
-        "add_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "change_all_info_about_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "change_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "delete_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "add_sitestatus",
-        "webapp",
-        "sitestatus"
-      ],
-      [
-        "browse_sitestatus",
-        "webapp",
-        "sitestatus"
-      ],
-      [
-        "change_sitestatus",
-        "webapp",
-        "sitestatus"
-      ],
-      [
-        "delete_sitestatus",
-        "webapp",
-        "sitestatus"
-      ],
-      [
-        "add_sitetype",
-        "webapp",
-        "sitetype"
-      ],
-      [
-        "browse_sitetype",
-        "webapp",
-        "sitetype"
-      ],
-      [
-        "change_sitetype",
-        "webapp",
-        "sitetype"
-      ],
-      [
-        "delete_sitetype",
-        "webapp",
-        "sitetype"
-      ],
-      [
-        "add_siteuse",
-        "webapp",
-        "siteuse"
-      ],
-      [
-        "browse_siteuse",
-        "webapp",
-        "siteuse"
-      ],
-      [
-        "change_siteuse",
-        "webapp",
-        "siteuse"
-      ],
-      [
-        "delete_siteuse",
-        "webapp",
-        "siteuse"
-      ],
-      [
-        "add_sourcetype",
-        "webapp",
-        "sourcetype"
-      ],
-      [
-        "browse_sourcetype",
-        "webapp",
-        "sourcetype"
-      ],
-      [
-        "change_sourcetype",
-        "webapp",
-        "sourcetype"
-      ],
-      [
-        "delete_sourcetype",
-        "webapp",
-        "sourcetype"
-      ],
-      [
-        "add_special",
-        "webapp",
-        "special"
-      ],
-      [
-        "browse_special",
-        "webapp",
-        "special"
-      ],
-      [
-        "change_special",
-        "webapp",
-        "special"
-      ],
-      [
-        "delete_special",
-        "webapp",
-        "special"
-      ],
-      [
-        "add_statictext",
-        "webapp",
-        "statictext"
-      ],
-      [
-        "change_statictext",
-        "webapp",
-        "statictext"
-      ],
-      [
-        "delete_statictext",
-        "webapp",
-        "statictext"
-      ],
-      [
-        "access_to_all_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "add_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "browse_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "change_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "delete_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "add_surveytype",
-        "webapp",
-        "surveytype"
-      ],
-      [
-        "browse_surveytype",
-        "webapp",
-        "surveytype"
-      ],
-      [
-        "change_surveytype",
-        "webapp",
-        "surveytype"
-      ],
-      [
-        "delete_surveytype",
-        "webapp",
-        "surveytype"
-      ],
-      [
-        "access_to_all_tests",
-        "webapp",
-        "test"
-      ],
-      [
-        "add_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "browse_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "change_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "delete_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "add_testmanufacturer",
-        "webapp",
-        "testmanufacturer"
-      ],
-      [
-        "browse_testmanufacturer",
-        "webapp",
-        "testmanufacturer"
-      ],
-      [
-        "change_testmanufacturer",
-        "webapp",
-        "testmanufacturer"
-      ],
-      [
-        "delete_testmanufacturer",
-        "webapp",
-        "testmanufacturer"
-      ],
-      [
-        "add_testmodel",
-        "webapp",
-        "testmodel"
-      ],
-      [
-        "browse_testmodel",
-        "webapp",
-        "testmodel"
-      ],
-      [
-        "change_testmodel",
-        "webapp",
-        "testmodel"
-      ],
-      [
-        "delete_testmodel",
-        "webapp",
-        "testmodel"
-      ]
-    ]
-  },
-  "model": "auth.group",
-  "pk": 1
-},
-{
-  "fields": {
-    "name": "Administrators",
-    "permissions": [
-      [
-        "add_user",
-        "auth",
-        "user"
-      ],
-      [
-        "change_user",
-        "auth",
-        "user"
-      ],
-      [
-        "access_to_pws_users",
-        "webapp",
-        "employee"
-      ],
-      [
-        "add_employee",
-        "webapp",
-        "employee"
-      ],
-      [
-        "browse_user",
-        "webapp",
-        "employee"
-      ],
-      [
-        "change_employee",
-        "webapp",
-        "employee"
-      ],
-      [
-        "access_to_pws_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "add_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "add_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "browse_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "change_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "pws_letter_access",
-        "webapp",
-        "letter"
-      ],
-      [
-        "send_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "access_to_batch_update",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_import",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_pws_sites",
-        "webapp",
-        "site"
-      ],
-      [
-        "add_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "change_all_info_about_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "change_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_pws_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "add_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "browse_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "change_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "access_to_pws_tests",
-        "webapp",
-        "test"
-      ],
-      [
-        "add_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "browse_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "change_test",
-        "webapp",
-        "test"
-      ]
-    ]
-  },
-  "model": "auth.group",
-  "pk": 2
-},
-{
-  "fields": {
-    "name": "Surveyors",
-    "permissions": [
-      [
-        "access_to_pws_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "add_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "add_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "browse_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "change_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "pws_letter_access",
-        "webapp",
-        "letter"
-      ],
-      [
-        "send_letter",
-        "webapp",
-        "letter"
-      ],
-      [
-        "access_to_pws_sites",
-        "webapp",
-        "site"
-      ],
-      [
-        "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "change_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_own_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "add_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "browse_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "change_survey",
-        "webapp",
-        "survey"
-      ]
-    ]
-  },
-  "model": "auth.group",
-  "pk": 3
-},
-{
-  "fields": {
-    "name": "Testers",
-    "permissions": [
-      [
-        "access_to_pws_hazards",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "access_to_site_by_customer_account",
-        "webapp",
-        "site"
-      ],
-      [
-        "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_own_tests",
-        "webapp",
-        "test"
-      ],
-      [
-        "add_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "browse_test",
-        "webapp",
-        "test"
-      ],
-      [
-        "change_test",
-        "webapp",
-        "test"
-      ]
-    ]
-  },
-  "model": "auth.group",
-  "pk": 4
-},
-{
     "fields": {
-        "username": "root",
-        "first_name": "root",
-        "last_name": "root",
-        "is_active": true,
-        "is_superuser": true,
-        "is_staff": true,
-        "last_login": "2015-05-04T11:55:41.752Z",
-        "groups": [
-            [
-                "SuperAdministrators"
-            ]
+        "detector_manufacturer": "",
+        "detector_model": "",
+        "pump_present": false,
+        "hazards": [
+            3
         ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$u9z9TV8pJf6r$ARP9lroecfgLdtEcUbYrgWCrti36AwnvEZ3I0ThseE8=",
-        "email": "thesomeq@gmail.com",
-        "date_joined": "2015-01-12T06:14:02Z"
+        "survey_type": 4,
+        "cc_present": false,
+        "site": 5,
+        "survey_date": "2015-01-26",
+        "metered": false,
+        "surveyor": [
+            "surveyor"
+        ],
+        "protected": false,
+        "detector_serial_no": "",
+        "service_type": 3,
+        "additives_present": false,
+        "aux_water": false,
+        "notes": "",
+        "special": null
     },
-    "model": "auth.user",
+    "model": "webapp.survey",
     "pk": 1
 },
 {
     "fields": {
-        "username": "tester",
-        "first_name": "tester",
-        "last_name": "tester",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": false,
-        "last_login": "2015-05-05T04:44:20.608Z",
-        "groups": [
-            [
-                "Testers"
-            ]
+        "detector_manufacturer": "",
+        "detector_model": "",
+        "pump_present": false,
+        "hazards": [
+            2
         ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$f1AektJQFT9r$JThfdyKIkuljMhpViPjrV3FHOwD7wviP4FygzknllYY=",
-        "email": "",
-        "date_joined": "2015-01-15T10:53:43Z"
+        "survey_type": 6,
+        "cc_present": false,
+        "site": 10,
+        "survey_date": "2015-01-26",
+        "metered": false,
+        "surveyor": [
+            "surveyor"
+        ],
+        "protected": false,
+        "detector_serial_no": "",
+        "service_type": 3,
+        "additives_present": false,
+        "aux_water": false,
+        "notes": "",
+        "special": null
     },
-    "model": "auth.user",
+    "model": "webapp.survey",
     "pk": 2
-},
-{
-    "fields": {
-        "username": "surveyor",
-        "first_name": "surveyor",
-        "last_name": "surveyor",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": false,
-        "last_login": "2015-04-24T09:34:32.927Z",
-        "groups": [
-            [
-                "Surveyors"
-            ]
-        ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$I4iwX5QbCR4Y$5QMZNxhNEET9GCF3jscIPQFlTCkMXcAVjr9wnAAg+io=",
-        "email": "",
-        "date_joined": "2015-01-15T10:55:12Z"
-    },
-    "model": "auth.user",
-    "pk": 3
-},
-{
-    "fields": {
-        "username": "admin",
-        "first_name": "admin",
-        "last_name": "admin",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": false,
-        "last_login": "2015-05-04T09:23:09.777Z",
-        "groups": [
-            [
-                "Administrators"
-            ]
-        ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
-        "email": "",
-        "date_joined": "2015-01-15T10:55:45Z"
-    },
-    "model": "auth.user",
-    "pk": 4
-},
-{
-    "fields": {
-        "username": "superadmin",
-        "first_name": "",
-        "last_name": "",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": true,
-        "last_login": "2015-02-16T10:56:26Z",
-        "groups": [
-            [
-                "SuperAdministrators"
-            ]
-        ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$2fUYcI9umPgG$Agziyt/ksLMXYFuIUHq80qTVWaI1MfHFsZJ900JBSP8=",
-        "email": "",
-        "date_joined": "2015-01-27T05:36:46Z"
-    },
-    "model": "auth.user",
-    "pk": 5
-},
-{
-    "fields": {
-        "username": "tester_without_pws",
-        "first_name": "",
-        "last_name": "",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": false,
-        "last_login": "2015-02-17T08:53:58Z",
-        "groups": [
-            [
-                "Testers"
-            ]
-        ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$9aPtgV8Ggjfn$IfA9z9levvZAKCBIgWGJs3K9nppQXwEuKryj7X4HsMk=",
-        "email": "",
-        "date_joined": "2015-02-17T08:53:58Z"
-    },
-    "model": "auth.user",
-    "pk": 9
-},
-{
-    "fields": {
-        "username": "surveyor_without_pws",
-        "first_name": "",
-        "last_name": "",
-        "is_active": true,
-        "is_superuser": false,
-        "is_staff": false,
-        "last_login": "2015-02-17T08:54:19Z",
-        "groups": [
-            [
-                "Surveyors"
-            ]
-        ],
-        "user_permissions": [],
-        "password": "pbkdf2_sha256$12000$9xjIZttWgXf3$ldgZo6WFFIKvS76jUlhGORudXumALnBNqWw6z7jAROY=",
-        "email": "",
-        "date_joined": "2015-02-17T08:54:19Z"
-    },
-    "model": "auth.user",
-    "pk": 10
 },
 {
     "fields": {
@@ -4030,6 +4273,8 @@
         "cv2_maintenance": false,
         "cv2_cleaned": true,
         "pvb_open_pressure": null,
+        "cv_retest_psi": null,
+        "air_inlet_retest_psi": null,
         "cv2_replaced_details": [],
         "cv2_leaked": false,
         "test_result": false,
@@ -4049,6 +4294,7 @@
         ],
         "cv1_maintenance": false,
         "cv1_cleaned": false,
+        "paid": true,
         "air_inlet_opened": false,
         "cv_leaked": true,
         "cv2_maintenance_pressure": null,
@@ -4062,8 +4308,7 @@
         "air_inlet_psi": null,
         "notes": "",
         "test_date": "2015-01-27",
-        "rv_cleaned": true,
-        "paid": true
+        "rv_cleaned": true
     },
     "model": "webapp.test",
     "pk": 1
@@ -4077,6 +4322,8 @@
         "cv2_maintenance": false,
         "cv2_cleaned": true,
         "pvb_open_pressure": null,
+        "cv_retest_psi": null,
+        "air_inlet_retest_psi": null,
         "cv2_replaced_details": [],
         "cv2_leaked": false,
         "test_result": false,
@@ -4092,6 +4339,7 @@
         ],
         "cv1_maintenance": false,
         "cv1_cleaned": true,
+        "paid": true,
         "air_inlet_opened": false,
         "cv_leaked": true,
         "cv2_maintenance_pressure": null,
@@ -4105,258 +4353,84 @@
         "air_inlet_psi": null,
         "notes": "",
         "test_date": "2015-01-27",
-        "rv_cleaned": true,
-        "paid": true
+        "rv_cleaned": true
     },
     "model": "webapp.test",
     "pk": 2
 },
 {
     "fields": {
-        "detector_manufacturer": "",
-        "detector_model": "",
-        "pump_present": false,
-        "hazards": [
-            3
-        ],
-        "survey_type": 4,
-        "cc_present": false,
-        "site": 5,
-        "survey_date": "2015-01-26",
-        "metered": false,
-        "surveyor": [
-            "surveyor"
-        ],
-        "protected": false,
-        "detector_serial_no": "",
-        "service_type": 3,
-        "additives_present": false,
-        "aux_water": false,
-        "notes": "",
-        "special": null
-    },
-    "model": "webapp.survey",
-    "pk": 1
-},
-{
-    "fields": {
-        "detector_manufacturer": "",
-        "detector_model": "",
-        "pump_present": false,
-        "hazards": [
-            2
-        ],
-        "survey_type": 6,
-        "cc_present": false,
-        "site": 10,
-        "survey_date": "2015-01-26",
-        "metered": false,
-        "surveyor": [
-            "surveyor"
-        ],
-        "protected": false,
-        "detector_serial_no": "",
-        "service_type": 3,
-        "additives_present": false,
-        "aux_water": false,
-        "notes": "",
-        "special": null
-    },
-    "model": "webapp.survey",
-    "pk": 2
-},
-{
-    "fields": {
-        "city": "root city",
-        "pws": null,
-        "zip": "root zip",
-        "phone2": "",
-        "cert_number": null,
-        "company": "root company",
-        "phone1": "root phone",
-        "test_serial": null,
-        "cert_expires": null,
-        "test_model": null,
-        "state": "AK",
-        "test_last_cert": null,
-        "user": [
-            "root"
-        ],
-        "address": "root address",
-        "cert_date": null,
-        "test_manufacturer": null
-    },
-    "model": "webapp.employee",
-    "pk": 1
-},
-{
-    "fields": {
-        "city": "tester city",
-        "pws": 9,
-        "zip": "tester zip",
-        "phone2": "",
-        "cert_number": "qwerty132",
-        "company": "tester company",
-        "phone1": "tester phone",
-        "test_serial": "",
-        "cert_expires": null,
-        "test_model": null,
-        "state": "AL",
-        "test_last_cert": null,
-        "user": [
+        "outlet_sov_leaked": false,
+        "rv_psi1": null,
+        "rv_psi2": null,
+        "rv_replaced_details": [],
+        "cv2_maintenance": false,
+        "cv2_cleaned": true,
+        "pvb_open_pressure": null,
+        "cv_retest_psi": null,
+        "air_inlet_retest_psi": null,
+        "cv2_replaced_details": [],
+        "cv2_leaked": false,
+        "test_result": false,
+        "rv_maintenance": false,
+        "cv1_replaced_details": [],
+        "pvb_opened": false,
+        "cv_maintenance": false,
+        "pvb_replaced_details": [],
+        "cv2_gauge_pressure": null,
+        "pvb_cleaned": true,
+        "tester": [
             "tester"
         ],
-        "address": "tester address",
-        "cert_date": null,
-        "test_manufacturer": null
+        "cv1_maintenance": false,
+        "cv1_cleaned": true,
+        "paid": false,
+        "air_inlet_opened": true,
+        "cv_leaked": false,
+        "cv2_maintenance_pressure": null,
+        "cv_held_pressure": null,
+        "cv_psi": null,
+        "cv1_gauge_pressure": null,
+        "rv_opened": false,
+        "cv1_maintenance_pressure": null,
+        "cv1_leaked": true,
+        "bp_device": 1,
+        "air_inlet_psi": null,
+        "notes": "",
+        "test_date": "2015-06-01",
+        "rv_cleaned": true
     },
-    "model": "webapp.employee",
-    "pk": 2
-},
-{
-    "fields": {
-        "city": "surveyor city",
-        "pws": 9,
-        "zip": "survey zip",
-        "phone2": "",
-        "cert_number": null,
-        "company": "surveyor company",
-        "phone1": "surveyor phone",
-        "test_serial": null,
-        "cert_expires": null,
-        "test_model": null,
-        "state": "AR",
-        "test_last_cert": null,
-        "user": [
-            "surveyor"
-        ],
-        "address": "surveyor address",
-        "cert_date": null,
-        "test_manufacturer": null
-    },
-    "model": "webapp.employee",
+    "model": "webapp.test",
     "pk": 3
 },
 {
     "fields": {
-        "city": "admin city",
-        "pws": 9,
-        "zip": "admin zip",
-        "phone2": "",
-        "cert_number": null,
-        "company": "admin company",
-        "phone1": "admin phone",
-        "test_serial": null,
-        "cert_expires": null,
-        "test_model": null,
-        "state": "KY",
-        "test_last_cert": null,
+        "already_sent": false,
+        "rendered_body": "<p><strong>2015-05-05&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Amanda James</td>\r\n\t\t\t<td>Account No.: QAZ2WSX</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>White House</td>\r\n\t\t\t<td>Assembly: HBVB</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Washington, DC, 90192</td>\r\n\t\t\t<td>Test Due Date: 2015-05-22</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: White House</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Washington, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of Washington will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to thesomeq@gmail.com.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at thesomeq@gmail.com.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, _______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n",
+        "site": 5,
+        "hazard": 3,
         "user": [
-            "admin"
+            "root"
         ],
-        "address": "admin address",
-        "cert_date": null,
-        "test_manufacturer": null
+        "date": "2015-05-03",
+        "letter_type": 1
     },
-    "model": "webapp.employee",
-    "pk": 4
+    "model": "webapp.letter",
+    "pk": 1
 },
 {
     "fields": {
-        "city": "superadmin city",
-        "pws": null,
-        "zip": "supadm zip",
-        "phone2": "",
-        "cert_number": null,
-        "company": "superadmin company",
-        "phone1": "superadmin phone",
-        "test_serial": null,
-        "cert_expires": null,
-        "test_model": null,
-        "state": "CO",
-        "test_last_cert": null,
+        "already_sent": false,
+        "rendered_body": "<p><strong>2015-05-05&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Gabe Newell</td>\r\n\t\t\t<td>Account No.: VALVE</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>127, Universe st</td>\r\n\t\t\t<td>Assembly: None</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Seattle, WA, 12382</td>\r\n\t\t\t<td>Test Due Date: None</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: 98, South Jackson st</p>\r\n\r\n<p style=\"text-align: right;\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Seattle is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of Seattle has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the Seattle Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at Plumber Packet Address.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at thesomeq@gmail.com.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at thesomeq@gmail.com.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n",
+        "site": 10,
+        "hazard": 2,
         "user": [
-            "superadmin"
+            "root"
         ],
-        "address": "superadmin address",
-        "cert_date": null,
-        "test_manufacturer": null
+        "date": "2015-05-05",
+        "letter_type": 6
     },
-    "model": "webapp.employee",
-    "pk": 5
-},
-{
-    "fields": {
-        "city": "",
-        "pws": null,
-        "zip": "",
-        "phone2": "",
-        "cert_number": null,
-        "company": "",
-        "phone1": "",
-        "test_serial": null,
-        "cert_expires": null,
-        "test_model": null,
-        "state": "AR",
-        "test_last_cert": null,
-        "user": [
-            "surveyor_without_pws"
-        ],
-        "address": "",
-        "cert_date": null,
-        "test_manufacturer": null
-    },
-    "model": "webapp.employee",
-    "pk": 10
-},
-{
-    "fields": {
-        "city": "",
-        "pws": null,
-        "zip": "",
-        "phone2": "",
-        "cert_number": null,
-        "company": "",
-        "phone1": "",
-        "test_serial": null,
-        "cert_expires": null,
-        "test_model": null,
-        "state": "OK",
-        "test_last_cert": null,
-        "user": [
-            "tester_without_pws"
-        ],
-        "address": "",
-        "cert_date": null,
-        "test_manufacturer": null
-    },
-    "model": "webapp.employee",
-    "pk": 11
-},
-{
-  "fields": {
-    "already_sent": false,
-    "rendered_body": "<p><strong>2015-05-05&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Amanda James</td>\r\n\t\t\t<td>Account No.: QAZ2WSX</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>White House</td>\r\n\t\t\t<td>Assembly: HBVB</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Washington, DC, 90192</td>\r\n\t\t\t<td>Test Due Date: 2015-05-22</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: White House</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Washington, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of Washington will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to thesomeq@gmail.com.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at thesomeq@gmail.com.</p>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><small>I, _______________________________________, agree to maintain an air gap when filling my vessel and agree that a backflow preventer will be required should I not comply with these filling requirements.</small></p>\r\n\r\n<div>&nbsp;</div>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"width:500px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td><small>Customer:</small></td>\r\n\t\t\t<td><small>&nbsp;Date:</small></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td><small>_______________________________________</small></td>\r\n\t\t\t<td><small>&nbsp;______________</small></td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n",
-    "site": 5,
-    "hazard": 3,
-    "user": 1,
-    "date": "2015-05-03",
-    "letter_type": 1
-  },
-  "model": "webapp.letter",
-  "pk": 1
-},
-{
-  "fields": {
-    "already_sent": false,
-    "rendered_body": "<p><strong>2015-05-05&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Gabe Newell</td>\r\n\t\t\t<td>Account No.: VALVE</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>127, Universe st</td>\r\n\t\t\t<td>Assembly: None</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Seattle, WA, 12382</td>\r\n\t\t\t<td>Test Due Date: None</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: 98, South Jackson st</p>\r\n\r\n<p style=\"text-align: right;\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Seattle is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of Seattle has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the Seattle Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at city hall located at Plumber Packet Address.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at thesomeq@gmail.com.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Backflow Prevention Services LLC, at thesomeq@gmail.com.</div>\r\n\r\n<p>Sincerely,</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Public Works Director</p>\r\n",
-    "site": 10,
-    "hazard": 2,
-    "user": 1,
-    "date": "2015-05-05",
-    "letter_type": 6
-  },
-  "model": "webapp.letter",
-  "pk": 2
+    "model": "webapp.letter",
+    "pk": 2
 }
 ]

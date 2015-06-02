@@ -1,10 +1,11 @@
 import os
-from django.conf import settings
 import time
-import helper
+
 from lettuce import *
-from data import *
 from django.core.management import call_command
+
+import helper
+from data import *
 
 
 @step('I open "(http.*)"')
@@ -24,20 +25,6 @@ def click_link(step, link_name):
            helper.find(Xpath.Pattern.link_by_exact_text % link_name) or \
            helper.find(Xpath.Pattern.link_by_substr % link_name)
     helper.check_element_exists(link, 'Link with name "%s" was not found' % link_name)
-    link.click()
-
-
-@step('I click survey detail link with number "(.*)"')
-def click_survey_detail_link(step, number):
-    link = helper.find(Xpath.Pattern.survey_detail % number)
-    helper.check_element_exists(link, 'Link with number "%s" was not found' % number)
-    link.click()
-
-
-@step('I click survey edit link')
-def click_survey_detail_link(step):
-    link = helper.find(Xpath.Pattern.survey_edit_link)
-    helper.check_element_exists(link, 'Survey edit link was not found')
     link.click()
 
 

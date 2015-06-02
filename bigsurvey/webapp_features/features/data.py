@@ -106,10 +106,18 @@ class Xpath:
         site_hazards_button = '//a[@id="hazards_button"]'
         site_surveys_button = '//a[@id="surveys_button"]'
 
+    class Paypal:
+        username = './/input[@name="login_email"]'
+        password = './/input[@name="login_password"]'
+        submit_button = './/input[@name="login.x"]'
+        login_button = './/input[@name="login_button"]'
+        continue_button = './/input[@name="continue"]'
+
     more_link = './/li[@id="bfp_menu"]/a'
     form_element = './/input|.//textarea|.//select'
     csrfmiddlewaretoken = './/input[@name="csrfmiddlewaretoken"]'
     import_mappings_form_errors = './/div[contains(@class, "uk-alert-danger")]/ul/li'
+    payment_step_2 = './/div[@data-content="step-2"]'
 
 
 import_mappings = {
@@ -134,3 +142,8 @@ import_mappings = {
     "cust_address2": 17,
     "next_survey_date": 4
 }
+
+
+class PaypalCredentials:
+    username = 'bigsurvey@test.com'
+    password = '1qaz@WSX'

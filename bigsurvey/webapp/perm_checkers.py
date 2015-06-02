@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
 
-
 class ObjectPermChecker(object):
     __metaclass__ = ABCMeta
 
@@ -30,7 +29,8 @@ class HazardPermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_hazards') or \
-               request.user.has_perm('webapp.access_to_pws_hazards') and obj.site.pws == request.user.employee.pws
+               request.user.has_perm('webapp.access_to_pws_hazards') and obj.site.pws == request.user.employee.pws or \
+               obj.tests.filter(tester=request.user).exists()
 
 
 class TestPermChecker(ObjectPermChecker):

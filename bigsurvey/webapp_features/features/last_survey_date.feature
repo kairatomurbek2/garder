@@ -1,5 +1,5 @@
 @last_survey_date
-Feature: last survey date
+Feature: Last survey date
 
   Scenario: I See initial date
     Given I logged in as "root"

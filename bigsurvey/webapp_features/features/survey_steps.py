@@ -4,6 +4,20 @@ from data import *
 from webapp.models import Survey
 
 
+@step('I click survey detail link with number "(.*)"')
+def click_survey_detail_link(step, number):
+    link = helper.find(Xpath.Pattern.survey_detail % number)
+    helper.check_element_exists(link, 'Link with number "%s" was not found' % number)
+    link.click()
+
+
+@step('I click survey edit link')
+def click_survey_detail_link(step):
+    link = helper.find(Xpath.Pattern.survey_edit_link)
+    helper.check_element_exists(link, 'Survey edit link was not found')
+    link.click()
+
+
 @step('I directly open "survey_detail" page with pk "(\d+)"')
 def directly_open_survey_detail_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.survey_detail % pk))
@@ -41,7 +55,7 @@ def open_survey_edit_page(step, pk):
 
 
 @step('I click "(\d+)"th "survey_detail" link on page')
-def click_survey_detail(step, number):
+def click_survey_detail_link(step, number):
     step.given('I click survey detail link with number "%s"' % number)
 
 
