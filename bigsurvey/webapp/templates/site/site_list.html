@@ -6,7 +6,7 @@
 <div class="uk-grid">
     {% include 'site/site_filters.html' %}
 
-    <div class="uk-width-4-5" style="margin-left: 260px; padding-top: 10px;">
+    <div id="uk-width-4-5" class="uk-width-4-5" style="margin-left: 260px; padding-top: 10px;">
         {% include 'messages.html' %}
         <div class="pagination-wrapper">{% paginate %}</div>
 
@@ -208,5 +208,16 @@
     function scrollPagination() {
         paginationWrapper.css('margin-left', documentScrollLeft + 'px');
     }
+
+
+    $(document).ready(function () {
+        $(document).on('show.uk.offcanvas', function () {
+            document.getElementById("uk-width-4-5").style.marginLeft = "0px";
+        });
+
+        $(document).on('hide.uk.offcanvas', function () {
+            document.getElementById("uk-width-4-5").style.marginLeft = "260px";
+        });
+    });
 
 </script>
