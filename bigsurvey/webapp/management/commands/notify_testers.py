@@ -26,5 +26,5 @@ class Command(BaseCommand):
                 send_mail(subject=self.subject,
                           message=plain_content,
                           from_email=settings.DEFAULT_FROM_EMAIL,
-                          recipient_list=[tester.employee.email],
+                          recipient_list=[tester.email],
                           html_message=html_content)
