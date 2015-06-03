@@ -16,7 +16,7 @@ Feature: Test adding
     | surveyor | 1  | see      |
     | surveyor | 2  | see      |
     | tester   | 2  | not see  |
-    | tester   | 1  | see      |
+    | tester   | 1  | not see  |
 
 
   Scenario: Correct test adding

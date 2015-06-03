@@ -16,7 +16,7 @@ Feature: Hazard Detail
     | surveyor | 2  | not see  |
     | surveyor | 1  | see      |
     | tester   | 2  | not see  |
-    | tester   | 1  | see      |
+    | tester   | 1  | not see  |
 
 
   Scenario: Hazard detail page elements
