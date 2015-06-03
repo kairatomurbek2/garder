@@ -46,14 +46,25 @@ var setPayButtonState = function () {
     }
 };
 
-var isProcessing = false;
+var createPayment = function (tests, successHandler) {
+    $.ajax(Urls.test_pay_paypal, {
+        method: 'post',
+        data: {
+            'tests': tests
+        },
+        traditional: true,
+        success: successHandler
+    });
+};
+
+var isPaymentProcessing = false;
 
 $(document).ready(function () {
     setPayButtonState();
     $(selectors.tests).click(setPayButtonState);
 
     $(selectors.modal).on('hide.uk.modal', function () {
-        isProcessing = false;
+        isPaymentProcessing = false;
         resetModal();
     });
 
@@ -68,44 +79,35 @@ $(document).ready(function () {
     $(selectors.creationLink).click(function (e) {
         e.preventDefault();
 
-        if (!isProcessing) {
-            isProcessing = true;
+        if (!isPaymentProcessing) {
+            isPaymentProcessing = true;
 
             var selectedTests = getSelectedTests();
-
-            var url = $(this).attr('href');
 
             $(selectors.step1).fadeTo('fast', 0.5);
             $(selectors.spinner).show();
 
-            $.ajax(url, {
-                method: 'post',
-                data: {
-                    'tests': selectedTests
-                },
-                traditional: true,
-                success: function (response) {
-                    if (!isProcessing) {
-                        resetModal();
-                        return;
-                    }
-                    if (response.status == 'success') {
-                        $(selectors.step1).hide();
-                        $(selectors.errorAlert).hide();
-                        $(selectors.step2).show();
-                        $(selectors.totalAmount).text(response.total_amount);
-                        $(selectors.approvalLink).attr('href', response.approval_url);
-                    } else if (response.status == 'error') {
-                        $(selectors.step1).fadeTo('fast', 1);
-                        $(selectors.errorAlert)
-                            .show()
-                            .find(selectors.errorMessage)
-                            .text(response.message);
-                        hideElementWithDelay($(selectors.errorAlert));
-                    }
-                    $(selectors.spinner).hide();
-                    isProcessing = false;
+            createPayment(selectedTests, function (response) {
+                if (!isPaymentProcessing) {
+                    resetModal();
+                    return;
                 }
+                if (response.status == 'success') {
+                    $(selectors.step1).hide();
+                    $(selectors.errorAlert).hide();
+                    $(selectors.step2).show();
+                    $(selectors.totalAmount).text(response.total_amount);
+                    $(selectors.approvalLink).attr('href', response.approval_url);
+                } else if (response.status == 'error') {
+                    $(selectors.step1).fadeTo('fast', 1);
+                    $(selectors.errorAlert)
+                        .show()
+                        .find(selectors.errorMessage)
+                        .text(response.message);
+                    hideElementWithDelay($(selectors.errorAlert));
+                }
+                $(selectors.spinner).hide();
+                isPaymentProcessing = false;
             });
         }
 

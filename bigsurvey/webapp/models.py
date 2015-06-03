@@ -365,6 +365,7 @@ class Employee(models.Model):
     test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
     company = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Company"))
     test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial"))
+    email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Email"))
 
     def __unicode__(self):
         return str(self.user)

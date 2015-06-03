@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{% static 'css/components/form-file.min.css' %}"/>
     {% block styles %}
     {% endblock %}
+    {% include 'partial/urls.html' %}
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/uikit.min.js' %}"></script>
     <script src="{% static 'js/components/datepicker.min.js' %}"></script>
@@ -28,7 +29,6 @@
     {% endblock %}
 </head>
 <body>
-
 <nav class="uk-navbar fixed-navbar uk-margin-large-bottom">
     <ul class="uk-navbar-nav uk-hidden-small">
         <li class="uk-active">
@@ -105,74 +105,73 @@
         </ul>
     </div>
     <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
+
     <div class="uk-navbar-brand uk-navbar uk-visible-small">BACKFLOW SOFTWARE SOLUTIONS</div>
 </nav>
 <div class="navbar-hack"></div>
 {% block content %}
 {% endblock %}
 <div id="offcanvas" class="uk-offcanvas">
-            <div class="uk-offcanvas-bar">
-                <ul class="uk-nav uk-nav-offcanvas">
-        {% if perms.webapp.browse_site %}
-            <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
-        {% endif %}
-        {% if perms.webapp.browse_survey %}
-            <li><a id="surveys_menu_link" href="{% url "webapp:survey_list" %}">{% trans "Surveys" %}</a></li>
-        {% endif %}
-        {% if perms.webapp.browse_test %}
-            <li><a id="tests_menu_link" href="{% url "webapp:test_list" %}">{% trans "Tests" %}</a></li>
-        {% endif %}
-        {% if perms.webapp.access_to_own_tests and not request.user.is_superuser %}
-            <li><a id="unpaid_tests_menu_link" href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unpaid Tests' %}</a></li>
-        {% endif %}
-        {% if perms.webapp.browse_hazard %}
-            <li>
-                <a id="hazards_menu_link" href="{% url "webapp:hazard_list" %}">
-                    {% if perms.webapp.change_all_info_about_hazard %}
-                        {% trans "Hazards" %}
-                    {% else %}
-                        {% trans "BP Devices" %}
-                    {% endif %}
-                </a>
-            </li>
-        {% endif %}
-        {% if perms.webapp.browse_letter %}
-            <li><a id="letters_menu_link" href="{% url 'webapp:letter_list' %}">{% trans "Letters" %}</a></li>
-        {% endif %}
-        {% if perms.webapp.browse_user %}
-            <li><a id="testers_menu_link" href="{% url 'webapp:tester_list' %}">{% trans "Testers" %}</a></li>
-        {% endif %}
-        {% if perms.webapp.browse_report %}
-            <li><a>{% trans "Reports" %}</a></li>
-        {% endif %}
-        {% if perms.webapp.browse_user %}
-
-
-        <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
-            <li class="uk-parent">
-                <a href="#">{% trans "More..." %}</a>
-                <ul class="uk-nav-sub">
-                    {% if perms.webapp.access_to_adminpanel %}
-                        <li><a id="admin_menu_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_pws %}
-                        <li><a id="pws_menu_link" href="{% url "webapp:pws_list" %}">{% trans "PWS" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.browse_user %}
-                        <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.access_to_import %}
-                        <li><a id="import_menu_link" href="{% url 'webapp:import' %}">{% trans "Import" %}</a></li>
-                    {% endif %}
-                    {% if perms.webapp.change_site %}
-                        <li><a id="batch_update_menu_link" href="{% url 'webapp:batch_update' %}">{% trans "Batch Update" %}</a></li>
-                    {% endif %}
+    <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+            {% if perms.webapp.browse_site %}
+                <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
+            {% endif %}
+            {% if perms.webapp.browse_survey %}
+                <li><a id="surveys_menu_link" href="{% url "webapp:survey_list" %}">{% trans "Surveys" %}</a></li>
+            {% endif %}
+            {% if perms.webapp.browse_test %}
+                <li><a id="tests_menu_link" href="{% url "webapp:test_list" %}">{% trans "Tests" %}</a></li>
+            {% endif %}
+            {% if perms.webapp.access_to_own_tests and not request.user.is_superuser %}
+                <li><a id="unpaid_tests_menu_link" href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unpaid Tests' %}</a></li>
+            {% endif %}
+            {% if perms.webapp.browse_hazard %}
+                <li>
+                    <a id="hazards_menu_link" href="{% url "webapp:hazard_list" %}">
+                        {% if perms.webapp.change_all_info_about_hazard %}
+                            {% trans "Hazards" %}
+                        {% else %}
+                            {% trans "BP Devices" %}
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+            {% if perms.webapp.browse_letter %}
+                <li><a id="letters_menu_link" href="{% url 'webapp:letter_list' %}">{% trans "Letters" %}</a></li>
+            {% endif %}
+            {% if perms.webapp.browse_user %}
+                <li><a id="testers_menu_link" href="{% url 'webapp:tester_list' %}">{% trans "Testers" %}</a></li>
+            {% endif %}
+            {% if perms.webapp.browse_report %}
+                <li><a>{% trans "Reports" %}</a></li>
+            {% endif %}
+            {% if perms.webapp.browse_user %}
+                <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
+                    <li class="uk-parent">
+                        <a href="#">{% trans "More..." %}</a>
+                        <ul class="uk-nav-sub">
+                            {% if perms.webapp.access_to_adminpanel %}
+                                <li><a id="admin_menu_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
+                            {% endif %}
+                            {% if perms.webapp.browse_pws %}
+                                <li><a id="pws_menu_link" href="{% url "webapp:pws_list" %}">{% trans "PWS" %}</a></li>
+                            {% endif %}
+                            {% if perms.webapp.browse_user %}
+                                <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>
+                            {% endif %}
+                            {% if perms.webapp.access_to_import %}
+                                <li><a id="import_menu_link" href="{% url 'webapp:import' %}">{% trans "Import" %}</a></li>
+                            {% endif %}
+                            {% if perms.webapp.change_site %}
+                                <li><a id="batch_update_menu_link" href="{% url 'webapp:batch_update' %}">{% trans "Batch Update" %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
                 </ul>
-            </li>
+            {% endif %}
         </ul>
-        {% endif %}
-                </ul>
-            </div>
-        </div>
+    </div>
+</div>
 </body>
 </html>

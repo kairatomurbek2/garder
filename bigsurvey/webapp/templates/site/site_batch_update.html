@@ -8,90 +8,90 @@
 {% endblock %}
 {% block content %}
     <div class="uk-grid">
-    <div class="wrapper uk-width-1-5">
-    {% include 'site/site_filters.html' %}
-    </div>
-    <div class="wrapper uk-width-4-5">
-    {% autopaginate site_filter.qs as filtered_sites 50 %}
-    {% paginate %}
-    <div class="wrapper">
-        {% include 'messages.html' %}
-        <form method="post" class="uk-form" name="batch_update">
-            {% csrf_token %}
-            <div class="uk-text-center">
-                {{ form.date|attr:'data-uk-datepicker:{format:"YYYY-MM-DD"}' }}
-                <button type="submit" name="set_sites_next_survey_date" class="uk-button uk-button-success">{% trans "Set Sites' Next Survey Date" %}</button>
-                <button type="submit" name="set_hazards_due_install_test_date" class="uk-button uk-button-success">{% trans "Set Hazards' Due Install Test Date" %}</button>
+        <div class="wrapper uk-width-1-5">
+            {% include 'site/site_filters.html' %}
+        </div>
+        <div class="wrapper uk-width-4-5">
+            {% autopaginate site_filter.qs as filtered_sites 50 %}
+            {% paginate %}
+            <div class="wrapper">
+                {% include 'messages.html' %}
+                <form method="post" class="uk-form" name="batch_update">
+                    {% csrf_token %}
+                    <div class="uk-text-center">
+                        {{ form.date|attr:'data-uk-datepicker:{format:"YYYY-MM-DD"}' }}
+                        <button type="submit" name="set_sites_next_survey_date" class="uk-button uk-button-success">{% trans "Set Sites' Next Survey Date" %}</button>
+                        <button type="submit" name="set_hazards_due_install_test_date" class="uk-button uk-button-success">{% trans "Set Hazards' Due Install Test Date" %}</button>
+                    </div>
+                    <table class="uk-table uk-table-hover">
+                        <thead>
+                        <tr class="border-bottom">
+                            <th class="uk-text-center border-right">
+                                <input type="checkbox" data-action="check_all"/>
+                            </th>
+                            <th class="uk-text-center border-right">
+                                {% trans "No." %}
+                            </th>
+                            <th>
+                                {% trans "Address" %}
+                            </th>
+                            <th>
+                                {% trans "Customer" %}
+                            </th>
+                            <th>
+                                {% trans "PWS" %}
+                            </th>
+                            <th>
+                                {% trans "Site Use" %}
+                            </th>
+                            <th>
+                                {% trans "Site Type" %}
+                            </th>
+                            <th>
+                                {% trans "Site Status" %}
+                            </th>
+                            <th>
+                                {% trans "Next Survey" %}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for site in filtered_sites %}
+                            <tr>
+                                <td class="uk-text-center border-right">
+                                    <input type="checkbox" name="site_pks" value="{{ site.pk }}"/>
+                                </td>
+                                <td class="uk-text-center border-right">
+                                    {{ site.pk }}
+                                </td>
+                                <td>
+                                    {{ site.city }}, {{ site.address1 }}
+                                </td>
+                                <td>
+                                    {{ site.cust_number }}, {{ site.cust_name }}
+                                </td>
+                                <td>
+                                    {{ site.pws.name }}
+                                </td>
+                                <td>
+                                    {{ site.site_use }}
+                                </td>
+                                <td>
+                                    {{ site.site_type }}
+                                </td>
+                                <td>
+                                    {{ site.status }}
+                                </td>
+                                <td>
+                                    {{ site.next_survey_date }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
             </div>
-            <table class="uk-table uk-table-hover">
-                <thead>
-                <tr class="border-bottom">
-                    <th class="uk-text-center border-right">
-                        <input type="checkbox" data-action="check_all"/>
-                    </th>
-                    <th class="uk-text-center border-right">
-                        {% trans "No." %}
-                    </th>
-                    <th>
-                        {% trans "Address" %}
-                    </th>
-                    <th>
-                        {% trans "Customer" %}
-                    </th>
-                    <th>
-                        {% trans "PWS" %}
-                    </th>
-                    <th>
-                        {% trans "Site Use" %}
-                    </th>
-                    <th>
-                        {% trans "Site Type" %}
-                    </th>
-                    <th>
-                        {% trans "Site Status" %}
-                    </th>
-                    <th>
-                        {% trans "Next Survey" %}
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for site in filtered_sites %}
-                    <tr>
-                        <td class="uk-text-center border-right">
-                            <input type="checkbox" name="site_pks" value="{{ site.pk }}"/>
-                        </td>
-                        <td class="uk-text-center border-right">
-                            {{ site.pk }}
-                        </td>
-                        <td>
-                            {{ site.city }}, {{ site.address1 }}
-                        </td>
-                        <td>
-                            {{ site.cust_number }}, {{ site.cust_name }}
-                        </td>
-                        <td>
-                            {{ site.pws.name }}
-                        </td>
-                        <td>
-                            {{ site.site_use }}
-                        </td>
-                        <td>
-                            {{ site.site_type }}
-                        </td>
-                        <td>
-                            {{ site.status }}
-                        </td>
-                        <td>
-                            {{ site.next_survey_date }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </form>
-    </div>
-    {% paginate %}
-    </div>
+            {% paginate %}
+        </div>
     </div>
 {% endblock %}

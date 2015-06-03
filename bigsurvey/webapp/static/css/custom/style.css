@@ -68,7 +68,7 @@ div.wrapper {
 .fixed-filters {
     top: 40px;
     left: 0;
-    width: 250px;
+    width: 220px;
     height: 100%;
 }
 
@@ -169,10 +169,6 @@ ul.form-ul {
     padding: 2px;
 }
 
-.payment-types li {
-    width: 49%;
-}
-
 .paypal-button {
     padding: 0;
     border: none;
@@ -183,4 +179,8 @@ ul.form-ul {
     top: auto;
     -moz-animation: uk-rotate 2s infinite linear;
     -o-animation: uk-rotate 2s infinite linear;
+}
+
+div.uk-width-4-5 {
+    padding-left: 40px;
 }

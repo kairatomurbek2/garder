@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load boolean_yes_no %}
 {% block menu %}
+    <li><a href="{% url 'webapp:letter_add' %}" id="letted_add_link">{% trans 'Add' %}</a></li>
 {% endblock %}
 {% block content %}
     {% autopaginate letter_filter.qs as filtered_letters 50 %}
@@ -27,7 +28,7 @@
                 <th>{% trans "Letter Type" %}</th>
                 <th>{% trans "Created By" %}</th>
                 <th>{% trans "Already Sent" %}</th>
-                <th>{% trans "Send From" %}</th>
+                <th>{% trans "Sent From" %}</th>
                 <th>{% trans "Date" %}</th>
                 <th colspan="2" class="uk-text-center border-left">{% trans "Actions" %}</th>
             </tr>
