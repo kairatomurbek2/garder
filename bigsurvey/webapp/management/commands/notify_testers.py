@@ -1,10 +1,10 @@
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core.management import BaseCommand
 from django.template.loader import render_to_string
+from django.utils.translation import ugettext as _
+
 from main.parameters import Groups
 from webapp import models
-from django.utils.translation import ugettext as _
 
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         testers = models.User.objects.filter(groups__name=Groups.tester)
         for tester in testers:
-            unpaid_tests = models.Test.objects.filter(tester=tester)
+            unpaid_tests = models.Test.objects.filter(tester=tester, paid=False)
             if unpaid_tests.exists():
                 context = {
                     'unpaid_tests': unpaid_tests,
@@ -23,8 +23,7 @@ class Command(BaseCommand):
                 }
                 html_content = render_to_string(self.html_template, context)
                 plain_content = render_to_string(self.plain_template, context)
-                send_mail(subject=self.subject,
-                          message=plain_content,
-                          from_email=settings.DEFAULT_FROM_EMAIL,
-                          recipient_list=[tester.email],
-                          html_message=html_content)
+                tester.email_user(subject=self.subject,
+                                  message=plain_content,
+                                  from_email=settings.DEFAULT_FROM_EMAIL,
+                                  html_message=html_content)

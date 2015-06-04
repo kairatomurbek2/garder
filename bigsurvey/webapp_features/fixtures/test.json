@@ -1008,7 +1008,7 @@
         ],
         "user_permissions": [],
         "password": "pbkdf2_sha256$12000$f1AektJQFT9r$JThfdyKIkuljMhpViPjrV3FHOwD7wviP4FygzknllYY=",
-        "email": "",
+        "email": "tester@example.com",
         "date_joined": "2015-01-15T10:53:43Z"
     },
     "model": "auth.user",

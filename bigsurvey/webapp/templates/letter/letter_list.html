@@ -2,9 +2,6 @@
 {% load pagination_tags %}
 {% load i18n %}
 {% load boolean_yes_no %}
-{% block menu %}
-    <li><a href="{% url 'webapp:letter_add' %}" id="letted_add_link">{% trans 'Add' %}</a></li>
-{% endblock %}
 {% block content %}
     {% autopaginate letter_filter.qs as filtered_letters 50 %}
     <div class="uk-grid">
