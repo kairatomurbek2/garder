@@ -31,8 +31,8 @@ def take_screenshot(scenario):
     if scenario.failed:
         date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
         try:
-            world.browser.get_screenshot_as_file('/tmp/failed_%s.png' % date)
-            with open('/tmp/failed_%s.txt' % date, 'w') as f:
+            world.browser.get_screenshot_as_file('/home/itattractor/failed_tests/screens/%s.png' % date)
+            with open('/home/itattractor/failed_tests/html_sources/failed_%s.txt' % date, 'w') as f:
                 f.write(world.browser.page_source)
         except (IOError, UnicodeDecodeError, UnicodeEncodeError):
             pass
