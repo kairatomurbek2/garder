@@ -23,6 +23,7 @@ Feature: PWS adding
       | number | PWS123456 |
       | name   | NEW PWS   |
       | city   | Bishkek   |
+      | price  | 13        |
     And I select "Private Well" from "water_source"
     When I submit "pws" form
     Then I should be at "pws_list" page

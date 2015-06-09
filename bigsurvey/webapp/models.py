@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.utils.translation import ugettext as _
 from main.parameters import *
@@ -328,6 +329,7 @@ class Regulation(models.Model):
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0), blank=True, verbose_name=_("Test's Price"))
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
     office_address = models.CharField(blank=True, null=True, max_length=50, verbose_name=_("Office Address"))
     water_source = models.ForeignKey(SourceType, blank=True, null=True, verbose_name=_("Water Source"),
@@ -586,7 +588,7 @@ class Test(models.Model):
 
     @property
     def price(self):
-        return 10.00
+        return self.bp_device.site.pws.price
 
     class Meta:
         verbose_name = _("Test")
