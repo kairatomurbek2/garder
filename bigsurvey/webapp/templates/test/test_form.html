@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load hazards_helper %}
 {% load form_helper %}
+{% load staticfiles %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
 {% endblock %}
@@ -260,12 +261,32 @@
                     <span class="inline-width-1-6 border-bottom">{{ object.tester.employee.cert_number }}</span>
                 </div>
 
-                <button type="submit" class="uk-button uk-button-primary uk-float-right margin-top-bottom-20">{% trans "Submit" %}</button>
+                <button type="submit" class="uk-button uk-button-primary uk-float-right margin-top-20">{% trans "Submit" %}</button>
+                <div class="uk-clearfix"></div>
+                {% if not object %}
+                    <p class="uk-float-right uk-text-right">
+                        {% url 'webapp:unpaid_test_list' as unpaid_test_list_url %}
+                        {% blocktrans %}
+                            After adding test you will be asked to pay.<br>
+                            You can pay immediately or later from <a href="{{ unpaid_test_list_url }}">"Unpaid Tests"</a> page
+                        {% endblocktrans %}
+                    </p>
+                {% endif %}
             </form>
         </div>
     </div>
+    {% if test_for_payment_pk %}
+        {% include 'test/test_payment_modal.html' %}
+    {% endif %}
 {% endblock %}
 {% block scripts %}
+    {% if test_for_payment_pk %}
+        <script src="{% static 'js/custom/paypal.js' %}"></script>
+        <script>
+            var tests = [{{ test_for_payment_pk }}];
+        </script>
+        <script src="{% static 'js/custom/payment-after-creation.js' %}"></script>
+    {% endif %}
     <script>
         var checkboxChangedTrigger = function (checkbox, input) {
             if (checkbox.is(':checked')) {

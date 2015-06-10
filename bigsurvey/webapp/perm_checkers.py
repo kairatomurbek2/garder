@@ -38,7 +38,7 @@ class TestPermChecker(ObjectPermChecker):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_tests') or \
                request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.site.pws == request.user.employee.pws or \
-               request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user and obj.bp_device.site.pws == request.user.employee.pws
+               request.user.has_perm('webapp.access_to_own_tests') and obj.tester == request.user
 
 
 class UserPermChecker(ObjectPermChecker):

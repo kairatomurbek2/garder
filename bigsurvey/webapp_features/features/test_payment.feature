@@ -1,4 +1,3 @@
-@wip
 Feature: Test payment
 
   Scenario: Unpaid test is not visible on site

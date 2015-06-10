@@ -17,6 +17,11 @@ def open_unpaid_test_list_page(step):
     step.given('I click "unpaid_tests" menu link')
 
 
+@step('I should be on "unpaid_test_list" page')
+def check_unpaid_test_list_page(step):
+    step.given('I should be at "%s"' % get_url(Urls.unpaid_test_list))
+
+
 @step('I wait until step 2 is appeared')
 def wait_until_step_2_is_appeared(step):
     WebDriverWait(world.browser, 10).until(
@@ -64,3 +69,20 @@ def wait_until_redirect(step):
 @step('I should see "payment successful" message')
 def check_payment_successful_message(step):
     step.given('I should see "%s"' % Messages.Test.payment_successful)
+
+
+@step('I should see pay modal')
+def check_pay_modal_visible(step):
+    modal = WebDriverWait(world.browser, 10).until(
+        expected_conditions.visibility_of_element_located((By.XPATH, Xpath.pay_modal))
+    )
+    helper.check_element_exists(modal, 'Payment modal was not found')
+
+
+@step('I close pay modal')
+def close_pay_modal(step):
+    modal = helper.find(Xpath.pay_modal)
+    helper.check_element_exists(modal, 'Payment modal was not found')
+
+    close_button = helper.find(Xpath.modal_close_button, modal)
+    close_button.click()

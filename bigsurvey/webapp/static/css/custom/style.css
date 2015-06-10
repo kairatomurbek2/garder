@@ -10,8 +10,22 @@ div.wrapper {
     display: none;
 }
 
+.spinner-crossbrowser {
+    -moz-animation: uk-rotate 2s infinite linear;
+    -o-animation: uk-rotate 2s infinite linear;
+}
+
+.filters-offset {
+    margin-left: 260px;
+    padding-top: 10px;
+}
+
 .margin-top-bottom-20 {
     margin: 20px 0;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
 }
 
 .margin-left-200 {
@@ -175,10 +189,8 @@ ul.form-ul {
     background: transparent;
 }
 
-.auto-modal-spinner {
+.valign-center-modal-spinner {
     top: auto;
-    -moz-animation: uk-rotate 2s infinite linear;
-    -o-animation: uk-rotate 2s infinite linear;
 }
 
 div.uk-width-4-5 {

@@ -18,7 +18,6 @@ Feature: Test adding
     | tester   | 2  | not see  |
     | tester   | 1  | not see  |
 
-
   Scenario: Correct test adding
     Given I logged in as "tester"
     And I open "test_add" page for hazard with pk "2"
@@ -31,12 +30,10 @@ Feature: Test adding
     And I check "rv_did_not_open"
     And I check "cv_leaked"
     When I submit "test" form
-    Then I should be at "hazard_detail" page with pk "2"
-    And I should see "test adding success" message
-    When I logout
-    And I login as "tester"
-    And I open "unpaid_test_list" page
-    Then I should see following
+    Then I should see pay modal
+    When I close pay modal
+    Then I should be redirected to "unpaid_test_list" page
+    And I should see following
       | text   |
       | tester |
       | Passed |

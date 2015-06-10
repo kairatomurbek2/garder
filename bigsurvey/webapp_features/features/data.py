@@ -117,7 +117,9 @@ class Xpath:
     form_element = './/input|.//textarea|.//select'
     csrfmiddlewaretoken = './/input[@name="csrfmiddlewaretoken"]'
     import_mappings_form_errors = './/div[contains(@class, "uk-alert-danger")]/ul/li'
+    pay_modal = './/div[@id="pay-modal"]'
     payment_step_2 = './/div[@data-content="step-2"]'
+    modal_close_button = './/a[contains(@class, "uk-modal-close")]'
 
 
 import_mappings = {

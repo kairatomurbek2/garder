@@ -534,9 +534,14 @@ class TestAddView(TestBaseFormView, CreateView):
             raise Http404
         return super(TestAddView, self).get_form(form_class)
 
+    def get_success_url(self):
+        return reverse('webapp:test_edit', args=(self.object.pk,))
+
     def form_valid(self, form):
         form.instance.bp_device = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        return super(TestAddView, self).form_valid(form)
+        response = super(TestAddView, self).form_valid(form)
+        self.request.session['test_for_payment_pk'] = self.object.pk
+        return response
 
 
 class TestEditView(TestBaseFormView, UpdateView):
@@ -547,6 +552,7 @@ class TestEditView(TestBaseFormView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(TestEditView, self).get_context_data(**kwargs)
         context['hazard'] = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
+        context['test_for_payment_pk'] = self.request.session.get('test_for_payment_pk', None)
         return context
 
     def get_form(self, form_class):
