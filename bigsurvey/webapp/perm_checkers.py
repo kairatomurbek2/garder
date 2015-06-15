@@ -54,3 +54,10 @@ class LetterPermChecker(ObjectPermChecker):
         a = request.user.has_perm('webapp.full_letter_access') or \
             request.user.has_perm('webapp.pws_letter_access') and obj.site.pws == request.user.employee.pws
         return a
+
+class LetterTypePermChecker(ObjectPermChecker):
+    @staticmethod
+    def has_perm(request, obj):
+        a = request.user.has_perm('webapp.access_to_all_lettertypes') or \
+            request.user.has_perm('webapp.access_to_pws_lettertypes') and obj.pws == request.user.employee.pws
+        return a

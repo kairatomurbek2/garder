@@ -1,7 +1,6 @@
 from django.conf import settings
 from main.parameters import Messages
 
-
 Messages = Messages
 
 DELIMITER = ' :: '
@@ -44,6 +43,8 @@ class Urls:
     import_page = '/import/'
     import_mappings = '/import-mappings/'
     import_mappings_process = '/import-mappings-process/'
+    letter_type_edit = '/letter_type/%s/edit/'
+    letter_type_list = '/letter_type/'
 
 
 class Logins:

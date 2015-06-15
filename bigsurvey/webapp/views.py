@@ -687,6 +687,46 @@ class UserEditView(UserBaseFormView):
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
 
+class LetterTypeListView(BaseTemplateView):
+    template_name = "letter_type/letter_type_list.html"
+    permission = 'webapp.browse_lettertype'
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = super(LetterTypeListView, self).get_context_data(**kwargs)
+        lettertypes = self._get_lettertypes(user)
+        context['letter_type_list'] = lettertypes
+        return context
+
+    def _get_lettertypes(self, user):
+        if user.has_perm('webapp.access_to_all_lettertypes'):
+            return models.LetterType.objects.all()
+        if user.has_perm('webapp.access_to_pws_lettertypes'):
+            return models.LetterType.objects.filter(pws=user.employee.pws)
+        return []
+
+class LetterTypeBaseFormView(BaseFormView):
+    template_name = "letter_type/letter_type_form.html"
+    form_class = forms.LetterTypeForm
+    model = models.LetterType
+
+    def get_success_url(self):
+        return reverse('webapp:letter_type_list')
+
+class LetterTypeEditView(LetterTypeBaseFormView, UpdateView):
+    permission = "webapp.access_to_pws_lettertypes"
+    success_message = Messages.LetterType.editing_success
+    error_message = Messages.LetterType.editing_error
+
+    def get_form(self, form_class):
+        form = super(LetterTypeBaseFormView, self).get_form(form_class)
+        if perm_checkers.LetterTypePermChecker.has_perm(self.request, form.instance):
+            return form
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        context = super(LetterTypeEditView, self).get_context_data(**kwargs)
+        return context
 
 class LetterListView(BaseTemplateView):
     template_name = "letter/letter_list.html"
@@ -735,8 +775,9 @@ class LetterAddView(LetterBaseFormView, CreateView):
     def get_form(self, form_class):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         if perm_checkers.SitePermChecker.has_perm(self.request, site):
-            form = super(LetterBaseFormView, self).get_form(form_class)
+            form = super(LetterAddView, self).get_form(form_class)
             form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
+            form.fields['letter_type'].queryset = site.pws.letter_types
             return form
         raise Http404
 

@@ -102,7 +102,7 @@
                             {{ test.test_result|test_result }}
                         </td>
                         <td>
-                            {{ test.price }}
+                            ${{ test.price }}
                         </td>
                         <td class="border-left uk-text-center">
                             <a href="{% url "webapp:test_edit" test.pk %}" id="test_{{ test.pk }}_edit_link">

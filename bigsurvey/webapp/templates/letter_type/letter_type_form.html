@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% block menu %}
+    <li><a href="{% url 'webapp:letter_type_list' %}">{% trans "Cancel" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <form class="uk-form" method="post" name="lettertype">
+            {% csrf_token %}
+            {{ form.media }}
+            <table class="uk-table">
+                <tbody>
+                <tr>
+                    <td class="uk-text-right uk-text-bold">{% trans "Letter Type" %}:</td>
+                    <td class="uk-text-left">
+                        {{ form.letter_type|attr:'readonly:readonly'|add_class:"uk-width-1-1" }}
+                        {{ form.letter_type.errors }}
+                    </td>
+                    <td class="uk-text-right uk-text-bold">{% trans "Letter Header" %}:</td>
+                    <td class="uk-text-left">
+                        {{ form.header|add_class:"uk-width-1-1" }}
+                        {{ form.header.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-text-right uk-text-bold">{% trans "Template" %}:</td>
+                    <td class="uk-text-left" colspan="3">
+                        {{ form.template|add_class:"uk-width-1-1" }}
+                        {{ form.template.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td colspan="3">
+                        <button type="submit"
+                                class="uk-button uk-button-primary">{% trans "Submit" %}</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

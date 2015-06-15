@@ -29,6 +29,7 @@ Feature: PWS adding
     Then I should be at "pws_list" page
     And I should see "pws adding success" message
     And I should see "NEW PWS"
+    And New letter types were created for PWS with number "PWS123456"
 
 
   Scenario: Incorrect PWS adding

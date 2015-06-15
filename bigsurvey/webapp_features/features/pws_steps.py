@@ -1,6 +1,7 @@
 from common_steps import *
 from lettuce import *
 from data import *
+from webapp import models
 
 
 @step('I directly open "pws_list" page')
@@ -69,3 +70,8 @@ def check_pws_editing_success_message(step):
 @step('I should see "pws editing error" message')
 def check_pws_editing_error_message(step):
     step.given('I should see "%s"' % Messages.PWS.editing_error)
+
+@step('New letter types were created for PWS with number "(.*)"')
+def check_new_lettertypes_were_created(step, number):
+    pws = models.PWS.objects.get(number=number)
+    assert pws.letter_types.exists(), 'PWS has no Letter Types'

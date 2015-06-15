@@ -175,3 +175,7 @@ class Messages:
         editing_error = _('Error while submitting form')
         send_success = _('Letter was successfully sent')
         send_error = _('Error while sending letter')
+
+    class LetterType:
+        editing_success = _('Lettertype was successfully updated')
+        editing_error = _('Error while submitting form')

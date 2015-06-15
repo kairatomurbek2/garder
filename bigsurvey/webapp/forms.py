@@ -5,7 +5,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, Details, TEST_RESULT_CHOICES
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, Details, \
+    TEST_RESULT_CHOICES
 from webapp.validators import validate_excel_file
 
 
@@ -70,17 +71,29 @@ class TestForm(forms.ModelForm):
     cv1_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
     cv2_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
     outlet_sov_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
-    cv1_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
-    rv_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
-    cv2_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
-    pvb_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, coerce=coerce_to_bool, initial=True)
+    cv1_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
+                                         coerce=coerce_to_bool, initial=True)
+    rv_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
+                                        coerce=coerce_to_bool, initial=True)
+    cv2_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
+                                         coerce=coerce_to_bool, initial=True)
+    pvb_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
+                                         coerce=coerce_to_bool, initial=True)
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
-    cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.cv1), required=False)
-    rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.rv), required=False)
-    cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.cv2), required=False)
-    pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple, queryset=models.Detail.objects.filter(pk__in=Details.pvb), required=False)
+    cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                                          queryset=models.Detail.objects.filter(pk__in=Details.cv1),
+                                                          required=False)
+    rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                                         queryset=models.Detail.objects.filter(pk__in=Details.rv),
+                                                         required=False)
+    cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                                          queryset=models.Detail.objects.filter(pk__in=Details.cv2),
+                                                          required=False)
+    pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                                          queryset=models.Detail.objects.filter(pk__in=Details.pvb),
+                                                          required=False)
     test_result = forms.ChoiceField(widget=forms.RadioSelect, choices=TEST_RESULT_CHOICES)
 
     def __init__(self, **kwargs):
@@ -221,6 +234,15 @@ class UserEditForm(UserChangeForm):
 
 class BatchUpdateForm(forms.Form):
     date = forms.DateField(label=_('Select date'))
+
+
+class LetterTypeForm(forms.ModelForm):
+    def clean_letter_type(self):
+        return self.instance.letter_type
+
+    class Meta:
+        model = models.LetterType
+        fields = ('template', 'header', 'letter_type')
 
 
 class LetterForm(forms.ModelForm):
