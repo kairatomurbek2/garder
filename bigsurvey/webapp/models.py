@@ -317,6 +317,10 @@ class PWS(models.Model):
     water_source = models.ForeignKey(SourceType, blank=True, null=True, verbose_name=_("Water Source"),
                                      related_name="pws")
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+    consultant_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Consultant Name'))
+    consultant_phone = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Consultant Phone'))
+    plumber_packet_location = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Plumber Packet Location'))
+    plumber_packet_address = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Plumber Packet Address'))
 
     def __unicode__(self):
         return u"%s, %s" % (self.number, self.name)

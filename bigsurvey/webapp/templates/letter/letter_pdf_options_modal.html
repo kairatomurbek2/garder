@@ -1,0 +1,25 @@
+{% load i18n %}
+<div id="pdf-options-modal" class="uk-modal">
+    <form action="{% url 'webapp:letter_pdf' letter.pk %}" method="post" class="uk-form uk-form-stacked">
+        {% csrf_token %}
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close uk-close-alt"></a>
+
+            <div class="uk-form-row">
+                <div class="uk-form-controls">
+                    {{ form.attach_testers }} <label for="{{ form.attach_testers.id_for_label }}">{{ form.attach_testers.label }}</label>
+                </div>
+            </div>
+
+            <div class="uk-form-row">
+                <div class="uk-form-controls">
+                    {{ form.attach_consultant_info }} <label for="{{ form.attach_consultant_info.id_for_label }}">{{ form.attach_consultant_info.label }}</label>
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="submit" class="uk-button uk-button-primary">{% trans 'Get PDF' %}</button>
+            </div>
+        </div>
+    </form>
+</div>

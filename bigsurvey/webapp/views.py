@@ -1,5 +1,6 @@
 from collections import OrderedDict
 import json
+from smtplib import SMTPException
 import time
 import os
 
@@ -8,6 +9,7 @@ from django.core.files.storage import default_storage
 from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
+from django.template.loader import render_to_string
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
 from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonResponse
 from django.core.urlresolvers import reverse
@@ -25,6 +27,7 @@ from paypalrestsdk.exceptions import ConnectionError
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
 from webapp.exceptions import PaymentWasNotCreatedError
+from webapp.responses import PDFResponse
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
@@ -687,6 +690,7 @@ class UserEditView(UserBaseFormView):
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
 
+
 class LetterTypeListView(BaseTemplateView):
     template_name = "letter_type/letter_type_list.html"
     permission = 'webapp.browse_lettertype'
@@ -705,6 +709,7 @@ class LetterTypeListView(BaseTemplateView):
             return models.LetterType.objects.filter(pws=user.employee.pws)
         return []
 
+
 class LetterTypeBaseFormView(BaseFormView):
     template_name = "letter_type/letter_type_form.html"
     form_class = forms.LetterTypeForm
@@ -712,6 +717,7 @@ class LetterTypeBaseFormView(BaseFormView):
 
     def get_success_url(self):
         return reverse('webapp:letter_type_list')
+
 
 class LetterTypeEditView(LetterTypeBaseFormView, UpdateView):
     permission = "webapp.access_to_pws_lettertypes"
@@ -727,6 +733,7 @@ class LetterTypeEditView(LetterTypeBaseFormView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(LetterTypeEditView, self).get_context_data(**kwargs)
         return context
+
 
 class LetterListView(BaseTemplateView):
     template_name = "letter/letter_list.html"
@@ -810,7 +817,21 @@ class LetterEditView(LetterBaseFormView, UpdateView):
         return context
 
 
-class LetterDetailView(BaseTemplateView, FormView):
+class LetterMixin(object):
+    def get_email_body(self, letter, form):
+        html = letter.rendered_body
+
+        if form.cleaned_data.get('attach_testers', False):
+            testers = models.User.objects.filter(groups__name=Groups.tester, employee__pws=letter.site.pws)
+            html += render_to_string('email_templates/html/testers_list.html', {'testers': testers})
+
+        if form.cleaned_data.get('attach_consultant_info', False):
+            html += render_to_string('email_templates/html/consultant_info.html', {'pws': letter.site.pws})
+
+        return html
+
+
+class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
     template_name = "letter/letter_detail.html"
     permission = 'webapp.browse_letter'
     form_class = forms.LetterSendForm
@@ -820,17 +841,13 @@ class LetterDetailView(BaseTemplateView, FormView):
 
     def get_context_data(self, **kwargs):
         letter = models.Letter.objects.get(pk=self.kwargs['pk'])
-        if perm_checkers.LetterPermChecker.has_perm(self.request, letter):
-            self._set_messages(letter)
-            context = super(LetterDetailView, self).get_context_data(**kwargs)
-            context['letter'] = letter
-            # for some reason (maybe inheritance issue)
-            # default get_form method is not called in super's get_context_data
-            # so here it's done manually with our own method _get_form
-            if not context.get('form'):
-                context['form'] = self._get_form(letter)
-            return context
-        raise Http404
+        if not perm_checkers.LetterPermChecker.has_perm(self.request, letter):
+            raise Http404
+        self._set_messages(letter)
+        context = super(LetterDetailView, self).get_context_data(**kwargs)
+        context['letter'] = letter
+        context['form'] = self.form_class(initial={'send_to': letter.site.contact_email})
+        return context
 
     def _set_messages(self, letter):
         if not letter.already_sent:
@@ -848,21 +865,18 @@ class LetterDetailView(BaseTemplateView, FormView):
                 open the letter in edit mode and submit the form to regenerate letter content.")
             )
 
-    def _get_form(self, letter):
-        return self.form_class(initial={
-            'send_to': "" or unicode(letter.site.contact_email)
-        })
-
     def form_valid(self, form):
         letter = models.Letter.objects.get(pk=self.kwargs['pk'])
         self._send_email(letter, form)
         return HttpResponseRedirect(reverse(self.success_url))
 
     def _send_email(self, letter, form):
+        body = self.get_email_body(letter, form)
+
         msg = EmailMessage(
             letter.letter_type.header,
-            letter.rendered_body,
-            to=[form.cleaned_data['send_to']]
+            body,
+            to=map(lambda email: email.strip(), form.cleaned_data['send_to'].strip(', ').split(','))
         )
         msg.content_subtype = 'html'
         try:
@@ -870,7 +884,7 @@ class LetterDetailView(BaseTemplateView, FormView):
             messages.success(self.request, self.success_message)
             letter.already_sent = True
             letter.save()
-        except:
+        except SMTPException:
             messages.error(self.request, self.error_message)
 
     def form_invalid(self, form):
@@ -878,20 +892,26 @@ class LetterDetailView(BaseTemplateView, FormView):
         return super(LetterDetailView, self).form_invalid(form)
 
 
-class LetterPDFView(BaseView):
-    template_name = "letter/pdf.html"
+class LetterPDFView(BaseView, FormView, LetterMixin):
+    template_name = "letter/letter_pdf_options_modal.html"
     permission = 'webapp.send_letter'
+    form_class = forms.LetterOptionsForm
 
-    def get(self, request, *args, **kwargs):
-        letter = models.Letter.objects.get(pk=kwargs['pk'])
-        pdf = PDFGenerator.generate_letter(letter)
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = u'attachment; filename="%s_%s_%s.pdf"' % (
-            letter.date,
-            letter.letter_type.letter_type,
-            letter.site.cust_number
-        )
-        return response
+    def get_context_data(self, **kwargs):
+        context = super(LetterPDFView, self).get_context_data(**kwargs)
+        context['letter'] = models.Letter.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(self.request.POST)
+        if form.is_valid():
+            letter = models.Letter.objects.get(pk=self.kwargs['pk'])
+
+            body = self.get_email_body(letter, form)
+
+            pdf_content = PDFGenerator.generate_from_html(body)
+            filename = u"%s_%s_%s.pdf" % (letter.date, letter.letter_type.letter_type, letter.site.cust_number)
+            return PDFResponse(filename=filename, content=pdf_content)
 
 
 class HelpView(BaseTemplateView):
@@ -1122,15 +1142,15 @@ class ImportView(BaseFormView):
 
     def _delete_previous_tmp_files(self):
         prefix = '%s-' % self.request.user.pk
-        files = os.listdir(settings.MEDIA_ROOT)
+        files = os.listdir(settings.EXCEL_FILES_DIR)
         for file in files:
             if file.startswith(prefix):
-                os.unlink(os.path.join(settings.MEDIA_ROOT, file))
+                os.unlink(os.path.join(settings.EXCEL_FILES_DIR, file))
 
     def _save_tmp_file(self, file):
         name, ext = os.path.splitext(file.name)
         new_filename = '%s-%s%s' % (self.request.user.pk, int(time.time()), ext)
-        default_storage.save(new_filename, file)
+        default_storage.save(os.path.join(settings.EXCEL_FILES_DIR, new_filename), file)
         return new_filename
 
     def _delete_cached_data(self):
@@ -1198,7 +1218,7 @@ class ImportMappingsFormsetMixin(object):
         return example_rows
 
     def get_formset(self):
-        self.excel_parser = ExcelParser(os.path.join(settings.MEDIA_ROOT, self.request.session['import_filename']))
+        self.excel_parser = ExcelParser(os.path.join(settings.EXCEL_FILES_DIR, self.request.session['import_filename']))
 
         formset_class = formset_factory(form=self.form_class, formset=self.base_formset_class, extra=0)
 

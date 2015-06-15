@@ -11,20 +11,38 @@
 {% endblock %}
 {% block content %}
     <div id="letter_detail" class="wrapper">
-    {% include 'messages.html' %}
-    <div class="wrapper uk-width-4-5 uk-align-center">
-        <form method="post" class="uk-form uk-align-right">
-            {% csrf_token %}
-            <p>
-                <label for="send_to">{% trans "To" %}: </label>
-                {{ form.send_to|add_class:"uk-width-1-1" }}
-                {{ form.send_to.errors }}
-            </p>
-            <p>
-                <button type="submit" name="send" class="uk-button uk-button-primary">{% trans "Send" %}</button>
-            </p>
-        </form>
-        {{ letter.rendered_body|safe }}
-    </div>
+        {% include 'messages.html' %}
+        <div class="wrapper uk-width-4-5 uk-align-center">
+            <form method="post" class="uk-form uk-form-stacked uk-align-right">
+                {% csrf_token %}
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="{{ form.send_to.id_for_label }}">{{ form.send_to.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {{ form.send_to|add_class:"uk-width-1-1" }}
+                        <p class="uk-text-small">
+                            {% blocktrans %}
+                                You can input here several email addresses separating them by comma
+                            {% endblocktrans %}
+                        </p>
+                        {{ form.send_to.errors }}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                        <label>{{ form.attach_testers }} {{ form.attach_testers.label }}</label>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                        <label>{{ form.attach_consultant_info }} {{ form.attach_consultant_info.label }}</label>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <button type="submit" name="send" class="uk-button uk-button-primary">{% trans "Send" %}</button>
+                </div>
+            </form>
+            {{ letter.rendered_body|safe }}
+        </div>
     </div>
 {% endblock %}

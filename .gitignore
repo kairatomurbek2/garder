@@ -9,6 +9,8 @@ settings_test.py
 bigsurvey/static
 testres.xml
 erd.png
-bigsurvey/uploads/*
-!bigsurvey/uploads/.gitkeep
+bigsurvey/uploads/excel_files/*
+!bigsurvey/uploads/excel_files/.gitkeep
+bigsurvey/uploads/pws_logos/*
+!bigsurvey/uploads/pws_logos/.gitkeep
 .~*

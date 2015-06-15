@@ -5,66 +5,87 @@
 {% block content %}
     {% autopaginate letter_filter.qs as filtered_letters 50 %}
     <div class="uk-grid">
-    <div class="wrapper uk-width-1-5">
-        {% include "letter/letter_filters.html" %}
-    </div>
-    <div class="wrapper uk-width-4-5">
-        {% paginate %}
-        {% include 'messages.html' %}
-        <table class="uk-table uk-table-hover">
-            <thead>
-            <tr class="border-bottom">
-                <th class="border-right uk-text-center">{% trans "No." %}</th>
-                {% if perms.webapp.full_letter_access %}
-                    <th>{% trans "PWS" %}</th>
-                {% endif %}
-                <th>{% trans "Customer Account" %}</th>
-                <th>{% trans "Customer Email" %}</th>
-                <th>{% trans "Service Type" %}</th>
-                <th>{% trans "Hazard Type" %}</th>
-                <th>{% trans "Letter Type" %}</th>
-                <th>{% trans "Created By" %}</th>
-                <th>{% trans "Already Sent" %}</th>
-                <th>{% trans "Sent From" %}</th>
-                <th>{% trans "Date" %}</th>
-                <th colspan="2" class="uk-text-center border-left">{% trans "Actions" %}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for letter in filtered_letters %}
-                <tr>
-                    <td class="border-right uk-text-center">{{ letter.pk }}</td>
+        <div class="wrapper uk-width-1-5">
+            {% include "letter/letter_filters.html" %}
+        </div>
+        <div class="wrapper uk-width-4-5">
+            {% paginate %}
+            {% include 'messages.html' %}
+            <table class="uk-table uk-table-hover">
+                <thead>
+                <tr class="border-bottom">
+                    <th class="border-right uk-text-center">{% trans "No." %}</th>
                     {% if perms.webapp.full_letter_access %}
-                        <td>{{ letter.site.pws.number }}</td>
+                        <th>{% trans "PWS" %}</th>
                     {% endif %}
-                    <td>
-                        <a href="{% url "webapp:site_detail" letter.site.pk %}">
-                            {{ letter.site.cust_number }}
-                        </a>
-                    </td>
-                    <td>{{ letter.site.contact_email }}</td>
-                    <td>{{ letter.hazard.service_type }}</td>
-                    <td>{{ letter.hazard.hazard_type }}</td>
-                    <td>{{ letter.letter_type }}</td>
-                    <td>{{ letter.user.username }}</td>
-                    <td>{{ letter.already_sent|yn }}</td>
-                    <td>{{ letter.user.email }}</td>
-                    <td>{{ letter.date }}</td>
-                    <td class="uk-text-center border-left">
-                        <a id="letter_{{ letter.pk }}_detail_link" href="{% url 'webapp:letter_detail' letter.pk %}">
-                            {% trans "Show" %}
-                        </a>
-                    </td>
-                    <td>
-                        <a id="letter_{{ letter.pk }}_pdf_link" href="{% url 'webapp:letter_pdf' letter.pk %}">
-                            {% trans "PDF" %}
-                        </a>
-                    </td>
+                    <th>{% trans "Customer Account" %}</th>
+                    <th>{% trans "Customer Email" %}</th>
+                    <th>{% trans "Service Type" %}</th>
+                    <th>{% trans "Hazard Type" %}</th>
+                    <th>{% trans "Letter Type" %}</th>
+                    <th>{% trans "Created By" %}</th>
+                    <th>{% trans "Already Sent" %}</th>
+                    <th>{% trans "Sent From" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th colspan="2" class="uk-text-center border-left">{% trans "Actions" %}</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% paginate %}
+                </thead>
+                <tbody>
+                {% for letter in filtered_letters %}
+                    <tr>
+                        <td class="border-right uk-text-center">{{ letter.pk }}</td>
+                        {% if perms.webapp.full_letter_access %}
+                            <td>{{ letter.site.pws.number }}</td>
+                        {% endif %}
+                        <td>
+                            <a href="{% url "webapp:site_detail" letter.site.pk %}">
+                                {{ letter.site.cust_number }}
+                            </a>
+                        </td>
+                        <td>{{ letter.site.contact_email }}</td>
+                        <td>{{ letter.hazard.service_type }}</td>
+                        <td>{{ letter.hazard.hazard_type }}</td>
+                        <td>{{ letter.letter_type }}</td>
+                        <td>{{ letter.user.username }}</td>
+                        <td>{{ letter.already_sent|yn }}</td>
+                        <td>{{ letter.user.email }}</td>
+                        <td>{{ letter.date }}</td>
+                        <td class="uk-text-center border-left">
+                            <a id="letter_{{ letter.pk }}_detail_link" href="{% url 'webapp:letter_detail' letter.pk %}">
+                                {% trans "Show" %}
+                            </a>
+                        </td>
+                        <td>
+                            <a id="letter_{{ letter.pk }}_pdf_link" href="{% url 'webapp:letter_pdf' letter.pk %}" data-action="show-pdf-options-modal">
+                                {% trans "PDF" %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% paginate %}
+        </div>
     </div>
-    </div>
+    <div id="modal-wrapper"></div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('[data-action="show-pdf-options-modal"]').click(function (e) {
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+
+                $.ajax(url, {
+                    success: function (response) {
+                        $('#modal-wrapper').html(response);
+                        UIkit.modal('#pdf-options-modal').show();
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
 {% endblock %}

@@ -270,8 +270,13 @@ class TesterSiteSearchForm(forms.Form):
         return super(TesterSiteSearchForm, self).clean()
 
 
-class LetterSendForm(forms.Form):
-    send_to = forms.EmailField(required=True)
+class LetterOptionsForm(forms.Form):
+    attach_testers = forms.BooleanField(widget=forms.CheckboxInput, label=_('Attach testers list'), required=False)
+    attach_consultant_info = forms.BooleanField(widget=forms.CheckboxInput, label=_('Attach consultant info'), required=False)
+
+
+class LetterSendForm(LetterOptionsForm):
+    send_to = forms.EmailField(required=True, label=_('Send to'))
 
 
 class ImportForm(forms.Form):

@@ -8,7 +8,7 @@ Feature: Letter Viewing and Sending
     When I directly open "letter_detail" page with pk "<pk>"
     Then I should <reaction> "Page not found"
     And I logout
-    Examples:
+  Examples:
     | role     | pk | reaction |
     | root     | 1  | not see  |
     | root     | 2  | not see  |
@@ -26,22 +26,21 @@ Feature: Letter Viewing and Sending
     Then I should see warning letter message
     And I should see warning due date letter message
     And I should see following
-    | text                  |
-    | thesomeq@gmail.com    |
-    | Send                  |
-    | To:                   |
-    | 2015-05-03            |
-    | {AssemblyType}        |
-    | {DueDate}             |
-    | Washington, DC, 90192 |
-    | Should the customer   |
-    | The City of           |
-    | Thank you in advance  |
-    | Sincerely,            |
-    | Public Works Director |
-    | I,                    |
-    | agree to maintain     |
-    | Customer:             |
-    | Date:                 |
-    | Edit                  |
-    | Get PDF               |
+      | text                  |
+      | thesomeq@gmail.com    |
+      | Send to               |
+      | 2015-05-03            |
+      | {AssemblyType}        |
+      | {DueDate}             |
+      | Washington, DC, 90192 |
+      | Should the customer   |
+      | The City of           |
+      | Thank you in advance  |
+      | Sincerely,            |
+      | Public Works Director |
+      | I,                    |
+      | agree to maintain     |
+      | Customer:             |
+      | Date:                 |
+      | Edit                  |
+      | Get PDF               |

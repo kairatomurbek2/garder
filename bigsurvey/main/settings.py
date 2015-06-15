@@ -111,6 +111,10 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
+EXCEL_FILES_DIR = os.path.join(MEDIA_ROOT, 'excel_files')
+
+PWS_LOGOS_DIR = os.path.join(MEDIA_ROOT, 'pws_logos')
+
 MEDIA_URL = '/uploads/'
 
 CKEDITOR_CONFIGS = {
