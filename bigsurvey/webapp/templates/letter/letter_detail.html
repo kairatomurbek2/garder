@@ -13,7 +13,7 @@
     <div id="letter_detail" class="wrapper">
         {% include 'messages.html' %}
         <div class="wrapper uk-width-4-5 uk-align-center">
-            <form method="post" class="uk-form uk-form-stacked uk-align-right">
+            <form method="post" class="uk-form uk-form-stacked uk-align-right" name="letter-send">
                 {% csrf_token %}
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="{{ form.send_to.id_for_label }}">{{ form.send_to.label }}</label>

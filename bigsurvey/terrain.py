@@ -13,6 +13,7 @@ def init():
     world.browser = webdriver.Firefox()
     world.browser.maximize_window()
     world.browser.implicitly_wait(1)
+    world.cache = {}
 
 
 @after.all
