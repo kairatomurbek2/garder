@@ -75,3 +75,13 @@ def check_pws_editing_error_message(step):
 def check_new_lettertypes_were_created(step, number):
     pws = models.PWS.objects.get(number=number)
     assert pws.letter_types.exists(), 'PWS has no Letter Types'
+
+@step('"(.*)" should be uploaded')
+def check_pws_logo_upload(step, file):
+    logo = os.path.join(settings.PWS_LOGOS_DIR, file)
+    assert os.path.isfile(logo), 'There is no logo'
+
+@step('"(.*)" should be deleted')
+def clear_logo(step, file):
+    logo = os.path.join(settings.PWS_LOGOS_DIR, file)
+    assert not os.path.isfile(logo), 'File was not deleted'

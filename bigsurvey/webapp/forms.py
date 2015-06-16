@@ -11,6 +11,7 @@ from webapp.validators import validate_excel_file
 
 
 class PWSForm(forms.ModelForm):
+
     class Meta:
         model = models.PWS
         fields = '__all__'

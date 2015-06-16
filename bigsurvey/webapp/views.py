@@ -591,10 +591,14 @@ class UserListView(BaseTemplateView):
             user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester)
             user_list['WithoutGroup'] = models.User.objects.filter(groups__name='')
         elif self.request.user.has_perm('webapp.access_to_pws_users'):
-            user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin, employee__pws=self.request.user.employee.pws)
-            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor, employee__pws=self.request.user.employee.pws)
-            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester, employee__pws=self.request.user.employee.pws)
-            user_list['WithoutGroup'] = models.User.objects.filter(groups__name='', employee__pws=self.request.user.employee.pws)
+            user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin,
+                                                                     employee__pws=self.request.user.employee.pws)
+            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor,
+                                                                employee__pws=self.request.user.employee.pws)
+            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester,
+                                                              employee__pws=self.request.user.employee.pws)
+            user_list['WithoutGroup'] = models.User.objects.filter(groups__name='',
+                                                                   employee__pws=self.request.user.employee.pws)
         return user_list
 
 
@@ -1038,7 +1042,8 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                     for link in payment.links:
                         if link['rel'] == 'approval_url':
                             approval_url = link['href']
-                    response = {'status': 'success', 'approval_url': approval_url, 'total_amount': payment.transactions[0]['amount']['total']}
+                    response = {'status': 'success', 'approval_url': approval_url,
+                                'total_amount': payment.transactions[0]['amount']['total']}
                 else:
                     raise PaymentWasNotCreatedError(payment.error)
             except (ConnectionError, PaymentWasNotCreatedError, NameError):
@@ -1057,7 +1062,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                 "currency": "USD"
             }
             for test in tests
-        ]
+            ]
 
         test_pks = ','.join((str(test.pk) for test in tests))
 
@@ -1067,8 +1072,10 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                 "payment_method": "paypal"
             },
             "redirect_urls": {
-                "return_url": "%s%s?action=%s&tests=%s" % (settings.HOST, reverse('webapp:test_pay_paypal'), self.SUCCESS, test_pks),
-                "cancel_url": "%s%s?action=%s&tests=%s" % (settings.HOST, reverse('webapp:test_pay_paypal'), self.CANCEL, test_pks)
+                "return_url": "%s%s?action=%s&tests=%s" % (
+                    settings.HOST, reverse('webapp:test_pay_paypal'), self.SUCCESS, test_pks),
+                "cancel_url": "%s%s?action=%s&tests=%s" % (
+                    settings.HOST, reverse('webapp:test_pay_paypal'), self.CANCEL, test_pks)
             },
             "transactions": [
                 {
@@ -1272,7 +1279,8 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
                 self.excel_parser.check_constraints(mappings)
                 import_progress = models.ImportProgress.objects.create()
                 self.request.session['import_progress_pk'] = import_progress.pk
-                self.excel_parser.parse_and_save_in_background(mappings, self.request.session['import_pws_pk'], import_progress.pk)
+                self.excel_parser.parse_and_save_in_background(mappings, self.request.session['import_pws_pk'],
+                                                               import_progress.pk)
                 return redirect('webapp:import-mappings')
             except (IntegrityError, DateFormatError) as e:
                 self.formset.add_error(str(e))

@@ -5,6 +5,7 @@ from main.parameters import *
 from django.contrib.auth.models import User, Group
 from ckeditor.fields import RichTextField
 from utils import photo_util
+import fields
 
 
 class SourceType(models.Model):
@@ -310,6 +311,7 @@ class Regulation(models.Model):
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
+    logo = fields.ImageField(upload_to='pws_logos', null=True, blank=True, verbose_name=_("Pws logo"))
     price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0), blank=True,
                                 verbose_name=_("Test's Price"))
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
