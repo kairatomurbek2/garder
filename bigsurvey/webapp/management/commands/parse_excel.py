@@ -24,5 +24,5 @@ class Command(BaseCommand):
         mappings = json.loads(options['mappings'])
         import_progress_pk = int(options['import_progress_pk'])
 
-        excel_parser = ExcelParser(os.path.join(settings.MEDIA_ROOT, filename))
+        excel_parser = ExcelParser(os.path.join(settings.EXCEL_FILES_DIR, filename))
         excel_parser.parse_and_save(mappings, pws_pk, import_progress_pk)

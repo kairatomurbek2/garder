@@ -2169,7 +2169,9 @@
     "price": "9.00",
     "number": "NUI812",
     "water_source": 1,
-    "notes": ""
+    "notes": "",
+    "consultant_name": "Van der Veijden",
+    "consultant_phone": "+1685231452"
   },
   "model": "webapp.pws",
   "pk": 9
