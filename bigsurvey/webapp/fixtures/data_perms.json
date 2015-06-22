@@ -259,6 +259,16 @@
         "icpointtype"
       ],
       [
+        "access_to_all_import_logs",
+        "webapp",
+        "importlog"
+      ],
+      [
+        "browse_import_log",
+        "webapp",
+        "importlog"
+      ],
+      [
         "add_letter",
         "webapp",
         "letter"
@@ -721,6 +731,16 @@
         "change_hazard",
         "webapp",
         "hazard"
+      ],
+      [
+        "access_to_pws_import_logs",
+        "webapp",
+        "importlog"
+      ],
+      [
+        "browse_import_log",
+        "webapp",
+        "importlog"
       ],
       [
         "add_letter",

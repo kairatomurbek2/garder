@@ -19,7 +19,8 @@ class Command(BaseCommand):
             if unpaid_tests.exists():
                 context = {
                     'unpaid_tests': unpaid_tests,
-                    'tester': tester
+                    'tester': tester,
+                    'days': settings.DELETE_UNPAID_TESTS_AFTER_DAYS
                 }
                 html_content = render_to_string(self.html_template, context)
                 plain_content = render_to_string(self.plain_template, context)

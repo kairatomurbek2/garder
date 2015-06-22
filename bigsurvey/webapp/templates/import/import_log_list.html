@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <div class="uk-grid">
+        <div class="uk-width-1-1">
+            {% include 'messages.html' %}
+            <table class="uk-table uk-table-hover">
+                <thead>
+                <tr class="border-bottom">
+                    <th>{% trans "Datetime" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th>{% trans "PWS" %}</th>
+                    <th>{% trans "Added sites" %}</th>
+                    <th>{% trans "Updated sites" %}</th>
+                    <th>{% trans "Deactivated sites" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for import_log in import_logs %}
+                    <tr>
+                        <td>{{ import_log.datetime }}</td>
+                        <td>{{ import_log.user.get_full_name }}</td>
+                        <td>{{ import_log.pws.number }}</td>
+                        <td><a href="{% url 'webapp:import_log_added_sites' import_log.pk %}">{{ import_log.added_sites.count }}</a></td>
+                        <td><a href="{% url 'webapp:import_log_updated_sites' import_log.pk %}">{{ import_log.updated_sites.count }}</a></td>
+                        <td><a href="{% url 'webapp:import_log_deactivated_sites' import_log.pk %}">{{ import_log.deactivated_sites.count }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

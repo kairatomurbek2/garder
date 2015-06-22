@@ -94,6 +94,9 @@
                     {% if perms.webapp.access_to_import %}
                         <li><a id="import_menu_link" href="{% url 'webapp:import' %}">{% trans "Import" %}</a></li>
                     {% endif %}
+                    {% if perms.webapp.browse_import_log %}
+                        <li><a id="import_log_menu_link" href="{% url 'webapp:import_log_list' %}">{% trans "Import Logs" %}</a></li>
+                    {% endif %}
                     {% if perms.webapp.change_site %}
                         <li><a id="batch_update_menu_link"
                                href="{% url 'webapp:batch_update' %}">{% trans "Batch Update" %}</a></li>
@@ -176,6 +179,9 @@
                             {% if perms.webapp.access_to_import %}
                                 <li><a id="import_menu_link" href="{% url 'webapp:import' %}">{% trans "Import" %}</a>
                                 </li>
+                            {% endif %}
+                            {% if perms.webapp.browse_import_log %}
+                                <li><a id="import_log_menu_link" href="{% url 'webapp:import_log_list' %}">{% trans "Import Logs" %}</a></li>
                             {% endif %}
                             {% if perms.webapp.change_site %}
                                 <li><a id="batch_update_menu_link"

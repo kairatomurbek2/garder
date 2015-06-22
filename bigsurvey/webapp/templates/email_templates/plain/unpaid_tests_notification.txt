@@ -1,6 +1,6 @@
 Hello, Dear {{ tester.get_full_name }}
 
-Please pay for tests listed below or they will be deleted within 10 days after creation
+Please pay for tests listed below or they will be deleted within {{ days }} days after creation
 {% for test in unpaid_tests %}
     * {{ test.bp_device.site }}, {{ test.bp_device }}, {{ test }}
 {% endfor %}

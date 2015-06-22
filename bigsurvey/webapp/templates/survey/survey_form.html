@@ -3,11 +3,11 @@
 {% load i18n %}
 {% block menu %}
     <li>
-    {% if survey.pk %}
-        <a href="{% url 'webapp:survey_detail' survey.pk %}">{% trans "Cancel" %}</a>
-    {% else %}
-        <a href="{% url 'webapp:site_detail' site_pk %}">{% trans "Cancel" %}</a>
-    {% endif %}
+        {% if survey.pk %}
+            <a href="{% url 'webapp:survey_detail' survey.pk %}">{% trans "Cancel" %}</a>
+        {% else %}
+            <a href="{% url 'webapp:site_detail' site_pk %}">{% trans "Cancel" %}</a>
+        {% endif %}
     </li>
 {% endblock %}
 {% block content %}
@@ -89,50 +89,50 @@
                         {% render_field form.aux_water|add_class:'uk-width-1-1' %}
                         {{ form.aux_water.errors }}
                     </td>
-                    {% if fire or survey.service_type.service_type == 'fire'  %}
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.detector_manufacturer.id_for_label }}">{{ form.detector_manufacturer.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                    {% render_field form.detector_manufacturer|add_class:'uk-width-1-1' %}
-                        {{ form.detector_manufacturer.errors }}
-                    </td>
+                    {% if fire or survey.service_type.service_type == 'fire' %}
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.detector_manufacturer.id_for_label }}">{{ form.detector_manufacturer.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {% render_field form.detector_manufacturer|add_class:'uk-width-1-1' %}
+                            {{ form.detector_manufacturer.errors }}
+                        </td>
                     {% else %}
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.special.id_for_label }}">{{ form.special.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                    {% render_field form.special|add_class:'uk-width-1-1' %}
-                        {{ form.special.errors }}
-                    </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.special.id_for_label }}">{{ form.special.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {% render_field form.special|add_class:'uk-width-1-1' %}
+                            {{ form.special.errors }}
+                        </td>
                     {% endif %}
                 </tr>
-                {% if fire or survey.service_type.service_type == 'fire'  %}
-                <tr>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.detector_model.id_for_label }}">{{ form.detector_model.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {% render_field form.detector_model|add_class:'uk-width-1-1' %}
-                        {{ form.detector_model.errors }}
-                    </td>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.detector_serial_no.id_for_label }}">{{ form.detector_serial_no.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {% render_field form.detector_serial_no|add_class:'uk-width-1-1' %}
-                        {{ form.detector_serial_no.errors }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.special.id_for_label }}">{{ form.special.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {% render_field form.special|add_class:'uk-width-1-1' %}
-                        {{ form.special.errors }}
-                    </td>
-                </tr>
+                {% if fire or survey.service_type.service_type == 'fire' %}
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.detector_model.id_for_label }}">{{ form.detector_model.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {% render_field form.detector_model|add_class:'uk-width-1-1' %}
+                            {{ form.detector_model.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.detector_serial_no.id_for_label }}">{{ form.detector_serial_no.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {% render_field form.detector_serial_no|add_class:'uk-width-1-1' %}
+                            {{ form.detector_serial_no.errors }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ form.special.id_for_label }}">{{ form.special.label }}</label>
+                        </td>
+                        <td class="uk-width-1-3">
+                            {% render_field form.special|add_class:'uk-width-1-1' %}
+                            {{ form.special.errors }}
+                        </td>
+                    </tr>
                 {% endif %}
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">

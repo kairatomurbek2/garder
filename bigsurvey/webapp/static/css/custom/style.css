@@ -101,7 +101,7 @@ div.wrapper {
 .fixed-navbar {
     position: fixed;
     width: 100%;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .navbar-hack {
@@ -191,8 +191,4 @@ ul.form-ul {
 
 .valign-center-modal-spinner {
     top: auto;
-}
-
-div.uk-width-4-5 {
-    padding-left: 40px;
 }

@@ -3,8 +3,8 @@
 {% load boolean_yes_no %}
 {% block content %}
     <div class="uk-grid">
-        <div class="wrapper uk-width-4-5">
-        {% include 'messages.html' %}
+        <div class="uk-width-1-1">
+            {% include 'messages.html' %}
             <table class="uk-table uk-table-hover">
                 <thead>
                 <tr class="border-bottom">
@@ -22,7 +22,7 @@
                             <a id="lettertype_{{ lettertype.pk }}_edit_link" href="{% url 'webapp:letter_type_edit' lettertype.pk %}">
                                 {% trans "Edit" %}
                             </a>
-                         </td>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

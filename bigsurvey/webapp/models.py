@@ -1,9 +1,11 @@
 from decimal import Decimal
+
 from django.db import models
 from django.utils.translation import ugettext as _
-from main.parameters import *
 from django.contrib.auth.models import User, Group
 from ckeditor.fields import RichTextField
+
+from main.parameters import *
 from utils import photo_util
 import fields
 
@@ -394,78 +396,46 @@ class Employee(models.Model):
 
 
 class Site(models.Model):
-    pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", help_text=_("PWS which Site belongs"),
-                            db_index=True)
-    connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"),
-                                    help_text=_("Connection date of Site"))
+    pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", help_text=_("PWS which Site belongs"), db_index=True)
+    connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"), help_text=_("Connection date of Site"))
     address1 = models.CharField(max_length=100, verbose_name=_("Address 1"), help_text=_("Main Address of Site"))
-    address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"),
-                                help_text=_("Secondary Address of Site if exists"))
-    street_number = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Street Number'),
-                                     help_text=_("Site Address's Street Number"))
-    apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Apt"),
-                           help_text=_("Site Address's Apartment"))
+    address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"), help_text=_("Secondary Address of Site if exists"))
+    street_number = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Street Number'), help_text=_("Site Address's Street Number"))
+    apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Apt"), help_text=_("Site Address's Apartment"))
     city = models.CharField(max_length=30, verbose_name=_("City"), help_text=_("Site's City"))
-    state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"),
-                             help_text=_("Site's State"))
+    state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"), help_text=_("Site's State"))
     zip = models.CharField(max_length=10, null=True, blank=True, verbose_name=_("ZIP"), help_text=_("Site's ZIP Code"))
-    site_use = models.ForeignKey(SiteUse, verbose_name=_("Site Use"), blank=True, null=True, related_name="sites",
-                                 help_text=_("Using of Site"))
-    site_type = models.ForeignKey(SiteType, verbose_name=_("Site Type"), blank=True, null=True, related_name="sites",
-                                  help_text=_("Type of Site"))
-    status = models.ForeignKey(SiteStatus, null=True, blank=True, verbose_name=_("Status"), related_name="sites",
-                               help_text=_("Site's Status"))
+    site_use = models.ForeignKey(SiteUse, verbose_name=_("Site Use"), blank=True, null=True, related_name="sites", help_text=_("Using of Site"))
+    site_type = models.ForeignKey(SiteType, verbose_name=_("Site Type"), blank=True, null=True, related_name="sites", help_text=_("Type of Site"))
+    status = models.ForeignKey(SiteStatus, null=True, blank=True, verbose_name=_("Status"), related_name="sites", help_text=_("Site's Status"))
     floors = models.ForeignKey(FloorsCount, verbose_name=_("Building Height"), blank=True, null=True,
                                related_name="sites", help_text=_("Number of Floors"))
     interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"), blank=True,
-                                              null=True, related_name="sites",
-                                              help_text=_("Interconnection Point Type"))
-    meter_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Meter Number"),
-                                    help_text=_("Meter Number"))
-    meter_size = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Meter Size"),
-                                  help_text=_("Meter Size"))
-    meter_reading = models.FloatField(blank=True, null=True, verbose_name=_("Meter Reading"),
-                                      help_text=_("Meter Reading"))
-    route = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Seq. Route"),
-                             help_text=_("Sequence Route"))
-    potable_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Potable Present"),
-                                          help_text=_("Is Potable connection present"))
-    fire_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Fire Present"),
-                                       help_text=_("Is Fire connection present"))
-    irrigation_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Irrigation Present"),
-                                             help_text=_("Is Irrigation connection present"))
-    is_due_install = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Due Install"),
-                                         help_text=_("Is Due Install"))
-    is_backflow = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Backflow Present"),
-                                      help_text=_("Is Backflow present"))
-    next_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Next Survey Date"),
-                                        help_text=_("Next Survey Date"))
+                                              null=True, related_name="sites", help_text=_("Interconnection Point Type"))
+    meter_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Meter Number"), help_text=_("Meter Number"))
+    meter_size = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Meter Size"), help_text=_("Meter Size"))
+    meter_reading = models.FloatField(blank=True, null=True, verbose_name=_("Meter Reading"), help_text=_("Meter Reading"))
+    route = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Seq. Route"), help_text=_("Sequence Route"))
+    potable_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Potable Present"), help_text=_("Is Potable connection present"))
+    fire_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Fire Present"), help_text=_("Is Fire connection present"))
+    irrigation_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Irrigation Present"), help_text=_("Is Irrigation connection present"))
+    is_due_install = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Due Install"), help_text=_("Is Due Install"))
+    is_backflow = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Is Backflow Present"), help_text=_("Is Backflow present"))
+    next_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Next Survey Date"), help_text=_("Next Survey Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"), help_text=_("Notes"))
-    last_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Last Survey Date"),
-                                        help_text=_("Last Survey Date"))
-    cust_number = models.CharField(max_length=15, verbose_name=_("Number"), help_text=_("Customer's Number"),
-                                   db_index=True)
+    last_survey_date = models.DateField(null=True, blank=True, verbose_name=_("Last Survey Date"), help_text=_("Last Survey Date"))
+    cust_number = models.CharField(max_length=15, verbose_name=_("Number"), help_text=_("Customer's Number"), db_index=True)
     cust_name = models.CharField(max_length=50, verbose_name=_("Name"), help_text=_("Customer's Name"))
-    cust_code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers",
-                                  help_text=_("Customer's Code"))
-    cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 1"),
-                                     help_text=_("Customer's Main Address"))
-    cust_address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"),
-                                     help_text=_("Customer's Secondary Address (if exists)"))
-    cust_apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Apt"),
-                                help_text=_("Customer's Apartment"))
-    cust_city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"),
-                                 help_text=_("Customer's City"))
-    cust_state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"),
-                                  help_text=_("Customer's State"))
-    cust_zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("ZIP"),
-                                help_text=_("Customer's ZIP Code"))
-    contact_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"),
-                                     help_text=_("Customer's Phone"))
-    contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"),
-                                   help_text=_("Customer's Fax"))
-    contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Email"),
-                                      help_text=_("Customer's Email Address"))
+    cust_code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers", help_text=_("Customer's Code"))
+    cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 1"), help_text=_("Customer's Main Address"))
+    cust_address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Address 2"), help_text=_("Customer's Secondary Address (if exists)"))
+    cust_apt = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Apt"), help_text=_("Customer's Apartment"))
+    cust_city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"), help_text=_("Customer's City"))
+    cust_state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"), help_text=_("Customer's State"))
+    cust_zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("ZIP"), help_text=_("Customer's ZIP Code"))
+    contact_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"), help_text=_("Customer's Phone"))
+    contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"), help_text=_("Customer's Fax"))
+    contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Email"), help_text=_("Customer's Email Address"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.city, self.address1)
@@ -616,14 +586,10 @@ class Test(models.Model):
     cv_retest_psi = models.FloatField(null=True, blank=True, verbose_name=_("CV Retest PSI"))
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-    cv1_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True,
-                                      verbose_name=_("CV1 Cleaned or Replaced"))
-    cv2_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True,
-                                      verbose_name=_("CV2 Cleaned or Replaced"))
-    rv_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True,
-                                     verbose_name=_("RV Cleaned or Replaced"))
-    pvb_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True,
-                                      verbose_name=_("PVB Cleaned or Replaced"))
+    cv1_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV1 Cleaned or Replaced"))
+    cv2_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV2 Cleaned or Replaced"))
+    rv_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("RV Cleaned or Replaced"))
+    pvb_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("PVB Cleaned or Replaced"))
     cv1_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv1_replacements')
     cv2_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv2_replacements')
     rv_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='rv_replacements')
@@ -705,6 +671,22 @@ class StaticText(models.Model):
 
 class ImportProgress(models.Model):
     progress = models.IntegerField(default=0)
+
+
+class ImportLog(models.Model):
+    user = models.ForeignKey(User)
+    pws = models.ForeignKey(PWS)
+    datetime = models.DateTimeField(auto_now_add=True)
+    added_sites = models.ManyToManyField(Site, related_name='added_imports')
+    updated_sites = models.ManyToManyField(Site, related_name='updated_imports')
+    deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports')
+
+    class Meta:
+        permissions = (
+            ('browse_import_log', _('Can browse Import Log')),
+            ('access_to_all_import_logs', _('Has access to all Import Logs')),
+            ('access_to_pws_import_logs', _('Has access to PWS\'s Import Logs')),
+        )
 
 
 import signals

@@ -19,7 +19,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.core.mail import EmailMessage
 import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
@@ -287,7 +287,7 @@ class SurveyBaseFormView(BaseFormView):
         try:
             site = survey.site
             service_type = survey.service_type
-        except:
+        except AttributeError:
             site = models.Site.objects.get(pk=self.kwargs['pk'])
             service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         return site.hazards.filter(service_type=service_type)
@@ -1062,7 +1062,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                 "currency": "USD"
             }
             for test in tests
-            ]
+        ]
 
         test_pks = ','.join((str(test.pk) for test in tests))
 
@@ -1279,8 +1279,13 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
                 self.excel_parser.check_constraints(mappings)
                 import_progress = models.ImportProgress.objects.create()
                 self.request.session['import_progress_pk'] = import_progress.pk
-                self.excel_parser.parse_and_save_in_background(mappings, self.request.session['import_pws_pk'],
-                                                               import_progress.pk)
+                self.excel_parser.parse_and_save_in_background(
+                    mappings,
+                    self.request.session['import_pws_pk'],
+                    import_progress.pk,
+                    self.request.user.pk
+                )
+
                 return redirect('webapp:import-mappings')
             except (IntegrityError, DateFormatError) as e:
                 self.formset.add_error(str(e))
@@ -1310,3 +1315,51 @@ class ImportProgressView(BaseTemplateView):
             except KeyError:
                 pass
         return JsonResponse(progress, safe=False)
+
+
+class ImportLogListView(BaseTemplateView):
+    permission = 'webapp.browse_import_log'
+    template_name = 'import/import_log_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ImportLogListView, self).get_context_data(**kwargs)
+        context['import_logs'] = self._get_import_logs()
+        return context
+
+    def _get_import_logs(self):
+        queryset = models.ImportLog.objects.none()
+        if self.request.user.has_perm('webapp.access_to_all_import_logs'):
+            queryset = models.ImportLog.objects.all()
+        elif self.request.user.has_perm('webapp.access_to_pws_import_logs'):
+            queryset = models.ImportLog.objects.filter(pws=self.request.user.employee.pws)
+        return queryset.order_by('-datetime')
+
+
+class ImportLogSitesMixin(BaseTemplateView):
+    permission = 'webapp.browse_import_log'
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ImportLogSitesMixin, self).get_context_data(**kwargs)
+        import_log = models.ImportLog.objects.get(pk=self.kwargs['pk'])
+        if not perm_checkers.ImportLogPermChecker.has_perm(self.request, import_log):
+            raise Http404
+        context['import_log'] = import_log
+        sites = self.get_sites(import_log)
+        context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites)
+        return context
+
+
+class ImportLogAddedSitesView(ImportLogSitesMixin):
+    def get_sites(self, import_log):
+        return import_log.added_sites
+
+
+class ImportLogUpdatedSitesView(ImportLogSitesMixin):
+    def get_sites(self, import_log):
+        return import_log.updated_sites
+
+
+class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
+    def get_sites(self, import_log):
+        return import_log.deactivated_sites

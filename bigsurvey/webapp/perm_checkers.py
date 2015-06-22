@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class ObjectPermChecker(object):
     __metaclass__ = ABCMeta
 
@@ -51,13 +52,19 @@ class UserPermChecker(ObjectPermChecker):
 class LetterPermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
-        a = request.user.has_perm('webapp.full_letter_access') or \
-            request.user.has_perm('webapp.pws_letter_access') and obj.site.pws == request.user.employee.pws
-        return a
+        return request.user.has_perm('webapp.full_letter_access') or \
+               request.user.has_perm('webapp.pws_letter_access') and obj.site.pws == request.user.employee.pws
+
 
 class LetterTypePermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
-        a = request.user.has_perm('webapp.access_to_all_lettertypes') or \
-            request.user.has_perm('webapp.access_to_pws_lettertypes') and obj.pws == request.user.employee.pws
-        return a
+        return request.user.has_perm('webapp.access_to_all_lettertypes') or \
+               request.user.has_perm('webapp.access_to_pws_lettertypes') and obj.pws == request.user.employee.pws
+
+
+class ImportLogPermChecker(ObjectPermChecker):
+    @staticmethod
+    def has_perm(request, obj):
+        return request.user.has_perm('webapp.access_to_all_import_logs') or \
+               request.user.has_perm('webapp.access_to_pws_import_logs') and obj.pws == request.user.employee.pws

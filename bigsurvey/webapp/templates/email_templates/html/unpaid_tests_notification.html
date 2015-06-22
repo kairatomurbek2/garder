@@ -8,7 +8,7 @@
     Hello, Dear {{ tester.get_full_name }}
 </h3>
 
-<p>Please pay for tests listed below or they will be deleted within 10 days after creation</p>
+<p>Please pay for tests listed below or they will be deleted within {{ days }} days after creation</p>
 <ul>
     {% for test in unpaid_tests %}
         <li>{{ test.bp_device.site }}, {{ test.bp_device }}, {{ test }}</li>

@@ -150,13 +150,15 @@ PAYPAL_CLIENT_ID = 'ARuglQBjPQQo6bUYpukNqLmFgPxQlg7Vb4zt0l0Gl6CAnX67uJGYYlMF_E5R
 PAYPAL_CLIENT_SECRET = 'EHUCx5wjMgFkQzqkhsWUtfG6-pzlvS72kaGafHmPu2-hfGE6ubLmS_yW9s0E_Hpq1YyNOGMFa4LPHA3G'
 
 # without trailing slash
-# required for PayPal to provide full return URL
+# required for PayPal to provide absolute return URL
 HOST = 'http://127.0.0.1:8000'
 
 DELETE_UNPAID_TESTS_AFTER_DAYS = 10
 
-from settings_local import *
-
+try:
+    from settings_local import *
+except ImportError:
+    pass
 
 paypalrestsdk.configure({
     'mode': PAYPAL_MODE,

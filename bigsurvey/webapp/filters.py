@@ -2,7 +2,7 @@ import django_filters
 import models
 from main.parameters import NEXT_DATE_FILTER_CHOICES, PAST_DATE_FILTER_CHOICES, Groups
 from datetime import datetime, timedelta
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 
 class FilterChoices(object):

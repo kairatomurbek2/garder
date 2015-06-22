@@ -53,5 +53,10 @@ urlpatterns = patterns(
     url(r'^import-mappings-process/$', views.ImportMappingsProcessView.as_view(), name="import-mappings-process"),
     url(r'^import-progress/$', views.ImportProgressView.as_view(), name="import-progress"),
 
+    url(r'^import-log/$', views.ImportLogListView.as_view(), name="import_log_list"),
+    url(r'^import-log/(?P<pk>\d+)/added/$', views.ImportLogAddedSitesView.as_view(), name="import_log_added_sites"),
+    url(r'^import-log/(?P<pk>\d+)/updated/$', views.ImportLogUpdatedSitesView.as_view(), name="import_log_updated_sites"),
+    url(r'^import-log/(?P<pk>\d+)/deactivated/$', views.ImportLogDeactivatedSitesView.as_view(), name="import_log_deactivated_sites"),
+
     url(r'^help/$', views.HelpView.as_view(), name="help"),
 )

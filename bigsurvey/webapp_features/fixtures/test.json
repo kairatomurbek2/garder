@@ -2061,11 +2061,16 @@
   "fields": {
     "city": "Second PWS city",
     "name": "Second PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "1.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "PWS2",
+    "logo": "",
     "water_source": 2,
-    "notes": "Quisque lorem magna, tincidunt in tempor at, placerat ut augue. Duis mattis massa luctus dui blandit auctor. Donec erat tellus, varius at vulputate in, finibus quis lacus. Proin in dui sit amet ex dignissim molestie eget volutpat nibh. Proin vel iaculis l"
+    "notes": "Quisque lorem magna, tincidunt in tempor at, placerat ut augue. Duis mattis massa luctus dui blandit auctor. Donec erat tellus, varius at vulputate in, finibus quis lacus. Proin in dui sit amet ex dignissim molestie eget volutpat nibh. Proin vel iaculis l",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 1
@@ -2074,11 +2079,16 @@
   "fields": {
     "city": "First PWS city",
     "name": "First PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "2.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "PWS1",
+    "logo": "",
     "water_source": 1,
-    "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id feugiat urna, in convallis dui. Fusce in luctus quam. In pellentesque porta nisi ut vulputate. Sed dignissim dolor felis, eget pellentesque dolor iaculis ut. Mauris at convallis odio. Mauris c"
+    "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut id feugiat urna, in convallis dui. Fusce in luctus quam. In pellentesque porta nisi ut vulputate. Sed dignissim dolor felis, eget pellentesque dolor iaculis ut. Mauris at convallis odio. Mauris c",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 2
@@ -2087,11 +2097,16 @@
   "fields": {
     "city": "Third PWS city",
     "name": "Third PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "3.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "PWS3",
+    "logo": "",
     "water_source": 3,
-    "notes": "This is test notes"
+    "notes": "This is test notes",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 3
@@ -2100,11 +2115,16 @@
   "fields": {
     "city": "Houston",
     "name": "Houston PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "4.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "XOL852",
+    "logo": "",
     "water_source": 3,
-    "notes": ""
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 4
@@ -2113,11 +2133,16 @@
   "fields": {
     "city": "Ancoridge",
     "name": "Alaska Central PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "5.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "AL202",
+    "logo": "",
     "water_source": 3,
-    "notes": ""
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 5
@@ -2126,11 +2151,16 @@
   "fields": {
     "city": "Washington",
     "name": "White House PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "6.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "DOC121",
+    "logo": "",
     "water_source": 3,
-    "notes": ""
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 6
@@ -2139,11 +2169,16 @@
   "fields": {
     "city": "Los Angeles",
     "name": "Los Angeles Beach System",
+    "consultant_phone": null,
     "office_address": null,
     "price": "7.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA200",
+    "logo": "",
     "water_source": 2,
-    "notes": ""
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 7
@@ -2152,11 +2187,16 @@
   "fields": {
     "city": "Boston",
     "name": "MIT Public Water System",
+    "consultant_phone": null,
     "office_address": null,
     "price": "8.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "KSL12",
+    "logo": "",
     "water_source": 2,
-    "notes": ""
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 8
@@ -2165,13 +2205,16 @@
   "fields": {
     "city": "Chikago",
     "name": "North USA PWS",
+    "consultant_phone": "+1685231452",
     "office_address": null,
     "price": "9.00",
+    "plumber_packet_address": null,
+    "consultant_name": "Van der Veijden",
     "number": "NUI812",
+    "logo": "",
     "water_source": 1,
     "notes": "",
-    "consultant_name": "Van der Veijden",
-    "consultant_phone": "+1685231452"
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 9
@@ -2180,11 +2223,16 @@
   "fields": {
     "city": "Seattle",
     "name": "South Western PWS",
+    "consultant_phone": null,
     "office_address": null,
     "price": "10.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "SW12",
+    "logo": "",
     "water_source": 2,
-    "notes": ""
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 10
@@ -3771,6 +3819,16 @@
         "icpointtype"
       ],
       [
+        "access_to_all_import_logs",
+        "webapp",
+        "importlog"
+      ],
+      [
+        "browse_import_log",
+        "webapp",
+        "importlog"
+      ],
+      [
         "add_letter",
         "webapp",
         "letter"
@@ -4235,6 +4293,16 @@
         "hazard"
       ],
       [
+        "access_to_pws_import_logs",
+        "webapp",
+        "importlog"
+      ],
+      [
+        "browse_import_log",
+        "webapp",
+        "importlog"
+      ],
+      [
         "add_letter",
         "webapp",
         "letter"
@@ -4510,7 +4578,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-06-12T10:44:27Z",
+    "last_login": "2015-06-22T09:51:45Z",
     "groups": [
       [
         "SuperAdministrators"
