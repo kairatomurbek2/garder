@@ -9,9 +9,15 @@ def directly_open_import_page(step):
 
 
 @step('I open "import" page')
-def open_pws_list_page(step):
+def open_import_list_page(step):
     step.given('I open "home" page')
     step.given('I click "import" menu link')
+
+
+@step('I open "import_log_list" page')
+def open_import_log_list_page(step):
+    step.given('I open "home" page')
+    step.given('I click "import_log" menu link')
 
 
 @step('I should be at "import_mappings" page')
@@ -68,3 +74,16 @@ def check_incorrect_date_format_message(step, params):
     params = tuple(params.split(DELIMITER))
     text = Messages.Import.required_value_is_empty % params
     helper.check_text_exists_inside_element(Xpath.import_mappings_form_errors, text, '"%s" is not on page.' % text)
+
+
+@step('Last import should have following data')
+def check_import_sites_count(step):
+    import_table = helper.find(Xpath.Pattern.table % 'import_logs')
+    last_import_row = helper.find(Xpath.Pattern.table_row_by_number % 1, import_table)
+    data = step.hashes[0]
+    added_sites = helper.find(Xpath.import_row_sites_count % 'added_sites', last_import_row).text
+    updated_sites = helper.find(Xpath.import_row_sites_count % 'updated_sites', last_import_row).text
+    deactivated_sites = helper.find(Xpath.import_row_sites_count % 'deactivated_sites', last_import_row).text
+    assert data['added_sites'] == added_sites, 'Expected %s added sites, found %s' % (data['added_sites'], added_sites)
+    assert data['updated_sites'] == updated_sites, 'Expected %s updated sites, found %s' % (data['updated_sites'], updated_sites)
+    assert data['updated_sites'] == updated_sites, 'Expected %s deactivated sites, found %s' % (data['deactivated_sites'], deactivated_sites)

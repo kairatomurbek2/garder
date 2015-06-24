@@ -74,6 +74,7 @@ class Xpath:
     class Pattern:
         # Common
         form = './/form[@name="%s"]'
+        table = './/table[@id="%s"]'
         input = './/input[@name="%s"]'
         file_input = './/input[@type="file"][@name="%s"]'
         textarea = './/textarea[@name="%s"]'
@@ -89,6 +90,7 @@ class Xpath:
         link_by_href = './/a[@href="%s"]'
         link_by_exact_text = './/a[. = "%s"]'
         link_by_substr = './/a[contains(., "%s")]'
+        table_row_by_number = './/tbody/tr[%d]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'
@@ -121,6 +123,7 @@ class Xpath:
     pay_modal = './/div[@id="pay-modal"]'
     payment_step_2 = './/div[@data-content="step-2"]'
     modal_close_button = './/a[contains(@class, "uk-modal-close")]'
+    import_row_sites_count = './/td[@data-content="%s"]/a'
 
 
 import_mappings = {

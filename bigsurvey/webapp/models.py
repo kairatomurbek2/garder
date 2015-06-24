@@ -612,6 +612,7 @@ class Test(models.Model):
             ('access_to_pws_tests', _('Has access to PWS\'s Tests')),
             ('access_to_own_tests', _('Has access to own Tests')),
         )
+        ordering = ('-test_date', '-id')
 
 
 class Letter(models.Model):

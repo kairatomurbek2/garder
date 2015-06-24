@@ -4,7 +4,7 @@
     <div class="uk-grid">
         <div class="uk-width-1-1">
             {% include 'messages.html' %}
-            <table class="uk-table uk-table-hover">
+            <table class="uk-table uk-table-hover" id="import_logs">
                 <thead>
                 <tr class="border-bottom">
                     <th>{% trans "Datetime" %}</th>
@@ -21,9 +21,9 @@
                         <td>{{ import_log.datetime }}</td>
                         <td>{{ import_log.user.get_full_name }}</td>
                         <td>{{ import_log.pws.number }}</td>
-                        <td><a href="{% url 'webapp:import_log_added_sites' import_log.pk %}">{{ import_log.added_sites.count }}</a></td>
-                        <td><a href="{% url 'webapp:import_log_updated_sites' import_log.pk %}">{{ import_log.updated_sites.count }}</a></td>
-                        <td><a href="{% url 'webapp:import_log_deactivated_sites' import_log.pk %}">{{ import_log.deactivated_sites.count }}</a></td>
+                        <td data-content="added_sites"><a href="{% url 'webapp:import_log_added_sites' import_log.pk %}">{{ import_log.added_sites.count }}</a></td>
+                        <td data-content="updated_sites"><a href="{% url 'webapp:import_log_updated_sites' import_log.pk %}">{{ import_log.updated_sites.count }}</a></td>
+                        <td data-content="deactivated_sites"><a href="{% url 'webapp:import_log_deactivated_sites' import_log.pk %}">{{ import_log.deactivated_sites.count }}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -14,6 +14,7 @@ Feature: Import from Excel files
     | surveyor | see      |
     | tester   | see      |
 
+  @wip
   Scenario: Correct Import
     Given I logged in as "root"
     When I open "import" page
@@ -37,6 +38,21 @@ Feature: Import from Excel files
       | 110000490 |
       | 110000495 |
       | 110000497 |
+    When I open "import_log_list" page
+    Then Last import should have following data
+      | added_sites | updated_sites | deactivated_sites |
+      | 9           | 0             | 0                 |
+    When I open "import" page
+    And I fill in file input "file" with "correct-new.xlsx"
+    And I select "Houston PWS" from "pws"
+    And I submit "import" form
+    And I fill in mappings
+    And I submit "import-mappings" form
+    And I wait for 5 seconds
+    And I open "import_log_list" page
+    Then Last import should have following data
+      | added_sites | updated_sites | deactivated_sites |
+      | 1           | 6             | 3                 |
     And I reset database
 
   Scenario: Incorrect Import
