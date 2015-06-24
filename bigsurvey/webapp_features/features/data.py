@@ -74,6 +74,7 @@ class Xpath:
     class Pattern:
         # Common
         form = './/form[@name="%s"]'
+        form_by_id = './/form[@id="%s"]'
         table = './/table[@id="%s"]'
         input = './/input[@name="%s"]'
         file_input = './/input[@type="file"][@name="%s"]'

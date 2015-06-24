@@ -14,7 +14,6 @@ Feature: Import from Excel files
     | surveyor | see      |
     | tester   | see      |
 
-  @wip
   Scenario: Correct Import
     Given I logged in as "root"
     When I open "import" page
