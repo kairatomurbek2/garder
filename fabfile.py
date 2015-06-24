@@ -33,11 +33,16 @@ def reload_server():
     sudo('service apache2 reload')
 
 
+def create_lettertypes_for_existing_pws():
+    run('bigsurvey/manage.py create_lettertypes_for_pws')
+
+
 def deploy_demo(commit="master"):
     check_env_parameters()
     with cd(env.get('project_path')):
         fetch_from_git(commit)
         run('./install.sh')
+        create_lettertypes_for_existing_pws()
         reload_server()
 
 
@@ -46,4 +51,5 @@ def deploy_production(commit="master"):
     with cd(env.get('project_path')):
         fetch_from_git(commit)
         run('./install_prod.sh')
+        create_lettertypes_for_existing_pws()
         reload_server()

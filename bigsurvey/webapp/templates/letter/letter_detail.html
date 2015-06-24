@@ -5,7 +5,7 @@
     <li><a href="{% url "webapp:letter_edit" letter.pk %}" id="letter_{{ letter.pk }}_edit_link">
         {% trans "Edit" %}
     </a></li>
-    <li><a href="{% url "webapp:letter_pdf" letter.pk %}" id="letter_{{ letter.pk }}_pdf_link">
+    <li><a href="{% url "webapp:letter_pdf" letter.pk %}" id="letter_{{ letter.pk }}_pdf_link" data-action="show-pdf-options-modal">
         {% trans "Get PDF" %}
     </a></li>
 {% endblock %}
@@ -45,4 +45,25 @@
             {{ letter.rendered_body|safe }}
         </div>
     </div>
+    <div id="modal-wrapper"></div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('[data-action="show-pdf-options-modal"]').click(function (e) {
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+
+                $.ajax(url, {
+                    success: function (response) {
+                        $('#modal-wrapper').html(response);
+                        UIkit.modal('#pdf-options-modal').show();
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
 {% endblock %}

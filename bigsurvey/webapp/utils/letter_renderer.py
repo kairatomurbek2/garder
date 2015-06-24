@@ -1,3 +1,6 @@
+from django.conf import settings
+
+
 class Placeholders(object):
     letter_date = '{LetterDate}'
     site_address = '{ServiceAddress}'
@@ -17,6 +20,7 @@ class Placeholders(object):
     consultant_phone = '{ConsultantPhone}'
     plumber_packet_location = '{PlumberPacketLocation}'
     plumber_packet_address = '{PlumberPacketAddress}'
+    pws_logo = '{PWSLogo}'
 
 
 class LetterRenderer(object):
@@ -26,6 +30,12 @@ class LetterRenderer(object):
         pws = site.pws
         hazard = letter.hazard
         warnings = []
+
+        if pws.logo:
+            pws_logo_replacement = '<div style="width:300px;"><img src="%s%s" style="width:100%%;height:auto;"></div>' % (settings.HOST, pws.logo.url)
+        else:
+            pws_logo_replacement = ''
+
         replacements = {
             Placeholders.letter_date: letter.date,
             Placeholders.site_address: site.address1,
@@ -43,6 +53,7 @@ class LetterRenderer(object):
             Placeholders.consultant_phone: pws.consultant_phone,
             Placeholders.plumber_packet_location: pws.plumber_packet_location,
             Placeholders.plumber_packet_address: pws.plumber_packet_address,
+            Placeholders.pws_logo: pws_logo_replacement
         }
         if hazard:
             replacements[Placeholders.assembly_type] = hazard.bp_type_required
