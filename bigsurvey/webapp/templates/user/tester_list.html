@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% load pagination_tags %}
 {% load widget_tweaks %}
 {% block content %}
@@ -8,104 +9,105 @@
     {% include 'messages.html' %}
 </div>
 <div class="uk-grid">
-<div class="wrapper uk-width-1-5">
     {% include 'user/tester_filters.html' %}
-</div>
-<div class="wrapper uk-width-4-5">
+    <div class="wrapper uk-width-4-5 filters-offset">
+        {% paginate %}
+        <table class="uk-table uk-table-hover">
+            <thead>
+                <tr class="border-bottom">
+                    <th class="uk-text-center border-right">
+                        {% trans "No." %}
+                    </th>
+                    <th>
+                        {% trans "PWS" %}
+                    </th>
+                    <th>
+                        {% trans "Username" %}
+                    </th>
+                    <th>
+                        {% trans "Name" %}
+                    </th>
+                    <th>
+                        {% trans "Company" %}
+                    </th>
+                    <th>
+                        {% trans "Certificate Number" %}
+                    </th>
+                    <th>
+                        {% trans "Certificate Date" %}
+                    </th>
+                    <th>
+                        {% trans "Certificate Expires" %}
+                    </th>
+                    <th>
+                        {% trans "Test Kit Manufacturer" %}
+                    </th>
+                    <th>
+                        {% trans "Test Kit Model" %}
+                    </th>
+                    <th>
+                        {% trans "Test Kit Serial" %}
+                    </th>
+                    <th>
+                        {% trans "Test Kit Last Certification" %}
+                    </th>
+                    <th class="uk-text-center border-left">
+                        {% trans "Actions" %}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tester in filtered_testers %}
+                <tr>
+                    <td class="uk-text-center border-right">
+                        {{ tester.pk }}
+                    </td>
+                    <td>
+                        {{ tester.employee.pws.number }}
+                    </td>
+                    <td>
+                        {{ tester.username }}
+                    </td>
+                    <td>
+                        {{ tester.first_name }} {{ tester.last_name }}
+                    </td>
+                    <td>
+                        {{ tester.employee.company }}
+                    </td>
+                    <td>
+                        {{ tester.employee.cert_number }}
+                    </td>
+                    <td>
+                        {{ tester.employee.cert_date }}
+                    </td>
+                    <td>
+                        {{ tester.employee.cert_expires }}
+                    </td>
+                    <td>
+                        {{ tester.employee.test_manufacturer }}
+                    </td>
+                    <td>
+                        {{ tester.employee.test_model }}
+                    </td>
+                    <td>
+                        {{ tester.employee.test_serial }}
+                    </td>
+                    <td>
+                        {{ tester.employee.test_last_cert }}
+                    </td>
+                    <td class="uk-text-center border-left">
+                        <a href="{% url 'webapp:user_detail' tester.pk %}" id="user_{{ tester.pk }}_detail_link">
+                            {% trans "Detail" %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% paginate %}
-    <table class="uk-table uk-table-hover">
-        <thead>
-            <tr class="border-bottom">
-                <th class="uk-text-center border-right">
-                    {% trans "No." %}
-                </th>
-                <th>
-                    {% trans "PWS" %}
-                </th>
-                <th>
-                    {% trans "Username" %}
-                </th>
-                <th>
-                    {% trans "Name" %}
-                </th>
-                <th>
-                    {% trans "Company" %}
-                </th>
-                <th>
-                    {% trans "Certificate Number" %}
-                </th>
-                <th>
-                    {% trans "Certificate Date" %}
-                </th>
-                <th>
-                    {% trans "Certificate Expires" %}
-                </th>
-                <th>
-                    {% trans "Test Kit Manufacturer" %}
-                </th>
-                <th>
-                    {% trans "Test Kit Model" %}
-                </th>
-                <th>
-                    {% trans "Test Kit Serial" %}
-                </th>
-                <th>
-                    {% trans "Test Kit Last Certification" %}
-                </th>
-                <th class="uk-text-center border-left">
-                    {% trans "Actions" %}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tester in filtered_testers %}
-            <tr>
-                <td class="uk-text-center border-right">
-                    {{ tester.pk }}
-                </td>
-                <td>
-                    {{ tester.employee.pws.number }}
-                </td>
-                <td>
-                    {{ tester.username }}
-                </td>
-                <td>
-                    {{ tester.first_name }} {{ tester.last_name }}
-                </td>
-                <td>
-                    {{ tester.employee.company }}
-                </td>
-                <td>
-                    {{ tester.employee.cert_number }}
-                </td>
-                <td>
-                    {{ tester.employee.cert_date }}
-                </td>
-                <td>
-                    {{ tester.employee.cert_expires }}
-                </td>
-                <td>
-                    {{ tester.employee.test_manufacturer }}
-                </td>
-                <td>
-                    {{ tester.employee.test_model }}
-                </td>
-                <td>
-                    {{ tester.employee.test_serial }}
-                </td>
-                <td>
-                    {{ tester.employee.test_last_cert }}
-                </td>
-                <td class="uk-text-center border-left">
-                    <a href="{% url 'webapp:user_detail' tester.pk %}" id="user_{{ tester.pk }}_detail_link">
-                        {% trans "Detail" %}
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% paginate %}
+    </div>
 </div>
-</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/custom/filters-offset.js' %}"></script>
 {% endblock %}

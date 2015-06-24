@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% load pagination_tags %}
+{% load staticfiles %}
 {% load i18n %}
 {% load boolean_yes_no %}
 {% block content %}
     {% autopaginate letter_filter.qs as filtered_letters 50 %}
     <div class="uk-grid">
-        <div class="wrapper uk-width-1-5">
-            {% include "letter/letter_filters.html" %}
-        </div>
-        <div class="wrapper uk-width-4-5">
+        {% include "letter/letter_filters.html" %}
+        <div class="wrapper uk-width-4-5 filters-offset">
             {% paginate %}
             {% include 'messages.html' %}
             <table class="uk-table uk-table-hover">
@@ -88,4 +87,5 @@
             });
         });
     </script>
+    <script src="{% static 'js/custom/filters-offset.js' %}"></script>
 {% endblock %}

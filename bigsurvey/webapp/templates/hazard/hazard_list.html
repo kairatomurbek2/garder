@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load boolean_yes_no %}
+{% load staticfiles %}
 {% load pagination_tags %}
 {% load widget_tweaks %}
 {% block content %}
 {% autopaginate hazard_filter.qs as filtered_hazards 50 %}
 <div class="uk-grid">
-    <div class="wrapper uk-width-1-5">
-        {% include 'hazard/hazard_filters.html' %}
-    </div>
-    <div class="wrapper uk-width-4-5">
+    {% include 'hazard/hazard_filters.html' %}
+    <div class="wrapper uk-width-4-5 filters-offset">
         {% paginate %}
         <table class="uk-table uk-table-hover">
             <thead>
@@ -52,4 +51,7 @@
         {% paginate %}
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/custom/filters-offset.js' %}"></script>
 {% endblock %}
