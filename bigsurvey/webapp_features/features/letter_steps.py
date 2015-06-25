@@ -2,6 +2,7 @@ from lettuce.django import mail
 from common_steps import *
 from lettuce import *
 from data import *
+from webapp import models
 from webapp.models import Letter
 
 
@@ -114,3 +115,11 @@ def check_email_content(step):
     email = world.cache['email']
     for row in step.hashes:
         assert row['text'] in email.body, '"%s" was not found in email body' % row['text']
+
+
+@step('There should be logo of PWS with pk "(\d+)"')
+def check_pws_logo_appears(step, pk):
+    pws = models.PWS.objects.get(pk=pk)
+    logo_absolute_url = '%s%s' % (settings.HOST, pws.logo.url)
+    assert logo_absolute_url in world.browser.page_source
+    pws.logo.delete()

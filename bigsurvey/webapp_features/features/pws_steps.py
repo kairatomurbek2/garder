@@ -1,3 +1,4 @@
+from django.core.files import File
 from common_steps import *
 from lettuce import *
 from data import *
@@ -71,17 +72,26 @@ def check_pws_editing_success_message(step):
 def check_pws_editing_error_message(step):
     step.given('I should see "%s"' % Messages.PWS.editing_error)
 
+
 @step('New letter types were created for PWS with number "(.*)"')
 def check_new_lettertypes_were_created(step, number):
     pws = models.PWS.objects.get(number=number)
     assert pws.letter_types.exists(), 'PWS has no Letter Types'
+
 
 @step('"(.*)" should be uploaded')
 def check_pws_logo_upload(step, file):
     logo = os.path.join(settings.PWS_LOGOS_DIR, file)
     assert os.path.isfile(logo), 'There is no logo'
 
+
 @step('"(.*)" should be deleted')
 def clear_logo(step, file):
     logo = os.path.join(settings.PWS_LOGOS_DIR, file)
     assert not os.path.isfile(logo), 'File was not deleted'
+
+
+@step('PWS with pk "(\d+)" has uploaded logo')
+def add_pws_logo(step, pk):
+    pws = models.PWS.objects.get(pk=pk)
+    pws.logo.save('pws-6.jpg', File(open(os.path.join(settings.STUB_FILES_DIR, 'logo.jpg'))))
