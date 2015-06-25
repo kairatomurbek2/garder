@@ -23,7 +23,7 @@
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="hazard" enctype="multipart/form-data">
             {% csrf_token %}
-            <table class="uk-table">
+            <table class="uk-table form-center">
                 <tbody>
                 {% if perms.webapp.change_all_info_about_hazard %}
                     <tr>
@@ -63,7 +63,7 @@
                             <label for="{{ form.notes.id_for_label }}">{% trans "Description" %}</label>
                         </td>
                         <td class="uk-width-5-6" colspan="3">
-                            {% render_field form.notes|add_class:'uk-width-1-1' %}
+                            {% render_field form.notes|add_class:'uk-width-1-1'|attr:'rows:3' %}
                             {{ form.notes.errors }}
                         </td>
                     </tr>

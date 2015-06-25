@@ -23,6 +23,7 @@ from django.utils.translation import ugettext as _
 from django.core.mail import EmailMessage
 import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
+from main import settings
 
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
@@ -880,7 +881,8 @@ class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
         msg = EmailMessage(
             letter.letter_type.header,
             body,
-            to=map(lambda email: email.strip(), form.cleaned_data['send_to'].strip(', ').split(','))
+            to=map(lambda email: email.strip(), form.cleaned_data['send_to'].strip(', ').split(',')),
+            headers={'From': settings.DEFAULT_FROM_EMAIL, 'Reply-To': settings.REPLY_TO_EMAIL, 'Return-Path': settings.RETURN_PATH_EMAIL}
         )
         msg.content_subtype = 'html'
         try:

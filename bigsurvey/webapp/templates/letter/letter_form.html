@@ -10,7 +10,7 @@
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="letter_generate_form">
             {% csrf_token %}
-            <table class="uk-table uk-table-hover table-fixed">
+            <table class="uk-table form-center">
                 <thead>
                     <tr class="border-bottom">
                         <th class="uk-text-bold uk-text-center" colspan="4">
@@ -33,7 +33,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button type="submit" name="submit_letter" class="uk-button uk-button-primary">{% trans "Generate Letter" %}</button>
+            <button type="submit" name="submit_letter" class="uk-button uk-button-primary uk-align-center">{% trans "Generate Letter" %}</button>
         </form>
     </div>
 {% endblock %}
