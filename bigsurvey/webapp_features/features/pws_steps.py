@@ -94,4 +94,4 @@ def clear_logo(step, file):
 @step('PWS with pk "(\d+)" has uploaded logo')
 def add_pws_logo(step, pk):
     pws = models.PWS.objects.get(pk=pk)
-    pws.logo.save('pws-6.jpg', File(open(os.path.join(settings.STUB_FILES_DIR, 'logo.jpg'))))
+    pws.logo.save('pws-6-logo.jpg', File(open(os.path.join(settings.STUB_FILES_DIR, 'logo.jpg'))))
