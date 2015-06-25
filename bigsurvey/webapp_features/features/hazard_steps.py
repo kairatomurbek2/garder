@@ -4,7 +4,7 @@ from data import *
 
 @step('I open "hazard_list" page')
 def open_hazard_list_page(step):
-    step.given('I click "hazards_menu" link')
+    step.given('I click "hazards" menu link')
 
 @step('I directly open "hazard_detail" page with pk "(\d+)"')
 def directly_open_hazard_detail_page(step, pk):

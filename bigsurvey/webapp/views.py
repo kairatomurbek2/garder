@@ -503,7 +503,7 @@ class TestBaseFormView(BaseFormView):
     model = models.Test
 
     def get_success_url(self):
-        return reverse('webapp:hazard_detail', args=(self.kwargs['pk'],))
+        return reverse('webapp:test_detail', args=(self.object.pk,))
 
     def get_form(self, form_class):
         form = super(TestBaseFormView, self).get_form(form_class)
@@ -813,6 +813,7 @@ class LetterEditView(LetterBaseFormView, UpdateView):
         if perm_checkers.LetterPermChecker.has_perm(self.request, form.instance):
             site = form.instance.site
             form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
+            form.fields['letter_type'].queryset = site.pws.letter_types
             return form
         raise Http404
 
@@ -965,12 +966,16 @@ class HazardListView(BaseTemplateView):
         queryset = models.Hazard.objects.none()
         if user.has_perm('webapp.access_to_all_hazards'):
             queryset = models.Hazard.objects.all()
-        if user.has_perm('webapp.access_to_pws_hazards'):
+        elif user.has_perm('webapp.access_to_pws_hazards'):
             queryset = models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) | \
                        models.Hazard.objects.filter(tests__tester=user)
-        hazards_wout_install_date = list(queryset.filter(install_date=None).order_by('due_install_test_date'))
-        hazards_with_install_date = list(queryset.exclude(install_date=None).order_by('-install_date'))
-        return hazards_wout_install_date + hazards_with_install_date
+        hazards = queryset.filter(install_date=None).order_by('due_install_test_date')
+        # this is required to hit database
+        len(hazards)
+        hazards_with_install_date = queryset.exclude(install_date=None).order_by('-install_date')
+        for hazard in hazards_with_install_date:
+            hazards._result_cache.append(hazard)
+        return hazards
 
 
 class TestListView(BaseTemplateView):
@@ -992,6 +997,20 @@ class TestListView(BaseTemplateView):
             return paid_tests.filter(bp_device__site__pws=user.employee.pws)
         if user.has_perm('webapp.access_to_own_tests'):
             return paid_tests.filter(tester=user)
+
+
+class TestDetailView(BaseTemplateView):
+    permission = 'webapp.browse_test'
+    template_name = 'test/test_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TestDetailView, self).get_context_data(**kwargs)
+        test = models.Test.objects.get(pk=self.kwargs['pk'])
+        if not perm_checkers.TestPermChecker.has_perm(self.request, test):
+            raise Http404
+        context['test'] = test
+        context['hazard'] = test.bp_device
+        return context
 
 
 class UnpaidTestMixin(object):

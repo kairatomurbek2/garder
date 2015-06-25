@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load hazards_helper %}
+{% load staticfiles %}
+{% load valve_leaked_choices %}
+{% load valve_opened_choices %}
+{% load test_result_choices %}
+{% load cleaned_replaced_choices %}
+{% load test_detail_helper %}
+{% block menu %}
+    <li><a href="{% url 'webapp:test_edit' test.pk %}">{% trans 'Edit' %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <div class="test-report-wrapper">
+            <h3 class="uk-text-uppercase uk-text-center uk-text-bold">{% trans 'Test and Maintenance report' %}</h3>
+
+            <p class="uk-text-uppercase uk-text-center">{% trans 'Backflow Prevention Assemblies' %}</p>
+
+            <form class="uk-form" method="post" name="test">
+                {% csrf_token %}
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-5">{% trans 'Customer' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.site.cust_name }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-5">{% trans 'Street Address' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.site.address1 }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-5">{% trans 'Mailing Address' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.site.cust_address1 }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-5">{% trans 'Location of Assembly' %}: </p>
+                    <span class="inline-width-4-5 border-bottom">{{ hazard.assembly_location }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-5">{% trans 'Assembly Type' %}: </p>
+                    <span class="inline-width-3-5">{% render_bp_type_checkboxes hazard.bp_type_present %}</span>
+
+                    <p class="inline-width-1-15">{% trans 'Size' %}: </p>
+                    <span class="inline-width-2-15 border-bottom">{{ hazard.bp_size }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-6 uk-text-right">{% trans 'Manufacturer' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ hazard.manufacturer }}</span>
+
+                    <p class="inline-width-1-6 uk-text-right">{% trans 'Model no.' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ hazard.model_no }}</span>
+
+                    <p class="inline-width-1-6 uk-text-right">{% trans 'Serial no.' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ hazard.serial_no }}</span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-6 uk-text-right">{% trans 'Test Kit Manuf.' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_manufacturer }}</span>
+
+                    <p class="inline-width-1-6 uk-text-right">{% trans 'Serial Number' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_serial }}</span>
+
+                    <p class="inline-width-1-6 uk-text-right">{% trans 'Date Calibrated' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_last_cert }}</span>
+                </div>
+
+                <table class="uk-table bordered-all">
+                    <thead>
+                    <tr>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Check Valve #1' %}
+                        </th>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Relief Valve' %}
+                        </th>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Check Valve #2' %}
+                        </th>
+                        <th class="uk-width-1-4 uk-text-center">
+                            {% trans 'Pressure Vacuum Breaker' %}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            {{ test.cv1_leaked|valve_leaked }}
+                        </td>
+                        <td>
+                            <p class="rv_psi1">
+                                {% ifequal test.rv_psi1 None %}
+                                    {% trans 'Did not open' %}
+                                {% else %}
+                                    {% trans 'Opened at' %}:
+                                    {{ test.rv_psi1 }}
+                                    {% trans 'psi' %}
+                                {% endifequal %}
+                            </p>
+                        </td>
+                        <td>
+                            {{ test.cv2_leaked|valve_leaked }}
+                        </td>
+                        <td>
+                            <p class="air_inlet_psi">
+                                {% ifequal test.air_inlet_psi None %}
+                                    {% trans 'Air Inlet: Did not open' %}
+                                {% else %}
+                                    {% trans 'Air Inlet: Opened at' %}:
+                                    {{ test.air_inlet_psi }}
+                                    {% trans 'psi' %}
+                                {% endifequal %}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{% trans 'Gauge pressure accross' %}</p>
+
+                            <p class="cv1_gauge_pressure">
+                                {% trans 'Check valve' %}:
+                                {{ test.cv1_gauge_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>{% trans 'Outlet shut-off Valve' %}</p>
+                            {{ test.outlet_sov_leaked|valve_leaked }}
+                        </td>
+                        <td>
+                            <p>{% trans 'Gauge pressure accross' %}</p>
+
+                            <p class="cv2_gauge_pressure">
+                                {% trans 'Check valve' %}:
+                                {{ test.cv2_gauge_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p class="cv_held_pressure">
+                                {% ifequal test.cv_held_pressure None %}
+                                    {% trans 'Check Valve: Leaked' %}
+                                {% else %}
+                                    {% trans 'Check Valve: Held at' %}:
+                                    {{ test.cv_held_pressure }}
+                                    {% trans 'psi' %}
+                                {% endifequal %}
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ test.cv1_cleaned|cleaned_replaced }}
+                            {% if not test.cv1_cleaned %}
+                                {% render_replaced_details test.cv1_replaced_details %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ test.rv_cleaned|cleaned_replaced }}
+                            {% if not test.rv_cleaned %}
+                                {% render_replaced_details test.rv_replaced_details %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ test.cv2_cleaned|cleaned_replaced }}
+                            {% if not test.cv2_cleaned %}
+                                {% render_replaced_details test.cv2_replaced_details %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ test.pvb_cleaned|cleaned_replaced }}
+                            {% if not test.pvb_cleaned %}
+                                {% render_replaced_details test.pvb_replaced_details %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                {% trans 'Gauge pressure accross' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}
+                                {{ test.cv1_maintenance_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {% trans 'Relief valve opened at' %}:
+                                {{ test.rv_psi2 }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {% trans 'Gauge pressure accross' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}:
+                                {{ test.cv2_maintenance_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {% trans 'Air Inlet' %}:
+                                {{ test.air_inlet_retest_psi }}
+                                {% trans 'psi' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}:
+                                {{ test.cv_retest_psi }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="uk-grid">
+                    <div class="uk-width-1-5">
+                        <h4 class="inline-block">{% trans 'The Assembly' %}:</h4>
+                    </div>
+                    <div class="uk-width-1-5">
+                        <span class="test-result-choices {% if test.test_result %}uk-text-success{% else %}uk-text-danger{% endif %}">{{ test.test_result|test_result }}</span>
+                    </div>
+                </div>
+                <h4 class="uk-text-uppercase uk-text-bold">{% trans 'Note: All repairs/replacement shall be completed within five (5) days.' %}</h4>
+
+                <div class="uk-grid">
+                    <div class="uk-width-1-6">{% trans 'Remarks' %}:</div>
+                    <div class="uk-width-5-6">{{ test.notes }}</div>
+                </div>
+                <p>{% trans 'I hereby certify that this data is accurate and reflects the proper operation and maintenance of the backflow preventer unit.' %}</p>
+
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-6">{% trans 'Tester' %}: </p>
+                    <span class="inline-width-1-6 border-bottom" class="border-none">{{ test.tester }}</span>
+
+                    <p class="inline-width-1-6 uk-text-center">{% trans 'Date' %}</p>
+                    <span class="inline-width-1-6 border-bottom">
+                        {{ test.test_date }}
+                    </span>
+                </div>
+                <div class="uk-width-1-1">
+                    <p class="inline-width-1-6">{% trans 'Certification Number' %}: </p>
+                    <span class="inline-width-1-6 border-bottom">{{ test.tester.employee.cert_number }}</span>
+                </div>
+
+                <div class="uk-clearfix"></div>
+            </form>
+        </div>
+    </div>
+    {% if test_for_payment_pk %}
+        {% include 'test/test_payment_modal.html' %}
+    {% endif %}
+{% endblock %}
