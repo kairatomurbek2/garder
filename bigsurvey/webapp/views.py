@@ -960,11 +960,15 @@ class HazardListView(BaseTemplateView):
 
     def _get_hazard_list(self):
         user = self.request.user
+        queryset = models.Hazard.objects.none()
         if user.has_perm('webapp.access_to_all_hazards'):
-            return models.Hazard.objects.all()
+            queryset = models.Hazard.objects.all()
         if user.has_perm('webapp.access_to_pws_hazards'):
-            return (models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) |
-                    models.Hazard.objects.filter(tests__tester=user)).distinct()
+            queryset = models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) | \
+                       models.Hazard.objects.filter(tests__tester=user)
+        hazards_wout_install_date = list(queryset.filter(install_date=None).order_by('due_install_test_date'))
+        hazards_with_install_date = list(queryset.exclude(install_date=None).order_by('-install_date'))
+        return hazards_wout_install_date + hazards_with_install_date
 
 
 class TestListView(BaseTemplateView):

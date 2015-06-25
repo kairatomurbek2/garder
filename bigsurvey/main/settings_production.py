@@ -7,11 +7,11 @@ DATABASES = {
     }
 }
 
-EMAIL_HOST_USER = "thesomeq@gmail.com"
+EMAIL_HOST_USER = "bss.bpsbr.com@gmail.com"
 
-EMAIL_HOST_PASSWORD = "dehhuasewprgnmhi"
+EMAIL_HOST_PASSWORD = "febAt62Aruwethe"
 
-DEFAULT_FROM_EMAIL = "thesomeq@gmail.com"
+DEFAULT_FROM_EMAIL = "bss.bpsbr.com@gmail.com"
 
 DEBUG = False
 

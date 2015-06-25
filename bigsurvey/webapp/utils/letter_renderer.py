@@ -23,6 +23,10 @@ class Placeholders(object):
     pws_logo = '{PWSLogo}'
 
 
+class EMPTY_VALUE:
+    pass
+
+
 class LetterRenderer(object):
     @staticmethod
     def render(letter):
@@ -34,7 +38,7 @@ class LetterRenderer(object):
         if pws.logo:
             pws_logo_replacement = '<div style="width:300px;"><img src="%s%s" style="width:100%%;height:auto;"></div>' % (settings.HOST, pws.logo.url)
         else:
-            pws_logo_replacement = ''
+            pws_logo_replacement = EMPTY_VALUE
 
         replacements = {
             Placeholders.letter_date: letter.date,
@@ -63,8 +67,10 @@ class LetterRenderer(object):
         template = letter.letter_type.template
         for key in replacements.keys():
             replacement = replacements[key]
-            if replacement is None or replacement == "":
+            if replacement is None or replacement == '':
                 warnings.append("Warning: %s has no value in database" % key)
+            elif replacement is EMPTY_VALUE:
+                template = template.replace(key, u'')
             else:
                 template = template.replace(key, unicode(replacement))
         letter.rendered_body = template
