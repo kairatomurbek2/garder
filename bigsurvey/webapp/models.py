@@ -546,6 +546,7 @@ class Survey(models.Model):
             ('access_to_pws_surveys', _('Has access to PWS\'s Surveys')),
             ('access_to_own_surveys', _('Has access to own Surveys')),
         )
+        ordering = ('-survey_date', '-id')
 
 
 class Detail(models.Model):
