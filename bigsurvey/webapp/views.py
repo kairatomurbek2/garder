@@ -383,6 +383,12 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
     success_message = Messages.Survey.editing_success
     error_message = Messages.Survey.editing_error
 
+    def get_context_data(self, **kwargs):
+        context = super(SurveyEditView, self).get_context_data(**kwargs)
+        context['site_pk'] = self.object.site.pk
+        context['service_type'] = self.object.service_type.service_type
+        return context
+
     def get_form(self, form_class):
         form = super(SurveyEditView, self).get_form(form_class)
         if not perm_checkers.SurveyPermChecker.has_perm(self.request, form.instance):
