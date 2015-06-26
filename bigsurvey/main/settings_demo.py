@@ -16,7 +16,6 @@ DEFAULT_FROM_EMAIL = "bss.bpsbr.com@gmail.com"
 REPLY_TO_EMAIL = "bss.bpsbr.com@gmail.com"
 
 RETURN_PATH_EMAIL = "bss.bpsbr.com@gmail.com"
-DEFAULT_FROM_EMAIL = "bss.bpsbr.com@gmail.com"
 
 DEBUG = False
 

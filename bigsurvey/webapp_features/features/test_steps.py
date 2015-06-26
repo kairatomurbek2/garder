@@ -72,3 +72,8 @@ def check_test_editing_success_message(step):
 @step('I should see "test editing error" message')
 def check_test_editing_error_message(step):
     step.given('I should see "%s"' % Messages.Test.editing_error)
+
+
+@step('I should be at "test_detail" page with pk "(\d+)"')
+def check_test_detail_page(step, pk):
+    step.given('I should be at "%s"' % get_url(Urls.test_detail % pk))

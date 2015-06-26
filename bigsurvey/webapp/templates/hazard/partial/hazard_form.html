@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% include 'messages.html' %}
-<form class="uk-form" method="post" name="hazard" enctype="multipart/form-data" action="{% url 'webapp:hazard_add' site_pk service_type %}">
+<form class="uk-form" method="post" name="hazard" enctype="multipart/form-data">
     {% csrf_token %}
     <table class="uk-table form-center">
         <tbody>

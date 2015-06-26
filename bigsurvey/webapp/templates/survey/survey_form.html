@@ -184,7 +184,7 @@
             $('#hazard-form-modal').on('submit', 'form', function (e) {
                 e.preventDefault();
 
-                var url = $(this).attr('action');
+                var url = '{% url 'webapp:hazard_add' site_pk service_type %}';
                 var method = $(this).attr('method');
 
                 $.ajax(url, {

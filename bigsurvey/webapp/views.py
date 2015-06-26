@@ -282,7 +282,6 @@ class SurveyBaseFormView(BaseFormView):
 
     def get_context_data(self, **kwargs):
         context = super(SurveyBaseFormView, self).get_context_data(**kwargs)
-        context['service_type'] = self.kwargs['service']
         context['hazard_form'] = forms.HazardForm()
         return context
 
@@ -326,6 +325,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
     def get_context_data(self, **kwargs):
         context = super(SurveyAddView, self).get_context_data(**kwargs)
         context['site_pk'] = self.kwargs['pk']
+        context['service_type'] = self.kwargs['service']
         context['fire'] = self._is_fire_service()
         return context
 

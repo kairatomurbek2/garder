@@ -79,8 +79,8 @@ Feature: Import from Excel files
     And I logout
 
   Examples:
-    | file                         | message                 | params                                 |
-    | incorrect_date_format.xlsx   | incorrect date format   | D6 :: %Y%m%d                           |
-    | duplicate_cust_numbers.xlsx  | duplicate cust numbers  | A6 :: A10                              |
-    | foreign_key_error.xlsx       | foreign key error       | C7 :: 1, 2, 3, 4, 5, 6, 7, 8, 9 :: 100 |
-    | required_value_is_empty.xlsx | required value is empty | A4                                     |
+    | file                         | message                 | params                                     |
+    | incorrect_date_format.xlsx   | incorrect date format   | D6 :: %Y%m%d                               |
+    | duplicate_cust_numbers.xlsx  | duplicate cust numbers  | A6 :: A10                                  |
+    | foreign_key_error.xlsx       | foreign key error       | C7 :: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 :: 100 |
+    | required_value_is_empty.xlsx | required value is empty | A4                                         |

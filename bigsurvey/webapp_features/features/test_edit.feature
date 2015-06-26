@@ -26,6 +26,6 @@ Feature: Test editing
       | field              | value  |
       | cv2_gauge_pressure | 111111 |
     When I submit "test" form
-    Then I should be at "hazard_detail" page with pk "2"
+    Then I should be at "test_detail" page with pk "2"
     And I should see "test editing success" message
     And I should see "111111"
