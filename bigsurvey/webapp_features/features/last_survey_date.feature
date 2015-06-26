@@ -33,6 +33,3 @@ Feature: Last survey date
     Then I should see following
       | text          |
       | Jan. 27, 2015 |
-    And I should not see following
-      | text          |
-      | Jan. 26, 2015 |

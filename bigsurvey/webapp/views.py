@@ -24,7 +24,6 @@ from django.utils.translation import ugettext as _
 from django.core.mail import EmailMessage
 import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
-from main import settings
 
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
