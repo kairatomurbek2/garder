@@ -30,6 +30,7 @@ class Urls:
     hazard_edit = '/hazard/%s/edit/'
     test_add = '/hazard/%s/add-test/'
     test_edit = '/test/%s/edit/'
+    test_detail = '/test/%s/'
     unpaid_test_list = '/unpaid-test/'
     user_list = '/user/'
     user_add = '/user/add/'

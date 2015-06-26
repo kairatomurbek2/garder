@@ -23,13 +23,13 @@ Feature: Hazard Detail
     Given I logged in as "root"
     When I open "hazard_detail" page with pk "1"
     Then I should see following
-      | text                  |
-      | Site                  |
-      | Survey                |
-      | Location 1            |
-      | Installer             |
-      | Feb. 18, 2015         |
-      | Edit                  |
-      | More...               |
-      | Add Test              |
-      | Jan. 27, 2015, Failed |
+      | text                    |
+      | Washington, White House |
+      | irrigation              |
+      | Digester                |
+      | Location 1              |
+      | Installer               |
+      | Feb. 18, 2015           |
+      | Edit                    |
+      | Add Test                |
+      | Jan. 27, 2015, Failed   |

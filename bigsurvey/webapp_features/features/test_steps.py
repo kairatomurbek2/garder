@@ -1,15 +1,29 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
-from common_steps import *
 from lettuce import *
+
 from data import *
+
 from webapp.models import Test
 
 
 @step('I directly open "test_add" page for hazard with pk "(\d+)"')
-def open_test_add_page(step, hazard_pk):
+def directly_open_test_add_page(step, hazard_pk):
     step.given('I open "%s"' % get_url(Urls.test_add % hazard_pk))
+
+
+@step('I directly open "test_detail" page with pk "(\d+)"')
+def directly_open_test_detail_page(step, pk):
+    step.given('I open "%s"' % get_url(Urls.test_detail % pk))
+
+
+@step('I open "test_list" page')
+def open_test_list_page(step):
+    step.given('I click "tests" menu link')
+
+
+@step('I open "test_detail" page with pk "(\d+)"')
+def open_test_detail_page(step, pk):
+    step.given('I open "test_list" page')
+    step.given('I click "test_%s_detail" link' % pk)
 
 
 @step('I open "test_add" page for hazard with pk "(\d+)"')

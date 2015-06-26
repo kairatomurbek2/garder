@@ -967,15 +967,20 @@ class HazardListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_hazards'):
             queryset = models.Hazard.objects.all()
         elif user.has_perm('webapp.access_to_pws_hazards'):
-            queryset = models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) | \
-                       models.Hazard.objects.filter(tests__tester=user)
-        hazards = queryset.filter(install_date=None).order_by('due_install_test_date')
-        # this is required to hit database
-        len(hazards)
-        hazards_with_install_date = queryset.exclude(install_date=None).order_by('-install_date')
-        for hazard in hazards_with_install_date:
-            hazards._result_cache.append(hazard)
-        return hazards
+            queryset = (models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) |
+                        models.Hazard.objects.filter(tests__tester=user)).distinct()
+        sql_query_for_priority = '''
+        SELECT
+            CASE WHEN install_date IS NULL THEN
+                CASE WHEN due_install_test_date IS NULL THEN
+                    1000000
+                ELSE
+                    DATEDIFF(due_install_test_date, CURRENT_TIMESTAMP)
+                END
+            ELSE
+                100000 + DATEDIFF(CURRENT_TIMESTAMP, install_date)
+            END'''
+        return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
 
 
 class TestListView(BaseTemplateView):

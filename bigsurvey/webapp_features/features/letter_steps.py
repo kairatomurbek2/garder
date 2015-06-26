@@ -12,7 +12,7 @@ WARNING_DUE_DATE_MESSAGE = "Warning: {DueDate} has no value in database"
 
 @step('I open "letter_list" page')
 def open_letter_list_page(step):
-    step.given('I click "letters_menu" link')
+    step.given('I click "letters" menu link')
 
 
 @step('I directly open "letter_list" page')
