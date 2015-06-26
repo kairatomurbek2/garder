@@ -31,6 +31,3 @@ Feature: Test Detail
       | Failed                |
       | qwerty132             |
       | Jan. 27, 2015         |
-      | May 31, 2015          |
-      | Jan. 27, 2015, Failed |
-      | View                  |

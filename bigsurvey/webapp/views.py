@@ -9,6 +9,7 @@ from django.core.files.storage import default_storage
 from django.db import IntegrityError, connection
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
+from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
 from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonResponse
@@ -279,6 +280,12 @@ class SurveyBaseFormView(BaseFormView):
     form_class = forms.SurveyForm
     model = models.Survey
 
+    def get_context_data(self, **kwargs):
+        context = super(SurveyBaseFormView, self).get_context_data(**kwargs)
+        context['service_type'] = self.kwargs['service']
+        context['hazard_form'] = forms.HazardForm()
+        return context
+
     def get_form(self, form_class):
         form = super(SurveyBaseFormView, self).get_form(form_class)
         form.fields['surveyor'].queryset = self._get_queryset_for_surveyor_field()
@@ -442,10 +449,22 @@ class HazardAddView(HazardBaseFormView, CreateView):
     success_message = Messages.Hazard.adding_success
     error_message = Messages.Hazard.adding_error
 
+    AJAX_OK = 'ok'
+    AJAX_ERROR = 'error'
+
     def get_context_data(self, **kwargs):
         context = super(HazardAddView, self).get_context_data(**kwargs)
         context['site_pk'] = self.kwargs['pk']
+        context['service_type'] = self.kwargs['service']
         return context
+
+    def ajax_response(self, status, form):
+        context = self.get_context_data()
+        if status == self.AJAX_ERROR:
+            context['form'] = form
+        else:
+            context['form'] = forms.HazardForm()
+        return JsonResponse({'status': status, 'form': render_to_string('hazard/partial/hazard_form.html', context, RequestContext(self.request))})
 
     def get_form(self, form_class):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
@@ -458,7 +477,15 @@ class HazardAddView(HazardBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
-        return super(HazardAddView, self).form_valid(form)
+        response = super(HazardAddView, self).form_valid(form)
+        if self.request.is_ajax():
+            return self.ajax_response(self.AJAX_OK, form)
+        return response
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return self.ajax_response(self.AJAX_ERROR, form)
+        return super(HazardAddView, self).form_invalid(form)
 
     def _service_type_on_site_exists(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])

@@ -20,7 +20,7 @@ def open_letter_type_edit_page(step, pk):
 @step('I open "letter_type_edit" page that belongs to "(.*)"\'s PWS')
 def open_letter_type_that_belongs_to_pws(step, username):
     pws = models.User.objects.get(username=username).employee.pws
-    letter_type = pws.letter_types.latest()
+    letter_type = pws.letter_types.latest('id')
     world.cache['letter_type_pk'] = letter_type.pk
     step.given('I open "letter_type_edit" page with pk "%s"' % letter_type.pk)
 

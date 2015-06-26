@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 {% load i18n %}
+{% load staticfiles %}
 {% block menu %}
     <li>
         {% if survey.pk %}
@@ -13,6 +14,8 @@
 {% block content %}
     <div class="wrapper">
         {% include 'messages.html' %}
+        <a href="{% url 'webapp:hazard_add' site_pk service_type %}" data-uk-modal="{target:'#hazard-form-modal'}"><i class="uk-icon-plus"></i> {% trans 'Add Hazard' %}</a>
+
         <form class="uk-form" method="post" name="survey">
             {% csrf_token %}
             <table class="uk-table form-center">
@@ -161,4 +164,40 @@
             </table>
         </form>
     </div>
+    <div class="uk-modal" id="hazard-form-modal">
+        <div class="uk-modal-dialog uk-modal-dialog-large">
+            <a class="uk-modal-close uk-close uk-close-alt"></a>
+
+            <div class="modal-content">
+                {% include 'hazard/partial/hazard_form.html' with form=hazard_form %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="{% static "js/custom/google_map.js" %}"></script>
+    <script>
+        $(document).ready(function () {
+            getLocation();
+
+            $('#hazard-form-modal').on('submit', 'form', function (e) {
+                e.preventDefault();
+
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+
+                $.ajax(url, {
+                    method: method,
+                    processData: false,
+                    contentType: false,
+                    data: new FormData(this),
+                    success: function (response) {
+                        $('#hazard-form-modal').find('.modal-content').html(response.form);
+                        getLocation();
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

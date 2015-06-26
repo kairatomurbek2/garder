@@ -26,8 +26,8 @@ Feature: Last survey date
   Scenario: I change survey date to older date
     Given I logged in as "root"
     When I open "site_detail" page with pk "10"
-    And I open "survey_edit" page for survey no "2" on the page
-    And I fill in "survey_date" with "2015-01-25"
+    And I open "survey_edit" page with pk "2"
+    And I fill in "survey_date" with "2015-01-26"
     And I submit "survey" form
     And I open "site_list" page
     Then I should see following
@@ -35,5 +35,4 @@ Feature: Last survey date
       | Jan. 27, 2015 |
     And I should not see following
       | text          |
-      | Jan. 25, 2015 |
-
+      | Jan. 26, 2015 |
