@@ -112,7 +112,7 @@ def check_email_received(step, receiver_email):
 
 @step('Email should contain following text')
 def check_email_content(step):
-    email = world.cache['email']
+    email = world.cache.pop('email')
     for row in step.hashes:
         assert row['text'] in email.body, '"%s" was not found in email body' % row['text']
 

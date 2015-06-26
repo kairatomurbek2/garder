@@ -6,7 +6,7 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.db import IntegrityError
+from django.db import IntegrityError, connection
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
 from django.template.loader import render_to_string
@@ -28,6 +28,7 @@ from main import settings
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
 from webapp.exceptions import PaymentWasNotCreatedError
+from webapp.raw_sql_queries import HazardPriorityQuery
 from webapp.responses import PDFResponse
 from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
@@ -969,17 +970,7 @@ class HazardListView(BaseTemplateView):
         elif user.has_perm('webapp.access_to_pws_hazards'):
             queryset = (models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) |
                         models.Hazard.objects.filter(tests__tester=user)).distinct()
-        sql_query_for_priority = '''
-        SELECT
-            CASE WHEN install_date IS NULL THEN
-                CASE WHEN due_install_test_date IS NULL THEN
-                    1000000
-                ELSE
-                    DATEDIFF(due_install_test_date, CURRENT_TIMESTAMP)
-                END
-            ELSE
-                100000 + DATEDIFF(CURRENT_TIMESTAMP, install_date)
-            END'''
+        sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
         return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
 
 

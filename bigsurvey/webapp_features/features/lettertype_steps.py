@@ -17,6 +17,14 @@ def open_letter_type_edit_page(step, pk):
     step.given('I click "lettertype_%s_edit" link' % pk)
 
 
+@step('I open "letter_type_edit" page that belongs to "(.*)"\'s PWS')
+def open_letter_type_that_belongs_to_pws(step, username):
+    pws = models.User.objects.get(username=username).employee.pws
+    letter_type = pws.letter_types.latest()
+    world.cache['letter_type_pk'] = letter_type.pk
+    step.given('I open "letter_type_edit" page with pk "%s"' % letter_type.pk)
+
+
 @step('I open "letter_type_list" page')
 def open_letter_type_list_page(step):
     step.given('I open "home" page')
@@ -39,6 +47,12 @@ def change_template_content(step, content):
 def check_letter_type_template_content(step, pk, content):
     letter_type = models.LetterType.objects.get(pk=pk)
     assert content in letter_type.template, '"%s" is not in "%s"' % (content, letter_type.template)
+
+
+@step('Letter that belongs to PWS should contain "(.*)"')
+def check_letter_type_that_belongs_to_pws(step, content):
+    letter_type_pk = world.cache.pop('letter_type_pk')
+    step.given('Letter type template with pk "%s" should contain "%s"' % (letter_type_pk, content))
 
 
 @step('I directly open "letter_type_add" page')

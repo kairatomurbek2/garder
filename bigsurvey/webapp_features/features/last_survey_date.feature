@@ -32,9 +32,8 @@ Feature: Last survey date
     And I open "site_list" page
     Then I should see following
       | text          |
-      | Jan. 26, 2015 |
+      | Jan. 27, 2015 |
     And I should not see following
       | text          |
-      | Jan. 27, 2015 |
       | Jan. 25, 2015 |
 
