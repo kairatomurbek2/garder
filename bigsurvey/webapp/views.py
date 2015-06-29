@@ -464,12 +464,19 @@ class HazardAddView(HazardBaseFormView, CreateView):
         return context
 
     def ajax_response(self, status, form):
+        json_data = {}
         context = self.get_context_data()
-        if status == self.AJAX_ERROR:
-            context['form'] = form
-        else:
+        if status == self.AJAX_OK:
             context['form'] = forms.HazardForm()
-        return JsonResponse({'status': status, 'form': render_to_string('hazard/partial/hazard_form.html', context, RequestContext(self.request))})
+            json_data['option'] = {
+                'value': self.object.pk,
+                'text': str(self.object)
+            }
+        else:
+            context['form'] = form
+        json_data['status'] = status
+        json_data['form'] = render_to_string('hazard/partial/hazard_form.html', context, RequestContext(self.request))
+        return JsonResponse(json_data)
 
     def get_form(self, form_class):
         site = models.Site.objects.get(pk=self.kwargs['pk'])

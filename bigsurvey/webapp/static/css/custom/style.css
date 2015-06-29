@@ -57,20 +57,40 @@ div.wrapper {
     border: none;
 }
 
+.border-all, .border-all td, .border-all th {
+    border: 1px solid #ddd;
+}
+
 .border-top, .border-top td, .border-top th {
-    border-top: 1px solid #a9a9a9;
+    border-top: 1px solid #ddd;
+}
+
+.border-top-none, .border-top-none td, .border-top-none th {
+    border-top: none;
 }
 
 .border-left, .border-left td, .border-left th {
-    border-left: 1px solid #a9a9a9;
+    border-left: 1px solid #ddd;
+}
+
+.border-left-none, .border-left-none td, .border-left-none th {
+    border-left: none;
 }
 
 .border-right, .border-right td, .border-right th {
-    border-right: 1px solid #a9a9a9;
+    border-right: 1px solid #ddd;
+}
+
+.border-right-none, .border-right-none td, .border-right-none th {
+    border-right: none;
 }
 
 .border-bottom, .border-bottom td, .border-bottom th {
-    border-bottom: 1px solid #a9a9a9;
+    border-bottom: 1px solid #ddd;
+}
+
+.border-bottom-none, .border-bottom-none td, .border-bottom-none th {
+    border-bottom: none;
 }
 
 .fixed {
@@ -164,10 +184,6 @@ ul.form-ul {
 
 .form-ul li {
     list-style-type: none;
-}
-
-.bordered-all td, .bordered-all th {
-    border: 1px solid #a9a9a9;
 }
 
 .second-level-ul {

@@ -178,38 +178,7 @@
         cursor: pointer;
     }
 </style>
-<script>
-    var filters = $('.fixed-filters');
-    var navbar = $('nav.uk-navbar');
-    var navbarHeight = parseInt(navbar.height());
-    var navbarWidth = parseInt(navbar.width());
-    var paginationWrapper = $('.pagination-wrapper');
-
-    var defaultTop = parseInt(filters.css('top'));
-    var lastScrollLeft = 0;
-    var documentScrollLeft;
-
-    $('.clickable-row').click(function (e) {
-        window.document.location = $(this).data("href");
-    });
-
-    $('.fixed-headers').floatThead({
-        scrollingTop: navbarHeight
-    });
-
-    $(document).scroll(function (e) {
-        documentScrollLeft = $(document).scrollLeft();
-        if (lastScrollLeft != documentScrollLeft) {
-            scrollPagination();
-            lastScrollLeft = documentScrollLeft;
-        }
-    });
-
-    function scrollPagination() {
-        paginationWrapper.css('margin-left', documentScrollLeft + 'px');
-    }
-
-</script>
 {% block scripts %}
+    <script src="{% static 'js/jquery.floatthead.js' %}"></script>
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
 {% endblock %}

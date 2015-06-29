@@ -34,7 +34,9 @@ def reload_server():
 
 
 def create_lettertypes_for_existing_pws():
+    run('. virtualenv/bin/activate')
     run('bigsurvey/manage.py create_lettertypes_for_pws')
+    run('deactivate')
 
 
 def deploy_demo(commit="master"):

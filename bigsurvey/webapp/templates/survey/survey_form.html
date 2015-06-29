@@ -2,6 +2,7 @@
 {% load widget_tweaks %}
 {% load i18n %}
 {% load staticfiles %}
+{% load google_map %}
 {% block menu %}
     <li>
         {% if survey.pk %}
@@ -14,12 +15,16 @@
 {% block content %}
     <div class="wrapper">
         {% include 'messages.html' %}
-        <a href="{% url 'webapp:hazard_add' site_pk service_type %}" data-uk-modal="{target:'#hazard-form-modal'}"><i class="uk-icon-plus"></i> {% trans 'Add Hazard' %}</a>
-
         <form class="uk-form" method="post" name="survey">
             {% csrf_token %}
-            <table class="uk-table form-center">
+            <table class="uk-table form-center border-none">
                 <tbody>
+                <tr>
+                    <td colspan="4" class="uk-text-right">
+                        <a href="{% url 'webapp:hazard_add' site_pk service_type %}" data-uk-modal="{target:'#hazard-form-modal'}" class="uk-button uk-button-primary">
+                            <i class="uk-icon-plus"></i> {% trans 'Add Hazard' %}</a>
+                    </td>
+                </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.survey_date.id_for_label }}">{{ form.survey_date.label }}</label>
@@ -175,8 +180,7 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="{% static "js/custom/google_map.js" %}"></script>
+    {% load_google_map_js %}
     <script>
         $(document).ready(function () {
             getLocation();
@@ -195,6 +199,11 @@
                     success: function (response) {
                         $('#hazard-form-modal').find('.modal-content').html(response.form);
                         getLocation();
+                        if (response.status == 'ok') {
+                            var option = $('<option>', {value: response.option.value, selected: 'selected'}).text(response.option.text);
+                            $('select[name="hazards"]').append(option);
+                        }
+
                     }
                 });
             });

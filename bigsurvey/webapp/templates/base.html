@@ -9,7 +9,7 @@
     {% block title %}
         <title>{% trans "BFP Services" %}</title>
     {% endblock %}
-    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/uikit.gradient.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/custom/my-uikit.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/custom/style.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/components/datepicker.min.css' %}"/>
@@ -23,7 +23,6 @@
     <script src="{% static 'js/uikit.min.js' %}"></script>
     <script src="{% static 'js/components/datepicker.min.js' %}"></script>
     <script src="{% static 'js/components/form-select.min.js' %}"></script>
-    <script src="{% static 'js/jquery.floatthead.js' %}"></script>
     <script src="{% static 'js/custom/csrf.js' %}"></script>
     {% block scripts %}
     {% endblock %}
@@ -31,7 +30,7 @@
 <body>
 <nav class="uk-navbar fixed-navbar uk-margin-large-bottom">
     <ul class="uk-navbar-nav uk-hidden-small">
-        <li class="uk-active">
+        <li>
             <a class="uk-navbar-brand uk-hidden-small" href="{% url 'webapp:home' %}">
                 <b>{% trans "BACKFLOW SOFTWARE SOLUTIONS" %}</b>
             </a>

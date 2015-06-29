@@ -7,7 +7,7 @@
 {% block content %}
     <div class="wrapper">
         {% include 'messages.html' %}
-        <table class="uk-table uk-table-hover">
+        <table class="uk-table">
             <thead>
             <tr class="border-bottom">
                 <th class="border-right uk-text-center">{% trans "No." %}</th>
@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             {% for pws in pws_list %}
-                <tr>
+                <tr class="border-bottom-none">
                     <td class="border-right uk-text-center">{{ pws.pk }}</td>
                     <td>{{ pws.number }}</td>
                     <td>{{ pws.name }}</td>
@@ -36,7 +36,7 @@
                 </tr>
                 <tr class="border-bottom uk-text-muted">
                     <td>{% trans "Notes:" %}</td>
-                    <td colspan="5" class="border-left border-right">{{ pws.notes }}</td>
+                    <td colspan="6" class="border-left border-right">{{ pws.notes }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -3,15 +3,6 @@
 {% load boolean_yes_no %}
 {% load hazards_for_services %}
 {% load staticfiles %}
-{% block scripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="{% static "js/custom/google_map.js" %}"></script>
-    <script type="text/javascript">
-        window.onload = function () {
-            showDetailMap();
-        }
-    </script>
-{% endblock %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">{% trans "Edit" %}</a></li>
     <li><a href="{% url 'webapp:site_detail' hazard.site.pk %}">{% trans "Back to Site" %}</a></li>
@@ -121,4 +112,13 @@
             {% include 'test/test_include_list.html' %}
         </div>
     {% endif %}
+{% endblock %}
+{% block scripts %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="{% static "js/custom/google_map.js" %}"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            showDetailMap();
+        }
+    </script>
 {% endblock %}
