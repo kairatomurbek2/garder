@@ -54,7 +54,7 @@
                     {% csrf_token %}
                     {{ formset.management_form }}
 
-                    <table class="uk-table">
+                    <table class="uk-table border-none">
                         <tbody>
                         {% for row_index in rows_count|xrange_filter %}
                             <tr>

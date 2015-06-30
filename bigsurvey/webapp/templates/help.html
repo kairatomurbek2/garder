@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load staticfiles %}
-{% block styles %}
-    <link rel="stylesheet" href="{% static 'css/custom/help.css' %}"/>
-{% endblock %}
 {% block content %}
     <div class="uk-margin-large-left uk-margin-large-right">
     {% for help_item in user_help %}

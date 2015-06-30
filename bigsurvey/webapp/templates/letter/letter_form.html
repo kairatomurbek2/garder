@@ -10,30 +10,32 @@
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="letter_generate_form">
             {% csrf_token %}
-            <table class="uk-table form-center">
+            <table class="uk-table form-center border-none">
                 <thead>
-                    <tr class="border-bottom">
-                        <th class="uk-text-bold uk-text-center" colspan="4">
-                            {% trans "Site" %}: {{ site }}
-                        </th>
-                    </tr>
+                <tr class="border-bottom">
+                    <th class="uk-text-bold uk-text-center" colspan="4">
+                        {% trans "Site" %}: {{ site }}
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="uk-text-right uk-text-bold">{% trans "Letter Type" %}:</td>
-                        <td class="uk-text-left">
-                            {{ form.letter_type|add_class:"uk-width-1-1" }}
-                            {{ form.letter_type.errors }}
-                        </td>
-                        <td class="uk-text-right uk-text-bold">{% trans "Hazard" %}:</td>
-                        <td class="uk-text-left">
-                            {{ form.hazard|add_class:"uk-width-1-1" }}
-                            {{ form.hazard.errors }}
-                        </td>
-                    </tr>
+                <tr>
+                    <td class="uk-text-right uk-text-bold uk-width-1-6">{% trans "Letter Type" %}:</td>
+                    <td class="uk-text-left uk-width-1-3">
+                        {{ form.letter_type|add_class:"uk-width-1-1" }}
+                        {{ form.letter_type.errors }}
+                    </td>
+                    <td class="uk-text-right uk-text-bold uk-width-1-6">{% trans "Hazard" %}:</td>
+                    <td class="uk-text-left uk-width-1-3">
+                        {{ form.hazard|add_class:"uk-width-1-1" }}
+                        {{ form.hazard.errors }}
+                    </td>
+                </tr>
                 </tbody>
             </table>
-            <button type="submit" name="submit_letter" class="uk-button uk-button-primary uk-align-center">{% trans "Generate Letter" %}</button>
+            <div class="form-center">
+                <button type="submit" name="submit_letter" class="uk-button uk-button-primary uk-align-center">{% trans "Generate Letter" %}</button>
+            </div>
         </form>
     </div>
 {% endblock %}
