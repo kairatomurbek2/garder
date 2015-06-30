@@ -98,3 +98,12 @@ def check_survey_editing_error_message(step):
 @step('I should see "survey editing success" message')
 def check_survey_editing_success_message(step):
     step.given('I should see "%s"' % Messages.Survey.editing_success)
+
+
+@step('I close hazard modal')
+def close_hazard_modal(step):
+    hazard_modal = helper.find(Xpath.hazard_modal)
+    helper.check_element_exists(hazard_modal, 'Hazard modal was not found')
+
+    close_button = helper.find(Xpath.modal_close_button, hazard_modal)
+    close_button.click()

@@ -19,7 +19,6 @@ Feature: Survey Add
     | surveyor | 2  | potable    | see      |
     | tester   | 10 | potable    | see      |
 
-
   Scenario: Correct survey adding
     Given I logged in as "root"
     When I open "survey_add" page for site with pk "5" and service "potable"
@@ -27,12 +26,16 @@ Feature: Survey Add
       | field       | value      |
       | survey_date | 2015-03-15 |
     And I select "Initial" from "survey_type"
+    And I click "add_hazard" link
+    And I select "Church Rec Center" from "hazard_type"
+    And I submit "hazard" form
+    And I close hazard modal
     And I submit "survey" form
-    Then I should be at "survey_detail" page with pk "4"
     And I should see "survey adding success" message
     And I should see following
-      | text           |
-      | March 15, 2015 |
+      | text              |
+      | March 15, 2015    |
+      | Church Rec Center |
 
 
   Scenario: Incorrect survey adding
