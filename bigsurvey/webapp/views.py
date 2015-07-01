@@ -6,7 +6,6 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError, connection
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
@@ -27,7 +26,7 @@ import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
 
 from webapp import perm_checkers, models, forms, filters
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, ServiceTypes
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS
 from webapp.exceptions import PaymentWasNotCreatedError
 from webapp.raw_sql_queries import HazardPriorityQuery
 from webapp.responses import PDFResponse
@@ -359,7 +358,6 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         return super(SurveyAddView, self).get_form(form_class)
 
 
-
 class SurveyEditView(SurveyBaseFormView, UpdateView):
     permission = 'webapp.add_survey'
     success_message = Messages.Survey.editing_success
@@ -478,9 +476,10 @@ class HazardAddView(HazardBaseFormView, CreateView):
         return response
 
     def form_invalid(self, form):
+        response = super(HazardAddView, self).form_invalid(form)
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_ERROR, form)
-        return super(HazardAddView, self).form_invalid(form)
+        return response
 
     def _service_type_on_site_exists(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])

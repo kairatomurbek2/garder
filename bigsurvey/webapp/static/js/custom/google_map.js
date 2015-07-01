@@ -17,7 +17,9 @@ var GoogleMap = {
         this.marker = this.getMarker(isMarkerDraggable);
 
         try {
+            this.latitudeInput.keyup(this.inputChanged.bind(this));
             this.latitudeInput.change(this.inputChanged.bind(this));
+            this.longitudeInput.keyup(this.inputChanged.bind(this));
             this.longitudeInput.change(this.inputChanged.bind(this));
         } catch (e) {
 
@@ -114,16 +116,17 @@ var GoogleMap = {
         this.setCoords(parseFloat(latitudeInputValue), parseFloat(longitudeInputValue));
     },
 
-    setCoords: function (latitude, longitude, redraw) {
-        if (redraw == undefined) {
-            redraw = true;
+    setCoords: function (latitude, longitude, reDraw) {
+        if (reDraw == undefined) {
+            reDraw = true;
         }
         this.latitude = latitude;
         this.longitude = longitude;
-        if (redraw) {
+        if (reDraw) {
             this.center = new google.maps.LatLng(this.latitude, this.longitude);
             this.setInputValues();
             this.centerChanged();
+            google.maps.event.trigger(this.map, "resize");
         }
     },
 

@@ -103,6 +103,13 @@ def check_survey_editing_success_message(step):
 def close_hazard_modal(step):
     hazard_modal = helper.find(Xpath.hazard_modal)
     helper.check_element_exists(hazard_modal, 'Hazard modal was not found')
-
     close_button = helper.find(Xpath.modal_close_button, hazard_modal)
     close_button.click()
+
+
+@step('Marker should be at "(.*)" latitude and "(.*)" longitude')
+def check_marker_position(step, latitude, longitude):
+    map_latitude = world.browser.execute_script('return GoogleMap.map.getCenter().lat()')
+    map_longitude = world.browser.execute_script('return GoogleMap.map.getCenter().lng()')
+    assert int(latitude) == map_latitude, 'Latitude: expected "%s", got "%s"' % (latitude, map_latitude)
+    assert int(longitude) == map_longitude, 'Longitude: expected "%s", got "%s"' % (longitude, map_longitude)

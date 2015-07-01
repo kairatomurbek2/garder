@@ -182,6 +182,14 @@
 {% block scripts %}
     {% load_google_map_js %}
     <script>
+        var initGoogleMap = function () {
+            GoogleMap.mapHolder = $(this).find('#mapholder');
+            GoogleMap.latitudeInput = $(this).find('input[name="latitude"]');
+            GoogleMap.longitudeInput = $(this).find('input[name="longitude"]');
+            GoogleMap.notificationLabel = $(this).find('#notification');
+            GoogleMap.initialize(true);
+        };
+
         $(document).ready(function () {
             $('#hazard-form-modal').on('submit', 'form', function (e) {
                 e.preventDefault();
@@ -196,7 +204,7 @@
                     data: new FormData(this),
                     success: function (response) {
                         $('#hazard-form-modal').find('.modal-content').html(response.form);
-
+                        initGoogleMap.call($('#hazard-form-modal'));
                         if (response.status == 'ok') {
                             var option = $('<option>', {value: response.option.value, selected: 'selected'}).text(response.option.text);
                             $('select[name="hazards"]').append(option);
@@ -207,11 +215,7 @@
             });
 
             $('#hazard-form-modal').on('show.uk.modal', function () {
-                GoogleMap.mapHolder = $(this).find('#mapholder');
-                GoogleMap.latitudeInput = $(this).find('input[name="latitude"]');
-                GoogleMap.longitudeInput = $(this).find('input[name="longitude"]');
-                GoogleMap.notificationLabel = $(this).find('#notification');
-                GoogleMap.initialize(true);
+                initGoogleMap.call(this);
             });
         });
     </script>

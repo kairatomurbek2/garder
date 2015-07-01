@@ -34,7 +34,7 @@ def reload_server():
 
 
 def create_lettertypes_for_existing_pws():
-    run('. virtualenv/bin/activate')
+    run('source virtualenv/bin/activate')
     run('bigsurvey/manage.py create_lettertypes_for_pws')
     run('deactivate')
 
@@ -44,7 +44,7 @@ def deploy_demo(commit="master"):
     with cd(env.get('project_path')):
         fetch_from_git(commit)
         run('./install.sh')
-        create_lettertypes_for_existing_pws()
+        # create_lettertypes_for_existing_pws()
         reload_server()
 
 
@@ -53,5 +53,5 @@ def deploy_production(commit="master"):
     with cd(env.get('project_path')):
         fetch_from_git(commit)
         run('./install_prod.sh')
-        create_lettertypes_for_existing_pws()
+        # create_lettertypes_for_existing_pws()
         reload_server()
