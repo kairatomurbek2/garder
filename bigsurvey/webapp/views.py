@@ -117,20 +117,8 @@ class SiteDetailView(BaseTemplateView):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
-        surveys_potable = site.surveys.filter(service_type__service_type=ServiceTypes.potable)
-        surveys_fire = site.surveys.filter(service_type__service_type=ServiceTypes.fire)
-        surveys_irrigation = site.surveys.filter(service_type__service_type=ServiceTypes.irrigation)
-        hazards_potable = site.hazards.filter(service_type__service_type=ServiceTypes.potable, is_present=True)
-        hazards_fire = site.hazards.filter(service_type__service_type=ServiceTypes.fire, is_present=True)
-        hazards_irrigation = site.hazards.filter(service_type__service_type=ServiceTypes.irrigation, is_present=True)
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         context['site'] = site
-        context['surv_p'] = surveys_potable
-        context['surv_f'] = surveys_fire
-        context['surv_i'] = surveys_irrigation
-        context['haz_p'] = hazards_potable
-        context['haz_f'] = hazards_fire
-        context['haz_i'] = hazards_irrigation
         return context
 
 
@@ -340,6 +328,12 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         super(SurveyAddView, self).form_valid(form)
         survey = site.surveys.latest('survey_date')
         site.last_survey_date = survey.survey_date
+        if form.instance.service_type.service_type == 'potable':
+            site.potable_present = True
+        elif form.instance.service_type.service_type == 'fire':
+            site.fire_present = True
+        elif form.instance.service_type.service_type == 'irrigation':
+            site.irrigation_present = True
         site.save()
         for hazard in site.hazards.all():
             if hazard in survey.hazards.all():
@@ -361,20 +355,8 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
     def get_form(self, form_class):
         if not perm_checkers.SitePermChecker.has_perm(self.request, self._get_site()):
             raise Http404
-        if not self._service_type_on_site_exists():
-            raise Http404
         return super(SurveyAddView, self).get_form(form_class)
 
-    def _service_type_on_site_exists(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        service_type = self.kwargs['service']
-        if service_type == 'potable' and site.potable_present:
-            return True
-        if service_type == 'fire' and site.fire_present:
-            return True
-        if service_type == 'irrigation' and site.irrigation_present:
-            return True
-        return False
 
 
 class SurveyEditView(SurveyBaseFormView, UpdateView):

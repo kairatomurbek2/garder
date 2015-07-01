@@ -16,6 +16,7 @@
     <div id="site_detail" class="wrapper">
         {% include 'messages.html' %}
         <h2 class="uk-text-center">{% trans "Site" %}: {{ site.address1 }}, {{ site.street_number }}</h2>
+
         <h3 class="uk-text-center">{% trans "Account Number" %}: {{ site.cust_number }}</h3>
         <table class="uk-table border-none">
             <tbody>
@@ -120,7 +121,6 @@
             </tbody>
         </table>
     </div>
-
     <div id="tab_control" class="uk-flex uk-flex-center">
         <ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#rel_data'}">
             {% if perms.webapp.browse_survey %}
@@ -140,57 +140,69 @@
             {% if perms.webapp.browse_survey %}
                 <li>
                     <div id="surveys_content">
+                        {% if perms.webapp.add_survey %}
+                            <div id="survey-button-group" class="wrapper uk-text-center">
+                                <a class="uk-button uk-button-primary uk-button-large" href="{% url 'webapp:survey_add' site.pk 'potable' %}" id="spotable_link">{% trans "Potable" %}</a>
+                                <a class="uk-button uk-button-danger uk-button-large" href="{% url 'webapp:survey_add' site.pk 'fire' %}" id="sfire_link">{% trans "Fire" %}</a>
+                                <a class="uk-button uk-button-success uk-button-large" href="{% url 'webapp:survey_add' site.pk 'irrigation' %}" id="sirrigation_link">{% trans "Irrigation" %}</a>
+                            </div>
+                        {% endif %}
+                        <div class="wrapper">
+                            <table class="uk-table uk-table-hover">
+                                <thead>
+                                <tr class="border-bottom">
+                                    <th class="border-right uk-text-center">
+                                        {% trans "No." %}
+                                    </th>
+                                    <th>
+                                        {% trans "Service Type" %}
+                                    </th>
+                                    <th>
+                                        {% trans "Survey type" %}
+                                    </th>
+                                    <th>
+                                        {% trans "Survey Date" %}
+                                    </th>
+                                    <th>
+                                        {% trans "Surveyor" %}
+                                    </th>
+                                    <th colspan="2" class="uk-text-center border-left uk-width-1-10">
+                                        {% trans "Actions" %}
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for survey in site.surveys.all %}
+                                    <tr>
+                                        <td class="uk-text-center border-right">
+                                            {{ survey.pk }}
+                                        </td>
+                                        <td>
+                                            {{ survey.service_type }}
+                                        </td>
+                                        <td>
+                                            {{ survey.survey_type }}
+                                        </td>
+                                        <td>
+                                            {{ survey.survey_date }}
+                                        </td>
+                                        <td>
+                                            {{ survey.surveyor }}
+                                        </td>
+                                        <td class="uk-text-center border-left">
+                                            <a href="{% url "webapp:survey_detail" survey.pk %}" id="survey_{{ survey.pk }}_detail_link">
+                                                {% trans "Detail" %}
+                                            </a>
+                                        </td>
+                                        <td class="uk-text-left">
+                                            <a href="{% url 'webapp:survey_edit' survey.pk %}" id="survey_{{ survey.pk }}_edit_link">{% trans "Edit" %}</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
 
-                        <div id="stab_control" class="uk-tab-center">
-                            <ul class="uk-tab" data-uk-tab="{connect:'#sservices'}">
-                                <li class="uk-active">
-                                    <a href="#" id="spotable_link">{% trans "Potable" %}</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="sfire_link">{% trans "Fire" %}</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="sirrigation_link">{% trans "Irrigation" %}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="stab_content">
-                            <ul class="uk-switcher uk-margin" id="sservices">
-                                <li>
-                                    <div id="spotable_content">
-                                        {% if site.potable_present %}
-                                            {% include_surveys 'potable' %}
-                                        {% else %}
-                                            <h4 class="padding-top-10 uk-text-center">
-                                                {% trans "Potable water supply is not present" %}
-                                            </h4>
-                                        {% endif %}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div id="sfire_content">
-                                        {% if site.fire_present %}
-                                            {% include_surveys 'fire' %}
-                                        {% else %}
-                                            <h4 class="padding-top-10 uk-text-center">
-                                                {% trans "Fire water supply is not present" %}
-                                            </h4>
-                                        {% endif %}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div id="sirrigation_content">
-                                        {% if site.irrigation_present %}
-                                            {% include_surveys 'irrigation' %}
-                                        {% else %}
-                                            <h4 class="padding-top-10 uk-text-center">
-                                                {% trans "Irrigation water supply is not present" %}
-                                            </h4>
-                                        {% endif %}
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
 
                     </div>
                 </li>
@@ -198,55 +210,60 @@
             {% if perms.webapp.browse_hazard %}
                 <li>
                     <div id="hazards_content">
-                        <div id="htab_control" class="uk-tab-center">
-                            <ul class="uk-tab" data-uk-tab="{connect:'#hservices'}">
-                                <li class="uk-active">
-                                    <a href="#" id="hpotable_link">{% trans "Potable" %}</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="hfire_link">{% trans "Fire" %}</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="hirrigation_link">{% trans "Irrigation" %}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="htab_content">
-                            <ul class="uk-switcher uk-margin" id="hservices">
-                                <li>
-                                    <div id="hpotable_content">
-                                        {% if site.potable_present %}
-                                            {% include_hazards 'potable' %}
-                                        {% else %}
-                                            <h4 class="padding-top-10 uk-text-center">
-                                                {% trans "Potable water supply is not present" %}
-                                            </h4>
+                        <div class="wrapper">
+                            <table class="uk-table uk-table-hover">
+                                <thead>
+                                <tr class="border-bottom">
+                                    <th class="border-right uk-text-center">
+                                        {% trans "No." %}
+                                    </th>
+                                    <th>
+                                        {% trans "Hazard Type" %}
+                                    </th>
+                                    <th>
+                                        {% trans "Location" %}
+                                    </th>
+                                    <th>
+                                        {% trans "Assembly Status" %}
+                                    </th>
+                                    <th>
+                                        {% trans "Due Install/Test" %}
+                                    </th>
+                                    <th colspan="2" class="uk-text-center border-left uk-width-1-10">
+                                        {% trans "Actions" %}
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for hazard in site.hazards.all %}
+                                    <tr>
+                                        <td class="uk-text-center border-right">
+                                            {{ hazard.pk }}
+                                        </td>
+                                        <td>
+                                            {{ hazard.hazard_type }}
+                                        </td>
+                                        <td>
+                                            {{ hazard.location1 }}
+                                        </td>
+                                        <td>
+                                            {{ hazard.assembly_status }}
+                                        </td>
+                                        <td>
+                                            {{ hazard.due_install_test_date }}
+                                        </td>
+                                        <td class="border-left uk-text-center">
+                                            <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
+                                        </td>
+                                        {% if perms.webapp.add_test %}
+                                            <td class="uk-text-center">
+                                                <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
+                                            </td>
                                         {% endif %}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div id="hfire_content">
-                                        {% if site.fire_present %}
-                                            {% include_hazards 'fire' %}
-                                        {% else %}
-                                            <h4 class="padding-top-10 uk-text-center">
-                                                {% trans "Fire water supply is not present" %}
-                                            </h4>
-                                        {% endif %}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div id="hirrigation_content">
-                                        {% if site.irrigation_present %}
-                                            {% include_hazards 'irrigation' %}
-                                        {% else %}
-                                            <h4 class="padding-top-10 uk-text-center">
-                                                {% trans "Irrigation water supply is not present" %}
-                                            </h4>
-                                        {% endif %}
-                                    </div>
-                                </li>
-                            </ul>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
 
                     </div>

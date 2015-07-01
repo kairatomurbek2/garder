@@ -7733,7 +7733,7 @@ a.uk-thumbnail:focus {
  * Avoids setting display to `block` so it works also with `inline-block` and `table`
  */
 /* Desktop and bigger */
-@media (min-width: 960px) {
+@media (min-width: 1105px) {
   .uk-visible-small {
     display: none !important;
   }
@@ -7745,7 +7745,7 @@ a.uk-thumbnail:focus {
   }
 }
 /* Tablets portrait */
-@media (min-width: 768px) and (max-width: 959px) {
+@media (min-width: 1105px) and (max-width: 1105px) {
   .uk-visible-small {
     display: none !important;
   }
@@ -7757,7 +7757,7 @@ a.uk-thumbnail:focus {
   }
 }
 /* Phone landscape and smaller*/
-@media (max-width: 767px) {
+@media (max-width: 1105px) {
   .uk-visible-medium {
     display: none !important;
   }

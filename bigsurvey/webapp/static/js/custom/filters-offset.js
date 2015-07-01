@@ -1,20 +1,13 @@
 $(document).ready(function () {
     var filters = $('.fixed-filters');
     var navbar = $('nav.uk-navbar');
-    var navbarHeight = parseInt(navbar.height());
-    var navbarWidth = parseInt(navbar.width());
     var paginationWrapper = $('.pagination-wrapper');
 
-    var defaultTop = parseInt(filters.css('top'));
     var lastScrollLeft = 0;
     var documentScrollLeft;
 
     $('.clickable-row').click(function (e) {
         window.document.location = $(this).data("href");
-    });
-
-    $('.fixed-headers').floatThead({
-        scrollingTop: navbarHeight
     });
 
     $(document).scroll(function (e) {
@@ -30,6 +23,7 @@ $(document).ready(function () {
     }
 
     $(document).on('show.uk.offcanvas', function () {
+        console.log('heeheer');
         $('.filters-offset').css('margin-left', '0');
     });
 
