@@ -6,13 +6,14 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.db import IntegrityError, connection
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
-from django.http import Http404, HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect

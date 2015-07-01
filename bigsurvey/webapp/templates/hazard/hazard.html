@@ -3,6 +3,7 @@
 {% load boolean_yes_no %}
 {% load hazards_for_services %}
 {% load staticfiles %}
+{% load google_map %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">{% trans "Edit" %}</a></li>
     <li><a href="{% url 'webapp:site_detail' hazard.site.pk %}">{% trans "Back to Site" %}</a></li>
@@ -114,11 +115,12 @@
     {% endif %}
 {% endblock %}
 {% block scripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="{% static "js/custom/google_map.js" %}"></script>
+    {% load_google_map_js %}
     <script type="text/javascript">
-        window.onload = function () {
-            showDetailMap();
-        }
+        $(document).ready(function () {
+            GoogleMap.mapHolder = $('#mapholder');
+            GoogleMap.setCoords({{ hazard.latitude }}, {{ hazard.longitude }}, false);
+            GoogleMap.initialize(false);
+        });
     </script>
 {% endblock %}

@@ -7,14 +7,14 @@ Feature: Site detail
     When I directly open "site_detail" page with pk "<pk>"
     Then I should <reaction> "Page not found"
     And I logout
-    Examples:
-      | role     | pk | reaction |
-      | root     | 3  | not see  |
-      | root     | 4  | not see  |
-      | admin    | 3  | see      |
-      | admin    | 4  | not see  |
-      | surveyor | 3  | see      |
-      | surveyor | 4  | not see  |
+  Examples:
+    | role     | pk | reaction |
+    | root     | 3  | not see  |
+    | root     | 4  | not see  |
+    | admin    | 3  | see      |
+    | admin    | 4  | not see  |
+    | surveyor | 3  | see      |
+    | surveyor | 4  | not see  |
 
 
   Scenario: Root is opening site detail page

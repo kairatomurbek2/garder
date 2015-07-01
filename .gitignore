@@ -12,4 +12,8 @@ bigsurvey/uploads/excel_files/*
 !bigsurvey/uploads/excel_files/.gitkeep
 bigsurvey/uploads/pws_logos/*
 !bigsurvey/uploads/pws_logos/.gitkeep
+bigsurvey/uploads/photo/*
+!bigsurvey/uploads/photo/.gitkeep
+!bigsurvey/uploads/photo/thumb
+!bigsurvey/uploads/photo/thumb/.gitkeep
 .~*

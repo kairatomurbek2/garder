@@ -10,7 +10,6 @@
     {% if perms.webapp.send_letter %}
         <li><a href="{% url 'webapp:letter_add' site.pk %}" id="site_{{ site.pk }}_letter_link">{% trans "New Letter" %}</a></li>
     {% endif %}
-    <li><a href="{% url "webapp:home" %}">{% trans "Site List" %}</a></li>
 {% endblock %}
 {% block content %}
     <div id="site_detail" class="wrapper">

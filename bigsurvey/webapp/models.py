@@ -459,8 +459,8 @@ class Hazard(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="hazards")
     location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
-    latitude = models.FloatField(blank=True, null=True, default=0, verbose_name=_("Latitude"))
-    longitude = models.FloatField(blank=True, null=True, default=0, verbose_name=_("Longitude"))
+    latitude = models.FloatField(blank=True, null=True, verbose_name=_("Latitude"))
+    longitude = models.FloatField(blank=True, null=True, verbose_name=_("Longitude"))
     regulation_type = models.ForeignKey(Regulation, verbose_name=_("Regulation"),
                                         null=True, blank=True, related_name="hazards")
     photo = models.ImageField(blank=True, null=True, default=None,

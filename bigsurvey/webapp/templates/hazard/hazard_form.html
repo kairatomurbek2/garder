@@ -2,15 +2,7 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% load i18n %}
-{% block scripts %}
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-    <script src="{% static "js/custom/google_map.js" %}"></script>
-    <script type="text/javascript">
-        window.onload = function () {
-            getLocation();
-        }
-    </script>
-{% endblock %}
+{% load google_map %}
 {% block menu %}
     {% if hazard.pk %}
         <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
@@ -22,4 +14,16 @@
     <div class="wrapper">
         {% include 'hazard/partial/hazard_form.html' %}
     </div>
+{% endblock %}
+{% block scripts %}
+    {% load_google_map_js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GoogleMap.mapHolder = $('#mapholder');
+            GoogleMap.latitudeInput= $('input[name="latitude"]');
+            GoogleMap.longitudeInput= $('input[name="longitude"]');
+            GoogleMap.notificationLabel = $('#notification');
+            GoogleMap.initialize(true);
+        });
+    </script>
 {% endblock %}
