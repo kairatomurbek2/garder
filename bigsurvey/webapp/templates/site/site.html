@@ -142,9 +142,9 @@
                     <div id="surveys_content">
                         {% if perms.webapp.add_survey %}
                             <div id="survey-button-group" class="wrapper uk-text-center">
-                                <a class="uk-button uk-button-primary uk-button-large" href="{% url 'webapp:survey_add' site.pk 'potable' %}" id="spotable_link">{% trans "Potable" %}</a>
-                                <a class="uk-button uk-button-danger uk-button-large" href="{% url 'webapp:survey_add' site.pk 'fire' %}" id="sfire_link">{% trans "Fire" %}</a>
-                                <a class="uk-button uk-button-success uk-button-large" href="{% url 'webapp:survey_add' site.pk 'irrigation' %}" id="sirrigation_link">{% trans "Irrigation" %}</a>
+                                <a class="uk-button uk-button-primary uk-button-large" href="{% url 'webapp:survey_add' site.pk 'potable' %}" id="site_{{ site.pk }}_service_potable_survey_add_link">{% trans "Add Potable" %}</a>
+                                <a class="uk-button uk-button-danger uk-button-large" href="{% url 'webapp:survey_add' site.pk 'fire' %}" id="site_{{ site.pk }}_service_fire_survey_add_link">{% trans "Add Fire" %}</a>
+                                <a class="uk-button uk-button-success uk-button-large" href="{% url 'webapp:survey_add' site.pk 'irrigation' %}" id="site_{{ site.pk }}_service_irrigation_survey_add_link">{% trans "Add Irrigation" %}</a>
                             </div>
                         {% endif %}
                         <div class="wrapper">

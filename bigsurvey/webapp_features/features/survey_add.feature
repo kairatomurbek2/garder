@@ -1,4 +1,5 @@
 @survey_add
+
 Feature: Survey Add
 
   Scenario Outline: Survey Add page access
@@ -7,17 +8,17 @@ Feature: Survey Add
     Then I should <reaction> "Page not found"
     And I logout
 
-  Examples:
-    | role     | pk | service    | reaction |
-    | root     | 5  | potable    | not see  |
-    | root     | 5  | irrigation | see      |
-    | admin    | 5  | potable    | see      |
-    | admin    | 10 | potable    | not see  |
-    | admin    | 10 | fire       | see      |
-    | surveyor | 10 | irrigation | not see  |
-    | surveyor | 5  | potable    | see      |
-    | surveyor | 2  | potable    | see      |
-    | tester   | 10 | potable    | see      |
+    Examples:
+      | role     | pk | service    | reaction |
+      | root     | 5  | potable    | not see  |
+      | root     | 5  | irrigation | not see  |
+      | admin    | 5  | potable    | see      |
+      | admin    | 10 | potable    | not see  |
+      | admin    | 10 | fire       | not see  |
+      | surveyor | 10 | irrigation | not see  |
+      | surveyor | 5  | potable    | see      |
+      | surveyor | 2  | potable    | see      |
+      | tester   | 10 | potable    | see      |
 
   Scenario: Correct survey adding
     Given I logged in as "root"

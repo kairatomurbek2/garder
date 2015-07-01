@@ -24,7 +24,7 @@ Feature: Hazard Add
 
   Scenario: Correct hazard adding
     Given I logged in as "root"
-    When I open "hazard_add" page for site with pk "5" and service "fire"
+    When I directly open "hazard_add" page for site with pk "5" and service "fire"
     And I fill in following fields with following values
       | field     | value    |
       | location1 | backyard |
@@ -39,7 +39,7 @@ Feature: Hazard Add
 
   Scenario: Incorrect hazard adding
     Given I logged in as "root"
-    When I open "hazard_add" page for site with pk "5" and service "fire"
+    When I directly open "hazard_add" page for site with pk "5" and service "fire"
     And I submit "hazard" form
     Then I should be at "hazard_add" page for survey with pk "5" and service "fire"
     And I should see "hazard adding error" message
