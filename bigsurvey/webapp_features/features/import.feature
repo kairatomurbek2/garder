@@ -18,7 +18,9 @@ Feature: Import from Excel files
     Given I logged in as "root"
     When I open "import" page
     And I fill in file input "file" with "correct.xlsx"
-    And I select "Houston PWS" from "pws"
+    And I select "South Western PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
     Then I should be at "import_mappings" page
     When I fill in mappings
@@ -43,7 +45,9 @@ Feature: Import from Excel files
       | 9           | 0             | 0                 |
     When I open "import" page
     And I fill in file input "file" with "correct-new.xlsx"
-    And I select "Houston PWS" from "pws"
+    And I select "South Western PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
     And I fill in mappings
     And I submit "import-mappings" form
@@ -54,11 +58,14 @@ Feature: Import from Excel files
       | 1           | 6             | 3                 |
     And I reset database
 
+    @wip
   Scenario: Incorrect Import
     Given I logged in as "root"
     When I open "import" page
     And I fill in file input "file" with "correct.xlsx"
-    And I select "Houston PWS" from "pws"
+    And I select "South Western PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
     Then I should be at "import_mappings" page
     And I submit "import-mappings" form
@@ -69,7 +76,9 @@ Feature: Import from Excel files
     Given I logged in as "root"
     When I open "import" page
     And I fill in file input "file" with "<file>"
-    And I select "Houston PWS" from "pws"
+    And I select "South Western PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
     Then I should be at "import_mappings" page
     When I fill in mappings

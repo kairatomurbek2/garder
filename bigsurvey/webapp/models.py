@@ -671,10 +671,6 @@ class StaticText(models.Model):
         verbose_name_plural = _("Static Text")
 
 
-class ImportProgress(models.Model):
-    progress = models.IntegerField(default=0)
-
-
 class ImportLog(models.Model):
     user = models.ForeignKey(User)
     pws = models.ForeignKey(PWS)
@@ -682,6 +678,7 @@ class ImportLog(models.Model):
     added_sites = models.ManyToManyField(Site, related_name='added_imports')
     updated_sites = models.ManyToManyField(Site, related_name='updated_imports')
     deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports')
+    progress = models.IntegerField(default=0)
 
     class Meta:
         permissions = (

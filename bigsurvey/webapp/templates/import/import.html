@@ -20,10 +20,57 @@
                         </div>
                     {% endif %}
                     <div class="uk-form-row">
+                        <p>{% trans 'Select Date Format used in Excel file' %}</p>
+                        {{ form.date_format.errors }}
+                        {{ form.date_format }} <a href="#date-formats-help" data-uk-modal>{% trans 'Date Formats Help' %}</a>
+                    </div>
+                    <div class="uk-form-row hidden" data-content="date_format_other">
+                        <p>{% trans 'If you do not find matching Date Format, provide it here manually' %}</p>
+                        {{ form.date_format_other.errors }}
+                        {{ form.date_format_other }}
+                    </div>
+                    <div class="uk-form-row">
                         <button type="submit" class="uk-button uk-button-primary">{% trans 'Submit' %}</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <div class="uk-modal" id="date-formats-help">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close uk-close-alt"></a>
+            <p>{% trans 'Assume we have following date: September 3, 2013' %}</p>
+            <table class="uk-table">
+                <thead>
+                <tr>
+                    <th>{% trans 'Code' %}</th>
+                    <th>{% trans 'Meaning' %}</th>
+                    <th>{% trans 'Example' %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dateformat in dateformat_help %}
+                    <tr>
+                        <td>{{ dateformat.code }}</td>
+                        <td>{{ dateformat.meaning }}</td>
+                        <td>{{ dateformat.example }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('select[name="date_format"]').change(function () {
+                if ($(this).val() == 'other') {
+                    $('[data-content="date_format_other"]').show();
+                } else {
+                    $('[data-content="date_format_other"]').hide();
+                }
+            });
+        });
+    </script>
 {% endblock %}

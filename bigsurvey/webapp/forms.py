@@ -6,12 +6,11 @@ from django.utils.translation import ugettext as _
 
 import models
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, Details, \
-    TEST_RESULT_CHOICES
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES
 from webapp.validators import validate_excel_file
 
 
 class PWSForm(forms.ModelForm):
-
     class Meta:
         model = models.PWS
         fields = '__all__'
@@ -282,6 +281,8 @@ class LetterSendForm(LetterOptionsForm):
 
 class ImportForm(forms.Form):
     file = forms.FileField(validators=[validate_excel_file])
+    date_format = forms.ChoiceField(choices=DATEFORMAT_CHOICES)
+    date_format_other = forms.CharField()
 
 
 class ImportMappingsForm(forms.Form):

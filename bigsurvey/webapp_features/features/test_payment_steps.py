@@ -68,7 +68,10 @@ def wait_until_redirect(step):
 
 @step('I should see "payment successful" message')
 def check_payment_successful_message(step):
-    step.given('I should see "%s"' % Messages.Test.payment_successful)
+    try:
+        step.given('I should see "%s"' % Messages.Test.payment_successful_singular)
+    except AssertionError:
+        step.given('I should see "%s"' % Messages.Test.payment_successful_plural)
 
 
 @step('I should see pay modal')

@@ -92,6 +92,66 @@ CREDIT_CARD_TYPE_CHOICES = (
     ('discover', 'Discover'),
 )
 
+OTHER = 'other'
+
+DATEFORMAT_CHOICES = (
+    ('%Y-%m-%d', '%Y-%m-%d'),
+    ('%m/%d/%Y', '%m/%d/%Y'),
+    ('%m/%d/%y', '%m/%d/%y'),
+    ('%b %d %Y', '%b %d %Y'),
+    ('%b %d, %Y', '%b %d, %Y'),
+    ('%d %b %Y', '%d %b %Y'),
+    ('%d %b, %Y', '%d %b, %Y'),
+    ('%B %d %Y', '%B %d %Y'),
+    ('%B %d, %Y', '%B %d, %Y'),
+    ('%d %B %Y', '%d %B %Y'),
+    ('%d %B, %Y', '%d %B, %Y'),
+    (OTHER, 'Other'),
+)
+
+DATEFORMAT_HELP = (
+    {
+        'code': '%d',
+        'meaning': _('Day of the month as a zero-padded decimal number.'),
+        'example': '03',
+    },
+    {
+        'code': '%-d',
+        'meaning': _('Day of the month as a decimal number. (Platform specific)'),
+        'example': '3',
+    },
+    {
+        'code': '%b',
+        'meaning': _('Month as locale\'s abbreviated name.'),
+        'example': 'Sep',
+    },
+    {
+        'code': '%B',
+        'meaning': _('Month as locale\'s full name.'),
+        'example': 'September',
+    },
+    {
+        'code': '%m',
+        'meaning': _('Month as a zero-padded decimal number.'),
+        'example': '09',
+    },
+    {
+        'code': '%-m',
+        'meaning': _('Month as a decimal number. (Platform specific)'),
+        'example': '9',
+    },
+    {
+        'code': '%y',
+        'meaning': _('Year without century as a zero-padded decimal number.'),
+        'example': '13',
+    },
+    {
+        'code': '%Y',
+        'meaning': _('Year with century as a decimal number.'),
+        'example': '2013',
+    },
+)
+
 
 class Messages:
     extension_not_allowed = _('File extension is not allowed. Allowed extensions: %(allowed_extensions)s')
@@ -146,7 +206,8 @@ class Messages:
         cv2_replaced_details_not_provided = _('You should provide details you have replaced for Relief Valve')
         rv_replaced_details_not_provided = _('You should provide details you have replaced for Check Valve 2')
         pvb_replaced_details_not_provided = _('You should provide details you have replaced for Pressure Vacuum Breaker')
-        payment_successful = _('Payment was completed successfully. Test(s) is(are) now visible on the site.')
+        payment_successful_singular = 'Payment was completed successfully. Test is now visible on the site.'
+        payment_successful_plural = 'Payment was completed successfully. Tests are now visible on the site.'
         payment_failed = _('Some errors happened during the payment. Please try again later.')
         payment_cancelled = _('You have cancelled payment. You can pay later.')
 

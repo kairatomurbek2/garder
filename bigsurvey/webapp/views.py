@@ -5,6 +5,7 @@ import time
 import os
 
 from django.conf import settings
+
 from django.core.files.storage import default_storage
 from django.db import IntegrityError, connection
 from django.db.models import NOT_PROVIDED
@@ -21,12 +22,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext as __
 from django.core.mail import EmailMessage
 import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
 
 from webapp import perm_checkers, models, forms, filters
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OTHER, DATEFORMAT_HELP
 from webapp.exceptions import PaymentWasNotCreatedError
 from webapp.raw_sql_queries import HazardPriorityQuery
 from webapp.responses import PDFResponse
@@ -325,7 +327,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         site = self._get_site()
         form.instance.site = site
         form.instance.service_type = self._get_service_type()
-        super(SurveyAddView, self).form_valid(form)
+        response = super(SurveyAddView, self).form_valid(form)
         survey = site.surveys.latest('survey_date')
         site.last_survey_date = survey.survey_date
         if form.instance.service_type.service_type == 'potable':
@@ -341,7 +343,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
             else:
                 hazard.is_present = False
             hazard.save()
-        return HttpResponseRedirect(self.get_success_url())
+        return response
 
     def _get_site(self):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
@@ -463,34 +465,31 @@ class HazardAddView(HazardBaseFormView, CreateView):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
-        if not self._service_type_on_site_exists():
-            raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
     def form_valid(self, form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         response = super(HazardAddView, self).form_valid(form)
+        self._switch_on_service_type(form.instance.site, self.kwargs['service'])
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_OK, form)
         return response
+
+    def _switch_on_service_type(self, site, service_type):
+        if service_type == 'potable':
+            site.potable_present = True
+        elif service_type == 'fire':
+            site.fire_present = True
+        elif service_type == 'irrigation':
+            site.irrigation_present = True
+        site.save()
 
     def form_invalid(self, form):
         response = super(HazardAddView, self).form_invalid(form)
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_ERROR, form)
         return response
-
-    def _service_type_on_site_exists(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        service_type = self.kwargs['service']
-        if service_type == 'potable' and site.potable_present:
-            return True
-        if service_type == 'fire' and site.fire_present:
-            return True
-        if service_type == 'irrigation' and site.irrigation_present:
-            return True
-        return False
 
 
 class HazardEditView(HazardBaseFormView, UpdateView):
@@ -1067,7 +1066,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
             if payment.execute({'payer_id': payer_id}):
                 test_pks = self.request.GET['tests'].split(',')
                 models.Test.objects.filter(pk__in=test_pks).update(paid=True)
-                messages.success(self.request, Messages.Test.payment_successful)
+                messages.success(self.request, __(Messages.Test.payment_successful_singular, Messages.Test.payment_successful_plural, len(test_pks)))
             else:
                 messages.error(self.request, Messages.Test.payment_failed)
         else:
@@ -1178,10 +1177,19 @@ class ImportView(BaseFormView):
             form.fields['pws'] = ModelChoiceField(queryset=models.PWS.objects.all())
         return form
 
+    def get_context_data(self, **kwargs):
+        context = super(ImportView, self).get_context_data(**kwargs)
+        context['dateformat_help'] = DATEFORMAT_HELP
+        return context
+
     def form_valid(self, form):
         self._delete_previous_tmp_files()
         filename = self._save_tmp_file(form.cleaned_data.get('file'))
         self.request.session['import_filename'] = filename
+        if form.cleaned_data.get('date_format') == OTHER:
+            self.request.session['import_date_format'] = form.cleaned_data.get('date_format_other')
+        else:
+            self.request.session['import_date_format'] = form.cleaned_data.get('date_format')
         try:
             self.request.session['import_pws_pk'] = form.cleaned_data['pws'].pk
         except KeyError:
@@ -1210,7 +1218,7 @@ class ImportView(BaseFormView):
         return reverse('webapp:import-mappings')
 
 
-class ImportMappingsFormsetMixin(object):
+class ImportMappingsFormsetMixin(BaseTemplateView):
     permission = 'webapp.access_to_import'
     template_name = 'import/import_mappings.html'
     form_class = ImportMappingsForm
@@ -1219,10 +1227,8 @@ class ImportMappingsFormsetMixin(object):
     EXAMPLE_ROWS_COUNT = 3
 
     exclude_site_model_fields = ['id', 'pws']
-
-    def __init__(self):
-        self.formset = None
-        self.excel_parser = None
+    formset = None
+    excel_parser = None
 
     def get_site_model_fields_list(self):
         field_names = []
@@ -1301,33 +1307,33 @@ class ImportMappingsFormsetMixin(object):
             context['import_mappings'] = json.dumps(self.request.session['import_mappings'])
         return context
 
-
-class ImportMappingsRenderView(ImportMappingsFormsetMixin, BaseTemplateView):
-    def get(self, request, *args, **kwargs):
-        self.formset = self.get_formset()
-        return self.render_to_response(self.get_context_data())
-
     def get_formset_data(self):
         return None
 
 
-class ImportMappingsProcessView(ImportMappingsFormsetMixin, BaseTemplateView):
+class ImportMappingsRenderView(ImportMappingsFormsetMixin):
+    def get(self, request, *args, **kwargs):
+        self.formset = self.get_formset()
+        return self.render_to_response(self.get_context_data())
+
+
+class ImportMappingsProcessView(ImportMappingsFormsetMixin):
     def post(self, request, *args, **kwargs):
         self.formset = self.get_formset()
         if self.formset.is_valid():
             mappings = self.formset.get_mappings()
             self.request.session['import_mappings'] = mappings
             try:
-                self.excel_parser.check_constraints(mappings)
-                import_progress = models.ImportProgress.objects.create()
-                self.request.session['import_progress_pk'] = import_progress.pk
+                pws = models.PWS.objects.get(pk=self.request.session.pop('import_pws_pk'))
+                date_format = self.request.session.pop('import_date_format')
+                self.excel_parser.check_constraints(mappings, date_format)
+                import_log = models.ImportLog.objects.create(user=self.request.user, pws=pws)
+                self.request.session['import_log_pk'] = import_log.pk
                 self.excel_parser.parse_and_save_in_background(
                     mappings,
-                    self.request.session['import_pws_pk'],
-                    import_progress.pk,
-                    self.request.user.pk
+                    import_log.pk,
+                    date_format
                 )
-
                 return redirect('webapp:import-mappings')
             except (IntegrityError, DateFormatError) as e:
                 self.formset.add_error(str(e))
@@ -1343,20 +1349,12 @@ class ImportProgressView(BaseTemplateView):
     permission = 'webapp.access_to_import'
 
     def get(self, request, *args, **kwargs):
-        try:
-            import_progress_pk = self.request.session['import_progress_pk']
-            import_progress = models.ImportProgress.objects.get(pk=import_progress_pk)
-            progress = import_progress.progress
-            if import_progress.progress == FINISHED:
-                import_progress.delete()
-                del self.request.session['import_progress_pk']
-        except (models.ImportProgress.DoesNotExist, KeyError):
-            progress = FINISHED
-            try:
-                del self.request.session['import_progress_pk']
-            except KeyError:
-                pass
-        return JsonResponse(progress, safe=False)
+        import_log_pk = self.request.session['import_log_pk']
+        import_log = models.ImportLog.objects.get(pk=import_log_pk)
+        progress = import_log.progress
+        if import_log.progress == FINISHED:
+            del self.request.session['import_log_pk']
+        return JsonResponse({'progress': progress})
 
 
 class ImportLogListView(BaseTemplateView):

@@ -9,14 +9,14 @@ Feature: Hazard Add
 
   Examples:
     | role     | pk | service | reaction |
-    | root     | 1  | potable | see      |
+    | root     | 1  | potable | not see  |
     | root     | 5  | fire    | not see  |
     | root     | 10 | potable | not see  |
     | admin    | 5  | fire    | see      |
     | admin    | 10 | potable | not see  |
-    | admin    | 10 | fire    | see      |
+    | admin    | 10 | fire    | not see  |
     | surveyor | 10 | potable | not see  |
-    | surveyor | 10 | fire    | see      |
+    | surveyor | 10 | fire    | not see  |
     | surveyor | 5  | potable | see      |
     | tester   | 5  | potable | see      |
     | tester   | 10 | potable | see      |

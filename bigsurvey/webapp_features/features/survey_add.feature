@@ -20,7 +20,6 @@ Feature: Survey Add
     | surveyor | 2  | potable    | see      |
     | tester   | 10 | potable    | see      |
 
-  @wip
   Scenario: Correct survey adding
     Given I logged in as "root"
     When I open "survey_add" page for site with pk "5" and service "potable"

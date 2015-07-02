@@ -86,4 +86,4 @@ def check_import_sites_count(step):
     deactivated_sites = helper.find(Xpath.import_row_sites_count % 'deactivated_sites', last_import_row).text
     assert data['added_sites'] == added_sites, 'Expected %s added sites, found %s' % (data['added_sites'], added_sites)
     assert data['updated_sites'] == updated_sites, 'Expected %s updated sites, found %s' % (data['updated_sites'], updated_sites)
-    assert data['updated_sites'] == updated_sites, 'Expected %s deactivated sites, found %s' % (data['deactivated_sites'], deactivated_sites)
+    assert data['deactivated_sites'] == deactivated_sites, 'Expected %s deactivated sites, found %s' % (data['deactivated_sites'], deactivated_sites)

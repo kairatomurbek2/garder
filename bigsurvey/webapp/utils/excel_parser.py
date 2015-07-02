@@ -5,12 +5,11 @@ import subprocess
 from bulk_update.helper import bulk_update
 from django.conf import settings
 from django.db import IntegrityError
-from django.db.models import NOT_PROVIDED, Q
+from django.db.models import NOT_PROVIDED
 import xlrd
 from xlrd.biffh import XL_CELL_NUMBER
 
 from main.parameters import Messages
-
 from webapp import models
 
 
@@ -30,7 +29,6 @@ class ExcelParser(object):
     PWS_FIELD_NAME = 'pws'
     FOREIGN_KEY_FIELDS = [PWS_FIELD_NAME, 'site_use', 'site_type', 'status', 'floors', 'interconnection_point', 'cust_code']
     DATE_FIELDS = ['connect_date', 'next_survey_date', 'last_survey_date']
-    DATE_FORMAT = '%Y%m%d'
 
     def __init__(self, filename, headers_row_number=0):
         self.filename = filename
@@ -86,7 +84,7 @@ class ExcelParser(object):
     def _is_empty(self, value):
         return str(value).strip() == ''
 
-    def check_constraints(self, mappings):
+    def check_constraints(self, mappings, date_format):
         self.open()
         start_row_number = self.headers_row_number + 1
         cust_numbers = {}
@@ -103,9 +101,9 @@ class ExcelParser(object):
                 if field_name in self.DATE_FIELDS:
                     if not self._is_empty(value):
                         try:
-                            datetime.strptime(str(value), self.DATE_FORMAT)
+                            datetime.strptime(str(value), date_format)
                         except ValueError:
-                            raise DateFormatError(Messages.Import.incorrect_date_format % (self.prettify_cell_index(row_number, column_number), self.DATE_FORMAT))
+                            raise DateFormatError(Messages.Import.incorrect_date_format % (self.prettify_cell_index(row_number, column_number), date_format))
                 if field_name in self.FOREIGN_KEY_FIELDS:
                     foreign_key_model = model_field.rel.to
                     available_values = foreign_key_model.objects.values_list('pk', flat=True).order_by('pk')
@@ -114,32 +112,26 @@ class ExcelParser(object):
                 if self._is_empty(value) and (not model_field.null and model_field.default == NOT_PROVIDED):
                     raise IntegrityError(Messages.Import.required_value_is_empty % self.prettify_cell_index(row_number, column_number))
 
-    def parse_and_save_in_background(self, mappings, pws_pk, import_progress_pk, user_pk):
-        filename_option = '--filename=%s' % self.filename
-        pws_option = '--pws_pk=%d' % pws_pk
+    def parse_and_save_in_background(self, mappings, import_log_pk, date_format):
+        filename_option = '--filename="%s"' % self.filename
         json_mappings = json.dumps(json.dumps(mappings, separators=(',', ':')))
-        mappings_option = '--mappings=%s' % json_mappings
-        import_progress_option = '--import_progress_pk=%d' % import_progress_pk
-        user_option = '--user_pk=%d' % user_pk
-        command = '%s %s %s %s %s %s %s %s' % (settings.PYTHON_EXECUTABLE, settings.MANAGE_PY, 'parse_excel', filename_option, pws_option, mappings_option, import_progress_option, user_option)
+        mappings_option = '--mappings="%s"' % json_mappings
+        import_log_option = '--import_log_pk="%d"' % import_log_pk
+        date_format_option = '--date_format="%s"' % date_format
+        command = '%s %s %s %s %s %s %s' % (settings.PYTHON_EXECUTABLE, settings.MANAGE_PY, 'parse_excel', filename_option, mappings_option, import_log_option, date_format_option)
         subprocess.Popen(command, shell=True)
 
-    def parse_and_save(self, mappings, pws_pk, import_progress_pk, user_pk):
+    def parse_and_save(self, mappings, import_log_pk, date_format):
         self.open()
 
-        pws = models.PWS.objects.get(pk=pws_pk)
-        import_progress = models.ImportProgress.objects.get(pk=import_progress_pk)
-        import_log = models.ImportLog()
-        import_log.pws = pws
-        import_log.user = models.User.objects.get(pk=user_pk)
-        import_log.save()
+        import_log = models.ImportLog.objects.get(pk=import_log_pk)
 
-        deactivated_sites_watcher = DeactivatedSitesWatcher(pws)
+        deactivated_sites_watcher = DeactivatedSitesWatcher(import_log.pws)
         updated_sites_watcher = UpdatedSitesWatcher()
         added_sites_watcher = AddedSitesWatcher()
 
         total_rows = self.sheet.nrows - self.headers_row_number
-        progress_watcher = ProgressWatcher(import_progress, total_rows)
+        progress_watcher = ProgressWatcher(import_log, total_rows)
 
         start_row_number = self.headers_row_number + 1
 
@@ -152,11 +144,11 @@ class ExcelParser(object):
             cust_number_cell = self.sheet.cell(row_number, cust_number_column_number)
             cust_number = self._get_cell_value(cust_number_cell)
             try:
-                site = models.Site.objects.get(pws=pws, cust_number=cust_number)
+                site = models.Site.objects.get(pws=import_log.pws, cust_number=cust_number)
                 deactivated_sites_watcher.remove(site)
             except models.Site.DoesNotExist:
                 site = models.Site()
-                site.pws = pws
+                site.pws = import_log.pws
                 site.cust_number = cust_number
             site.status = active_status
             for field_name, column_number in mappings.items():
@@ -166,7 +158,7 @@ class ExcelParser(object):
                     field_name = self.FOREIGN_KEY_PATTERN % field_name
                 if field_name in self.DATE_FIELDS:
                     if not self._is_empty(value):
-                        value = datetime.strptime(str(value), self.DATE_FORMAT)
+                        value = datetime.strptime(str(value), date_format)
                     else:
                         value = None
                 setattr(site, field_name, value)
@@ -191,13 +183,13 @@ class ExcelParser(object):
 
         import_log.save()
 
-        import_progress.progress = FINISHED
-        import_progress.save()
+        import_log.progress = FINISHED
+        import_log.save()
 
 
 class ProgressWatcher(object):
-    def __init__(self, import_progress, total_rows, update_step=DEFAULT_PROGRESS_UPDATE_STEP):
-        self.import_progress = import_progress
+    def __init__(self, import_log, total_rows, update_step=DEFAULT_PROGRESS_UPDATE_STEP):
+        self.import_log = import_log
         self.total_rows = total_rows
         self.update_step = update_step
         self.processed_rows = 0
@@ -205,8 +197,8 @@ class ProgressWatcher(object):
     def increment_processed_rows(self):
         self.processed_rows += 1
         if self.processed_rows % self.update_step == 0:
-            self.import_progress.progress = int(float(FINISHED) * self.processed_rows / self.total_rows)
-            self.import_progress.save()
+            self.import_log.progress = int(float(FINISHED) * self.processed_rows / self.total_rows)
+            self.import_log.save()
 
 
 class DeactivatedSitesWatcher(object):
