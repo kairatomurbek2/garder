@@ -7,5 +7,5 @@ fi
 pip install -r requirements.txt
 cd bigsurvey
 ./manage.py migrate --noinput
-./manage.py loaddata test --noinput
+./manage.py loaddata test
 deactivate
