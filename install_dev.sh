@@ -6,6 +6,6 @@ fi
 . virtualenv/bin/activate
 pip install -r requirements.txt
 cd bigsurvey
-./manage.py migrate
-./manage.py loaddata test
+./manage.py migrate --noinput
+./manage.py loaddata test --noinput
 deactivate
