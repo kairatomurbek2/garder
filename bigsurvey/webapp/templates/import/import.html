@@ -7,6 +7,7 @@
             <div class="uk-width-1-2 uk-container-center">
                 <form class="uk-form" method="post" enctype="multipart/form-data" name="import">
                     {% csrf_token %}
+
                     <div class="uk-form-row">
                         <p>{% trans 'Select File' %}</p>
                         {{ form.file.errors }}
@@ -24,6 +25,7 @@
                         {{ form.date_format.errors }}
                         {{ form.date_format }} <a href="#date-formats-help" data-uk-modal>{% trans 'Date Formats Help' %}</a>
                     </div>
+
                     <div class="uk-form-row hidden" data-content="date_format_other">
                         <p>{% trans 'If you do not find matching Date Format, provide it here manually' %}</p>
                         {{ form.date_format_other.errors }}

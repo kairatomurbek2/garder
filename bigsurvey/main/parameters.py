@@ -6,6 +6,9 @@ class ServiceTypes(object):
     fire = "fire"
     irrigation = "irrigation"
 
+INACTIVE_SITE = 'Inactive'
+ACTIVE_SITE = 'Active'
+
 
 YESNO_CHOICES = (
     (True, "Yes"),

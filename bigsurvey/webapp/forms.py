@@ -282,7 +282,7 @@ class LetterSendForm(LetterOptionsForm):
 class ImportForm(forms.Form):
     file = forms.FileField(validators=[validate_excel_file])
     date_format = forms.ChoiceField(choices=DATEFORMAT_CHOICES)
-    date_format_other = forms.CharField()
+    date_format_other = forms.CharField(required=False)
 
 
 class ImportMappingsForm(forms.Form):

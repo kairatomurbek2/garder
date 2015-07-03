@@ -58,7 +58,6 @@ Feature: Import from Excel files
       | 1           | 6             | 3                 |
     And I reset database
 
-    @wip
   Scenario: Incorrect Import
     Given I logged in as "root"
     When I open "import" page

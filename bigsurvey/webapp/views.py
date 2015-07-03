@@ -36,7 +36,7 @@ from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
 from webapp.utils import photo_util
-from webapp.utils.excel_parser import ExcelParser, DateFormatError, FINISHED
+from webapp.utils.excel_parser import ExcelParser, DateFormatError, FINISHED, BackgroundExcelParserRunner
 
 
 class PermissionRequiredMixin(View):
@@ -1321,25 +1321,36 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
     def post(self, request, *args, **kwargs):
         self.formset = self.get_formset()
         if self.formset.is_valid():
-            mappings = self.formset.get_mappings()
-            self.request.session['import_mappings'] = mappings
-            try:
-                pws = models.PWS.objects.get(pk=self.request.session.pop('import_pws_pk'))
-                date_format = self.request.session.pop('import_date_format')
-                self.excel_parser.check_constraints(mappings, date_format)
-                import_log = models.ImportLog.objects.create(user=self.request.user, pws=pws)
-                self.request.session['import_log_pk'] = import_log.pk
-                self.excel_parser.parse_and_save_in_background(
-                    mappings,
-                    import_log.pk,
-                    date_format
-                )
-                return redirect('webapp:import-mappings')
-            except (IntegrityError, DateFormatError) as e:
-                self.formset.add_error(str(e))
-                return self.render_to_response(self.get_context_data())
+            return self._import_excel_file()
         else:
             return self.render_to_response(self.get_context_data())
+
+    def _import_excel_file(self):
+        mappings = self.formset.get_mappings()
+        self.request.session['import_mappings'] = mappings
+        try:
+            self._try_to_import(mappings)
+            return redirect('webapp:import-mappings')
+        except (IntegrityError, DateFormatError) as e:
+            self.formset.add_error(str(e))
+            return self.render_to_response(self.get_context_data())
+
+    def _try_to_import(self, mappings):
+        pws = models.PWS.objects.get(pk=self.request.session.pop('import_pws_pk'))
+        date_format = self.request.session.pop('import_date_format')
+        self.excel_parser.check_constraints(mappings, date_format)
+        import_log = models.ImportLog.objects.create(user=self.request.user, pws=pws)
+        self.request.session['import_log_pk'] = import_log.pk
+        self._run_background_parser(self.request.session['import_filename'], date_format, import_log, mappings)
+
+
+    def _run_background_parser(self, filename, date_format, import_log, mappings):
+        background_runner = BackgroundExcelParserRunner()
+        background_runner.filename = filename
+        background_runner.mappings = mappings
+        background_runner.date_format = date_format
+        background_runner.import_log_pk = import_log.pk
+        background_runner.execute()
 
     def get_formset_data(self):
         return self.request.POST
