@@ -1,13 +1,17 @@
 from django.utils.translation import ugettext as _
 
 
-class ServiceTypes(object):
-    potable = "potable"
-    fire = "fire"
-    irrigation = "irrigation"
+class SERVICE_TYPE(object):
+    POTABLE = "potable"
+    FIRE = "fire"
+    IRRIGATION = "irrigation"
 
-INACTIVE_SITE = 'Inactive'
-ACTIVE_SITE = 'Active'
+
+class SITE_STATUS(object):
+    ACTIVE = 'Active'
+    SUSPENDED = 'Suspended'
+    DISCONNECTED = 'Disconnected'
+    INACTIVE = 'Inactive'
 
 
 YESNO_CHOICES = (
@@ -173,7 +177,7 @@ class Messages:
         required_value_is_empty = _('Found empty value in %s cell, please fill in this cell')
         incorrect_date_format = _('Date in %s cell does not match "%s" format')
         duplicate_cust_numbers = _('Duplicate Customer Numbers found in %s and %s cells')
-        import_was_started = _('Import was started. It will be completed within 5 minutes')
+        import_was_finished = _('Import was finished. Added sites: %d, updated sites: %d, deactivated sites: %d. More information <a href="%s">here</a>.')
 
     class BatchUpdate:
         success = _('Batch update successfully performed')

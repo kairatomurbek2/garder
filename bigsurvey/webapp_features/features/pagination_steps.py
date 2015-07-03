@@ -1,8 +1,8 @@
 from common_steps import *
 from lettuce import *
 from selenium import *
-from webapp.models import Site, PWS, CustomerCode
-from main.parameters import STATES
+from webapp.models import Site, PWS, CustomerCode, SiteStatus
+from main.parameters import STATES, SITE_STATUS
 
 
 TEST_SITES_COUNT = 100
@@ -13,6 +13,7 @@ TEST_CUSTOMERS_COUNT = 100
 def generate_test_sites(step):
     pws = PWS.objects.first()
     cust_code = CustomerCode.objects.first()
+    active_status = SiteStatus.objects.get(site_status=SITE_STATUS.ACTIVE)
     for i in xrange(0, TEST_SITES_COUNT):
         site = Site()
         site.pws = pws
@@ -22,6 +23,7 @@ def generate_test_sites(step):
         site.cust_code = cust_code
         site.cust_number = 'TNUM%s' % i
         site.zip = 'TestZip%s' % i
+        site.status = active_status
         site.save()
 
 

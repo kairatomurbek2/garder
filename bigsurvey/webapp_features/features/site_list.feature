@@ -1,7 +1,5 @@
 @site_list
 Feature: Site list
-
-
   Scenario: Root is opening site list page
     Given I logged in as "root"
     When I open "site_list" page

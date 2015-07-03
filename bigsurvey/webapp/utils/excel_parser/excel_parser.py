@@ -4,22 +4,15 @@ import subprocess
 
 from bulk_update.helper import bulk_update
 from django.conf import settings
-from django.db import IntegrityError
-from django.db.models import NOT_PROVIDED
 import xlrd
-from xlrd.biffh import XL_CELL_NUMBER
+from xlrd.biffh import XL_CELL_NUMBER, XL_CELL_TEXT
 
-from main.parameters import Messages, ACTIVE_SITE, INACTIVE_SITE
+from main.parameters import SITE_STATUS
 from webapp import models
-
-ALPHABET_LENGTH = 26
-FINISHED = 100
-DEFAULT_BULK_SIZE = 1000
-DEFAULT_PROGRESS_UPDATE_STEP = 1000
+from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE
+from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
 
 
-class DateFormatError(Exception):
-    pass
 
 
 class ExcelDocument(object):
@@ -40,23 +33,21 @@ class ExcelDocument(object):
             for column_number in xrange(self.sheet.ncols):
                 cell = self.sheet.cell(self.headers_row_number, column_number)
                 value = self.get_cell_value(cell)
-                if not self.is_empty_value(value):
+                if value:
                     self.headers.append((column_number, value))
-
         return self.headers
 
     def get_cell_value(self, cell):
         if cell.ctype == XL_CELL_NUMBER:
             return int(cell.value)
+        if cell.ctype == XL_CELL_TEXT:
+            return cell.value.strip()
         return cell.value
-
-    def is_empty_value(self, value):
-        return str(value).strip() == ''
 
     def get_cell(self, row, column):
         return self.sheet.cell(row, column)
 
-    def get_n_rows(self, rows_count):
+    def get_first_n_rows(self, rows_count):
         self.open()
         example_rows = []
         start_row_number = self.headers_row_number + 1
@@ -85,35 +76,14 @@ class ConstraintChecker(object):
     mappings = None
     date_format = None
     excel_document = None
-    FOREIGN_KEY_FIELDS = None
-    CUST_NUMBER_FIELD_NAME = None
-    DATE_FIELDS = None
 
     def execute(self):
         start_row_number = self.excel_document.headers_row_number + 1
-        cust_numbers = {}
         for field_name, column_number in self.mappings.items():
-            model_field = models.Site._meta.get_field(field_name)
+            checker = ValueCheckerFactory.get_checker(field_name, date_format=self.date_format)
             for row_number in xrange(start_row_number, self.excel_document.num_rows):
                 value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
-                if field_name == self.CUST_NUMBER_FIELD_NAME:
-                    if value in cust_numbers:
-                        raise IntegrityError(
-                            Messages.Import.duplicate_cust_numbers % (self.prettify_cell_index(cust_numbers[value][0], cust_numbers[value][1]), self.prettify_cell_index(row_number, column_number)))
-                    cust_numbers[value] = (row_number, column_number)
-                if field_name in self.DATE_FIELDS:
-                    if not self.excel_document.is_empty_value(value):
-                        try:
-                            datetime.strptime(str(value), self.date_format)
-                        except ValueError:
-                            raise DateFormatError(Messages.Import.incorrect_date_format % (self.prettify_cell_index(row_number, column_number), self.date_format))
-                if field_name in self.FOREIGN_KEY_FIELDS:
-                    foreign_key_model = model_field.rel.to
-                    available_values = foreign_key_model.objects.values_list('pk', flat=True).order_by('pk')
-                    if not self.excel_document.is_empty_value(value) and value not in available_values:
-                        raise IntegrityError(Messages.Import.foreign_key_error % (self.prettify_cell_index(row_number, column_number), ', '.join(map(str, available_values)), value))
-                if self.excel_document.is_empty_value(value) and (not model_field.null and model_field.default == NOT_PROVIDED):
-                    raise IntegrityError(Messages.Import.required_value_is_empty % self.prettify_cell_index(row_number, column_number))
+                checker.check(value, self.prettify_cell_index(row_number, column_number))
 
     def prettify_cell_index(self, row_number, col_number):
         if col_number < ALPHABET_LENGTH:
@@ -140,11 +110,6 @@ class BackgroundExcelParserRunner(object):
 
 
 class ExcelParser(object):
-    FOREIGN_KEY_PATTERN = '%s_id'
-    CUST_NUMBER_FIELD_NAME = 'cust_number'
-    PWS_FIELD_NAME = 'pws'
-    FOREIGN_KEY_FIELDS = [PWS_FIELD_NAME, 'site_use', 'site_type', 'status', 'floors', 'interconnection_point', 'cust_code']
-    DATE_FIELDS = ['connect_date', 'next_survey_date', 'last_survey_date']
     excel_document = None
 
     def __init__(self, filename, headers_row_number=0):
@@ -156,16 +121,13 @@ class ExcelParser(object):
         return self.excel_document.parse_headers()
 
     def get_example_rows(self, rows_count):
-        return self.excel_document.get_n_rows(rows_count)
+        return self.excel_document.get_first_n_rows(rows_count)
 
     def check_constraints(self, mappings, date_format):
         constraint_checker = ConstraintChecker()
         constraint_checker.excel_document = self.excel_document
         constraint_checker.mappings = mappings
         constraint_checker.date_format = date_format
-        constraint_checker.FOREIGN_KEY_FIELDS = self.FOREIGN_KEY_FIELDS
-        constraint_checker.CUST_NUMBER_FIELD_NAME = self.CUST_NUMBER_FIELD_NAME
-        constraint_checker.DATE_FIELDS = self.DATE_FIELDS
         constraint_checker.execute()
 
     def parse_and_save(self, mappings, import_log_pk, date_format):
@@ -180,8 +142,8 @@ class ExcelParser(object):
 
         start_row_number = self.excel_document.headers_row_number + 1
 
-        active_status = models.SiteStatus.objects.get(site_status__iexact=ACTIVE_SITE)
-        inactive_status = models.SiteStatus.objects.get(site_status__iexact=INACTIVE_SITE)
+        active_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.ACTIVE)
+        inactive_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.INACTIVE)
 
         cust_number_column_number = mappings.pop('cust_number')
 
@@ -197,10 +159,10 @@ class ExcelParser(object):
             site.status = active_status
             for field_name, column_number in mappings.items():
                 value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
-                if field_name in self.FOREIGN_KEY_FIELDS:
-                    field_name = self.FOREIGN_KEY_PATTERN % field_name
-                if field_name in self.DATE_FIELDS:
-                    if not self.excel_document.is_empty_value(value):
+                if field_name in FOREIGN_KEY_FIELDS:
+                    field_name = FOREIGN_KEY_PATTERN % field_name
+                if field_name in DATE_FIELDS:
+                    if value:
                         value = datetime.strptime(str(value), date_format)
                     else:
                         value = None
@@ -225,9 +187,7 @@ class ExcelParser(object):
         import_log.added_sites = added_sites
 
         import_log.save()
-
-        import_log.progress = FINISHED
-        import_log.save()
+        progress_watcher.set_as_finished()
 
 
 class ProgressWatcher(object):
@@ -242,6 +202,10 @@ class ProgressWatcher(object):
         if self.processed_rows % self.update_step == 0:
             self.import_log.progress = int(float(FINISHED) * self.processed_rows / self.total_rows)
             self.import_log.save()
+
+    def set_as_finished(self):
+        self.import_log.progress = FINISHED
+        self.import_log.save()
 
 
 class DeactivatedSitesWatcher(object):

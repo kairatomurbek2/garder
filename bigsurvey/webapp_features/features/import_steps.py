@@ -38,11 +38,6 @@ def fill_in_mappings(step):
         option.click()
 
 
-@step('I should see "import was started" message')
-def check_import_was_started_message(step):
-    step.given('I should see "%s"' % Messages.Import.import_was_started)
-
-
 @step('I should see "required fields not filled" message')
 def check_import_was_started_message(step):
     step.given('I should see "%s"' % Messages.Import.required_fields_not_filled)

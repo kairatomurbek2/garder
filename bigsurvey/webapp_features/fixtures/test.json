@@ -2388,7 +2388,7 @@
     "cust_address1": "First Customer address",
     "cust_address2": "",
     "fire_present": false,
-    "status": null,
+    "status": 1,
     "cust_code": 1,
     "pws": 2,
     "address1": "First Site address",

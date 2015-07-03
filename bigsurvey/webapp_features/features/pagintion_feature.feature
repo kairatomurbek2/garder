@@ -1,7 +1,6 @@
 @pagination
 Feature: Pagination
 
-
   @site_pagination
   Scenario: Site pagination
     Given I logged in as "root"
