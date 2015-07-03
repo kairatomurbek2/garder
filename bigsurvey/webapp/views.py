@@ -28,7 +28,7 @@ import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
 
 from webapp import perm_checkers, models, forms, filters
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OTHER, DATEFORMAT_HELP
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OTHER, DATEFORMAT_HELP, SITE_STATUS
 from webapp.exceptions import PaymentWasNotCreatedError
 from webapp.raw_sql_queries import HazardPriorityQuery
 from webapp.responses import PDFResponse
@@ -90,11 +90,12 @@ class HomeView(BaseTemplateView):
         return context
 
     def _get_sites(self, user):
-        if user.has_perm('webapp.access_to_all_sites'):
-            return models.Site.objects.all()
+        sites = models.Site.objects.none()
         if user.has_perm('webapp.access_to_pws_sites'):
-            return models.Site.objects.filter(pws=user.employee.pws)
-        return []
+            sites = models.Site.objects.filter(pws=user.employee.pws)
+        if user.has_perm('webapp.access_to_all_sites'):
+            sites = models.Site.objects.all()
+        return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
 
 
 class TesterHomeView(BaseTemplateView, FormView):
@@ -663,7 +664,7 @@ class UserBaseFormView(BaseFormView):
             self.user_object = user_form.save()
             employee_form.instance.user = self.user_object
             if not self.request.user.has_perm('webapp.access_to_all_users'):
-                employee_form.instance.pws = self.request.user.pws
+                employee_form.instance.pws = self.request.user.employee.pws
             self.employee_object = employee_form.save()
             messages.success(self.request, self.success_message)
             return redirect(self.get_success_url())
@@ -1364,6 +1365,7 @@ class ImportProgressView(BaseTemplateView):
         import_log = models.ImportLog.objects.get(pk=import_log_pk)
         progress = import_log.progress
         if import_log.progress == FINISHED:
+            messages.success(self.request, Messages.Import.import_was_finished % (import_log.added_sites.count(), import_log.updated_sites.count(), import_log.deactivated_sites.count(), reverse('webapp:import_log_list')))
             del self.request.session['import_log_pk']
         return JsonResponse({'progress': progress})
 

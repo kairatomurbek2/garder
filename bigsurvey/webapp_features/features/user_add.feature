@@ -1,7 +1,6 @@
 @user_add
 Feature: User adding
 
-
   Scenario Outline: User adding page access
     Given I logged in as "<role>"
     When I directly open "user_add" page
@@ -14,9 +13,8 @@ Feature: User adding
     | surveyor | see      |
     | tester   | see      |
 
-
   Scenario: Correct user adding
-    Given I logged in as "root"
+    Given I logged in as "admin"
     And I open "user_add" page
     And I fill in following fields with following values
       | field      | value               |
@@ -27,7 +25,6 @@ Feature: User adding
       | password1  | password            |
       | password2  | password            |
     And I select "Surveyor" from "groups"
-    And I select "Alaska Central PWS" from "pws"
     When I submit "user" form
     Then I should be at "user_list" page
     And I should see "user adding success" message
@@ -37,7 +34,7 @@ Feature: User adding
       | newuser@example.com |
       | John                |
       | Smith               |
-      | Alaska Central PWS  |
+      | North USA PWS       |
 
 
   Scenario: Incorrect user adding
