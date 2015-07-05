@@ -11,18 +11,35 @@ class ValueCheckerFactory(object):
     @classmethod
     def get_checker(cls, field_name, **kwargs):
         model_field = models.Site._meta.get_field(field_name)
-        required = not model_field.null and model_field.default != NOT_PROVIDED
-        if field_name == CUST_NUMBER_FIELD_NAME:
+        required = not model_field.null and model_field.default == NOT_PROVIDED
+        if cls._is_customer_number_field(field_name):
             builder = CustomerNumberValueCheckerBuilder()
-        elif field_name in FOREIGN_KEY_FIELDS:
+        elif cls._is_foreign_key_field(field_name):
             model = model_field.rel.to
-            builder = ForeignKeyValueCheckerBuilder().set_required(required).set_model(model)
-        elif field_name in DATE_FIELDS:
+            builder = ForeignKeyValueCheckerBuilder()
+            builder.set_required(required)
+            builder.set_model(model)
+        elif cls._is_date_field(field_name):
             date_format = kwargs.pop('date_format')
-            builder = DateValueCheckerBuilder().set_required(required).set_date_format(date_format)
+            builder = DateValueCheckerBuilder()
+            builder.set_required(required)
+            builder.set_date_format(date_format)
         else:
-            builder = RequiredValueCheckerBuilder().set_required(required)
+            builder = RequiredValueCheckerBuilder()
+            builder.set_required(required)
         return builder.build()
+
+    @classmethod
+    def _is_customer_number_field(cls, field_name):
+        return field_name == CUST_NUMBER_FIELD_NAME
+
+    @classmethod
+    def _is_foreign_key_field(cls, field_name):
+        return field_name in FOREIGN_KEY_FIELDS
+
+    @classmethod
+    def _is_date_field(cls, field_name):
+        return field_name in DATE_FIELDS
 
 
 class ValueCheckerBuilder(object):

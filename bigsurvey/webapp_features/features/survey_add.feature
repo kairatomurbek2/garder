@@ -1,5 +1,4 @@
 @survey_add
-
 Feature: Survey Add
 
   Scenario Outline: Survey Add page access
@@ -22,6 +21,7 @@ Feature: Survey Add
 
   Scenario: Correct survey adding
     Given I logged in as "root"
+    And Site with pk "5" has "potable" service turned off
     When I open "survey_add" page for site with pk "5" and service "potable"
     And I fill in following fields with following values
       | field       | value      |
@@ -34,7 +34,8 @@ Feature: Survey Add
       | latitude  | 10    |
       | longitude | -25   |
     Then Marker should be at "10" latitude and "-25" longitude
-    And I submit "hazard" form
+    When I submit "hazard" form
+    Then Site with pk "5" should have "potable" service turned on
     And I close hazard modal
     And I submit "survey" form
     And I should see "survey adding success" message

@@ -1,6 +1,7 @@
 from common_steps import *
 from lettuce import *
 from data import *
+from webapp import models
 from webapp.models import Survey
 
 
@@ -109,7 +110,23 @@ def close_hazard_modal(step):
 
 @step('Marker should be at "(.*)" latitude and "(.*)" longitude')
 def check_marker_position(step, latitude, longitude):
-    map_latitude = world.browser.execute_script('return GoogleMap.map.getCenter().lat()')
-    map_longitude = world.browser.execute_script('return GoogleMap.map.getCenter().lng()')
+    map_latitude = world.browser.execute_script('return GoogleMap.marker.getPosition().lat()')
+    map_longitude = world.browser.execute_script('return GoogleMap.marker.getPosition().lng()')
     assert int(latitude) == map_latitude, 'Latitude: expected "%s", got "%s"' % (latitude, map_latitude)
     assert int(longitude) == map_longitude, 'Longitude: expected "%s", got "%s"' % (longitude, map_longitude)
+
+
+@step('Site with pk "(\d+)" has "(potable|fire|irrigation)" service turned (on|off)')
+def set_service_type_present(step, pk, service_type, value):
+    site = models.Site.objects.get(pk=pk)
+    value = True if value == 'on' else False
+    setattr(site, '%s_present' % service_type, value)
+    site.save()
+
+
+@step('Site with pk "(\d+)" should have "(potable|fire|irrigation)" service turned (on|off)')
+def check_service_type_present(step, pk, service_type, value):
+    site = models.Site.objects.get(pk=pk)
+    value = True if value == 'on' else False
+    site_value = getattr(site, '%s_present' % service_type)
+    assert site_value == value, '%s service: expected %s, found %s' % (service_type.capitalize(), value, site_value)

@@ -180,8 +180,8 @@ class Messages:
         import_was_finished = _('Import was finished. Added sites: %d, updated sites: %d, deactivated sites: %d. More information <a href="%s">here</a>.')
 
     class BatchUpdate:
-        success = _('Batch update successfully performed')
-        error = _('Cannot perform batch update. Please provide date')
+        success = _('Batch update was performed successfully')
+        error = _('Cannot perform batch update. Please provide date.')
 
     class PWS:
         adding_success = _('PWS was successfully added')

@@ -46,8 +46,10 @@ class SurveyAdmin(admin.ModelAdmin):
     form = SurveyAdminForm
     filter_horizontal = ("hazards",)
 
+
 class LetterTypeAdmin(admin.ModelAdmin):
     list_display = 'letter_type', 'pws'
+
 
 admin.site.unregister(User)
 admin.site.register(User, EmployeeAdmin)
