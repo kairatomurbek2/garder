@@ -54,7 +54,20 @@ class BaseView(PermissionRequiredMixin):
 
 
 class BaseTemplateView(BaseView, TemplateView):
-    pass
+    def has_more_link(self):
+        user = self.request.user
+        return user.has_perm('webapp.access_to_adminpanel') or \
+               user.has_perm('webapp.browse_pws') or \
+               not user.is_superuser and user.has_perm('webapp.browse_lettertype') or \
+               user.has_perm('webapp.browse_user') or \
+               user.has_perm('webapp.access_to_import') or \
+               user.has_perm('webapp.browse_import_log') or \
+               user.has_perm('webapp.access_to_batch_update')
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseTemplateView, self).get_context_data(**kwargs)
+        context['has_more_link'] = self.has_more_link()
+        return context
 
 
 class BaseFormView(BaseView, FormView):
@@ -1104,7 +1117,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                 "currency": "USD"
             }
             for test in tests
-        ]
+            ]
 
         test_pks = ','.join((str(test.pk) for test in tests))
 
@@ -1344,7 +1357,6 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
         self.request.session['import_log_pk'] = import_log.pk
         self._run_background_parser(self.request.session['import_filename'], date_format, import_log, mappings)
 
-
     def _run_background_parser(self, filename, date_format, import_log, mappings):
         background_runner = BackgroundExcelParserRunner()
         background_runner.filename = filename
@@ -1365,7 +1377,8 @@ class ImportProgressView(BaseTemplateView):
         import_log = models.ImportLog.objects.get(pk=import_log_pk)
         progress = import_log.progress
         if import_log.progress == FINISHED:
-            messages.success(self.request, Messages.Import.import_was_finished % (import_log.added_sites.count(), import_log.updated_sites.count(), import_log.deactivated_sites.count(), reverse('webapp:import_log_list')))
+            messages.success(self.request, Messages.Import.import_was_finished % (
+                import_log.added_sites.count(), import_log.updated_sites.count(), import_log.deactivated_sites.count(), reverse('webapp:import_log_list')))
             del self.request.session['import_log_pk']
         return JsonResponse({'progress': progress})
 
