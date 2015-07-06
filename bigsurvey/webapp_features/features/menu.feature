@@ -1,23 +1,22 @@
 @menu
 Feature: Menu
 
-
   Scenario: Root Menu
     Given I logged in as "root"
     And I open "home" page
     When I hover on "more" link
     Then I should see following menu links
-      | link            |
-      | admin           |
-      | pws             |
-      | letters         |
-      | import          |
-      | sites           |
-      | surveys         |
-      | tests           |
-      | hazards         |
-      | testers         |
-      | users           |
+      | link    |
+      | admin   |
+      | pws     |
+      | letters |
+      | import  |
+      | sites   |
+      | surveys |
+      | tests   |
+      | hazards |
+      | testers |
+      | users   |
 
 
   Scenario: Admin Menu
@@ -25,15 +24,15 @@ Feature: Menu
     When I open "home" page
     When I hover on "more" link
     Then I should see following menu links
-      | link            |
-      | letters         |
-      | import          |
-      | sites           |
-      | surveys         |
-      | tests           |
-      | hazards         |
-      | testers         |
-      | users           |
+      | link    |
+      | letters |
+      | import  |
+      | sites   |
+      | surveys |
+      | tests   |
+      | hazards |
+      | testers |
+      | users   |
     And I should not see following menu links
       | link  |
       | admin |
@@ -50,28 +49,28 @@ Feature: Menu
       | letters |
       | hazards |
     And I should not see following menu links
-      | link            |
-      | tests           |
-      | pws             |
-      | import          |
-      | users           |
-      | testers         |
+      | link    |
+      | tests   |
+      | pws     |
+      | import  |
+      | users   |
+      | testers |
 
 
   Scenario: Tester Menu
     Given I logged in as "tester"
     When I open "home" page
     Then I should see following menu links
-      | link    |
-      | sites   |
-      | tests   |
-      | hazards |
+      | link  |
+      | sites |
+      | tests |
     And I should not see following menu links
-      | link            |
-      | admin           |
-      | pws             |
-      | letters         |
-      | import          |
-      | users           |
-      | surveys         |
-      | testers         |
+      | link    |
+      | hazards |
+      | admin   |
+      | pws     |
+      | letters |
+      | import  |
+      | users   |
+      | surveys |
+      | testers |

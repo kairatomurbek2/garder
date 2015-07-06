@@ -10,7 +10,7 @@
         <form class="uk-form" method="post" name="lettertype">
             {% csrf_token %}
             {{ form.media }}
-            <table class="uk-table">
+            <table class="uk-table uk-table-condensed form-center">
                 <tbody>
                 <tr>
                     <td class="uk-text-right uk-text-bold">{% trans "Letter Type" %}:</td>

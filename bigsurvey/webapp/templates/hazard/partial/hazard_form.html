@@ -4,7 +4,7 @@
 {% include 'messages.html' %}
 <form class="uk-form" method="post" name="hazard" enctype="multipart/form-data">
     {% csrf_token %}
-    <table class="uk-table form-center border-none">
+    <table class="uk-table form-center border-none uk-table-condensed">
         <tbody>
         {% if perms.webapp.change_all_info_about_hazard %}
             <tr>

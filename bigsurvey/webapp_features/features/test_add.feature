@@ -19,7 +19,7 @@ Feature: Test adding
 
   Scenario: Correct test adding
     Given I logged in as "tester"
-    And I open "test_add" page for hazard with pk "2"
+    And I directly open "test_add" page for hazard with pk "2"
     And I fill in following fields with following values
       | field              | value  |
       | cv1_gauge_pressure | 123456 |

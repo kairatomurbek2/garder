@@ -600,6 +600,8 @@ class TestEditView(TestBaseFormView, UpdateView):
         form = super(TestEditView, self).get_form(form_class)
         if not perm_checkers.TestPermChecker.has_perm(self.request, form.instance):
             raise Http404
+        if form.instance.user != self.request.user and not form.instance.paid:
+            raise Http404
         return form
 
     def get_initial(self):
@@ -1040,6 +1042,8 @@ class TestDetailView(BaseTemplateView):
         test = models.Test.objects.get(pk=self.kwargs['pk'])
         if not perm_checkers.TestPermChecker.has_perm(self.request, test):
             raise Http404
+        if self.request.user != test.user and not test.paid:
+            raise Http404
         context['test'] = test
         context['hazard'] = test.bp_device
         return context
@@ -1119,7 +1123,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                 "currency": "USD"
             }
             for test in tests
-            ]
+        ]
 
         test_pks = ','.join((str(test.pk) for test in tests))
 

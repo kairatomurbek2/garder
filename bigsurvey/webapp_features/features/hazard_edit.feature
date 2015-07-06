@@ -21,7 +21,7 @@ Feature: Hazard Edit
 
   Scenario: Tester Field Set
     Given I logged in as "tester"
-    When I open "hazard_edit" page with pk "2"
+    When I directly open "hazard_edit" page with pk "2"
     Then I should not see following
       | text        |
       | Hazard Type |
@@ -32,7 +32,7 @@ Feature: Hazard Edit
 
   Scenario: Correct hazard editing
     Given I logged in as "tester"
-    When I open "hazard_edit" page with pk "2"
+    When I directly open "hazard_edit" page with pk "2"
     And I fill in following fields with following values
       | field     | value |
       | installer | self  |

@@ -1,3 +1,4 @@
+@test_payment
 Feature: Test payment
 
   Scenario: Unpaid test is not visible on site
@@ -17,5 +18,5 @@ Feature: Test payment
     And I confirm payment
     Then I should be redirected to "unpaid_test_list" page
     And I should see "payment successful" message
-    When I open "hazard_detail" page with pk "1"
+    When I directly open "hazard_detail" page with pk "1"
     Then I should see "June 1, 2015, Failed"

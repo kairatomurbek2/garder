@@ -66,8 +66,8 @@
 {% endblock %}
 {% block scripts %}
     <script>
-        var dateFormatChanged = function () {
-            if ($(this).val() == 'other') {
+        var dateFormatChanged = function (select) {
+            if (select.val() == 'other') {
                 $('[data-content="date_format_other"]').show();
             } else {
                 $('[data-content="date_format_other"]').hide();
@@ -75,8 +75,10 @@
         };
 
         $(document).ready(function () {
-            dateFormatChanged();
-            $('select[name="date_format"]').change(dateFormatChanged);
+            dateFormatChanged($('select[name="date_format"]'));
+            $('select[name="date_format"]').change(function () {
+                dateFormatChanged($(this));
+            });
         });
     </script>
 {% endblock %}

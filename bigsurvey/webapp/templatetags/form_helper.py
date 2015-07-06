@@ -34,9 +34,12 @@ def render_checkboxes(checkboxes):
 
 @register.simple_tag()
 def is_detail_checked(details, name):
-    if details.filter(detail__iexact=name).exists():
-        return 'checked'
-    return ''
+    try:
+        if details.filter(detail__iexact=name).exists():
+            return 'checked'
+        raise Exception
+    except Exception:
+        return ''
 
 
 @register.assignment_tag()

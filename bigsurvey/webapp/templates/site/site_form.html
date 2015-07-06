@@ -15,7 +15,7 @@
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="site">
             {% csrf_token %}
-            <table class="uk-table border-none">
+            <table class="uk-table border-none uk-table-condensed">
                 <tbody>
                 {% if perms.webapp.change_all_info_about_site %}
                 <tr class="border-bottom">

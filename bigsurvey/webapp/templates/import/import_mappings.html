@@ -12,7 +12,7 @@
                 <h2>{% trans 'Example rows' %}</h2>
 
                 <div class="uk-overflow-container">
-                    <table class="uk-table border-all example-rows-table">
+                    <table class="uk-table border-all example-rows-table uk-table-condensed">
                         <thead>
                         <tr>
                             {% for column_index, field_name in excel_field_headers %}
@@ -54,7 +54,7 @@
                     {% csrf_token %}
                     {{ formset.management_form }}
 
-                    <table class="uk-table border-none">
+                    <table class="uk-table border-none uk-table-condensed">
                         <tbody>
                         {% for row_index in rows_count|xrange_filter %}
                             <tr>

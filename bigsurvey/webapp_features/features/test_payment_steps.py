@@ -24,7 +24,7 @@ def check_unpaid_test_list_page(step):
 
 @step('I wait until step 2 is appeared')
 def wait_until_step_2_is_appeared(step):
-    WebDriverWait(world.browser, 10).until(
+    WebDriverWait(world.browser, 30).until(
         expected_conditions.visibility_of_element_located((By.XPATH, Xpath.payment_step_2))
     )
 
@@ -34,7 +34,7 @@ def login_in_paypal(step):
     login_button = helper.find(Xpath.Paypal.login_button)
     if login_button:
         login_button.click()
-        WebDriverWait(world.browser, 10).until(
+        WebDriverWait(world.browser, 15).until(
             expected_conditions.visibility_of_element_located((By.XPATH, Xpath.Paypal.username))
         )
     username_field = helper.find(Xpath.Paypal.username)
@@ -52,7 +52,7 @@ def login_in_paypal(step):
 
 @step('I confirm payment')
 def confirm_payment(step):
-    continue_button = WebDriverWait(world.browser, 10).until(
+    continue_button = WebDriverWait(world.browser, 15).until(
         expected_conditions.presence_of_element_located((By.XPATH, Xpath.Paypal.continue_button))
     )
     continue_button.click()
