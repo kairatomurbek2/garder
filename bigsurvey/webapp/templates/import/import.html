@@ -41,6 +41,7 @@
     <div class="uk-modal" id="date-formats-help">
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close uk-close-alt"></a>
+
             <p>{% trans 'Assume we have following date: September 3, 2013' %}</p>
             <table class="uk-table">
                 <thead>
@@ -65,14 +66,17 @@
 {% endblock %}
 {% block scripts %}
     <script>
+        var dateFormatChanged = function () {
+            if ($(this).val() == 'other') {
+                $('[data-content="date_format_other"]').show();
+            } else {
+                $('[data-content="date_format_other"]').hide();
+            }
+        };
+
         $(document).ready(function () {
-            $('select[name="date_format"]').change(function () {
-                if ($(this).val() == 'other') {
-                    $('[data-content="date_format_other"]').show();
-                } else {
-                    $('[data-content="date_format_other"]').hide();
-                }
-            });
+            dateFormatChanged();
+            $('select[name="date_format"]').change(dateFormatChanged);
         });
     </script>
 {% endblock %}

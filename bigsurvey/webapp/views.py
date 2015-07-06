@@ -117,8 +117,11 @@ class TesterHomeView(BaseTemplateView, FormView):
     form_class = TesterSiteSearchForm
 
     def get_context_data(self, **kwargs):
-        kwargs['form'] = self.form_class(self.request.POST or None)
-        return super(TesterHomeView, self).get_context_data(**kwargs)
+        context = super(TesterHomeView, self).get_context_data(**kwargs)
+        form = self.form_class(self.request.POST or None)
+        form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+        context['form'] = form
+        return context
 
     def form_valid(self, form):
         self.request.session['site_pk'] = form.site.pk
@@ -574,12 +577,12 @@ class TestAddView(TestBaseFormView, CreateView):
         return super(TestAddView, self).get_form(form_class)
 
     def get_success_url(self):
-        return reverse('webapp:test_edit', args=(self.object.pk,))
+        return reverse('webapp:unpaid_test_list')
 
     def form_valid(self, form):
         form.instance.bp_device = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        form.instance.user = self.request.user
         response = super(TestAddView, self).form_valid(form)
-        self.request.session['test_for_payment_pk'] = self.object.pk
         return response
 
 
@@ -591,7 +594,6 @@ class TestEditView(TestBaseFormView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(TestEditView, self).get_context_data(**kwargs)
         context['hazard'] = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
-        context['test_for_payment_pk'] = self.request.session.get('test_for_payment_pk', None)
         return context
 
     def get_form(self, form_class):

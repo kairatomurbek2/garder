@@ -560,6 +560,7 @@ class Test(models.Model):
     bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"),
                                   related_name="tests")
     tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")
+    user = models.ForeignKey(User, verbose_name=_("Who added test into System"), related_name="added_tests")
     test_date = models.DateField(verbose_name=_("Test Date"), auto_now_add=True)
     cv1_leaked = models.BooleanField(default=False, choices=VALVE_LEAKED_CHOICES, verbose_name=_("CV1 Leaked"))
     cv1_gauge_pressure = models.FloatField(blank=True, null=True, verbose_name=_("CV1 Gauge Pressure"))

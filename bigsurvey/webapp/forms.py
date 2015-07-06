@@ -1,12 +1,10 @@
 from django import forms
-
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, Details, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, TEST_RESULT_CHOICES, DATEFORMAT_CHOICES
 from webapp.validators import validate_excel_file
 
 
@@ -83,16 +81,16 @@ class TestForm(forms.ModelForm):
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
     cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                          queryset=models.Detail.objects.filter(pk__in=Details.cv1),
+                                                          queryset=models.Detail.objects.all(),
                                                           required=False)
     rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                         queryset=models.Detail.objects.filter(pk__in=Details.rv),
+                                                         queryset=models.Detail.objects.all(),
                                                          required=False)
     cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                          queryset=models.Detail.objects.filter(pk__in=Details.cv2),
+                                                          queryset=models.Detail.objects.all(),
                                                           required=False)
     pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                          queryset=models.Detail.objects.filter(pk__in=Details.pvb),
+                                                          queryset=models.Detail.objects.all(),
                                                           required=False)
     test_result = forms.ChoiceField(widget=forms.RadioSelect, choices=TEST_RESULT_CHOICES)
 
@@ -177,7 +175,7 @@ class TestForm(forms.ModelForm):
 
     class Meta:
         model = models.Test
-        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened', 'paid')
+        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened', 'paid', 'user')
 
 
 class EmployeeForm(forms.ModelForm):

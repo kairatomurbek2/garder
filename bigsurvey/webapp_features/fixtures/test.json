@@ -4213,6 +4213,9 @@
     "tester": [
       "tester"
     ],
+    "user": [
+      "tester"
+    ],
     "cv1_maintenance": false,
     "cv1_cleaned": false,
     "paid": true,
@@ -4258,6 +4261,9 @@
     "tester": [
       "tester"
     ],
+    "user": [
+      "tester"
+    ],
     "cv1_maintenance": false,
     "cv1_cleaned": true,
     "paid": true,
@@ -4301,6 +4307,9 @@
     "cv2_gauge_pressure": null,
     "pvb_cleaned": true,
     "tester": [
+      "tester"
+    ],
+    "user": [
       "tester"
     ],
     "cv1_maintenance": false,
