@@ -559,8 +559,18 @@
             </form>
         </div>
     </div>
+    {% if test_for_payment_pk %}
+        {% include 'test/test_payment_modal.html' %}
+    {% endif %}
 {% endblock %}
 {% block scripts %}
+    {% if test_for_payment_pk %}
+        <script src="{% static 'js/custom/paypal.js' %}"></script>
+        <script>
+            var tests = [{{ test_for_payment_pk }}];
+        </script>
+        <script src="{% static 'js/custom/payment-after-creation.js' %}"></script>
+    {% endif %}
     <script src="{% static 'js/custom/non-clickable-checkbox.js' %}"></script>
     <script>
         var checkboxChangedTrigger = function (checkbox, input) {
@@ -593,17 +603,17 @@
             });
         };
 
-        var contradictionsChangedTrigger = function (disabledGroup) {
+        var contradictionsChangedTrigger = function (currentGroup, anotherGroup) {
 
         };
 
         var listenContradictions = function (group1, group2) {
 
             group1.change(function () {
-                contradictionsChangedTrigger(group2);
+                contradictionsChangedTrigger(group1, group2);
             });
             group2.change(function () {
-                contradictionsChangedTrigger(group1);
+                contradictionsChangedTrigger(group2, group1);
             });
         };
 

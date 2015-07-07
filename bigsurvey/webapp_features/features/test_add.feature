@@ -29,7 +29,9 @@ Feature: Test adding
     And I check "rv_did_not_open"
     And I check "cv_leaked"
     When I submit "test" form
-    Then I should be on "unpaid_test_list" page
+    Then I should see pay modal
+    When I close pay modal
+    Then I should be redirected to "unpaid_test_list" page
     And I should see following
       | text   |
       | tester |
