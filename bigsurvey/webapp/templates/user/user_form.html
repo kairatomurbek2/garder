@@ -192,6 +192,13 @@
                         {{ employee_form.test_last_cert|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ employee_form.test_last_cert.errors }}
                     </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ employee_form.has_licence_for_installation.id_for_label }}">{{ employee_form.has_licence_for_installation.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ employee_form.has_licence_for_installation|add_class:"uk-width-1-1" }}
+                        {{ employee_form.has_licence_for_installation.errors }}
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4">

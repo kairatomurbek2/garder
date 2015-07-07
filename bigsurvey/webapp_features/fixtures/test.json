@@ -4430,7 +4430,8 @@
     ],
     "address": "tester address",
     "cert_date": null,
-    "test_manufacturer": null
+    "test_manufacturer": null,
+    "has_licence_for_installation": true
   },
   "model": "webapp.employee",
   "pk": 2

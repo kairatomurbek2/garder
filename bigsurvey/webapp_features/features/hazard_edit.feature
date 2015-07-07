@@ -29,6 +29,17 @@ Feature: Hazard Edit
       | Location 2  |
       | Notes       |
 
+  Scenario Outline: Testing has_licence_for_installation property
+    Given "tester" <relation> licence for installation
+    And I logged in as "tester"
+    When I directly open "hazard_edit" page with pk "2"
+    Then I should <reaction> "Page not found"
+    And I logout
+    And I reset database
+  Examples:
+    | relation      | reaction |
+    | has           | not see  |
+    | does not have | see      |
 
   Scenario: Correct hazard editing
     Given I logged in as "tester"

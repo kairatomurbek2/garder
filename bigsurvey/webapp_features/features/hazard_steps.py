@@ -1,10 +1,13 @@
 from common_steps import *
 from lettuce import *
 from data import *
+from webapp import models
+
 
 @step('I open "hazard_list" page')
 def open_hazard_list_page(step):
     step.given('I click "hazards" menu link')
+
 
 @step('I directly open "hazard_detail" page with pk "(\d+)"')
 def directly_open_hazard_detail_page(step, pk):
@@ -74,3 +77,11 @@ def check_hazard_editing_error_message(step):
 @step('I should see "hazard editing success" message')
 def check_hazard_editing_success_message(step):
     step.given('I should see "%s"' % Messages.Hazard.editing_success)
+
+
+@step('"(.*)" (has|does not have) licence for installation')
+def set_has_licence_for_installation(step, username, relation):
+    user = models.User.objects.get(username=username)
+    has_licence_for_installation = True if relation == 'has' else False
+    user.employee.has_licence_for_installation = has_licence_for_installation
+    user.employee.save()

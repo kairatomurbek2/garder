@@ -524,6 +524,8 @@ class HazardEditView(HazardBaseFormView, UpdateView):
         form = super(HazardEditView, self).get_form(form_class)
         if not perm_checkers.HazardPermChecker.has_perm(self.request, form.instance):
             raise Http404
+        if not self.request.user.has_perm('webapp.change_all_info_about_hazard') and not self.request.user.employee.has_licence_for_installation:
+            raise Http404
         form.fields['assembly_status'].queryset = self._get_queryset_for_assembly_status_field()
         return form
 

@@ -16,14 +16,16 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    {% load_google_map_js %}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            GoogleMap.mapHolder = $('#mapholder');
-            GoogleMap.latitudeInput= $('input[name="latitude"]');
-            GoogleMap.longitudeInput= $('input[name="longitude"]');
-            GoogleMap.notificationLabel = $('#notification');
-            GoogleMap.initialize(true);
-        });
-    </script>
+    {% if perms.webapp.change_all_info_about_hazard %}
+        {% load_google_map_js %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                GoogleMap.mapHolder = $('#mapholder');
+                GoogleMap.latitudeInput = $('input[name="latitude"]');
+                GoogleMap.longitudeInput = $('input[name="longitude"]');
+                GoogleMap.notificationLabel = $('#notification');
+                GoogleMap.initialize(true);
+            });
+        </script>
+    {% endif %}
 {% endblock %}
