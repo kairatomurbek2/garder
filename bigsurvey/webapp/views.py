@@ -1090,7 +1090,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
             payment = paypalrestsdk.Payment.find(payment_id)
             if payment.execute({'payer_id': payer_id}):
                 test_pks = self.request.GET['tests'].split(',')
-                models.Test.objects.filter(pk__in=test_pks).update(paid=True)
+                models.Test.objects.filter(pk__in=test_pks).update(paid=True, paypal_payment_id=payment_id)
                 messages.success(self.request, __(Messages.Test.payment_successful_singular, Messages.Test.payment_successful_plural, len(test_pks)))
             else:
                 messages.error(self.request, Messages.Test.payment_failed)

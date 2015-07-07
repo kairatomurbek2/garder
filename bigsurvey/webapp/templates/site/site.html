@@ -141,9 +141,12 @@
                     <div id="surveys_content">
                         {% if perms.webapp.add_survey %}
                             <div id="survey-button-group" class="wrapper uk-text-center">
-                                <a class="uk-button uk-button-primary uk-button-large" href="{% url 'webapp:survey_add' site.pk 'potable' %}" id="site_{{ site.pk }}_service_potable_survey_add_link">{% trans "Add Potable" %}</a>
-                                <a class="uk-button uk-button-danger uk-button-large" href="{% url 'webapp:survey_add' site.pk 'fire' %}" id="site_{{ site.pk }}_service_fire_survey_add_link">{% trans "Add Fire" %}</a>
-                                <a class="uk-button uk-button-success uk-button-large" href="{% url 'webapp:survey_add' site.pk 'irrigation' %}" id="site_{{ site.pk }}_service_irrigation_survey_add_link">{% trans "Add Irrigation" %}</a>
+                                <a class="uk-button uk-button-primary uk-button-large" href="{% url 'webapp:survey_add' site.pk 'potable' %}"
+                                   id="site_{{ site.pk }}_service_potable_survey_add_link">{% trans "Add Potable" %}</a>
+                                <a class="uk-button uk-button-danger uk-button-large" href="{% url 'webapp:survey_add' site.pk 'fire' %}"
+                                   id="site_{{ site.pk }}_service_fire_survey_add_link">{% trans "Add Fire" %}</a>
+                                <a class="uk-button uk-button-success uk-button-large" href="{% url 'webapp:survey_add' site.pk 'irrigation' %}"
+                                   id="site_{{ site.pk }}_service_irrigation_survey_add_link">{% trans "Add Irrigation" %}</a>
                             </div>
                         {% endif %}
                         <div class="wrapper">
@@ -201,8 +204,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                     </div>
                 </li>
             {% endif %}
@@ -228,7 +229,7 @@
                                     <th>
                                         {% trans "Due Install/Test" %}
                                     </th>
-                                    <th colspan="2" class="uk-text-center border-left uk-width-1-10">
+                                    <th {% if perms.webapp.add_test %}colspan="2"{% endif %} class="uk-text-center border-left uk-width-1-10">
                                         {% trans "Actions" %}
                                     </th>
                                 </tr>
@@ -255,7 +256,7 @@
                                             <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
                                         </td>
                                         {% if perms.webapp.add_test %}
-                                            <td class="uk-text-center">
+                                            <td class="uk-text-center" nowrap>
                                                 <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
                                             </td>
                                         {% endif %}
@@ -264,7 +265,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </li>
             {% endif %}

@@ -598,6 +598,7 @@ class Test(models.Model):
     rv_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='rv_replacements')
     pvb_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='pvb_replacements')
     paid = models.BooleanField(default=False, verbose_name=_('Was test paid?'))
+    paypal_payment_id = models.CharField(max_length=50, null=True, blank=True, verbose_name=_('Paypal Payment ID'))
 
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)

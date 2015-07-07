@@ -551,8 +551,8 @@
                     <p class="uk-float-right uk-text-right">
                         {% url 'webapp:unpaid_test_list' as unpaid_test_list_url %}
                         {% blocktrans %}
-                            After adding test you will be asked to pay.<br>
-                            You can pay immediately or later from <a href="{{ unpaid_test_list_url }}">"Unpaid Tests"</a> page
+                            After adding test you will be redirected to<br>
+                            <a href="{{ unpaid_test_list_url }}">"Unpaid Tests"</a> page where you can pay for the test
                         {% endblocktrans %}
                     </p>
                 {% endif %}

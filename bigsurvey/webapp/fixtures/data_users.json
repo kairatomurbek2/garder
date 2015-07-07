@@ -526,7 +526,7 @@
 {
   "fields": {
     "city": "",
-    "pws": null,
+    "pws": 1,
     "zip": "",
     "phone2": "",
     "cert_number": null,
