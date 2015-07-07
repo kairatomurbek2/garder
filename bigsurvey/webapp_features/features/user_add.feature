@@ -13,6 +13,11 @@ Feature: User adding
     | surveyor | see      |
     | tester   | see      |
 
+  Scenario: More... link exists in menu
+    Given I logged in as "root"
+    When I open "user_add" page
+    Then I should see "More..."
+
   Scenario: Correct user adding
     Given I logged in as "admin"
     And I open "user_add" page

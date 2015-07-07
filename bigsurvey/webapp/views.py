@@ -50,10 +50,6 @@ class PermissionRequiredMixin(View):
 
 
 class BaseView(PermissionRequiredMixin):
-    pass
-
-
-class BaseTemplateView(BaseView, TemplateView):
     def has_more_link(self):
         user = self.request.user
         return user.has_perm('webapp.access_to_adminpanel') or \
@@ -65,9 +61,13 @@ class BaseTemplateView(BaseView, TemplateView):
                user.has_perm('webapp.access_to_batch_update')
 
     def get_context_data(self, **kwargs):
-        context = super(BaseTemplateView, self).get_context_data(**kwargs)
+        context = super(BaseView, self).get_context_data(**kwargs)
         context['has_more_link'] = self.has_more_link()
         return context
+
+
+class BaseTemplateView(BaseView, TemplateView):
+    pass
 
 
 class BaseFormView(BaseView, FormView):
@@ -660,7 +660,10 @@ class UserBaseFormView(BaseFormView):
         employee_form = self.get_employee_form()
         user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
         employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-        return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
+        context = super(BaseFormView, self).get_context_data()
+        context['user_form'] = user_form
+        context['employee_form'] = employee_form
+        return render(self.request, self.template_name, context)
 
     def _get_queryset_for_group_field(self):
         queryset = []
