@@ -119,7 +119,10 @@ class TesterHomeView(BaseTemplateView, FormView):
     def get_context_data(self, **kwargs):
         context = super(TesterHomeView, self).get_context_data(**kwargs)
         form = self.form_class(self.request.POST or None)
-        form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+        try:
+            form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+        except AttributeError:
+            form.fields['pws'].queryset = models.PWS.objects.none()
         context['form'] = form
         return context
 
@@ -958,7 +961,7 @@ class LetterPDFView(BaseView, FormView, LetterMixin):
             body = self.get_email_body(letter, form)
 
             pdf_content = PDFGenerator.generate_from_html(body)
-            filename = u"%s_%s_%s.pdf" % (letter.date, letter.letter_type.letter_type, letter.site.cust_number)
+            filename = u"%s_%s_%s.pdf" % (letter.date, letter.letter_type.letter_type.replace(' ', '_'), letter.site.cust_number)
             return PDFResponse(filename=filename, content=pdf_content)
 
 

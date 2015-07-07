@@ -5,7 +5,7 @@
     <li><a href="{% url "webapp:letter_edit" letter.pk %}" id="letter_{{ letter.pk }}_edit_link">
         {% trans "Edit" %}
     </a></li>
-    <li><a href="{% url "webapp:letter_pdf" letter.pk %}" id="letter_{{ letter.pk }}_pdf_link" data-action="show-pdf-options-modal">
+    <li><a href="{% url "webapp:letter_pdf" letter.pk %}" id="letter_{{ letter.pk }}_pdf_link" data-action="download-pdf">
         {% trans "Get PDF" %}
     </a></li>
 {% endblock %}
@@ -45,20 +45,29 @@
             {{ letter.rendered_body|safe }}
         </div>
     </div>
-    <div id="modal-wrapper"></div>
 {% endblock %}
 {% block scripts %}
     <script>
         $(document).ready(function () {
-            $('[data-action="show-pdf-options-modal"]').click(function (e) {
+            $('[data-action="download-pdf"]').click(function (e) {
                 e.preventDefault();
 
                 var url = $(this).attr('href');
 
                 $.ajax(url, {
-                    success: function (response) {
-                        $('#modal-wrapper').html(response);
-                        UIkit.modal('#pdf-options-modal').show();
+                    method: 'POST',
+                    data: new FormData($('form[name="letter-send"]').get(0)),
+                    processData: false,
+                    contentType: false,
+                    success: function (response, status, xhr) {
+                        var content_disposition = xhr.getResponseHeader('Content-Disposition');
+                        var regexp = /filename="(.*)"/;
+                        var filename = regexp.exec(content_disposition)[1];
+                        var blob = new Blob([response]);
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename;
+                        link.click();
                     }
                 });
 
