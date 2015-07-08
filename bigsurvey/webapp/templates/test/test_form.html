@@ -20,7 +20,6 @@
             <h3 class="uk-text-uppercase uk-text-center uk-text-bold">{% trans 'Test and Maintenance report' %}</h3>
 
             <p class="uk-text-uppercase uk-text-center">{% trans 'Backflow Prevention Assemblies' %}</p>
-
             <form class="uk-form" method="post" name="test">
                 {% csrf_token %}
                 <div class="uk-width-1-1">
@@ -92,6 +91,7 @@
                         <td>
                             <p class="rv_psi1">
                                 {% trans 'Opened at' %}
+                                {{ form.rv_psi1.errors }}
                                 {{ form.rv_psi1|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -106,6 +106,7 @@
 
                             <p class="air_inlet_psi">
                                 {% trans 'Opened at' %}
+                                {{ form.air_inlet_psi.errors }}
                                 {{ form.air_inlet_psi|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -117,6 +118,7 @@
 
                             <p class="cv1_gauge_pressure">
                                 {% trans 'Check valve' %}
+                                {{ form.cv1_gauge_pressure.errors }}
                                 {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -130,6 +132,7 @@
 
                             <p class="cv2_gauge_pressure">
                                 {% trans 'Check valve' %}
+                                {{ form.cv2_gauge_pressure.errors }}
                                 {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -139,6 +142,7 @@
 
                             <p class="cv_held_pressure">
                                 {% trans 'Or held at' %}
+                                {{ form.cv_held_pressure.errors }}
                                 {{ form.cv_held_pressure|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -462,6 +466,7 @@
 
                             <p>
                                 {% trans 'Check valve' %}
+                                {{ form.cv1_maintenance_pressure.errors }}
                                 {{ form.cv1_maintenance_pressure|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -472,6 +477,7 @@
                             </p>
 
                             <p>
+                                {{ form.rv_psi2.errors }}
                                 {{ form.rv_psi2|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -483,6 +489,7 @@
 
                             <p>
                                 {% trans 'Check valve' %}
+                                {{ form.cv2_maintenance_pressure.errors }}
                                 {{ form.cv2_maintenance_pressure|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
@@ -490,12 +497,14 @@
                         <td>
                             <p>
                                 {% trans 'Air Inlet' %}
+                                {{ form.air_inlet_retest_psi.errors }}
                                 {{ form.air_inlet_retest_psi|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
 
                             <p>
                                 {% trans 'Check valve' %}
+                                 {{ form.cv_retest_psi.errors }}
                                 {{ form.cv_retest_psi|add_class:'uk-form-small' }}
                                 {% trans 'psi' %}
                             </p>
