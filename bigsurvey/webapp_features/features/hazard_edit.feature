@@ -7,16 +7,16 @@ Feature: Hazard Edit
     Then I should <reaction> "Page not found"
     And I logout
 
-  Examples:
-    | role     | pk | reaction |
-    | root     | 1  | not see  |
-    | root     | 2  | not see  |
-    | admin    | 2  | not see  |
-    | admin    | 1  | see      |
-    | surveyor | 2  | not see  |
-    | surveyor | 1  | see      |
-    | tester   | 2  | not see  |
-    | tester   | 1  | not see  |
+    Examples:
+      | role     | pk | reaction |
+      | root     | 1  | not see  |
+      | root     | 2  | not see  |
+      | admin    | 2  | not see  |
+      | admin    | 1  | see      |
+      | surveyor | 2  | not see  |
+      | surveyor | 1  | see      |
+      | tester   | 2  | not see  |
+      | tester   | 1  | not see  |
 
 
   Scenario: Tester Field Set
@@ -36,10 +36,10 @@ Feature: Hazard Edit
     Then I should <reaction> "Page not found"
     And I logout
     And I reset database
-  Examples:
-    | relation      | reaction |
-    | has           | not see  |
-    | does not have | see      |
+    Examples:
+      | relation      | reaction |
+      | has           | not see  |
+      | does not have | see      |
 
   Scenario: Correct hazard editing
     Given I logged in as "tester"
@@ -48,15 +48,24 @@ Feature: Hazard Edit
       | field     | value |
       | installer | self  |
     And I select "Horizontal" from "orientation"
+    And I select "Yes" from "pump_present"
+    And I select "Yes" from "additives_present"
+    And I select "Yes" from "cc_present"
+    And I select "Yes" from "aux_water"
     And I submit "hazard" form
     Then I should be at "hazard_detail" page with pk "2"
     And I should see "hazard editing success" message
     And I should see following
-      | text         |
-      | self         |
-      | Horizontal   |
-      | Trailer Park |
-      | Washington   |
+      | text              |
+      | self              |
+      | Horizontal        |
+      | Trailer Park      |
+      | Washington        |
+      | Pump Present      |
+      | CC Present        |
+      | Additives Present |
+      | Auxiliary Water   |
+      | Yes               |
 
 
   Scenario: Incorrect hazard editing

@@ -7,16 +7,16 @@ Feature: Hazard Detail
     Then I should <reaction> "Page not found"
     And I logout
 
-  Examples:
-    | role     | pk | reaction |
-    | root     | 1  | not see  |
-    | root     | 2  | not see  |
-    | admin    | 2  | not see  |
-    | admin    | 1  | see      |
-    | surveyor | 2  | not see  |
-    | surveyor | 1  | see      |
-    | tester   | 2  | not see  |
-    | tester   | 1  | not see  |
+    Examples:
+      | role     | pk | reaction |
+      | root     | 1  | not see  |
+      | root     | 2  | not see  |
+      | admin    | 2  | not see  |
+      | admin    | 1  | see      |
+      | surveyor | 2  | not see  |
+      | surveyor | 1  | see      |
+      | tester   | 2  | not see  |
+      | tester   | 1  | not see  |
 
 
   Scenario: Hazard detail page elements
@@ -33,3 +33,7 @@ Feature: Hazard Detail
       | Edit                    |
       | Add Test                |
       | Jan. 27, 2015, Failed   |
+      | Pump Present            |
+      | CC Present              |
+      | Additives Present       |
+      | Auxiliary Water         |

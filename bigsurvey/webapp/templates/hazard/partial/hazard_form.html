@@ -6,6 +6,38 @@
     {% csrf_token %}
     <table class="uk-table form-center border-none uk-table-condensed">
         <tbody>
+            <tr>
+                <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.pump_present.id_for_label }}">{{ form.pump_present.label }}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.pump_present|add_class:'uk-width-1-1' %}
+                    {{ form.pump_present.errors }}
+                </td>
+                <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.additives_present.id_for_label }}">{{ form.additives_present.label }}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.additives_present|add_class:'uk-width-1-1' %}
+                    {{ form.additives_present.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.cc_present.id_for_label }}">{{ form.cc_present.label }}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.cc_present|add_class:'uk-width-1-1' %}
+                    {{ form.cc_present.errors }}
+                </td>
+                <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.aux_water.id_for_label }}">{{ form.aux_water.label }}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.aux_water|add_class:'uk-width-1-1' %}
+                    {{ form.aux_water.errors }}
+                </td>
+            </tr>
         {% if perms.webapp.change_all_info_about_hazard %}
             <tr>
                 <td class="uk-width-1-6 uk-text-right uk-text-bold">

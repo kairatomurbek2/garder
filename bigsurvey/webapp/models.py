@@ -470,6 +470,10 @@ class Hazard(models.Model):
                               verbose_name=_('Photo'))
     photo_thumb = models.ImageField(blank=True, null=True, default=None, upload_to='photo/thumb/',
                                     verbose_name=_('Photo Thumbnail'))
+    pump_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Pump Present"))
+    additives_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Additives Present"))
+    cc_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("CC Present"))
+    aux_water = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Auxiliary Water"))
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="hazards")
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
     assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
