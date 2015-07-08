@@ -8,3 +8,4 @@ class Command(BaseCommand):
         for model in get_models(webapp):
             model.objects.all().delete()
         call_command('loaddata', 'test', interactive=False, verbosity=1)
+        call_command('create_lettertypes_for_pws', interactive=False, verbosity=1)
