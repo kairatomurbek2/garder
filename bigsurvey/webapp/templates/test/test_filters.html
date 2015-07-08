@@ -2,87 +2,89 @@
 {% load widget_tweaks %}
 <form action="" method="get" name="test_filter" class="uk-form">
     <div class="fixed fixed-filters">
-        <table class="uk-table border-none">
-            <thead>
-            <tr class="border-bottom">
-                <th class="uk-text-center uk-text-large uk-text-primary">
-                    {% trans "Filters" %}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if perms.webapp.access_to_all_tests %}
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.pws.label }}
-                    {{ test_filter.form.pws|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            {% endif %}
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.customer.label }}
-                    {{ test_filter.form.customer|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.city.label }}
-                    {{ test_filter.form.city|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.address.label }}
-                    {{ test_filter.form.address|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.service_type.label }}
-                    {{ test_filter.form.service_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.hazard_type.label }}
-                    {{ test_filter.form.hazard_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.bp_type.label }}
-                    {{ test_filter.form.bp_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.test_date.label }}
-                    {{ test_filter.form.test_date|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            {% if perms.webapp.access_to_pws_tests or perms.webapp.access_to_all_tests %}
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.tester.label }}
-                    {{ test_filter.form.tester|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            {% endif %}
-            <tr class="uk-text-center">
-                <td>
-                    {{ test_filter.form.test_result.label }}
-                    {{ test_filter.form.test_result|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="uk-button uk-button-primary uk-align-center" type="submit">
-                        {% trans "Apply Filters" %}
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div id="filters-scroll">
+            <table class="uk-table border-none">
+                <thead>
+                <tr class="border-bottom">
+                    <th class="uk-text-center uk-text-large uk-text-primary">
+                        {% trans "Filters" %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if perms.webapp.access_to_all_tests %}
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.pws.label }}
+                        {{ test_filter.form.pws|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                {% endif %}
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.customer.label }}
+                        {{ test_filter.form.customer|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.city.label }}
+                        {{ test_filter.form.city|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.address.label }}
+                        {{ test_filter.form.address|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.service_type.label }}
+                        {{ test_filter.form.service_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.hazard_type.label }}
+                        {{ test_filter.form.hazard_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.bp_type.label }}
+                        {{ test_filter.form.bp_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.test_date.label }}
+                        {{ test_filter.form.test_date|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                {% if perms.webapp.access_to_pws_tests or perms.webapp.access_to_all_tests %}
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.tester.label }}
+                        {{ test_filter.form.tester|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                {% endif %}
+                <tr class="uk-text-center">
+                    <td>
+                        {{ test_filter.form.test_result.label }}
+                        {{ test_filter.form.test_result|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                            {% trans "Apply Filters" %}
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </form>

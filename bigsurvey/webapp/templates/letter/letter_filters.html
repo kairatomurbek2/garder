@@ -2,80 +2,82 @@
 {% load widget_tweaks %}
 <form action="" method="get" name="letter_filter" class="uk-form">
     <div class="fixed fixed-filters">
-        <table class="uk-table border-none">
-            <thead>
-            <tr class="border-bottom">
-                <th class="uk-text-center uk-text-large uk-text-primary">
-                    {% trans "Filters" %}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if perms.webapp.full_letter_access %}
+        <div id="filters-scroll">
+            <table class="uk-table border-none">
+                <thead>
+                <tr class="border-bottom">
+                    <th class="uk-text-center uk-text-large uk-text-primary">
+                        {% trans "Filters" %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if perms.webapp.full_letter_access %}
+                    <tr class="uk-text-center">
+                        <td>
+                            {{ letter_filter.form.pws.label }}
+                            {{ letter_filter.form.pws|add_class:"uk-width-1-1" }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr class="uk-text-center">
                     <td>
-                        {{ letter_filter.form.pws.label }}
-                        {{ letter_filter.form.pws|add_class:"uk-width-1-1" }}
+                        {{ letter_filter.form.customer.label }}
+                        {{ letter_filter.form.customer|add_class:"uk-width-1-1" }}
                     </td>
                 </tr>
-            {% endif %}
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.customer.label }}
-                    {{ letter_filter.form.customer|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.customer_email.label }}
-                    {{ letter_filter.form.customer_email|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.service_type.label }}
-                    {{ letter_filter.form.service_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.hazard_type.label }}
-                    {{ letter_filter.form.hazard_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.letter_type.label }}
-                    {{ letter_filter.form.letter_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.user.label }}
-                    {{ letter_filter.form.user|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ letter_filter.form.already_sent.label }}
-                    {{ letter_filter.form.already_sent|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {% trans "Letter Date" %}
-                    {% trans "From" %} {{ letter_filter.form.date_gt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
-                    {% trans "To" %} {{ letter_filter.form.date_lt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="uk-button uk-button-primary uk-align-center" type="submit">
-                        {% trans "Apply Filters" %}
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.customer_email.label }}
+                        {{ letter_filter.form.customer_email|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.service_type.label }}
+                        {{ letter_filter.form.service_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.hazard_type.label }}
+                        {{ letter_filter.form.hazard_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.letter_type.label }}
+                        {{ letter_filter.form.letter_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.user.label }}
+                        {{ letter_filter.form.user|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.already_sent.label }}
+                        {{ letter_filter.form.already_sent|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {% trans "Letter Date" %}
+                        {% trans "From" %} {{ letter_filter.form.date_gt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {% trans "To" %} {{ letter_filter.form.date_lt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                            {% trans "Apply Filters" %}
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </form>

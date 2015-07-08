@@ -2,73 +2,75 @@
 {% load widget_tweaks %}
 <form action="" method="get" name="site_filter" class="uk-form">
     <div class="fixed fixed-filters">
-        <table class="uk-table border-none">
-            <thead>
-            <tr class="border-bottom">
-                <th class="uk-text-center uk-text-large uk-text-primary">
-                    {% trans "Filters" %}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if perms.webapp.access_to_all_sites %}
+        <div id="filters-scroll">
+            <table class="uk-table border-none">
+                <thead>
+                <tr class="border-bottom">
+                    <th class="uk-text-center uk-text-large uk-text-primary">
+                        {% trans "Filters" %}
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if perms.webapp.access_to_all_sites %}
+                    <tr class="uk-text-center">
+                        <td>
+                            {{ site_filter.form.pws.label }}
+                            {{ site_filter.form.pws|add_class:"uk-width-1-1" }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.pws.label }}
-                        {{ site_filter.form.pws|add_class:"uk-width-1-1" }}
+                        {{ site_filter.form.route.label }}
+                        {{ site_filter.form.route|add_class:"uk-width-1-1" }}
                     </td>
                 </tr>
-            {% endif %}
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.route.label }}
-                    {{ site_filter.form.route|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.cust_number.label }}
-                    {{ site_filter.form.cust_number|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.address.label }}
-                    {{ site_filter.form.address|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.last_survey_date.label }}
-                    {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.next_survey_date.label }}
-                    {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.site_type.label }}
-                    {{ site_filter.form.site_type|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr class="uk-text-center">
-                <td>
-                    {{ site_filter.form.site_use.label }}
-                    {{ site_filter.form.site_use|add_class:"uk-width-1-1" }}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button class="uk-button uk-button-primary uk-align-center" type="submit">
-                        {% trans "Apply Filters" %}
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ site_filter.form.cust_number.label }}
+                        {{ site_filter.form.cust_number|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ site_filter.form.address.label }}
+                        {{ site_filter.form.address|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ site_filter.form.last_survey_date.label }}
+                        {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ site_filter.form.next_survey_date.label }}
+                        {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ site_filter.form.site_type.label }}
+                        {{ site_filter.form.site_type|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ site_filter.form.site_use.label }}
+                        {{ site_filter.form.site_use|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                            {% trans "Apply Filters" %}
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </form>
