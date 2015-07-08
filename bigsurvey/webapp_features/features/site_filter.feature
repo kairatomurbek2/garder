@@ -84,3 +84,13 @@ Feature: Filtration
       | text       |
       | Seattle    |
       | Washington |
+
+  Scenario: Filtration by account number while logged in as root
+    Given I logged in as "root"
+    And I open "site_list" page
+    When I fill in "cust_number" with "VALVE"
+    And I submit "site_filter" form
+    Then I should see following
+      | text                 |
+      | Seattle              |
+      | 98, South Jackson st |

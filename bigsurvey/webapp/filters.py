@@ -382,7 +382,7 @@ class FilterActions(object):
 
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
-    number = django_filters.CharFilter(lookup_type='icontains', label=_('Account Number'), name='number')
+    cust_number = django_filters.CharFilter(lookup_type='icontains', label=_('Account Number'), name='cust_number')
     address = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address'), name='address1')
     site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
