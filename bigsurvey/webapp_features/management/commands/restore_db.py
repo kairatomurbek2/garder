@@ -1,9 +1,10 @@
 from django.core.management import BaseCommand, call_command
-
-from webapp import models
+from django.db.models.loading import get_models, get_app
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        models.Site.objects.all().delete()
-        call_command('loaddata', 'test', interactive=False, verbosity=0)
+        webapp = get_app('webapp')
+        for model in get_models(webapp):
+            model.objects.all().delete()
+        call_command('loaddata', 'test', interactive=False, verbosity=1)

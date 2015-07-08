@@ -3,6 +3,7 @@ var GoogleMap = {
     latitudeInput: null,
     longitudeInput: null,
     notificationLabel: null,
+    getLocationButton: null,
     map: null,
     latitude: null,
     longitude: null,
@@ -21,9 +22,11 @@ var GoogleMap = {
             this.latitudeInput.change(this.inputChanged.bind(this));
             this.longitudeInput.keyup(this.inputChanged.bind(this));
             this.longitudeInput.change(this.inputChanged.bind(this));
+            this.getLocationButton.click(this.getLocationButtonClicked.bind(this))
         } catch (e) {
 
         }
+        this.setCoords(this.latitude, this.longitude);
     },
 
     getMap: function () {
@@ -62,7 +65,9 @@ var GoogleMap = {
             this.latitude = parseFloat(latitudeInputValue);
             this.longitude = parseFloat(longitudeInputValue);
         } catch (e) {
-            this.setDefaultCenterCoords();
+            // this.setDefaultCenterCoords();
+            this.latitude = 0;
+            this.longitude = 0;
         }
     },
 
@@ -114,6 +119,11 @@ var GoogleMap = {
             return;
         }
         this.setCoords(parseFloat(latitudeInputValue), parseFloat(longitudeInputValue));
+    },
+
+    getLocationButtonClicked: function () {
+        this.notificationLabel.empty();
+        this.setDefaultCenterCoords();
     },
 
     setCoords: function (latitude, longitude, reDraw) {

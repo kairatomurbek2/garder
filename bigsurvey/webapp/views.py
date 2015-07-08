@@ -1062,13 +1062,13 @@ class TestDetailView(BaseTemplateView):
 class UnpaidTestMixin(object):
     def get_unpaid_tests(self):
         user = self.request.user
-        paid_tests = models.Test.objects.filter(paid=False)
+        unpaid_tests = models.Test.objects.filter(paid=False)
         if user.has_perm('webapp.access_to_all_tests'):
-            return paid_tests
+            return unpaid_tests
         if user.has_perm("webapp.access_to_pws_tests"):
-            return paid_tests.filter(bp_device__site__pws=user.employee.pws)
+            return unpaid_tests.filter(user=user)
         if user.has_perm('webapp.access_to_own_tests'):
-            return paid_tests.filter(tester=user)
+            return unpaid_tests.filter(user=user)
 
 
 class UnpaidTestView(BaseTemplateView, UnpaidTestMixin):

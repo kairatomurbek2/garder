@@ -29,3 +29,14 @@ Feature: Test editing
     Then I should be at "test_detail" page with pk "2"
     And I should see "test editing success" message
     And I should see "111111"
+
+  Scenario: Check test_date is editable
+    Given I logged in as "tester"
+    And I directly open "test_edit" page with pk "3"
+    And I fill in "test_date" with "2015-07-08"
+    When I submit "test" form
+    Then I should be at "test_detail" page with pk "3"
+    And I should see following
+      | text         |
+      | July 8, 2015 |
+    And I reset database
