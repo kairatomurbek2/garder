@@ -8,7 +8,11 @@
     "is_superuser": true,
     "is_staff": true,
     "last_login": "2015-04-30T08:14:19Z",
-    "groups": [],
+    "groups": [
+      [
+        "SuperAdministrators"
+      ]
+    ],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",
     "email": "root@root.root",

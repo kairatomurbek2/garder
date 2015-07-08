@@ -28,6 +28,10 @@ div.wrapper {
     margin-top: 20px;
 }
 
+.uk-grid + .uk-grid.margin-top-0 {
+    margin-top: 0;
+}
+
 .margin-left-200 {
     margin-left: 200px;
 }

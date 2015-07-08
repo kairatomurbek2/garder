@@ -119,7 +119,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             GoogleMap.mapHolder = $('#mapholder');
-            GoogleMap.setCoords({{ hazard.latitude }}, {{ hazard.longitude }}, false);
+            GoogleMap.setCoords({{ hazard.latitude|default_if_none:0 }}, {{ hazard.longitude|default_if_none:0 }}, false);
             GoogleMap.initialize(false);
         });
     </script>

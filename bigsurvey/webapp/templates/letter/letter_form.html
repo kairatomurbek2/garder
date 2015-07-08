@@ -3,7 +3,7 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block menu %}
-    <li><a href="{% url 'webapp:home' %}" id="return_to_site_link">{% trans "Cancel" %}</a></li>
+    <li><a href="{% url 'webapp:site_detail' site.pk %}" id="return_to_site_link">{% trans "Cancel" %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="wrapper">

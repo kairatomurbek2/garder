@@ -509,7 +509,7 @@
                         {{ form.test_result.errors }}
                     </div>
                 </div>
-                <div class="uk-grid">
+                <div class="uk-grid margin-top-0">
                     <div class="uk-width-1-5">
                         <h4 class="inline-block">{% trans 'The Assembly' %}:</h4>
                     </div>
@@ -532,12 +532,9 @@
                     <span class="inline-width-1-6" class="border-none">{{ form.tester }}</span>
 
                     <p class="inline-width-1-6">{% trans 'Date' %}</p>
-                    <span class="inline-width-1-6 border-bottom">
-                        {% if object %}
-                            {{ object.test_date }}
-                        {% else %}
-                            {% now 'N j, Y' %}
-                        {% endif %}
+                    <span class="inline-width-1-6">
+                        {{ form.test_date.errors }}
+                        {{ form.test_date|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                     </span>
                 </div>
                 <div class="uk-width-1-1">
