@@ -783,6 +783,16 @@
         "lettertype"
       ],
       [
+        "change_own_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "change_pws",
+        "webapp",
+        "pws"
+      ],
+      [
         "access_to_batch_update",
         "webapp",
         "site"

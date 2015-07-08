@@ -336,6 +336,7 @@ class PWS(models.Model):
         ordering = ('number',)
         permissions = (
             ('browse_pws', _('Can browse Public Water System')),
+            ('change_own_pws', _('Can change his own Public Water System'))
         )
 
 

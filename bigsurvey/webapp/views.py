@@ -55,6 +55,7 @@ class BaseView(PermissionRequiredMixin):
         return user.has_perm('webapp.access_to_adminpanel') or \
                user.has_perm('webapp.browse_pws') or \
                not user.is_superuser and user.has_perm('webapp.browse_lettertype') or \
+               not user.is_superuser and user.has_perm('webapp.change_own_pws') and user.employee.pws or \
                user.has_perm('webapp.browse_user') or \
                user.has_perm('webapp.access_to_import') or \
                user.has_perm('webapp.browse_import_log') or \
@@ -267,6 +268,19 @@ class PWSEditView(PWSBaseFormView, UpdateView):
     permission = 'webapp.change_pws'
     success_message = Messages.PWS.editing_success
     error_message = Messages.PWS.editing_error
+    form_class_for_admin = forms.PWSFormForAdmin
+
+    def get_form_class(self):
+        user = self.request.user
+        if not user.is_superuser and user.has_perm('webapp.change_own_pws'):
+            return self.form_class_for_admin
+        return self.form_class
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        if not user.is_superuser and user.has_perm('webapp.change_own_pws') and self.object != user.employee.pws:
+            raise Http404
+        return super(PWSEditView, self).get_context_data(**kwargs)
 
 
 class SurveyDetailView(BaseTemplateView):

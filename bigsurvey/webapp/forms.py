@@ -14,6 +14,12 @@ class PWSForm(forms.ModelForm):
         fields = '__all__'
 
 
+class PWSFormForAdmin(forms.ModelForm):
+    class Meta:
+        model = models.PWS
+        exclude = 'number', 'name'
+
+
 class SiteForm(forms.ModelForm):
     pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), empty_label=None)
 

@@ -12,6 +12,7 @@ do
    echo Loading ${data_type}
    ./manage.py loaddata data_${data_type}
 done
+./manage.py create_lettertypes_for_pws
 ./manage.py collectstatic --noinput
 touch main/wsgi.py
 deactivate
