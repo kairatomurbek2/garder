@@ -27,7 +27,7 @@ urlpatterns = patterns(
 
     url(r'^test/$', views.TestListView.as_view(), name="test_list"),
     url(r'^test/(?P<pk>\d+)/$', views.TestDetailView.as_view(), name="test_detail"),
-    url(r'^unpaid-test/$', views.UnpaidTestView.as_view(), name="unpaid_test_list"),
+    url(r'^unsaved-test/$', views.UnpaidTestView.as_view(), name="unpaid_test_list"),
     url(r'^test/(?P<pk>\d+)/edit/$', views.TestEditView.as_view(), name="test_edit"),
     url(r'^test/pay/paypal/$', views.TestPayPaypalView.as_view(), name="test_pay_paypal"),
     url(r'^testers/$', views.TesterListView.as_view(), name="tester_list"),

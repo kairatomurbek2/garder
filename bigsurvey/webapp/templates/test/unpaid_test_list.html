@@ -10,13 +10,11 @@
 {% block content %}
     {% autopaginate test_filter.qs as unpaid_tests 50 %}
     <div class="uk-grid">
-        <div class="wrapper uk-width-1-5">
-            {% include 'test/test_filters.html' %}
-        </div>
-        <div class="wrapper uk-width-4-5">
+        {% include 'test/test_filters.html' %}
+        <div class="wrapper uk-width-4-5 filters-offset">
             {% include 'messages.html' %}
             {% paginate %}
-            <button class="uk-button uk-button-primary" data-action="pay" disabled="disabled" name="pay">{% trans 'Pay for selected tests' %}</button>
+            <button class="uk-button uk-button-primary" data-action="pay" disabled="disabled" name="pay">{% trans 'Save selected tests' %}</button>
             <table class="uk-table uk-table-hover">
                 <thead>
                 <tr class="border-bottom">
@@ -121,4 +119,5 @@
 {% block scripts %}
     <script src="{% static 'js/custom/paypal.js' %}"></script>
     <script src="{% static 'js/custom/payment-from-unpaid-tests-page.js' %}"></script>
+    <script src="{% static 'js/custom/filters-offset.js' %}"></script>
 {% endblock %}

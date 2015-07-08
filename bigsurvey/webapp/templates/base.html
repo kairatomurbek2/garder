@@ -47,7 +47,7 @@
         {% if not request.user.is_superuser %}
             {% if perms.webapp.access_to_own_tests or perms.webapp.access_to_pws_tests %}
                 <li><a id="unpaid_tests_menu_link"
-                       href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unpaid Tests' %}</a></li>
+                       href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unsaved Tests' %}</a></li>
             {% endif %}
         {% endif %}
         {% if perms.webapp.browse_hazard %}
@@ -135,7 +135,7 @@
             {% endif %}
             {% if perms.webapp.access_to_own_tests and not request.user.is_superuser %}
                 <li><a id="unpaid_tests_menu_link"
-                       href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unpaid Tests' %}</a></li>
+                       href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unsaved Tests' %}</a></li>
             {% endif %}
             {% if perms.webapp.browse_hazard %}
                 {% if perms.webapp.change_all_info_about_hazard %}
