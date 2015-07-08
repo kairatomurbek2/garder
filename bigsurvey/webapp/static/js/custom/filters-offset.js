@@ -1,10 +1,11 @@
-$(document).ready(function () {
-    var filters = $('.fixed-filters');
-    var navbar = $('nav.uk-navbar');
-    var paginationWrapper = $('.pagination-wrapper');
+var filters, navbar, paginationWrapper, lastScrollLeft, documentScrollLeft;
 
-    var lastScrollLeft = 0;
-    var documentScrollLeft;
+$(document).ready(function () {
+    filters = $('.fixed-filters');
+    navbar = $('nav.uk-navbar');
+    paginationWrapper = $('.pagination-wrapper');
+
+    lastScrollLeft = 0;
 
     $('.clickable-row').click(function (e) {
         window.document.location = $(this).data("href");

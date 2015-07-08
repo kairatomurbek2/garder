@@ -780,9 +780,9 @@ class LetterTypeEditView(LetterTypeBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(LetterTypeBaseFormView, self).get_form(form_class)
-        if perm_checkers.LetterTypePermChecker.has_perm(self.request, form.instance):
-            return form
-        raise Http404
+        if not perm_checkers.LetterTypePermChecker.has_perm(self.request, form.instance):
+            raise Http404
+        return form
 
     def get_context_data(self, **kwargs):
         context = super(LetterTypeEditView, self).get_context_data(**kwargs)

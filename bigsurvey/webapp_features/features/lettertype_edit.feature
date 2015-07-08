@@ -1,6 +1,6 @@
 @lettertype_edit
 Feature: Letter Type editing
-
+@wip
   Scenario Outline: Letter Type Edit Page Access
     Given I logged in as "<role>"
     When I directly open "letter_type_edit" page with pk "<pk>"
@@ -9,11 +9,8 @@ Feature: Letter Type editing
   Examples:
     | role     | pk | reaction |
     | root     | 1  | not see  |
-    | root     | 20 | not see  |
     | surveyor | 1  | see      |
-    | surveyor | 20 | see      |
     | tester   | 1  | see      |
-    | tester   | 20 | see      |
 
   Scenario: Correct Letter Type Edit
     Given I logged in as "admin"
