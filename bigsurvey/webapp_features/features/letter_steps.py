@@ -85,7 +85,7 @@ def open_hazard_edit_page(step, pk):
 
 @step('I should see "letter editing success" message')
 def see_letter_editing_success(step):
-    step.given('I should see "%s"' % Messages.Letter.editing_success)
+    step.then('I should see "%s"' % Messages.Letter.editing_success)
 
 
 @step('I should see warning due date letter message')
@@ -100,7 +100,7 @@ def see_letter_editing_error_message(step):
 
 @step('I should be at "letter_edit" page for site with pk "(\d+)"')
 def check_letter_edit_page(step, pk):
-    step.given('I should be at "%s"' % get_url(Urls.letter_edit % pk))
+    step.then('I should be at "%s"' % get_url(Urls.letter_edit % pk))
 
 
 @step('Receiver "(.*)" should receive email')

@@ -30,14 +30,12 @@ Feature: Letter Adding
     And I should see warning letter message
     And I should see following
       | text                   |
-      | my swimming pool       |
       | Dear Customer          |
       | The City of Washington |
-      | thesomeq@gmail.com     |
       | Amanda James           |
       | QAZ2WSX                |
       | Washington, DC, 90192  |
-      | 2015-05-31             |
+      | 05/31/2015             |
       | White House            |
     And There should be logo of PWS with pk "6"
     And I logout

@@ -19,28 +19,23 @@ Feature: Letter Viewing and Sending
     | tester   | 1  | see      |
     | tester   | 2  | see      |
 
-  @letter_detail_page_elements
   Scenario: Letter Detail Page Elements
     Given I logged in as "root"
     When I open "letter_detail" page with pk "1"
     Then I should see warning letter message
     And I should see warning due date letter message
     And I should see following
-      | text                  |
-      | thesomeq@gmail.com    |
-      | Send to               |
-      | 2015-05-03            |
-      | {AssemblyType}        |
-      | {DueDate}             |
-      | Washington, DC, 90192 |
-      | Should the customer   |
-      | The City of           |
-      | Thank you in advance  |
-      | Sincerely,            |
-      | Public Works Director |
-      | I,                    |
-      | agree to maintain     |
-      | Customer:             |
-      | Date:                 |
-      | Edit                  |
-      | Get PDF               |
+      | text                     |
+      | Send to                  |
+      | May 03, 2015             |
+      | {AssemblyType}           |
+      | {DueDate}                |
+      | Washington, DC, 90192    |
+      | Should the customer      |
+      | The City of              |
+      | Thank you in advance     |
+      | Sincerely,               |
+      | Director of Public Works |
+      | Date:                    |
+      | Edit                     |
+      | Get PDF                  |

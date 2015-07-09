@@ -7,7 +7,7 @@ Feature: Letter Editing
     When I directly open "letter_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
     And I logout
-    Examples:
+  Examples:
     | role     | pk | reaction |
     | root     | 1  | not see  |
     | root     | 2  | not see  |
@@ -18,7 +18,6 @@ Feature: Letter Editing
     | tester   | 1  | see      |
     | tester   | 2  | see      |
 
-  @correct_letter_editing
   Scenario: Correct Letter Editing
     Given I logged in as "root"
     And I open "letter_edit" page with pk "2"
@@ -29,18 +28,16 @@ Feature: Letter Editing
     And I should see warning letter message
     And I should see warning due date letter message
     And I should see following
-    | text                   |
-    | Gabe Newell            |
-    | Dear Customer          |
-    | The City of Seattle    |
-    | 2-nd Notice            |
-    | thesomeq@gmail.com     |
-    | 2015-05-05             |
-    | As mentioned above     |
+      | text                |
+      | Gabe Newell         |
+      | Dear Customer       |
+      | The City of Seattle |
+      | 2-nd Notice         |
+      | May 05, 2015        |
+      | As mentioned above  |
     And I logout
 
-  @incorrect_letter_adding
-  Scenario: Incorrect Letter Adding
+  Scenario: Incorrect Letter Editing
     Given I logged in as "root"
     And I open "letter_edit" page with pk "1"
     And I select "" from "letter_type"
@@ -48,6 +45,6 @@ Feature: Letter Editing
     Then I should be at "letter_edit" page for site with pk "1"
     And I should see "letter editing error" message
     And I should see following validation error messages on following fields
-    | field       | error_message           |
-    | letter_type | This field is required. |
+      | field       | error_message           |
+      | letter_type | This field is required. |
     And I logout

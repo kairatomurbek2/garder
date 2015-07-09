@@ -8,6 +8,7 @@
     <div class="wrapper">
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="pws" enctype="multipart/form-data">
+            {{ form.media }}
             {% csrf_token %}
             <table class="uk-table form-center border-none uk-table-condensed">
                 <tbody>
@@ -45,18 +46,18 @@
                 </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.zip.id_for_label }}">{{ form.zip.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.zip|add_class:'uk-width-1-1' }}
+                        {{ form.zip.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.water_source.id_for_label }}">{{ form.water_source.label }}</label>
                     </td>
                     <td class="uk-width-1-3">
                         {{ form.water_source|add_class:'uk-width-1-1' }}
                         {{ form.water_source.errors }}
-                    </td>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {{ form.price|add_class:'uk-width-1-1' }}
-                        {{ form.price.errors }}
                     </td>
                 </tr>
                 <tr>
@@ -98,6 +99,72 @@
                     <td class="uk-width-1-3">
                         {{ form.logo|add_class:'uk-width-1-1' }}
                         {{ form.logo.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.price|add_class:'uk-width-1-1' }}
+                        {{ form.price.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.bailee_name.id_for_label }}">{{ form.bailee_name.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.bailee_name|add_class:'uk-width-1-1' }}
+                        {{ form.bailee_name.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.bailee_job_title.id_for_label }}">{{ form.bailee_job_title.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.bailee_job_title|add_class:'uk-width-1-1' }}
+                        {{ form.bailee_job_title.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.phone|add_class:'uk-width-1-1' }}
+                        {{ form.phone.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.fax.id_for_label }}">{{ form.fax.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.fax|add_class:'uk-width-1-1' }}
+                        {{ form.fax.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.email|add_class:'uk-width-1-1' }}
+                        {{ form.email.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.letter_left_header_block.id_for_label }}">{{ form.letter_left_header_block.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3" colspan="3">
+                        {{ form.letter_left_header_block|add_class:'uk-width-1-1' }}
+                        {{ form.letter_left_header_block.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.letter_right_header_block.id_for_label }}">{{ form.letter_right_header_block.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3" colspan="3">
+                        {{ form.letter_right_header_block|add_class:'uk-width-1-1' }}
+                        {{ form.letter_right_header_block.errors }}
                     </td>
                 </tr>
                 <tr>

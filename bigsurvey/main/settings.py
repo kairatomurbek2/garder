@@ -119,16 +119,17 @@ MEDIA_URL = '/uploads/'
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
+        'toolbar': 'Hello',
+        'toolbar_Hello': [
             ['Format', 'Font', 'FontSize'],
             ['Bold', 'Italic', 'Underline', 'Strike', '-', 'TextColor', 'BGColor', '-', 'RemoveFormat'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['Image', 'Table', '-', 'Link', 'Unlink'],
             ['Undo', 'Redo'],
             ['Source']
-        ]
-    }
+        ],
+        'allowedContent': True,
+    },
 }
 
 CKEDITOR_UPLOAD_PATH = "uploads/"

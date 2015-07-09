@@ -315,17 +315,24 @@ class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     logo = fields.ImageField(upload_to='pws_logos', null=True, blank=True, verbose_name=_("Pws logo"))
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0), blank=True,
-                                verbose_name=_("Test's Price"))
+    zip = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("ZIP"))
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0), blank=True, verbose_name=_("Test's Price"))
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
+    state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"), help_text=_("Site's State"))
     office_address = models.CharField(blank=True, null=True, max_length=50, verbose_name=_("Office Address"))
-    water_source = models.ForeignKey(SourceType, blank=True, null=True, verbose_name=_("Water Source"),
-                                     related_name="pws")
+    water_source = models.ForeignKey(SourceType, blank=True, null=True, verbose_name=_("Water Source"), related_name="pws")
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
     consultant_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Consultant Name'))
     consultant_phone = models.CharField(max_length=50, blank=True, null=True, verbose_name=_('Consultant Phone'))
     plumber_packet_location = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Plumber Packet Location'))
     plumber_packet_address = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Plumber Packet Address'))
+    bailee_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Name of Director of Public Works or other person on whose behalf the letter will be sent'))
+    bailee_job_title = models.CharField(max_length=100, default='Director of Public Works', verbose_name=_('Job title of person on whose behalf the letter will be sent'))
+    phone = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("PWS's Phone number"))
+    fax = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("PWS's Fax number"))
+    email = models.EmailField(max_length=100, blank=True, null=True, verbose_name=_("PWS's email"))
+    letter_left_header_block = RichTextField(blank=True, verbose_name=_('Letter Left Header block'))
+    letter_right_header_block = RichTextField(blank=True, verbose_name=_('Letter Right Header block'))
 
     def __unicode__(self):
         return u"%s, %s" % (self.number, self.name)
@@ -342,10 +349,8 @@ class PWS(models.Model):
 
 class LetterType(models.Model):
     letter_type = models.CharField(max_length=20, verbose_name=_("Letter Type"))
-    template = RichTextField(blank=False, null=False, default=_('Default Letter Template'),
-                             verbose_name=_('Letter Template'))
-    header = models.CharField(blank=False, null=False, default=_('Backflow Prevention Services Notification'),
-                              verbose_name=_('Letter Header'), max_length=150)
+    template = RichTextField(blank=False, null=False, default=_('Default Letter Template'), verbose_name=_('Letter Template'))
+    header = models.CharField(blank=False, null=False, default=_('Backflow Prevention Services Notification'), verbose_name=_('Letter Header'), max_length=150)
     pws = models.ForeignKey(PWS, null=True, blank=True, default=None, related_name='letter_types')
 
     def __unicode__(self):
@@ -561,7 +566,6 @@ class Detail(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.detail
-
 
 
 class Test(models.Model):

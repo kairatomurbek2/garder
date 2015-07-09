@@ -28,7 +28,6 @@ Feature: Letter List
       | Air Gap               |
       | root                  |
       | No                    |
-      | thesomeq@gmail.com    |
       | May 5, 2015           |
       | Show                  |
       | PDF                   |
@@ -46,7 +45,6 @@ Feature: Letter List
       | Annual Test Second    |
       | root                  |
       | No                    |
-      | thesomeq@gmail.com    |
       | May 5, 2015           |
       | Show                  |
       | PDF                   |
@@ -67,7 +65,6 @@ Feature: Letter List
       | Annual Test Second    |
       | root                  |
       | No                    |
-      | thesomeq@gmail.com    |
       | May 5, 2015           |
       | Show                  |
       | PDF                   |
