@@ -270,6 +270,12 @@ class PWSEditView(PWSBaseFormView, UpdateView):
     error_message = Messages.PWS.editing_error
     form_class_for_admin = forms.PWSFormForAdmin
 
+    def get_success_url(self):
+        user = self.request.user
+        if not user.is_superuser and user.has_perm('webapp.change_own_pws'):
+            return reverse('webapp:home')
+        return super(PWSEditView, self).get_success_url()
+
     def get_form_class(self):
         user = self.request.user
         if not user.is_superuser and user.has_perm('webapp.change_own_pws'):

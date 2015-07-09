@@ -1,6 +1,6 @@
 @lettertype_edit
 Feature: Letter Type editing
-@wip
+
   Scenario Outline: Letter Type Edit Page Access
     Given I logged in as "<role>"
     When I directly open "letter_type_edit" page with pk "<pk>"

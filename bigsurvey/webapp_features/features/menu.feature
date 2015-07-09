@@ -18,26 +18,25 @@ Feature: Menu
       | testers |
       | users   |
 
-
   Scenario: Admin Menu
     Given I logged in as "admin"
     When I open "home" page
     When I hover on "more" link
     Then I should see following menu links
-      | link    |
-      | letters |
-      | import  |
-      | sites   |
-      | surveys |
-      | tests   |
-      | hazards |
-      | testers |
-      | users   |
+      | link         |
+      | letters      |
+      | import       |
+      | sites        |
+      | surveys      |
+      | tests        |
+      | hazards      |
+      | testers      |
+      | users        |
+      | own_pws_edit |
     And I should not see following menu links
       | link  |
       | admin |
       | pws   |
-
 
   Scenario: Surveyor Menu
     Given I logged in as "surveyor"
@@ -55,7 +54,6 @@ Feature: Menu
       | import  |
       | users   |
       | testers |
-
 
   Scenario: Tester Menu
     Given I logged in as "tester"

@@ -95,3 +95,10 @@ def clear_logo(step, file):
 def add_pws_logo(step, pk):
     pws = models.PWS.objects.get(pk=pk)
     pws.logo.save('pws-6-logo.jpg', File(open(os.path.join(settings.STUB_FILES_DIR, 'logo.jpg'))))
+
+
+@step('PWS with pk "(\d+)" should contain "(.*)" in "(.*)" field')
+def check_pws_field_value(step, pk, value, field):
+    pws = models.PWS.objects.get(pk=pk)
+    actual_value = getattr(pws, field)
+    assert value == actual_value, 'Expected "%s" in "%s" field, found "%s"' % (value, field, actual_value)
