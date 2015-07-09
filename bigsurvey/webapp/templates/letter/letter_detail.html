@@ -45,9 +45,17 @@
             {{ letter.rendered_body|safe }}
         </div>
     </div>
+    <div id="get-pdf-modal-wrapper"></div>
 {% endblock %}
 {% block scripts %}
     <script>
+        function isMsie() {
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+
+            return !!(msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./));
+
+        }
         $(document).ready(function () {
             $('[data-action="download-pdf"]').click(function (e) {
                 e.preventDefault();
@@ -63,11 +71,21 @@
                         var content_disposition = xhr.getResponseHeader('Content-Disposition');
                         var regexp = /filename="(.*)"/;
                         var filename = regexp.exec(content_disposition)[1];
-                        var blob = new Blob([response]);
-                        var link = document.createElement('a');
-                        link.href = window.URL.createObjectURL(blob);
-                        link.download = filename;
-                        link.click();
+                        var blob = new Blob([response], {
+                            "type": "application/pdf"
+                        });
+
+                        if (isMsie()) {
+                            window.navigator.msSaveOrOpenBlob(blob, filename);
+                        } else {
+                            var link = document.createElement('a');
+                            link.setAttribute("href", window.URL.createObjectURL(blob));
+                            link.setAttribute("download", filename);
+                            link.style.display = 'none';
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }
                     }
                 });
 
