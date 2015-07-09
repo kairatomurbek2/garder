@@ -14,7 +14,7 @@
 {% block content %}
     <div id="site_detail" class="wrapper">
         {% include 'messages.html' %}
-        <h2 class="uk-text-center">{% trans "Site" %}: {{ site.address1 }}, {{ site.street_number }}</h2>
+        <h2 class="uk-text-center">{% trans "Site" %}: {{ site.street_number }}, {{ site.address1 }}</h2>
 
         <h3 class="uk-text-center">{% trans "Account Number" %}: {{ site.cust_number }}</h3>
         <table class="uk-table border-none uk-table-condensed">
