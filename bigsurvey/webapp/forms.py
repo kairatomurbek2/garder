@@ -25,7 +25,6 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = models.Site
-        exclude = ['status']
 
 
 class SiteFormForSurveyor(forms.ModelForm):

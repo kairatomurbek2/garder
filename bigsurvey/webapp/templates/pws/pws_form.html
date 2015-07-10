@@ -53,6 +53,15 @@
                         {{ form.zip.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.state.id_for_label }}">{{ form.state.label }}</label>
+                    </td>
+                    <td class="uk-width-1-3">
+                        {{ form.state|add_class:'uk-width-1-1' }}
+                        {{ form.state.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.water_source.id_for_label }}">{{ form.water_source.label }}</label>
                     </td>
                     <td class="uk-width-1-3">

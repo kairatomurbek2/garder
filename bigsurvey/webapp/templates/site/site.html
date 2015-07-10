@@ -32,7 +32,8 @@
                 <td class="uk-text-center uk-text-primary">{{ site.site_use }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Site Type" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.site_type }}</td>
-                <td colspan="2"></td>
+                <td class="uk-text-right uk-text-muted">{% trans "Site Status" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.status }}</td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
@@ -50,13 +51,17 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Service Appartment" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.apt }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Service Address 2" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.address2 }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Floors Count" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.floors }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Interconnection Point" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ site.interconnection_point }}</td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Sequence Route" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ site.route }}</td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Customer Name" %}</td>

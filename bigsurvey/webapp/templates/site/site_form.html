@@ -18,7 +18,7 @@
             <table class="uk-table border-none uk-table-condensed">
                 <tbody>
                 {% if perms.webapp.change_all_info_about_site %}
-                <tr class="border-bottom">
+                <tr>
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.cust_number.id_for_label }}">Account Number</label>
                     </td>
@@ -39,6 +39,15 @@
                     <td class="uk-width-1-6">
                         {{ form.connect_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                         {{ form.connect_date.errors }}
+                    </td>
+                </tr>
+                <tr class="border-bottom">
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% render_field form.status|add_class:'uk-width-1-1' %}
+                        {{ form.status.errors }}
                     </td>
                 </tr>
                 <tr>
@@ -65,7 +74,7 @@
                     </td>
                 </tr>
 
-                <tr class="border-bottom">
+                <tr>
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.address1.id_for_label }}">{{ form.address1.label }}</label>
                     </td>
@@ -74,12 +83,21 @@
                         {{ form.address1.errors }}
                     </td>
                     <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.street_number.id_for_label }}">{{ form.street_number.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% render_field form.street_number|add_class:'uk-width-1-1' %}
+                        {{ form.street_number.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.address2.id_for_label }}">{{ form.address2.label }}</label>
                     </td>
                     <td class="uk-width-1-6">
                         {% render_field form.address2|add_class:'uk-width-1-1' %}
                         {{ form.address2.errors }}
                     </td>
+                </tr>
+                <tr class="border-bottom">
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.apt.id_for_label }}">{{ form.apt.label }}</label>
                     </td>
@@ -87,8 +105,14 @@
                         {% render_field form.apt|add_class:'uk-width-1-1' %}
                         {{ form.apt.errors }}
                     </td>
+                     <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.route.id_for_label }}">{{ form.route.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% render_field form.route|add_class:'uk-width-1-1' %}
+                        {{ form.route.errors }}
+                    </td>
                 </tr>
-
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.site_use.id_for_label }}">{{ form.site_use.label }}</label>
@@ -123,6 +147,29 @@
                     </td>
                 </tr>
                 {% endif %}
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.meter_size.id_for_label }}">{{ form.meter_size.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% render_field form.meter_size|add_class:'uk-width-1-1' %}
+                        {{ form.meter_size.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.meter_reading.id_for_label }}">{{ form.meter_reading.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% render_field form.meter_reading|add_class:'uk-width-1-1' %}
+                        {{ form.meter_reading.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.meter_number.id_for_label }}">{{ form.meter_number.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% render_field form.meter_number|add_class:'uk-width-1-1' %}
+                        {{ form.meter_number.errors }}
+                    </td>
+                </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.potable_present.id_for_label }}">{{ form.potable_present.label }}</label>
@@ -205,7 +252,7 @@
                         <label for="{{ form.cust_apt.id_for_label }}">{{ form.cust_apt.label }}</label>
                     </td>
                     <td class="uk-width-1-6">
-                        {{ form.cust_apt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ form.cust_apt|add_class:"uk-width-1-1" }}
                         {{ form.cust_apt.errors }}
                     </td>
                 </tr>
@@ -228,7 +275,7 @@
                         <label for="{{ form.cust_zip.id_for_label }}">{{ form.cust_zip.label }}</label>
                     </td>
                     <td class="uk-width-1-6">
-                        {{ form.cust_zip|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ form.cust_zip|add_class:"uk-width-1-1" }}
                         {{ form.cust_zip.errors }}
                     </td>
                 </tr>
