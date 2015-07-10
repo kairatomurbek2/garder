@@ -117,7 +117,7 @@ class FilterChoices(object):
     @staticmethod
     def letter_type():
         choices = [('', _('All'))]
-        for letter_type in models.LetterType.objects.all():
+        for letter_type in models.LetterType.objects.filter(pws=None):
             choices.append((letter_type.pk, letter_type.letter_type))
         return choices
 
@@ -336,37 +336,39 @@ class FilterActions(object):
             if value:
                 return letters.filter(site__cust_number__icontains=value)
             return letters
-        
+
         @staticmethod
         def customer_email(letters, value):
             if value:
                 return letters.filter(site__contact_email__icontains=value)
             return letters
-        
+
         @staticmethod
         def service_type(letters, value):
             if value:
                 return letters.filter(hazard__service_type__pk=value)
             return letters
-        
+
         @staticmethod
         def hazard_type(letters, value):
             if value:
                 return letters.filter(hazard__hazard_type__pk=value)
             return letters
-        
+
         @staticmethod
         def letter_type(letters, value):
             if value:
-                return letters.filter(letter_type__pk=value)
+                letter_type = models.LetterType.objects.get(pk=value)
+                letter_types_with_same_name = models.LetterType.objects.filter(letter_type=letter_type.letter_type)
+                return letters.filter(letter_type__in=letter_types_with_same_name)
             return letters
-        
+
         @staticmethod
         def user(letters, value):
             if value:
                 return letters.filter(user__username__icontains=value)
             return letters
-        
+
         @staticmethod
         def date_gt(letters, value):
             if value:

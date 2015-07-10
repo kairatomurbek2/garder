@@ -120,6 +120,5 @@ def check_email_content(step):
 @step('There should be logo of PWS with pk "(\d+)"')
 def check_pws_logo_appears(step, pk):
     pws = models.PWS.objects.get(pk=pk)
-    logo_absolute_url = '%s%s' % (settings.HOST, pws.logo.url)
-    assert logo_absolute_url in world.browser.page_source
+    assert pws.logo.url in world.browser.page_source
     pws.logo.delete()

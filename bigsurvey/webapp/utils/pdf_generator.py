@@ -1,7 +1,9 @@
-from main.settings import MEDIA_ROOT, MEDIA_URL
+import StringIO
 import os
+
 from xhtml2pdf import pisa
-from tempfile import TemporaryFile
+
+from main.settings import MEDIA_ROOT, MEDIA_URL
 
 
 class PDFGenerator(object):
@@ -9,10 +11,6 @@ class PDFGenerator(object):
     def generate_from_html(html):
         def media_files_callback(uri, rel):
             return os.path.join(MEDIA_ROOT, uri.replace(MEDIA_URL, ""))
-
-        temp_file = TemporaryFile()
-        pisa.CreatePDF(html, temp_file, link_callback=media_files_callback)
-        temp_file.seek(0)
-        pdf = temp_file.read()
-        temp_file.close()
-        return pdf
+        stream = StringIO.StringIO()
+        pisa.CreatePDF(html, stream, link_callback=media_files_callback)
+        return stream.getvalue()
