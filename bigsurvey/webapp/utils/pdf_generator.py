@@ -11,7 +11,7 @@ class PDFGenerator(object):
             return os.path.join(MEDIA_ROOT, uri.replace(MEDIA_URL, ""))
 
         temp_file = TemporaryFile()
-        pisa_status = pisa.CreatePDF(html, temp_file, link_callback=media_files_callback)
+        pisa.CreatePDF(html, temp_file, link_callback=media_files_callback)
         temp_file.seek(0)
         pdf = temp_file.read()
         temp_file.close()
