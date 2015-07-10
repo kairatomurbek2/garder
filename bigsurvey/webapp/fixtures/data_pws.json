@@ -2,11 +2,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "FARMERVILLE",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1111005",
-    "water_source": 3
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 3,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 1
@@ -14,11 +29,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "LPWD NORTH PRODUCTION FACILITY",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1055171",
-    "water_source": 3
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 3,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 2
@@ -26,11 +56,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "LPWDN PURCHASE WEST SCOTT",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1055172",
-    "water_source": 3
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 3,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 3
@@ -38,11 +83,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "LPWDN NORTH REGION",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1055191",
-    "water_source": 3
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 3,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 4
@@ -50,11 +110,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "LPWDN SOUTH REGION",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1055192",
-    "water_source": 3
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 3,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 5
@@ -62,11 +137,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "ST JOHN WATER DISTRICT #2",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1095002",
-    "water_source": null
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": null,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 6
@@ -74,11 +164,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "ST JOHN WATER DISTRICT #1",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1095003",
-    "water_source": null
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": null,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 7
@@ -86,11 +191,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "PLEASURE BEND WATER SUPPLY",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1095006",
-    "water_source": null
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": null,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 8
@@ -98,11 +218,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "ST FRANCISVILLE",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1125006",
-    "water_source": null
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": null,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 9
@@ -110,11 +245,26 @@
 {
   "fields": {
     "city": "",
+    "fax": null,
+    "consultant_phone": null,
     "name": "DENHAM SPRINGS",
+    "zip": null,
     "office_address": null,
-    "notes": "",
+    "price": "0.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
     "number": "LA1063004",
-    "water_source": 2
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p>{BaileeName}</p>\n<p>{BaileeJobTitle}</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p>{PWSOfficeAddress}</p>\n<p>{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 2,
+    "notes": "",
+    "plumber_packet_location": null
   },
   "model": "webapp.pws",
   "pk": 10

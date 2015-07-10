@@ -4,6 +4,7 @@ from django.conf import settings
 class Placeholders(object):
     letter_date = '{LetterDate}'
     site_address = '{ServiceAddress}'
+    site_street_number = '{ServiceStreetNumber}'
     site_city = '{ServiceCity}'
     site_state = '{ServiceState}'
     cust_name = '{CustomerName}'
@@ -13,7 +14,6 @@ class Placeholders(object):
     cust_zip = '{CustomerZip}'
     account_number = '{AccountNumber}'
     assembly_type = '{AssemblyType}'
-    contact_email = '{ContactEmail}'
     due_date = '{DueDate}'
     consultant_name = '{ConsultantName}'
     consultant_phone = '{ConsultantPhone}'
@@ -57,7 +57,8 @@ class LetterRenderer(object):
 
         replacements = {
             Placeholders.letter_date: letter.date.strftime("%B %d, %Y"),
-            Placeholders.site_address: "%s, %s, %s, %s" % (site.street_number, site.address1, site.city, site.state),
+            Placeholders.site_address: site.address1,
+            Placeholders.site_street_number: site.street_number,
             Placeholders.site_city: site.city,
             Placeholders.site_state: site.state,
             Placeholders.cust_name: site.cust_name,
@@ -66,7 +67,6 @@ class LetterRenderer(object):
             Placeholders.cust_state: site.cust_state,
             Placeholders.cust_zip: site.cust_zip,
             Placeholders.account_number: site.cust_number,
-            Placeholders.contact_email: pws.email,
             Placeholders.pws_name: pws.name,
             Placeholders.pws_logo: pws_logo_replacement,
             Placeholders.pws_office_address: pws.office_address,
