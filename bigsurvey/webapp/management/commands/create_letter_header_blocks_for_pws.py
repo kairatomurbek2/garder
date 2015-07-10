@@ -3,16 +3,16 @@ from webapp.models import PWS
 
 
 DEFAULT_LEFT_HEADER = '''
-<p>{BaileeName}</p>
-<p>{BaileeJobTitle}</p>
-<p>{PWSPhone}</p>
-<p>Fax: {PWSFax}</p>
-<p>{PWSEmail}</p>
+<p style="font-size:12px">{BaileeName}<br>
+{BaileeJobTitle}<br>
+{PWSPhone}<br>
+Fax: {PWSFax}<br>
+{PWSEmail}</p>
 '''
 
 DEFAULT_RIGHT_HEADER = '''
-<p>{PWSOfficeAddress}</p>
-<p>{PWSCity}, {PWSState}, {PWSZip}</p>
+<p style="font-size:12px">{PWSOfficeAddress}<br>
+{PWSCity}, {PWSState}, {PWSZip}</p>
 '''
 
 

@@ -141,7 +141,6 @@ class TestForm(forms.ModelForm):
         cv1_cleaned = self.cleaned_data.get('cv1_cleaned')
         if not cv1_cleaned:
             cv1_replaced_details = self.cleaned_data.get('cv1_replaced_details')
-            print cv1_replaced_details
             if not cv1_replaced_details:
                 self._custom_errors.append(ValidationError(Messages.Test.cv1_replaced_details_not_provided))
 

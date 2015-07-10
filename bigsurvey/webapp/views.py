@@ -893,16 +893,23 @@ class LetterEditView(LetterBaseFormView, UpdateView):
 
 
 class LetterMixin(object):
-    def get_email_body(self, letter, form):
+    def get_email_body(self, letter, form, is_pdf=False):
         html = letter.rendered_body
+
+        new_page_inserted = False
+        page_delimiter = '<pdf:nextpage />'
 
         if form.cleaned_data.get('attach_testers', False):
             testers = models.User.objects.filter(groups__name=Groups.tester, employee__pws=letter.site.pws)
+            if is_pdf:
+                html += page_delimiter
+                new_page_inserted = True
             html += render_to_string('email_templates/html/testers_list.html', {'testers': testers})
 
         if form.cleaned_data.get('attach_consultant_info', False):
+            if is_pdf and not new_page_inserted:
+                html += page_delimiter
             html += render_to_string('email_templates/html/consultant_info.html', {'pws': letter.site.pws})
-
         return html
 
 
@@ -978,13 +985,18 @@ class LetterPDFView(BaseView, FormView, LetterMixin):
         context['letter'] = models.Letter.objects.get(pk=self.kwargs['pk'])
         return context
 
+    def append_styles(self):
+        styles = render_to_string('partial/pdf_styles.html')
+        return styles
+
     def post(self, request, *args, **kwargs):
         form = self.form_class(self.request.POST)
         if form.is_valid():
             letter = models.Letter.objects.get(pk=self.kwargs['pk'])
 
-            body = self.get_email_body(letter, form)
-
+            body = self.get_email_body(letter, form, is_pdf=True)
+            body += self.append_styles()
+            print body
             pdf_content = PDFGenerator.generate_from_html(body)
             filename = u"%s_%s_%s.pdf" % (letter.date, letter.letter_type.letter_type.replace(' ', '_'), letter.site.cust_number)
             return PDFResponse(filename=filename, content=pdf_content)

@@ -15,8 +15,7 @@ em {
 }
 
 .spinner-crossbrowser {
-    -moz-animation: uk-rotate 2s infinite
-    linear;
+    -moz-animation: uk-rotate 2s infinite linear;
     -o-animation: uk-rotate 2s infinite linear;
 }
 
@@ -224,4 +223,8 @@ ul.test-form-ul {
 
 .valign-center-modal-spinner {
     top: auto;
+}
+
+.pws_logo {
+    width: 100%;
 }
