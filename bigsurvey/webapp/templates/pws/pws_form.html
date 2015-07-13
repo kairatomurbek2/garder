@@ -13,6 +13,7 @@
         {% include 'messages.html' %}
         <form class="uk-form" method="post" name="pws" enctype="multipart/form-data">
             {{ form.media }}
+            {{ form.price.as_hidden }}
             {% csrf_token %}
             <table class="uk-table form-center border-none uk-table-condensed">
                 <tbody>
@@ -113,13 +114,8 @@
                         {{ form.logo|add_class:'uk-width-1-1' }}
                         {{ form.logo.errors }}
                     </td>
-                    <td class="uk-width-1-6 uk-text-right">
-                        <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
-                    </td>
-                    <td class="uk-width-1-3">
-                        {{ form.price|add_class:'uk-width-1-1' }}
-                        {{ form.price.errors }}
-                    </td>
+
+
                 </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
