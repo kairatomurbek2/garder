@@ -90,7 +90,7 @@ class LetterRenderer(object):
             warnings.append("Warning: Letter has no Hazard specified. Was it imported?")
         for key, value in replacements.items():
             if value is None or value == '':
-                warnings.append("Warning: %s has no value in database" % key)
+                warnings.append(key)
             elif value is EMPTY_VALUE:
                 template = template.replace(key, u'')
             else:

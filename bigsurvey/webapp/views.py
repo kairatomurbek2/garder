@@ -943,8 +943,7 @@ class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
         if not letter.already_sent:
             warnings = LetterRenderer.render(letter)
             if warnings:
-                for warning in warnings:
-                    messages.warning(self.request, warning)
+                messages.warning(self.request, "Following fields has no value in database: %s" % ", ".join(warnings))
             else:
                 messages.success(self.request, _("All required data is present!"))
         else:
