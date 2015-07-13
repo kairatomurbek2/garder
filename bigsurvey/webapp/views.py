@@ -53,7 +53,7 @@ class BaseView(PermissionRequiredMixin):
     def has_more_link(self):
         user = self.request.user
         return user.has_perm('webapp.access_to_adminpanel') or \
-               user.has_perm('webapp.browse_pws') or \
+               user.has_perm('webapp.browse_all_pws') or \
                not user.is_superuser and user.has_perm('webapp.browse_lettertype') or \
                not user.is_superuser and user.has_perm('webapp.change_own_pws') and user.employee.pws or \
                user.has_perm('webapp.browse_user') or \
@@ -241,7 +241,7 @@ class BatchUpdateView(BaseTemplateView):
 
 class PWSListView(BaseTemplateView):
     template_name = 'pws/pws_list.html'
-    permission = 'webapp.browse_pws'
+    permission = 'webapp.browse_all_pws'
 
     def get_context_data(self, **kwargs):
         context = super(PWSListView, self).get_context_data(**kwargs)

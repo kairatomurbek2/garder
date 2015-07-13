@@ -154,7 +154,7 @@ PAYPAL_CLIENT_SECRET = 'EHUCx5wjMgFkQzqkhsWUtfG6-pzlvS72kaGafHmPu2-hfGE6ubLmS_yW
 # required for PayPal to provide absolute return URL
 HOST = 'http://127.0.0.1:8000'
 
-DELETE_UNPAID_TESTS_AFTER_DAYS = 10
+DELETE_UNPAID_TESTS_AFTER_DAYS = 90
 
 try:
     from settings_local import *

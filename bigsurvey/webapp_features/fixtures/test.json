@@ -4167,6 +4167,11 @@
         "pws"
       ],
       [
+        "browse_all_pws",
+        "webapp",
+        "pws"
+      ],
+      [
         "change_pws",
         "webapp",
         "pws"
@@ -4826,7 +4831,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-07-13T04:54:03Z",
+    "last_login": "2015-07-13T05:13:45Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -4892,7 +4897,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-07-13T04:52:49Z",
+    "last_login": "2015-07-13T05:18:01Z",
     "groups": [
       [
         "Administrators"

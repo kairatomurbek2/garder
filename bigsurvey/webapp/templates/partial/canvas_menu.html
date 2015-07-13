@@ -1,10 +1,5 @@
 {% load i18n %}
-<ul class="uk-navbar-nav uk-hidden-small">
-    <li>
-        <a class="uk-navbar-brand uk-hidden-small" href="{% url 'webapp:home' %}">
-            <b>{% trans "BACKFLOW SOFTWARE SOLUTIONS" %}</b>
-        </a>
-    </li>
+<ul class="uk-nav uk-nav-offcanvas">
     {% if perms.webapp.browse_site %}
         <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
     {% endif %}
@@ -14,11 +9,9 @@
     {% if perms.webapp.browse_test %}
         <li><a id="tests_menu_link" href="{% url "webapp:test_list" %}">{% trans "Tests" %}</a></li>
     {% endif %}
-    {% if not request.user.is_superuser %}
-        {% if perms.webapp.access_to_own_tests or perms.webapp.access_to_pws_tests %}
-            <li><a id="unpaid_tests_menu_link"
-                   href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unsaved Tests' %}</a></li>
-        {% endif %}
+    {% if perms.webapp.access_to_own_tests and not request.user.is_superuser %}
+        <li><a id="unpaid_tests_menu_link"
+               href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unsaved Tests' %}</a></li>
     {% endif %}
     {% if perms.webapp.browse_hazard %}
         {% if perms.webapp.change_all_info_about_hazard %}
@@ -39,13 +32,10 @@
         <li><a>{% trans "Reports" %}</a></li>
     {% endif %}
     {% if has_more_link %}
-        <li class="uk-parent" data-uk-dropdown="" id="bfp_menu">
-            <a href="#">
-                {% trans "More..." %}
-            </a>
-
-            <div class="uk-dropdown uk-dropdown-navbar">
-                <ul class="uk-nav uk-nav-navbar" id="more_menu_links">
+        <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
+            <li class="uk-parent">
+                <a href="#">{% trans "More..." %}</a>
+                <ul class="uk-nav-sub">
                     {% if perms.webapp.access_to_adminpanel %}
                         <li><a id="admin_menu_link" href="{% url "admin:index" %}">{% trans "Administration" %}</a></li>
                     {% endif %}
@@ -59,7 +49,8 @@
                         <li><a id="letter_type_menu_link" href="{% url 'webapp:letter_type_list' %}">{% trans "Letter Types" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_user %}
-                        <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a></li>
+                        <li><a id="users_menu_link" href="{% url 'webapp:user_list' %}">{% trans "Users" %}</a>
+                        </li>
                     {% endif %}
                     {% if perms.webapp.access_to_import %}
                         <li><a id="import_menu_link" href="{% url 'webapp:import' %}">{% trans "Import" %}</a></li>
@@ -71,7 +62,7 @@
                         <li><a id="batch_update_menu_link" href="{% url 'webapp:batch_update' %}">{% trans "Batch Update" %}</a></li>
                     {% endif %}
                 </ul>
-            </div>
-        </li>
+            </li>
+        </ul>
     {% endif %}
 </ul>

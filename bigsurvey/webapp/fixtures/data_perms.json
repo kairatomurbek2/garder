@@ -374,6 +374,11 @@
         "pws"
       ],
       [
+        "browse_all_pws",
+        "webapp",
+        "pws"
+      ],
+      [
         "change_pws",
         "webapp",
         "pws"

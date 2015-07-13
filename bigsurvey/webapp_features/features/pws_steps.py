@@ -45,7 +45,7 @@ def directly_open_pws_edit_page(step, pk):
 
 @step('I open "pws_edit" page with pk "(\d+)"')
 def open_pws_edit_page(step, pk):
-    step.given('I open "pws_list" page')
+    step.given('I open "pws_detail" page with pk "%s"' % pk)
     step.given('I click "pws_%s_edit" link' % pk)
 
 
@@ -56,22 +56,27 @@ def check_pws_add_page(step):
 
 @step('I should be at "pws_add" page')
 def check_pws_add_page(step):
-    step.given('I should be at "%s"' % get_url(Urls.pws_add))
+    step.then('I should be at "%s"' % get_url(Urls.pws_add))
+
+
+@step('I should be at "pws_detail" page with pk "(\d+)"')
+def check_pws_detail_page(step, pk):
+    step.then('I should be at "%s"' % get_url(Urls.pws_detail % pk))
 
 
 @step('I should be at "pws_edit" page with pk "(\d+)"')
 def check_pws_edit_page(step, pk):
-    step.given('I should be at "%s"' % get_url(Urls.pws_edit % pk))
+    step.then('I should be at "%s"' % get_url(Urls.pws_edit % pk))
 
 
 @step('I should see "pws adding success" message')
 def check_pws_adding_success_message(step):
-    step.given('I should see "%s"' % Messages.PWS.adding_success)
+    step.then('I should see "%s"' % Messages.PWS.adding_success)
 
 
 @step('I should see "pws adding error" message')
 def check_pws_adding_error_message(step):
-    step.given('I should see "%s"' % Messages.PWS.adding_error)
+    step.then('I should see "%s"' % Messages.PWS.adding_error)
 
 
 @step('I should see "pws editing success" message')
