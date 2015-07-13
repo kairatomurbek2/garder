@@ -129,6 +129,7 @@ CKEDITOR_CONFIGS = {
             ['Source']
         ],
         'allowedContent': True,
+        'width': '100%',
     },
 }
 

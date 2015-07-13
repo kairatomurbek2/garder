@@ -166,18 +166,41 @@
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.letter_left_header_block.id_for_label }}">{{ form.letter_left_header_block.label }}</label>
                     </td>
-                    <td class="uk-width-1-3" colspan="3">
+                    <td class="uk-width-4-6" colspan="2">
                         {{ form.letter_left_header_block|add_class:'uk-width-1-1' }}
                         {{ form.letter_left_header_block.errors }}
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% blocktrans %}
+                            List of available placeholders
+                            <ul>
+                                <li>{BaileeName} - Name of Director of Public Works or other person on whose behalf the letter will be sent</li>
+                                <li>{BaileeJobTitle} - Job title of person on whose behalf the letter will be sent</li>
+                                <li>{PWSPhone} - PWS's phone</li>
+                                <li>{PWSFax} - PWS's fax</li>
+                                <li>{PWSEmail} - PWS's email</li>
+                            </ul>
+                        {% endblocktrans %}
                     </td>
                 </tr>
                 <tr>
                     <td class="uk-width-1-6 uk-text-right">
                         <label for="{{ form.letter_right_header_block.id_for_label }}">{{ form.letter_right_header_block.label }}</label>
                     </td>
-                    <td class="uk-width-1-3" colspan="3">
+                    <td class="uk-width-4-6" colspan="2">
                         {{ form.letter_right_header_block|add_class:'uk-width-1-1' }}
                         {{ form.letter_right_header_block.errors }}
+                    </td>
+                    <td class="uk-width-1-6">
+                        {% blocktrans %}
+                            List of available placeholders
+                            <ul>
+                                <li>{PWSOfficeAddress} - PWS's office address</li>
+                                <li>{PWSCity} - PWS's city</li>
+                                <li>{PWSState} - PWS's state</li>
+                                <li>{PWSZip} - PWS's zip</li>
+                            </ul>
+                        {% endblocktrans %}
                     </td>
                 </tr>
                 <tr>

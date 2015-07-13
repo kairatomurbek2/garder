@@ -10,34 +10,66 @@
         <form class="uk-form" method="post" name="lettertype">
             {% csrf_token %}
             {{ form.media }}
-            <table class="uk-table uk-table-condensed form-center">
+            <table class="uk-table uk-table-condensed form-center border-none">
                 <tbody>
                 <tr>
-                    <td class="uk-text-right uk-text-bold">{% trans "Letter Type" %}:</td>
-                    <td class="uk-text-left">
+                    <td class="uk-text-right uk-text-bold uk-width-1-6">{% trans "Letter Type" %}:</td>
+                    <td class="uk-text-left uk-width-1-3">
                         {{ form.letter_type|attr:'readonly:readonly'|add_class:"uk-width-1-1" }}
                         {{ form.letter_type.errors }}
                     </td>
-                    <td class="uk-text-right uk-text-bold">{% trans "Letter Header" %}:</td>
-                    <td class="uk-text-left">
+                    <td class="uk-text-right uk-text-bold uk-width-1-6">{% trans "Letter Header" %}:</td>
+                    <td class="uk-text-left uk-width-1-3">
                         {{ form.header|add_class:"uk-width-1-1" }}
                         {{ form.header.errors }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="uk-text-right uk-text-bold">{% trans "Template" %}:</td>
-                    <td class="uk-text-left" colspan="3">
+                    <td class="uk-text-right uk-text-bold uk-width-1-6">{% trans "Template" %}:</td>
+                    <td class="uk-text-left uk-width-2-3" colspan="2">
                         {{ form.template|add_class:"uk-width-1-1" }}
                         {{ form.template.errors }}
                     </td>
+                    <td class="uk-width-1-6">
+                        {% blocktrans %}
+                            List of available placeholders
+                            <ul>
+                                <li>{LeftHeaderBlock} - Letter's left header block</li>
+                                <li>{RightHeaderBlock} - Letter's right header block</li>
+                                <li>{BaileeName} - Name of Director of Public Works or other person on whose behalf the letter will be sent</li>
+                                <li>{BaileeJobTitle} - Job title of person on whose behalf the letter will be sent</li>
+                                <li>{PWSLogo} - PWS's Logo</li>
+                                <li>{PWSPhone} - PWS's phone</li>
+                                <li>{PWSFax} - PWS's fax</li>
+                                <li>{PWSEmail} - PWS's email</li>
+                                <li>{PWSOfficeAddress} - PWS's office address</li>
+                                <li>{PWSCity} - PWS's city</li>
+                                <li>{PWSState} - PWS's state</li>
+                                <li>{PWSZip} - PWS's zip</li>
+                                <li>{LetterDate} - Letter's Date (autocompleted with current date when letter created)</li>
+                                <li>{CustomerName} - Customer's Name</li>
+                                <li>{AccountNumber} - Site's Account Number</li>
+                                <li>{CustomerAddress} - Customer's Address</li>
+                                <li>{AssemblyType} - Assembly Type (Air Gap, PVB, HBVB etc)</li>
+                                <li>{CustomerCity} - Customer's City</li>
+                                <li>{CustomerState} - Customer's State</li>
+                                <li>{CustomerZip} - Customer's ZIP</li>
+                                <li>{DueDate} - Hazard's Due Install/Test Date</li>
+                                <li>{ServiceStreetNumber} - Site's Street Number</li>
+                                <li>{ServiceAddress} - Site's Street Address</li>
+                                <li>{ServiceCity} - Site's City</li>
+                                <li>{ServiceState} - Site's State</li>
+                                <li>{ConsultantName} - PWS's Consultant's Name</li>
+                                <li>{ConsultantPhone} - PWS's Consultant's Phone</li>
+                                <li>{PlumberPacketLocation} - Plumber Packet's Location</li>
+                                <li>{PlumberPacketAddress} - Plumber Packet's Address</li>
+                            </ul>
+                        {% endblocktrans %}
+                    </td>
                 </tr>
                 <tr>
-                    <td>
-
-                    </td>
-                    <td colspan="3">
-                        <button type="submit"
-                                class="uk-button uk-button-primary">{% trans "Submit" %}</button>
+                    <td colspan="4">
+                        <button type="submit" class="uk-button uk-button-primary uk-align-right">{% trans "Submit" %}</button>
                     </td>
                 </tr>
                 </tbody>

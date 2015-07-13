@@ -54,7 +54,7 @@ class BaseView(PermissionRequiredMixin):
         user = self.request.user
         return user.has_perm('webapp.access_to_adminpanel') or \
                user.has_perm('webapp.browse_all_pws') or \
-               not user.is_superuser and user.has_perm('webapp.browse_lettertype') or \
+               user.has_perm('webapp.browse_lettertype') or \
                not user.is_superuser and user.has_perm('webapp.change_own_pws') and user.employee.pws or \
                user.has_perm('webapp.browse_user') or \
                user.has_perm('webapp.access_to_import') or \
@@ -786,9 +786,9 @@ class LetterTypeListView(BaseTemplateView):
 
     def _get_lettertypes(self, user):
         if user.has_perm('webapp.access_to_all_lettertypes'):
-            return models.LetterType.objects.all()
+            return models.LetterType.objects.all().order_by('pws')
         if user.has_perm('webapp.access_to_pws_lettertypes'):
-            return models.LetterType.objects.filter(pws=user.employee.pws)
+            return models.LetterType.objects.filter(pws=user.employee.pws).order_by('pws')
         return []
 
 
