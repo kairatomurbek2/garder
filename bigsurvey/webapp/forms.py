@@ -9,19 +9,15 @@ from webapp.validators import validate_excel_file
 
 
 class PWSForm(forms.ModelForm):
-    price = forms.DecimalField(widget=forms.HiddenInput)
     class Meta:
         model = models.PWS
-        # exclude = ['price',]
         fields = '__all__'
-
-
 
 
 class PWSFormForAdmin(forms.ModelForm):
     class Meta:
         model = models.PWS
-        exclude = 'number', 'name'
+        exclude = 'number', 'name', 'price'
 
 
 class SiteForm(forms.ModelForm):
