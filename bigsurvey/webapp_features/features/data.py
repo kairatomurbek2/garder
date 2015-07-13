@@ -20,6 +20,7 @@ class Urls:
     site_add = '/site/add/'
     site_edit = '/site/%s/edit/'
     pws_list = '/pws/'
+    pws_detail = '/pws/%s/'
     pws_add = '/pws/add/'
     pws_edit = '/pws/%s/edit/'
     survey_detail = '/survey/%s/'

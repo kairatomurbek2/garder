@@ -249,13 +249,27 @@ class PWSListView(BaseTemplateView):
         return context
 
 
+class PWSDetailView(BaseTemplateView):
+    template_name = 'pws/pws.html'
+    permission = 'webapp.browse_pws'
+
+    def get_context_data(self, **kwargs):
+        context = super(PWSDetailView, self).get_context_data(**kwargs)
+        pws = models.PWS.objects.get(pk=self.kwargs['pk'])
+        user = self.request.user
+        if not user.is_superuser and user.has_perm('webapp.change_own_pws') and user.employee.pws != pws:
+            raise Http404
+        context['pws'] = pws
+        return context
+
+
 class PWSBaseFormView(BaseFormView):
     template_name = 'pws/pws_form.html'
     form_class = forms.PWSForm
     model = models.PWS
 
     def get_success_url(self):
-        return reverse('webapp:pws_list')
+        return reverse('webapp:pws_detail', args=(self.object.pk,))
 
 
 class PWSAddView(PWSBaseFormView, CreateView):
@@ -269,12 +283,6 @@ class PWSEditView(PWSBaseFormView, UpdateView):
     success_message = Messages.PWS.editing_success
     error_message = Messages.PWS.editing_error
     form_class_for_admin = forms.PWSFormForAdmin
-
-    def get_success_url(self):
-        user = self.request.user
-        if not user.is_superuser and user.has_perm('webapp.change_own_pws'):
-            return reverse('webapp:home')
-        return super(PWSEditView, self).get_success_url()
 
     def get_form_class(self):
         user = self.request.user

@@ -25,6 +25,7 @@ class SiteForm(forms.ModelForm):
 
     class Meta:
         model = models.Site
+        fields = '__all__'
 
 
 class SiteFormForSurveyor(forms.ModelForm):

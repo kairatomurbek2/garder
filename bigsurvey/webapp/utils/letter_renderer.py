@@ -51,7 +51,7 @@ class LetterRenderer(object):
         template = template.replace(Placeholders.right_header_block, pws.letter_right_header_block)
 
         if pws.logo:
-            pws_logo_replacement = '<p><img src="%s" class="pws_logo"></p>' % pws.logo.url
+            pws_logo_replacement = '<p style="text-align: center; height: 250px;"><img src="%s" style="width: auto; max-height: 100%%"></p>' % pws.logo.url
         else:
             pws_logo_replacement = EMPTY_VALUE
 

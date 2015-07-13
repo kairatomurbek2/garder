@@ -13,7 +13,6 @@
                 <th class="border-right uk-text-center">{% trans "No." %}</th>
                 <th>{% trans "Number" %}</th>
                 <th>{% trans "Name" %}</th>
-                <th>{% trans "Test's Price" %}</th>
                 <th>{% trans "City" %}</th>
                 <th>{% trans "Office Address" %}</th>
                 <th>{% trans "Water Source" %}</th>
@@ -22,21 +21,16 @@
             </thead>
             <tbody>
             {% for pws in pws_list %}
-                <tr class="border-bottom-none">
+                <tr>
                     <td class="border-right uk-text-center">{{ pws.pk }}</td>
                     <td>{{ pws.number }}</td>
                     <td>{{ pws.name }}</td>
-                    <td>${{ pws.price }}</td>
                     <td>{{ pws.city }}</td>
                     <td>{{ pws.office_address }}</td>
                     <td>{{ pws.water_source }}</td>
-                    <td class="uk-text-center border-left border-bottom" rowspan="2">
-                        <a id="pws_{{ pws.pk }}_edit_link" href="{% url 'webapp:pws_edit' pws.pk %}">{% trans "Edit" %}</a>
+                    <td class="uk-text-center border-left border-bottom">
+                        <a id="pws_{{ pws.pk }}_detail_link" href="{% url 'webapp:pws_detail' pws.pk %}">{% trans "Detail" %}</a>
                     </td>
-                </tr>
-                <tr class="border-bottom uk-text-muted">
-                    <td>{% trans "Notes:" %}</td>
-                    <td colspan="6" class="border-left border-right">{{ pws.notes }}</td>
                 </tr>
             {% endfor %}
             </tbody>

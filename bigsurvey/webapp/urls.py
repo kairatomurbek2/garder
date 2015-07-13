@@ -41,6 +41,7 @@ urlpatterns = patterns(
     url(r'^letter/(?P<pk>\d+)/pdf/$', views.LetterPDFView.as_view(), name="letter_pdf"),
 
     url(r'^pws/$', views.PWSListView.as_view(), name="pws_list"),
+    url(r'^pws/(?P<pk>\d+)/$', views.PWSDetailView.as_view(), name="pws_detail"),
     url(r'^pws/add/$', views.PWSAddView.as_view(), name="pws_add"),
     url(r'^pws/(?P<pk>\d+)/edit/$', views.PWSEditView.as_view(), name="pws_edit"),
 

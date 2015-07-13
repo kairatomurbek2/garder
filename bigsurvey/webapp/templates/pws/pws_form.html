@@ -2,7 +2,11 @@
 {% load widget_tweaks %}
 {% load i18n %}
 {% block menu %}
-    <li><a href="{% url 'webapp:pws_list' %}">{% trans "Cancel" %}</a></li>
+    {% if object %}
+        <li><a href="{% url 'webapp:pws_detail' object.pk %}">{% trans "Cancel" %}</a></li>
+    {% else %}
+        <li><a href="{% url 'webapp:pws_list' %}">{% trans "Cancel" %}</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="wrapper">

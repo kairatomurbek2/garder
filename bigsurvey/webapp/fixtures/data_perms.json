@@ -783,6 +783,11 @@
         "lettertype"
       ],
       [
+        "browse_pws",
+        "webapp",
+        "pws"
+      ],
+      [
         "change_own_pws",
         "webapp",
         "pws"

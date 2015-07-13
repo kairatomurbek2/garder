@@ -4576,6 +4576,11 @@
         "lettertype"
       ],
       [
+        "browse_pws",
+        "webapp",
+        "pws"
+      ],
+      [
         "change_own_pws",
         "webapp",
         "pws"
@@ -4821,7 +4826,7 @@
     "is_active": true,
     "is_superuser": true,
     "is_staff": true,
-    "last_login": "2015-07-10T05:48:41Z",
+    "last_login": "2015-07-13T04:54:03Z",
     "groups": [
       [
         "SuperAdministrators"
@@ -4887,7 +4892,7 @@
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
-    "last_login": "2015-05-04T09:23:09Z",
+    "last_login": "2015-07-13T04:52:49Z",
     "groups": [
       [
         "Administrators"
@@ -4985,7 +4990,7 @@
 {
   "fields": {
     "already_sent": false,
-    "rendered_body": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\"><p>John McConley</p>\r\n\r\n<p>Director of Public Works</p>\r\n\r\n<p>+123456789</p>\r\n\r\n<p>Fax: +987654321</p>\r\n\r\n<p>pws@test.com</p>\r\n</td>\r\n\t\t\t<td style=\"width:50%\"></td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\"><p>200 South Jefferson st.</p>\r\n\r\n<p>Chikago, {PWSState}, 70643</p>\r\n</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>May 05, 2015&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Gabe Newell</td>\r\n\t\t\t<td>Account No.: VALVE</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>127, Universe st</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Seattle, WA, 12382</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">7269, 98, South Jackson st, Seattle, WA</span></p>\r\n\r\n<p style=\"text-align:right\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Seattle is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of Seattle has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the Seattle Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at {PlumberPackerLocation} located at city hall.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at pws@test.com.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Van der Veijden, at +1685231452.</div>\r\n\r\n<p>Sincerely, John McConley</p>\r\n\r\n<p>Director of Public Works</p>\r\n</div>\r\n",
+    "rendered_body": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">\n<p style=\"font-size:12px\">John McConley<br>\nDirector of Public Works<br>\n+123456789<br>\nFax: +987654321<br>\npws@test.com</p>\n</td>\r\n\t\t\t<td style=\"width:50%\"></td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">\n<p style=\"font-size:12px\">200 South Jefferson st.<br>\nChikago, IL, 70643</p>\n</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>May 05, 2015&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Gabe Newell</td>\r\n\t\t\t<td>Account No.: VALVE</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>127, Universe st</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Seattle, WA, 12382</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">7269, 98, South Jackson st, Seattle, WA</span></p>\r\n\r\n<p style=\"text-align:right\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Seattle is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of Seattle has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the Seattle Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at {PlumberPackerLocation} located at city hall.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at pws@test.com.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Van der Veijden, at +1685231452.</div>\r\n\r\n<p>Sincerely, John McConley</p>\r\n\r\n<p>Director of Public Works</p>\r\n</div>\r\n",
     "site": 10,
     "hazard": 2,
     "user": [

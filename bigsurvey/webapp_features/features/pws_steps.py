@@ -21,6 +21,17 @@ def directly_open_pws_add_page(step):
     step.given('I open "%s"' % get_url(Urls.pws_add))
 
 
+@step('I directly open "pws_detail" page with pk "(\d+)"')
+def directly_open_pws_detail_page(step, pk):
+    step.given('I open "%s"' % get_url(Urls.pws_detail % pk))
+
+
+@step('I open "pws_detail" page with pk "(\d+)"')
+def open_pws_detail_page(step, pk):
+    step.given('I open "pws_list" page')
+    step.given('I click "pws_%s_detail" link' % pk)
+
+
 @step('I open "pws_add" page')
 def open_pws_add_page(step):
     step.given('I open "pws_list" page')

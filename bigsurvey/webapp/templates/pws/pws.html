@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load boolean_yes_no %}
+{% load staticfiles %}
+{% block menu %}
+    <li><a href="{% url 'webapp:pws_edit' pws.pk %}" id="pws_{{ pws.pk }}_edit_link">{% trans "Edit" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <table class="uk-table border-none uk-table-condensed">
+            <tbody>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Number" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.number }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Water Source" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.water_source }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Office Address" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.office_address }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.city }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "State" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.state }}</td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Zip" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.zip }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Plumber Packet Location" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.plumber_packet_location }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Plumber Packet Address" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.plumber_packet_address }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Phone" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.phone }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Email" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.email }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Fax" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.fax }}</td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Bailee Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.bailee_name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Bailee Job Title" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.bailee_job_title }}</td>
+                <td colspan="2"></td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Consultant Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.consultant_name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Consultant Phone" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.consultant_phone }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Test Price" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.price }}</td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Description" %}</td>
+                <td class="uk-text-primary" colspan="5">{{ pws.notes }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="uk-text-right uk-text-muted">{% trans "Logo" %}</td>
+                <td class="uk-text-center uk-text-primary" colspan="2">
+                    {% if pws.logo %}
+                        <img src="{{ pws.logo.url }}" style="max-width: 100%; max-height: 250px;">
+                    {% else %}
+                        <span>{% trans "No logo available" %}</span>
+                    {% endif %}
+                </td>
+                <td colspan="2"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
