@@ -292,8 +292,6 @@ class Dumper(Connector):
                    (3, "webapp.assemblylocation"),
                    (4, "webapp.assemblystatus"),
                    (6, "webapp.orientation"),
-                   (7, "webapp.bptype"),
-                   (8, "webapp.bptype"),
                    (9, "webapp.bpsize"),
                    (10, "webapp.bpmanufacturer")],
         'pws': [(2, "webapp.sourcetype")],
