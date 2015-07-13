@@ -86,21 +86,6 @@ class SurveyType(models.Model):
         )
 
 
-class BPType(models.Model):
-    bp_type = models.CharField(max_length=10, verbose_name=_("BFP Type"))
-
-    def __unicode__(self):
-        return u"%s" % self.bp_type
-
-    class Meta:
-        verbose_name = _('BFP Type')
-        verbose_name_plural = _('BFP Types')
-        ordering = ('bp_type',)
-        permissions = (
-            ('browse_bptype', _('Can browse BP Type')),
-        )
-
-
 class BPSize(models.Model):
     bp_size = models.CharField(max_length=10, verbose_name=_("BFP Size"))
 
@@ -470,8 +455,7 @@ class Hazard(models.Model):
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
     latitude = models.FloatField(blank=True, null=True, verbose_name=_("Latitude"))
     longitude = models.FloatField(blank=True, null=True, verbose_name=_("Longitude"))
-    regulation_type = models.ForeignKey(Regulation, verbose_name=_("Regulation"),
-                                        null=True, blank=True, related_name="hazards")
+    regulation_type = models.ForeignKey(Regulation, verbose_name=_("Regulation"), null=True, blank=True, related_name="hazards")
     photo = models.ImageField(blank=True, null=True, default=None,
                               upload_to=photo_util.rename,
                               verbose_name=_('Photo'))
@@ -493,10 +477,8 @@ class Hazard(models.Model):
     replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
     orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
                                     related_name="hazards")
-    bp_type_present = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Present'),
-                                        related_name='hazards_p')
-    bp_type_required = models.ForeignKey(BPType, null=True, blank=True, verbose_name=_('BP Type Required'),
-                                         related_name='hazards_r')
+    bp_type_present = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True, verbose_name=_('BP Type Present'))
+    bp_type_required = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True, verbose_name=_('BP Type Required'))
     bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
                                 related_name="hazards")
     manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),

@@ -14,6 +14,28 @@ class SITE_STATUS(object):
     INACTIVE = 'Inactive'
 
 
+class BP_TYPE(object):
+    AIR_GAP = 'Air Gap'
+    AVB = 'AVB'
+    DC = 'DC'
+    DCDA = 'DCDA'
+    HBVB = 'HBVB'
+    PVB = 'PVB'
+    RP = 'RP'
+    RPDA = 'RPDA'
+
+
+BP_TYPE_CHOICES = (
+    (BP_TYPE.AIR_GAP, BP_TYPE.AIR_GAP),
+    (BP_TYPE.AVB, BP_TYPE.AVB),
+    (BP_TYPE.DC, BP_TYPE.DC),
+    (BP_TYPE.DCDA, BP_TYPE.DCDA),
+    (BP_TYPE.HBVB, BP_TYPE.HBVB),
+    (BP_TYPE.PVB, BP_TYPE.PVB),
+    (BP_TYPE.RP, BP_TYPE.RP),
+    (BP_TYPE.RPDA, BP_TYPE.RPDA),
+)
+
 YESNO_CHOICES = (
     (True, "Yes"),
     (False, "No"),

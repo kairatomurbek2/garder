@@ -17,7 +17,7 @@ class PWSForm(forms.ModelForm):
 class PWSFormForAdmin(forms.ModelForm):
     class Meta:
         model = models.PWS
-        exclude = 'number', 'name'
+        exclude = 'number', 'name', 'price'
 
 
 class SiteForm(forms.ModelForm):
