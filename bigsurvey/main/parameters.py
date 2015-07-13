@@ -15,14 +15,14 @@ class SITE_STATUS(object):
 
 
 class BP_TYPE(object):
-    AIR_GAP = 'Air Gap'
-    AVB = 'AVB'
-    DC = 'DC'
-    DCDA = 'DCDA'
-    HBVB = 'HBVB'
-    PVB = 'PVB'
-    RP = 'RP'
-    RPDA = 'RPDA'
+    AIR_GAP = _('Air Gap')
+    AVB = _('AVB')
+    DC = _('DC')
+    DCDA = _('DCDA')
+    HBVB = _('HBVB')
+    PVB = _('PVB')
+    RP = _('RP')
+    RPDA = _('RPDA')
 
 
 BP_TYPE_CHOICES = (
