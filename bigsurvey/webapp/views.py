@@ -802,7 +802,7 @@ class LetterTypeBaseFormView(BaseFormView):
 
 
 class LetterTypeEditView(LetterTypeBaseFormView, UpdateView):
-    permission = "webapp.access_to_pws_lettertypes"
+    permission = "webapp.change_lettertype"
     success_message = Messages.LetterType.editing_success
     error_message = Messages.LetterType.editing_error
 
