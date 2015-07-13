@@ -25,8 +25,8 @@ Feature: Letter Editing
     And I submit "letter_generate_form" form
     Then I should be at "letter_detail" page with pk "2"
     And I should see "letter editing success" message
-    And I should see warning letter message
-    And I should see warning due date letter message
+#    And I should see warning letter message
+#    And I should see warning due date letter message
     And I should see following
       | text                |
       | Gabe Newell         |

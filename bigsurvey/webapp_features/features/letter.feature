@@ -22,8 +22,8 @@ Feature: Letter Viewing and Sending
   Scenario: Letter Detail Page Elements
     Given I logged in as "root"
     When I open "letter_detail" page with pk "2"
-    Then I should see warning letter message
-    And I should see warning due date letter message
+#    Then I should see warning letter message
+#    And I should see warning due date letter message
     And I should see following
       | text                                    |
       | Send to                                 |

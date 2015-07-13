@@ -27,7 +27,7 @@ Feature: Letter Adding
     And I submit "letter_generate_form" form
     Then I should be at "letter_detail" page with pk "3"
     And I should see "letter adding success" message
-    And I should see warning letter message
+#    And I should see warning letter message
     And I should see following
       | text                   |
       | Dear Customer          |

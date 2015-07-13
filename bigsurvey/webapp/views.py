@@ -1405,8 +1405,8 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
             return self.render_to_response(self.get_context_data())
 
     def _try_to_import(self, mappings):
-        pws = models.PWS.objects.get(pk=self.request.session.pop('import_pws_pk'))
-        date_format = self.request.session.pop('import_date_format')
+        pws = models.PWS.objects.get(pk=self.request.session.get('import_pws_pk'))
+        date_format = self.request.session.get('import_date_format')
         self.excel_parser.check_constraints(mappings, date_format)
         import_log = models.ImportLog.objects.create(user=self.request.user, pws=pws)
         self.request.session['import_log_pk'] = import_log.pk
@@ -1435,6 +1435,8 @@ class ImportProgressView(BaseTemplateView):
             messages.success(self.request, Messages.Import.import_was_finished % (
                 import_log.added_sites.count(), import_log.updated_sites.count(), import_log.deactivated_sites.count(), reverse('webapp:import_log_list')))
             del self.request.session['import_log_pk']
+            del self.request.session['import_pws_pk']
+            del self.request.session['import_date_format']
         return JsonResponse({'progress': progress})
 
 
@@ -1466,6 +1468,7 @@ class ImportLogSitesMixin(BaseTemplateView):
         if not perm_checkers.ImportLogPermChecker.has_perm(self.request, import_log):
             raise Http404
         context['import_log'] = import_log
+        context['header'] = self.get_header(import_log)
         sites = self.get_sites(import_log)
         context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites)
         return context
@@ -1475,12 +1478,21 @@ class ImportLogAddedSitesView(ImportLogSitesMixin):
     def get_sites(self, import_log):
         return import_log.added_sites
 
+    def get_header(self, import_log):
+        return _("You are browsing the sites that have been added during the import on %s") % import_log.datetime.strftime('%B %d, %Y, %H:%m')
+
 
 class ImportLogUpdatedSitesView(ImportLogSitesMixin):
     def get_sites(self, import_log):
         return import_log.updated_sites
 
+    def get_header(self, import_log):
+        return _("You are browsing the sites that have been updated during the import on %s") % import_log.datetime.strftime('%B %d, %Y, %H:%m')
+
 
 class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
     def get_sites(self, import_log):
         return import_log.deactivated_sites
+
+    def get_header(self, import_log):
+        return _("You are browsing the sites that have been deactivated during the import on %s") % import_log.datetime.strftime('%B %d, %Y, %H:%m')

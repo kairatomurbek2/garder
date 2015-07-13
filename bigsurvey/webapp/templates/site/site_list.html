@@ -8,6 +8,9 @@
 
     <div class="wrapper uk-width-4-5 filters-offset">
         {% include 'messages.html' %}
+        {% if header %}
+            <div class="uk-alert">{{ header }}</div>
+        {% endif %}
         <div class="pagination-wrapper">{% paginate %}</div>
 
         <table class="uk-table big-table uk-table-hover fixed-headers">
