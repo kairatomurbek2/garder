@@ -1,7 +1,6 @@
 @site_filter
 Feature: Filtration
 
-
   Scenario: Filtration by address1 field while logged in as root
     Given I logged in as "root"
     And I open "site_list" page

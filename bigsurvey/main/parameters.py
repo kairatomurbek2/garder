@@ -23,6 +23,12 @@ class BP_TYPE(object):
     PVB = _('PVB')
     RP = _('RP')
     RPDA = _('RPDA')
+    SVB = _('SVB')
+
+    DC_TYPES = [DC, DCDA]
+    RP_TYPES = [RP, RPDA]
+    STANDALONE_TYPES = [PVB, SVB]
+    NOT_REQUIRE_TEST_TYPES = [AIR_GAP, AVB, HBVB]
 
 
 BP_TYPE_CHOICES = (

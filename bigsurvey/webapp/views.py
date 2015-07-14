@@ -847,12 +847,7 @@ class LetterBaseFormView(BaseFormView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         response = super(LetterBaseFormView, self).form_valid(form)
-        warnings = LetterRenderer.render(self.object)
-        if warnings:
-            for warning in warnings:
-                messages.warning(self.request, warning)
-        else:
-            messages.success(self.request, _("All required data is present!"))
+        LetterRenderer.render(self.object)
         return response
 
 

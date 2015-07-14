@@ -736,62 +736,6 @@
 },
 {
   "fields": {
-    "bp_type": "RP"
-  },
-  "model": "webapp.bptype",
-  "pk": 1
-},
-{
-  "fields": {
-    "bp_type": "RPDA"
-  },
-  "model": "webapp.bptype",
-  "pk": 2
-},
-{
-  "fields": {
-    "bp_type": "HBVB"
-  },
-  "model": "webapp.bptype",
-  "pk": 3
-},
-{
-  "fields": {
-    "bp_type": "DCDA"
-  },
-  "model": "webapp.bptype",
-  "pk": 4
-},
-{
-  "fields": {
-    "bp_type": "Air Gap"
-  },
-  "model": "webapp.bptype",
-  "pk": 5
-},
-{
-  "fields": {
-    "bp_type": "PVB"
-  },
-  "model": "webapp.bptype",
-  "pk": 6
-},
-{
-  "fields": {
-    "bp_type": "AVB"
-  },
-  "model": "webapp.bptype",
-  "pk": 7
-},
-{
-  "fields": {
-    "bp_type": "DC"
-  },
-  "model": "webapp.bptype",
-  "pk": 8
-},
-{
-  "fields": {
     "bp_size": "3/4\""
   },
   "model": "webapp.bpsize",

@@ -99,26 +99,6 @@
         "bpsize"
       ],
       [
-        "add_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "browse_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "change_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
-        "delete_bptype",
-        "webapp",
-        "bptype"
-      ],
-      [
         "add_customercode",
         "webapp",
         "customercode"

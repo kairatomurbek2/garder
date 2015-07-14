@@ -207,7 +207,6 @@ class Jsoner(object):
             "webapp.siteuse": {},
             "webapp.servicetype": {},
             "webapp.surveytype": {},
-            "webapp.bptype": {},
             "webapp.bpsize": {},
             "webapp.bpmanufacturer": {},
             "webapp.customercode": {},
