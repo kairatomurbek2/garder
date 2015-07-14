@@ -943,7 +943,7 @@ class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
         if not letter.already_sent:
             warnings = LetterRenderer.render(letter)
             if warnings:
-                messages.warning(self.request, "Following fields has no value in database: %s" % ", ".join(warnings))
+                messages.warning(self.request, _("Following fields has no value in database: %s") % ", ".join(warnings))
             else:
                 messages.success(self.request, _("All required data is present!"))
         else:
@@ -1003,7 +1003,6 @@ class LetterPDFView(BaseView, FormView, LetterMixin):
 
             body = self.get_email_body(letter, form, is_pdf=True)
             body += self.append_styles()
-            print body
             pdf_content = PDFGenerator.generate_from_html(body)
             filename = u"%s_%s_%s.pdf" % (letter.date, letter.letter_type.letter_type.replace(' ', '_'), letter.site.cust_number)
             return PDFResponse(filename=filename, content=pdf_content)

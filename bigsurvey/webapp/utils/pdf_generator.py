@@ -19,5 +19,5 @@ class PDFGenerator(object):
             return path
 
         stream = StringIO.StringIO()
-        pisa.CreatePDF(html, stream, link_callback=media_files_callback)
+        pisa.CreatePDF(html, stream)
         return stream.getvalue()
