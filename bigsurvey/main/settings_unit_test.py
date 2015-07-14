@@ -1,10 +1,11 @@
 from settings import *
 
+
 MIGRATION_MODULES = {"webapp": "webapp.migrations_not_used_in_tests"}  # in order to make tests not to run migrations
 
 # SQLite
 # DATABASES = {
-#     'default': {
+# 'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'db', 'unittest.db.sqlite3'),
 #     }

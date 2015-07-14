@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 from main.parameters import Messages
 from webapp import models
-from webapp.utils.excel_parser import FOREIGN_KEY_FIELDS, CUST_NUMBER_FIELD_NAME, DATE_FIELDS, DateFormatError
+from webapp.utils.excel_parser import FOREIGN_KEY_FIELDS, CUST_NUMBER_FIELD_NAME, DATE_FIELDS, DateFormatError, ForeignKeyError, CustomerNumberError, RequiredValueIsEmptyError
 
 
 class ValueCheckerFactory(object):
@@ -113,7 +113,7 @@ class RequiredValueChecker(ValueChecker):
 
     def check(self, value, coords):
         if self.required and not value:
-            raise IntegrityError(Messages.Import.required_value_is_empty % coords)
+            raise RequiredValueIsEmptyError(Messages.Import.required_value_is_empty % coords)
 
 
 class CustomerNumberValueChecker(RequiredValueChecker):
@@ -123,7 +123,7 @@ class CustomerNumberValueChecker(RequiredValueChecker):
     def check(self, value, coords):
         super(CustomerNumberValueChecker, self).check(value, coords)
         if value in self._customer_numbers:
-            raise IntegrityError(Messages.Import.duplicate_cust_numbers % (self._customer_numbers[value], coords))
+            raise CustomerNumberError(Messages.Import.duplicate_cust_numbers % (self._customer_numbers[value], coords))
         self._customer_numbers[value] = coords
 
 
@@ -139,7 +139,7 @@ class ForeignKeyValueChecker(RequiredValueChecker):
     def check(self, value, coords):
         super(ForeignKeyValueChecker, self).check(value, coords)
         if value and value not in self.get_available_values():
-            raise IntegrityError(Messages.Import.foreign_key_error % (coords, ', '.join(map(str, self.get_available_values())), value))
+            raise ForeignKeyError(Messages.Import.foreign_key_error % (coords, ', '.join(map(str, self.get_available_values())), value))
 
 
 class DateValueChecker(RequiredValueChecker):

@@ -38,6 +38,9 @@ class EMPTY_VALUE:
     pass
 
 
+PWS_LOGO_TEMPLATE = '<p style="text-align: center; height: 200px;"><img src="%s%s" style="width: auto; max-height: 100%%; max-width: 100%%"></p>'
+
+
 class LetterRenderer(object):
     @staticmethod
     def render(letter):
@@ -51,7 +54,7 @@ class LetterRenderer(object):
         template = template.replace(Placeholders.right_header_block, pws.letter_right_header_block)
 
         if pws.logo:
-            pws_logo_replacement = '<p style="text-align: center; height: 250px;"><img src="%s%s" style="width: auto; max-height: 100%%"></p>' % (settings.HOST, pws.logo.url)
+            pws_logo_replacement = PWS_LOGO_TEMPLATE % (settings.HOST, pws.logo.url)
         else:
             pws_logo_replacement = EMPTY_VALUE
 
@@ -87,8 +90,8 @@ class LetterRenderer(object):
             replacements[Placeholders.assembly_type] = hazard.bp_type_required
             replacements[Placeholders.due_date] = hazard.due_install_test_date.strftime("%m/%d/%Y") if hazard.due_install_test_date else ''
         else:
-            # warnings.append("Warning: Letter has no Hazard specified. Was it imported?")
-            pass
+            warnings.append(Placeholders.assembly_type)
+            warnings.append(Placeholders.due_date)
         for key, value in replacements.items():
             if value is None or value == '':
                 warnings.append(key)

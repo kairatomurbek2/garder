@@ -36,7 +36,7 @@ from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
 from webapp.utils import photo_util
-from webapp.utils.excel_parser import ExcelParser, DateFormatError, FINISHED, BackgroundExcelParserRunner
+from webapp.utils.excel_parser import ExcelParser, DateFormatError, FINISHED, BackgroundExcelParserRunner, ExcelValidationError
 
 
 class PermissionRequiredMixin(View):
@@ -1399,8 +1399,15 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
         try:
             self._try_to_import(mappings)
             return redirect('webapp:import-mappings')
-        except (IntegrityError, DateFormatError) as e:
-            self.formset.add_error(str(e))
+        except ExcelValidationError as e:
+            for error in e.required_value_errors:
+                self.formset.add_error(error)
+            for error in e.date_format_errors:
+                self.formset.add_error(error)
+            for error in e.customer_number_errors:
+                self.formset.add_error(error)
+            for error in e.foreign_key_errors:
+                self.formset.add_error(error)
             return self.render_to_response(self.get_context_data())
 
     def _try_to_import(self, mappings):

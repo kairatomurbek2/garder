@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.test import TestCase
 from webapp.models import ImportLog, PWS, Site
-from webapp.utils.excel_parser import ExcelParser, DateFormatError
+from webapp.utils.excel_parser import ExcelParser, DateFormatError, ExcelValidationError
 import os
 from django.conf import settings
 
@@ -53,19 +53,19 @@ class TestExcelParser(TestCase):
 
     def test_foreign_key_error(self):
         self.excel_parser = self._create_excel_parser('foreign_key_error.xlsx')
-        self.assertRaisesMessage(IntegrityError, 'Incorrect value in C7 cell. Available values are 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, but found 100', self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
+        self.assertRaises(ExcelValidationError, self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
 
     def test_incorrect_date_format_error(self):
         self.excel_parser = self._create_excel_parser('incorrect_date_format.xlsx')
-        self.assertRaisesMessage(DateFormatError, 'Date in D6 cell does not match "%Y%m%d" format', self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
+        self.assertRaises(ExcelValidationError, self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
 
     def test_required_values_is_empty_error(self):
         self.excel_parser = self._create_excel_parser('required_value_is_empty.xlsx')
-        self.assertRaisesMessage(IntegrityError, "Found empty value in A4 cell, please fill in this cell", self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
+        self.assertRaises(ExcelValidationError, self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
 
     def test_duplicate_customer_number_error(self):
         self.excel_parser = self._create_excel_parser('duplicate_cust_numbers.xlsx')
-        self.assertRaisesMessage(IntegrityError, "Duplicate Customer Numbers found in A6 and A10 cells", self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
+        self.assertRaises(ExcelValidationError, self.excel_parser.check_constraints, IMPORT_MAPPINGS.copy(), DATE_FORMAT)
 
     def test_import_two_times(self):
         self.test_file_parsed()

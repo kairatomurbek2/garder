@@ -9,10 +9,9 @@ from xlrd.biffh import XL_CELL_NUMBER, XL_CELL_TEXT
 
 from main.parameters import SITE_STATUS
 from webapp import models
-from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE
+from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE, RequiredValueIsEmptyError, \
+    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
-
-
 
 
 class ExcelDocument(object):
@@ -77,13 +76,31 @@ class ConstraintChecker(object):
     date_format = None
     excel_document = None
 
+    def __init__(self):
+        self.required_value_errors = []
+        self.date_format_errors = []
+        self.customer_number_errors = []
+        self.foreign_key_errors = []
+
     def execute(self):
         start_row_number = self.excel_document.headers_row_number + 1
         for field_name, column_number in self.mappings.items():
             checker = ValueCheckerFactory.get_checker(field_name, date_format=self.date_format)
             for row_number in xrange(start_row_number, self.excel_document.num_rows):
                 value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
-                checker.check(value, self.prettify_cell_index(row_number, column_number))
+                try:
+                    checker.check(value, self.prettify_cell_index(row_number, column_number))
+                except RequiredValueIsEmptyError as e:
+                    self.required_value_errors.append(str(e))
+                except DateFormatError as e:
+                    self.date_format_errors.append(str(e))
+                except CustomerNumberError as e:
+                    self.customer_number_errors.append(str(e))
+                except ForeignKeyError as e:
+                    self.foreign_key_errors.append(str(e))
+        if self.required_value_errors or self.date_format_errors \
+                or self.customer_number_errors or self.foreign_key_errors:
+            raise ExcelValidationError(self.required_value_errors, self.date_format_errors, self.customer_number_errors, self.foreign_key_errors)
 
     def prettify_cell_index(self, row_number, col_number):
         if col_number < ALPHABET_LENGTH:
