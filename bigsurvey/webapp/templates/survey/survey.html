@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load boolean_yes_no %}
-{% load hazards_for_services %}
+{% load i18n choices %}
 {% block menu %}
     <li><a href="{% url 'webapp:survey_edit' survey.pk %}" id="survey_{{ survey.pk }}_edit_link">{% trans "Edit" %}</a></li>
     <li><a href="{% url 'webapp:site_detail' survey.site.pk %}">{% trans "Back to Site" %}</a></li>

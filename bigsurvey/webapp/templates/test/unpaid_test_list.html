@@ -1,12 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load boolean_yes_no %}
-{% load valve_leaked_choices %}
-{% load valve_opened_choices %}
-{% load test_result_choices %}
-{% load pagination_tags %}
-{% load staticfiles %}
-{% load common %}
+{% load i18n choices pagination_tags staticfiles %}
 {% block content %}
     {% autopaginate test_filter.qs as unpaid_tests 50 %}
     <div class="uk-grid">

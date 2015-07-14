@@ -12,9 +12,9 @@ class RawSqlQuery(object):
 
     @classmethod
     def get_query(cls, vendor):
-        if vendor in cls.available_vendors:
-            return getattr(cls, 'as_%s' % vendor)()
-        raise InvalidVendor(vendor, cls.available_vendors)
+        if vendor not in cls.available_vendors:
+            raise InvalidVendor(vendor, cls.available_vendors)
+        return getattr(cls, 'as_%s' % vendor)()
 
     @classmethod
     def as_sql(cls):

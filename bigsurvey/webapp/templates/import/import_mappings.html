@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load form_helper %}
-{% load staticfiles %}
+{% load i18n form_helper staticfiles %}
 {% block styles %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/components/progress.min.css' %}">
 {% endblock %}
@@ -60,7 +58,7 @@
                             <tr>
                                 {% for col_index in '01'|make_list %}
                                     {% get_formset_index row_index col_index as index %}
-                                    {% get_form formset index as form %}
+                                    {% get_form_from_formset formset index as form %}
                                     <td>
                                         {{ form.model_field }}
                                         {{ form.model_field.label }}

@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
-{% load staticfiles %}
-{% load widget_tweaks %}
-{% load i18n %}
-{% load google_map %}
+{% load i18n staticfiles widget_tweaks google_map %}
 {% block menu %}
     {% if hazard.pk %}
         <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>

@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load boolean_yes_no %}
-{% load staticfiles %}
-{% load pagination_tags %}
-{% load widget_tweaks %}
+{% load i18n staticfiles pagination_tags widget_tweaks %}
 {% block content %}
 {% autopaginate hazard_filter.qs as filtered_hazards 50 %}
 <div class="uk-grid">

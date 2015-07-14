@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
-{% load i18n %}
-{% load hazards_helper %}
-{% load form_helper %}
-{% load staticfiles %}
+{% load i18n widget_tweaks staticfiles hazards_helper form_helper %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
 {% endblock %}

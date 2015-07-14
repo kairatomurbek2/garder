@@ -1,8 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load staticfiles %}
-{% load pagination_tags %}
-{% load widget_tweaks %}
+{% load i18n staticfiles pagination_tags widget_tweaks %}
 {% block content %}
 {% autopaginate tester_filter.qs as filtered_testers 20 %}
 <div class="wrapper">

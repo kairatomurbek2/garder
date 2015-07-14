@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
-{% load i18n %}
-
-
+{% load i18n widget_tweaks %}
 {% block menu %}
     {% if site.pk %}
         <li><a href="{% url 'webapp:site_detail' site.pk %}">{% trans "Cancel" %}</a></li>

@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load staticfiles %}
-{% load boolean_yes_no %}
+{% load i18n staticfiles choices %}
 {% block menu %}
     <li><a href="{% url 'webapp:user_add' %}" id="user_add_link">{% trans "Add User" %}</a></li>
 {% endblock %}

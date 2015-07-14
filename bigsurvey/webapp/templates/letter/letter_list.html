@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
-{% load pagination_tags %}
-{% load staticfiles %}
-{% load i18n %}
-{% load boolean_yes_no %}
+{% load i18n pagination_tags staticfiles choices %}
 {% block content %}
     {% autopaginate letter_filter.qs as filtered_letters 50 %}
     <div class="uk-grid">

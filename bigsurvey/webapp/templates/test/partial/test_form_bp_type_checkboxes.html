@@ -1,0 +1,6 @@
+{% for bp_type in bp_types %}
+    <label>
+        <input type="checkbox" name="bp_type" data-type="non-clickable-checkbox" {% if bp_type == current_bp_type %}checked{% endif %}>
+        {{ bp_type }}
+    </label>
+{% endfor %}

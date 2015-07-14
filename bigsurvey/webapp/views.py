@@ -5,9 +5,8 @@ import time
 import os
 
 from django.conf import settings
-
 from django.core.files.storage import default_storage
-from django.db import IntegrityError, connection
+from django.db import connection
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
 from django.template import RequestContext
@@ -28,7 +27,7 @@ import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
 
 from webapp import perm_checkers, models, forms, filters
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OTHER, DATEFORMAT_HELP, SITE_STATUS
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OTHER, DATEFORMAT_HELP, SITE_STATUS, BP_TYPE
 from webapp.exceptions import PaymentWasNotCreatedError
 from webapp.raw_sql_queries import HazardPriorityQuery
 from webapp.responses import PDFResponse
@@ -36,7 +35,7 @@ from webapp.utils.letter_renderer import LetterRenderer
 from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMappingsFormSet, ImportForm
 from webapp.utils.pdf_generator import PDFGenerator
 from webapp.utils import photo_util
-from webapp.utils.excel_parser import ExcelParser, DateFormatError, FINISHED, BackgroundExcelParserRunner, ExcelValidationError
+from webapp.utils.excel_parser import ExcelParser, FINISHED, BackgroundExcelParserRunner, ExcelValidationError
 
 
 class PermissionRequiredMixin(View):
@@ -142,6 +141,7 @@ class SiteDetailView(BaseTemplateView):
             raise Http404
         context = super(SiteDetailView, self).get_context_data(**kwargs)
         context['site'] = site
+        context['BP_TYPE'] = BP_TYPE
         return context
 
 
@@ -309,6 +309,7 @@ class SurveyDetailView(BaseTemplateView):
         context['survey'] = survey
         context['hazards'] = survey.hazards.all()
         context['service'] = survey.service_type.service_type
+        context['BP_TYPE'] = BP_TYPE
         return context
 
 

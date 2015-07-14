@@ -1,6 +1,8 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from webapp.models import PWS, LetterType
+
 
 @receiver(post_save, sender=PWS)
 def create_letter_types_for_pws(sender, instance, created, raw, **kwargs):

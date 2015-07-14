@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load pagination_tags %}
-{% load staticfiles %}
-{% load widget_tweaks %}
+{% load i18n pagination_tags staticfiles widget_tweaks %}
 {% block content %}
     {% autopaginate survey_filter.qs as filtered_surveys 50 %}
     <div class="uk-grid">

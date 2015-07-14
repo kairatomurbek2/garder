@@ -1,13 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
-{% load i18n %}
-{% load hazards_helper %}
-{% load staticfiles %}
-{% load valve_leaked_choices %}
-{% load valve_opened_choices %}
-{% load test_result_choices %}
-{% load cleaned_replaced_choices %}
-{% load test_detail_helper %}
+{% load i18n widget_tweaks staticfiles choices test_form_helper %}
 {% block menu %}
     <li><a href="{% url 'webapp:test_edit' test.pk %}">{% trans 'Edit' %}</a></li>
 {% endblock %}

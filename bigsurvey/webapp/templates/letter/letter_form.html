@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load staticfiles %}
-{% load widget_tweaks %}
+{% load i18n staticfiles widget_tweaks %}
 {% block menu %}
     <li><a href="{% url 'webapp:site_detail' site.pk %}" id="return_to_site_link">{% trans "Cancel" %}</a></li>
 {% endblock %}

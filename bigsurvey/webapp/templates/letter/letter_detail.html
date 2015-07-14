@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load widget_tweaks %}
-{% load i18n %}
+{% load i18n widget_tweaks %}
 {% block menu %}
     <li><a href="{% url "webapp:letter_edit" letter.pk %}" id="letter_{{ letter.pk }}_edit_link">
         {% trans "Edit" %}

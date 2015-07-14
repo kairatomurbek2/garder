@@ -1,6 +1,0 @@
-{% for bp_type_key, bp_type_value in bp_types %}
-    <label>
-        <input type="checkbox" name="bp_type" data-type="non-clickable-checkbox" {% if bp_type_key == current_bp_type %}checked{% endif %}>
-        {{ bp_type_key }}
-    </label>
-{% endfor %}
