@@ -1,6 +1,6 @@
 import django_filters
 import models
-from main.parameters import NEXT_DATE_FILTER_CHOICES, PAST_DATE_FILTER_CHOICES, Groups
+from main.parameters import NEXT_DATE_FILTER_CHOICES, PAST_DATE_FILTER_CHOICES, Groups, BP_TYPE_CHOICES
 from datetime import datetime, timedelta
 from django.utils.translation import ugettext as _
 
@@ -72,9 +72,7 @@ class FilterChoices(object):
 
     @staticmethod
     def bp_type():
-        choices = [('', _('All'))]
-        for bp_type in models.BPType.objects.all():
-            choices.append((bp_type.pk, bp_type.bp_type))
+        choices = (('', _('All')),) + BP_TYPE_CHOICES
         return choices
 
     @staticmethod
@@ -434,6 +432,7 @@ class HazardFilter(django_filters.FilterSet):
     hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'))
     assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))
     bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'))
+    bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Required'))
     due_install_test_date = django_filters.DateRangeFilter(label=_('Due Install/Test Date'))
 
 
