@@ -26,6 +26,13 @@ Feature: Test adding
       | air_inlet_psi      | 16     |
     And I select "tester" from "tester"
     And I choose "True" from "test_result"
+    And I choose "True" from "cv1_leaked"
+    And I choose "False" from "cv2_leaked"
+    And I choose "True" from "cv1_cleaned"
+    And I choose "True" from "rv_cleaned"
+    And I choose "True" from "cv2_cleaned"
+    And I choose "True" from "pvb_cleaned"
+    And I choose "True" from "outlet_sov_leaked"
     And I check "rv_did_not_open"
     And I check "cv_leaked"
     When I submit "test" form

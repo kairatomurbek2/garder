@@ -72,17 +72,17 @@ def coerce_to_bool(value):
 
 class TestForm(forms.ModelForm):
     tester = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.tester), empty_label=None)
-    cv1_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
-    cv2_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
-    outlet_sov_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES, initial=False)
+    cv1_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES)
+    cv2_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES)
+    outlet_sov_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES)
     cv1_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool, initial=True)
+                                         coerce=coerce_to_bool)
     rv_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                        coerce=coerce_to_bool, initial=True)
+                                        coerce=coerce_to_bool)
     cv2_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool, initial=True)
+                                         coerce=coerce_to_bool)
     pvb_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool, initial=True)
+                                         coerce=coerce_to_bool)
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
@@ -141,28 +141,28 @@ class TestForm(forms.ModelForm):
 
     def _clean_cv1_cleaned(self):
         cv1_cleaned = self.cleaned_data.get('cv1_cleaned')
-        if not cv1_cleaned:
+        if cv1_cleaned is False:
             cv1_replaced_details = self.cleaned_data.get('cv1_replaced_details')
             if not cv1_replaced_details:
                 self._custom_errors.append(ValidationError(Messages.Test.cv1_replaced_details_not_provided))
 
     def _clean_rv_cleaned(self):
         rv_cleaned = self.cleaned_data.get('rv_cleaned')
-        if not rv_cleaned:
+        if rv_cleaned is False:
             rv_replaced_details = self.cleaned_data.get('rv_replaced_details')
             if not rv_replaced_details:
                 self._custom_errors.append(ValidationError(Messages.Test.rv_replaced_details_not_provided))
 
     def _clean_cv2_cleaned(self):
         cv2_cleaned = self.cleaned_data.get('cv2_cleaned')
-        if not cv2_cleaned:
+        if cv2_cleaned is False:
             cv2_replaced_details = self.cleaned_data.get('cv2_replaced_details')
             if not cv2_replaced_details:
                 self._custom_errors.append(ValidationError(Messages.Test.cv2_replaced_details_not_provided))
 
     def _clean_pvb_cleaned(self):
         pvb_cleaned = self.cleaned_data.get('pvb_cleaned')
-        if not pvb_cleaned:
+        if pvb_cleaned is False:
             pvb_replaced_details = self.cleaned_data.get('pvb_replaced_details')
             if not pvb_replaced_details:
                 self._custom_errors.append(ValidationError(Messages.Test.pvb_replaced_details_not_provided))

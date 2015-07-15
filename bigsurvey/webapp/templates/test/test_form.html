@@ -99,7 +99,7 @@
                                     <p class="rv_psi1">
                                         {% trans 'Opened at' %}
                                         {{ form.rv_psi1.errors }}
-                                        {{ form.rv_psi1|add_class:'uk-form-small' }}
+                                        {{ form.rv_psi1|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                         {% trans 'psi' %}
                                     </p>
 
@@ -116,7 +116,7 @@
                                     <p class="air_inlet_psi">
                                         {% trans 'Opened at' %}
                                         {{ form.air_inlet_psi.errors }}
-                                        {{ form.air_inlet_psi|add_class:'uk-form-small' }}
+                                        {{ form.air_inlet_psi|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                         {% trans 'psi' %}
                                     </p>
                                 </td>
@@ -131,7 +131,7 @@
                                 <p class="cv1_gauge_pressure">
                                     {% trans 'Check valve' %}
                                     {{ form.cv1_gauge_pressure.errors }}
-                                    {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
+                                    {{ form.cv1_gauge_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -149,7 +149,7 @@
                                 <p class="cv2_gauge_pressure">
                                     {% trans 'Check valve' %}
                                     {{ form.cv2_gauge_pressure.errors }}
-                                    {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
+                                    {{ form.cv2_gauge_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -161,7 +161,7 @@
                                 <p class="cv_held_pressure">
                                     {% trans 'Or held at' %}
                                     {{ form.cv_held_pressure.errors }}
-                                    {{ form.cv_held_pressure|add_class:'uk-form-small' }}
+                                    {{ form.cv_held_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -495,7 +495,7 @@
                                 <p>
                                     {% trans 'Check valve' %}
                                     {{ form.cv1_maintenance_pressure.errors }}
-                                    {{ form.cv1_maintenance_pressure|add_class:'uk-form-small' }}
+                                    {{ form.cv1_maintenance_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -508,7 +508,7 @@
 
                                 <p>
                                     {{ form.rv_psi2.errors }}
-                                    {{ form.rv_psi2|add_class:'uk-form-small' }}
+                                    {{ form.rv_psi2|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -522,7 +522,7 @@
                                 <p>
                                     {% trans 'Check valve' %}
                                     {{ form.cv2_maintenance_pressure.errors }}
-                                    {{ form.cv2_maintenance_pressure|add_class:'uk-form-small' }}
+                                    {{ form.cv2_maintenance_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -532,14 +532,14 @@
                                 <p>
                                     {% trans 'Air Inlet' %}
                                     {{ form.air_inlet_retest_psi.errors }}
-                                    {{ form.air_inlet_retest_psi|add_class:'uk-form-small' }}
+                                    {{ form.air_inlet_retest_psi|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
 
                                 <p>
                                     {% trans 'Check valve' %}
                                     {{ form.cv_retest_psi.errors }}
-                                    {{ form.cv_retest_psi|add_class:'uk-form-small' }}
+                                    {{ form.cv_retest_psi|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -592,8 +592,8 @@
                     <p class="uk-float-right uk-text-right">
                         {% url 'webapp:unpaid_test_list' as unpaid_test_list_url %}
                         {% blocktrans %}
-                            After adding test you will be redirected to<br>
-                            <a href="{{ unpaid_test_list_url }}">"Unsaved Tests"</a> page where you can save the test
+                            After submitting form you will be asked to save the test.<br>
+                            You can save it immediately or later from <a href="{{ unpaid_test_list_url }}">"Unsaved Tests"</a> page
                         {% endblocktrans %}
                     </p>
                 {% endif %}
@@ -666,6 +666,23 @@
             listenRadio($('input[name="rv_cleaned"]'), $('input[name="rv_replaced_details"]'));
             listenRadio($('input[name="cv2_cleaned"]'), $('input[name="cv2_replaced_details"]'));
             listenRadio($('input[name="pvb_cleaned"]'), $('input[name="pvb_replaced_details"]'));
+
+            $('[data-content="decimal-field"]').keyup(function () {
+                var $this = $(this);
+                var value = $this.val();
+                console.log(value);
+                var regexForValidation = /^(\d+\.?\d?)$/;
+                if (!regexForValidation.test(value)) {
+                    var regexForStripping = /^(\d+\.?\d?)/;
+                    try {
+                        $this.val(regexForStripping.exec(value)[1])
+                    }
+                    catch (e) {
+                        $this.val('');
+                    }
+                }
+            });
+
         });
     </script>
 {% endblock %}
