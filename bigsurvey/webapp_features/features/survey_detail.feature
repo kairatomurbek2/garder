@@ -29,6 +29,5 @@ Feature: Survey Detail
       | Metered      |
       | Hazards      |
       | Detail       |
-      | Add Test     |
       | Edit         |
       | Back to Site |
