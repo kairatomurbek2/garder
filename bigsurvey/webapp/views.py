@@ -448,7 +448,10 @@ class HazardDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
         context['hazard'] = self._get_hazard()
+        if not context['hazard'].bp_type_required:
+            messages.warning(self.request, Messages.Test.assembly_type_not_set % reverse('webapp:hazard_edit', args=(context['hazard'].pk,)))
         context['countlte0'] = self._is_tests_count_lte0(context['hazard'])
+        context['BP_TYPE'] = BP_TYPE
         return context
 
     def _get_hazard(self):
@@ -573,6 +576,13 @@ class TestBaseFormView(BaseFormView):
     template_name = 'test/test_form.html'
     form_class = forms.TestForm
     model = models.Test
+    hazard = None
+
+    def get_context_data(self, **kwargs):
+        context = super(TestBaseFormView, self).get_context_data(**kwargs)
+        context['BP_TYPE'] = BP_TYPE
+        context['hazard'] = self.get_hazard()
+        return context
 
     def get_success_url(self):
         return reverse('webapp:test_detail', args=(self.object.pk,))
@@ -580,10 +590,11 @@ class TestBaseFormView(BaseFormView):
     def get_form(self, form_class):
         form = super(TestBaseFormView, self).get_form(form_class)
         form.fields['tester'].queryset = self._get_queryset_for_tester_field()
+        form.bp_type = self.get_hazard().bp_type_required
         return form
 
     def _get_queryset_for_tester_field(self):
-        queryset = []
+        queryset = models.User.objects.none()
         user = self.request.user
         if self.request.user.has_perm('webapp.access_to_own_tests'):
             queryset = models.User.objects.filter(pk=user.pk)
@@ -600,10 +611,11 @@ class TestAddView(TestBaseFormView, CreateView):
     success_message = Messages.Test.adding_success
     error_message = Messages.Test.adding_error
 
-    def get_context_data(self, **kwargs):
-        context = super(TestAddView, self).get_context_data(**kwargs)
-        context['hazard'] = models.Hazard.objects.get(pk=self.kwargs['pk'])
-        return context
+    def get_hazard(self):
+        if self.hazard:
+            return self.hazard
+        self.hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        return self.hazard
 
     def get_form(self, form_class):
         if not perm_checkers.HazardPermChecker.has_perm(self.request, models.Hazard.objects.get(pk=self.kwargs['pk'])):
@@ -626,9 +638,14 @@ class TestEditView(TestBaseFormView, UpdateView):
     success_message = Messages.Test.editing_success
     error_message = Messages.Test.editing_error
 
+    def get_hazard(self):
+        if self.hazard:
+            return self.hazard
+        self.hazard = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
+        return self.hazard
+
     def get_context_data(self, **kwargs):
         context = super(TestEditView, self).get_context_data(**kwargs)
-        context['hazard'] = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
         context['test_for_payment_pk'] = self.request.session.pop('test_for_payment_pk', None)
         return context
 
@@ -939,16 +956,11 @@ class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
         if not letter.already_sent:
             warnings = LetterRenderer.render(letter)
             if warnings:
-                messages.warning(self.request, _("Following fields has no value in database: %s") % ", ".join(warnings))
+                messages.warning(self.request, Messages.Letter.fields_without_value % ", ".join(warnings))
             else:
-                messages.success(self.request, _("All required data is present!"))
+                messages.success(self.request, Messages.Letter.required_data_present)
         else:
-            messages.info(
-                self.request,
-                _("This letter has been sent already. \
-                If you have changed site or hazard data from this letter and want to send it again, please, \
-                open the letter in edit mode and submit the form to regenerate letter content.")
-            )
+            messages.info(self.request, Messages.Letter.letter_already_sent)
 
     def form_valid(self, form):
         letter = models.Letter.objects.get(pk=self.kwargs['pk'])
@@ -1090,6 +1102,7 @@ class TestDetailView(BaseTemplateView):
             raise Http404
         context['test'] = test
         context['hazard'] = test.bp_device
+        context['BP_TYPE'] = BP_TYPE
         return context
 
 

@@ -21,22 +21,22 @@ Feature: Site detail
     Given I logged in as "root"
     When I open "site_detail" page with pk "10"
     Then I should see following
-      | text                 |
-      | Gabe Newell          |
-      | Edit                 |
-      | Surveys              |
-      | Hazards              |
-      | 98, South Jackson st |
-      | 75/2                 |
-      | 7269                 |
-      | VALVE-APT            |
-      | 127, Universe st     |
-      | surveyor             |
-      | potable              |
-      | Service Type         |
-      | Survey type          |
-      | Survey Date          |
-      | Jan. 26, 2015        |
+      | text             |
+      | Gabe Newell      |
+      | Edit             |
+      | Surveys          |
+      | Hazards          |
+      | South Jackson st |
+      | 75/2             |
+      | 7269             |
+      | VALVE-APT        |
+      | 127, Universe st |
+      | surveyor         |
+      | potable          |
+      | Service Type     |
+      | Survey type      |
+      | Survey Date      |
+      | Jan. 26, 2015    |
 
 
   Scenario: Admin is opening site detail page

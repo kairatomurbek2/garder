@@ -191,7 +191,8 @@ em {
 
 .inline-width-1-6 {
     display: inline-block;
-    width: 16%;
+    width: 13%;
+    margin-right: 3%;
 }
 
 ul.test-form-ul {

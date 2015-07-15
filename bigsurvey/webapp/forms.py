@@ -103,6 +103,7 @@ class TestForm(forms.ModelForm):
     def __init__(self, **kwargs):
         super(TestForm, self).__init__(**kwargs)
         self._custom_errors = []
+        self.bp_type = None
 
     def _clean_relief_valve(self):
         rv_did_not_open = self.cleaned_data.get('rv_did_not_open', False)

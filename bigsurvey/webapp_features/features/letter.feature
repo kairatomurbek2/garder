@@ -24,21 +24,21 @@ Feature: Letter Viewing and Sending
     When I open "letter_detail" page with pk "2"
     Then I should see warning letter message
     And I should see following
-      | text                                    |
-      | Send to                                 |
-      | May 05, 2015                            |
-      | {AssemblyType}                          |
-      | {DueDate}                               |
-      | Seattle, WA, 12382                      |
-      | 7269, 98, South Jackson st, Seattle, WA |
-      | +1685231452                             |
-      | Sincerely, John McConley                |
-      | Director of Public Works                |
-      | Van der Veijden                         |
-      | Edit                                    |
-      | Get PDF                                 |
-      | +123456789                              |
-      | +987654321                              |
-      | pws@test.com                            |
-      | 200 South Jefferson st.                 |
-      | Chikago, IL, 70643                      |
+      | text                                |
+      | Send to                             |
+      | May 05, 2015                        |
+      | {AssemblyType}                      |
+      | {DueDate}                           |
+      | Seattle, WA, 12382                  |
+      | 7269, South Jackson st, Seattle, WA |
+      | +1685231452                         |
+      | Sincerely, John McConley            |
+      | Director of Public Works            |
+      | Van der Veijden                     |
+      | Edit                                |
+      | Get PDF                             |
+      | +123456789                          |
+      | +987654321                          |
+      | pws@test.com                        |
+      | 200 South Jefferson st.             |
+      | Chikago, IL, 70643                  |

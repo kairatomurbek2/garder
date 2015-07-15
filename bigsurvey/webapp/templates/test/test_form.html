@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n widget_tweaks staticfiles hazards_helper form_helper %}
+{% load i18n widget_tweaks staticfiles test_form_helper form_helper %}
 {% block menu %}
     <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
 {% endblock %}
@@ -16,6 +16,7 @@
             <h3 class="uk-text-uppercase uk-text-center uk-text-bold">{% trans 'Test and Maintenance report' %}</h3>
 
             <p class="uk-text-uppercase uk-text-center">{% trans 'Backflow Prevention Assemblies' %}</p>
+
             <form class="uk-form" method="post" name="test">
                 {% csrf_token %}
                 <div class="uk-width-1-1">
@@ -65,446 +66,484 @@
                 <table class="uk-table border-all uk-table-condensed">
                     <thead>
                     <tr>
-                        <th class="uk-width-1-4 uk-text-center">
-                            {% trans 'Check Valve #1' %}
-                        </th>
-                        <th class="uk-width-1-4 uk-text-center">
-                            {% trans 'Relief Valve' %}
-                        </th>
-                        <th class="uk-width-1-4 uk-text-center">
-                            {% trans 'Check Valve #2' %}
-                        </th>
-                        <th class="uk-width-1-4 uk-text-center">
-                            {% trans 'Pressure Vacuum Breaker' %}
-                        </th>
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <th class="uk-width-1-4 uk-text-center">
+                                {% trans 'Check Valve #1' %}
+                            </th>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                            <th class="uk-width-1-4 uk-text-center">
+                                {% trans 'Relief Valve' %}
+                            </th>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <th class="uk-width-1-4 uk-text-center">
+                                {% trans 'Check Valve #2' %}
+                            </th>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                            <th class="uk-width-1-4 uk-text-center">
+                                {% trans 'Pressure Vacuum Breaker' %}
+                            </th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
+                    {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                        <tr>
+                            {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                                <td>
+                                    {% render_radiobuttons form.cv1_leaked %}
+                                </td>
+                                <td>
+                                    <p class="rv_psi1">
+                                        {% trans 'Opened at' %}
+                                        {{ form.rv_psi1.errors }}
+                                        {{ form.rv_psi1|add_class:'uk-form-small' }}
+                                        {% trans 'psi' %}
+                                    </p>
+
+                                    <p>{% trans 'Did not open' %} {{ form.rv_did_not_open }}</p>
+                                </td>
+                                <td>
+                                    {% render_radiobuttons form.cv2_leaked %}
+                                </td>
+                            {% endif %}
+                            {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                                <td>
+                                    <p>{% trans 'Air Inlet: Did not open' %} {{ form.air_inlet_did_not_open }}</p>
+
+                                    <p class="air_inlet_psi">
+                                        {% trans 'Opened at' %}
+                                        {{ form.air_inlet_psi.errors }}
+                                        {{ form.air_inlet_psi|add_class:'uk-form-small' }}
+                                        {% trans 'psi' %}
+                                    </p>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
                     <tr>
-                        <td>
-                            {% render_radiobuttons form.cv1_leaked %}
-                        </td>
-                        <td>
-                            <p class="rv_psi1">
-                                {% trans 'Opened at' %}
-                                {{ form.rv_psi1.errors }}
-                                {{ form.rv_psi1|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <td>
+                                <p>{% trans 'Gauge pressure accross' %}</p>
 
-                            <p>{% trans 'Did not open' %} {{ form.rv_did_not_open }}</p>
-                        </td>
-                        <td>
-                            {% render_radiobuttons form.cv2_leaked %}
-                        </td>
-                        <td>
-                            <p>{% trans 'Air Inlet: Did not open' %} {{ form.air_inlet_did_not_open }}</p>
+                                <p class="cv1_gauge_pressure">
+                                    {% trans 'Check valve' %}
+                                    {{ form.cv1_gauge_pressure.errors }}
+                                    {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                            <td>
+                                <p>{% trans 'Outlet shut-off Valve' %}</p>
+                                {% render_radiobuttons form.outlet_sov_leaked %}
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <td>
+                                <p>{% trans 'Gauge pressure accross' %}</p>
 
-                            <p class="air_inlet_psi">
-                                {% trans 'Opened at' %}
-                                {{ form.air_inlet_psi.errors }}
-                                {{ form.air_inlet_psi|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
+                                <p class="cv2_gauge_pressure">
+                                    {% trans 'Check valve' %}
+                                    {{ form.cv2_gauge_pressure.errors }}
+                                    {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                            <td>
+                                <p>{% trans 'Check Valve: Leaked' %} {{ form.cv_leaked }}</p>
+
+                                <p class="cv_held_pressure">
+                                    {% trans 'Or held at' %}
+                                    {{ form.cv_held_pressure.errors }}
+                                    {{ form.cv_held_pressure|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
                     </tr>
                     <tr>
-                        <td>
-                            <p>{% trans 'Gauge pressure accross' %}</p>
-
-                            <p class="cv1_gauge_pressure">
-                                {% trans 'Check valve' %}
-                                {{ form.cv1_gauge_pressure.errors }}
-                                {{ form.cv1_gauge_pressure|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
-                        <td>
-                            <p>{% trans 'Outlet shut-off Valve' %}</p>
-                            {% render_radiobuttons form.outlet_sov_leaked %}
-                        </td>
-                        <td>
-                            <p>{% trans 'Gauge pressure accross' %}</p>
-
-                            <p class="cv2_gauge_pressure">
-                                {% trans 'Check valve' %}
-                                {{ form.cv2_gauge_pressure.errors }}
-                                {{ form.cv2_gauge_pressure|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
-                        <td>
-                            <p>{% trans 'Check Valve: Leaked' %} {{ form.cv_leaked }}</p>
-
-                            <p class="cv_held_pressure">
-                                {% trans 'Or held at' %}
-                                {{ form.cv_held_pressure.errors }}
-                                {{ form.cv_held_pressure|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <td>
+                                {% render_radiobuttons form.cv1_cleaned %}
+                                <div class="second-level-ul">
+                                    <ul class="test-form-ul">
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.0.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Rubber Parts Kit' %}>
+                                            <label for="{{ form.cv1_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.1.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'C.V. Assembly'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'C.V. Assembly' %}>
+                                            <label for="{{ form.cv1_replaced_details.1.id_for_label }}">{% trans 'C.V. Assembly' %}</label>
+                                        </li>
+                                        <li class="uk-text-center">{% trans 'OR' %}</li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.2.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Disk'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Disk' %}>
+                                            <label for="{{ form.cv1_replaced_details.2.id_for_label }}">{% trans 'Disk' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.3.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'O-Rings'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'O-Rings' %}>
+                                            <label for="{{ form.cv1_replaced_details.3.id_for_label }}">{% trans 'O-Rings' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.4.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Seat'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Seat' %}>
+                                            <label for="{{ form.cv1_replaced_details.4.id_for_label }}">{% trans 'Seat' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.5.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Spring'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Spring' %}>
+                                            <label for="{{ form.cv1_replaced_details.5.id_for_label }}">{% trans 'Spring' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.6.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Stem/Guide'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Stem/Guide' %}>
+                                            <label for="{{ form.cv1_replaced_details.6.id_for_label }}">{% trans 'Stem/Guide' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.7.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Retainer'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Retainer' %}>
+                                            <label for="{{ form.cv1_replaced_details.7.id_for_label }}">{% trans 'Retainer' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.8.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Lock Nuts'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Lock Nuts' %}>
+                                            <label for="{{ form.cv1_replaced_details.8.id_for_label }}">{% trans 'Lock Nuts' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv1_replaced_details.9.id_for_label }}"
+                                                   name="{{ form.cv1_replaced_details.name }}"
+                                                   value="{{ 'Other'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv1_replaced_details 'Other' %}>
+                                            <label for="{{ form.cv1_replaced_details.9.id_for_label }}">{% trans 'Other' %}</label>
+                                        </li>
+                                    </ul>
+                                    {{ form.cv1_replaced_details.errors }}
+                                </div>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                            <td>
+                                {% render_radiobuttons form.rv_cleaned %}
+                                <div class="second-level-ul">
+                                    <ul class="test-form-ul">
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.0.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Rubber Parts Kit' %}>
+                                            <label for="{{ form.rv_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.1.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'R.V. Assembly'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'R.V. Assembly' %}>
+                                            <label for="{{ form.rv_replaced_details.1.id_for_label }}">{% trans 'R.V. Assembly' %}</label>
+                                        </li>
+                                        <li class="uk-text-center">{% trans 'OR' %}</li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.2.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Disk'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Disk' %}>
+                                            <label for="{{ form.rv_replaced_details.2.id_for_label }}">{% trans 'Disk' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.3.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Diaphragm(s)'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Diaphragm(s)' %}>
+                                            <label for="{{ form.rv_replaced_details.3.id_for_label }}">{% trans 'Diaphragm(s)' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.4.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Seat'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Seat' %}>
+                                            <label for="{{ form.rv_replaced_details.4.id_for_label }}">{% trans 'Seat' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.5.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Spring'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Spring' %}>
+                                            <label for="{{ form.rv_replaced_details.5.id_for_label }}">{% trans 'Spring' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.6.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Guide'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Guide' %}>
+                                            <label for="{{ form.rv_replaced_details.6.id_for_label }}">{% trans 'Guide' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.7.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'O-Rings'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'O-Rings' %}>
+                                            <label for="{{ form.rv_replaced_details.7.id_for_label }}">{% trans 'O-Rings' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.rv_replaced_details.8.id_for_label }}"
+                                                   name="{{ form.rv_replaced_details.name }}"
+                                                   value="{{ 'Other'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.rv_replaced_details 'Other' %}>
+                                            <label for="{{ form.rv_replaced_details.8.id_for_label }}">{% trans 'Other' %}</label>
+                                        </li>
+                                    </ul>
+                                    {{ form.rv_replaced_details.errors }}
+                                </div>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <td>
+                                {% render_radiobuttons form.cv2_cleaned %}
+                                <div class="second-level-ul">
+                                    <ul class="test-form-ul">
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.0.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Rubber Parts Kit' %}>
+                                            <label for="{{ form.cv2_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.1.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'C.V. Assembly'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'C.V. Assembly' %}>
+                                            <label for="{{ form.cv2_replaced_details.1.id_for_label }}">{% trans 'C.V. Assembly' %}</label>
+                                        </li>
+                                        <li class="uk-text-center">{% trans 'OR' %}</li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.2.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Disk'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Disk' %}>
+                                            <label for="{{ form.cv2_replaced_details.2.id_for_label }}">{% trans 'Disk' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.3.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'O-Rings'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'O-Rings' %}>
+                                            <label for="{{ form.cv2_replaced_details.3.id_for_label }}">{% trans 'O-Rings' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.4.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Seat'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Seat' %}>
+                                            <label for="{{ form.cv2_replaced_details.4.id_for_label }}">{% trans 'Seat' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.5.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Spring'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Spring' %}>
+                                            <label for="{{ form.cv2_replaced_details.5.id_for_label }}">{% trans 'Spring' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.6.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Stem/Guide'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Stem/Guide' %}>
+                                            <label for="{{ form.cv2_replaced_details.6.id_for_label }}">{% trans 'Stem/Guide' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.7.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Retainer'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Retainer' %}>
+                                            <label for="{{ form.cv2_replaced_details.7.id_for_label }}">{% trans 'Retainer' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.8.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Lock Nuts'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Lock Nuts' %}>
+                                            <label for="{{ form.cv2_replaced_details.8.id_for_label }}">{% trans 'Lock Nuts' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.cv2_replaced_details.9.id_for_label }}"
+                                                   name="{{ form.cv2_replaced_details.name }}"
+                                                   value="{{ 'Other'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.cv2_replaced_details 'Other' %}>
+                                            <label for="{{ form.cv2_replaced_details.9.id_for_label }}">{% trans 'Other' %}</label>
+                                        </li>
+                                    </ul>
+                                    {{ form.cv2_replaced_details.errors }}
+                                </div>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                            <td>
+                                {% render_radiobuttons form.pvb_cleaned %}
+                                <div class="second-level-ul">
+                                    <ul class="test-form-ul">
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.0.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Rubber Parts Kit' %}>
+                                            <label for="{{ form.pvb_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.1.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'R.V. Assembly'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'R.V. Assembly' %}>
+                                            <label for="{{ form.pvb_replaced_details.1.id_for_label }}">{% trans 'R.V. Assembly' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.2.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Disk Air Inlet'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Disk Air Inlet' %}>
+                                            <label for="{{ form.pvb_replaced_details.2.id_for_label }}">{% trans 'Disk Air Inlet' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.3.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Disk, Check Valve'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Disk, Check Valve' %}>
+                                            <label for="{{ form.pvb_replaced_details.3.id_for_label }}">{% trans 'Disk, Check Valve' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.4.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Seat, Check Valve'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Seat, Check Valve' %}>
+                                            <label for="{{ form.pvb_replaced_details.4.id_for_label }}">{% trans 'Seat, Check Valve' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.5.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Spring, Air Inlet'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Spring, Air Inlet' %}>
+                                            <label for="{{ form.pvb_replaced_details.5.id_for_label }}">{% trans 'Spring, Air Inlet' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.6.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Spring, Check Valve'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Spring, Check Valve' %}>
+                                            <label for="{{ form.pvb_replaced_details.6.id_for_label }}">{% trans 'Spring, Check Valve' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.7.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Guide'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Guide' %}>
+                                            <label for="{{ form.pvb_replaced_details.7.id_for_label }}">{% trans 'Guide' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.8.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'O-Rings'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'O-Rings' %}>
+                                            <label for="{{ form.pvb_replaced_details.8.id_for_label }}">{% trans 'O-Rings' %}</label>
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="{{ form.pvb_replaced_details.9.id_for_label }}"
+                                                   name="{{ form.pvb_replaced_details.name }}"
+                                                   value="{{ 'Other'|detail_pk_by_name }}"
+                                                    {% is_detail_checked form.instance.pvb_replaced_details 'Other' %}>
+                                            <label for="{{ form.pvb_replaced_details.9.id_for_label }}">{% trans 'Other' %}</label>
+                                        </li>
+                                    </ul>
+                                    {{ form.pvb_replaced_details.errors }}
+                                </div>
+                            </td>
+                        {% endif %}
                     </tr>
                     <tr>
-                        <td>
-                            {% render_radiobuttons form.cv1_cleaned %}
-                            <div class="second-level-ul">
-                                <ul class="test-form-ul">
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.0.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Rubber Parts Kit' %}>
-                                        <label for="{{ form.cv1_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.1.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'C.V. Assembly'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'C.V. Assembly' %}>
-                                        <label for="{{ form.cv1_replaced_details.1.id_for_label }}">{% trans 'C.V. Assembly' %}</label>
-                                    </li>
-                                    <li class="uk-text-center">{% trans 'OR' %}</li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.2.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Disk'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Disk' %}>
-                                        <label for="{{ form.cv1_replaced_details.2.id_for_label }}">{% trans 'Disk' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.3.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'O-Rings'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'O-Rings' %}>
-                                        <label for="{{ form.cv1_replaced_details.3.id_for_label }}">{% trans 'O-Rings' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.4.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Seat'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Seat' %}>
-                                        <label for="{{ form.cv1_replaced_details.4.id_for_label }}">{% trans 'Seat' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.5.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Spring'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Spring' %}>
-                                        <label for="{{ form.cv1_replaced_details.5.id_for_label }}">{% trans 'Spring' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.6.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Stem/Guide'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Stem/Guide' %}>
-                                        <label for="{{ form.cv1_replaced_details.6.id_for_label }}">{% trans 'Stem/Guide' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.7.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Retainer'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Retainer' %}>
-                                        <label for="{{ form.cv1_replaced_details.7.id_for_label }}">{% trans 'Retainer' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.8.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Lock Nuts'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Lock Nuts' %}>
-                                        <label for="{{ form.cv1_replaced_details.8.id_for_label }}">{% trans 'Lock Nuts' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv1_replaced_details.9.id_for_label }}"
-                                               name="{{ form.cv1_replaced_details.name }}"
-                                               value="{{ 'Other'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv1_replaced_details 'Other' %}>
-                                        <label for="{{ form.cv1_replaced_details.9.id_for_label }}">{% trans 'Other' %}</label>
-                                    </li>
-                                </ul>
-                                {{ form.cv1_replaced_details.errors }}
-                            </div>
-                        </td>
-                        <td>
-                            {% render_radiobuttons form.rv_cleaned %}
-                            <div class="second-level-ul">
-                                <ul class="test-form-ul">
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.0.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Rubber Parts Kit' %}>
-                                        <label for="{{ form.rv_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.1.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'R.V. Assembly'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'R.V. Assembly' %}>
-                                        <label for="{{ form.rv_replaced_details.1.id_for_label }}">{% trans 'R.V. Assembly' %}</label>
-                                    </li>
-                                    <li class="uk-text-center">{% trans 'OR' %}</li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.2.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Disk'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Disk' %}>
-                                        <label for="{{ form.rv_replaced_details.2.id_for_label }}">{% trans 'Disk' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.3.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Diaphragm(s)'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Diaphragm(s)' %}>
-                                        <label for="{{ form.rv_replaced_details.3.id_for_label }}">{% trans 'Diaphragm(s)' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.4.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Seat'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Seat' %}>
-                                        <label for="{{ form.rv_replaced_details.4.id_for_label }}">{% trans 'Seat' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.5.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Spring'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Spring' %}>
-                                        <label for="{{ form.rv_replaced_details.5.id_for_label }}">{% trans 'Spring' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.6.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Guide'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Guide' %}>
-                                        <label for="{{ form.rv_replaced_details.6.id_for_label }}">{% trans 'Guide' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.7.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'O-Rings'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'O-Rings' %}>
-                                        <label for="{{ form.rv_replaced_details.7.id_for_label }}">{% trans 'O-Rings' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.rv_replaced_details.8.id_for_label }}"
-                                               name="{{ form.rv_replaced_details.name }}"
-                                               value="{{ 'Other'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.rv_replaced_details 'Other' %}>
-                                        <label for="{{ form.rv_replaced_details.8.id_for_label }}">{% trans 'Other' %}</label>
-                                    </li>
-                                </ul>
-                                {{ form.rv_replaced_details.errors }}
-                            </div>
-                        </td>
-                        <td>
-                            {% render_radiobuttons form.cv2_cleaned %}
-                            <div class="second-level-ul">
-                                <ul class="test-form-ul">
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.0.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Rubber Parts Kit' %}>
-                                        <label for="{{ form.cv2_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.1.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'C.V. Assembly'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'C.V. Assembly' %}>
-                                        <label for="{{ form.cv2_replaced_details.1.id_for_label }}">{% trans 'C.V. Assembly' %}</label>
-                                    </li>
-                                    <li class="uk-text-center">{% trans 'OR' %}</li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.2.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Disk'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Disk' %}>
-                                        <label for="{{ form.cv2_replaced_details.2.id_for_label }}">{% trans 'Disk' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.3.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'O-Rings'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'O-Rings' %}>
-                                        <label for="{{ form.cv2_replaced_details.3.id_for_label }}">{% trans 'O-Rings' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.4.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Seat'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Seat' %}>
-                                        <label for="{{ form.cv2_replaced_details.4.id_for_label }}">{% trans 'Seat' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.5.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Spring'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Spring' %}>
-                                        <label for="{{ form.cv2_replaced_details.5.id_for_label }}">{% trans 'Spring' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.6.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Stem/Guide'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Stem/Guide' %}>
-                                        <label for="{{ form.cv2_replaced_details.6.id_for_label }}">{% trans 'Stem/Guide' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.7.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Retainer'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Retainer' %}>
-                                        <label for="{{ form.cv2_replaced_details.7.id_for_label }}">{% trans 'Retainer' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.8.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Lock Nuts'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Lock Nuts' %}>
-                                        <label for="{{ form.cv2_replaced_details.8.id_for_label }}">{% trans 'Lock Nuts' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.cv2_replaced_details.9.id_for_label }}"
-                                               name="{{ form.cv2_replaced_details.name }}"
-                                               value="{{ 'Other'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.cv2_replaced_details 'Other' %}>
-                                        <label for="{{ form.cv2_replaced_details.9.id_for_label }}">{% trans 'Other' %}</label>
-                                    </li>
-                                </ul>
-                                {{ form.cv2_replaced_details.errors }}
-                            </div>
-                        </td>
-                        <td>
-                            {% render_radiobuttons form.pvb_cleaned %}
-                            <div class="second-level-ul">
-                                <ul class="test-form-ul">
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.0.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Rubber Parts Kit'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Rubber Parts Kit' %}>
-                                        <label for="{{ form.pvb_replaced_details.0.id_for_label }}">{% trans 'Rubber Parts Kit' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.1.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'R.V. Assembly'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'R.V. Assembly' %}>
-                                        <label for="{{ form.pvb_replaced_details.1.id_for_label }}">{% trans 'R.V. Assembly' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.2.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Disk Air Inlet'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Disk Air Inlet' %}>
-                                        <label for="{{ form.pvb_replaced_details.2.id_for_label }}">{% trans 'Disk Air Inlet' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.3.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Disk, Check Valve'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Disk, Check Valve' %}>
-                                        <label for="{{ form.pvb_replaced_details.3.id_for_label }}">{% trans 'Disk, Check Valve' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.4.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Seat, Check Valve'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Seat, Check Valve' %}>
-                                        <label for="{{ form.pvb_replaced_details.4.id_for_label }}">{% trans 'Seat, Check Valve' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.5.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Spring, Air Inlet'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Spring, Air Inlet' %}>
-                                        <label for="{{ form.pvb_replaced_details.5.id_for_label }}">{% trans 'Spring, Air Inlet' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.6.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Spring, Check Valve'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Spring, Check Valve' %}>
-                                        <label for="{{ form.pvb_replaced_details.6.id_for_label }}">{% trans 'Spring, Check Valve' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.7.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Guide'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Guide' %}>
-                                        <label for="{{ form.pvb_replaced_details.7.id_for_label }}">{% trans 'Guide' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.8.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'O-Rings'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'O-Rings' %}>
-                                        <label for="{{ form.pvb_replaced_details.8.id_for_label }}">{% trans 'O-Rings' %}</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="{{ form.pvb_replaced_details.9.id_for_label }}"
-                                               name="{{ form.pvb_replaced_details.name }}"
-                                               value="{{ 'Other'|detail_pk_by_name }}"
-                                                {% is_detail_checked form.instance.pvb_replaced_details 'Other' %}>
-                                        <label for="{{ form.pvb_replaced_details.9.id_for_label }}">{% trans 'Other' %}</label>
-                                    </li>
-                                </ul>
-                                {{ form.pvb_replaced_details.errors }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                {% trans 'Gauge pressure accross' %}
-                            </p>
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <td>
+                                <p>
+                                    {% trans 'Gauge pressure accross' %}
+                                </p>
 
-                            <p>
-                                {% trans 'Check valve' %}
-                                {{ form.cv1_maintenance_pressure.errors }}
-                                {{ form.cv1_maintenance_pressure|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                {% trans 'Relief valve opened at' %}
-                            </p>
+                                <p>
+                                    {% trans 'Check valve' %}
+                                    {{ form.cv1_maintenance_pressure.errors }}
+                                    {{ form.cv1_maintenance_pressure|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                            <td>
+                                <p>
+                                    {% trans 'Relief valve opened at' %}
+                                </p>
 
-                            <p>
-                                {{ form.rv_psi2.errors }}
-                                {{ form.rv_psi2|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                {% trans 'Gauge pressure accross' %}
-                            </p>
+                                <p>
+                                    {{ form.rv_psi2.errors }}
+                                    {{ form.rv_psi2|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                            <td>
+                                <p>
+                                    {% trans 'Gauge pressure accross' %}
+                                </p>
 
-                            <p>
-                                {% trans 'Check valve' %}
-                                {{ form.cv2_maintenance_pressure.errors }}
-                                {{ form.cv2_maintenance_pressure|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                {% trans 'Air Inlet' %}
-                                {{ form.air_inlet_retest_psi.errors }}
-                                {{ form.air_inlet_retest_psi|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
+                                <p>
+                                    {% trans 'Check valve' %}
+                                    {{ form.cv2_maintenance_pressure.errors }}
+                                    {{ form.cv2_maintenance_pressure|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
+                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                            <td>
+                                <p>
+                                    {% trans 'Air Inlet' %}
+                                    {{ form.air_inlet_retest_psi.errors }}
+                                    {{ form.air_inlet_retest_psi|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
 
-                            <p>
-                                {% trans 'Check valve' %}
-                                 {{ form.cv_retest_psi.errors }}
-                                {{ form.cv_retest_psi|add_class:'uk-form-small' }}
-                                {% trans 'psi' %}
-                            </p>
-                        </td>
+                                <p>
+                                    {% trans 'Check valve' %}
+                                    {{ form.cv_retest_psi.errors }}
+                                    {{ form.cv_retest_psi|add_class:'uk-form-small' }}
+                                    {% trans 'psi' %}
+                                </p>
+                            </td>
+                        {% endif %}
                     </tr>
                     </tbody>
                 </table>

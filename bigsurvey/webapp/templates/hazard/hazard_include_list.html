@@ -14,6 +14,9 @@
                     {% trans "Location" %}
                 </th>
                 <th>
+                    {% trans "Assembly Type" %}
+                </th>
+                <th>
                     {% trans "Assembly Status" %}
                 </th>
                 <th>
@@ -37,6 +40,9 @@
                         {{ hazard.location1 }}
                     </td>
                     <td>
+                        {{ hazard.bp_type_required }}
+                    </td>
+                    <td>
                         {{ hazard.assembly_status }}
                     </td>
                     <td>
@@ -45,11 +51,11 @@
                     <td class="border-left uk-text-center">
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
                     </td>
-                    {% if perms.webapp.add_test and hazard.bp_type_required in BP_TYPE.REQUIRE_TEST_TYPES %}
-                        <td class="uk-text-center">
+                    <td class="uk-text-center">
+                        {% if perms.webapp.add_test and hazard.bp_type_required in BP_TYPE.REQUIRE_TEST_TYPES %}
                             <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
-                        </td>
-                    {% endif %}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

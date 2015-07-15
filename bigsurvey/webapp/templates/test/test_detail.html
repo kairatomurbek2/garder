@@ -37,23 +37,23 @@
                     <span class="inline-width-2-15 border-bottom">{{ hazard.bp_size }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="inline-width-1-6 uk-text-right">{% trans 'Manufacturer' %}: </p>
+                    <p class="inline-width-1-6">{% trans 'Manufacturer' %}: </p>
                     <span class="inline-width-1-6 border-bottom">{{ hazard.manufacturer }}</span>
 
-                    <p class="inline-width-1-6 uk-text-right">{% trans 'Model no.' %}: </p>
+                    <p class="inline-width-1-6">{% trans 'Model no.' %}: </p>
                     <span class="inline-width-1-6 border-bottom">{{ hazard.model_no }}</span>
 
-                    <p class="inline-width-1-6 uk-text-right">{% trans 'Serial no.' %}: </p>
+                    <p class="inline-width-1-6">{% trans 'Serial no.' %}: </p>
                     <span class="inline-width-1-6 border-bottom">{{ hazard.serial_no }}</span>
                 </div>
                 <div class="uk-width-1-1">
-                    <p class="inline-width-1-6 uk-text-right">{% trans 'Test Kit Manuf.' %}: </p>
+                    <p class="inline-width-1-6">{% trans 'Test Kit Manuf.' %}: </p>
                     <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_manufacturer }}</span>
 
-                    <p class="inline-width-1-6 uk-text-right">{% trans 'Serial Number' %}: </p>
+                    <p class="inline-width-1-6">{% trans 'Serial Number' %}: </p>
                     <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_serial }}</span>
 
-                    <p class="inline-width-1-6 uk-text-right">{% trans 'Date Calibrated' %}: </p>
+                    <p class="inline-width-1-6">{% trans 'Date Calibrated' %}: </p>
                     <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_last_cert }}</span>
                 </div>
 
@@ -246,4 +246,7 @@
             </form>
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/custom/non-clickable-checkbox.js' %}"></script>
 {% endblock %}

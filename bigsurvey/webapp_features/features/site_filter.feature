@@ -90,6 +90,6 @@ Feature: Filtration
     When I fill in "cust_number" with "VALVE"
     And I submit "site_filter" form
     Then I should see following
-      | text                 |
-      | Seattle              |
-      | 98, South Jackson st |
+      | text             |
+      | Seattle          |
+      | South Jackson st |

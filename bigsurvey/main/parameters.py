@@ -246,6 +246,7 @@ class Messages:
         payment_successful_plural = 'Payment was completed successfully. Tests are now visible on the site.'
         payment_failed = _('Some errors happened during the payment. Please try again later.')
         payment_cancelled = _('You have cancelled payment. You can pay later.')
+        assembly_type_not_set = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type" set. Please provide it <a href="%s">here</a>')
 
     class Inspection:
         adding_success = _('Inspection was successfully added')
@@ -272,6 +273,10 @@ class Messages:
         editing_error = _('Error while submitting form')
         send_success = _('Letter was successfully sent')
         send_error = _('Error while sending letter')
+        required_data_present = _("All required data is present!")
+        fields_without_value = _("Following fields has no value in database: %s")
+        letter_already_sent = _(
+            "This letter has been sent already. If you have changed site or hazard data from this letter and want to send it again, please, open the letter in edit mode and submit the form to regenerate letter content.")
 
     class LetterType:
         editing_success = _('Lettertype was successfully updated')
