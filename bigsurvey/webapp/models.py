@@ -432,7 +432,7 @@ class Site(models.Model):
     contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Email"), help_text=_("Customer's Email Address"))
 
     def __unicode__(self):
-        return u"%s %s, %s %s" % (self.street_number, self.address1, self.city, self.zip)
+        return u"%s %s, %s %s" % (self.street_number or '', self.address1, self.city, self.zip or '')
 
     class Meta:
         verbose_name = _("Site")

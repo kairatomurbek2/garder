@@ -21,7 +21,7 @@ class TestManagementCommands(TestCase):
         self.assertEqual(email.from_email, settings.DEFAULT_FROM_EMAIL)
         self.assertEqual(email.to, ['tester@example.com'])
         self.assertIn('tester tester', email.body)
-        self.assertIn('Washington, White House, Digester', email.body)
+        self.assertIn('White House, Washington 80192', email.body)
         self.assertIn('2015-06-01', email.body)
 
     def test_deleting_unpaid_tests(self):
