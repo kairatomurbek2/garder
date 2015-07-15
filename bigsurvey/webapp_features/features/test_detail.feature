@@ -22,12 +22,12 @@ Feature: Test Detail
     Given I logged in as "root"
     When I open "test_detail" page with pk "1"
     Then I should see following
-      | text                  |
-      | Amanda James          |
-      | White House           |
-      | Internal              |
-      | C.V. Assembly         |
-      | Spring, Air Inlet     |
-      | Failed                |
-      | qwerty132             |
-      | Jan. 27, 2015         |
+      | text              |
+      | Amanda James      |
+      | White House       |
+      | Internal          |
+      | Spring, Air Inlet |
+      | Failed            |
+      | tester            |
+      | qwerty132         |
+      | Jan. 27, 2015     |

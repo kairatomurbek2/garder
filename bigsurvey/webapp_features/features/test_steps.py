@@ -1,6 +1,7 @@
 from lettuce import *
 
 from data import *
+from webapp import models
 
 from webapp.models import Test
 
@@ -77,3 +78,10 @@ def check_test_editing_error_message(step):
 @step('I should be at "test_detail" page with pk "(\d+)"')
 def check_test_detail_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.test_detail % pk))
+
+
+@step('Hazard with pk "(\d+)" has "(Air Gap|AVB|DC|DCDA|RP|RPDA|PVB|SVB|HBVB)" assembly type')
+def set_hazard_assembly_type(step, pk, assembly_type):
+    hazard = models.Hazard.objects.get(pk=pk)
+    hazard.bp_type_required = assembly_type
+    hazard.save()

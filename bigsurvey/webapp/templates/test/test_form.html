@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 {% load i18n widget_tweaks staticfiles test_form_helper form_helper %}
 {% block menu %}
-    <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
+    {% if object %}
+        <li><a href="{% url 'webapp:test_detail' object.pk %}">{% trans "Cancel" %}</a></li>
+    {% else %}
+        <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
+    {% endif %}
+{% endblock %}
+{% block styles %}
+    <style>
+        ul.errorlist {
+            list-style-type: none;
+            padding-left: 0;
+        }
+    </style>
 {% endblock %}
 {% block content %}
     <div class="wrapper">
         {% include 'messages.html' %}
-        {% if form.non_field_errors %}
-            <div class="alert-margin-top uk-alert uk-alert-danger" data-uk-alert>
-                <a href="" class="uk-alert-close uk-close"></a>
-                {{ form.non_field_errors }}
-            </div>
-        {% endif %}
         <div class="test-report-wrapper">
             <h3 class="uk-text-uppercase uk-text-center uk-text-bold">{% trans 'Test and Maintenance report' %}</h3>
 
@@ -104,6 +110,8 @@
                                     </p>
 
                                     <p>{% trans 'Did not open' %} {{ form.rv_did_not_open }}</p>
+
+                                    <p>{{ form.rv_did_not_open.errors }}</p>
                                 </td>
                                 <td>
                                     {% render_radiobuttons form.cv2_leaked %}
@@ -118,6 +126,10 @@
                                         {{ form.air_inlet_psi.errors }}
                                         {{ form.air_inlet_psi|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                         {% trans 'psi' %}
+                                    </p>
+
+                                    <p>
+                                        {{ form.air_inlet_did_not_open.errors }}
                                     </p>
                                 </td>
                             {% endif %}
@@ -163,6 +175,10 @@
                                     {{ form.cv_held_pressure.errors }}
                                     {{ form.cv_held_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
+                                </p>
+
+                                <p>
+                                    {{ form.cv_leaked.errors }}
                                 </p>
                             </td>
                         {% endif %}
@@ -548,12 +564,6 @@
                     </tbody>
                 </table>
                 <div class="uk-grid">
-                    <div class="uk-width-1-5"></div>
-                    <div class="uk-width-1-5">
-                        {{ form.test_result.errors }}
-                    </div>
-                </div>
-                <div class="uk-grid margin-top-0">
                     <div class="uk-width-1-5">
                         <h4 class="inline-block">{% trans 'The Assembly' %}:</h4>
                     </div>
@@ -562,6 +572,12 @@
                             {{ test_result.tag }} <label for="{{ test_result.id_for_label }}"><span class="test-result-choices">{{ test_result.choice_label }}</span></label>
                         </div>
                     {% endfor %}
+                </div>
+                <div class="uk-grid margin-top-0">
+                    <div class="uk-width-1-5"></div>
+                    <div class="uk-width-1-5">
+                        {{ form.test_result.errors }}
+                    </div>
                 </div>
                 <h4 class="uk-text-uppercase uk-text-bold">{% trans 'Note: All repairs/replacement shall be completed within five (5) days.' %}</h4>
 
@@ -577,8 +593,8 @@
 
                     <p class="inline-width-1-6">{% trans 'Date' %}</p>
                     <span class="inline-width-1-6">
-                        {{ form.test_date.errors }}
                         {{ form.test_date|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ form.test_date.errors }}
                     </span>
                 </div>
                 <div class="uk-width-1-1">
@@ -593,7 +609,7 @@
                         {% url 'webapp:unpaid_test_list' as unpaid_test_list_url %}
                         {% blocktrans %}
                             After submitting form you will be asked to save the test.<br>
-                            You can save it immediately or later from <a href="{{ unpaid_test_list_url }}">"Unsaved Tests"</a> page
+                            You can save it immediately or later from <a href="{{ unpaid_test_list_url }}" target="_blank">"Unsaved Tests"</a> page
                         {% endblocktrans %}
                     </p>
                 {% endif %}

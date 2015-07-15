@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, TEST_RESULT_CHOICES, DATEFORMAT_CHOICES
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE
 from webapp.validators import validate_excel_file
 
 
@@ -67,22 +67,29 @@ class HazardFormForTester(forms.ModelForm):
 
 
 def coerce_to_bool(value):
-    return value == 'True'
+    if value == 'True':
+        return True
+    elif value == 'False':
+        return False
+    raise ValueError('Cannot coerce "%s" to bool' % value)
 
 
 class TestForm(forms.ModelForm):
     tester = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.tester), empty_label=None)
-    cv1_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES)
-    cv2_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES)
-    outlet_sov_leaked = forms.ChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES)
+    cv1_leaked = forms.TypedChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES,
+                                        coerce=coerce_to_bool, required=False)
+    cv2_leaked = forms.TypedChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES,
+                                        coerce=coerce_to_bool, required=False)
+    outlet_sov_leaked = forms.TypedChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES,
+                                               coerce=coerce_to_bool, required=False)
     cv1_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool)
+                                         coerce=coerce_to_bool, required=False)
     rv_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                        coerce=coerce_to_bool)
+                                        coerce=coerce_to_bool, required=False)
     cv2_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool)
+                                         coerce=coerce_to_bool, required=False)
     pvb_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool)
+                                         coerce=coerce_to_bool, required=False)
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
@@ -105,7 +112,7 @@ class TestForm(forms.ModelForm):
         self._custom_errors = []
         self.bp_type = None
 
-    def _clean_relief_valve(self):
+    def _clean_rv_did_not_open(self):
         rv_did_not_open = self.cleaned_data.get('rv_did_not_open', False)
         if rv_did_not_open:
             self.cleaned_data.pop('rv_psi1', None)
@@ -115,9 +122,9 @@ class TestForm(forms.ModelForm):
             self.instance.rv_opened = True
             rv_psi1 = self.cleaned_data.get('rv_psi1')
             if rv_psi1 is None:
-                self._custom_errors.append(ValidationError(Messages.Test.rv_not_provided))
+                self.add_error('rv_did_not_open', ValidationError(Messages.Test.rv_not_provided))
 
-    def _clean_air_inlet(self):
+    def _clean_air_inlet_did_not_open(self):
         air_inlet_did_not_open = self.cleaned_data.get('air_inlet_did_not_open', False)
         if air_inlet_did_not_open:
             self.cleaned_data.pop('air_inlet_psi', None)
@@ -127,7 +134,7 @@ class TestForm(forms.ModelForm):
             self.instance.air_inlet_opened = True
             air_inlet_psi = self.cleaned_data.get('air_inlet_psi')
             if air_inlet_psi is None:
-                self._custom_errors.append(ValidationError(Messages.Test.air_inlet_not_provided))
+                self.add_error('air_inlet_did_not_open', ValidationError(Messages.Test.air_inlet_not_provided))
 
     def _clean_cv_leaked(self):
         cv_leaked = self.cleaned_data.get('cv_leaked', False)
@@ -137,46 +144,84 @@ class TestForm(forms.ModelForm):
         else:
             cv_held_pressure = self.cleaned_data.get('cv_held_pressure')
             if cv_held_pressure is None:
-                self._custom_errors.append(ValidationError(Messages.Test.cv_not_provided))
+                self.add_error('cv_leaked', ValidationError(Messages.Test.cv_not_provided))
+
+    def _clean_cv1_leaked(self):
+        cv1_leaked = self.cleaned_data.get('cv1_leaked')
+        if cv1_leaked == self.fields['cv1_leaked'].empty_value:
+            self.add_error('cv1_leaked', ValidationError(self.fields['cv1_leaked'].error_messages['required'], code='required'))
+
+    def _clean_cv2_leaked(self):
+        cv2_leaked = self.cleaned_data.get('cv2_leaked')
+        if cv2_leaked == self.fields['cv2_leaked'].empty_value:
+            self.add_error('cv2_leaked', ValidationError(self.fields['cv2_leaked'].error_messages['required'], code='required'))
+
+    def _clean_outlet_sov_leaked(self):
+        outlet_sov_leaked = self.cleaned_data.get('outlet_sov_leaked')
+        if outlet_sov_leaked == self.fields['outlet_sov_leaked'].empty_value:
+            self.add_error('outlet_sov_leaked', ValidationError(self.fields['outlet_sov_leaked'].error_messages['required'], code='required'))
 
     def _clean_cv1_cleaned(self):
         cv1_cleaned = self.cleaned_data.get('cv1_cleaned')
+        if cv1_cleaned == self.fields['cv1_cleaned'].empty_value:
+            self.add_error('cv1_cleaned', ValidationError(self.fields['cv1_cleaned'].error_messages['required'], code='required'))
         if cv1_cleaned is False:
             cv1_replaced_details = self.cleaned_data.get('cv1_replaced_details')
             if not cv1_replaced_details:
-                self._custom_errors.append(ValidationError(Messages.Test.cv1_replaced_details_not_provided))
+                self.add_error('cv1_replaced_details', ValidationError(Messages.Test.cv1_replaced_details_not_provided))
 
     def _clean_rv_cleaned(self):
         rv_cleaned = self.cleaned_data.get('rv_cleaned')
+        if rv_cleaned == self.fields['rv_cleaned'].empty_value:
+            self.add_error('rv_cleaned', ValidationError(self.fields['rv_cleaned'].error_messages['required'], code='required'))
         if rv_cleaned is False:
             rv_replaced_details = self.cleaned_data.get('rv_replaced_details')
             if not rv_replaced_details:
-                self._custom_errors.append(ValidationError(Messages.Test.rv_replaced_details_not_provided))
+                self.add_error('rv_replaced_details', ValidationError(Messages.Test.rv_replaced_details_not_provided))
 
     def _clean_cv2_cleaned(self):
         cv2_cleaned = self.cleaned_data.get('cv2_cleaned')
+        if cv2_cleaned == self.fields['cv2_cleaned'].empty_value:
+            self.add_error('cv2_cleaned', ValidationError(self.fields['cv2_cleaned'].error_messages['required'], code='required'))
         if cv2_cleaned is False:
             cv2_replaced_details = self.cleaned_data.get('cv2_replaced_details')
             if not cv2_replaced_details:
-                self._custom_errors.append(ValidationError(Messages.Test.cv2_replaced_details_not_provided))
+                self.add_error('cv2_replaced_details', ValidationError(Messages.Test.cv2_replaced_details_not_provided))
 
     def _clean_pvb_cleaned(self):
         pvb_cleaned = self.cleaned_data.get('pvb_cleaned')
+        if pvb_cleaned == self.fields['pvb_cleaned'].empty_value:
+            self.add_error('pvb_cleaned', ValidationError(self.fields['pvb_cleaned'].error_messages['required'], code='required'))
         if pvb_cleaned is False:
             pvb_replaced_details = self.cleaned_data.get('pvb_replaced_details')
             if not pvb_replaced_details:
-                self._custom_errors.append(ValidationError(Messages.Test.pvb_replaced_details_not_provided))
+                self.add_error('pvb_replaced_details', ValidationError(Messages.Test.pvb_replaced_details_not_provided))
+
+    def clean_rp_types(self):
+        self._clean_cv1_leaked()
+        self._clean_cv1_cleaned()
+        self._clean_cv2_leaked()
+        self._clean_cv2_cleaned()
+        self._clean_outlet_sov_leaked()
+        self._clean_rv_did_not_open()
+        self._clean_rv_cleaned()
+
+    def clean_dc_types(self):
+        self._clean_cv1_cleaned()
+        self._clean_cv2_cleaned()
+
+    def clean_standalone_types(self):
+        self._clean_cv_leaked()
+        self._clean_air_inlet_did_not_open()
+        self._clean_pvb_cleaned()
 
     def clean(self):
-        self._clean_relief_valve()
-        self._clean_air_inlet()
-        self._clean_cv_leaked()
-        self._clean_cv1_cleaned()
-        self._clean_rv_cleaned()
-        self._clean_cv2_cleaned()
-        self._clean_pvb_cleaned()
-        if self._custom_errors:
-            raise ValidationError(self._custom_errors)
+        if self.bp_type in BP_TYPE.RP_TYPES:
+            self.clean_rp_types()
+        if self.bp_type in BP_TYPE.DC_TYPES:
+            self.clean_dc_types()
+        if self.bp_type in BP_TYPE.STANDALONE_TYPES:
+            self.clean_standalone_types()
         return super(TestForm, self).clean()
 
     class Meta:

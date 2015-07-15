@@ -3510,7 +3510,7 @@
     "serial_no": "",
     "site": 5,
     "replace_date": null,
-    "bp_type_required": null,
+    "bp_type_required": "PVB",
     "hazard_type": 40,
     "longitude": 0.0,
     "installed_properly": false,

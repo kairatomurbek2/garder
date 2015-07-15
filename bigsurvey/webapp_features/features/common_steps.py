@@ -188,7 +188,7 @@ def check_multiple_values_from_checkbox(step, checkbox_name):
 
 @step('I reset database')
 def reset_database(step):
-    call_command('restore_db', interactive=False, verbosity=1)
+    call_command('restore_db', interactive=False, verbosity=0)
 
 
 @step('I wait for (\d+) seconds?')

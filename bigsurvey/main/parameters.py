@@ -41,6 +41,7 @@ BP_TYPE_CHOICES = (
     (BP_TYPE.PVB, BP_TYPE.PVB),
     (BP_TYPE.RP, BP_TYPE.RP),
     (BP_TYPE.RPDA, BP_TYPE.RPDA),
+    (BP_TYPE.SVB, BP_TYPE.SVB),
 )
 
 YESNO_CHOICES = (
@@ -238,10 +239,10 @@ class Messages:
         air_inlet_not_provided = _('You should either set "Air Inlet Did not open" or provide "Air Inlet psi"')
         rv_not_provided = _('You should either set "Relief Valve Did not open" or provide "Relief Valve psi"')
         cv_not_provided = _('You should either set "Check Valve Did not open" or provide "Check Valve psi"')
-        cv1_replaced_details_not_provided = _('You should provide details you have replaced for Check Valve 1')
-        cv2_replaced_details_not_provided = _('You should provide details you have replaced for Relief Valve')
-        rv_replaced_details_not_provided = _('You should provide details you have replaced for Check Valve 2')
-        pvb_replaced_details_not_provided = _('You should provide details you have replaced for Pressure Vacuum Breaker')
+        cv1_replaced_details_not_provided = _('You must provide details for replacement of Check Valve #1')
+        cv2_replaced_details_not_provided = _('You must provide details for replacement of Relief Valve')
+        rv_replaced_details_not_provided = _('You must provide details for replacement of Check Valve #2')
+        pvb_replaced_details_not_provided = _('You must provide details for replacement of Pressure Vacuum Breaker')
         payment_successful_singular = 'Payment was completed successfully. Test is now visible on the site.'
         payment_successful_plural = 'Payment was completed successfully. Tests are now visible on the site.'
         payment_failed = _('Some errors happened during the payment. Please try again later.')

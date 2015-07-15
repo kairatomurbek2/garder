@@ -17,13 +17,14 @@ Feature: Test adding
     | tester   | 2  | not see  |
     | tester   | 1  | not see  |
 
-  Scenario: Correct test adding
+  Scenario: Correct test adding for RP Hazard
     Given I logged in as "tester"
-    And I directly open "test_add" page for hazard with pk "2"
+    And Hazard with pk "2" has "RP" assembly type
+    When I directly open "test_add" page for hazard with pk "2"
     And I fill in following fields with following values
       | field              | value  |
       | cv1_gauge_pressure | 123456 |
-      | air_inlet_psi      | 16     |
+      | cv2_gauge_pressure | 321    |
     And I select "tester" from "tester"
     And I choose "True" from "test_result"
     And I choose "True" from "cv1_leaked"
@@ -31,11 +32,9 @@ Feature: Test adding
     And I choose "True" from "cv1_cleaned"
     And I choose "True" from "rv_cleaned"
     And I choose "True" from "cv2_cleaned"
-    And I choose "True" from "pvb_cleaned"
     And I choose "True" from "outlet_sov_leaked"
     And I check "rv_did_not_open"
-    And I check "cv_leaked"
-    When I submit "test" form
+    And I submit "test" form
     Then I should see pay modal
     When I close pay modal
     Then I should be redirected to "unpaid_test_list" page
@@ -44,3 +43,47 @@ Feature: Test adding
       | tester |
       | Passed |
       | VALVE  |
+    And I reset database
+
+  Scenario: Correct test adding for DC Hazard
+    Given I logged in as "tester"
+    And Hazard with pk "2" has "DC" assembly type
+    When I directly open "test_add" page for hazard with pk "2"
+    And I fill in following fields with following values
+      | field              | value  |
+      | cv1_gauge_pressure | 123456 |
+      | cv2_gauge_pressure | 321    |
+    And I select "tester" from "tester"
+    And I choose "True" from "test_result"
+    And I choose "True" from "cv1_cleaned"
+    And I choose "True" from "cv2_cleaned"
+    And I submit "test" form
+    Then I should see pay modal
+    When I close pay modal
+    Then I should be redirected to "unpaid_test_list" page
+    And I should see following
+      | text   |
+      | tester |
+      | Passed |
+      | VALVE  |
+    And I reset database
+
+  Scenario: Correct test adding for PVB Hazard
+    Given I logged in as "tester"
+    And Hazard with pk "2" has "PVB" assembly type
+    When I directly open "test_add" page for hazard with pk "2"
+    And I fill in "air_inlet_psi" with "1232"
+    And I select "tester" from "tester"
+    And I choose "True" from "test_result"
+    And I choose "True" from "pvb_cleaned"
+    And I check "cv_leaked"
+    And I submit "test" form
+    Then I should see pay modal
+    When I close pay modal
+    Then I should be redirected to "unpaid_test_list" page
+    And I should see following
+      | text   |
+      | tester |
+      | Passed |
+      | VALVE  |
+    And I reset database

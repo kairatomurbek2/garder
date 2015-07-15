@@ -1,7 +1,6 @@
 @test_edit
 Feature: Test editing
 
-
   Scenario Outline: Test editing page access
     Given I logged in as "<role>"
     When I directly open "test_edit" page with pk "<pk>"
@@ -21,14 +20,16 @@ Feature: Test editing
 
   Scenario: Correct test editing
     Given I logged in as "root"
-    And I open "test_edit" page with pk "2"
+    And Hazard with pk "2" has "RP" assembly type
+    When I open "test_edit" page with pk "2"
     And I fill in following fields with following values
       | field              | value  |
       | cv2_gauge_pressure | 111111 |
-    When I submit "test" form
+    And I submit "test" form
     Then I should be at "test_detail" page with pk "2"
     And I should see "test editing success" message
     And I should see "111111"
+    And I reset database
 
   Scenario: Check test_date is editable
     Given I logged in as "tester"

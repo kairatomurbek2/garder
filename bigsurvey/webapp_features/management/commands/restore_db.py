@@ -7,4 +7,4 @@ class Command(BaseCommand):
         webapp = get_app('webapp')
         for model in get_models(webapp):
             model.objects.all().delete()
-        call_command('loaddata', 'test', interactive=False, verbosity=1)
+        call_command('loaddata', 'test', interactive=False, verbosity=options['verbosity'])
