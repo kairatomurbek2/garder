@@ -36,10 +36,14 @@ def render_replaced_details(details):
 
 
 @register.simple_tag()
-def is_detail_checked(details, name):
+def is_detail_checked(details, form_data, name):
     try:
-        if details.filter(detail__iexact=name).exists():
+        if form_data:
+            if name in (detail.detail for detail in form_data):
+                return 'checked'
+        elif details.filter(detail__iexact=name).exists():
             return 'checked'
-        raise Exception
     except Exception:
+        return ''
+    else:
         return ''
