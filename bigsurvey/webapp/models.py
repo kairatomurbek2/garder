@@ -544,13 +544,6 @@ class Survey(models.Model):
         ordering = ('-survey_date', '-id')
 
 
-class Detail(models.Model):
-    detail = models.CharField(max_length=100, verbose_name=_('Detail'))
-
-    def __unicode__(self):
-        return u'%s' % self.detail
-
-
 class Test(models.Model):
     bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"), related_name="tests")
     tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")

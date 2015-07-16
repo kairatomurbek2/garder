@@ -93,18 +93,6 @@ class TestForm(forms.ModelForm):
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)
-    cv1_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                          queryset=models.Detail.objects.all(),
-                                                          required=False)
-    rv_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                         queryset=models.Detail.objects.all(),
-                                                         required=False)
-    cv2_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                          queryset=models.Detail.objects.all(),
-                                                          required=False)
-    pvb_replaced_details = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                                          queryset=models.Detail.objects.all(),
-                                                          required=False)
     test_result = forms.ChoiceField(widget=forms.RadioSelect, choices=TEST_RESULT_CHOICES)
 
     def __init__(self, **kwargs):

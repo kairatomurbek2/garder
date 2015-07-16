@@ -1,7 +1,7 @@
 <div class="second-level-ul">
     <ul>
-        {% for detail in details.all %}
-            <li><span class="form-ul-label">{{ detail.detail }}</span></li>
+        {% for detail in details %}
+            <li><span class="form-ul-label">{{ detail }}</span></li>
         {% endfor %}
     </ul>
 </div>

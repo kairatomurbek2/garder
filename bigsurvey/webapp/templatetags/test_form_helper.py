@@ -1,7 +1,6 @@
 from django import template
 
 from main.parameters import BP_TYPE
-from webapp.models import Detail
 
 
 register = template.Library()
@@ -22,28 +21,6 @@ def render_checkboxes(checkboxes):
     return {'checkboxes': checkboxes}
 
 
-@register.filter()
-def detail_pk_by_name(name):
-    try:
-        return Detail.objects.get(detail__iexact=name).pk
-    except Detail.DoesNotExist:
-        return None
-
-
 @register.inclusion_tag('test/partial/replaced_details.html')
 def render_replaced_details(details):
     return {'details': details}
-
-
-@register.simple_tag()
-def is_detail_checked(details, form_data, name):
-    try:
-        if form_data:
-            if name in (detail.detail for detail in form_data):
-                return 'checked'
-        elif details.filter(detail__iexact=name).exists():
-            return 'checked'
-    except Exception:
-        return ''
-    else:
-        return ''
