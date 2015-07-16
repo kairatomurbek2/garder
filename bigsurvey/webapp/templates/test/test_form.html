@@ -138,7 +138,7 @@
                     <tr>
                         {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
                             <td>
-                                <p>{% trans 'Gauge pressure accross' %}</p>
+                                <p>{% trans 'Gauge pressure across' %}</p>
 
                                 <p class="cv1_gauge_pressure">
                                     {% trans 'Check valve' %}
@@ -156,7 +156,7 @@
                         {% endif %}
                         {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
                             <td>
-                                <p>{% trans 'Gauge pressure accross' %}</p>
+                                <p>{% trans 'Gauge pressure across' %}</p>
 
                                 <p class="cv2_gauge_pressure">
                                     {% trans 'Check valve' %}
@@ -505,13 +505,13 @@
                         {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
                             <td>
                                 <p>
-                                    {% trans 'Gauge pressure accross' %}
+                                    {% trans 'Gauge pressure across' %}
                                 </p>
 
                                 <p>
                                     {% trans 'Check valve' %}
-                                    {{ form.cv1_maintenance_pressure.errors }}
-                                    {{ form.cv1_maintenance_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
+                                    {{ form.cv1_retest_gauge_pressure.errors }}
+                                    {{ form.cv1_retest_gauge_pressure|add_class:'uk-form-small'|attr:'data-content:decimal-field'|attr:'type:text' }}
                                     {% trans 'psi' %}
                                 </p>
                             </td>
@@ -532,7 +532,7 @@
                         {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
                             <td>
                                 <p>
-                                    {% trans 'Gauge pressure accross' %}
+                                    {% trans 'Gauge pressure across' %}
                                 </p>
 
                                 <p>
