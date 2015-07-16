@@ -1,9 +1,8 @@
 from django.core.urlresolvers import reverse
-from common_steps import *
-from lettuce import *
-from data import *
+from lettuce import step, world
 from webapp import models
-from webapp.models import PWS
+from webapp_features.features import helper
+from webapp_features.features.data import get_url, Xpath, Urls
 
 
 @step('I directly open "letter_type_edit" page with pk "(\d+)"')
@@ -69,5 +68,5 @@ def submit_letter_type_form(step, form_id):
 
 @step('Letter type with name "(.*)" was cloned to all PWS')
 def check_new_letter_type(step, letter_type):
-    for pws in PWS.objects.all():
+    for pws in models.PWS.objects.all():
         assert pws.letter_types.filter(letter_type=letter_type).exists(), 'PWS "%s" does not contain Letter Type "%s"' % (pws.name, letter_type)

@@ -1,6 +1,7 @@
-from common_steps import *
-from lettuce import *
+from lettuce import step
+
 from data import *
+from main.parameters import Messages
 
 
 @step('I directly open "user_list" page')

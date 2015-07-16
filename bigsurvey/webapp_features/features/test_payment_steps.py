@@ -2,8 +2,10 @@ from lettuce import step, world
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+
+from main.parameters import Messages
 from webapp_features.features import helper
-from webapp_features.features.data import get_url, Urls, Xpath, PaypalCredentials, Messages
+from webapp_features.features.data import get_url, Urls, Xpath, PaypalCredentials
 
 
 @step('I directly open "unpaid_test_list" page')

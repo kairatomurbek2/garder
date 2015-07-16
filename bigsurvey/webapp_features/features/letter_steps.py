@@ -1,9 +1,10 @@
 from lettuce.django import mail
-from common_steps import *
-from lettuce import *
-from data import *
+from lettuce import step, world
+
+from main.parameters import Messages
 from webapp import models
 from webapp.models import Letter
+from webapp_features.features.data import get_url, Urls
 
 
 WARNING_LETTER_MESSAGE = "Following fields has no value in database:"

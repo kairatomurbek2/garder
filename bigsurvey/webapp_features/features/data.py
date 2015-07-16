@@ -1,7 +1,4 @@
 from django.conf import settings
-from main.parameters import Messages
-
-Messages = Messages
 
 DELIMITER = ' :: '
 

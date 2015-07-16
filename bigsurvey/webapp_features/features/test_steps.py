@@ -1,9 +1,8 @@
-from lettuce import *
+from lettuce import step
 
-from data import *
+from data import get_url, Urls
+from main.parameters import Messages
 from webapp import models
-
-from webapp.models import Test
 
 
 @step('I directly open "test_add" page for hazard with pk "(\d+)"')
@@ -40,7 +39,7 @@ def directly_open_test_edit_page(step, pk):
 
 @step('I open "test_edit" page with pk "(\d+)"')
 def open_test_edit_page(step, pk):
-    hazard = Test.objects.get(pk=pk).bp_device
+    hazard = models.Test.objects.get(pk=pk).bp_device
     step.given('I open "hazard_detail" page with pk "%s"' % hazard.pk)
     step.given('I click "test_%s_edit" link' % pk)
 

@@ -1,11 +1,13 @@
 import os
 import time
+from django.conf import settings
 
-from lettuce import *
+from lettuce import step, world
 from django.core.management import call_command
 
 import helper
-from data import *
+from webapp_features.features.data import get_url, Xpath
+from webapp_features.features.data import Urls
 
 
 @step('I open "(http.*)"')

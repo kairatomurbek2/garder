@@ -1,7 +1,7 @@
 from selenium.webdriver import ActionChains
-from common_steps import *
-from lettuce import *
-from data import *
+from lettuce import step, world
+from webapp_features.features import helper
+from webapp_features.features.data import Xpath
 
 
 @step('I should see following menu links')

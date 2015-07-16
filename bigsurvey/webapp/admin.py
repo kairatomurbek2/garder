@@ -47,6 +47,14 @@ class SurveyAdmin(admin.ModelAdmin):
     filter_horizontal = ("hazards",)
 
 
+class TestAdmin(admin.ModelAdmin):
+    readonly_fields = 'paypal_payment_id',
+
+
+class ImportLogModelAdmin(admin.ModelAdmin):
+    readonly_fields = 'added_sites', 'updated_sites', 'deleted_sites', 'progress'
+
+
 class LetterTypeAdmin(admin.ModelAdmin):
     list_display = 'letter_type', 'pws'
 
@@ -63,7 +71,6 @@ admin.site.register(models.HazardType)
 admin.site.register(models.ICPointType)
 admin.site.register(models.Letter)
 admin.site.register(models.LetterType, LetterTypeAdmin)
-admin.site.register(models.Licence)
 admin.site.register(models.Orientation)
 admin.site.register(models.PWS)
 admin.site.register(models.ServiceType)
@@ -74,9 +81,10 @@ admin.site.register(models.SourceType)
 admin.site.register(models.Special)
 admin.site.register(models.Survey, SurveyAdmin)
 admin.site.register(models.SurveyType)
-admin.site.register(models.Test)
+admin.site.register(models.Test, TestAdmin)
 admin.site.register(models.TestManufacturer)
 admin.site.register(models.TestModel)
 admin.site.register(models.AssemblyStatus)
 admin.site.register(models.SiteStatus)
 admin.site.register(models.StaticText, StaticTextAdmin)
+admin.site.register(models.ImportLog)

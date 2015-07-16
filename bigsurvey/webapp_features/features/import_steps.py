@@ -1,6 +1,8 @@
-from lettuce import *
-from common_steps import *
-from data import *
+from lettuce import step
+from main.parameters import Messages
+
+from webapp_features.features import helper
+from webapp_features.features.data import get_url, Urls, import_mappings, Xpath, DELIMITER
 
 
 @step('I directly open "import" page')

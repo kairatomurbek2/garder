@@ -1,6 +1,7 @@
-from lettuce import *
-from selenium.common.exceptions import *
-from data import *
+from lettuce import world
+from selenium.common.exceptions import NoSuchElementException
+
+from webapp_features.features.data import Xpath
 
 
 def find(xpath, context=None):

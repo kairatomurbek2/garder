@@ -1,8 +1,9 @@
-from common_steps import *
-from lettuce import *
-from selenium import *
-from webapp.models import Site, PWS, CustomerCode, SiteStatus
+from lettuce import step
+
+from webapp import models
 from main.parameters import STATES, SITE_STATUS
+from webapp_features.features import helper
+from webapp_features.features.data import Xpath
 
 
 TEST_SITES_COUNT = 100
@@ -11,11 +12,11 @@ TEST_CUSTOMERS_COUNT = 100
 
 @step('I generate test sites')
 def generate_test_sites(step):
-    pws = PWS.objects.first()
-    cust_code = CustomerCode.objects.first()
-    active_status = SiteStatus.objects.get(site_status=SITE_STATUS.ACTIVE)
+    pws = models.PWS.objects.first()
+    cust_code = models.CustomerCode.objects.first()
+    active_status = models.SiteStatus.objects.get(site_status=SITE_STATUS.ACTIVE)
     for i in xrange(0, TEST_SITES_COUNT):
-        site = Site()
+        site = models.Site()
         site.pws = pws
         site.address1 = 'TestAddress%s' % i
         site.city = 'TestCity%s' % i
@@ -29,7 +30,7 @@ def generate_test_sites(step):
 
 @step('I delete test sites')
 def delete_test_sites(step):
-    Site.objects.filter(city__startswith='TestCity').delete()
+    models.Site.objects.filter(city__startswith='TestCity').delete()
 
 
 @step('I turn to the "(\d+)" page')

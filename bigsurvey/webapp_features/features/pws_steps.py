@@ -1,8 +1,15 @@
+import os
+
+from django.conf import settings
+
 from django.core.files import File
-from common_steps import *
-from lettuce import *
-from data import *
+from lettuce import step
+
+from main.parameters import Messages
+
 from webapp import models
+from webapp_features.features.data import get_url
+from webapp_features.features.data import Urls
 
 
 @step('I directly open "pws_list" page')

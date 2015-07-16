@@ -1,7 +1,9 @@
-from common_steps import *
-from lettuce import *
-from data import *
+from lettuce import step
+
+from main.parameters import Messages
 from webapp import models
+from webapp_features.features.common_steps import click_element_by_xpath
+from webapp_features.features.data import get_url, Urls, Xpath
 
 
 @step('I open "hazard_list" page')

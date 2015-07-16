@@ -587,10 +587,6 @@ class Test(models.Model):
     cv2_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV2 Cleaned or Replaced"))
     rv_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("RV Cleaned or Replaced"))
     pvb_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("PVB Cleaned or Replaced"))
-    cv1_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv1_replacements')
-    cv2_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='cv2_replacements')
-    rv_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='rv_replacements')
-    pvb_replaced_details = models.ManyToManyField(Detail, null=True, blank=True, related_name='pvb_replacements')
     paid = models.BooleanField(default=False, verbose_name=_('Was test paid?'))
     paypal_payment_id = models.CharField(max_length=50, null=True, blank=True, verbose_name=_('Paypal Payment ID'))
 
@@ -636,25 +632,6 @@ class Letter(models.Model):
         )
 
 
-class Licence(models.Model):
-    given_to = models.ForeignKey(User, verbose_name=_("Given To"), related_name="licences")
-    given_by = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Given By"), related_name="licences_given")
-    start_date = models.DateField(verbose_name=_("Start Date"))
-    end_date = models.DateField(verbose_name=_("End Date"))
-    is_active = models.BooleanField(verbose_name=_("Is Active"), default=True)
-    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
-
-    def __unicode__(self):
-        return u"%s %s, %s" % (self.given_to.first_name, self.given_to.last_name, self.start_date)
-
-    class Meta:
-        verbose_name = "Licence"
-        verbose_name_plural = "Licences"
-        permissions = (
-            ('browse_licence', _('Can browse Licence')),
-        )
-
-
 class StaticText(models.Model):
     title = models.CharField(max_length=20, verbose_name=_('Title'))
     group = models.ForeignKey(Group, blank=True, null=True, verbose_name=_('Group'), related_name="static_texts")
@@ -665,19 +642,21 @@ class StaticText(models.Model):
 
     class Meta:
         verbose_name = _("Static Text")
-        verbose_name_plural = _("Static Text")
+        verbose_name_plural = _("Static Texts")
 
 
 class ImportLog(models.Model):
-    user = models.ForeignKey(User)
-    pws = models.ForeignKey(PWS)
-    datetime = models.DateTimeField(auto_now_add=True)
-    added_sites = models.ManyToManyField(Site, related_name='added_imports')
-    updated_sites = models.ManyToManyField(Site, related_name='updated_imports')
-    deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports')
-    progress = models.IntegerField(default=0)
+    user = models.ForeignKey(User, related_name='import_logs', verbose_name=_('User who performed import'))
+    pws = models.ForeignKey(PWS, related_name='import_logs', verbose_name=_('PWS for which import was performed'))
+    datetime = models.DateTimeField(auto_now_add=True, verbose_name=_('Datetime of import'))
+    added_sites = models.ManyToManyField(Site, related_name='added_imports', verbose_name=_('Added sites'))
+    updated_sites = models.ManyToManyField(Site, related_name='updated_imports', verbose_name=_('Updated sites'))
+    deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports', verbose_name=_('Deactivated sites'))
+    progress = models.IntegerField(default=0, verbose_name=_('Progress of import'))
 
     class Meta:
+        verbose_name = _('Import Log')
+        verbose_name_plural = _('Import Logs')
         permissions = (
             ('browse_import_log', _('Can browse Import Log')),
             ('access_to_all_import_logs', _('Has access to all Import Logs')),

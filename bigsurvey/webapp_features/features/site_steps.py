@@ -1,8 +1,8 @@
 from selenium.webdriver import ActionChains
-from lettuce import *
 
 from common_steps import *
 from data import *
+from main.parameters import Messages
 
 
 @step('I directly open "site_list" page')
@@ -25,7 +25,6 @@ def directly_open_site_detail_page(step, pk):
 def open_site_detail_page(step, pk):
     step.given('I open "site_list" page')
     helper.find(Xpath.Pattern.site_detail_link % pk).click()
-    #step.given('I click "site_%s_detail" link' % pk)
 
 
 @step('I directly open "site_add" page')
@@ -76,6 +75,7 @@ def check_text_in_services_exists(step):
         elem = helper.find(Xpath.Pattern.site_hazard_service % row['service'])
         helper.check_element_exists(elem, 'service "%s" was not found' % row['service'])
         helper.check_text_exists(row['text'], '"%s" is not in "%s" service' % (row['text'], row['service']), elem)
+
 
 @step('I should see "site adding success" message')
 def check_site_adding_success_message(step):

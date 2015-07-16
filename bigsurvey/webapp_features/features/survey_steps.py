@@ -1,8 +1,9 @@
-from common_steps import *
-from lettuce import *
-from data import *
+from lettuce import step, world
+from main.parameters import Messages
 from webapp import models
-from webapp.models import Survey
+from webapp_features.features import helper
+from webapp_features.features.common_steps import click_element_by_xpath
+from webapp_features.features.data import Xpath, get_url, Urls
 
 
 @step('I click survey detail link with number "(.*)"')
@@ -26,7 +27,7 @@ def directly_open_survey_detail_page(step, pk):
 
 @step('I open "survey_detail" page with pk "(\d+)"')
 def open_survey_detail_page(step, pk):
-    site = Survey.objects.get(pk=pk).site
+    site = models.Survey.objects.get(pk=pk).site
     step.given('I open "site_detail" page with pk "%s"' % site.pk)
     step.given('I click "survey_%s_detail" link' % pk)
 

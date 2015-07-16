@@ -1,7 +1,7 @@
-from common_steps import *
-from lettuce import *
-from data import *
-from django.contrib.auth.models import User
+from webapp import models
+from webapp_features.features.data import get_url, Logins
+from webapp_features.features.data import Urls
+from lettuce import step, world
 
 
 @step('I open "login" page')
@@ -40,8 +40,8 @@ def login(step, username, password):
     step.given('I fill in "password" with "%s"' % password)
     step.given('I submit "%s" form' % 'auth')
     try:
-        world.user = User.objects.get(username=username)
-    except User.DoesNotExist:
+        world.user = models.User.objects.get(username=username)
+    except models.User.DoesNotExist:
         pass
 
 

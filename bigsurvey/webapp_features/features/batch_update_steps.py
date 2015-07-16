@@ -1,6 +1,6 @@
-from common_steps import *
-from lettuce import *
-from selenium import *
+from lettuce import step, world
+from main.parameters import Messages
+from webapp_features.features.data import get_url, Urls
 
 
 @step('I directly open "batch_update" page')

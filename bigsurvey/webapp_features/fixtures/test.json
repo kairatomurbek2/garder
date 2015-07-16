@@ -4041,26 +4041,6 @@
         "lettertype"
       ],
       [
-        "add_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "browse_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "change_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "delete_licence",
-        "webapp",
-        "licence"
-      ],
-      [
         "add_orientation",
         "webapp",
         "orientation"
@@ -4936,24 +4916,16 @@
     "outlet_sov_leaked": false,
     "rv_psi1": null,
     "rv_psi2": null,
-    "rv_replaced_details": [],
     "cv2_maintenance": false,
     "cv2_cleaned": true,
     "pvb_open_pressure": null,
     "cv_retest_psi": null,
     "air_inlet_retest_psi": null,
-    "cv2_replaced_details": [],
     "cv2_leaked": false,
     "test_result": false,
     "rv_maintenance": false,
-    "cv1_replaced_details": [
-      2
-    ],
     "pvb_opened": false,
     "cv_maintenance": false,
-    "pvb_replaced_details": [
-      16
-    ],
     "cv2_gauge_pressure": null,
     "pvb_cleaned": false,
     "tester": [
@@ -4989,20 +4961,16 @@
     "outlet_sov_leaked": false,
     "rv_psi1": null,
     "rv_psi2": null,
-    "rv_replaced_details": [],
     "cv2_maintenance": false,
     "cv2_cleaned": true,
     "pvb_open_pressure": null,
     "cv_retest_psi": null,
     "air_inlet_retest_psi": null,
-    "cv2_replaced_details": [],
     "cv2_leaked": false,
     "test_result": false,
     "rv_maintenance": false,
-    "cv1_replaced_details": [],
     "pvb_opened": false,
     "cv_maintenance": false,
-    "pvb_replaced_details": [],
     "cv2_gauge_pressure": null,
     "pvb_cleaned": true,
     "tester": [
@@ -5038,20 +5006,16 @@
     "outlet_sov_leaked": false,
     "rv_psi1": null,
     "rv_psi2": null,
-    "rv_replaced_details": [],
     "cv2_maintenance": false,
     "cv2_cleaned": true,
     "pvb_open_pressure": null,
     "cv_retest_psi": null,
     "air_inlet_retest_psi": null,
-    "cv2_replaced_details": [],
     "cv2_leaked": false,
     "test_result": false,
     "rv_maintenance": false,
-    "cv1_replaced_details": [],
     "pvb_opened": false,
     "cv_maintenance": false,
-    "pvb_replaced_details": [],
     "cv2_gauge_pressure": null,
     "pvb_cleaned": true,
     "tester": [

@@ -304,26 +304,6 @@
         "lettertype"
       ],
       [
-        "add_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "browse_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "change_licence",
-        "webapp",
-        "licence"
-      ],
-      [
-        "delete_licence",
-        "webapp",
-        "licence"
-      ],
-      [
         "add_orientation",
         "webapp",
         "orientation"
