@@ -8,16 +8,16 @@ Feature: Letter Viewing and Sending
     When I directly open "letter_detail" page with pk "<pk>"
     Then I should <reaction> "Page not found"
     And I logout
-  Examples:
-    | role     | pk | reaction |
-    | root     | 1  | not see  |
-    | root     | 2  | not see  |
-    | admin    | 1  | see      |
-    | admin    | 2  | not see  |
-    | surveyor | 1  | see      |
-    | surveyor | 2  | not see  |
-    | tester   | 1  | see      |
-    | tester   | 2  | see      |
+    Examples:
+      | role     | pk | reaction |
+      | root     | 1  | not see  |
+      | root     | 2  | not see  |
+      | admin    | 1  | see      |
+      | admin    | 2  | not see  |
+      | surveyor | 1  | see      |
+      | surveyor | 2  | not see  |
+      | tester   | 1  | see      |
+      | tester   | 2  | see      |
 
   Scenario: Letter Detail Page Elements
     Given I logged in as "root"
@@ -27,7 +27,7 @@ Feature: Letter Viewing and Sending
       | text                                |
       | Send to                             |
       | May 05, 2015                        |
-      | {AssemblyType}                      |
+      | RP                                  |
       | {DueDate}                           |
       | Seattle, WA, 12382                  |
       | 7269, South Jackson st, Seattle, WA |

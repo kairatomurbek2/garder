@@ -149,49 +149,35 @@ class TestForm(forms.ModelForm):
         if outlet_sov_leaked == self.fields['outlet_sov_leaked'].empty_value:
             self.add_error('outlet_sov_leaked', ValidationError(self.fields['outlet_sov_leaked'].error_messages['required'], code='required'))
 
+    def _clean_valve_cleaned(self, type, error_message):
+        field_name = '%s_cleaned' % type
+        value = self.cleaned_data.get(field_name)
+        if value == self.fields[field_name].empty_value:
+            self.add_error(field_name, ValidationError(self.fields[field_name].error_messages['required'], code='required'))
+        if value is False:
+            details = [value for key, value in self.cleaned_data.items() if key.startswith('%s_detail' % type)]
+            if not any(details):
+                self.add_error(field_name, ValidationError(error_message))
+
     def _clean_cv1_cleaned(self):
-        cv1_cleaned = self.cleaned_data.get('cv1_cleaned')
-        if cv1_cleaned == self.fields['cv1_cleaned'].empty_value:
-            self.add_error('cv1_cleaned', ValidationError(self.fields['cv1_cleaned'].error_messages['required'], code='required'))
-        if cv1_cleaned is False:
-            cv1_replaced_details = self.cleaned_data.get('cv1_replaced_details')
-            if not cv1_replaced_details:
-                self.add_error('cv1_replaced_details', ValidationError(Messages.Test.cv1_replaced_details_not_provided))
+        self._clean_valve_cleaned('cv1', Messages.Test.cv1_replaced_details_not_provided)
 
     def _clean_rv_cleaned(self):
-        rv_cleaned = self.cleaned_data.get('rv_cleaned')
-        if rv_cleaned == self.fields['rv_cleaned'].empty_value:
-            self.add_error('rv_cleaned', ValidationError(self.fields['rv_cleaned'].error_messages['required'], code='required'))
-        if rv_cleaned is False:
-            rv_replaced_details = self.cleaned_data.get('rv_replaced_details')
-            if not rv_replaced_details:
-                self.add_error('rv_replaced_details', ValidationError(Messages.Test.rv_replaced_details_not_provided))
+        self._clean_valve_cleaned('rv', Messages.Test.rv_replaced_details_not_provided)
 
     def _clean_cv2_cleaned(self):
-        cv2_cleaned = self.cleaned_data.get('cv2_cleaned')
-        if cv2_cleaned == self.fields['cv2_cleaned'].empty_value:
-            self.add_error('cv2_cleaned', ValidationError(self.fields['cv2_cleaned'].error_messages['required'], code='required'))
-        if cv2_cleaned is False:
-            cv2_replaced_details = self.cleaned_data.get('cv2_replaced_details')
-            if not cv2_replaced_details:
-                self.add_error('cv2_replaced_details', ValidationError(Messages.Test.cv2_replaced_details_not_provided))
+        self._clean_valve_cleaned('cv2', Messages.Test.cv2_replaced_details_not_provided)
 
     def _clean_pvb_cleaned(self):
-        pvb_cleaned = self.cleaned_data.get('pvb_cleaned')
-        if pvb_cleaned == self.fields['pvb_cleaned'].empty_value:
-            self.add_error('pvb_cleaned', ValidationError(self.fields['pvb_cleaned'].error_messages['required'], code='required'))
-        if pvb_cleaned is False:
-            pvb_replaced_details = self.cleaned_data.get('pvb_replaced_details')
-            if not pvb_replaced_details:
-                self.add_error('pvb_replaced_details', ValidationError(Messages.Test.pvb_replaced_details_not_provided))
+        self._clean_valve_cleaned('pvb', Messages.Test.pvb_replaced_details_not_provided)
 
     def clean_rp_types(self):
         self._clean_cv1_leaked()
-        self._clean_cv1_cleaned()
         self._clean_cv2_leaked()
-        self._clean_cv2_cleaned()
         self._clean_outlet_sov_leaked()
         self._clean_rv_did_not_open()
+        self._clean_cv1_cleaned()
+        self._clean_cv2_cleaned()
         self._clean_rv_cleaned()
 
     def clean_dc_types(self):

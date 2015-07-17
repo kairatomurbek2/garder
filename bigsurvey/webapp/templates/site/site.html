@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load boolean_yes_no %}
+{% load i18n choices %}
 {% block menu %}
     {% if perms.webapp.change_site %}
         <li><a href="{% url 'webapp:site_edit' site.pk %}" id="site_{{ site.pk }}_edit_link">{% trans "Edit" %}</a></li>

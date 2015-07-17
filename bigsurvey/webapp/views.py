@@ -1180,7 +1180,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                 "currency": "USD"
             }
             for test in tests
-        ]
+            ]
 
         test_pks = ','.join((str(test.pk) for test in tests))
 
@@ -1494,7 +1494,7 @@ class ImportLogAddedSitesView(ImportLogSitesMixin):
         return import_log.added_sites
 
     def get_header(self, import_log):
-        return _("You are browsing the sites that have been added during the import on %s") % import_log.datetime.strftime('%B %d, %Y, %H:%m')
+        return Messages.Import.added_sites_header % import_log.datetime.strftime('%b. %d, %Y, %H:%m')
 
 
 class ImportLogUpdatedSitesView(ImportLogSitesMixin):
@@ -1502,7 +1502,7 @@ class ImportLogUpdatedSitesView(ImportLogSitesMixin):
         return import_log.updated_sites
 
     def get_header(self, import_log):
-        return _("You are browsing the sites that have been updated during the import on %s") % import_log.datetime.strftime('%B %d, %Y, %H:%m')
+        return Messages.Import.updated_sites_header % import_log.datetime.strftime('%b. %d, %Y, %H:%m')
 
 
 class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
@@ -1510,4 +1510,4 @@ class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
         return import_log.deactivated_sites
 
     def get_header(self, import_log):
-        return _("You are browsing the sites that have been deactivated during the import on %s") % import_log.datetime.strftime('%B %d, %Y, %H:%m')
+        return Messages.Import.deactivated_sites_header % import_log.datetime.strftime('%b. %d, %Y, %H:%m')

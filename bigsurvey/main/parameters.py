@@ -201,6 +201,9 @@ class Messages:
         incorrect_date_format = _('Date in %s cell does not match "%s" format')
         duplicate_cust_numbers = _('Duplicate Customer Numbers found in %s and %s cells')
         import_was_finished = _('Import was finished. Added sites: %d, updated sites: %d, deactivated sites: %d. More information <a href="%s">here</a>.')
+        added_sites_header = _("You are browsing the sites that have been added during the import on %s")
+        updated_sites_header = _("You are browsing the sites that have been updated during the import on %s")
+        deactivated_sites_header = _("You are browsing the sites that have been deactivated during the import on %s")
 
     class BatchUpdate:
         success = _('Batch update was performed successfully')
