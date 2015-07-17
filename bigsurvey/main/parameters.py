@@ -236,8 +236,8 @@ class Messages:
         rv_not_provided = _('You should either set "Relief Valve Did not open" or provide "Relief Valve psi"')
         cv_not_provided = _('You should either set "Check Valve Did not open" or provide "Check Valve psi"')
         cv1_replaced_details_not_provided = _('You must provide details for replacement of Check Valve #1')
-        cv2_replaced_details_not_provided = _('You must provide details for replacement of Relief Valve')
-        rv_replaced_details_not_provided = _('You must provide details for replacement of Check Valve #2')
+        cv2_replaced_details_not_provided = _('You must provide details for replacement of Check Valve #2')
+        rv_replaced_details_not_provided = _('You must provide details for replacement of Relief Valve')
         pvb_replaced_details_not_provided = _('You must provide details for replacement of Pressure Vacuum Breaker')
         payment_successful_singular = 'Payment was completed successfully. Test is now visible on the site.'
         payment_successful_plural = 'Payment was completed successfully. Tests are now visible on the site.'
