@@ -70,13 +70,6 @@ CLEANED_REPLACED_CHOICES = (
 )
 
 
-# class Details:
-# cv1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 18]
-# rv = [1, 10, 3, 11, 5, 6, 12, 4, 18]
-# cv2 = cv1
-# pvb = [1, 2, 13, 14, 15, 16, 17, 12, 4, 18]
-
-
 STATES = (
     ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),
     ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'),

@@ -620,6 +620,27 @@ class Test(models.Model):
     def price(self):
         return self.bp_device.site.pws.price
 
+    @property
+    def cv1_replaced_details(self):
+        return self._get_replaced_details('cv1')
+
+    @property
+    def rv_replaced_details(self):
+        return self._get_replaced_details('rv')
+
+    @property
+    def cv2_replaced_details(self):
+        return self._get_replaced_details('cv2')
+
+    @property
+    def pvb_replaced_details(self):
+        return self._get_replaced_details('pvb')
+
+    def _get_replaced_details(self, type):
+        detail_fields = [field for field in self._meta.fields if field.name.startswith('%s_detail' % type)]
+        details = [field.verbose_name for field in detail_fields if getattr(self, field.name) is True]
+        return details
+
     class Meta:
         verbose_name = _("Test")
         verbose_name_plural = _("Tests")

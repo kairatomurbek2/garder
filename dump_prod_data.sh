@@ -6,7 +6,7 @@ FIXTURE_DIR=webapp/fixtures
 ./manage.py dumpdata webapp.sourcetype webapp.sitetype webapp.siteuse webapp.servicetype webapp.surveytype webapp.bpsize webapp.bpmanufacturer webapp.customercode webapp.hazardtype webapp.testmanufacturer webapp.testmodel webapp.icpointtype webapp.assemblylocation webapp.assemblystatus webapp.lettertype webapp.floorscount webapp.special webapp.orientation webapp.sitestatus --indent=2 > ${FIXTURE_DIR}/data_base.json
 ./manage.py dumpdata auth.group --natural-foreign --indent 2 > ${FIXTURE_DIR}/data_perms.json
 ./manage.py dumpdata webapp.employee auth.user --natural-foreign --indent 2 > ${FIXTURE_DIR}/data_users.json
-for data_type in "pws" "survey" "hazard" "letter" "details"
+for data_type in "pws" "survey" "hazard" "letter"
 do
    ./manage.py dumpdata webapp.${data_type} --indent=2 > ${FIXTURE_DIR}/data_${data_type}.json
 done

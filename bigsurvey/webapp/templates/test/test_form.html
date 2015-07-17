@@ -188,7 +188,7 @@
                             <td>
                                 {% render_radiobuttons form.cv1_cleaned %}
                                 <div class="second-level-ul">
-                                    <ul class="test-form-ul">
+                                    <ul class="test-form-ul" data-content="cv1_details">
                                         <li>
                                             {{ form.cv1_detail_rubber_parts_kit }}
                                             <label for="{{ form.cv1_detail_rubber_parts_kit.id_for_label }}">{{ form.cv1_detail_rubber_parts_kit.label }}</label>
@@ -238,7 +238,7 @@
                             <td>
                                 {% render_radiobuttons form.rv_cleaned %}
                                 <div class="second-level-ul">
-                                    <ul class="test-form-ul">
+                                    <ul class="test-form-ul" data-content="rv_details">
                                         <li>
                                             {{ form.rv_detail_rubber_parts_kit }}
                                             <label for="{{ form.rv_detail_rubber_parts_kit.id_for_label }}">{{ form.rv_detail_rubber_parts_kit.label }}</label>
@@ -284,7 +284,7 @@
                             <td>
                                 {% render_radiobuttons form.cv2_cleaned %}
                                 <div class="second-level-ul">
-                                    <ul class="test-form-ul">
+                                    <ul class="test-form-ul" data-content="cv2_details">
                                         <li>
                                             {{ form.cv2_detail_rubber_parts_kit }}
                                             <label for="{{ form.cv2_detail_rubber_parts_kit.id_for_label }}">{{ form.cv2_detail_rubber_parts_kit.label }}</label>
@@ -334,7 +334,7 @@
                             <td>
                                 {% render_radiobuttons form.pvb_cleaned %}
                                 <div class="second-level-ul">
-                                    <ul class="test-form-ul">
+                                    <ul class="test-form-ul" data-content="pvb_details">
                                         <li>
                                             {{ form.pvb_detail_rubber_parts_kit }}
                                             <label for="{{ form.pvb_detail_rubber_parts_kit.id_for_label }}">{{ form.pvb_detail_rubber_parts_kit.label }}</label>
@@ -556,15 +556,14 @@
             listenCheckbox($('input[name="rv_did_not_open"]'), $('input[name="rv_psi1"]'));
             listenCheckbox($('input[name="air_inlet_did_not_open"]'), $('input[name="air_inlet_psi"]'));
             listenCheckbox($('input[name="cv_leaked"]'), $('input[name="cv_held_pressure"]'));
-            listenRadio($('input[name="cv1_cleaned"]'), $('input[name="cv1_replaced_details"]'));
-            listenRadio($('input[name="rv_cleaned"]'), $('input[name="rv_replaced_details"]'));
-            listenRadio($('input[name="cv2_cleaned"]'), $('input[name="cv2_replaced_details"]'));
-            listenRadio($('input[name="pvb_cleaned"]'), $('input[name="pvb_replaced_details"]'));
+            listenRadio($('input[name="cv1_cleaned"]'), $('[data-content="cv1_details"]').find('input[type="checkbox"]'));
+            listenRadio($('input[name="rv_cleaned"]'), $('[data-content="rv_details"]').find('input[type="checkbox"]'));
+            listenRadio($('input[name="cv2_cleaned"]'), $('[data-content="cv2_details"]').find('input[type="checkbox"]'));
+            listenRadio($('input[name="pvb_cleaned"]'), $('[data-content="pvb_details"]').find('input[type="checkbox"]'));
 
             $('[data-content="decimal-field"]').keyup(function () {
                 var $this = $(this);
                 var value = $this.val();
-                console.log(value);
                 var regexForValidation = /^(\d+\.?\d?)$/;
                 if (!regexForValidation.test(value)) {
                     var regexForStripping = /^(\d+\.?\d?)/;
