@@ -29,7 +29,6 @@ Feature: Test editing
     Then I should be at "test_detail" page with pk "2"
     And I should see "test editing success" message
     And I should see "111111"
-    And I reset database
 
   Scenario: Check test_date is editable
     Given I logged in as "tester"
@@ -40,4 +39,3 @@ Feature: Test editing
     And I should see following
       | text         |
       | July 8, 2015 |
-    And I reset database

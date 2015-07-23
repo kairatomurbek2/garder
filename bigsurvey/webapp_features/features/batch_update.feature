@@ -40,7 +40,6 @@ Feature: Batch Update
     Then I should see "batch updating success" message
     When I open "hazard_detail" page with pk "2"
     Then I should see "Aug. 22, 2015"
-    And I reset database
 
   Scenario: Incorrect Batch Updating
     Given I logged in as "root"

@@ -43,7 +43,6 @@ Feature: Test adding
       | tester |
       | Passed |
       | VALVE  |
-    And I reset database
 
   Scenario: Correct test adding for DC Hazard
     Given I logged in as "tester"
@@ -66,7 +65,6 @@ Feature: Test adding
       | tester |
       | Passed |
       | VALVE  |
-    And I reset database
 
   Scenario: Correct test adding for PVB Hazard
     Given I logged in as "tester"
@@ -86,4 +84,3 @@ Feature: Test adding
       | tester |
       | Passed |
       | VALVE  |
-    And I reset database

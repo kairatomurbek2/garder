@@ -40,7 +40,6 @@ Feature: PWS editing
     And I should see "pws editing success" message
     And PWS with pk "9" should contain "+19265429" in "consultant_phone" field
     And PWS with pk "9" should contain "Minneapolis" in "city" field
-    And I reset database
 
   Scenario: Incorrect PWS editing
     Given I logged in as "root"

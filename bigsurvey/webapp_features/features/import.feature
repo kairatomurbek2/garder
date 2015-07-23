@@ -56,7 +56,6 @@ Feature: Import from Excel files
     Then Last import should have following data
       | added_sites | updated_sites | deactivated_sites |
       | 1           | 6             | 3                 |
-    And I reset database
 
   Scenario: Incorrect Import
     Given I logged in as "root"

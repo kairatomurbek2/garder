@@ -34,8 +34,6 @@ Feature: Hazard Edit
     And I logged in as "tester"
     When I directly open "hazard_edit" page with pk "2"
     Then I should <reaction> "Page not found"
-    And I logout
-    And I reset database
     Examples:
       | relation      | reaction |
       | has           | not see  |
