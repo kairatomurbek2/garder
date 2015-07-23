@@ -5,7 +5,6 @@ Feature: Hazard Edit
     Given I logged in as "<role>"
     When I directly open "hazard_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
-    And I logout
 
     Examples:
       | role     | pk | reaction |

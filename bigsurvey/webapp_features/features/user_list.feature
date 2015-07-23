@@ -6,7 +6,6 @@ Feature: User list
     Given I logged in as "<role>"
     When I directly open "user_list" page
     Then I should <reaction> "Page not found"
-    And I logout
   Examples:
     | role     | reaction |
     | root     | not see  |

@@ -6,7 +6,6 @@ Feature: Site detail
     Given I logged in as "<role>"
     When I directly open "site_detail" page with pk "<pk>"
     Then I should <reaction> "Page not found"
-    And I logout
   Examples:
     | role     | pk | reaction |
     | root     | 3  | not see  |

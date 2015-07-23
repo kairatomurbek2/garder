@@ -6,7 +6,6 @@ Feature: Authorization
     Given I open "login" page
     When I login as "<role>"
     Then I should be at "<page>" page
-    And I logout
   Examples:
     | role     | page        |
     | root     | home        |

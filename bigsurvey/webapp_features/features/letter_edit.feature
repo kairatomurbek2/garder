@@ -6,7 +6,6 @@ Feature: Letter Editing
     Given I logged in as "<role>"
     When I directly open "letter_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
-    And I logout
   Examples:
     | role     | pk | reaction |
     | root     | 1  | not see  |
@@ -34,7 +33,6 @@ Feature: Letter Editing
       | 2-nd Notice         |
       | May 05, 2015        |
       | As mentioned above  |
-    And I logout
 
   Scenario: Incorrect Letter Editing
     Given I logged in as "root"
@@ -46,4 +44,3 @@ Feature: Letter Editing
     And I should see following validation error messages on following fields
       | field       | error_message           |
       | letter_type | This field is required. |
-    And I logout

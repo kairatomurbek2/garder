@@ -5,7 +5,6 @@ Feature: Hazard Add
     Given I logged in as "<role>"
     When I directly open "hazard_add" page for site with pk "<pk>" and service "<service>"
     Then I should <reaction> "Page not found"
-    And I logout
 
     Examples:
       | role     | pk | service | reaction |

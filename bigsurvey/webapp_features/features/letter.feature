@@ -7,7 +7,6 @@ Feature: Letter Viewing and Sending
     Given I logged in as "<role>"
     When I directly open "letter_detail" page with pk "<pk>"
     Then I should <reaction> "Page not found"
-    And I logout
     Examples:
       | role     | pk | reaction |
       | root     | 1  | not see  |

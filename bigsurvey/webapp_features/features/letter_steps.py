@@ -62,11 +62,6 @@ def see_warning_letter_message(step):
     step.then('I should see "%s"' % WARNING_LETTER_MESSAGE)
 
 
-@step('letter is deleted')
-def delete_fresh_added_letter(step):
-    Letter.objects.filter(letter_type__letter_type="Pool").delete()
-
-
 @step('I should see "letter adding error" message')
 def see_letter_adding_error_message(step):
     step.then('I should see "%s"' % Messages.Letter.adding_error)

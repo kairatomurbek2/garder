@@ -5,7 +5,6 @@ Feature: PWS editing
     Given I logged in as "<role>"
     When I directly open "pws_edit" page with pk "6"
     Then I should <reaction> "Page not found"
-    And I logout
   Examples:
     | role     | reaction |
     | root     | not see  |

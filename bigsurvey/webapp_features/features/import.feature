@@ -5,7 +5,6 @@ Feature: Import from Excel files
     Given I logged in as "<role>"
     When I directly open "import" page
     Then I should <reaction> "Page not found"
-    And I logout
 
   Examples:
     | role     | reaction |
@@ -82,7 +81,6 @@ Feature: Import from Excel files
     And I submit "import-mappings" form
     Then I should be at "import_mappings_process" page
     And I should see "<message>" message with params "<params>"
-    And I logout
 
   Examples:
     | file                         | message                 | params                                     |

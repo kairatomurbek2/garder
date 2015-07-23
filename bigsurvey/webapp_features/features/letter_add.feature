@@ -6,7 +6,6 @@ Feature: Letter Adding
     Given I logged in as "<role>"
     When I directly open "letter_add" page for site with pk "<pk>"
     Then I should <reaction> "Page not found"
-    And I logout
   Examples:
     | role     | pk | reaction |
     | root     | 5  | not see  |
@@ -38,8 +37,6 @@ Feature: Letter Adding
       | 05/31/2015             |
       | White House            |
     And There should be logo of PWS with pk "6"
-    And I logout
-    And letter is deleted
 
   @incorrect_letter_adding
   Scenario: Incorrect Letter Adding
@@ -52,4 +49,3 @@ Feature: Letter Adding
       | field       | error_message           |
       | letter_type | This field is required. |
       | hazard      | This field is required. |
-    And I logout

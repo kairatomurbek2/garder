@@ -5,7 +5,6 @@ Feature: Batch Update
     Given I logged in as "<role>"
     When I directly open "batch_update" page
     Then I should <reaction> "Page not found"
-    And I logout
 
   Examples:
     | role     | reaction |

@@ -5,7 +5,6 @@ Feature: Test editing
     Given I logged in as "<role>"
     When I directly open "test_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
-    And I logout
   Examples:
     | role     | pk | reaction |
     | root     | 1  | not see  |
