@@ -28,8 +28,8 @@ class Placeholders(object):
     pws_zip = '{PWSZip}'
     pws_state = '{PWSState}'
     pws_office_address = '{PWSOfficeAddress}'
-    bailee_name = '{BaileeName}'
-    bailee_job_title = '{BaileeJobTitle}'
+    bailee_name = '{PersonInChargeName}'
+    bailee_job_title = '{PersonInChargeJobTitle}'
     left_header_block = '{LeftHeaderBlock}'
     right_header_block = '{RightHeaderBlock}'
 
