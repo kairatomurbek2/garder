@@ -28,9 +28,12 @@ Feature: Last survey date
     Given I logged in as "root"
     When I open "site_detail" page with pk "10"
     And I open "survey_edit" page with pk "2"
-    And I fill in "survey_date" with "2015-01-26"
+    And I fill in "survey_date" with "2015-01-24"
     And I submit "survey" form
     And I open "site_list" page
     Then I should see following
       | text          |
-      | Jan. 27, 2015 |
+      | Jan. 26, 2015 |
+    And I should not see following
+      | text         |
+      | Jan. 24, 2015 |

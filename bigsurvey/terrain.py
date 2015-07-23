@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.core.management import call_command
 from lettuce import before, after, world
 from selenium import webdriver
@@ -26,7 +27,8 @@ def teardown(total):
 @before.outline
 def clear_cookies_and_db(scenario, *args, **kwargs):
     world.browser.delete_all_cookies()
-    call_command('restore_db', interactive=False, verbosity=0)
+    if settings.REINITIALIZE_DATABASE:
+        call_command('restore_db', interactive=False, verbosity=0)
     world.user = None
     world.cache = {}
 

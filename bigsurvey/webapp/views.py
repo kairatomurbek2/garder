@@ -379,13 +379,7 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         response = super(SurveyAddView, self).form_valid(form)
         survey = site.surveys.latest('survey_date')
         site.last_survey_date = survey.survey_date
-        if form.instance.service_type.service_type == 'potable':
-            site.potable_present = True
-        elif form.instance.service_type.service_type == 'fire':
-            site.fire_present = True
-        elif form.instance.service_type.service_type == 'irrigation':
-            site.irrigation_present = True
-        site.save()
+        self._switch_on_service_type(site, form.instance.service_type.service_type)
         for hazard in site.hazards.all():
             if hazard in survey.hazards.all():
                 hazard.is_present = True
@@ -402,6 +396,15 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
 
     def _get_service_type(self):
         return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
+
+    def _switch_on_service_type(self, site, service_type):
+        if service_type == 'potable':
+            site.potable_present = True
+        elif service_type == 'fire':
+            site.fire_present = True
+        elif service_type == 'irrigation':
+            site.irrigation_present = True
+        site.save()
 
     def get_form(self, form_class):
         if not perm_checkers.SitePermChecker.has_perm(self.request, self._get_site()):
@@ -522,8 +525,8 @@ class HazardAddView(HazardBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
-        response = super(HazardAddView, self).form_valid(form)
         self._switch_on_service_type(form.instance.site, self.kwargs['service'])
+        response = super(HazardAddView, self).form_valid(form)
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_OK, form)
         return response
