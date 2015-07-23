@@ -1,6 +1,7 @@
 @batch_update
 Feature: Batch Update
 
+  @keep_db
   Scenario Outline: Batch Update page access
     Given I logged in as "<role>"
     When I directly open "batch_update" page

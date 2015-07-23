@@ -1,6 +1,6 @@
 @hazard_detail
 Feature: Hazard Detail
-
+  @keep_db
   Scenario Outline: Hazard detail page access
     Given I logged in as "<role>"
     When I directly open "hazard_detail" page with pk "<pk>"
@@ -17,7 +17,7 @@ Feature: Hazard Detail
     | tester   | 2  | not see  |
     | tester   | 1  | not see  |
 
-
+  @keep_db
   Scenario: Hazard detail page elements
     Given I logged in as "root"
     When I open "hazard_detail" page with pk "1"

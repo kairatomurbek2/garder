@@ -1,6 +1,6 @@
 @test_add
 Feature: Test adding
-
+  @keep_db
   Scenario Outline: Test adding page access
     Given I logged in as "<role>"
     When I directly open "test_add" page for hazard with pk "<pk>"

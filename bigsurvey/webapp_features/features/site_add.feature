@@ -1,7 +1,7 @@
 @site_add
 Feature: Site adding
 
-
+  @keep_db
   Scenario Outline: Site adding page access
     Given I logged in as "<role>"
     When I directly open "site_add" page

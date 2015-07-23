@@ -2,6 +2,7 @@
 @letter_add
 Feature: Letter Adding
 
+  @keep_db
   Scenario Outline: Letter Add Page Access
     Given I logged in as "<role>"
     When I directly open "letter_add" page for site with pk "<pk>"
@@ -38,7 +39,6 @@ Feature: Letter Adding
       | White House            |
     And There should be logo of PWS with pk "6"
 
-  @incorrect_letter_adding
   Scenario: Incorrect Letter Adding
     Given I logged in as "root"
     And I open "letter_add" page for site with pk "7"

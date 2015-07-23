@@ -28,11 +28,6 @@ def generate_test_sites(step):
         site.save()
 
 
-@step('I delete test sites')
-def delete_test_sites(step):
-    models.Site.objects.filter(city__startswith='TestCity').delete()
-
-
 @step('I turn to the "(\d+)" page')
 def click_pagination_link(step, page_number):
     link = helper.find(Xpath.Pattern.pagination_link % page_number)

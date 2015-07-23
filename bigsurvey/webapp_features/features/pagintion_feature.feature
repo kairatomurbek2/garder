@@ -1,7 +1,6 @@
 @pagination
 Feature: Pagination
 
-  @site_pagination
   Scenario: Site pagination
     Given I logged in as "root"
     And I generate test sites
@@ -26,4 +25,3 @@ Feature: Pagination
       | text       |
       | TestCity90 |
       | TestCity99 |
-    Then I delete test sites

@@ -1,6 +1,6 @@
 @hazard_add
 Feature: Hazard Add
-
+  @keep_db
   Scenario Outline: Hazard Add page access
     Given I logged in as "<role>"
     When I directly open "hazard_add" page for site with pk "<pk>" and service "<service>"

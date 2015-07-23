@@ -1,6 +1,6 @@
 @test_edit
 Feature: Test editing
-
+  @keep_db
   Scenario Outline: Test editing page access
     Given I logged in as "<role>"
     When I directly open "test_edit" page with pk "<pk>"
@@ -15,7 +15,6 @@ Feature: Test editing
     | surveyor | 2  | see      |
     | tester   | 2  | not see  |
     | tester   | 1  | not see  |
-
 
   Scenario: Correct test editing
     Given I logged in as "root"

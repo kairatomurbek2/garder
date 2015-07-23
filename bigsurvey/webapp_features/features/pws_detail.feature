@@ -1,6 +1,6 @@
 @pws_detail
 Feature: PWS Detail Page
-
+  @keep_db
   Scenario Outline: PWS Detail Page access
     Given I logged in as "<role>"
     When I directly open "pws_detail" page with pk "<pk>"
@@ -16,7 +16,7 @@ Feature: PWS Detail Page
     | tester   | 1  | see      |
     | tester   | 9  | see      |
 
-
+  @keep_db
   Scenario: PWS Detail Page elements
     Given I logged in as "root"
     When I open "pws_detail" page with pk "9"

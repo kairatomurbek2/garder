@@ -1,6 +1,6 @@
 @test_payment
 Feature: Test payment
-
+  @keep_db
   Scenario: Unpaid test is not visible on site
     Given I logged in as "root"
     When I open "hazard_detail" page with pk "1"

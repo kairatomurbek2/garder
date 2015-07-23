@@ -1,6 +1,6 @@
 @survey_detail
 Feature: Survey Detail
-
+  @keep_db
   Scenario Outline: Survey detail page access
     Given I logged in as "<role>"
     When I directly open "survey_detail" page with pk "<pk>"
@@ -17,7 +17,7 @@ Feature: Survey Detail
     | tester   | 1  | see      |
     | tester   | 2  | see      |
 
-
+  @keep_db
   Scenario: Survey detail page elements
     Given I logged in as "root"
     When I open "survey_detail" page with pk "1"

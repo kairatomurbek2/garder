@@ -1,7 +1,7 @@
 @last_survey_date
 
 Feature: Last survey date
-
+  @keep_db
   Scenario: I See initial date
     Given I logged in as "root"
     When I open "site_list" page

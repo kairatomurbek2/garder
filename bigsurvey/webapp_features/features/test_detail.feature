@@ -1,6 +1,6 @@
 @test_detail
 Feature: Test Detail
-
+  @keep_db
   Scenario Outline: Test detail page access
     Given I logged in as "<role>"
     When I directly open "test_detail" page with pk "<pk>"
@@ -16,7 +16,7 @@ Feature: Test Detail
     | tester   | 2  | not see  |
     | tester   | 1  | not see  |
 
-
+  @keep_db
   Scenario: Test detail page elements
     Given I logged in as "root"
     When I open "test_detail" page with pk "1"

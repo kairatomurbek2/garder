@@ -1,6 +1,6 @@
 @user_add
 Feature: User adding
-
+  @keep_db
   Scenario Outline: User adding page access
     Given I logged in as "<role>"
     When I directly open "user_add" page

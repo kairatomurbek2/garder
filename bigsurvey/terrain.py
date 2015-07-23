@@ -23,11 +23,11 @@ def teardown(total):
     world.browser.quit()
 
 
-@before.each_scenario
-@before.outline
+@after.each_scenario
+@after.outline
 def clear_cookies_and_db(scenario, *args, **kwargs):
     world.browser.delete_all_cookies()
-    if settings.REINITIALIZE_DATABASE:
+    if settings.REINITIALIZE_DATABASE and 'keep_db' not in scenario.tags:
         call_command('restore_db', interactive=False, verbosity=0)
     world.user = None
     world.cache = {}

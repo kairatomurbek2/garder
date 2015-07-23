@@ -1,6 +1,6 @@
 @site_edit
 Feature: Site editing
-
+  @keep_db
   Scenario Outline: Site editing page access
     Given I logged in as "<role>"
     When I directly open "site_edit" page with pk "<pk>"

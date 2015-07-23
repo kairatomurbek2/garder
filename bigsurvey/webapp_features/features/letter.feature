@@ -2,7 +2,7 @@
 @letter_detail
 Feature: Letter Viewing and Sending
 
-  @letter_detail_page_access
+  @keep_db
   Scenario Outline: Letter Detail Page Access
     Given I logged in as "<role>"
     When I directly open "letter_detail" page with pk "<pk>"
@@ -18,6 +18,7 @@ Feature: Letter Viewing and Sending
       | tester   | 1  | see      |
       | tester   | 2  | see      |
 
+  @keep_db
   Scenario: Letter Detail Page Elements
     Given I logged in as "root"
     When I open "letter_detail" page with pk "2"

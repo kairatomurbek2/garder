@@ -1,5 +1,6 @@
 @site_list
 Feature: Site list
+  @keep_db
   Scenario: Root is opening site list page
     Given I logged in as "root"
     When I open "site_list" page
@@ -12,6 +13,7 @@ Feature: Site list
       | Seattle     |
       | New York    |
 
+  @keep_db
   Scenario: Admin is opening site list page
     Given I logged in as "admin"
     When I open "site_list" page
@@ -28,6 +30,7 @@ Feature: Site list
       | Houston     |
       | Washington  |
 
+  @keep_db
   Scenario: Surveyor is opening site list page
     Given I logged in as "surveyor"
     When I open "site_list" page

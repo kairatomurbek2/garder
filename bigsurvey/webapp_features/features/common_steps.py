@@ -1,9 +1,8 @@
 import os
 import time
-from django.conf import settings
 
+from django.conf import settings
 from lettuce import step, world
-from django.core.management import call_command
 
 import helper
 from webapp_features.features.data import get_url, Xpath

@@ -2,6 +2,7 @@
 @letter_list
 Feature: Letter List
 
+  @keep_db
   Scenario Outline: Letter List Page Access
     Given I logged in as "<role>"
     When I directly open "letter_list" page
@@ -13,6 +14,7 @@ Feature: Letter List
     | surveyor | not see  |
     | tester   | see      |
 
+  @keep_db
   Scenario: Root is opening letter list page
     Given I logged in as "root"
     When I open "letter_list" page
@@ -32,6 +34,7 @@ Feature: Letter List
       | PDF                   |
       | NUI812                |
 
+  @keep_db
   Scenario: Admin is opening letter list page
     Given I logged in as "admin"
     When I open "letter_list" page
@@ -52,6 +55,7 @@ Feature: Letter List
       | amanda_j@hotmail.com  |
       | NUI812                |
 
+  @keep_db
   Scenario: Surveyor is opening letter list page
     Given I logged in as "surveyor"
     When I open "letter_list" page

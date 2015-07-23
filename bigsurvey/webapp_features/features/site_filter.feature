@@ -1,6 +1,6 @@
 @site_filter
 Feature: Filtration
-
+  @keep_db
   Scenario: Filtration by address1 field while logged in as root
     Given I logged in as "root"
     And I open "site_list" page
@@ -15,7 +15,7 @@ Feature: Filtration
       | Washington |
       | New York   |
 
-
+  @keep_db
   Scenario: Filtration by site_use field while logged in as admin
     Given I logged in as "admin"
     And I open "site_list" page
@@ -32,7 +32,7 @@ Feature: Filtration
       | New York    |
       | Los Angeles |
 
-
+  @keep_db
   Scenario: Filtration by site use and type while logged in as root
     Given I logged in as "root"
     And I open "site_list" page
@@ -46,7 +46,7 @@ Feature: Filtration
       | text   |
       | IKW182 |
 
-
+  @keep_db
   Scenario: Filtration by next survey date while logged in as admin
     Given I logged in as "admin"
     And I open "site_list" page
@@ -59,7 +59,7 @@ Feature: Filtration
       | text    |
       | Seattle |
 
-
+  @keep_db
   Scenario: Filtration by last survey date while logged in as root
     Given I logged in as "root"
     And I open "site_list" page
@@ -74,6 +74,7 @@ Feature: Filtration
       | Chikago |
       | Boston  |
 
+  @keep_db
   Scenario: Filtration by seq route
     Given I logged in as "root"
     And I open "site_list" page
@@ -84,6 +85,7 @@ Feature: Filtration
       | Seattle    |
       | Washington |
 
+  @keep_db
   Scenario: Filtration by account number while logged in as root
     Given I logged in as "root"
     And I open "site_list" page

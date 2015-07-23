@@ -1,6 +1,6 @@
 @import
 Feature: Import from Excel files
-
+  @keep_db
   Scenario Outline: Import page access
     Given I logged in as "<role>"
     When I directly open "import" page

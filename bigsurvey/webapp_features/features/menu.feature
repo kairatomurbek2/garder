@@ -1,6 +1,6 @@
 @menu
 Feature: Menu
-
+  @keep_db
   Scenario: Root Menu
     Given I logged in as "root"
     And I open "home" page
@@ -18,6 +18,7 @@ Feature: Menu
       | testers |
       | users   |
 
+  @keep_db
   Scenario: Admin Menu
     Given I logged in as "admin"
     When I open "home" page
@@ -38,6 +39,7 @@ Feature: Menu
       | admin |
       | pws   |
 
+  @keep_db
   Scenario: Surveyor Menu
     Given I logged in as "surveyor"
     When I open "home" page
@@ -55,6 +57,7 @@ Feature: Menu
       | users   |
       | testers |
 
+  @keep_db
   Scenario: Tester Menu
     Given I logged in as "tester"
     When I open "home" page

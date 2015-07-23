@@ -1,6 +1,6 @@
 @pws_edit
 Feature: PWS editing
-
+  @keep_db
   Scenario Outline: PWS editing page access
     Given I logged in as "<role>"
     When I directly open "pws_edit" page with pk "6"

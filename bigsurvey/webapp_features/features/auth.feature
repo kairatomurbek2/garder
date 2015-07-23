@@ -1,7 +1,7 @@
 @authorization
 Feature: Authorization
 
-
+  @keep_db
   Scenario Outline: Authorization with existent account
     Given I open "login" page
     When I login as "<role>"
@@ -13,7 +13,7 @@ Feature: Authorization
     | surveyor | home        |
     | tester   | tester home |
 
-
+  @keep_db
   Scenario: Authorization with non-existent account
     Given I open "login" page
     When I login as "non existent user"

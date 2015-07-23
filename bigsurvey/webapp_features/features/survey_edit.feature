@@ -1,6 +1,6 @@
 @survey_edit
 Feature: Survey Edit
-
+  @keep_db
   Scenario Outline: Survey Edit page access
     Given I logged in as "<role>"
     When I directly open "survey_edit" page with pk "<pk>"

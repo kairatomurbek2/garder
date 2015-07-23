@@ -1,7 +1,7 @@
 @site_detail
 Feature: Site detail
 
-
+  @keep_db
   Scenario Outline: Site detail page access
     Given I logged in as "<role>"
     When I directly open "site_detail" page with pk "<pk>"
@@ -15,7 +15,7 @@ Feature: Site detail
     | surveyor | 3  | see      |
     | surveyor | 4  | not see  |
 
-
+  @keep_db
   Scenario: Root is opening site detail page
     Given I logged in as "root"
     When I open "site_detail" page with pk "10"
@@ -37,7 +37,7 @@ Feature: Site detail
       | Survey Date      |
       | Jan. 26, 2015    |
 
-
+  @keep_db
   Scenario: Admin is opening site detail page
     Given I logged in as "admin"
     When I open "site_detail" page with pk "10"
@@ -55,7 +55,7 @@ Feature: Site detail
       | Jan. 26, 2015 |
       | surveyor      |
 
-
+  @keep_db
   Scenario: Surveyor is opening site detail page
     Given I logged in as "surveyor"
     When I open "site_detail" page with pk "10"
@@ -73,6 +73,7 @@ Feature: Site detail
       | Jan. 26, 2015 |
       | surveyor      |
 
+  @keep_db
   Scenario: Tester is opening site detail page
     Given I logged in as "tester"
     When I select "North USA PWS" from "pws"

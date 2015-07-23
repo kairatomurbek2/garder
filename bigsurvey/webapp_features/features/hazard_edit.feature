@@ -1,6 +1,6 @@
 @hazard_edit
 Feature: Hazard Edit
-
+  @keep_db
   Scenario Outline: Hazard Edit page access
     Given I logged in as "<role>"
     When I directly open "hazard_edit" page with pk "<pk>"
@@ -17,7 +17,7 @@ Feature: Hazard Edit
       | tester   | 2  | not see  |
       | tester   | 1  | not see  |
 
-
+  @keep_db
   Scenario: Tester Field Set
     Given I logged in as "tester"
     When I directly open "hazard_edit" page with pk "2"

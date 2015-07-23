@@ -1,6 +1,6 @@
 @pws_list
 Feature: PWS list
-
+  @keep_db
   Scenario Outline: PWS list page access
     Given I logged in as "<role>"
     When I directly open "pws_list" page
@@ -12,7 +12,7 @@ Feature: PWS list
     | surveyor | see      |
     | tester   | see      |
 
-
+  @keep_db
   Scenario: Root is opening PWS list page
     Given I logged in as "root"
     When I open "pws_list" page

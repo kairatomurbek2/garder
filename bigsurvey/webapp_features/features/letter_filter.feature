@@ -2,6 +2,7 @@
 @letter_filter
 Feature: Letter Filtration
 
+  @keep_db
   Scenario: LetterFiltration
     Given I logged in as "root"
     And I open "letter_list" page

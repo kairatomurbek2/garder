@@ -1,6 +1,6 @@
 @survey_add
 Feature: Survey Add
-
+  @keep_db
   Scenario Outline: Survey Add page access
     Given I logged in as "<role>"
     When I directly open "survey_add" page for site with pk "<pk>" and service "<service>"

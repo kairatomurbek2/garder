@@ -2,6 +2,7 @@
 @letter_edit
 Feature: Letter Editing
 
+  @keep_db
   Scenario Outline: Letter Edit Page Access
     Given I logged in as "<role>"
     When I directly open "letter_edit" page with pk "<pk>"
