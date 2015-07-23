@@ -1,8 +1,9 @@
-from selenium.webdriver import ActionChains
+from lettuce import step
 
-from common_steps import *
-from data import *
 from main.parameters import Messages
+from webapp_features.features import helper
+from webapp_features.features.data import get_url, Xpath
+from webapp_features.features.data import Urls
 
 
 @step('I directly open "site_list" page')
@@ -95,14 +96,6 @@ def check_site_editing_success_message(step):
 @step('I should see "site editing error" message')
 def check_site_editing_error_message(step):
     step.given('I should see "%s"' % Messages.Site.editing_error)
-
-
-@step('I hover on "assign" link')
-def hover_on_menu(step):
-    assign_link = helper.find(Xpath.Pattern.link % 'assign')
-    helper.check_element_exists(assign_link, 'Assign link was not found')
-    actions = ActionChains(world.browser)
-    actions.move_to_element(assign_link).perform()
 
 
 @step('I should see only (\d+) following fields in "(.*)" form')

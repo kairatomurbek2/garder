@@ -79,8 +79,7 @@ Feature: Import from Excel files
     And I select "other" from "date_format"
     And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
-    Then I should be at "import_mappings" page
-    When I fill in mappings
+    And I fill in mappings
     And I submit "import-mappings" form
     Then I should be at "import_mappings_process" page
     And I should see "<message>" message with params "<params>"

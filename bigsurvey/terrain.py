@@ -13,6 +13,7 @@ def init():
     world.browser = webdriver.Firefox()
     world.browser.maximize_window()
     world.browser.implicitly_wait(1)
+    world.user = None
     world.cache = {}
 
 
@@ -22,9 +23,12 @@ def teardown(total):
 
 
 @before.each_scenario
-def clear_cookies(scenario):
+@before.outline
+def clear_cookies_and_db(scenario):
     world.browser.delete_all_cookies()
+    call_command('restore_db', interactive=False, verbosity=0)
     world.user = None
+    world.cache = {}
 
 
 @after.each_scenario

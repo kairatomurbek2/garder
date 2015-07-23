@@ -6,17 +6,13 @@ Feature: User adding
     When I directly open "user_add" page
     Then I should <reaction> "Page not found"
     And I logout
-  Examples:
-    | role     | reaction |
-    | root     | not see  |
-    | admin    | not see  |
-    | surveyor | see      |
-    | tester   | see      |
+    Examples:
+      | role     | reaction |
+      | root     | not see  |
+      | admin    | not see  |
+      | surveyor | see      |
+      | tester   | see      |
 
-  Scenario: More... link exists in menu
-    Given I logged in as "root"
-    When I open "user_add" page
-    Then I should see "More..."
 
   Scenario: Correct user adding
     Given I logged in as "admin"

@@ -1477,6 +1477,9 @@ class ImportLogSitesMixin(BaseTemplateView):
     permission = 'webapp.browse_import_log'
     template_name = 'home.html'
 
+    def get_datetime_readable_value(self, import_log):
+        return import_log.datetime.strftime('%b. %d, %Y, %H:%M')
+
     def get_context_data(self, **kwargs):
         context = super(ImportLogSitesMixin, self).get_context_data(**kwargs)
         import_log = models.ImportLog.objects.get(pk=self.kwargs['pk'])
@@ -1494,7 +1497,7 @@ class ImportLogAddedSitesView(ImportLogSitesMixin):
         return import_log.added_sites
 
     def get_header(self, import_log):
-        return Messages.Import.added_sites_header % import_log.datetime.strftime('%b. %d, %Y, %H:%m')
+        return Messages.Import.added_sites_header % self.get_datetime_readable_value(import_log)
 
 
 class ImportLogUpdatedSitesView(ImportLogSitesMixin):
@@ -1502,7 +1505,7 @@ class ImportLogUpdatedSitesView(ImportLogSitesMixin):
         return import_log.updated_sites
 
     def get_header(self, import_log):
-        return Messages.Import.updated_sites_header % import_log.datetime.strftime('%b. %d, %Y, %H:%m')
+        return Messages.Import.updated_sites_header % self.get_datetime_readable_value(import_log)
 
 
 class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
@@ -1510,4 +1513,4 @@ class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
         return import_log.deactivated_sites
 
     def get_header(self, import_log):
-        return Messages.Import.deactivated_sites_header % import_log.datetime.strftime('%b. %d, %Y, %H:%m')
+        return Messages.Import.deactivated_sites_header % self.get_datetime_readable_value(import_log)
