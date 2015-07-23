@@ -24,7 +24,7 @@ def teardown(total):
 
 @before.each_scenario
 @before.outline
-def clear_cookies_and_db(scenario):
+def clear_cookies_and_db(scenario, *args, **kwargs):
     world.browser.delete_all_cookies()
     call_command('restore_db', interactive=False, verbosity=0)
     world.user = None
@@ -32,7 +32,8 @@ def clear_cookies_and_db(scenario):
 
 
 @after.each_scenario
-def take_screenshot(scenario):
+@after.outline
+def take_screenshot(scenario, *args, **kwargs):
     if scenario.failed:
         date = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
         world.browser.get_screenshot_as_file('/home/itattractor/failed_tests/screens/%s-%s.png' % (date, scenario.name.replace(' ', '-')))
