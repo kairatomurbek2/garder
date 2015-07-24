@@ -28,12 +28,7 @@ Feature: Survey Add
     And I select "Initial" from "survey_type"
     And I click "add_hazard" link
     And I select "Church Rec Center" from "hazard_type"
-    And I fill in following fields with following values
-      | field     | value |
-      | latitude  | 10    |
-      | longitude | -25   |
-    Then Marker should be at "10" latitude and "-25" longitude
-    When I submit "hazard" form
+    And I submit "hazard" form
     Then Site with pk "5" should have "potable" service turned on
     And I close hazard modal
     And I submit "survey" form
@@ -42,6 +37,25 @@ Feature: Survey Add
       | text              |
       | March 15, 2015    |
       | Church Rec Center |
+
+  Scenario: Manual settings coordinates
+    Given I logged in as "root"
+    And Site with pk "5" has "potable" service turned off
+    When I open "survey_add" page for site with pk "5" and service "potable"
+    And I click "add_hazard" link
+    And I fill in following fields with following values
+      | field     | value |
+      | latitude  | 10    |
+      | longitude | -25   |
+    Then Marker should be at "10" latitude and "-25" longitude
+    @wip
+  Scenario: Geolocation check
+    Given I logged in as "root"
+    And Site with pk "5" has "potable" service turned off
+    When I open "survey_add" page for site with pk "5" and service "potable"
+    And I click "add_hazard" link
+    And I click "get-location" button
+    Then Marker should be approximately inside Kyrgyzstan
 
 
   Scenario: Incorrect survey adding

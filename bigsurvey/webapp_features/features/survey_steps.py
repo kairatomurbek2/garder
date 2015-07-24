@@ -117,6 +117,19 @@ def check_marker_position(step, latitude, longitude):
     assert int(longitude) == map_longitude, 'Longitude: expected "%s", got "%s"' % (longitude, map_longitude)
 
 
+@step('Marker should be approximately inside Kyrgyzstan')
+def check_market_in_kyrgyzstan(step):
+    import time
+    # Sleep while GoogleMap is updating
+    time.sleep(3)
+    latitude = 39, 44
+    longitude = 69, 81
+    map_latitude = world.browser.execute_script('return GoogleMap.marker.getPosition().lat()')
+    map_longitude = world.browser.execute_script('return GoogleMap.marker.getPosition().lng()')
+    assert latitude[0] <= map_latitude <= latitude[1], 'Latitude expected to be in range (%s, %s), got %s' % (latitude[0], latitude[1], map_latitude)
+    assert longitude[0] <= map_longitude <= longitude[1], 'Longitude expected to be in range (%s, %s), got %s' % (longitude[0], longitude[1], map_longitude)
+
+
 @step('Site with pk "(\d+)" has "(potable|fire|irrigation)" service turned (on|off)')
 def set_service_type_present(step, pk, service_type, value):
     site = models.Site.objects.get(pk=pk)
