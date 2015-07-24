@@ -1,4 +1,5 @@
 @batch_update
+@wip
 Feature: Batch Update
 
   @keep_db

@@ -4,7 +4,6 @@ Feature: Menu
   Scenario: Root Menu
     Given I logged in as "root"
     And I open "home" page
-    When I hover on "more" link
     Then I should see following menu links
       | link    |
       | admin   |
@@ -22,7 +21,6 @@ Feature: Menu
   Scenario: Admin Menu
     Given I logged in as "admin"
     When I open "home" page
-    When I hover on "more" link
     Then I should see following menu links
       | link         |
       | letters      |

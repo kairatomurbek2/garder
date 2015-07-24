@@ -30,7 +30,7 @@ def directly_open_hazard_add_page_for_site(step, survey_pk, service_name):
 @step('I open "hazard_add" page for site with pk "(\d+)" and service "([a-z]+)"')
 def open_hazard_add_page_for_site(step, survey_pk, service_name):
     step.given('I open "site_detail" page with pk "%s"' % survey_pk)
-    click_element_by_xpath(Xpath.Pattern.site_hazards_button)
+    click_element_by_xpath(Xpath.site_hazards_button)
     step.given('I click "h%s" link' % service_name)
     step.given('I click "site_%s_hazard_add" link' % service_name)
 

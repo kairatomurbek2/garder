@@ -6,20 +6,6 @@ from webapp_features.features.common_steps import click_element_by_xpath
 from webapp_features.features.data import Xpath, get_url, Urls
 
 
-@step('I click survey detail link with number "(.*)"')
-def click_survey_detail_link(step, number):
-    link = helper.find(Xpath.Pattern.survey_detail % number)
-    helper.check_element_exists(link, 'Link with number "%s" was not found' % number)
-    link.click()
-
-
-@step('I click survey edit link')
-def click_survey_detail_link(step):
-    link = helper.find(Xpath.Pattern.survey_edit_link)
-    helper.check_element_exists(link, 'Survey edit link was not found')
-    link.click()
-
-
 @step('I directly open "survey_detail" page with pk "(\d+)"')
 def directly_open_survey_detail_page(step, pk):
     step.given('I open "%s"' % get_url(Urls.survey_detail % pk))
@@ -40,7 +26,7 @@ def directly_open_survey_add_page_for_site(step, site_pk, service_type):
 @step('I open "survey_add" page for site with pk "(\d+)" and service "([a-z]+)"')
 def open_survey_add_page_for_site(step, site_pk, service_type):
     step.given('I open "site_detail" page with pk "%s"' % site_pk)
-    click_element_by_xpath(Xpath.Pattern.site_surveys_button)
+    click_element_by_xpath(Xpath.site_surveys_button)
     step.given('I click "site_%s_service_%s_survey_add" link' % (site_pk, service_type))
 
 
@@ -53,17 +39,6 @@ def directly_open_survey_edit_page(step, pk):
 def open_survey_edit_page(step, pk):
     step.given('I open "survey_detail" page with pk "%s"' % pk)
     step.given('I click "survey_%s_edit" link' % pk)
-
-
-@step('I click "(\d+)"th "survey_detail" link on page')
-def click_survey_detail_link(step, number):
-    step.given('I click survey detail link with number "%s"' % number)
-
-
-@step('I open "survey_edit" page for survey no "(\d+)" on the page')
-def open_survey_edit_page(step, pk):
-    step.given('I click "%s"th "survey_detail" link on page' % pk)
-    step.given('I click survey edit link')
 
 
 @step('I should be at "survey_detail" page with pk "(\d+)"')

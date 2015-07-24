@@ -29,7 +29,7 @@ def check_import_mappings_page(step):
 @step('I fill in mappings')
 def fill_in_mappings(step):
     for model_field, value in import_mappings.items():
-        select = helper.find(Xpath.Pattern.select_by_model_field % model_field)
+        select = helper.find(Xpath.Pattern.excel_field_select_by_model_field % model_field)
         option = helper.find(Xpath.Pattern.option_by_value % value, select)
         option.click()
 

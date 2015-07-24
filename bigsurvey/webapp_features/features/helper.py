@@ -1,7 +1,40 @@
 from lettuce import world
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementNotVisibleException
 
 from webapp_features.features.data import Xpath
+
+menu, is_top_menu = None, False
+browser_width, browser_height = None, None
+
+
+def get_browser_size():
+    size = world.browser.get_window_size()
+    return size['width'], size['height']
+
+
+def get_menu_context():
+    """
+    Returns menu context.
+    Firstly tries to get top menu
+    If it is not visible then falls back to canvas menu
+    :rtype tuple(WebElement, bool)
+    """
+    global browser_width, browser_height, menu, is_top_menu
+    width, height = get_browser_size()
+    if menu and browser_width == width and browser_height == height:
+        return menu
+    try:
+        top_menu = find(Xpath.top_menu)
+        if top_menu.is_displayed():
+            menu = top_menu
+            is_top_menu = True
+            return menu, is_top_menu
+        raise ElementNotVisibleException
+    except ElementNotVisibleException:
+        canvas_menu = find(Xpath.canvas_menu)
+        menu = canvas_menu
+        is_top_menu = False
+        return menu, is_top_menu
 
 
 def find(xpath, context=None):
@@ -28,6 +61,10 @@ def check_element_exists(elem, assert_message):
 
 def check_element_visible(elem, assert_message):
     assert elem.is_displayed(), assert_message
+
+
+def check_element_not_visible(elem, assert_message):
+    assert not elem or not elem.is_displayed(), assert_message
 
 
 def check_element_doesnt_exist(elem, assert_message):

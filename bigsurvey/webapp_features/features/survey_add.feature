@@ -48,7 +48,7 @@ Feature: Survey Add
       | latitude  | 10    |
       | longitude | -25   |
     Then Marker should be at "10" latitude and "-25" longitude
-    @wip
+
   Scenario: Geolocation check
     Given I logged in as "root"
     And Site with pk "5" has "potable" service turned off

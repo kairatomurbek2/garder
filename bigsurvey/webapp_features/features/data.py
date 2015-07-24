@@ -88,27 +88,20 @@ class Xpath:
         radiobutton_by_value = './/input[@type="radio"][@name="%s"][@value="%s"]'
         button = './/button[@name="%s"]'
         button_with_label = './/button[contains(., "%s")]'
+        link = './/a[@id="%s_link"]'
         link_by_href = './/a[@href="%s"]'
         link_by_exact_text = './/a[. = "%s"]'
         link_by_substr = './/a[contains(., "%s")]'
-        table_row_by_number = './/tbody/tr[%d]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'
+        table_row_by_number = './/tbody/tr[%d]'
         menu_item = './/a[@id="%s_menu_link"]'
-        site_service = './/div[@id="s%s_content"]'
-        site_hazard_service = './/div[@id="h%s_content"]'
         validation_error_by_exact_text = './/../ul[@class="errorlist"]/li[. = "%s"]'
         validation_error_by_substr = './/../ul[@class="errorlist"]/li[contains(., "%s")]'
-        customer_select_button = './/button[@data-id="%s"]'
-        link = './/a[@id="%s_link"]'
         pagination_link = './/a[@data-action="pagination"][@data-id="%s"]'
-        survey_detail = '//div[@id="spotable_content"]//table/tbody/tr[%s]//a'
         site_detail_link = './/tr[@class="clickable-row"][@data-id="%s"]'
-        select_by_model_field = './/input[@value="%s"]/../following-sibling::td/select'
-        survey_edit_link = '//*[@class="uk-navbar-flip"]//a[1]'
-        site_hazards_button = '//a[@id="hazards_button"]'
-        site_surveys_button = '//a[@id="surveys_button"]'
+        excel_field_select_by_model_field = './/input[@value="%s"]/../following-sibling::td/select'
 
     class Paypal:
         username = './/input[@name="login_email"]'
@@ -117,15 +110,19 @@ class Xpath:
         login_button = './/input[@name="login_button"]'
         continue_button = './/input[@name="continue"]'
 
-    more_link = './/li[@id="bfp_menu"]/a'
     form_element = './/input|.//textarea|.//select'
     csrfmiddlewaretoken = './/input[@name="csrfmiddlewaretoken"]'
+    top_menu = './/ul[@data-content="menu"]'
+    canvas_menu = './/ul[@data-content="canvas-menu"]'
+    more_link = './/li[@id="bfp_menu"]/a'
     import_mappings_form_errors = './/div[contains(@class, "uk-alert-danger")]/ul/li'
     hazard_modal = './/div[@id="hazard-form-modal"]'
     pay_modal = './/div[@id="pay-modal"]'
     payment_step_2 = './/div[@data-content="step-2"]'
     modal_close_button = './/a[contains(@class, "uk-modal-close")]'
     import_row_sites_count = './/td[@data-content="%s"]/a'
+    site_hazards_button = '//a[@id="hazards_button"]'
+    site_surveys_button = '//a[@id="surveys_button"]'
 
 
 import_mappings = {

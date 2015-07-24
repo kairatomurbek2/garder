@@ -14,7 +14,7 @@ def directly_open_site_list_page(step):
 @step('I open "site_list" page')
 def open_site_list_page(step):
     step.given('I open "home" page')
-    step.given('I click "sites" outer menu link')
+    step.given('I click "sites" menu link')
 
 
 @step('I directly open "site_detail" page with pk "(\d+)"')
@@ -68,14 +68,6 @@ def check_site_edit_page(step, pk):
 @step('I should be at "site_detail" page with pk "(\d+)"')
 def check_site_edit_page(step, pk):
     step.given('I should be at "%s"' % get_url(Urls.site_detail % pk))
-
-
-@step('I should see following text in following hazard services')
-def check_text_in_services_exists(step):
-    for row in step.hashes:
-        elem = helper.find(Xpath.Pattern.site_hazard_service % row['service'])
-        helper.check_element_exists(elem, 'service "%s" was not found' % row['service'])
-        helper.check_text_exists(row['text'], '"%s" is not in "%s" service' % (row['text'], row['service']), elem)
 
 
 @step('I should see "site adding success" message')
