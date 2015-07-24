@@ -201,7 +201,7 @@ class BatchUpdateView(BaseTemplateView):
 
     @staticmethod
     def _get_sites(user):
-        sites = []
+        sites = models.Site.objects.none()
         if user.has_perm('webapp.access_to_pws_sites'):
             sites = models.Site.objects.filter(pws=user.employee.pws)
         if user.has_perm('webapp.access_to_all_sites'):
@@ -339,7 +339,7 @@ class SurveyBaseFormView(BaseFormView):
         return site.hazards.filter(service_type=service_type)
 
     def _get_queryset_for_surveyor_field(self):
-        queryset = []
+        queryset = models.User.objects.none()
         if self.request.user.has_perm('webapp.access_to_own_surveys'):
             queryset = models.User.objects.filter(pk=self.request.user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_surveys'):
@@ -350,6 +350,15 @@ class SurveyBaseFormView(BaseFormView):
         if self.request.user.has_perm('webapp.access_to_all_surveys'):
             queryset = models.User.objects.filter(groups__name=Groups.surveyor)
         return queryset
+
+    def _update_last_survey_date(self, site):
+        survey = site.surveys.latest('survey_date')
+        site.last_survey_date = survey.survey_date
+        site.save()
+
+    def _update_is_present(self, site, survey):
+        survey.hazards.update(is_present=True)
+        site.hazards.filter(service_type=survey.service_type).exclude(pk__in=(hazard.pk for hazard in survey.hazards.all())).update(is_present=False)
 
     def get_success_url(self):
         return reverse('webapp:survey_detail', args=(self.object.pk,))
@@ -377,15 +386,9 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         form.instance.site = site
         form.instance.service_type = self._get_service_type()
         response = super(SurveyAddView, self).form_valid(form)
-        survey = site.surveys.latest('survey_date')
-        site.last_survey_date = survey.survey_date
+        self._update_last_survey_date(site)
         self._switch_on_service_type(site, form.instance.service_type.service_type)
-        for hazard in site.hazards.all():
-            if hazard in survey.hazards.all():
-                hazard.is_present = True
-            else:
-                hazard.is_present = False
-            hazard.save()
+        self._update_is_present(site, form.instance)
         return response
 
     def _get_site(self):
@@ -431,17 +434,10 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
 
     def form_valid(self, form):
         site = form.instance.site
-        super(SurveyEditView, self).form_valid(form)
-        survey = site.surveys.latest('survey_date')
-        site.last_survey_date = survey.survey_date
-        site.save()
-        for hazard in site.hazards.all():
-            if hazard in survey.hazards.all():
-                hazard.is_present = True
-            else:
-                hazard.is_present = False
-            hazard.save()
-        return HttpResponseRedirect(self.get_success_url())
+        response = super(SurveyEditView, self).form_valid(form)
+        self._update_last_survey_date(site)
+        self._update_is_present(site, form.instance)
+        return response
 
 
 class HazardDetailView(BaseTemplateView):
@@ -717,7 +713,7 @@ class UserBaseFormView(BaseFormView):
         return render(self.request, self.template_name, context)
 
     def _get_queryset_for_group_field(self):
-        queryset = []
+        queryset = Group.objects.none()
         if self.request.user.has_perm('webapp.access_to_pws_users'):
             queryset = Group.objects.filter(name__in=ADMIN_GROUPS)
         if self.request.user.has_perm('webapp.access_to_all_users'):
@@ -725,7 +721,7 @@ class UserBaseFormView(BaseFormView):
         return queryset
 
     def _get_queryset_for_pws_field(self):
-        queryset = []
+        queryset = models.PWS.objects.none()
         if self.request.user.has_perm('webapp.access_to_pws_users'):
             if self.request.user.employee.pws:
                 queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
@@ -810,7 +806,7 @@ class LetterTypeListView(BaseTemplateView):
             return models.LetterType.objects.all().order_by('pws')
         if user.has_perm('webapp.access_to_pws_lettertypes'):
             return models.LetterType.objects.filter(pws=user.employee.pws).order_by('pws')
-        return []
+        return models.LetterType.objects.none()
 
 
 class LetterTypeBaseFormView(BaseFormView):
@@ -902,7 +898,7 @@ class LetterEditView(LetterBaseFormView, UpdateView):
     error_message = Messages.Letter.editing_error
 
     def get_form(self, form_class):
-        form = super(LetterBaseFormView, self).get_form(form_class)
+        form = super(LetterEditView, self).get_form(form_class)
         if perm_checkers.LetterPermChecker.has_perm(self.request, form.instance):
             site = form.instance.site
             form.fields['hazard'].queryset = site.hazards.filter(is_present=True)

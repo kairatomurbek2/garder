@@ -36,7 +36,8 @@
                 <td class="uk-text-center uk-text-primary">{{ hazard.location1 }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Location 2" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ hazard.location2 }}</td>
-                <td colspan="2"></td>
+                <td class="uk-text-right uk-text-muted">{% trans "Is present" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ hazard.is_present|yn }}</td>
             </tr>
             <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Description" %}</td>

@@ -9,10 +9,14 @@ cd bigsurvey
 ./manage.py migrate --noinput
 for data_type in "base" "pws" "perms" "users" "help" "site_1" "site_2" "site_3" "site_4" "site_5" "site_6" "hazard" "survey" "letter"
 do
-   echo Loading ${data_type}
+   echo Loading ${data_type}...
    ./manage.py loaddata data_${data_type}
 done
+echo Creating lettertypes...
 ./manage.py create_lettertypes_for_pws
+echo Settings last_survey_date...
+./manage.py set_last_survey_date
+echo Collecting static...
 ./manage.py collectstatic --noinput
 touch main/wsgi.py
 deactivate
