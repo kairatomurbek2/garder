@@ -2,8 +2,6 @@ virtualenv
 *.pyc
 .idea
 *.sqlite3
-*.sqlite-shm
-*.sqlite-wal
 *~
 settings_local.py
 *.bak
@@ -19,3 +17,6 @@ bigsurvey/uploads/photo/*
 !bigsurvey/uploads/photo/thumb
 !bigsurvey/uploads/photo/thumb/.gitkeep
 .~*
+firefox-profile/*
+!firefox-profile/prefs.js
+!firefox-profile/permissions.sqlite

@@ -92,13 +92,13 @@ def check_marker_position(step, latitude, longitude):
     assert int(longitude) == map_longitude, 'Longitude: expected "%s", got "%s"' % (longitude, map_longitude)
 
 
-@step('Marker should be approximately inside Kyrgyzstan')
+@step('Marker should be approximately inside Bishkek')
 def check_market_in_kyrgyzstan(step):
     import time
-    # Sleep while GoogleMap is updating
+    # Wait until GoogleMap is updating
     time.sleep(3)
-    latitude = 39, 44
-    longitude = 69, 81
+    latitude = 42.8, 42.9
+    longitude = 74.5, 74.7
     map_latitude = world.browser.execute_script('return GoogleMap.marker.getPosition().lat()')
     map_longitude = world.browser.execute_script('return GoogleMap.marker.getPosition().lng()')
     assert latitude[0] <= map_latitude <= latitude[1], 'Latitude expected to be in range (%s, %s), got %s' % (latitude[0], latitude[1], map_latitude)

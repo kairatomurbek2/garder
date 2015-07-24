@@ -55,7 +55,7 @@ Feature: Survey Add
     When I open "survey_add" page for site with pk "5" and service "potable"
     And I click "add_hazard" link
     And I click "get-location" button
-    Then Marker should be approximately inside Kyrgyzstan
+    Then Marker should be approximately inside Bishkek
 
 
   Scenario: Incorrect survey adding
