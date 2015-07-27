@@ -1,3 +1,6 @@
+from webapp import models
+
+
 class InvalidVendor(Exception):
     def __init__(self, vendor, available_vendors, *args, **kwargs):
         self.vendor = vendor
@@ -67,3 +70,19 @@ class HazardPriorityQuery(RawSqlQuery):
                 100000 + cast(round(julianday() - julianday(install_date) - 0.5) as int)
             END
         '''
+
+
+class SetLastSurveyDateQuery(RawSqlQuery):
+    sites_table_name = models.Site._meta.db_table
+    surveys_table_name = models.Survey._meta.db_table
+
+    @classmethod
+    def as_sql(cls):
+        query = '''
+        UPDATE %(sites_table_name)s
+            SET last_survey_date =
+                (SELECT MAX(%(surveys_table_name)s.survey_date)
+                    FROM %(surveys_table_name)s
+                    WHERE %(surveys_table_name)s.site_id = %(sites_table_name)s.id)
+        '''
+        return query % {'sites_table_name': cls.sites_table_name, 'surveys_table_name': cls.surveys_table_name}
