@@ -11,7 +11,7 @@ from webapp import models
 
 class TestManagementCommands(TestCase):
     def setUp(self):
-        call_command('restore_db')
+        call_command('restore_db', verbosity=0)
 
     def test_testers_notifications(self):
         call_command('notify_testers')
@@ -32,3 +32,11 @@ class TestManagementCommands(TestCase):
         test.save()
         call_command('delete_unpaid_tests')
         self.assertFalse(models.Test.objects.filter(pk=test.pk).exists())
+
+    def test_set_last_survey_date(self):
+        raised = False
+        try:
+            call_command('set_last_survey_date')
+        except Exception:
+            raised = True
+        self.assertFalse(raised)
