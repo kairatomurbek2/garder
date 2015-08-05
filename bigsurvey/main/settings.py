@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import paypalrestsdk
 
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -101,6 +100,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Email configuration
+EMAIL_HOST = "smtp.office365.com"
+
+EMAIL_HOST_USER = "bss@bpsbr.com"
+
+EMAIL_HOST_PASSWORD = "B@ckFl0w!"
+
+DEFAULT_FROM_EMAIL = "bss@bpsbr.com"
+
+REPLY_TO_EMAIL = "bss@bpsbr.com"
+
+RETURN_PATH_EMAIL = "bss@bpsbr.com"
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -134,12 +150,6 @@ CKEDITOR_CONFIGS = {
 }
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
-
-EMAIL_HOST = "smtp.gmail.com"
-
-EMAIL_PORT = 587
-
-EMAIL_USE_TLS = True
 
 PYTHON_EXECUTABLE = os.path.join(os.path.dirname(BASE_DIR), 'virtualenv', 'bin', 'python')
 

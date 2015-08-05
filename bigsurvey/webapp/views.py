@@ -20,7 +20,6 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext as __
 from django.core.mail import EmailMessage
 import paypalrestsdk

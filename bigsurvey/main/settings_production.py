@@ -7,16 +7,6 @@ DATABASES = {
     }
 }
 
-EMAIL_HOST_USER = "bss.bpsbr.com@gmail.com"
-
-EMAIL_HOST_PASSWORD = "febAt62Aruwethe"
-
-DEFAULT_FROM_EMAIL = "bss.bpsbr.com@gmail.com"
-
-REPLY_TO_EMAIL = "bss.bpsbr.com@gmail.com"
-
-RETURN_PATH_EMAIL = "bss.bpsbr.com@gmail.com"
-
 DEBUG = False
 
 ALLOWED_HOSTS = [

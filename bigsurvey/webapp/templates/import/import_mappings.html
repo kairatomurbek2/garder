@@ -61,9 +61,12 @@
                                     {% get_form_from_formset formset index as form %}
                                     <td>
                                         {{ form.model_field }}
+                                        {% if form.fields.excel_field.required %}
+                                            <span class="uk-text-bold">
+                                        {% endif %}
                                         {{ form.model_field.label }}
                                         {% if form.fields.excel_field.required %}
-                                            <span class="uk-text-danger">*</span>
+                                            </span>
                                         {% endif %}
                                         <br>
                                         <span class="uk-text-muted">{{ form.model_field.help_text }}</span>

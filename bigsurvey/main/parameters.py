@@ -15,15 +15,15 @@ class SITE_STATUS(object):
 
 
 class BP_TYPE(object):
-    AIR_GAP = _('Air Gap')
-    AVB = _('AVB')
-    DC = _('DC')
-    DCDA = _('DCDA')
-    HBVB = _('HBVB')
-    PVB = _('PVB')
-    RP = _('RP')
-    RPDA = _('RPDA')
-    SVB = _('SVB')
+    AIR_GAP = 'Air Gap'
+    AVB = 'AVB'
+    DC = 'DC'
+    DCDA = 'DCDA'
+    HBVB = 'HBVB'
+    PVB = 'PVB'
+    RP = 'RP'
+    RPDA = 'RPDA'
+    SVB = 'SVB'
 
     DC_TYPES = [DC, DCDA]
     RP_TYPES = [RP, RPDA]
@@ -68,7 +68,6 @@ CLEANED_REPLACED_CHOICES = (
     (True, "Cleaned only"),
     (False, "Replaced")
 )
-
 
 STATES = (
     ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),
@@ -194,7 +193,7 @@ class Messages:
         not_found = _('Site was not found')
 
     class Import:
-        required_fields_not_filled = _('Please fill in all required fields marked by asterisk')
+        required_fields_not_filled = _('Please fill in all required fields marked by bold label')
         duplicate_excel_fields = _('You have selected the same Excel field more than once')
         foreign_key_error = _('Incorrect value in %s cell. Available values are %s, but found %s')
         required_value_is_empty = _('Found empty value in %s cell, please fill in this cell')
