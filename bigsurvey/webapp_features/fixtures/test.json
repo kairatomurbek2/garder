@@ -5073,7 +5073,7 @@
 {
   "fields": {
     "city": "root city",
-    "pws": null,
+    "pws": [],
     "zip": "root zip",
     "has_licence_for_installation": false,
     "phone2": "",
@@ -5098,7 +5098,7 @@
 {
   "fields": {
     "city": "tester city",
-    "pws": 9,
+    "pws": [9],
     "zip": "tester zip",
     "has_licence_for_installation": true,
     "phone2": "",
@@ -5123,7 +5123,7 @@
 {
   "fields": {
     "city": "surveyor city",
-    "pws": 9,
+    "pws": [9],
     "zip": "survey zip",
     "has_licence_for_installation": false,
     "phone2": "",
@@ -5148,7 +5148,7 @@
 {
   "fields": {
     "city": "admin city",
-    "pws": 9,
+    "pws": [9],
     "zip": "admin zip",
     "has_licence_for_installation": false,
     "phone2": "",
@@ -5173,7 +5173,7 @@
 {
   "fields": {
     "city": "superadmin city",
-    "pws": null,
+    "pws": [],
     "zip": "supadm zip",
     "has_licence_for_installation": false,
     "phone2": "",
@@ -5198,7 +5198,7 @@
 {
   "fields": {
     "city": "",
-    "pws": null,
+    "pws": [],
     "zip": "",
     "has_licence_for_installation": false,
     "phone2": "",
@@ -5223,7 +5223,7 @@
 {
   "fields": {
     "city": "",
-    "pws": null,
+    "pws": [],
     "zip": "",
     "has_licence_for_installation": false,
     "phone2": "",

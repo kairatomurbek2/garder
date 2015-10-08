@@ -6,6 +6,7 @@ Feature: Test payment
     When I open "hazard_detail" page with pk "1"
     Then I should not see "June 1, 2015, Failed"
 
+  @payment_for_test
   Scenario: Payment for test
     Given I logged in as "tester"
     And I open "unpaid_test_list" page"

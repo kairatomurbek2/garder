@@ -39,8 +39,8 @@
                     {% if perms.webapp.browse_all_pws %}
                         <li><a id="pws_menu_link" href="{% url "webapp:pws_list" %}">{% trans "PWS" %}</a></li>
                     {% endif %}
-                    {% if not user.is_superuser and perms.webapp.change_own_pws and user.employee.pws %}
-                        <li><a id="own_pws_edit_menu_link" href="{% url 'webapp:pws_edit' user.employee.pws.pk %}">{% trans "Change PWS information" %}</a></li>
+                    {% if not user.is_superuser and perms.webapp.change_own_pws and user.employee.pws.all %}
+                        <li><a id="own_pws_edit_menu_link" href="{% url 'webapp:pws_edit' user.employee.pws.all.0.pk %}">{% trans "Change PWS information" %}</a></li>
                     {% endif %}
                     {% if perms.webapp.browse_lettertype %}
                         <li><a id="letter_type_menu_link" href="{% url 'webapp:letter_type_list' %}">{% trans "Letter Types" %}</a></li>

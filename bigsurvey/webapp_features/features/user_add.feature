@@ -1,6 +1,7 @@
 @user_add
 Feature: User adding
   @keep_db
+  @user_add_page_access
   Scenario Outline: User adding page access
     Given I logged in as "<role>"
     When I directly open "user_add" page
@@ -12,7 +13,7 @@ Feature: User adding
       | surveyor | see      |
       | tester   | see      |
 
-
+  @user_add_correct
   Scenario: Correct user adding
     Given I logged in as "admin"
     And I open "user_add" page

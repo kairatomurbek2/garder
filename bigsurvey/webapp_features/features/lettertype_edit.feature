@@ -11,6 +11,7 @@ Feature: Letter Type editing
     | surveyor | 1  | see      |
     | tester   | 1  | see      |
 
+  @letter_type_edit_correct
   Scenario: Correct Letter Type Edit
     Given I logged in as "admin"
     And I open "letter_type_edit" page that belongs to "admin"'s PWS

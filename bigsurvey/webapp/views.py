@@ -104,7 +104,7 @@ class HomeView(BaseTemplateView):
     def _get_sites(self, user):
         sites = models.Site.objects.none()
         if user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.objects.filter(pws=user.employee.pws)
+            sites = models.Site.objects.filter(pws__in=user.employee.pws.all())
         if user.has_perm('webapp.access_to_all_sites'):
             sites = models.Site.objects.all()
         return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
@@ -118,10 +118,7 @@ class TesterHomeView(BaseTemplateView, FormView):
     def get_context_data(self, **kwargs):
         context = super(TesterHomeView, self).get_context_data(**kwargs)
         form = self.form_class(self.request.POST or None)
-        try:
-            form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
-        except AttributeError:
-            form.fields['pws'].queryset = models.PWS.objects.none()
+        form.fields['pws'].queryset = self.request.user.employee.pws.all()
         context['form'] = form
         return context
 
@@ -159,7 +156,7 @@ class SiteBaseFormView(BaseFormView):
         form = super(SiteBaseFormView, self).get_form(form_class)
         if self.request.user.has_perm('webapp.change_all_info_about_site'):
             if not self.request.user.has_perm('webapp.access_to_all_sites'):
-                form.fields['pws'].queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+                form.fields['pws'].queryset = self.request.user.employee.pws.all()
         return form
 
     def get_success_url(self):
@@ -202,7 +199,7 @@ class BatchUpdateView(BaseTemplateView):
     def _get_sites(user):
         sites = models.Site.objects.none()
         if user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.objects.filter(pws=user.employee.pws)
+            sites = models.Site.objects.filter(pws__in=user.employee.pws.all())
         if user.has_perm('webapp.access_to_all_sites'):
             sites = models.Site.objects.all()
         return sites
@@ -256,7 +253,7 @@ class PWSDetailView(BaseTemplateView):
         context = super(PWSDetailView, self).get_context_data(**kwargs)
         pws = models.PWS.objects.get(pk=self.kwargs['pk'])
         user = self.request.user
-        if not user.is_superuser and user.has_perm('webapp.change_own_pws') and user.employee.pws != pws:
+        if not user.is_superuser and user.has_perm('webapp.change_own_pws') and pws not in user.employee.pws.all():
             raise Http404
         context['pws'] = pws
         return context
@@ -291,7 +288,7 @@ class PWSEditView(PWSBaseFormView, UpdateView):
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        if not user.is_superuser and user.has_perm('webapp.change_own_pws') and self.object != user.employee.pws:
+        if not user.is_superuser and user.has_perm('webapp.change_own_pws') and self.object not in user.employee.pws.all():
             raise Http404
         return super(PWSEditView, self).get_context_data(**kwargs)
 
@@ -344,7 +341,7 @@ class SurveyBaseFormView(BaseFormView):
         if self.request.user.has_perm('webapp.access_to_pws_surveys'):
             queryset = models.User.objects.filter(
                 groups__name=Groups.surveyor,
-                employee__pws=self.request.user.employee.pws
+                employee__pws__in=self.request.user.employee.pws.all()
             )
         if self.request.user.has_perm('webapp.access_to_all_surveys'):
             queryset = models.User.objects.filter(groups__name=Groups.surveyor)
@@ -598,7 +595,7 @@ class TestBaseFormView(BaseFormView):
             queryset = models.User.objects.filter(pk=user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_tests'):
             queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin],
-                                                  employee__pws=user.employee.pws)
+                                                  employee__pws__in=user.employee.pws.all())
         if self.request.user.has_perm('webapp.access_to_all_tests'):
             queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin])
         return queryset
@@ -683,13 +680,13 @@ class UserListView(BaseTemplateView):
             user_list['WithoutGroup'] = models.User.objects.filter(groups__name='')
         elif self.request.user.has_perm('webapp.access_to_pws_users'):
             user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin,
-                                                                     employee__pws=self.request.user.employee.pws)
+                                                                     employee__pws__in=self.request.user.employee.pws.all())
             user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor,
-                                                                employee__pws=self.request.user.employee.pws)
+                                                                employee__pws__in=self.request.user.employee.pws.all())
             user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester,
-                                                              employee__pws=self.request.user.employee.pws)
+                                                              employee__pws__in=self.request.user.employee.pws.all())
             user_list['WithoutGroup'] = models.User.objects.filter(groups__name='',
-                                                                   employee__pws=self.request.user.employee.pws)
+                                                                   employee__pws__in=self.request.user.employee.pws.all())
         return user_list
 
 
@@ -706,7 +703,7 @@ class UserBaseFormView(BaseFormView):
         employee_form = self.get_employee_form()
         user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
         employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-        context = super(BaseFormView, self).get_context_data()
+        context = super(UserBaseFormView, self).get_context_data()
         context['user_form'] = user_form
         context['employee_form'] = employee_form
         return render(self.request, self.template_name, context)
@@ -722,8 +719,8 @@ class UserBaseFormView(BaseFormView):
     def _get_queryset_for_pws_field(self):
         queryset = models.PWS.objects.none()
         if self.request.user.has_perm('webapp.access_to_pws_users'):
-            if self.request.user.employee.pws:
-                queryset = models.PWS.objects.filter(pk=self.request.user.employee.pws.pk)
+            if self.request.user.employee.pws.all():
+                queryset = self.request.user.employee.pws.all()
         if self.request.user.has_perm('webapp.access_to_all_users'):
             queryset = models.PWS.objects.all()
         return queryset
@@ -734,9 +731,10 @@ class UserBaseFormView(BaseFormView):
         if user_form.is_valid() and employee_form.is_valid():
             self.user_object = user_form.save()
             employee_form.instance.user = self.user_object
-            if not self.request.user.has_perm('webapp.access_to_all_users'):
-                employee_form.instance.pws = self.request.user.employee.pws
             self.employee_object = employee_form.save()
+            if not self.request.user.has_perm('webapp.access_to_all_users'):
+                self.employee_object.pws = [self.request.user.employee.pws.all()[0]]
+            self.employee_object.save()
             messages.success(self.request, self.success_message)
             return redirect(self.get_success_url())
         else:
@@ -804,7 +802,7 @@ class LetterTypeListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_lettertypes'):
             return models.LetterType.objects.all().order_by('pws')
         if user.has_perm('webapp.access_to_pws_lettertypes'):
-            return models.LetterType.objects.filter(pws=user.employee.pws).order_by('pws')
+            return models.LetterType.objects.filter(pws__in=user.employee.pws.all()).order_by('pws')
         return models.LetterType.objects.none()
 
 
@@ -847,7 +845,7 @@ class LetterListView(BaseTemplateView):
         if self.request.user.has_perm('webapp.full_letter_access'):
             return models.Letter.objects.all()
         elif self.request.user.has_perm('webapp.pws_letter_access'):
-            return models.Letter.objects.filter(site__pws=self.request.user.employee.pws)
+            return models.Letter.objects.filter(site__pws__in=self.request.user.employee.pws.all())
         else:
             raise Http404
 
@@ -1039,9 +1037,9 @@ class SurveyListView(BaseTemplateView):
         if user.has_perm("webapp.access_to_all_surveys"):
             return models.Survey.objects.all()
         if user.has_perm("webapp.access_to_pws_surveys"):
-            return models.Survey.objects.filter(site__pws=user.employee.pws)
+            return models.Survey.objects.filter(site__pws__in=user.employee.pws.all())
         if user.has_perm("webapp.access_to_own_surveys"):
-            return models.Survey.objects.filter(surveyor=user, site__pws=user.employee.pws)
+            return models.Survey.objects.filter(surveyor=user, site__pws__in=user.employee.pws.all())
 
 
 class HazardListView(BaseTemplateView):
@@ -1060,7 +1058,7 @@ class HazardListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_hazards'):
             queryset = models.Hazard.objects.all()
         elif user.has_perm('webapp.access_to_pws_hazards'):
-            queryset = (models.Hazard.objects.filter(site__pws=user.employee.pws, is_present=True) |
+            queryset = (models.Hazard.objects.filter(site__pws__in=user.employee.pws.all(), is_present=True) |
                         models.Hazard.objects.filter(tests__tester=user)).distinct()
         sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
         return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
@@ -1082,7 +1080,7 @@ class TestListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_tests'):
             return paid_tests
         if user.has_perm("webapp.access_to_pws_tests"):
-            return paid_tests.filter(bp_device__site__pws=user.employee.pws)
+            return paid_tests.filter(bp_device__site__pws__in=user.employee.pws.all())
         if user.has_perm('webapp.access_to_own_tests'):
             return paid_tests.filter(tester=user)
 
@@ -1223,7 +1221,7 @@ class TesterListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_users'):
             return models.User.objects.filter(groups__name=Groups.tester)
         if user.has_perm('webapp.access_to_pws_users'):
-            return models.User.objects.filter(groups__name=Groups.tester, employee__pws=user.employee.pws)
+            return models.User.objects.filter(groups__name=Groups.tester, employee__pws__in=user.employee.pws.all())
 
 
 class UserDetailView(BaseTemplateView):
@@ -1268,7 +1266,7 @@ class ImportView(BaseFormView):
         try:
             self.request.session['import_pws_pk'] = form.cleaned_data['pws'].pk
         except KeyError:
-            self.request.session['import_pws_pk'] = self.request.user.employee.pws.pk
+            self.request.session['import_pws_pk'] = self.request.user.employee.pws.all()[0].pk
         self._delete_cached_data()
         return super(ImportView, self).form_valid(form)
 
@@ -1467,7 +1465,7 @@ class ImportLogListView(BaseTemplateView):
         if self.request.user.has_perm('webapp.access_to_all_import_logs'):
             queryset = models.ImportLog.objects.all()
         elif self.request.user.has_perm('webapp.access_to_pws_import_logs'):
-            queryset = models.ImportLog.objects.filter(pws=self.request.user.employee.pws)
+            queryset = models.ImportLog.objects.filter(pws__in=self.request.user.employee.pws.all())
         return queryset.order_by('-datetime')
 
 

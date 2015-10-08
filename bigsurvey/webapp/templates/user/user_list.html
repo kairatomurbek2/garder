@@ -31,7 +31,11 @@
                             <td>{{ user.first_name }} {{ user.last_name }}</td>
                             <td>{{ user.employee.state }}</td>
                             <td>{{ user.employee.city }}</td>
-                            <td>{{ user.employee.pws }}</td>
+                            <td>
+                                {% for pws in user.employee.pws.all %}
+                                    <p>{{ pws }}</p>
+                                {% endfor %}
+                            </td>
                             <td class="uk-text-center border-left">
                                 <a href="{% url 'webapp:user_edit' user.pk %}" id="user_{{ user.pk }}_edit_link">{% trans "Edit" %}</a>
                             </td>

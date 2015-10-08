@@ -18,7 +18,11 @@
             </tr>
             <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "PWS" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ selected_user.employee.pws.number }}</td>
+                <td class="uk-text-center uk-text-primary">
+                    {% for pws in selected_user.employee.pws.all %}
+                        <p>{{ pws.number }}</p>
+                    {% endfor %}
+                </td>
                 <td class="uk-text-right uk-text-muted">{% trans "Groups" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ selected_user.groups.all|join:', ' }}</td>
                 <td colspan="2"></td>

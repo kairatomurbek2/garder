@@ -18,6 +18,7 @@ Feature: Survey Add
     | surveyor | 2  | potable    | see      |
     | tester   | 10 | potable    | see      |
 
+  @survey_add_correct
   Scenario: Correct survey adding
     Given I logged in as "root"
     And Site with pk "5" has "potable" service turned off
@@ -38,6 +39,7 @@ Feature: Survey Add
       | March 15, 2015    |
       | Church Rec Center |
 
+  @survey_manual_crds
   Scenario: Manual settings coordinates
     Given I logged in as "root"
     And Site with pk "5" has "potable" service turned off
@@ -49,6 +51,7 @@ Feature: Survey Add
       | longitude | -25   |
     Then Marker should be at "10" latitude and "-25" longitude
 
+  @survey_geolocation_check
   Scenario: Geolocation check
     Given I logged in as "root"
     And Site with pk "5" has "potable" service turned off

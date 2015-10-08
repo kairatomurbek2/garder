@@ -3,7 +3,7 @@
 . virtualenv/bin/activate
 cd bigsurvey
 # unit tests
-./manage.py test webapp_features --settings=main.settings_unit_test --noinput
+# ./manage.py test webapp_features --settings=main.settings_unit_test --noinput
 
 
 # acceptance tests
