@@ -17,7 +17,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bigsurvey',
         'USER': 'root',
-        'PASSWORD': ''
+        'PASSWORD': 'root'
     }
 }
 

@@ -362,7 +362,7 @@ class Employee(models.Model):
     zip = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("ZIP"))
     phone1 = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Phone 1"))
     phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
-    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
+    pws = models.ManyToManyField(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
     cert_number = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"))
     cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
     cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
