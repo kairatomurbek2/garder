@@ -7,11 +7,12 @@ Feature: User adding
     When I directly open "user_add" page
     Then I should <reaction> "Page not found"
     Examples:
-      | role     | reaction |
-      | root     | not see  |
-      | admin    | not see  |
-      | surveyor | see      |
-      | tester   | see      |
+      | role      | reaction |
+      | root      | not see  |
+      | admin     | not see  |
+      | pws_owner | not see  |
+      | surveyor  | see      |
+      | tester    | see      |
 
   @user_add_correct
   Scenario: Correct user adding

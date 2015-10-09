@@ -15,23 +15,28 @@ def login_as_root(step):
 
 
 @step('I login as "admin"')
-def login_as_root(step):
+def login_as_admin(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.admin['username'], Logins.admin['password']))
 
 
 @step('I login as "surveyor"')
-def login_as_root(step):
+def login_as_surveyor(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.surveyor['username'], Logins.surveyor['password']))
 
 
 @step('I login as "tester"')
-def login_as_root(step):
+def login_as_tester(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.tester['username'], Logins.tester['password']))
 
 
 @step('I login as "non existent user"')
-def login_as_root(step):
+def login_as_non_existent_user(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.non_existent_user['username'], Logins.non_existent_user['password']))
+
+
+@step('I login as "pws_owner"')
+def login_as_pws_owner(step):
+    step.given('I login with username "%s" and password "%s"' % (Logins.pws_owner['username'], Logins.pws_owner['password']))
 
 
 @step('I login with username "(.*)" and password "(.*)"')

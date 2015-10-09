@@ -8,15 +8,22 @@ Feature: User editing
     When I directly open "user_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | pk | reaction |
-    | root     | 3  | not see  |
-    | root     | 10 | not see  |
-    | admin    | 3  | not see  |
-    | admin    | 10 | see      |
-    | surveyor | 3  | see      |
-    | surveyor | 10 | see      |
-    | tester   | 3  | see      |
-    | tester   | 10 | see      |
+    | role      | pk | reaction |
+    | root      | 3  | not see  |
+    | root      | 10 | not see  |
+    | admin     | 3  | not see  |
+    | admin     | 10 | see      |
+    | surveyor  | 3  | see      |
+    | surveyor  | 10 | see      |
+    | tester    | 3  | see      |
+    | tester    | 10 | see      |
+    | admin     | 12 | see      |
+    | pws_owner | 12  | not see |
+    | pws_owner | 2   | not see |
+    | pws_owner | 3   | not see |
+    | pws_owner | 4   | not see |
+    | pws_owner | 1   | see     |
+    | pws_owner | 10  | see     |
 
 
   Scenario: Correct user editing

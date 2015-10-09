@@ -73,3 +73,23 @@ Feature: Menu
       | users   |
       | surveys |
       | testers |
+
+  @keep_db
+  Scenario: PWS owner menu
+    Given I logged in as "pws_owner"
+    When I open "home" page
+    Then I should see following menu links
+    Then I should see following menu links
+      | link    |
+      | letters |
+      | import  |
+      | sites   |
+      | surveys |
+      | tests   |
+      | hazards |
+      | testers |
+      | users   |
+      | pws     |
+    And I should not see following menu links
+      | link  |
+      | admin |

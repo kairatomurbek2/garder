@@ -9,11 +9,12 @@ Feature: Batch Update
     Then I should <reaction> "Page not found"
 
   Examples:
-    | role     | reaction |
-    | root     | not see  |
-    | admin    | not see  |
-    | surveyor | see      |
-    | tester   | see      |
+    | role      | reaction |
+    | root      | not see  |
+    | admin     | not see  |
+    | pws_owner | not see  |
+    | surveyor  | see      |
+    | tester    | see      |
 
   Scenario: Correct Batch Updating Sites' Next Survey Date
     Given I logged in as "root"

@@ -6,11 +6,12 @@ Feature: PWS editing
     When I directly open "pws_edit" page with pk "6"
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | reaction |
-    | root     | not see  |
-    | admin    | see      |
-    | surveyor | see      |
-    | tester   | see      |
+    | role      | reaction |
+    | root      | not see  |
+    | pws_owner | not see  |
+    | admin     | see      |
+    | surveyor  | see      |
+    | tester    | see      |
 
   Scenario: Correct PWS editing
     Given I logged in as "root"

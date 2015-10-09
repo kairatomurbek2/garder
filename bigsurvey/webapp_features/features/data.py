@@ -64,6 +64,10 @@ class Logins:
         'username': 'tester',
         'password': 'tester'
     }
+    pws_owner = {
+        'username': 'owner',
+        'password': 'admin'
+    }
     non_existent_user = {
         'username': 'non_existent_username',
         'password': 'non_existent_password'

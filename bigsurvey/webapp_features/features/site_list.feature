@@ -14,6 +14,23 @@ Feature: Site list
       | New York    |
 
   @keep_db
+  Scenario: Pws owner is opening site list page
+    Given I logged in as "pws_owner"
+    When I open "site_list" page
+    Then I should see following
+      | text        |
+      | Ancoridge   |
+      | Chikago     |
+      | Seattle     |
+      | New York    |
+      | Wahsington  |
+    And I should not see following
+      | First Site  |
+      | Second Site |
+      | Houston     |
+      | Boston      |
+
+  @keep_db
   Scenario: Admin is opening site list page
     Given I logged in as "admin"
     When I open "site_list" page

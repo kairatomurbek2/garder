@@ -6,15 +6,23 @@ Feature: Test adding
     When I directly open "test_add" page for hazard with pk "<pk>"
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | pk | reaction |
-    | root     | 1  | not see  |
-    | root     | 2  | not see  |
-    | admin    | 2  | not see  |
-    | admin    | 1  | see      |
-    | surveyor | 1  | see      |
-    | surveyor | 2  | see      |
-    | tester   | 2  | not see  |
-    | tester   | 1  | not see  |
+    | role      | pk | reaction |
+    | root      | 1  | not see  |
+    | root      | 2  | not see  |
+    | admin     | 2  | not see  |
+    | admin     | 1  | see      |
+    | surveyor  | 1  | see      |
+    | surveyor  | 2  | see      |
+    | tester    | 2  | not see  |
+    | tester    | 1  | not see  |
+    | root      | 4  | not see  |
+    | admin     | 4  | see      |
+    | surveyor  | 4  | see      |
+    | tester    | 4  | see      |
+    | pws_owner | 1  | not see  |
+    | pws_owner | 2  | not see  |
+    | pws_owner | 4  | see      |
+
 
   Scenario: Correct test adding for RP Hazard
     Given I logged in as "tester"

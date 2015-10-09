@@ -8,15 +8,22 @@ Feature: Letter Adding
     When I directly open "letter_add" page for site with pk "<pk>"
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | pk | reaction |
-    | root     | 5  | not see  |
-    | root     | 10 | not see  |
-    | admin    | 5  | see      |
-    | admin    | 10 | not see  |
-    | surveyor | 5  | see      |
-    | surveyor | 10 | not see  |
-    | tester   | 5  | see      |
-    | tester   | 10 | see      |
+    | role      | pk | reaction |
+    | root      | 5  | not see  |
+    | root      | 10 | not see  |
+    | root      | 1  | not see  |
+    | admin     | 5  | see      |
+    | admin     | 10 | not see  |
+    | admin     | 1  | see      |
+    | pws_owner | 5  | not see  |
+    | pws_owner | 10 | not see  |
+    | pws_owner | 1  | see      |
+    | surveyor  | 5  | see      |
+    | surveyor  | 1  | see      |
+    | surveyor  | 10 | not see  |
+    | tester    | 5  | see      |
+    | tester    | 1  | see      |
+    | tester    | 10 | see      |
 
   Scenario: Correct Letter Adding
     Given I logged in as "root"
@@ -25,7 +32,7 @@ Feature: Letter Adding
     And I select "Pool" from "letter_type"
     And I select "Digester" from "hazard"
     And I submit "letter_generate_form" form
-    Then I should be at "letter_detail" page with pk "3"
+    Then I should be at "letter_detail" page with pk "4"
     And I should see "letter adding success" message
     And I should see warning letter message
     And I should see following

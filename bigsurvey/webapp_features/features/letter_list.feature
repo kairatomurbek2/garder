@@ -8,15 +8,37 @@ Feature: Letter List
     When I directly open "letter_list" page
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | reaction |
-    | root     | not see  |
-    | admin    | not see  |
-    | surveyor | not see  |
-    | tester   | see      |
+    | role      | reaction |
+    | root      | not see  |
+    | admin     | not see  |
+    | pws_owner | not see  |
+    | surveyor  | not see  |
+    | tester    | see      |
 
   @keep_db
   Scenario: Root is opening letter list page
     Given I logged in as "root"
+    When I open "letter_list" page
+    Then I should see following
+      | text                  |
+      | DOC121                |
+      | PWS2                  |
+      | Filters               |
+      | QAZ2WSX               |
+      | amanda_j@hotmail.com  |
+      | potable               |
+      | Denied or Restricted  |
+      | Air Gap               |
+      | root                  |
+      | No                    |
+      | May 5, 2015           |
+      | Show                  |
+      | PDF                   |
+      | NUI812                |
+
+  @keep_db
+  Scenario: Pws owner is opening letter list page
+    Given I logged in as "pws_owner"
     When I open "letter_list" page
     Then I should see following
       | text                  |
@@ -33,6 +55,9 @@ Feature: Letter List
       | Show                  |
       | PDF                   |
       | NUI812                |
+    And I should not see following
+      | text                  |
+      | PWS2                  |
 
   @keep_db
   Scenario: Admin is opening letter list page
@@ -54,6 +79,7 @@ Feature: Letter List
       | text                  |
       | amanda_j@hotmail.com  |
       | NUI812                |
+      | PWS2                  |
 
   @keep_db
   Scenario: Surveyor is opening letter list page
@@ -75,3 +101,4 @@ Feature: Letter List
       | text                  |
       | amanda_j@hotmail.com  |
       | NUI812                |
+      | PWS2                  |

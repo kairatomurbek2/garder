@@ -7,13 +7,19 @@ Feature: Site detail
     When I directly open "site_detail" page with pk "<pk>"
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | pk | reaction |
-    | root     | 3  | not see  |
-    | root     | 4  | not see  |
-    | admin    | 3  | see      |
-    | admin    | 4  | not see  |
-    | surveyor | 3  | see      |
-    | surveyor | 4  | not see  |
+    | role      | pk | reaction |
+    | root      | 3  | not see  |
+    | root      | 4  | not see  |
+    | admin     | 3  | see      |
+    | admin     | 4  | not see  |
+    | surveyor  | 3  | see      |
+    | surveyor  | 4  | not see  |
+    | root      | 5  | not see  |
+    | admin     | 5  | see      |
+    | surveyor  | 5  | see      |
+    | pws_owner | 3  | see      |
+    | pws_owner | 5  | not see  |
+    | pws_owner | 4  | not see  |
 
   @keep_db
   Scenario: Root is opening site detail page

@@ -1,4 +1,4 @@
-@letter
++@letter
 @letter_edit
 Feature: Letter Editing
 
@@ -8,15 +8,22 @@ Feature: Letter Editing
     When I directly open "letter_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | pk | reaction |
-    | root     | 1  | not see  |
-    | root     | 2  | not see  |
-    | admin    | 1  | see      |
-    | admin    | 2  | not see  |
-    | surveyor | 1  | see      |
-    | surveyor | 2  | not see  |
-    | tester   | 1  | see      |
-    | tester   | 2  | see      |
+    | role      | pk | reaction |
+    | root      | 1  | not see  |
+    | root      | 2  | not see  |
+    | admin     | 1  | see      |
+    | admin     | 2  | not see  |
+    | surveyor  | 1  | see      |
+    | surveyor  | 2  | not see  |
+    | tester    | 1  | see      |
+    | tester    | 2  | see      |
+    | root      | 3  | not see  |
+    | admin     | 3  | see      |
+    | pws_owner | 1  | not see  |
+    | pws_owner | 2  | not see  |
+    | pws_owner | 3  | see      |
+    | surveyor  | 3  | see      |
+    | tester    | 3  | see      |
 
   Scenario: Correct Letter Editing
     Given I logged in as "root"

@@ -7,11 +7,12 @@ Feature: Site adding
     When I directly open "site_add" page
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | reaction |
-    | root     | not see  |
-    | admin    | not see  |
-    | surveyor | see      |
-    | tester   | see      |
+    | role      | reaction |
+    | root      | not see  |
+    | admin     | not see  |
+    | pws_owner | not see  |
+    | surveyor  | see      |
+    | tester    | see      |
 
 
   Scenario: Correct site adding

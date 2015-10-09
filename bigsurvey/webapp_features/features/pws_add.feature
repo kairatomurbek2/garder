@@ -6,11 +6,12 @@ Feature: PWS adding
     When I directly open "pws_add" page
     Then I should <reaction> "Page not found"
   Examples:
-    | role     | reaction |
-    | root     | not see  |
-    | admin    | see      |
-    | surveyor | see      |
-    | tester   | see      |
+    | role      | reaction |
+    | root      | not see  |
+    | pws_owner | not see  |
+    | admin     | see      |
+    | surveyor  | see      |
+    | tester    | see      |
 
 
   Scenario: Correct PWS adding

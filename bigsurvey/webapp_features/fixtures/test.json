@@ -3582,6 +3582,42 @@
     "serial_no": "",
     "site": 5,
     "replace_date": null,
+    "bp_type_required": "RP",
+    "hazard_type": 14,
+    "longitude": 0.0,
+    "installed_properly": false,
+    "installer": "",
+    "photo_thumb": "",
+    "is_present": true,
+    "bp_type_present": null,
+    "cc_present": false,
+    "service_type": 3,
+    "bp_size": null,
+    "model_no": "",
+    "aux_water": false,
+    "location2": "",
+    "location1": "Washington",
+    "latitude": 0.0,
+    "manufacturer": null,
+    "regulation_type": null,
+    "notes": "",
+    "install_date": null,
+    "assembly_status": 1,
+    "assembly_location": 2,
+    "due_install_test_date": null,
+    "additives_present": false
+  },
+  "model": "webapp.hazard",
+  "pk": 3
+},
+{
+  "fields": {
+    "orientation": null,
+    "pump_present": false,
+    "photo": "",
+    "serial_no": "",
+    "site": 1,
+    "replace_date": null,
     "bp_type_required": null,
     "hazard_type": 1,
     "longitude": 0.0,
@@ -3608,7 +3644,7 @@
     "additives_present": false
   },
   "model": "webapp.hazard",
-  "pk": 3
+  "pk": 4
 },
 {
   "fields": {
@@ -4603,6 +4639,210 @@
 },
 {
   "fields": {
+    "name": "PWSOwners",
+    "permissions": [
+      [
+        "add_user",
+        "auth",
+        "user"
+      ],
+      [
+        "change_user",
+        "auth",
+        "user"
+      ],
+      [
+        "access_to_pws_users",
+        "webapp",
+        "employee"
+      ],
+      [
+        "add_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "browse_user",
+        "webapp",
+        "employee"
+      ],
+      [
+        "change_employee",
+        "webapp",
+        "employee"
+      ],
+      [
+        "access_to_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "add_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_all_info_about_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "change_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_pws_import_logs",
+        "webapp",
+        "importlog"
+      ],
+      [
+        "browse_import_log",
+        "webapp",
+        "importlog"
+      ],
+      [
+        "add_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "browse_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "change_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "pws_letter_access",
+        "webapp",
+        "letter"
+      ],
+      [
+        "send_letter",
+        "webapp",
+        "letter"
+      ],
+      [
+        "access_to_pws_lettertypes",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "browse_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "change_lettertype",
+        "webapp",
+        "lettertype"
+      ],
+      [
+        "browse_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "change_own_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "change_pws",
+        "webapp",
+        "pws"
+      ],
+      [
+        "access_to_batch_update",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_import",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "add_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_all_info_about_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "change_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_pws_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "add_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "change_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_pws_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "add_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ],
+      [
+        "change_test",
+        "webapp",
+        "test"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 5
+},
+{
+  "fields": {
     "username": "root",
     "first_name": "root",
     "last_name": "root",
@@ -4757,6 +4997,50 @@
 },
 {
   "fields": {
+    "username": "pws6user",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-17T08:54:19Z",
+    "groups": [
+      [
+        "Surveyors"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$9xjIZttWgXf3$ldgZo6WFFIKvS76jUlhGORudXumALnBNqWw6z7jAROY=",
+    "email": "",
+    "date_joined": "2015-02-17T08:54:19Z"
+  },
+  "model": "auth.user",
+  "pk": 11
+},
+{
+  "fields": {
+    "username": "owner",
+    "first_name": "owner",
+    "last_name": "owner",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-07-13T05:18:01Z",
+    "groups": [
+      [
+        "PWSOwners"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
+    "email": "",
+    "date_joined": "2015-01-15T10:55:45Z"
+  },
+  "model": "auth.user",
+  "pk": 12
+},
+{
+  "fields": {
     "already_sent": false,
     "rendered_body": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">\n<p>{PersonInChargeName}</p>\n<p>Director of Public Works</p>\n<p>{PWSPhone}</p>\n<p>Fax: {PWSFax}</p>\n<p>{PWSEmail}</p>\n</td>\r\n\t\t\t<td style=\"width:50%\"></td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">\n<p>{PWSOfficeAddress}</p>\n<p>Washington, {PWSState}, {PWSZip}</p>\n</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>May 03, 2015&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Amanda James</td>\r\n\t\t\t<td>Account No.: QAZ2WSX</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>White House</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Washington, DC, 90192</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceStreetNumber}, White House, Washington, DC</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Washington, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of Washington will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {PWSEmail}.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</p>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>Director of Public Works</p>\r\n</div>\r\n",
     "site": 5,
@@ -4784,6 +5068,22 @@
   },
   "model": "webapp.letter",
   "pk": 2
+},
+
+{
+  "fields": {
+    "already_sent": false,
+    "rendered_body": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">\n<p style=\"font-size:12px\">John McConley<br>\nDirector of Public Works<br>\n+123456789<br>\nFax: +987654321<br>\npws@test.com</p>\n</td>\r\n\t\t\t<td style=\"width:50%\"></td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">\n<p style=\"font-size:12px\">200 South Jefferson st.<br>\nChikago, IL, 70643</p>\n</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>May 05, 2015&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>Gabe Newell</td>\r\n\t\t\t<td>Account No.: VALVE</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>127, Universe st</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>Seattle, WA, 12382</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">7269, South Jackson st, Seattle, WA</span></p>\r\n\r\n<p style=\"text-align:right\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of Seattle is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of Seattle has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the Seattle Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at {PlumberPackerLocation} located at city hall.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at pws@test.com.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, Van der Veijden, at +1685231452.</div>\r\n\r\n<p>Sincerely, John McConley</p>\r\n\r\n<p>Director of Public Works</p>\r\n</div>\r\n",
+    "site": 1,
+    "hazard": 3,
+    "user": [
+      "root"
+    ],
+    "date": "2015-05-05",
+    "letter_type": 38
+  },
+  "model": "webapp.letter",
+  "pk": 3
 },
 {
   "fields": {
@@ -5018,6 +5318,83 @@
 },
 {
   "fields": {
+    "outlet_sov_leaked": false,
+    "cv2_detail_stem_guide": false,
+    "pvb_detail_disk_check_valve": false,
+    "rv_detail_diaphragms": false,
+    "pvb_detail_o_rings": false,
+    "rv_psi1": null,
+    "rv_psi2": null,
+    "rv_detail_other": false,
+    "cv2_cleaned": true,
+    "cv2_detail_retainer": false,
+    "cv1_detail_lock_nuts": false,
+    "pvb_detail_spring_check_valve": false,
+    "cv2_retest_gauge_pressure": null,
+    "cv1_detail_cv_assembly": false,
+    "rv_detail_o_rings": false,
+    "cv_retest_psi": null,
+    "air_inlet_retest_psi": null,
+    "pvb_detail_seat_check_valve": false,
+    "cv2_leaked": false,
+    "cv_held_pressure": null,
+    "cv1_detail_rubber_parts_kit": false,
+    "cv2_detail_o_rings": false,
+    "cv1_detail_other": false,
+    "rv_detail_rv_assembly": false,
+    "pvb_detail_rubber_parts_kit": false,
+    "cv1_detail_o_rings": false,
+    "pvb_detail_other": false,
+    "cv1_detail_retainer": false,
+    "cv2_detail_rubber_parts_kit": false,
+    "pvb_detail_rv_assembly": false,
+    "rv_detail_rubber_parts_kit": false,
+    "cv1_detail_disk": false,
+    "cv1_detail_spring": false,
+    "rv_detail_disk": false,
+    "cv2_gauge_pressure": null,
+    "pvb_cleaned": true,
+    "tester": [
+      "tester"
+    ],
+    "cv2_detail_disk": false,
+    "cv2_detail_lock_nuts": false,
+    "cv1_cleaned": true,
+    "paid": false,
+    "air_inlet_opened": false,
+    "air_inlet_psi": null,
+    "paypal_payment_id": null,
+    "user": [
+      "tester"
+    ],
+    "cv1_detail_stem_guide": false,
+    "test_result": false,
+    "cv2_detail_seat": false,
+    "pvb_detail_guide": false,
+    "cv1_retest_gauge_pressure": null,
+    "cv1_gauge_pressure": null,
+    "rv_opened": false,
+    "cv1_leaked": true,
+    "cv2_detail_spring": false,
+    "bp_device": 4,
+    "cv_leaked": true,
+    "pvb_detail_disk_air_inlet": false,
+    "notes": "",
+    "rv_detail_spring": false,
+    "rv_detail_guide": false,
+    "cv2_detail_other": false,
+    "test_date": "2015-06-01",
+    "rv_cleaned": true,
+    "cv2_detail_cv_assembly": false,
+    "pvb_detail_spring_air_inlet": false,
+    "rv_detail_seat": false,
+    "cv1_detail_seat": false
+  },
+  "model": "webapp.test",
+  "pk": 4
+},
+{
+  "fields": {
     "detector_manufacturer": "",
     "detector_model": "",
     "pump_present": false,
@@ -5069,6 +5446,33 @@
   },
   "model": "webapp.survey",
   "pk": 2
+},
+{
+  "fields": {
+    "detector_manufacturer": "",
+    "detector_model": "",
+    "pump_present": false,
+    "hazards": [
+      4
+    ],
+    "survey_type": 6,
+    "cc_present": false,
+    "site": 1,
+    "survey_date": "2015-01-26",
+    "metered": false,
+    "surveyor": [
+      "surveyor"
+    ],
+    "protected": false,
+    "detector_serial_no": "",
+    "service_type": 3,
+    "additives_present": false,
+    "aux_water": false,
+    "notes": "",
+    "special": null
+  },
+  "model": "webapp.survey",
+  "pk": 3
 },
 {
   "fields": {
@@ -5244,5 +5648,55 @@
   },
   "model": "webapp.employee",
   "pk": 11
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [6],
+    "zip": "",
+    "has_licence_for_installation": false,
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": "OK",
+    "test_last_cert": null,
+    "user": [
+      "pws6user"
+    ],
+    "address": "",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 12
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [6, 9],
+    "zip": "",
+    "has_licence_for_installation": false,
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": "OK",
+    "test_last_cert": null,
+    "user": [
+      "owner"
+    ],
+    "address": "",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 13
 }
 ]
