@@ -52,3 +52,14 @@ Feature: User editing
       | field     | error_message                           |
       | username  | User with this Username already exists. |
       | password2 | The two password fields didn't match.   |
+
+    Scenario: Administrator self edit
+      Given I logged in as "admin"
+      And I open "user_edit" page with pk "4"
+      When I submit "user" form
+      Then I should be at "user_list" page
+      And I should see "text"
+        | text     |
+        | admin    |
+        | surveyor |
+        | tester   |
