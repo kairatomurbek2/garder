@@ -26,7 +26,7 @@ import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
 
 from webapp import perm_checkers, models, forms, filters
-from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OTHER, DATEFORMAT_HELP, SITE_STATUS, BP_TYPE
+from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OWNER_GROUPS, OTHER, DATEFORMAT_HELP, SITE_STATUS, BP_TYPE
 from webapp.exceptions import PaymentWasNotCreatedError
 from webapp.raw_sql_queries import HazardPriorityQuery
 from webapp.responses import PDFResponse
@@ -674,19 +674,29 @@ class UserListView(BaseTemplateView):
         user_list = OrderedDict()
         if self.request.user.has_perm('webapp.access_to_all_users'):
             user_list['SuperAdministrators'] = models.User.objects.filter(groups__name=Groups.superadmin)
+            user_list['PWSOwners'] = models.User.objects.filter(groups__name=Groups.pws_owner)
             user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin)
             user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor)
             user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester)
             user_list['WithoutGroup'] = models.User.objects.filter(groups__name='')
         elif self.request.user.has_perm('webapp.access_to_pws_users'):
-            user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin,
-                                                                     employee__pws__in=self.request.user.employee.pws.all())
-            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor,
-                                                                employee__pws__in=self.request.user.employee.pws.all())
-            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester,
-                                                              employee__pws__in=self.request.user.employee.pws.all())
-            user_list['WithoutGroup'] = models.User.objects.filter(groups__name='',
-                                                                   employee__pws__in=self.request.user.employee.pws.all())
+            if self.request.user.has_perm('webapp.access_to_multiple_pws_users'):
+                user_list['PWSOwners'] = models.User.objects.filter(
+                    groups__name=Groups.pws_owner,
+                    employee__pws__in=self.request.user.employee.pws.all()
+                ).distinct()
+            user_list['Surveyors'] = models.User.objects.filter(
+                groups__name=Groups.surveyor,
+                employee__pws__in=self.request.user.employee.pws.all()
+            )
+            user_list['Testers'] = models.User.objects.filter(
+                groups__name=Groups.tester,
+                employee__pws__in=self.request.user.employee.pws.all()
+            )
+            user_list['WithoutGroup'] = models.User.objects.filter(
+                groups__name='',
+                employee__pws__in=self.request.user.employee.pws.all()
+            )
         return user_list
 
 

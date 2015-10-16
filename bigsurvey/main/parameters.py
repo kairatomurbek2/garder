@@ -108,9 +108,12 @@ class Groups:
     admin = 'Administrators'
     surveyor = 'Surveyors'
     tester = 'Testers'
+    pws_owner = 'PWSOwners'
 
 
 ADMIN_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]
+
+OWNER_GROUPS = [Groups.pws_owner, Groups.admin, Groups.surveyor, Groups.tester]
 
 EXCEL_EXTENSIONS = ['.xls', '.xlsx']
 

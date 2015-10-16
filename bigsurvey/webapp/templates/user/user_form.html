@@ -125,7 +125,7 @@
                         {{ employee_form.company|add_class:'uk-width-1-1' }}
                         {{ employee_form.company.errors }}
                     </td>
-                    {% if perms.webapp.access_to_all_users %}
+                    {% if perms.webapp.access_to_all_users or perms.webapp.access_to_multiple_pws_users %}
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ employee_form.pws.id_for_label }}">{{ employee_form.pws.label }}</label>
                         </td>

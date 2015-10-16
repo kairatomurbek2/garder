@@ -386,6 +386,7 @@ class Employee(models.Model):
             ('access_to_adminpanel', _('Can log into Admin Panel')),
             ('access_to_all_users', _('Has access to all Users')),
             ('access_to_pws_users', _('Has access to PWS\'s Users')),
+            ('access_to_multiple_pws_users', _('Has access to Users from multiple PWS\'s')),
         )
 
 

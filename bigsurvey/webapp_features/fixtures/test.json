@@ -4652,6 +4652,11 @@
         "user"
       ],
       [
+        "access_to_multiple_pws_users",
+        "webapp",
+        "employee"
+      ],
+      [
         "access_to_pws_users",
         "webapp",
         "employee"
@@ -4745,6 +4750,11 @@
         "change_lettertype",
         "webapp",
         "lettertype"
+      ],
+      [
+        "add_pws",
+        "webapp",
+        "pws"
       ],
       [
         "browse_pws",
