@@ -685,6 +685,10 @@ class UserListView(BaseTemplateView):
                     groups__name=Groups.pws_owner,
                     employee__pws__in=self.request.user.employee.pws.all()
                 ).distinct()
+            user_list['Administrators'] = models.User.objects.filter(
+                groups__name=Groups.admin,
+                employee__pws__in=self.request.user.employee.pws.all()
+            ).distinct()
             user_list['Surveyors'] = models.User.objects.filter(
                 groups__name=Groups.surveyor,
                 employee__pws__in=self.request.user.employee.pws.all()
@@ -719,11 +723,14 @@ class UserBaseFormView(BaseFormView):
         return render(self.request, self.template_name, context)
 
     def _get_queryset_for_group_field(self):
-        queryset = Group.objects.none()
-        if self.request.user.has_perm('webapp.access_to_pws_users'):
-            queryset = Group.objects.filter(name__in=ADMIN_GROUPS)
         if self.request.user.has_perm('webapp.access_to_all_users'):
             queryset = Group.objects.all()
+        elif self.request.user.has_perm('webapp.access_to_multiple_pws_users'):
+            queryset = Group.objects.filter(name__in=OWNER_GROUPS)
+        elif self.request.user.has_perm('webapp.access_to_pws_users'):
+            queryset = Group.objects.filter(name__in=ADMIN_GROUPS)
+        else:
+            raise Http404
         return queryset
 
     def _get_queryset_for_pws_field(self):
@@ -735,22 +742,6 @@ class UserBaseFormView(BaseFormView):
             queryset = models.PWS.objects.all()
         return queryset
 
-    def post(self, request, *args, **kwargs):
-        user_form = self.get_user_form()
-        employee_form = self.get_employee_form()
-        if user_form.is_valid() and employee_form.is_valid():
-            self.user_object = user_form.save()
-            employee_form.instance.user = self.user_object
-            self.employee_object = employee_form.save()
-            if not self.request.user.has_perm('webapp.access_to_all_users'):
-                self.employee_object.pws = [self.request.user.employee.pws.all()[0]]
-            self.employee_object.save()
-            messages.success(self.request, self.success_message)
-            return redirect(self.get_success_url())
-        else:
-            messages.error(self.request, self.error_message)
-            return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
-
     def get_success_url(self):
         return reverse('webapp:user_list')
 
@@ -761,10 +752,31 @@ class UserAddView(UserBaseFormView):
     success_message = Messages.User.adding_success
     error_message = Messages.User.adding_error
 
+    def post(self, request, *args, **kwargs):
+        user_form = self.get_user_form()
+        employee_form = self.get_employee_form()
+        if user_form.is_valid() and employee_form.is_valid():
+            self.user_object = user_form.save()
+            employee_form.instance.user = self.user_object
+            self.employee_object = employee_form.save()
+            if not self.request.user.has_perm('webapp.access_to_all_users'):
+                if not (self.request.user.has_perm('webapp.access_to_multiple_pws_users') and self.employee_object.pws):
+                    self.employee_object.pws = [self.request.user.employee.pws.all()[0]]
+            self.employee_object.save()
+            messages.success(self.request, self.success_message)
+            return redirect(self.get_success_url())
+        else:
+            messages.error(self.request, self.error_message)
+            user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
+            employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
+            return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
+
     def get_user_form(self):
         return self.user_form_class(**self.get_form_kwargs())
 
     def get_employee_form(self):
+        if self.request.user.has_perm('webapp.access_to_multiple_pws_users'):
+            return forms.PWSOwnerEmployeeForm(**self.get_form_kwargs())
         return self.employee_form_class(**self.get_form_kwargs())
 
 
@@ -784,7 +796,23 @@ class UserEditView(UserBaseFormView):
         user = self.user_model.objects.get(pk=self.kwargs['pk'])
         if not perm_checkers.UserPermChecker.has_perm(self.request, user):
             raise Http404
-        return super(UserEditView, self).post(request, *args, **kwargs)
+        user_form = self.get_user_form()
+        employee_form = self.get_employee_form()
+        if user_form.is_valid() and employee_form.is_valid():
+            self.user_object = user_form.save(commit=False)
+            self.employee_object = employee_form.save(commit=False)
+            if user_form.instance.pk == self.request.user.pk:
+                self.user_object.groups = self.request.user.groups.all()
+                self.employee_object.pws = self.request.user.employee.pws.all()
+            self.user_object.save()
+            self.employee_object.save()
+            messages.success(self.request, self.success_message)
+            return redirect(self.get_success_url())
+        else:
+            messages.error(self.request, self.error_message)
+            user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
+            employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
+            return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
 
     def get_user_form(self):
         self.user_object = self.user_model.objects.get(pk=self.kwargs['pk'])
@@ -794,6 +822,8 @@ class UserEditView(UserBaseFormView):
 
     def get_employee_form(self):
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
+        if self.request.user.has_perm('webapp.access_to_multiple_pws_users'):
+            return forms.PWSOwnerEmployeeForm(instance=self.employee_object, **self.get_form_kwargs())
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
 
 

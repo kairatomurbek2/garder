@@ -209,6 +209,14 @@ class EmployeeForm(forms.ModelForm):
         exclude = ('user',)
 
 
+class PWSOwnerEmployeeForm(forms.ModelForm):
+    pws = forms.ModelMultipleChoiceField(models.PWS.objects.all(), required=True, label=_('PWS'))
+
+    class Meta:
+        model = models.Employee
+        exclude = ('user',)
+
+
 class UserAddForm(UserCreationForm):
     def save(self, commit=True):
         self.instance = super(UserAddForm, self).save()

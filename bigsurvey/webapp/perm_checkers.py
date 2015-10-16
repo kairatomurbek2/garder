@@ -47,7 +47,9 @@ class UserPermChecker(ObjectPermChecker):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_users') or \
                request.user.has_perm('webapp.access_to_pws_users') and \
-               bool(set(obj.employee.pws.all()) & set(request.user.employee.pws.all()))
+               set(obj.employee.pws.all()).issubset(request.user.employee.pws.all()) or \
+               request.user.has_perm('webapp.access_to_multiple_pws_users') and \
+               set(obj.employee.pws.all()).issubset(request.user.employee.pws.all())
 
 
 class LetterPermChecker(ObjectPermChecker):
