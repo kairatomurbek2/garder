@@ -60,7 +60,7 @@
                         {{ tester.pk }}
                     </td>
                     <td>
-                        {% for pws in tester.employee.pws %}
+                        {% for pws in tester.employee.pws.all %}
                             <p>{{ pws.number }}</p>
                         {% endfor %}
                     </td>

@@ -204,13 +204,14 @@ class TestForm(forms.ModelForm):
 
 
 class EmployeeForm(forms.ModelForm):
+    pws = forms.ModelMultipleChoiceField(models.PWS.objects.all(), required=True, label=_('PWS'))
+
     class Meta:
         model = models.Employee
         exclude = ('user',)
 
 
-class PWSOwnerEmployeeForm(forms.ModelForm):
-    pws = forms.ModelMultipleChoiceField(models.PWS.objects.all(), required=True, label=_('PWS'))
+class TesterEmployeeForm(forms.ModelForm):
 
     class Meta:
         model = models.Employee
@@ -260,7 +261,7 @@ class UserEditForm(UserChangeForm):
 
     class Meta:
         model = models.User
-        fields = ('username', 'email', 'first_name', 'last_name', 'groups')
+        fields = ('username', 'email', 'first_name', 'last_name', 'groups', 'is_active')
 
 
 class BatchUpdateForm(forms.Form):
