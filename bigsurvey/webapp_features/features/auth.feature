@@ -14,6 +14,7 @@ Feature: Authorization
     | tester   | tester home |
 
   @keep_db
+  @auth_non_exist
   Scenario: Authorization with non-existent account
     Given I open "login" page
     When I login as "non existent user"

@@ -6,6 +6,7 @@ from lettuce import step, world
 
 @step('I open "login" page')
 def open_login_page(step):
+    step.given('I logout')
     step.given('I open "%s"' % get_url(Urls.login))
 
 
@@ -41,7 +42,6 @@ def login_as_pws_owner(step):
 
 @step('I login with username "(.*)" and password "(.*)"')
 def login(step, username, password):
-    step.given('I logout')
     step.given('I fill in "username" with "%s"' % username)
     step.given('I fill in "password" with "%s"' % password)
     step.given('I submit "%s" form' % 'auth')
