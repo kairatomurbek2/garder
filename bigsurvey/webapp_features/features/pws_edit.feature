@@ -1,17 +1,21 @@
+@pws
 @pws_edit
 Feature: PWS editing
   @keep_db
   Scenario Outline: PWS editing page access
     Given I logged in as "<role>"
-    When I directly open "pws_edit" page with pk "6"
+    When I directly open "pws_edit" page with pk "<pk>"
     Then I should <reaction> "Page not found"
   Examples:
-    | role      | reaction |
-    | root      | not see  |
-    | pws_owner | not see  |
-    | admin     | see      |
-    | surveyor  | see      |
-    | tester    | see      |
+    | role      | pk | reaction |
+    | root      | 1  | not see  |
+    | pws_owner | 6  | not see  |
+    | pws_owner | 1  | see      |
+    | pws_owner | 9  | not see  |
+    | admin     | 6  | see      |
+    | admin     | 9  | not see  |
+    | surveyor  | 6  | see      |
+    | tester    | 6  | see      |
 
   Scenario: Correct PWS editing
     Given I logged in as "root"

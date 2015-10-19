@@ -1,3 +1,4 @@
+@pws
 @pws_detail
 Feature: PWS Detail Page
   @keep_db
@@ -19,7 +20,7 @@ Feature: PWS Detail Page
     | admin     | 6  | see      |
     | pws_owner | 1  | see      |
     | pws_owner | 6  | not see  |
-    | pws_owner | 10 | not see  |
+    | pws_owner | 9  | not see  |
     | surveyor  | 6  | see      |
     | tester    | 6  | see      |
 

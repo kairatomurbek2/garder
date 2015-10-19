@@ -1,3 +1,4 @@
+@user
 @user_add
 Feature: User adding
   @keep_db

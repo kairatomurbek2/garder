@@ -37,6 +37,7 @@ Feature: Letter List
       | NUI812                |
 
   @keep_db
+  @owner_letter_list
   Scenario: Pws owner is opening letter list page
     Given I logged in as "pws_owner"
     When I open "letter_list" page
@@ -57,7 +58,7 @@ Feature: Letter List
       | NUI812                |
     And I should not see following
       | text                  |
-      | PWS2                  |
+      | Customer1             |
 
   @keep_db
   Scenario: Admin is opening letter list page

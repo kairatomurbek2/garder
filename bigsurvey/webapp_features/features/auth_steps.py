@@ -41,6 +41,7 @@ def login_as_pws_owner(step):
 
 @step('I login with username "(.*)" and password "(.*)"')
 def login(step, username, password):
+    step.given('I logout')
     step.given('I fill in "username" with "%s"' % username)
     step.given('I fill in "password" with "%s"' % password)
     step.given('I submit "%s" form' % 'auth')

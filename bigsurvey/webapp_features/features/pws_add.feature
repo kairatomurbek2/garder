@@ -1,3 +1,4 @@
+@pws
 @pws_add
 Feature: PWS adding
   @keep_db
@@ -29,6 +30,20 @@ Feature: PWS adding
     And I should see "NEW PWS"
     And New letter types were created for PWS with number "PWS123456"
 
+  Scenario: Correct PWS adding by owner
+    Given I logged in as "pws_owner"
+    And I open "pws_add" page
+    And I fill in following fields with following values
+      | field  | value     |
+      | number | PWS123456 |
+      | name   | NEW PWS   |
+      | city   | Bishkek   |
+      | price  | 13        |
+    And I select "Private Well" from "water_source"
+    When I submit "pws" form
+    Then I should see "pws adding success" message
+    And I should see "NEW PWS"
+    And New letter types were created for PWS with number "PWS123456"
 
   Scenario: Incorrect PWS adding
     Given I logged in as "root"

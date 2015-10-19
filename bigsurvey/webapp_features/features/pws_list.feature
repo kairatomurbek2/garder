@@ -1,3 +1,4 @@
+@pws
 @pws_list
 Feature: PWS list
   @keep_db

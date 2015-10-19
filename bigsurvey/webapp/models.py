@@ -329,6 +329,7 @@ class PWS(models.Model):
         permissions = (
             ('browse_pws', _('Can browse Public Water System')),
             ('browse_all_pws', _('Can browse all Public Water Systems')),
+            ('own_multiple_pws', _('Owns multiple Public Water Systems')),
             ('change_own_pws', _('Can change his own Public Water System'))
         )
 
@@ -350,7 +351,7 @@ class LetterType(models.Model):
         permissions = (
             ('browse_lettertype', _('Can browse Letter Type')),
             ('access_to_all_lettertypes', _('Has access to all Letter Types')),
-            ('access_to_pws_lettertypes', _('Has access to PWS\'s Letter Types')),
+            ('access_to_pws_lettertypes', _('Has access to PWS\' Letter Types')),
         )
 
 
@@ -386,7 +387,7 @@ class Employee(models.Model):
             ('access_to_adminpanel', _('Can log into Admin Panel')),
             ('access_to_all_users', _('Has access to all Users')),
             ('access_to_pws_users', _('Has access to PWS\'s Users')),
-            ('access_to_multiple_pws_users', _('Has access to Users from multiple PWS\'s')),
+            ('access_to_multiple_pws_users', _('Has access to Users from multiple PWS')),
         )
 
 
@@ -443,6 +444,7 @@ class Site(models.Model):
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),
             ('access_to_pws_sites', _('Has access to PWS\'s Sites')),
+            ('access_to_multiple_pws_sites', _('Has access to multiple PWS\' Sites')),
             ('access_to_site_by_customer_account', _('Has access to Site through Customer Account')),
             ('access_to_import', _('Can import Sites from Excel file')),
             ('access_to_batch_update', _('Has access to batch update')),
@@ -504,6 +506,7 @@ class Hazard(models.Model):
             ('browse_hazard', _('Can browse Hazard')),
             ('access_to_all_hazards', _('Has access to all Hazards')),
             ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
+            ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards')),
             ('change_all_info_about_hazard', _('Can change all information about Hazard')),
         )
 
@@ -540,6 +543,7 @@ class Survey(models.Model):
             ('browse_survey', _('Can browse Survey')),
             ('access_to_all_surveys', _('Has access to all Surveys')),
             ('access_to_pws_surveys', _('Has access to PWS\'s Surveys')),
+            ('access_to_multiple_pws_surveys', _('Has access to multiple PWS\' Surveys')),
             ('access_to_own_surveys', _('Has access to own Surveys')),
         )
         ordering = ('-survey_date', '-id')
@@ -649,6 +653,7 @@ class Test(models.Model):
             ('browse_test', _('Can browse Test')),
             ('access_to_all_tests', _('Has access to all Tests')),
             ('access_to_pws_tests', _('Has access to PWS\'s Tests')),
+            ('access_to_multiple_pws_tests', _('Has access to multiple PWS\' Tests')),
             ('access_to_own_tests', _('Has access to own Tests')),
         )
         ordering = ('-test_date', '-id')
@@ -673,6 +678,7 @@ class Letter(models.Model):
             ('browse_letter', _('Can browse Letter')),
             ('send_letter', _('Can send Letter')),
             ('pws_letter_access', _('Has access to pws letters')),
+            ('multiple_pws_letter_access', _('Has access to multiple pws\' letters')),
             ('full_letter_access', _('Has access to all letters'))
         )
 

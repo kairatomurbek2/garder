@@ -1,3 +1,4 @@
+@user
 @user_list
 Feature: User list
 

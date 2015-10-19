@@ -11,7 +11,7 @@
                 <thead>
                 <tr class="border-bottom">
                     <th class="border-right uk-text-center">{% trans "No." %}</th>
-                    {% if perms.webapp.full_letter_access %}
+                    {% if perms.webapp.full_letter_access or perms.webapp.multiple_pws_letter_access %}
                         <th>{% trans "PWS" %}</th>
                     {% endif %}
                     <th>{% trans "Customer Account" %}</th>
@@ -30,7 +30,7 @@
                 {% for letter in filtered_letters %}
                     <tr>
                         <td class="border-right uk-text-center">{{ letter.pk }}</td>
-                        {% if perms.webapp.full_letter_access %}
+                        {% if perms.webapp.full_letter_access or perms.webapp.multiple_pws_letter_access %}
                             <td>{{ letter.site.pws.number }}</td>
                         {% endif %}
                         <td>

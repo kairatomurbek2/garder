@@ -1,3 +1,4 @@
+@user
 @user_edit
 Feature: User editing
 
@@ -53,13 +54,15 @@ Feature: User editing
       | username  | User with this Username already exists. |
       | password2 | The two password fields didn't match.   |
 
+    @admin_self_edit
     Scenario: Administrator self edit
       Given I logged in as "admin"
       And I open "user_edit" page with pk "4"
       When I submit "user" form
       Then I should be at "user_list" page
-      And I should see "text"
+      And I should see following
         | text     |
         | admin    |
         | surveyor |
         | tester   |
+

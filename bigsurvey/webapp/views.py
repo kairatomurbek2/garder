@@ -237,11 +237,17 @@ class BatchUpdateView(BaseTemplateView):
 
 class PWSListView(BaseTemplateView):
     template_name = 'pws/pws_list.html'
-    permission = 'webapp.browse_all_pws'
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
         context = super(PWSListView, self).get_context_data(**kwargs)
-        context['pws_list'] = models.PWS.objects.all()
+        if user.has_perm('webapp.browse_all_pws'):
+            pws_list = models.PWS.objects.all()
+        elif user.has_perm('webapp.own_multiple_pws'):
+            pws_list = user.employee.pws.all()
+        else:
+            raise Http404
+        context['pws_list'] = pws_list
         return context
 
 
@@ -272,6 +278,14 @@ class PWSAddView(PWSBaseFormView, CreateView):
     permission = 'webapp.add_pws'
     success_message = Messages.PWS.adding_success
     error_message = Messages.PWS.adding_error
+
+    def form_valid(self, form):
+        form_is_valid = super(PWSAddView, self).form_valid(form)
+        user = self.request.user
+        if user.has_perm('webapp.own_multiple_pws'):
+            user.employee.pws.add(self.object)
+            user.employee.save()
+        return form_is_valid
 
 
 class PWSEditView(PWSBaseFormView, UpdateView):
@@ -717,7 +731,7 @@ class UserBaseFormView(BaseFormView):
         employee_form = self.get_employee_form()
         user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
         employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-        context = self.get_context_data(request, *args, **kwargs)
+        context = self.get_context_data(**kwargs)
         context['user_form'] = user_form
         context['employee_form'] = employee_form
         return render(self.request, self.template_name, context)
@@ -774,9 +788,11 @@ class UserAddView(UserBaseFormView):
         return self.user_form_class(**self.get_form_kwargs())
 
     def get_employee_form(self):
-        if self.request.user.has_perm('webapp.access_to_multiple_pws_users'):
-            return forms.PWSOwnerEmployeeForm(**self.get_form_kwargs())
-        return self.employee_form_class(**self.get_form_kwargs())
+        if self.request.user.has_perm('webapp.access_to_all_users'):
+            return forms.EmployeeFormNoPWS(instance=self.employee_object, **self.get_form_kwargs())
+        form_kwargs = self.get_form_kwargs()
+        form_kwargs['initial']['pws'] = [self.request.user.employee.pws.all().first()]
+        return self.employee_form_class(instance=self.employee_object, **form_kwargs)
 
 
 class UserEditView(UserBaseFormView):
@@ -791,8 +807,8 @@ class UserEditView(UserBaseFormView):
             raise Http404
         return response
 
-    def get_context_data(self, request, *args, **kwargs):
-        context = super(UserEditView, self).get_context_data(*args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(UserEditView, self).get_context_data(**kwargs)
         user = self.user_model.objects.get(pk=self.kwargs['pk'])
         testers_group = models.Group.objects.get(name=Groups.tester)
         if testers_group not in user.groups.all():
@@ -833,9 +849,8 @@ class UserEditView(UserBaseFormView):
 
     def get_employee_form(self):
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
-        tester_group = Group.objects.get(name=Groups.tester)
-        if tester_group in self.user_object.groups.all():
-            return forms.TesterEmployeeForm(instance=self.employee_object, **self.get_form_kwargs())
+        if self.request.user.has_perm('webapp.access_to_all_users'):
+            return forms.EmployeeFormNoPWS(instance=self.employee_object, **self.get_form_kwargs())
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
 
 

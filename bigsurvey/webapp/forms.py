@@ -211,7 +211,7 @@ class EmployeeForm(forms.ModelForm):
         exclude = ('user',)
 
 
-class TesterEmployeeForm(forms.ModelForm):
+class EmployeeFormNoPWS(forms.ModelForm):
 
     class Meta:
         model = models.Employee

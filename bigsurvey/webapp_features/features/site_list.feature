@@ -14,6 +14,7 @@ Feature: Site list
       | New York    |
 
   @keep_db
+  @owner_site_list
   Scenario: Pws owner is opening site list page
     Given I logged in as "pws_owner"
     When I open "site_list" page
@@ -23,8 +24,9 @@ Feature: Site list
       | Chikago     |
       | Seattle     |
       | New York    |
-      | Wahsington  |
+      | Washington  |
     And I should not see following
+      | text        |
       | First Site  |
       | Second Site |
       | Houston     |

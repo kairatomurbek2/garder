@@ -14,9 +14,12 @@ Feature: Hazard Add
       | admin     | 5  | fire    | see      |
       | admin     | 10 | potable | not see  |
       | admin     | 10 | fire    | not see  |
+      | admin     | 1  | potable | see      |
       | surveyor  | 10 | potable | not see  |
       | surveyor  | 10 | fire    | not see  |
       | surveyor  | 5  | potable | see      |
+      | surveyor  | 1  | potable | see      |
+      | tester    | 1  | potable | see      |
       | tester    | 5  | potable | see      |
       | tester    | 10 | potable | see      |
       | pws_owner | 1  | potable | see      |

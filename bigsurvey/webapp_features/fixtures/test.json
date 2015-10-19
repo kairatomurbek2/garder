@@ -3582,42 +3582,6 @@
     "serial_no": "",
     "site": 5,
     "replace_date": null,
-    "bp_type_required": "RP",
-    "hazard_type": 14,
-    "longitude": 0.0,
-    "installed_properly": false,
-    "installer": "",
-    "photo_thumb": "",
-    "is_present": true,
-    "bp_type_present": null,
-    "cc_present": false,
-    "service_type": 3,
-    "bp_size": null,
-    "model_no": "",
-    "aux_water": false,
-    "location2": "",
-    "location1": "Washington",
-    "latitude": 0.0,
-    "manufacturer": null,
-    "regulation_type": null,
-    "notes": "",
-    "install_date": null,
-    "assembly_status": 1,
-    "assembly_location": 2,
-    "due_install_test_date": null,
-    "additives_present": false
-  },
-  "model": "webapp.hazard",
-  "pk": 3
-},
-{
-  "fields": {
-    "orientation": null,
-    "pump_present": false,
-    "photo": "",
-    "serial_no": "",
-    "site": 1,
-    "replace_date": null,
     "bp_type_required": null,
     "hazard_type": 1,
     "longitude": 0.0,
@@ -3640,6 +3604,42 @@
     "install_date": null,
     "assembly_status": null,
     "assembly_location": null,
+    "due_install_test_date": null,
+    "additives_present": false
+  },
+  "model": "webapp.hazard",
+  "pk": 3
+},
+{
+  "fields": {
+    "orientation": null,
+    "pump_present": false,
+    "photo": "",
+    "serial_no": "",
+    "site": 1,
+    "replace_date": null,
+    "bp_type_required": "RP",
+    "hazard_type": 14,
+    "longitude": 0.0,
+    "installed_properly": false,
+    "installer": "",
+    "photo_thumb": "",
+    "is_present": true,
+    "bp_type_present": null,
+    "cc_present": false,
+    "service_type": 3,
+    "bp_size": null,
+    "model_no": "",
+    "aux_water": false,
+    "location2": "",
+    "location1": "Washington",
+    "latitude": 0.0,
+    "manufacturer": null,
+    "regulation_type": null,
+    "notes": "",
+    "install_date": null,
+    "assembly_status": 1,
+    "assembly_location": 2,
     "due_install_test_date": null,
     "additives_present": false
   },
@@ -4682,6 +4682,11 @@
         "hazard"
       ],
       [
+        "access_to_multiple_pws_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
         "add_hazard",
         "webapp",
         "hazard"
@@ -4732,6 +4737,11 @@
         "letter"
       ],
       [
+        "multiple_pws_letter_access",
+        "webapp",
+        "letter"
+      ],
+      [
         "send_letter",
         "webapp",
         "letter"
@@ -4767,6 +4777,11 @@
         "pws"
       ],
       [
+        "own_multiple_pws",
+        "webapp",
+        "pws"
+      ],
+      [
         "change_pws",
         "webapp",
         "pws"
@@ -4783,6 +4798,11 @@
       ],
       [
         "access_to_pws_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_multiple_pws_sites",
         "webapp",
         "site"
       ],
@@ -4812,6 +4832,11 @@
         "survey"
       ],
       [
+        "access_to_multiple_pws_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
         "add_survey",
         "webapp",
         "survey"
@@ -4828,6 +4853,11 @@
       ],
       [
         "access_to_pws_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "access_to_multiple_pws_tests",
         "webapp",
         "test"
       ],

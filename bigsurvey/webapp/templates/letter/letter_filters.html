@@ -11,7 +11,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if perms.webapp.full_letter_access %}
+                {% if perms.webapp.full_letter_access or perms.webapp.multiple_pws_letter_access %}
                     <tr class="uk-text-center">
                         <td>
                             {{ letter_filter.form.pws.label }}

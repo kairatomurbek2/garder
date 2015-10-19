@@ -1,6 +1,7 @@
 @test_edit
 Feature: Test editing
   @keep_db
+  @test_access
   Scenario Outline: Test editing page access
     Given I logged in as "<role>"
     When I directly open "test_edit" page with pk "<pk>"
@@ -15,10 +16,10 @@ Feature: Test editing
     | surveyor  | 2  | see      |
     | tester    | 2  | not see  |
     | tester    | 1  | not see  |
-    | root      | 4  | not see  |
+    | root      | 4  | see      |
     | admin     | 4  | see      |
     | surveyor  | 4  | see      |
-    | tester    | 4  | see      |
+    | tester    | 4  | not see  |
     | pws_owner | 1  | not see  |
     | pws_owner | 2  | not see  |
     | pws_owner | 4  | see      |
