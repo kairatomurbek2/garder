@@ -219,10 +219,24 @@ class EmployeeFormNoPWS(forms.ModelForm):
 
 
 class UserAddForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    groups = forms.ModelMultipleChoiceField(queryset=models.Group.objects.all(), required=True)
+
     def save(self, commit=True):
         self.instance = super(UserAddForm, self).save()
         self.save_m2m()
         return self.instance
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if models.User.objects.filter(email=data).exists():
+            raise ValidationError(
+                _("User with such email already exists"),
+                code='email_used'
+            )
+        return data
 
     class Meta:
         model = models.User
@@ -240,6 +254,10 @@ class UserEditForm(UserChangeForm):
     password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput, required=False,
                                 help_text=_("Enter the same password as above, for verification."))
     is_active = forms.BooleanField(label=_("Active"), widget=forms.CheckboxInput, required=False, initial=True)
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    groups = forms.ModelMultipleChoiceField(queryset=models.Group.objects.all(), required=True)
 
     def save(self, commit=True):
         password = self.cleaned_data.get('password1')
@@ -259,6 +277,16 @@ class UserEditForm(UserChangeForm):
 
     def clean_password(self):
         return self.initial.get('password')
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        users_with_email = models.User.objects.filter(email=data)
+        if users_with_email.exists() and self.instance not in users_with_email:
+            raise ValidationError(
+                _("User with such email already exists"),
+                code='email_used'
+            )
+        return data
 
     class Meta:
         model = models.User
