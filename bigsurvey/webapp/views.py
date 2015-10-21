@@ -831,12 +831,14 @@ class UserEditView(UserBaseFormView):
                 self.user_object.save()
                 self.employee_object.save()
             else:
-                self.user_object = user_form.save()
+                self.user_object = user_form.save(commit=False)
+                pws_to_save = user.employee.pws.all().exclude(id__in=self.request.user.employee.pws.all()) | employee_form.cleaned_data['pws']
+                employee_form.cleaned_data['pws'] = pws_to_save
+                self.employee_object = employee_form.save()
                 testers_group = models.Group.objects.get(name=Groups.tester)
                 if testers_group in self.user_object.groups.all() and not self.request.user.has_perm('webapp.access_to_all_users'):
                     self.user_object.is_active = True
-                    self.user_object.save()
-                self.employee_object = employee_form.save()
+                self.user_object.save()
             messages.success(self.request, self.success_message)
             return redirect(self.get_success_url())
         else:
