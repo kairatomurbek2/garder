@@ -811,7 +811,7 @@ class UserEditView(UserBaseFormView):
         context = super(UserEditView, self).get_context_data(**kwargs)
         user = self.user_model.objects.get(pk=self.kwargs['pk'])
         testers_group = models.Group.objects.get(name=Groups.tester)
-        if testers_group not in user.groups.all():
+        if testers_group not in user.groups.all() or self.request.user.has_perm('webapp.access_to_all_users'):
             context['display_is_active'] = True
         return context
 
@@ -832,6 +832,10 @@ class UserEditView(UserBaseFormView):
                 self.employee_object.save()
             else:
                 self.user_object = user_form.save()
+                testers_group = models.Group.objects.get(name=Groups.tester)
+                if testers_group in self.user_object.groups.all() and not self.request.user.has_perm('webapp.access_to_all_users'):
+                    self.user_object.is_active = True
+                    self.user_object.save()
                 self.employee_object = employee_form.save()
             messages.success(self.request, self.success_message)
             return redirect(self.get_success_url())

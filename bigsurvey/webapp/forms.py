@@ -239,6 +239,7 @@ class UserEditForm(UserChangeForm):
                                 help_text=_("If you do not want to change password leave this field blank"))
     password2 = forms.CharField(label=_("Password confirmation"), widget=forms.PasswordInput, required=False,
                                 help_text=_("Enter the same password as above, for verification."))
+    is_active = forms.BooleanField(label=_("Active"), widget=forms.CheckboxInput, required=False, initial=True)
 
     def save(self, commit=True):
         password = self.cleaned_data.get('password1')
