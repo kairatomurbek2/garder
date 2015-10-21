@@ -10,6 +10,8 @@ from main.parameters import *
 from utils import photo_util
 import fields
 
+import uuid
+
 
 class SourceType(models.Model):
     source_type = models.CharField(max_length=50, verbose_name=_("Source Type"))
@@ -713,6 +715,19 @@ class ImportLog(models.Model):
             ('access_to_all_import_logs', _('Has access to all Import Logs')),
             ('access_to_pws_import_logs', _('Has access to PWS\'s Import Logs')),
         )
+
+
+class Invite(models.Model):
+    invite_date = models.DateField(auto_now_add=True, verbose_name=_('Invite sending date'))
+    invite_from = models.ForeignKey(User, verbose_name=_('Invite sender'), related_name='invites_sent')
+    invite_to = models.ForeignKey(User, verbose_name=_('Invited tester'), related_name='invites_received')
+    invite_pws = models.ManyToManyField(PWS, verbose_name=_('Invite to PWS'))
+    accepted = models.BooleanField(default=False)
+    code = models.CharField(max_length=64, default=uuid.uuid4)
+
+    class Meta:
+        verbose_name = _('Invite')
+        verbose_name_plural = _('Invites')
 
 
 import signals

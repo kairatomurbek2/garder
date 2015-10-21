@@ -3,7 +3,8 @@ import json
 from smtplib import SMTPException
 import time
 import os
-
+from datetime import datetime
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.db import connection
@@ -1340,15 +1341,53 @@ class TesterSearchView(BaseFormView):
         return None
 
     def invite_form_valid(self, invite_form):
+        invite = models.Invite.objects.create(
+            invite_from=self.request.user,
+            invite_to=self.tester,
+        )
         for pws in invite_form.cleaned_data['pws']:
-            self.tester.employee.pws.add(pws)
-            self.tester.employee.save()
+            invite.invite_pws.add(pws)
+        invite.save()
+        self.__send_email_to_tester()
         messages.success(self.request, Messages.TesterInvite.tester_invite_success)
         return HttpResponseRedirect(reverse('webapp:tester_list'))
+
+    def __send_email_to_tester(self):
+        pass
 
     def invite_form_invalid(self, form, invite_form):
         messages.error(self.request, Messages.TesterInvite.tester_invite_error)
         return self.render_to_response({'form': form, 'tester': self.tester, 'invite_form': invite_form})
+
+
+class TesterInviteAcceptView(BaseTemplateView):
+    template_name = 'user/tester_accept.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            invite = models.Invite.objects.get(code=request.GET.get('code'))
+        except ObjectDoesNotExist:
+            raise Http404
+        if invite.invite_to != request.user:
+            raise Http404
+        if invite.accepted:
+            invite_message = "You have already accepted this invite."
+        elif (datetime.now().date() - invite.invite_date).days > 3:
+            invite_message = "Invite expired. Please, contact PWS administrator to receive new invite."
+        else:
+            for pws in invite.invite_pws.all():
+                invite.invite_to.employee.pws.add(pws)
+            invite.invite_to.employee.save()
+            invite.accepted = True
+            invite.save()
+            invite_message = "Invite successfully accepted."
+        self.__send_email_to_admin(invite.invite_from)
+        context = self.get_context_data(**kwargs)
+        context['invite_accept_text'] = invite_message
+        return self.render_to_response(context)
+
+    def __send_email_to_admin(self, to):
+        pass
 
 
 class UserDetailView(BaseTemplateView):
