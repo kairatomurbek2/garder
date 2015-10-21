@@ -372,3 +372,20 @@ class PaymentForm(forms.Form):
         queryset = kwargs.pop('queryset', models.Test.objects.none())
         super(PaymentForm, self).__init__(*args, **kwargs)
         self.fields['tests'].queryset = queryset
+
+
+class TesterSearchForm(forms.Form):
+    email = forms.EmailField(required=True)
+    cert_number = forms.CharField(max_length=128, required=False)
+
+    prefix = 'search'
+
+class TesterInviteForm(forms.Form):
+    pws = forms.ModelMultipleChoiceField(queryset=models.PWS.objects.none(), required=True)
+
+    prefix = 'invite'
+
+    def __init__(self, *args, **kwargs):
+        queryset = kwargs.pop('queryset', models.PWS.objects.none())
+        super(TesterInviteForm, self).__init__(*args, **kwargs)
+        self.fields['pws'].queryset = queryset

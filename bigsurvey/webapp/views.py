@@ -24,7 +24,6 @@ from django.utils.translation import ungettext as __
 from django.core.mail import EmailMessage
 import paypalrestsdk
 from paypalrestsdk.exceptions import ConnectionError
-
 from webapp import perm_checkers, models, forms, filters
 from main.parameters import Messages, Groups, TESTER_ASSEMBLY_STATUSES, ADMIN_GROUPS, OWNER_GROUPS, OTHER, DATEFORMAT_HELP, SITE_STATUS, BP_TYPE
 from webapp.exceptions import PaymentWasNotCreatedError
@@ -848,8 +847,9 @@ class UserEditView(UserBaseFormView):
         return self.user_form_class(instance=self.user_object, **self.get_form_kwargs())
 
     def get_employee_form(self):
+        tester_group = models.Group.objects.get(name=Groups.tester)
         self.employee_object = self.employee_model.objects.get(user=self.user_object)
-        if self.request.user.has_perm('webapp.access_to_all_users'):
+        if self.request.user.has_perm('webapp.access_to_all_users') or tester_group in self.user_object.groups.all():
             return forms.EmployeeFormNoPWS(instance=self.employee_object, **self.get_form_kwargs())
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
 
@@ -1289,6 +1289,66 @@ class TesterListView(BaseTemplateView):
             return models.User.objects.filter(groups__name=Groups.tester)
         if user.has_perm('webapp.access_to_pws_users'):
             return models.User.objects.filter(groups__name=Groups.tester, employee__pws__in=user.employee.pws.all())
+
+
+class TesterSearchView(BaseFormView):
+    template_name = 'user/tester_search.html'
+    form_class = forms.TesterSearchForm
+    permission = 'webapp.browse_user'
+    tester = None
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(**self.get_form_kwargs())
+        if form.is_valid():
+            valid = self.form_valid(form)
+            if 'invite_tester' in request.POST:
+                invite_form = forms.TesterInviteForm(queryset=self.request.user.employee.pws.all(), **self.get_form_kwargs())
+                if invite_form.is_valid():
+                    return self.invite_form_valid(invite_form)
+                return self.invite_form_invalid(form, invite_form)
+            return valid
+        return self.form_invalid(form)
+
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        cert_number = form.cleaned_data['cert_number']
+        self.tester = self.__get_tester(email, cert_number)
+        invite_form = None
+        if self.tester:
+            if set(self.request.user.employee.pws.all()).issubset(self.tester.employee.pws.all()):
+                messages.warning(self.request, Messages.TesterInvite.tester_already_in_pws)
+            else:
+                invite_form = forms.TesterInviteForm(queryset=self.request.user.employee.pws.all())
+        else:
+            messages.error(self.request, Messages.TesterInvite.tester_not_found)
+        return self.render_to_response({'form': form, 'tester': self.tester, 'invite_form': invite_form})
+
+    def __get_tester(self, email, cert_number):
+        if cert_number:
+            testers = models.User.objects.filter(
+                groups__name=Groups.tester,
+                email=email,
+                employee__cert_number=cert_number
+            )
+        else:
+            testers = models.User.objects.filter(
+                groups__name=Groups.tester,
+                email=email,
+            )
+        if testers:
+            return testers.first()
+        return None
+
+    def invite_form_valid(self, invite_form):
+        for pws in invite_form.cleaned_data['pws']:
+            self.tester.employee.pws.add(pws)
+            self.tester.employee.save()
+        messages.success(self.request, Messages.TesterInvite.tester_invite_success)
+        return HttpResponseRedirect(reverse('webapp:tester_list'))
+
+    def invite_form_invalid(self, form, invite_form):
+        messages.error(self.request, Messages.TesterInvite.tester_invite_error)
+        return self.render_to_response({'form': form, 'tester': self.tester, 'invite_form': invite_form})
 
 
 class UserDetailView(BaseTemplateView):

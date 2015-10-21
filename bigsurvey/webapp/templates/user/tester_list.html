@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load i18n staticfiles pagination_tags widget_tweaks %}
+{% block menu %}
+    <li><a href="{% url 'webapp:tester_search' %}">{% trans "Invite Tester" %}</a></li>
+{% endblock %}
 {% block content %}
 {% autopaginate tester_filter.qs as filtered_testers 20 %}
-<div class="wrapper">
-    {% include 'messages.html' %}
-</div>
 <div class="uk-grid">
     {% include 'user/tester_filters.html' %}
     <div class="wrapper uk-width-4-5 filters-offset">
+        <div class="wrapper">
+            {% include 'messages.html' %}
+        </div>
         {% paginate %}
         <table class="uk-table uk-table-hover">
             <thead>

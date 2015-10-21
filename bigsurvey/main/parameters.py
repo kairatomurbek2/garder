@@ -265,6 +265,12 @@ class Messages:
         editing_success = _('User was successfully updated')
         editing_error = _('Error while submitting form')
 
+    class TesterInvite:
+        tester_not_found = _('Tester with such email and certificate number not found')
+        tester_already_in_pws = _('Selected tester is employee of your PWS already')
+        tester_invite_error = _('Error while submitting form')
+        tester_invite_success = _('Invite have been sent to selected tester\'s email. He should accept it in 3 days')
+
     class Letter:
         adding_success = _('Letter was successfully created')
         adding_error = _('Error while submitting form')
