@@ -5542,7 +5542,7 @@
 {
   "fields": {
     "city": "tester city",
-    "pws": [9],
+    "pws": [6, 9],
     "zip": "tester zip",
     "has_licence_for_installation": true,
     "phone2": "",

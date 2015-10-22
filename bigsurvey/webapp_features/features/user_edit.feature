@@ -66,3 +66,11 @@ Feature: User editing
         | surveyor |
         | tester   |
 
+    @admin_tester_edit
+    # checks that tester is not removed from PWS which admin can not select
+    Scenario: Admin edits tester
+      Given I logged in as "admin"
+      And I open "user_edit" page with pk "2"
+      And I submit "user" form
+      When I open "user_list" page
+      Then I should see "DOC121"
