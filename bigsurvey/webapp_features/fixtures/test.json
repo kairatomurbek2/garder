@@ -4941,7 +4941,7 @@
     ],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$I4iwX5QbCR4Y$5QMZNxhNEET9GCF3jscIPQFlTCkMXcAVjr9wnAAg+io=",
-    "email": "",
+    "email": "surv@y.or",
     "date_joined": "2015-01-15T10:55:12Z"
   },
   "model": "auth.user",
@@ -4963,7 +4963,7 @@
     ],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
-    "email": "",
+    "email": "admin@mail.ru",
     "date_joined": "2015-01-15T10:55:45Z"
   },
   "model": "auth.user",
@@ -4994,8 +4994,8 @@
 {
   "fields": {
     "username": "tester_without_pws",
-    "first_name": "",
-    "last_name": "",
+    "first_name": "tester_no_pws",
+    "last_name": "tester_no_pws",
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
@@ -5007,7 +5007,7 @@
     ],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$9aPtgV8Ggjfn$IfA9z9levvZAKCBIgWGJs3K9nppQXwEuKryj7X4HsMk=",
-    "email": "",
+    "email": "nopws@tester.com",
     "date_joined": "2015-02-17T08:53:58Z"
   },
   "model": "auth.user",

@@ -45,6 +45,7 @@ class Urls:
     import_log_sites = '/import-log/%s/%s/'
     letter_type_edit = '/letter_type/%s/edit/'
     letter_type_list = '/letter_type/'
+    tester_invite = '/tester-search/'
 
 
 class Logins:
