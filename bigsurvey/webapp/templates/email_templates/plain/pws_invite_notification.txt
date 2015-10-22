@@ -1,0 +1,13 @@
+Hello, Dear {{ invite.invite_to.get_full_name }}
+
+You received this message because you are registered Tester at Backflow Software Solutions.
+
+You have been invited to collaborate with following Private Water Systems:
+{% for pws in invite.invite_pws.all %}
+ * {{ pws.name }}
+{% endfor %}
+
+Please, follow {{ base_url }}{% url "webapp:invite_accept" %}?code={{ invite.code }} and log in the BSS site with your username and password to accept invitation.
+
+If you do not want to accept invitation just ignore this message.
+Invitation will be active for 3 days.

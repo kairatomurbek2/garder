@@ -1,0 +1,3 @@
+Hello, Dear {{ invite.invite_from.get_full_name }}
+
+Notifying you that tester {{ invite.invite_to.get_full_name }} had accepted your invitation to collaborate.

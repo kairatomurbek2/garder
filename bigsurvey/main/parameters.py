@@ -270,6 +270,7 @@ class Messages:
         tester_already_in_pws = _('Selected tester is employee of your PWS already')
         tester_invite_error = _('Error while submitting form')
         tester_invite_success = _('Invite have been sent to selected tester\'s email. He should accept it in 3 days')
+        tester_invite_failed = _('Failed to send invite. Please, try again later.')
 
     class Letter:
         adding_success = _('Letter was successfully created')

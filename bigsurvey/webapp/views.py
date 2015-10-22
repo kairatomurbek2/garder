@@ -1354,12 +1354,29 @@ class TesterSearchView(BaseFormView):
         for pws in invite_form.cleaned_data['pws']:
             invite.invite_pws.add(pws)
         invite.save()
-        self.__send_email_to_tester()
-        messages.success(self.request, Messages.TesterInvite.tester_invite_success)
+        self.__send_email_to_tester(invite)
         return HttpResponseRedirect(reverse('webapp:tester_list'))
 
-    def __send_email_to_tester(self):
-        pass
+    def __send_email_to_tester(self, invite):
+        context = {
+            'invite': invite,
+            'base_url': settings.HOST
+        }
+        html_template = 'email_templates/html/pws_invite_notification.html'
+        plain_template = 'email_templates/plain/pws_invite_notification.txt'
+        subject = 'Invitation from PWS'
+        html_content = render_to_string(html_template, context)
+        plain_content = render_to_string(plain_template, context)
+        try:
+            self.tester.email_user(
+                subject=subject,
+                message=plain_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                html_message=html_content
+            )
+            messages.success(self.request, Messages.TesterInvite.tester_invite_success)
+        except SMTPException:
+            messages.error(self.request, Messages.TesterInvite.tester_invite_failed)
 
     def invite_form_invalid(self, form, invite_form):
         messages.error(self.request, Messages.TesterInvite.tester_invite_error)
@@ -1387,13 +1404,29 @@ class TesterInviteAcceptView(BaseTemplateView):
             invite.accepted = True
             invite.save()
             invite_message = "Invite successfully accepted."
-        self.__send_email_to_admin(invite.invite_from)
+        self.__send_email_to_admin(invite)
         context = self.get_context_data(**kwargs)
         context['invite_accept_text'] = invite_message
         return self.render_to_response(context)
 
-    def __send_email_to_admin(self, to):
-        pass
+    def __send_email_to_admin(self, invite):
+        context = {
+            'invite': invite,
+        }
+        html_template = 'email_templates/html/pws_invite_accept_notification.html'
+        plain_template = 'email_templates/plain/pws_invite_accept_notification.txt'
+        subject = 'Invitation have been accepted'
+        html_content = render_to_string(html_template, context)
+        plain_content = render_to_string(plain_template, context)
+        try:
+            invite.invite_from.email_user(
+                subject=subject,
+                message=plain_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                html_message=html_content
+            )
+        except SMTPException:
+            pass
 
 
 class UserDetailView(BaseTemplateView):

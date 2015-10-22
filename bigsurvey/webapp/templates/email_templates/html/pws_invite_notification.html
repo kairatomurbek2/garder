@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<h3>
+    Hello, Dear {{ invite.invite_to.get_full_name }}
+</h3>
+
+<p>You received this message because you are registered Tester at <a href="http://bss.bpsbr.com">
+    Backflow Software Solutions.
+</a></p>
+&nbsp;
+<p>You have been invited to collaborate with following Private Water Systems:</p>
+<ul>
+    {% for pws in invite.invite_pws.all %}
+        <li>{{ pws.name }}</li>
+    {% endfor %}
+</ul>
+&nbsp;
+<p>Please, follow <a href="{{ base_url }}{% url "webapp:invite_accept" %}?code={{ invite.code }}">This Link</a> and log in the BSS site with your username and password to accept invitation.</p>
+<p>If link is not working you may copy following link and paste it directly in your browser address bar:</p>
+&nbsp;
+<p><u>{{ base_url }}{% url "webapp:invite_accept" %}?code={{ invite.code }}</u></p>
+&nbsp;
+<p>If you do not want to accept invitation just ignore this message. Invite will be active for 3 days.</p>
+</body>
+</html>
