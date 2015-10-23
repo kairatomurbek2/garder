@@ -409,6 +409,7 @@ class TesterSearchForm(forms.Form):
 
     prefix = 'search'
 
+
 class TesterInviteForm(forms.Form):
     pws = forms.ModelMultipleChoiceField(queryset=models.PWS.objects.none(), required=True)
 

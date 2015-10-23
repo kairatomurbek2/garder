@@ -73,4 +73,4 @@ Feature: User editing
       And I open "user_edit" page with pk "2"
       And I submit "user" form
       When I open "user_list" page
-      Then I should see "DOC121"
+      Then I should see "PWS3"

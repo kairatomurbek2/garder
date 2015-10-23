@@ -1,6 +1,6 @@
 import django_filters
 import models
-from main.parameters import NEXT_DATE_FILTER_CHOICES, PAST_DATE_FILTER_CHOICES, Groups, BP_TYPE_CHOICES
+from main.parameters import NEXT_DATE_FILTER_CHOICES, PAST_DATE_FILTER_CHOICES, Groups, BP_TYPE_CHOICES, STATES_FILTER
 from datetime import datetime, timedelta
 from django.utils.translation import ugettext as _
 
@@ -130,6 +130,8 @@ class FilterActions(object):
                 'month': current_date + timedelta(days=30),
                 'year': current_date + timedelta(days=365),
             }
+            if value == 'never':
+                return sites.filter(next_survey_date=None)
             if value in dates:
                 return sites.filter(next_survey_date__range=[current_date, dates[value]])
             return sites
@@ -149,6 +151,12 @@ class FilterActions(object):
                 return sites.filter(last_survey_date=None)
             if value in dates:
                 return sites.filter(last_survey_date__lt=dates[value])
+            return sites
+
+        @staticmethod
+        def state(sites, value):
+            if value:
+                return sites.filter(state=value)
             return sites
 
     class Survey(object):
@@ -383,16 +391,35 @@ class FilterActions(object):
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
     cust_number = django_filters.CharFilter(lookup_type='icontains', label=_('Account Number'), name='cust_number')
-    address = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address'), name='address1')
-    site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
-    site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
+    cust_code = django_filters.ChoiceFilter(choices=FilterChoices.customer_code(), label=_('Customer Code'), name='cust_code')
+    cust_name = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Name'), name='cust_name')
+    street_number = django_filters.CharFilter(lookup_type='icontains', label=_('Street Number'), name='street_number')
+    address1 = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address 1'), name='address1')
+    address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address 2'), name='address2')
+    apt = django_filters.CharFilter(lookup_type='icontains', label=_('Service Apt'))
+    city = django_filters.CharFilter(lookup_type='icontains', label=_('Service City'))
+    state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Service State'), action=FilterActions.Site.state)
+    zip = django_filters.CharFilter(lookup_type='icontains', label=_('Service ZIP'))
+    cust_address1 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 1'))
+    cust_address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 2'))
+    cust_apt = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Apt'))
+    cust_city = django_filters.CharFilter(lookup_type='icontains', label=_('Customer City'))
+    cust_state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Customer State'), action=FilterActions.Site.state)
+    cust_zip = django_filters.CharFilter(lookup_type='icontains', label=_('Customer ZIP'))
     next_survey_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
                                                    action=FilterActions.Site.next_date,
-                                                   label=_('Next Survey Date'))
+                                                   label=_('Next Survey'))
     last_survey_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
                                                    action=FilterActions.Site.last_date,
-                                                   label=_('Last Survey older than'))
+                                                   label=_('Last Survey'))
     route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='exact')
+    meter_number = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Number'))
+    meter_size = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Size'))
+    meter_reading = django_filters.NumberFilter(label=_('Meter Reading'))
+    connect_date = django_filters.DateFilter(label=_('Connect Date'))
+    # they aren't displayed currently but may require them later
+    # site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
+    # site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
 
 
 class SurveyFilter(django_filters.FilterSet):

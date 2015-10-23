@@ -17,3 +17,11 @@
 .form-center {
     width: 90%;
 }
+
+.vertical-align-top {
+    vertical-align: top!important;
+}
+
+.opaque {
+    background-color: #FFF;
+}

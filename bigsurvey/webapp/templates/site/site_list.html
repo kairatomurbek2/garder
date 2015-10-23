@@ -1,177 +1,205 @@
 {% load i18n pagination_tags widget_tweaks staticfiles %}
 {% autopaginate site_filter.qs as filtered_sites 50 %}
 <div class="uk-grid">
-    {% include 'site/site_filters.html' %}
-
-    <div class="wrapper uk-width-4-5 filters-offset">
-        {% include 'messages.html' %}
-        {% if header %}
-            <div class="uk-alert">{{ header }}</div>
-        {% endif %}
-        <div class="pagination-wrapper">{% paginate %}</div>
-
-        <table class="uk-table big-table uk-table-hover fixed-headers">
-            <thead>
-            <tr class="table-border-bottom">
-                <th class="table-border-right">
-                    {% trans "ID" %}
-                </th>
-                <th>
-                    {% trans "PWSID" %}
-                </th>
-                <th>
-                    {% trans "Account Number" %}
-                </th>
-                <th>
-                    {% trans "Customer Code" %}
-                </th>
-                <th>
-                    {% trans "Customer Name" %}
-                </th>
-                <th>
-                    {% trans "Service Street Number" %}
-                </th>
-                <th>
-                    {% trans "Service Address Street" %}
-                </th>
-                <th>
-                    {% trans "Service Address 2" %}
-                </th>
-                <th>
-                    {% trans "Site Apt" %}
-                </th>
-                <th>
-                    {% trans "Service Town" %}
-                </th>
-                <th>
-                    {% trans "Service State" %}
-                </th>
-                <th>
-                    {% trans "Service Zip" %}
-                </th>
-                <th>
-                    {% trans "Customer Address 1" %}
-                </th>
-                <th>
-                    {% trans "Customer Address 2" %}
-                </th>
-                <th>
-                    {% trans "Customer Apt" %}
-                </th>
-                <th>
-                    {% trans "Customer City" %}
-                </th>
-                <th>
-                    {% trans "Customer State" %}
-                </th>
-                <th>
-                    {% trans "Customer Zip" %}
-                </th>
-                <th>
-                    {% trans "Seq. Route" %}
-                </th>
-                <th>
-                    {% trans "Meter Number" %}
-                </th>
-                <th>
-                    {% trans "Meter Size" %}
-                </th>
-                <th>
-                    {% trans "Meter Reading" %}
-                </th>
-                <th>
-                    {% trans "Connect Date" %}
-                </th>
-                <th>
-                    {% trans "Next Survey Date" %}
-                </th>
-                <th>
-                    {% trans "Last Survey Date" %}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for site in filtered_sites %}
-                <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}" data-id="{{ site.pk }}">
-                    <td class="table-border-right">{{ site.pk }}</td>
-                    <td>
-                        {{ site.pws.number }}
+    <form action="" method="get" name="site_filter" class="uk-form">
+        <div class="fixed filter-button-div">
+            <button class="uk-button uk-button-primary filter-button" type="submit">
+                {% trans "Apply Filters" %}
+            </button>
+        </div>
+        <div>
+            {% include 'messages.html' %}
+            {% if header %}
+                <div class="uk-alert">{{ header }}</div>
+            {% endif %}
+            <div class="pagination-wrapper">{% paginate %}</div>
+            <table class="uk-table big-table uk-table-hover fixed-headers" style="margin-top: 40px">
+                <thead>
+                <tr class="table-border-bottom">
+                    <th class="vertical-align-top table-border-right">
+                        {% trans "ID" %}
+                    </th>
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.pws.label }}</span>
+                        {{ site_filter.form.pws|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_number }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_number.label }}</span>
+                        {{ site_filter.form.cust_number|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_code }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_code.label }}</span>
+                        {{ site_filter.form.cust_code|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_name }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_name.label }}</span>
+                        {{ site_filter.form.cust_name|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.street_number }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.street_number.label }}</span>
+                        {{ site_filter.form.street_number|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.address1 }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.address1.label }}</span>
+                        {{ site_filter.form.address1|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.address2 }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.address2.label }}</span>
+                        {{ site_filter.form.address2|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.apt }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.apt.label }}</span>
+                        {{ site_filter.form.apt|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.city }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.city.label }}</span>
+                        {{ site_filter.form.city|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.state }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.state.label }}</span>
+                        {{ site_filter.form.state|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.zip }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.zip.label }}</span>
+                        {{ site_filter.form.zip|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_address1 }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_address1.label }}</span>
+                        {{ site_filter.form.cust_address1|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_address2 }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_address2.label }}</span>
+                        {{ site_filter.form.cust_address2|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_apt }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_apt.label }}</span>
+                        {{ site_filter.form.cust_apt|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_city }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_city.label }}</span>
+                        {{ site_filter.form.cust_city|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_state }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_state.label }}</span>
+                        {{ site_filter.form.cust_state|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.cust_zip }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.cust_zip.label }}</span>
+                        {{ site_filter.form.cust_zip|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.route }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.route.label }}</span>
+                        {{ site_filter.form.route|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.meter_number }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.meter_number.label }}</span>
+                        {{ site_filter.form.meter_number|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.meter_size }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.meter_size.label }}</span>
+                        {{ site_filter.form.meter_size|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.meter_reading }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.meter_reading.label }}</span>
+                        {{ site_filter.form.meter_reading|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.connect_date }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.connect_date.label }}</span>
+                        {{ site_filter.form.connect_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                     </td>
-                    <td>
-                        {{ site.next_survey_date }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.next_survey_date.label }}</span>
+                        {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
                     </td>
-                    <td>
-                        {{ site.last_survey_date }}
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.last_survey_date.label }}</span>
+                        {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
                     </td>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="pagination-wrapper">{% paginate %}</div>
-    </div>
+                </thead>
+                <tbody>
+                {% for site in filtered_sites %}
+                    <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}" data-id="{{ site.pk }}">
+                        <td class="table-border-right">{{ site.pk }}</td>
+                        <td>
+                            {{ site.pws.number }}
+                        </td>
+                        <td>
+                            {{ site.cust_number }}
+                        </td>
+                        <td>
+                            {{ site.cust_code }}
+                        </td>
+                        <td>
+                            {{ site.cust_name }}
+                        </td>
+                        <td>
+                            {{ site.street_number }}
+                        </td>
+                        <td>
+                            {{ site.address1 }}
+                        </td>
+                        <td>
+                            {{ site.address2 }}
+                        </td>
+                        <td>
+                            {{ site.apt }}
+                        </td>
+                        <td>
+                            {{ site.city }}
+                        </td>
+                        <td>
+                            {{ site.state }}
+                        </td>
+                        <td>
+                            {{ site.zip }}
+                        </td>
+                        <td>
+                            {{ site.cust_address1 }}
+                        </td>
+                        <td>
+                            {{ site.cust_address2 }}
+                        </td>
+                        <td>
+                            {{ site.cust_apt }}
+                        </td>
+                        <td>
+                            {{ site.cust_city }}
+                        </td>
+                        <td>
+                            {{ site.cust_state }}
+                        </td>
+                        <td>
+                            {{ site.cust_zip }}
+                        </td>
+                        <td>
+                            {{ site.route }}
+                        </td>
+                        <td>
+                            {{ site.meter_number }}
+                        </td>
+                        <td>
+                            {{ site.meter_size }}
+                        </td>
+                        <td>
+                            {{ site.meter_reading }}
+                        </td>
+                        <td>
+                            {{ site.connect_date }}
+                        </td>
+                        <td>
+                            {{ site.next_survey_date }}
+                        </td>
+                        <td>
+                            {{ site.last_survey_date }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination-wrapper">{% paginate %}</div>
+        </div>
+    </form>
 </div>
 <style>
     .clickable-row {
@@ -183,7 +211,7 @@
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
     <script>
         $(document).ready(function () {
-            var navbarHeight = parseInt(navbar.height());
+            var navbarHeight = parseInt(navbar.height() + 40);
 
             $('.fixed-headers').floatThead({
                 scrollingTop: navbarHeight

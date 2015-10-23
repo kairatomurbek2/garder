@@ -229,3 +229,12 @@ ul.test-form-ul {
 .pws_logo {
     max-height: 250px;
 }
+
+.filter-button-div {
+    width: 100%;
+    background-color: #FFF;
+}
+
+.filter-button {
+    margin: 10px 10px 0;
+}
