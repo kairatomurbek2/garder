@@ -177,6 +177,182 @@
 },
 {
   "fields": {
+    "username": "cdugas",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 9
+},
+{
+  "fields": {
+    "username": "dlouque",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 10
+},
+{
+  "fields": {
+    "username": "rdufrene",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 11
+},
+{
+  "fields": {
+    "username": "rmeyer",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 12
+},
+{
+  "fields": {
+    "username": "dmccann",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 13
+},
+{
+  "fields": {
+    "username": "mjacaruso",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 14
+},
+{
+  "fields": {
+    "username": "mvitale",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 15
+},
+{
+  "fields": {
+    "username": "ncarter",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-02-25T06:41:22Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$WGOLJU2TasgS$fSex6zucPhmScYsc6dlWKt2tzCOGEqn9x6X63JSQtIQ=",
+    "email": "",
+    "date_joined": "2015-02-25T06:41:22Z"
+  },
+  "model": "auth.user",
+  "pk": 16
+},
+{
+  "fields": {
     "username": "superadmin",
     "first_name": "",
     "last_name": "",
@@ -195,7 +371,7 @@
     "date_joined": "2015-03-09T08:25:27Z"
   },
   "model": "auth.user",
-  "pk": 9
+  "pk": 17
 },
 {
   "fields": {
@@ -217,7 +393,7 @@
     "date_joined": "2015-03-09T08:25:54Z"
   },
   "model": "auth.user",
-  "pk": 10
+  "pk": 18
 },
 {
   "fields": {
@@ -239,7 +415,7 @@
     "date_joined": "2015-03-09T08:26:54Z"
   },
   "model": "auth.user",
-  "pk": 11
+  "pk": 19
 },
 {
   "fields": {
@@ -261,7 +437,7 @@
     "date_joined": "2015-03-09T08:27:26Z"
   },
   "model": "auth.user",
-  "pk": 12
+  "pk": 20
 },
 {
   "fields": {
@@ -470,6 +646,198 @@
     "state": null,
     "test_last_cert": null,
     "user": [
+      "cdugas"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 9
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "dlouque"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 10
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "rdufrene"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 11
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "rmeyer"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 12
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "dmccann"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 13
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "mjacaruso"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 14
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "mvitale"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 15
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
+      "ncarter"
+    ],
+    "address": "USA",
+    "cert_date": null,
+    "test_manufacturer": null
+  },
+  "model": "webapp.employee",
+  "pk": 16
+},
+{
+  "fields": {
+    "city": "",
+    "pws": null,
+    "zip": "",
+    "phone2": "",
+    "cert_number": null,
+    "company": "",
+    "phone1": "",
+    "test_serial": null,
+    "cert_expires": null,
+    "test_model": null,
+    "state": null,
+    "test_last_cert": null,
+    "user": [
       "superadmin"
     ],
     "address": "super address",
@@ -477,7 +845,7 @@
     "test_manufacturer": null
   },
   "model": "webapp.employee",
-  "pk": 9
+  "pk": 17
 },
 {
   "fields": {
@@ -501,7 +869,7 @@
     "test_manufacturer": null
   },
   "model": "webapp.employee",
-  "pk": 10
+  "pk": 18
 },
 {
   "fields": {
@@ -525,7 +893,7 @@
     "test_manufacturer": null
   },
   "model": "webapp.employee",
-  "pk": 11
+  "pk": 19
 },
 {
   "fields": {
@@ -549,6 +917,6 @@
     "test_manufacturer": null
   },
   "model": "webapp.employee",
-  "pk": 12
+  "pk": 20
 }
 ]

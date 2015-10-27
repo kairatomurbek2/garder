@@ -6,14 +6,14 @@
             <button class="uk-button uk-button-primary filter-button" type="submit">
                 {% trans "Apply Filters" %}
             </button>
+            {% paginate %}
         </div>
-        <div>
+        <div id="table_div">
             {% include 'messages.html' %}
             {% if header %}
                 <div class="uk-alert">{{ header }}</div>
             {% endif %}
-            <div class="pagination-wrapper">{% paginate %}</div>
-            <table class="uk-table big-table uk-table-hover fixed-headers" style="margin-top: 40px">
+            <table class="uk-table big-table uk-table-hover fixed-headers">
                 <thead>
                 <tr class="table-border-bottom">
                     <th class="vertical-align-top table-border-right">
@@ -197,7 +197,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <div class="pagination-wrapper">{% paginate %}</div>
         </div>
     </form>
 </div>
@@ -211,8 +210,8 @@
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
     <script>
         $(document).ready(function () {
-            var navbarHeight = parseInt(navbar.height() + 40);
-
+            var navbarHeight = parseInt(navbar.height() + fixedDiv.height());
+            $("#table_div").css("margin-top", fixedDiv.height() + "px");
             $('.fixed-headers').floatThead({
                 scrollingTop: navbarHeight
             });

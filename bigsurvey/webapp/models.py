@@ -194,7 +194,7 @@ class AssemblyLocation(models.Model):
 
 
 class AssemblyStatus(models.Model):
-    assembly_status = models.CharField(max_length=20, verbose_name=_("Assembly Status"))
+    assembly_status = models.CharField(max_length=50, verbose_name=_("Assembly Status"))
 
     def __unicode__(self):
         return u"%s" % self.assembly_status
@@ -410,8 +410,8 @@ class Site(models.Model):
                                related_name="sites", help_text=_("Number of Floors"))
     interconnection_point = models.ForeignKey(ICPointType, verbose_name=_("Interconnection Point"), blank=True,
                                               null=True, related_name="sites", help_text=_("Interconnection Point Type"))
-    meter_number = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Meter Number"), help_text=_("Meter Number"))
-    meter_size = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Meter Size"), help_text=_("Meter Size"))
+    meter_number = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Meter Number"), help_text=_("Meter Number"))
+    meter_size = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Meter Size"), help_text=_("Meter Size"))
     meter_reading = models.FloatField(blank=True, null=True, verbose_name=_("Meter Reading"), help_text=_("Meter Reading"))
     route = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Seq. Route"), help_text=_("Sequence Route"))
     potable_present = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Potable Present"), help_text=_("Is Potable connection present"))

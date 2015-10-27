@@ -1,0 +1,1338 @@
+[
+{
+  "fields": {
+    "source_type": "Public Water Supply and Private Well"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 1
+},
+{
+  "fields": {
+    "source_type": "Private Well"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 2
+},
+{
+  "fields": {
+    "source_type": "Public Water Supply"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 3
+},
+{
+  "fields": {
+    "source_type": "Public Water Supply and Pond, Stream, Bay, etc"
+  },
+  "model": "webapp.sourcetype",
+  "pk": 4
+},
+{
+  "fields": {
+    "site_type": "School"
+  },
+  "model": "webapp.sitetype",
+  "pk": 1
+},
+{
+  "fields": {
+    "site_type": "Irrigation"
+  },
+  "model": "webapp.sitetype",
+  "pk": 2
+},
+{
+  "fields": {
+    "site_type": "Multi-Family"
+  },
+  "model": "webapp.sitetype",
+  "pk": 3
+},
+{
+  "fields": {
+    "site_type": "Offices"
+  },
+  "model": "webapp.sitetype",
+  "pk": 4
+},
+{
+  "fields": {
+    "site_type": "Pest Exterminator"
+  },
+  "model": "webapp.sitetype",
+  "pk": 5
+},
+{
+  "fields": {
+    "site_type": "Pharmacy"
+  },
+  "model": "webapp.sitetype",
+  "pk": 6
+},
+{
+  "fields": {
+    "site_type": "Pool"
+  },
+  "model": "webapp.sitetype",
+  "pk": 7
+},
+{
+  "fields": {
+    "site_type": "Realtor"
+  },
+  "model": "webapp.sitetype",
+  "pk": 8
+},
+{
+  "fields": {
+    "site_type": "Restaurant"
+  },
+  "model": "webapp.sitetype",
+  "pk": 9
+},
+{
+  "fields": {
+    "site_type": "Mortuary"
+  },
+  "model": "webapp.sitetype",
+  "pk": 10
+},
+{
+  "fields": {
+    "site_type": "Retirement Home"
+  },
+  "model": "webapp.sitetype",
+  "pk": 11
+},
+{
+  "fields": {
+    "site_type": "Medical"
+  },
+  "model": "webapp.sitetype",
+  "pk": 12
+},
+{
+  "fields": {
+    "site_type": "Storage Facility"
+  },
+  "model": "webapp.sitetype",
+  "pk": 13
+},
+{
+  "fields": {
+    "site_type": "Video Rental"
+  },
+  "model": "webapp.sitetype",
+  "pk": 14
+},
+{
+  "fields": {
+    "site_type": "Church"
+  },
+  "model": "webapp.sitetype",
+  "pk": 15
+},
+{
+  "fields": {
+    "site_type": "Catering"
+  },
+  "model": "webapp.sitetype",
+  "pk": 16
+},
+{
+  "fields": {
+    "site_type": "Chiropractic"
+  },
+  "model": "webapp.sitetype",
+  "pk": 17
+},
+{
+  "fields": {
+    "site_type": "Car Wash"
+  },
+  "model": "webapp.sitetype",
+  "pk": 18
+},
+{
+  "fields": {
+    "site_type": "Business Office"
+  },
+  "model": "webapp.sitetype",
+  "pk": 19
+},
+{
+  "fields": {
+    "site_type": "Beauty Salon/Barber"
+  },
+  "model": "webapp.sitetype",
+  "pk": 20
+},
+{
+  "fields": {
+    "site_type": "Retail"
+  },
+  "model": "webapp.sitetype",
+  "pk": 21
+},
+{
+  "fields": {
+    "site_type": "Home Owners Association"
+  },
+  "model": "webapp.sitetype",
+  "pk": 22
+},
+{
+  "fields": {
+    "site_type": "Dialysis Clinic"
+  },
+  "model": "webapp.sitetype",
+  "pk": 23
+},
+{
+  "fields": {
+    "site_type": "Doctors Office"
+  },
+  "model": "webapp.sitetype",
+  "pk": 24
+},
+{
+  "fields": {
+    "site_type": "Dry Cleaners"
+  },
+  "model": "webapp.sitetype",
+  "pk": 25
+},
+{
+  "fields": {
+    "site_type": "Fast Food"
+  },
+  "model": "webapp.sitetype",
+  "pk": 26
+},
+{
+  "fields": {
+    "site_type": "Fireline"
+  },
+  "model": "webapp.sitetype",
+  "pk": 27
+},
+{
+  "fields": {
+    "site_type": "Food Processing"
+  },
+  "model": "webapp.sitetype",
+  "pk": 28
+},
+{
+  "fields": {
+    "site_type": "Office W/ Washerteria"
+  },
+  "model": "webapp.sitetype",
+  "pk": 29
+},
+{
+  "fields": {
+    "site_type": "Gas Station"
+  },
+  "model": "webapp.sitetype",
+  "pk": 30
+},
+{
+  "fields": {
+    "site_type": "Governmental"
+  },
+  "model": "webapp.sitetype",
+  "pk": 31
+},
+{
+  "fields": {
+    "site_type": "Motels/Hotels"
+  },
+  "model": "webapp.sitetype",
+  "pk": 32
+},
+{
+  "fields": {
+    "site_type": "Health Club"
+  },
+  "model": "webapp.sitetype",
+  "pk": 33
+},
+{
+  "fields": {
+    "site_type": "Department Store"
+  },
+  "model": "webapp.sitetype",
+  "pk": 34
+},
+{
+  "fields": {
+    "site_type": "Industrial"
+  },
+  "model": "webapp.sitetype",
+  "pk": 35
+},
+{
+  "fields": {
+    "site_type": "Dentist"
+  },
+  "model": "webapp.sitetype",
+  "pk": 36
+},
+{
+  "fields": {
+    "site_type": "Convenience"
+  },
+  "model": "webapp.sitetype",
+  "pk": 37
+},
+{
+  "fields": {
+    "site_type": "Residential"
+  },
+  "model": "webapp.sitetype",
+  "pk": 38
+},
+{
+  "fields": {
+    "site_type": "Commercial"
+  },
+  "model": "webapp.sitetype",
+  "pk": 39
+},
+{
+  "fields": {
+    "site_type": "Bar and Grill"
+  },
+  "model": "webapp.sitetype",
+  "pk": 40
+},
+{
+  "fields": {
+    "site_type": "Irrigation and pool"
+  },
+  "model": "webapp.sitetype",
+  "pk": 41
+},
+{
+  "fields": {
+    "site_type": "Laundromat"
+  },
+  "model": "webapp.sitetype",
+  "pk": 42
+},
+{
+  "fields": {
+    "site_type": "Grocery/Supermarket"
+  },
+  "model": "webapp.sitetype",
+  "pk": 43
+},
+{
+  "fields": {
+    "site_type": "Auxiliary Water"
+  },
+  "model": "webapp.sitetype",
+  "pk": 44
+},
+{
+  "fields": {
+    "site_type": "Animal Hospital / Veterinarian"
+  },
+  "model": "webapp.sitetype",
+  "pk": 45
+},
+{
+  "fields": {
+    "site_type": "Doctors Office #1"
+  },
+  "model": "webapp.sitetype",
+  "pk": 46
+},
+{
+  "fields": {
+    "site_type": "Dialysis Center"
+  },
+  "model": "webapp.sitetype",
+  "pk": 47
+},
+{
+  "fields": {
+    "site_type": "Commercial Residence"
+  },
+  "model": "webapp.sitetype",
+  "pk": 48
+},
+{
+  "fields": {
+    "site_type": "Commerc. Multi-ten"
+  },
+  "model": "webapp.sitetype",
+  "pk": 49
+},
+{
+  "fields": {
+    "site_type": "Comm"
+  },
+  "model": "webapp.sitetype",
+  "pk": 50
+},
+{
+  "fields": {
+    "site_type": "Carwash"
+  },
+  "model": "webapp.sitetype",
+  "pk": 51
+},
+{
+  "fields": {
+    "site_type": "Beauty Shop"
+  },
+  "model": "webapp.sitetype",
+  "pk": 52
+},
+{
+  "fields": {
+    "site_type": "Empty Lot"
+  },
+  "model": "webapp.sitetype",
+  "pk": 53
+},
+{
+  "fields": {
+    "site_type": "Barber Shop"
+  },
+  "model": "webapp.sitetype",
+  "pk": 54
+},
+{
+  "fields": {
+    "site_type": "Florist"
+  },
+  "model": "webapp.sitetype",
+  "pk": 55
+},
+{
+  "fields": {
+    "site_type": "Automotive"
+  },
+  "model": "webapp.sitetype",
+  "pk": 56
+},
+{
+  "fields": {
+    "site_type": "Assisted Living"
+  },
+  "model": "webapp.sitetype",
+  "pk": 57
+},
+{
+  "fields": {
+    "site_type": "Apartments"
+  },
+  "model": "webapp.sitetype",
+  "pk": 58
+},
+{
+  "fields": {
+    "site_type": "Resiedential"
+  },
+  "model": "webapp.sitetype",
+  "pk": 59
+},
+{
+  "fields": {
+    "site_type": "Retail Store"
+  },
+  "model": "webapp.sitetype",
+  "pk": 60
+},
+{
+  "fields": {
+    "site_type": "Salon"
+  },
+  "model": "webapp.sitetype",
+  "pk": 61
+},
+{
+  "fields": {
+    "site_type": "Storage Building"
+  },
+  "model": "webapp.sitetype",
+  "pk": 62
+},
+{
+  "fields": {
+    "site_type": "Veterinary Office"
+  },
+  "model": "webapp.sitetype",
+  "pk": 63
+},
+{
+  "fields": {
+    "site_type": "Warehouse"
+  },
+  "model": "webapp.sitetype",
+  "pk": 64
+},
+{
+  "fields": {
+    "site_type": "Beauty Salon"
+  },
+  "model": "webapp.sitetype",
+  "pk": 65
+},
+{
+  "fields": {
+    "site_type": "No Address"
+  },
+  "model": "webapp.sitetype",
+  "pk": 66
+},
+{
+  "fields": {
+    "site_type": "Auto Repair"
+  },
+  "model": "webapp.sitetype",
+  "pk": 67
+},
+{
+  "fields": {
+    "site_type": "Child/Day Care/Nursery"
+  },
+  "model": "webapp.sitetype",
+  "pk": 68
+},
+{
+  "fields": {
+    "site_type": "Agricultural"
+  },
+  "model": "webapp.sitetype",
+  "pk": 69
+},
+{
+  "fields": {
+    "site_type": "Recreation"
+  },
+  "model": "webapp.sitetype",
+  "pk": 70
+},
+{
+  "fields": {
+    "site_type": "Processing Facility"
+  },
+  "model": "webapp.sitetype",
+  "pk": 71
+},
+{
+  "fields": {
+    "site_type": "Potable/recreation"
+  },
+  "model": "webapp.sitetype",
+  "pk": 72
+},
+{
+  "fields": {
+    "site_type": "Potable"
+  },
+  "model": "webapp.sitetype",
+  "pk": 73
+},
+{
+  "fields": {
+    "site_type": "Doctors Office #2"
+  },
+  "model": "webapp.sitetype",
+  "pk": 74
+},
+{
+  "fields": {
+    "site_type": "Office"
+  },
+  "model": "webapp.sitetype",
+  "pk": 75
+},
+{
+  "fields": {
+    "site_type": "Bank"
+  },
+  "model": "webapp.sitetype",
+  "pk": 76
+},
+{
+  "fields": {
+    "site_type": "Motel"
+  },
+  "model": "webapp.sitetype",
+  "pk": 77
+},
+{
+  "fields": {
+    "site_type": "Jail/ Governmental"
+  },
+  "model": "webapp.sitetype",
+  "pk": 78
+},
+{
+  "fields": {
+    "site_type": "Ice Machine"
+  },
+  "model": "webapp.sitetype",
+  "pk": 79
+},
+{
+  "fields": {
+    "site_type": "Hospital"
+  },
+  "model": "webapp.sitetype",
+  "pk": 80
+},
+{
+  "fields": {
+    "site_type": "Home"
+  },
+  "model": "webapp.sitetype",
+  "pk": 81
+},
+{
+  "fields": {
+    "site_type": "Health Unit"
+  },
+  "model": "webapp.sitetype",
+  "pk": 82
+},
+{
+  "fields": {
+    "site_type": "Grocery Store"
+  },
+  "model": "webapp.sitetype",
+  "pk": 83
+},
+{
+  "fields": {
+    "site_type": "Funeral Home"
+  },
+  "model": "webapp.sitetype",
+  "pk": 84
+},
+{
+  "fields": {
+    "site_type": "Fraternal Hall"
+  },
+  "model": "webapp.sitetype",
+  "pk": 85
+},
+{
+  "fields": {
+    "site_use": "Commercial"
+  },
+  "model": "webapp.siteuse",
+  "pk": 1
+},
+{
+  "fields": {
+    "site_use": "Farming"
+  },
+  "model": "webapp.siteuse",
+  "pk": 3
+},
+{
+  "fields": {
+    "site_use": "Governmental"
+  },
+  "model": "webapp.siteuse",
+  "pk": 4
+},
+{
+  "fields": {
+    "site_use": "Industrial"
+  },
+  "model": "webapp.siteuse",
+  "pk": 5
+},
+{
+  "fields": {
+    "site_use": "Multi-Family"
+  },
+  "model": "webapp.siteuse",
+  "pk": 6
+},
+{
+  "fields": {
+    "site_use": "Residential"
+  },
+  "model": "webapp.siteuse",
+  "pk": 7
+},
+{
+  "fields": {
+    "site_use": "Agricultural"
+  },
+  "model": "webapp.siteuse",
+  "pk": 8
+},
+{
+  "fields": {
+    "site_use": "Commercial Multi-Tenant"
+  },
+  "model": "webapp.siteuse",
+  "pk": 9
+},
+{
+  "fields": {
+    "service_type": "Fire"
+  },
+  "model": "webapp.servicetype",
+  "pk": 2
+},
+{
+  "fields": {
+    "service_type": "Potable"
+  },
+  "model": "webapp.servicetype",
+  "pk": 3
+},
+{
+  "fields": {
+    "service_type": "Irrigation"
+  },
+  "model": "webapp.servicetype",
+  "pk": 4
+},
+{
+  "fields": {
+    "survey_type": "Initial"
+  },
+  "model": "webapp.surveytype",
+  "pk": 2
+},
+{
+  "fields": {
+    "survey_type": "Drive-by"
+  },
+  "model": "webapp.surveytype",
+  "pk": 3
+},
+{
+  "fields": {
+    "survey_type": "Initial/Drive-by"
+  },
+  "model": "webapp.surveytype",
+  "pk": 4
+},
+{
+  "fields": {
+    "survey_type": "Follow-up"
+  },
+  "model": "webapp.surveytype",
+  "pk": 5
+},
+{
+  "fields": {
+    "survey_type": "Annual"
+  },
+  "model": "webapp.surveytype",
+  "pk": 6
+},
+{
+  "fields": {
+    "bp_size": "3/4\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 1
+},
+{
+  "fields": {
+    "bp_size": "5/8\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 2
+},
+{
+  "fields": {
+    "bp_size": "1\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 3
+},
+{
+  "fields": {
+    "bp_size": "1.5\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 4
+},
+{
+  "fields": {
+    "bp_size": "2\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 5
+},
+{
+  "fields": {
+    "bp_size": "2.5\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 6
+},
+{
+  "fields": {
+    "bp_size": "3\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 7
+},
+{
+  "fields": {
+    "bp_size": "4\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 8
+},
+{
+  "fields": {
+    "bp_size": "5\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 9
+},
+{
+  "fields": {
+    "bp_size": "6\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 10
+},
+{
+  "fields": {
+    "bp_size": "8\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 11
+},
+{
+  "fields": {
+    "bp_size": "9\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 12
+},
+{
+  "fields": {
+    "bp_size": "10\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 13
+},
+{
+  "fields": {
+    "bp_size": "12\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 14
+},
+{
+  "fields": {
+    "bp_size": "14\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 15
+},
+{
+  "fields": {
+    "bp_size": "16\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 16
+},
+{
+  "fields": {
+    "bp_manufacturer": "Ames"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 1
+},
+{
+  "fields": {
+    "bp_manufacturer": "Wilkins"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 2
+},
+{
+  "fields": {
+    "bp_manufacturer": "Watts"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 3
+},
+{
+  "fields": {
+    "bp_manufacturer": "Conbraco"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 4
+},
+{
+  "fields": {
+    "bp_manufacturer": "Febco"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 5
+},
+{
+  "fields": {
+    "bp_manufacturer": "Hersey"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 6
+},
+{
+  "fields": {
+    "customer_code": "Residential"
+  },
+  "model": "webapp.customercode",
+  "pk": 1
+},
+{
+  "fields": {
+    "customer_code": "Governmental"
+  },
+  "model": "webapp.customercode",
+  "pk": 2
+},
+{
+  "fields": {
+    "customer_code": "Commercial"
+  },
+  "model": "webapp.customercode",
+  "pk": 3
+},
+{
+  "fields": {
+    "customer_code": "Industrial"
+  },
+  "model": "webapp.customercode",
+  "pk": 4
+},
+{
+  "fields": {
+    "customer_code": "Trailer Park"
+  },
+  "model": "webapp.customercode",
+  "pk": 5
+},
+{
+  "fields": {
+    "customer_code": "Multifamily"
+  },
+  "model": "webapp.customercode",
+  "pk": 6
+},
+{
+  "fields": {
+    "customer_code": "Irrigation"
+  },
+  "model": "webapp.customercode",
+  "pk": 7
+},
+{
+  "fields": {
+    "customer_code": "Fire"
+  },
+  "model": "webapp.customercode",
+  "pk": 8
+},
+{
+  "fields": {
+    "customer_code": "Other"
+  },
+  "model": "webapp.customercode",
+  "pk": 9
+},
+{
+  "fields": {
+    "customer_code": "Potable"
+  },
+  "model": "webapp.customercode",
+  "pk": 10
+},
+{"fields":{"hazard_type":"Agriculture"},"model":"webapp.hazardtype","pk":1},
+{"fields":{"hazard_type":"Aspirator"},"model":"webapp.hazardtype","pk":2},
+{"fields":{"hazard_type":"Assisted Living"},"model":"webapp.hazardtype","pk":3},
+{"fields":{"hazard_type":"Auto Repair"},"model":"webapp.hazardtype","pk":4},
+{"fields":{"hazard_type":"Autoclaves"},"model":"webapp.hazardtype","pk":5},
+{"fields":{"hazard_type":"Autopsy Table"},"model":"webapp.hazardtype","pk":6},
+{"fields":{"hazard_type":"Auxiliary Water"},"model":"webapp.hazardtype","pk":7},
+{"fields":{"hazard_type":"Auxiliary Water System (Surf. Water)"},"model":"webapp.hazardtype","pk":8},
+{"fields":{"hazard_type":"Auxiliary Water System (Well)"},"model":"webapp.hazardtype","pk":9},
+{"fields":{"hazard_type":"Bank"},"model":"webapp.hazardtype","pk":10},
+{"fields":{"hazard_type":"Baptismal Font"},"model":"webapp.hazardtype","pk":11},
+{"fields":{"hazard_type":"Bar and Grill"},"model":"webapp.hazardtype","pk":12},
+{"fields":{"hazard_type":"Barber Shop"},"model":"webapp.hazardtype","pk":13},
+{"fields":{"hazard_type":"Bathrooms"},"model":"webapp.hazardtype","pk":14},
+{"fields":{"hazard_type":"Beauty Salon"},"model":"webapp.hazardtype","pk":15},
+{"fields":{"hazard_type":"Bedpan Washer"},"model":"webapp.hazardtype","pk":16},
+{"fields":{"hazard_type":"Boiler Feed Line"},"model":"webapp.hazardtype","pk":17},
+{"fields":{"hazard_type":"Bottle Washer"},"model":"webapp.hazardtype","pk":18},
+{"fields":{"hazard_type":"breakroom"},"model":"webapp.hazardtype","pk":19},
+{"fields":{"hazard_type":"Car Wash"},"model":"webapp.hazardtype","pk":20},
+{"fields":{"hazard_type":"Caterer"},"model":"webapp.hazardtype","pk":21},
+{"fields":{"hazard_type":"Child Care Facility"},"model":"webapp.hazardtype","pk":22},
+{"fields":{"hazard_type":"Chiller System"},"model":"webapp.hazardtype","pk":23},
+{"fields":{"hazard_type":"Chiropractor/Health Clinic"},"model":"webapp.hazardtype","pk":24},
+{"fields":{"hazard_type":"Church"},"model":"webapp.hazardtype","pk":25},
+{"fields":{"hazard_type":"Church Rec Center"},"model":"webapp.hazardtype","pk":26},
+{"fields":{"hazard_type":"Coffee Urn"},"model":"webapp.hazardtype","pk":27},
+{"fields":{"hazard_type":"Commercial Multi-tenant"},"model":"webapp.hazardtype","pk":28},
+{"fields":{"hazard_type":"Compressors, Water Cooled"},"model":"webapp.hazardtype","pk":29},
+{"fields":{"hazard_type":"Condenser"},"model":"webapp.hazardtype","pk":30},
+{"fields":{"hazard_type":"Convenience Store"},"model":"webapp.hazardtype","pk":31},
+{"fields":{"hazard_type":"Cooking Kettle"},"model":"webapp.hazardtype","pk":32},
+{"fields":{"hazard_type":"Cooling Tower"},"model":"webapp.hazardtype","pk":33},
+{"fields":{"hazard_type":"Degreasing Equipment"},"model":"webapp.hazardtype","pk":34},
+{"fields":{"hazard_type":"De-ionized Water System"},"model":"webapp.hazardtype","pk":35},
+{"fields":{"hazard_type":"Deli/bakery"},"model":"webapp.hazardtype","pk":36},
+{"fields":{"hazard_type":"Denied or Restricted Access"},"model":"webapp.hazardtype","pk":37},
+{"fields":{"hazard_type":"Dental Cuspidor (Spit Sink)"},"model":"webapp.hazardtype","pk":38},
+{"fields":{"hazard_type":"Dialysis Center"},"model":"webapp.hazardtype","pk":39},
+{"fields":{"hazard_type":"Digester"},"model":"webapp.hazardtype","pk":40},
+{"fields":{"hazard_type":"Dishwasher"},"model":"webapp.hazardtype","pk":41},
+{"fields":{"hazard_type":"Distillation Equipment"},"model":"webapp.hazardtype","pk":42},
+{"fields":{"hazard_type":"Doctors Office"},"model":"webapp.hazardtype","pk":43},
+{"fields":{"hazard_type":"Dry Cleaners"},"model":"webapp.hazardtype","pk":44},
+{"fields":{"hazard_type":"Dye Vats"},"model":"webapp.hazardtype","pk":45},
+{"fields":{"hazard_type":"Equipment Repair"},"model":"webapp.hazardtype","pk":46},
+{"fields":{"hazard_type":"Expansion Tank"},"model":"webapp.hazardtype","pk":47},
+{"fields":{"hazard_type":"Exterminator"},"model":"webapp.hazardtype","pk":48},
+{"fields":{"hazard_type":"eye wash shower"},"model":"webapp.hazardtype","pk":49},
+{"fields":{"hazard_type":"Farm"},"model":"webapp.hazardtype","pk":50},
+{"fields":{"hazard_type":"Fermentation Tank"},"model":"webapp.hazardtype","pk":51},
+{"fields":{"hazard_type":"Fertilizer Injector"},"model":"webapp.hazardtype","pk":52},
+{"fields":{"hazard_type":"Fire Sprinkler System"},"model":"webapp.hazardtype","pk":53},
+{"fields":{"hazard_type":"Fireline"},"model":"webapp.hazardtype","pk":54},
+{"fields":{"hazard_type":"Food Processing"},"model":"webapp.hazardtype","pk":55},
+{"fields":{"hazard_type":"Fountain, Ornamental"},"model":"webapp.hazardtype","pk":56},
+{"fields":{"hazard_type":"Fraternal Hall"},"model":"webapp.hazardtype","pk":57},
+{"fields":{"hazard_type":"Frost proof HB"},"model":"webapp.hazardtype","pk":58},
+{"fields":{"hazard_type":"Funeral Home"},"model":"webapp.hazardtype","pk":59},
+{"fields":{"hazard_type":"Garbage Can Washer"},"model":"webapp.hazardtype","pk":60},
+{"fields":{"hazard_type":"Garbage Disposal"},"model":"webapp.hazardtype","pk":61},
+{"fields":{"hazard_type":"Governmental"},"model":"webapp.hazardtype","pk":62},
+{"fields":{"hazard_type":"Grease Trap"},"model":"webapp.hazardtype","pk":63},
+{"fields":{"hazard_type":"Grocery Store"},"model":"webapp.hazardtype","pk":64},
+{"fields":{"hazard_type":"Group Home"},"model":"webapp.hazardtype","pk":65},
+{"fields":{"hazard_type":"Home Owners Association"},"model":"webapp.hazardtype","pk":66},
+{"fields":{"hazard_type":"Hose Bibs"},"model":"webapp.hazardtype","pk":67},
+{"fields":{"hazard_type":"Hospital"},"model":"webapp.hazardtype","pk":68},
+{"fields":{"hazard_type":"Ice Maker"},"model":"webapp.hazardtype","pk":69},
+{"fields":{"hazard_type":"Industrial"},"model":"webapp.hazardtype","pk":70},
+{"fields":{"hazard_type":"Industrial Fluids"},"model":"webapp.hazardtype","pk":71},
+{"fields":{"hazard_type":"Irrigation"},"model":"webapp.hazardtype","pk":72},
+{"fields":{"hazard_type":"Irrigation and Pool"},"model":"webapp.hazardtype","pk":73},
+{"fields":{"hazard_type":"Irrigation System"},"model":"webapp.hazardtype","pk":74},
+{"fields":{"hazard_type":"Jail/Prison"},"model":"webapp.hazardtype","pk":75},
+{"fields":{"hazard_type":"Lab Sink"},"model":"webapp.hazardtype","pk":76},
+{"fields":{"hazard_type":"Landscape Nursery"},"model":"webapp.hazardtype","pk":77},
+{"fields":{"hazard_type":"Laundromat"},"model":"webapp.hazardtype","pk":78},
+{"fields":{"hazard_type":"Mechanic Shop"},"model":"webapp.hazardtype","pk":79},
+{"fields":{"hazard_type":"Medical Facility"},"model":"webapp.hazardtype","pk":80},
+{"fields":{"hazard_type":"Mop Sink"},"model":"webapp.hazardtype","pk":81},
+{"fields":{"hazard_type":"Motel"},"model":"webapp.hazardtype","pk":82},
+{"fields":{"hazard_type":"Movie Theater"},"model":"webapp.hazardtype","pk":83},
+{"fields":{"hazard_type":"Multi-Family"},"model":"webapp.hazardtype","pk":84},
+{"fields":{"hazard_type":"NHP"},"model":"webapp.hazardtype","pk":85},
+{"fields":{"hazard_type":"No Address"},"model":"webapp.hazardtype","pk":86},
+{"fields":{"hazard_type":"Nursing Home"},"model":"webapp.hazardtype","pk":87},
+{"fields":{"hazard_type":"Office"},"model":"webapp.hazardtype","pk":88},
+{"fields":{"hazard_type":"Overhead Spray Hose"},"model":"webapp.hazardtype","pk":89},
+{"fields":{"hazard_type":"Pharmacy"},"model":"webapp.hazardtype","pk":90},
+{"fields":{"hazard_type":"Photo Developer (Automatic)"},"model":"webapp.hazardtype","pk":91},
+{"fields":{"hazard_type":"Photo Film Washer"},"model":"webapp.hazardtype","pk":92},
+{"fields":{"hazard_type":"Photo Rinse Sinks"},"model":"webapp.hazardtype","pk":93},
+{"fields":{"hazard_type":"Photostat Equipment"},"model":"webapp.hazardtype","pk":94},
+{"fields":{"hazard_type":"Pipette Washer"},"model":"webapp.hazardtype","pk":95},
+{"fields":{"hazard_type":"Pool"},"model":"webapp.hazardtype","pk":96},
+{"fields":{"hazard_type":"Potato Peeler"},"model":"webapp.hazardtype","pk":97},
+{"fields":{"hazard_type":"Pressure Cooker"},"model":"webapp.hazardtype","pk":98},
+{"fields":{"hazard_type":"processing"},"model":"webapp.hazardtype","pk":99},
+{"fields":{"hazard_type":"Product Manufacturing"},"model":"webapp.hazardtype","pk":100},
+{"fields":{"hazard_type":"Radiator Flushing Equipment"},"model":"webapp.hazardtype","pk":101},
+{"fields":{"hazard_type":"Recreation Center"},"model":"webapp.hazardtype","pk":102},
+{"fields":{"hazard_type":"Recreation Grounds"},"model":"webapp.hazardtype","pk":103},
+{"fields":{"hazard_type":"Restaurant"},"model":"webapp.hazardtype","pk":104},
+{"fields":{"hazard_type":"Restrooms"},"model":"webapp.hazardtype","pk":105},
+{"fields":{"hazard_type":"Retail"},"model":"webapp.hazardtype","pk":106},
+{"fields":{"hazard_type":"School"},"model":"webapp.hazardtype","pk":107},
+{"fields":{"hazard_type":"Sewer Plant"},"model":"webapp.hazardtype","pk":108},
+{"fields":{"hazard_type":"Solar System"},"model":"webapp.hazardtype","pk":109},
+{"fields":{"hazard_type":"Starch Tanks"},"model":"webapp.hazardtype","pk":110},
+{"fields":{"hazard_type":"Steam Cleaner"},"model":"webapp.hazardtype","pk":111},
+{"fields":{"hazard_type":"steam line"},"model":"webapp.hazardtype","pk":112},
+{"fields":{"hazard_type":"Steam Table"},"model":"webapp.hazardtype","pk":113},
+{"fields":{"hazard_type":"Sterilizing Equipment"},"model":"webapp.hazardtype","pk":114},
+{"fields":{"hazard_type":"Storage Center"},"model":"webapp.hazardtype","pk":115},
+{"fields":{"hazard_type":"Trailer Park"},"model":"webapp.hazardtype","pk":116},
+{"fields":{"hazard_type":"Vacant"},"model":"webapp.hazardtype","pk":117},
+{"fields":{"hazard_type":"Veterinarian"},"model":"webapp.hazardtype","pk":118},
+{"fields":{"hazard_type":"Video Rental"},"model":"webapp.hazardtype","pk":119},
+{"fields":{"hazard_type":"Wash Rack"},"model":"webapp.hazardtype","pk":120},
+{"fields":{"hazard_type":"Water Softener"},"model":"webapp.hazardtype","pk":121},
+{"fields":{"hazard_type":"water tower"},"model":"webapp.hazardtype","pk":122},
+{"fields":{"hazard_type":"Welder, Water Cooled"},"model":"webapp.hazardtype","pk":123},
+{"fields":{"hazard_type":"X-Ray Equipment"},"model":"webapp.hazardtype","pk":124},
+{"fields":{"hazard_type":"Other"},"model":"webapp.hazardtype","pk":125},
+{
+  "fields": {
+    "test_manufacturer": "Wilkins"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 1
+},
+{
+  "fields": {
+    "test_manufacturer": "Midwest"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 2
+},
+{
+  "fields": {
+    "test_manufacturer": "Watts"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 3
+},
+{
+  "fields": {
+    "ic_point": "Yard"
+  },
+  "model": "webapp.icpointtype",
+  "pk": 1
+},
+{
+  "fields": {
+    "ic_point": "Building"
+  },
+  "model": "webapp.icpointtype",
+  "pk": 2
+},
+{
+  "fields": {
+    "assembly_location": "At Meter"
+  },
+  "model": "webapp.assemblylocation",
+  "pk": 1
+},
+{
+  "fields": {
+    "assembly_location": "Internal to meter"
+  },
+  "model": "webapp.assemblylocation",
+  "pk": 2
+},
+{
+  "fields": {
+    "assembly_status": "Installed"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 1
+},
+{
+  "fields": {
+    "assembly_status": "Installed Properly"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 2
+},
+{
+  "fields": {
+    "assembly_status": "Due Install"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 3
+},
+{
+  "fields": {
+    "assembly_status": "Installed Improperly"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 4
+},
+{
+  "fields": {
+    "assembly_status": "Installed Incorrect BP"
+  },
+  "model": "webapp.assemblystatus",
+  "pk": 5
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Air Gap",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: {ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity}, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of {ServiceCity} will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {PWSEmail}.</u> <em>Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</em></p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</p>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>\r\n"
+  },
+  "model": "webapp.lettertype",
+  "pk": 1
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Pool",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">{ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity}, under the direction of the Louisiana Department of Health and Hospitals (DHH), has developed a Cross Connection Control and Backflow Prevention Program. This program was developed to minimize the impact of potential contaminants from entering the potable water supply. As such, part of the plan is to insure that customers with auxiliary water, such as ponds, fountains, etc., on their property fill these vessels using an air gap. The easiest way to accomplish this task is to securing the end of the filling hose to a permanent fixture above the flood level rim of the vessel and let water flow through the air into the vessel. This is a requirement of DHH.</p>\r\n\r\n<p>Should the customer be found not complying with this agreement, then the City of {ServiceCity} will require that a reduced pressure backflow preventer be installed in accordance with DHH regulations. This plumbing device will have to be placed behind your water meter at significant cost to you should non-compliance become an issue. <u>If you are in agreement with the terms presented within this document, please sign at the designated place below and return this letter via email to {PWSEmail}.</u> Failure to notify this office of your agreement to this condition will be considered nonresponsive and therefore necessitate the installation of a backflow preventer.</p>\r\n\r\n<p>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</p>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>\r\n"
+  },
+  "model": "webapp.lettertype",
+  "pk": 2
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Due Install First",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">{ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing a cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH).&nbsp; Part of the mandate establishes who is required to install a backflow preventer for the protection of the potable water supply system.&nbsp; In accordance with the minimum standards established by DHH, your account is required to have a backflow prevention assembly installed. <u>The assembly must be tested upon installation and annually thereafter.</u></p>\r\n\r\n<p>In accordance with state plumbing regulations, the assembly must be installed by a Master Plumber who has a Water Supply Protection Specialist (WSPS) endorsement on their license or a Journeyman Plumber with the WSPS endorsement working for a Master Plumber.&nbsp; For your convenience, we have attached a list of local plumbers possessing the WSPS endorsement.&nbsp; You may choose a plumber from this list or any state approved WSPS endorsed plumber.&nbsp; Per state regulations, the cost of the backflow preventer installation and testing must be borne by the<br />\r\ncustomer.</p>\r\n\r\n<p>Prior to the installation of the backflow preventer, please have your selected plumber pick up a &quot;Plumber&rsquo;s Packet for Backflow Preventer Installation&quot; from {PlumberPacketLocation} located at {PlumberPacketAddress}.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service for non-compliant customers.</u>&nbsp; Please have the backflow preventer installed and tested by the above stated Test Due Date and email a copy of the test report to {PWSEmail}. In the event that the required backflow preventer is already installed, please email a copy of the test report to the email address provided.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter. Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</div>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>\r\n"
+  },
+  "model": "webapp.lettertype",
+  "pk": 3
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Annual Test First",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">{ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</span></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>In accordance with State regulations and the City of {ServiceCity} backflow prevention program, all backflow preventers must be tested annually.&nbsp; According to our records, it is now time for your backflow preventer to be tested.&nbsp; Only Water Supply Protection Specialist (WSPS) plumbers or DHH Approved General Testers can perform this task.&nbsp; For your convenience, we have attached a list of local testers previously approved by the City of {ServiceCity}.&nbsp; You may choose a tester from this list or any state approved tester.&nbsp; However, the selected tester not on the previously approved list must obtain a Plumbers Packet from {PlumberPacketLocation} located at {PlumberPacketAddress} prior to performing the test.</p>\r\n\r\n<p>Please have the backflow preventer tested by the above stated Test Due Date and send a copy of the test report to {PWSEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</div>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>"
+  },
+  "model": "webapp.lettertype",
+  "pk": 4
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Due Install Second",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">{ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</span></p>\r\n\r\n<p style=\"text-align:right\"><u><strong>2-nd Notice</strong></u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter. is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of {ServiceCity} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the City of {ServiceCity} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at {PlumberPacketLocation} located at {PlumberPacketAddress}.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service for non-compliant customers.</u>&nbsp; Please have the backflow preventer installed and tested by the above stated Test Due Date and email a copy of the test report to {PWSEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter. Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</div>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>\r\n"
+  },
+  "model": "webapp.lettertype",
+  "pk": 5
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Annual Test Second",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">{ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</span></p>\r\n\r\n<p style=\"text-align:right\"><strong><u>2-nd Notice</u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u> </u></strong></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>The City of {ServiceCity} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by the Louisiana Department of Health &amp; Hospitals (DHH). We previously sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer.&nbsp; In accordance with DHH regulations, the backflow preventer must be tested upon installation and annually thereafter.</p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, the City of {ServiceCity} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the {ServiceCity} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at {PlumberPackerLocation} located at {PlumberPacketAddress}.</p>\r\n\r\n<p>As mentioned above, this is a state mandated program. <u>The only recourse the City has is to discontinue water service to those who do not comply.</u>&nbsp; Please email us with a successful test report by the above stated Test Due Date at {PWSEmail}.</p>\r\n\r\n<div>Thank you in advance for your cooperation and assistance in this matter.&nbsp; Should you have any questions, please feel free to contact our consultant, {ConsultantName}, at {ConsultantPhone}.</div>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>\r\n"
+  },
+  "model": "webapp.lettertype",
+  "pk": 6
+},
+{
+  "fields": {
+    "header": "Backflow Prevention Services Notification",
+    "letter_type": "Due Install Third",
+    "pws": null,
+    "template": "<table border=\"0\" style=\"width:100%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td style=\"width:25%; vertical-align:top\">{LeftHeaderBlock}</td>\r\n\t\t\t<td style=\"width:50%\">{PWSLogo}</td>\r\n\t\t\t<td style=\"width: 25%; text-align: right; vertical-align:top\">{RightHeaderBlock}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<div style=\"width: 80%; margin: 0 auto;\">\r\n<p><strong>{LetterDate}&nbsp;</strong></p>\r\n\r\n<table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" style=\"height:122px; width:581px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerName}</td>\r\n\t\t\t<td>Account No.: {AccountNumber}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerAddress}</td>\r\n\t\t\t<td>Assembly: {AssemblyType}</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>{CustomerCity}, {CustomerState}, {CustomerZip}</td>\r\n\t\t\t<td>Test Due Date: {DueDate}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<p style=\"text-align:center\"><strong>(THIRD AND FINAL NOTICE)</strong></p>\r\n\r\n<p>RE: Cross Connection Control and Backflow Prevention Program</p>\r\n\r\n<p>Service Address: <span style=\"line-height: 20.7999992370605px;\">{ServiceStreetNumber}, {ServiceAddress}, {ServiceCity}, {ServiceState}</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Dear Customer,</p>\r\n\r\n<p>{PWSName} is in the process of implementing the required cross connection control and backflow prevention program in accordance with mandates established by state regulations. On two (2) prior occasions, we sent you correspondence requiring the testing or installation of a backflow preventer on your plumbing system.&nbsp; To date, we have not received a copy of a successful test report on your backflow preventer. &nbsp;Non-compliance is a violation of state and {PWSName} regulations.&nbsp;As a result,&nbsp;<u>your water service will be terminated on the above stated due date if a successful test report is not received.</u></p>\r\n\r\n<p>In order to insure that the work is being performed by State regulated personnel, {PWSName} has developed the attached approved list for your use in selecting personnel to perform the work.&nbsp; <u>Only those individuals on the approved list may be used to perform the work.</u>&nbsp; You may choose anyone from this list.&nbsp; However, should you wish to use a plumber that is not on the approved list, your selected plumber must have a Water Supply Protection Specialist (WSPS) endorsement on their license and must provide the information in the {PWSName} Plumber&rsquo;s Packet.&nbsp; The Plumber&rsquo;s Packet is available at {PlumberPacketLocation} located at {PlumberPacketAddress}.</p>\r\n\r\n<p>We urge you to comply with the state requirement in order to avoid termination of your water service.</p>\r\n\r\n<div>Should you have any questions, please feel free to contact {ConsultantName}, at {ConsultantPhone}.</div>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Sincerely, {PersonInChargeName}</p>\r\n\r\n<p>{PersonInChargeJobTitle}</p>\r\n</div>\r\n"
+  },
+  "model": "webapp.lettertype",
+  "pk": 7
+},
+{
+  "fields": {
+    "floors_count": "1"
+  },
+  "model": "webapp.floorscount",
+  "pk": 1
+},
+{
+  "fields": {
+    "floors_count": "2"
+  },
+  "model": "webapp.floorscount",
+  "pk": 2
+},
+{
+  "fields": {
+    "floors_count": "3 or more"
+  },
+  "model": "webapp.floorscount",
+  "pk": 3
+},
+{
+  "fields": {
+    "special": "A"
+  },
+  "model": "webapp.special",
+  "pk": 1
+},
+{
+  "fields": {
+    "special": "B"
+  },
+  "model": "webapp.special",
+  "pk": 2
+},
+{
+  "fields": {
+    "special": "C"
+  },
+  "model": "webapp.special",
+  "pk": 3
+},
+{
+  "fields": {
+    "special": "D"
+  },
+  "model": "webapp.special",
+  "pk": 4
+},
+{
+  "fields": {
+    "special": "E"
+  },
+  "model": "webapp.special",
+  "pk": 5
+},
+{
+  "fields": {
+    "orientation": "Horizontal"
+  },
+  "model": "webapp.orientation",
+  "pk": 1
+},
+{
+  "fields": {
+    "orientation": "Vertical"
+  },
+  "model": "webapp.orientation",
+  "pk": 2
+},
+{
+  "fields": {
+    "site_status": "Active"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 1
+},
+{
+  "fields": {
+    "site_status": "Suspended"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 2
+},
+{
+  "fields": {
+    "site_status": "Disconnected"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 3
+},
+{
+  "fields": {
+    "site_status": "Inactive"
+  },
+  "model": "webapp.sitestatus",
+  "pk": 4
+}
+]

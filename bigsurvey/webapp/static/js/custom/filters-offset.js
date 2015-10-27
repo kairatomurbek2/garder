@@ -1,9 +1,10 @@
-var filters, navbar, paginationWrapper, lastScrollLeft, documentScrollLeft;
+var filters, navbar, paginationWrapper, lastScrollLeft, documentScrollLeft, fixedDiv;
 
 $(document).ready(function () {
     filters = $('.fixed-filters');
     navbar = $('nav.uk-navbar');
     paginationWrapper = $('.pagination-wrapper');
+    fixedDiv = $('.filter-button-div');
 
     lastScrollLeft = 0;
 
