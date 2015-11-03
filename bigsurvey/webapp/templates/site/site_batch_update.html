@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n pagination_tags widget_tweaks staticfiles %}
+{% load i18n pagination_tags widget_tweaks staticfiles batch_update_tags %}
 {% block scripts %}
     <script src="{% static 'js/custom/batch_update.js' %}"></script>
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
@@ -29,25 +29,25 @@
                                 {% trans "No." %}
                             </th>
                             <th>
-                                {% trans "Address" %}
+                                {% trans "PWS" %}
                             </th>
                             <th>
                                 {% trans "Customer" %}
                             </th>
                             <th>
-                                {% trans "PWS" %}
-                            </th>
-                            <th>
-                                {% trans "Site Use" %}
-                            </th>
-                            <th>
-                                {% trans "Site Type" %}
+                                {% trans "Site Address" %}
                             </th>
                             <th>
                                 {% trans "Site Status" %}
                             </th>
                             <th>
                                 {% trans "Next Survey" %}
+                            </th>
+                            <th>
+                                {% trans "Last Survey" %}
+                            </th>
+                            <th>
+                                {% trans "Due Install/Test" %}
                             </th>
                         </tr>
                         </thead>
@@ -61,25 +61,25 @@
                                     {{ site.pk }}
                                 </td>
                                 <td>
-                                    {{ site.city }}, {{ site.address1 }}
-                                </td>
-                                <td>
-                                    {{ site.cust_number }}, {{ site.cust_name }}
-                                </td>
-                                <td>
                                     {{ site.pws.name }}
                                 </td>
                                 <td>
-                                    {{ site.site_use }}
+                                    {{ site.cust_number }}
                                 </td>
                                 <td>
-                                    {{ site.site_type }}
+                                    {{ site.address1 }}
                                 </td>
                                 <td>
                                     {{ site.status }}
                                 </td>
                                 <td>
                                     {{ site.next_survey_date }}
+                                </td>
+                                <td>
+                                    {{ site.last_survey_date }}
+                                </td>
+                                <td>
+                                    {% get_due_test_date site %}
                                 </td>
                             </tr>
                         {% endfor %}

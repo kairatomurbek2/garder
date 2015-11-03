@@ -137,6 +137,20 @@ class FilterActions(object):
             return sites
 
         @staticmethod
+        def due_install_test_date(sites, value):
+            current_date = datetime.now()
+            dates = {
+                'week': current_date + timedelta(weeks=1),
+                'month': current_date + timedelta(days=30),
+                'year': current_date + timedelta(days=365),
+            }
+            if value == 'never':
+                return sites.filter(next_survey_date=None)
+            if value in dates:
+                return sites.filter(hazards__due_install_test_date__range=[current_date, dates[value]])
+            return sites
+
+        @staticmethod
         def last_date(sites, value):
             current_date = datetime.now().date()
             dates = {
@@ -412,11 +426,20 @@ class SiteFilter(django_filters.FilterSet):
     last_survey_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
                                                    action=FilterActions.Site.last_date,
                                                    label=_('Last Survey'))
+    next_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
+                                                 action=FilterActions.Site.next_date,
+                                                 label=_('Next Survey'))
+    last_test_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
+                                                 action=FilterActions.Site.last_date,
+                                                 label=_('Last Survey'))
     route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='exact')
     meter_number = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Number'))
     meter_size = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Size'))
     meter_reading = django_filters.NumberFilter(label=_('Meter Reading'))
     connect_date = django_filters.DateFilter(label=_('Connect Date'))
+    due_install_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
+                                                        label=_('Due install/test'),
+                                                        action=FilterActions.Site.due_install_test_date)
     # they aren't displayed currently but may require them later
     # site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     # site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
