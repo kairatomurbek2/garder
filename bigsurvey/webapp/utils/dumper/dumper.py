@@ -67,13 +67,13 @@ class Connector(object):
 class Preloader(Connector):
     def preload(self):
         self._connect()
-##        self._preload_pws()
-##        self._preload_sites()
-##        self._preload_surveys()
-##        self._preload_hazards()
+        self._preload_pws()
+        self._preload_sites()
+        self._preload_surveys()
+        self._preload_hazards()
         self._preload_letters()
-##        self._preload_tests()
-##        self._disconnect()
+        self._preload_tests()
+        self._disconnect()
 
     def _execute_list(self, sqls):
         for sql in sqls:
@@ -112,14 +112,16 @@ SET [state] = (Select Pval from Pvals WHERE ([Pval_ID]=[state])),
     site_type = (Select Pval from Pvals WHERE ([Pval_ID]=[site_type])),
     floors = (Select Pval from Pvals WHERE ([Pval_ID]=[floors]));""",
             "UPDATE ALL_SITES SET ALL_SITES.meter_number = 'N/M' WHERE (((ALL_SITES.meter_number)='N\\M'));",
-            "UPDATE ALL_SITES SET ALL_SITES.meter_size = Replace([meter_size],'\"','''''') WHERE (((ALL_SITES.meter_size) Like '%\"%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.meter_size = Replace([meter_size],'\"','\\\"') WHERE (((ALL_SITES.meter_size) Like '%\"%'));",
             "UPDATE ALL_SITES SET ALL_SITES.city = 'Unknown' WHERE ((ALL_SITES.city is null or ALL_SITES.city=''));",
             "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = [ALL_SITES].[CustAddress2] WHERE (ALL_SITES.CustAddress1='' or CustAddress1 is Null);",
             "UPDATE ALL_SITES SET ALL_SITES.CustAddress2 = '' WHERE (ALL_SITES.CustAddress2=CustAddress1);",
-            "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\"','''') WHERE (((ALL_SITES.CustomerName) Like '%\"%'));",
-            "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = Replace(CustAddress1,'\\','/') WHERE (((ALL_SITES.CustAddress1) Like '%\\%'));",
             "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\\','/') WHERE (((ALL_SITES.CustomerName) Like '%\\%'));",
-            "UPDATE ALL_SITES SET ALL_SITES.Code = '200' WHERE (Code='13025');",
+            "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\"','\\\"') WHERE (((ALL_SITES.CustomerName) Like '%\"%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = Replace(CustAddress1,'\\','/') WHERE (((ALL_SITES.CustAddress1) Like '%\\%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = Replace(CustAddress1,'\"','\\\"') WHERE (((ALL_SITES.CustAddress1) Like '%\"%'));",
+            "UPDATE ALL_SITES SET ALL_SITES.CustAddress2 = Replace(CustAddress2,'\\','/') WHERE (((ALL_SITES.CustAddress2) Like '%\\%'));"
+            "UPDATE ALL_SITES SET ALL_SITES.Code = '200' WHERE (Code='13025' or Code ='1');",
             "UPDATE ALL_SITES SET ALL_SITES.fire = 0 WHERE fire IS NULL;",
             "UPDATE ALL_SITES SET ALL_SITES.potable = 0 WHERE potable IS NULL;",
             "UPDATE ALL_SITES SET ALL_SITES.irrigation = 0 WHERE irrigation IS NULL;",
@@ -145,7 +147,7 @@ SET ALL_SITES.Code = (Select Pval from Pvals WHERE ([Pval_ID]=[Code])),
     ALL_SURVEYS.detector_manufacturer = (select [Pval] from Pvals WHERE [Pval_ID]=[detector_manufacturer]),
     ALL_SURVEYS.special = (select [Pval] from Pvals WHERE [Pval_ID]=[special]);""",
             "UPDATE ALL_SURVEYS SET ALL_SURVEYS.notes = Replace([ALL_SURVEYS].[notes],(Char(13) + Char(10)),'') WHERE ((ALL_SURVEYS.notes) Like ('%' + Char(13) + Char(10) + '%'));",
-            "UPDATE ALL_SURVEYS SET ALL_SURVEYS.notes = Replace([ALL_SURVEYS].[notes],'\"','''''') WHERE (((ALL_SURVEYS.notes) Like ('%\"%')));",
+            "UPDATE ALL_SURVEYS SET ALL_SURVEYS.notes = Replace([ALL_SURVEYS].[notes],'\"','\\\"') WHERE (((ALL_SURVEYS.notes) Like ('%\"%')));",
         )
         self._execute_list(sqls)
 
@@ -187,6 +189,7 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "UPDATE ALL_HAZARDS set assembly_status='Due Install' where assembly_status='due install'",
             "UPDATE ALL_HAZARDS set assembly_status='Installed' where assembly_status='installed'",
             "update ALL_HAZARDS set installed_properly = 0 where installed_properly is null;",
+            "delete from ALL_HAZARDS where hazard_type is NULL;",
         )
         self._execute_list(sqls)
 
@@ -221,6 +224,17 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
                 TestResult, AccountNumber, Notes, TesterCertNumber, TestSerialNumber, TestManufacturer, LastCalibrationDate
             FROM Tests;
             """,
+            "update all_tests set cv1_leaked = 0 where cv1_leaked is Null;",
+            "update all_tests set cv2_leaked = 0 where cv2_leaked is Null;",
+            "update all_tests set cv_leaked = 0 where cv_leaked is Null;",
+            "update all_tests set rv_opened = 0 where rv_opened is Null;",
+            "update all_tests set pvb_opened = 1 where pvb_opened is Null;",
+            "update all_tests set cv1_cleaned = 1 where cv1_cleaned is Null;",
+            "update all_tests set cv2_cleaned = 1 where cv2_cleaned is Null;",
+            "update all_tests set rv_cleaned = 1 where rv_cleaned is Null;",
+            "update all_tests set pvb_cleaned = 1 where pvb_cleaned is Null;",
+            "delete from all_tests where bp_device is null;",
+            "update all_tests set outlet_sov_leaked = 0 where outlet_sov_leaked is Null;",
             "UPDATE ALL_TESTS set bp_device=(select TOP 1 ALL_HAZARDS.ID from ALL_HAZARDS where ALL_HAZARDS.[site]=(select ALL_SITES.ID from ALL_SITES where ALL_SITES.AccountNumber=ALL_TESTS.account_number))",
             "UPDATE ALL_TESTS set tester='Bill Travis' where TesterCertNumber='6871'",
             "UPDATE ALL_TESTS set TesterCertNumber='LJP4526', tester='David Zeringue' where TesterCertNumber like '%4526%'",
@@ -272,7 +286,8 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "UPDATE ALL_TESTS SET ALL_TESTS.notes = Replace([ALL_TESTS].[notes],Char(10),'') WHERE (ALL_TESTS.notes Like ('%' + Char(10) + '%'));",
             "update all_tests set tester='Brett Mayeaux' where tester='Brett mayeaux';",
             "update ALL_TESTS set tester='Cody Dugas' where tester='cody dugas';",
-            "update ALL_TESTS set tester='Nathan Carter' where tester='nathan Carter';"
+            "update ALL_TESTS set tester='Nathan Carter' where tester='nathan Carter';",
+            "UPDATE ALL_TESTS SET ALL_TESTS.notes = Replace([notes],'\"','\\\"') WHERE (((ALL_TESTS.notes) Like '%\"%'));",
         )
         self._execute_list(sqls)
 
@@ -281,51 +296,51 @@ class Formatter(Connector):
     CREATE_TABLE_PATTERN = "create table %s (ID int IDENTITY(1, 1) PRIMARY KEY, %s);"
     FIELD_PATTERN = "[%s] %s %s"
     TABLES = {
-##        "sites": ("ALL_SITES", [
-##            "Customer", "PWS", ("connect_date", "date"),
-##            "address1", "address2", "apt", "city", "state", "zip",
-##            "site_use", "site_type", "floors", "ic_point",
-##            ("potable", "bit"), ("fire", "bit"), ("irrigation", "bit"),
-##            ("is_due_install", "bit"), ("is_backflow", "bit"),
-##            "route", "meter_number", "meter_size", "meter_reading",
-##            "CustomerName", "AccountNumber", "CustCity", "Code",
-##            "CustZip", "CustAddress1", "CustAddress2", "CustState",
-##            ("LastSurveyDate", "date"), ("NextSurveyDate", "date")
-##        ]),
-##        "pws": ("ALL_PWS", [
-##            "Number", "Name", "City", "WaterSource"
-##        ]),
+        "sites": ("ALL_SITES", [
+            "Customer", "PWS", ("connect_date", "date"),
+            "address1", "address2", "apt", "city", "state", "zip",
+            "site_use", "site_type", "floors", "ic_point",
+            ("potable", "bit"), ("fire", "bit"), ("irrigation", "bit"),
+            ("is_due_install", "bit"), ("is_backflow", "bit"),
+            "route", "meter_number", "meter_size", "meter_reading",
+            "CustomerName", "AccountNumber", "CustCity", "Code",
+            "CustZip", "CustAddress1", "CustAddress2", "CustState",
+            ("LastSurveyDate", "date"), ("NextSurveyDate", "date")
+        ]),
+        "pws": ("ALL_PWS", [
+            "Number", "Name", "City", "WaterSource"
+        ]),
         "letters": ("ALL_LETTERS", ["Site", ("LetterDate", "date"), "LetterType", "Sender"]),
-##        "surveys": ("ALL_SURVEYS", [
-##            "site", "service_type", ("survey_date", "date"),
-##            "survey_type", "surveyor", ("metered", "bit"),
-##            ("pump_present", "bit"), ("additives_present", "bit"), ("cc_present", "bit"),
-##            ("protected", "bit"), ("aux_water", "bit"),
-##            "detector_manufacturer", "detector_model", "special", "detector_serial",
-##            ("notes", "nvarchar(max)"), "old_id"
-##        ]),
-##        "hazards": ("ALL_HAZARDS", [
-##            "site", "survey", "service_type", "location1", "location2",
-##            "hazard_type", "assembly_location", "assembly_status",
-##            ("installed_properly", "bit"), "installer",
-##            ("install_date", "date"), ("replace_date", "date"),
-##            "orientation", "bp_type_present", "bp_type_required",
-##            "bp_size", "bp_manufacturer", "model_no", "serial_no",
-##            ("due_install_test_date", "date")
-##            # may require this later
-##            # ("last_test_date", "date"), ("next_test_date", "date")
-##        ]),
-##        "tests": ("ALL_TESTS", [
-##	    "bp_device", "tester", "user", ("test_date", "date"), 
-##	    ("cv1_leaked", "bit"), "cv1_gauge_pressure", ("cv1_cleaned", "bit"), "cv1_retest_pressure",
-##	    ("cv2_leaked", "bit"), "cv2_gauge_pressure", ("cv2_cleaned", "bit"), "cv2_retest_pressure",
-##	    ("rv_opened", "bit"), "rv_psi1", ("rv_cleaned", "bit"), "rv_psi2",
-##	    ("outlet_sov_leaked", "bit"), 
-##	    ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
-##	    ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
-##	    ("test_result", "bit"), "account_number", 
-##	    ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date")
-##        ])
+        "surveys": ("ALL_SURVEYS", [
+            "site", "service_type", ("survey_date", "date"),
+            "survey_type", "surveyor", ("metered", "bit"),
+            ("pump_present", "bit"), ("additives_present", "bit"), ("cc_present", "bit"),
+            ("protected", "bit"), ("aux_water", "bit"),
+            "detector_manufacturer", "detector_model", "special", "detector_serial",
+            ("notes", "nvarchar(max)"), "old_id"
+        ]),
+        "hazards": ("ALL_HAZARDS", [
+            "site", "survey", "service_type", "location1", "location2",
+            "hazard_type", "assembly_location", "assembly_status",
+            ("installed_properly", "bit"), "installer",
+            ("install_date", "date"), ("replace_date", "date"),
+            "orientation", "bp_type_present", "bp_type_required",
+            "bp_size", "bp_manufacturer", "model_no", "serial_no",
+            ("due_install_test_date", "date")
+            # may require this later
+            # ("last_test_date", "date"), ("next_test_date", "date")
+        ]),
+        "tests": ("ALL_TESTS", [
+	    "bp_device", "tester", "user", ("test_date", "date"), 
+	    ("cv1_leaked", "bit"), "cv1_gauge_pressure", ("cv1_cleaned", "bit"), "cv1_retest_pressure",
+	    ("cv2_leaked", "bit"), "cv2_gauge_pressure", ("cv2_cleaned", "bit"), "cv2_retest_pressure",
+	    ("rv_opened", "bit"), "rv_psi1", ("rv_cleaned", "bit"), "rv_psi2",
+	    ("outlet_sov_leaked", "bit"), 
+	    ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
+	    ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
+	    ("test_result", "bit"), "account_number", 
+	    ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date")
+        ])
     }
 
     def _create_tables(self):
@@ -510,7 +525,7 @@ class Dumper(Connector):
 "cv2_retest_gauge_pressure": %s, "test_last_cert": "%s", "cv_retest_psi": %s, \
 "air_inlet_retest_psi": %s,"cv2_leaked": %s, "cv_held_pressure": %s, \
 "test_manufacturer": %s, "cv2_gauge_pressure": %s, "pvb_cleaned": %s, "tester": %s,\
-"cv1_cleaned": %s, "paid": true, "air_inlet_opened": null, "air_inlet_psi": %s,"user": %s, \
+"cv1_cleaned": %s, "paid": true, "air_inlet_opened": %s, "air_inlet_psi": %s,"user": %s, \
 "test_result": %s, "cv1_retest_gauge_pressure": %s, "cv1_gauge_pressure": %s,\
 "rv_opened": %s, "cv1_leaked": %s, "bp_device": %s, "cv_leaked": %s, "notes": "%s", \
 "test_serial": "%s", "test_date": "%s", "rv_cleaned": %s}', '"webapp.test"', '%s'),
@@ -527,16 +542,16 @@ LastSurveyDate, NextSurveyDate, ID from ALL_SITES',
         'dump_tests': 'select outlet_sov_leaked, rv_psi1, rv_psi2, cv2_cleaned,\
 cv2_retest_pressure, test_last_cert, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pressure,\
 test_manufacturer, cv2_gauge_pressure, pvb_cleaned, tester, cv1_cleaned,\
-air_inlet_psi, [user], test_result, cv1_retest_pressure, cv1_gauge_pressure,\
+pvb_opened, air_inlet_psi, [user], test_result, cv1_retest_pressure, cv1_gauge_pressure,\
 rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_cleaned, ID from ALL_TESTS',
     }
     DATA_TYPES = [
-        #'pws',
-        #'site',
-        #'survey',
-        #'hazard',
+        'pws',
+        'site',
+        'survey',
+        'hazard',
         'letter',
-        #'test'
+        'test'
     ]
     FIELDS_TO_REPLACE = {
         'site': [(7, "webapp.siteuse"),
@@ -559,7 +574,7 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
                    (3, "auth.user")],
         'test': [(10, "webapp.testmanufacturer"),
                  (13, "auth.user"),
-                 (16, "auth.user")]
+                 (17, "auth.user")]
     }
 
     def __init__(self):
@@ -704,6 +719,7 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
             tester_pk += 1
         first_name, last_name, username = self.handle_tester_names(last_row[0])
         tester = template[:-1] % (username, first_name, last_name, tester_pk, (last_row[1] if last_row[1] else 'null'), username, tester_pk)
+        tester.replace('"null"', 'null')
         f.write(tester)
         f.write('\n]')
         f.close()
@@ -723,5 +739,5 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
 
 if __name__ == '__main__':
     dumper = Dumper()
-    #dumper.dump_testers()
+    dumper.dump_testers()
     dumper.dump()

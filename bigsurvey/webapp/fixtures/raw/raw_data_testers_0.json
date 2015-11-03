@@ -784,7 +784,7 @@
 {
   "fields": {
     "username": "cschmidt",
-    "first_name": "christian",
+    "first_name": "Christian",
     "last_name": "Schmidt",
     "is_active": true,
     "is_superuser": false,
