@@ -1106,6 +1106,13 @@
 },
 {
   "fields": {
+    "test_manufacturer": "Backflow Gage"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 4
+},
+{
+  "fields": {
     "ic_point": "Yard"
   },
   "model": "webapp.icpointtype",

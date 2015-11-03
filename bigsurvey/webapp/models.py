@@ -619,6 +619,12 @@ class Test(models.Model):
     pvb_detail_guide = models.BooleanField(default=False, verbose_name=_('Guide'))
     pvb_detail_o_rings = models.BooleanField(default=False, verbose_name=_('O-Rings'))
     pvb_detail_other = models.BooleanField(default=False, verbose_name=_('Other'))
+    test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
+                                          related_name=_("tests"))
+    test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
+                                   related_name=_("tests"))
+    test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
+    test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)
