@@ -33,7 +33,7 @@
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.address1.label }}
+                        {% trans "Site Address" %}
                         {{ site_filter.form.address1|add_class:"uk-width-1-1" }}
                     </td>
                 </tr>
@@ -51,14 +51,14 @@
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.due_install_test_date.label }}
-                        {{ site_filter.form.due_install_test_date|add_class:"uk-width-1-1" }}
+                        {{ site_filter.form.due_test_date_gt.label }}
+                        {{ site_filter.form.due_test_date_gt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                     </td>
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.site_use.label }}
-                        {{ site_filter.form.site_use|add_class:"uk-width-1-1" }}
+                        {{ site_filter.form.due_test_date_lt.label }}
+                        {{ site_filter.form.due_test_date_lt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                     </td>
                 </tr>
                 <tr>

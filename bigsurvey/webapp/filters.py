@@ -137,17 +137,15 @@ class FilterActions(object):
             return sites
 
         @staticmethod
-        def due_install_test_date(sites, value):
-            current_date = datetime.now()
-            dates = {
-                'week': current_date + timedelta(weeks=1),
-                'month': current_date + timedelta(days=30),
-                'year': current_date + timedelta(days=365),
-            }
-            if value == 'never':
-                return sites.filter(next_survey_date=None)
-            if value in dates:
-                return sites.filter(hazards__due_install_test_date__range=[current_date, dates[value]])
+        def due_test_gt(sites, value):
+            if value:
+                return sites.filter(hazards__due_install_test_date__gte=value).distinct()
+            return sites
+
+        @staticmethod
+        def due_test_lt(sites, value):
+            if value:
+                return sites.filter(hazards__due_install_test_date__lte=value).distinct()
             return sites
 
         @staticmethod
@@ -437,9 +435,10 @@ class SiteFilter(django_filters.FilterSet):
     meter_size = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Size'))
     meter_reading = django_filters.NumberFilter(label=_('Meter Reading'))
     connect_date = django_filters.DateFilter(label=_('Connect Date'))
-    due_install_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
-                                                        label=_('Due install/test'),
-                                                        action=FilterActions.Site.due_install_test_date)
+    due_test_date_gt = django_filters.DateFilter(label=_("Due install/test date from"),
+                                                 action=FilterActions.Site.due_test_gt)
+    due_test_date_lt = django_filters.DateFilter(label=_("Due install/test date to"),
+                                                 action=FilterActions.Site.due_test_lt)
     # they aren't displayed currently but may require them later
     # site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     # site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
