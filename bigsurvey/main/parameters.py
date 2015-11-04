@@ -83,7 +83,7 @@ STATES = (
 )
 
 STATES_FILTER = (
-    ('', 'All'), ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),
+    ('', 'All'), ('blank', 'Blank'), ('AL', 'Alabama'), ('AK', 'Alaska'), ('AZ', 'Arizona'), ('AR', 'Arkansas'), ('CA', 'California'),
     ('CO', 'Colorado'), ('CT', 'Connecticut'), ('DE', 'Delaware'), ('DC', 'District of Columbia'), ('FL', 'Florida'),
     ('GA', 'Georgia'), ('HI', 'Hawaii'), ('ID', 'Idaho'), ('IL', 'Illinois'), ('IN', 'Indiana'), ('IA', 'Iowa'),
     ('KS', 'Kansas'), ('KY', 'Kentucky'), ('LA', 'Louisiana'), ('ME', 'Maine'), ('MD', 'Maryland'),
@@ -97,21 +97,23 @@ STATES_FILTER = (
 
 NEXT_DATE_FILTER_CHOICES = (
     ('all', _('All')),
-    ('week', _('Within the next week')),
-    ('month', _('Within the next month')),
-    ('year', _('Within the next year')),
-    ('never', _('Not set'))
+    ('never', _('Blank')),
+    ('today', _('Today')),
+    ('week', _('Next week')),
+    ('month', _('Next month')),
+    ('year', _('Next year')),
+    ('missed', _('In the past')),
 )
 
 PAST_DATE_FILTER_CHOICES = (
     ('all', _('All')),
+    ('never', _('Blank')),
     ('week', _('1 week ago')),
     ('month', _('1 month ago')),
     ('2months', _('2 months ago')),
     ('3months', _('3 months ago')),
     ('6months', _('6 months ago')),
     ('year', _('1 year ago')),
-    ('never', _('Not set')),
 )
 
 TESTER_ASSEMBLY_STATUSES = ['Installed', 'Replaced']

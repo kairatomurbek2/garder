@@ -3,6 +3,7 @@ import models
 from main.parameters import NEXT_DATE_FILTER_CHOICES, PAST_DATE_FILTER_CHOICES, Groups, BP_TYPE_CHOICES, STATES_FILTER
 from datetime import datetime, timedelta
 from django.utils.translation import ugettext as _
+from django import forms
 
 
 class FilterChoices(object):
@@ -126,6 +127,7 @@ class FilterActions(object):
         def next_date(sites, value):
             current_date = datetime.now()
             dates = {
+                'today': current_date,
                 'week': current_date + timedelta(weeks=1),
                 'month': current_date + timedelta(days=30),
                 'year': current_date + timedelta(days=365),
@@ -168,7 +170,101 @@ class FilterActions(object):
         @staticmethod
         def state(sites, value):
             if value:
+                if value == 'blank':
+                    return sites.filter(state=None)
                 return sites.filter(state=value)
+            return sites
+
+        @staticmethod
+        def cust_state(sites, value):
+            if value:
+                if value == 'blank':
+                    return sites.filter(cust_state=None)
+                return sites.filter(cust_state=value)
+            return sites
+
+        @staticmethod
+        def street_number_blank(sites, value):
+            if value:
+                return sites.filter(street_number__isnull=True) | sites.filter(street_number='')
+            return sites
+
+        @staticmethod
+        def address2_blank(sites, value):
+            if value:
+                return sites.filter(address2__isnull=True) | sites.filter(address2='')
+            return sites
+
+        @staticmethod
+        def apt_blank(sites, value):
+            if value:
+                return sites.filter(apt__isnull=True) | sites.filter(apt='')
+            return sites
+
+        @staticmethod
+        def zip_blank(sites, value):
+            if value:
+                return sites.filter(zip__isnull=True) | sites.filter(zip='')
+            return sites
+
+        @staticmethod
+        def cust_address1_blank(sites, value):
+            if value:
+                return sites.filter(cust_address1__isnull=True) | sites.filter(cust_address1='')
+            return sites
+
+        @staticmethod
+        def cust_address2_blank(sites, value):
+            if value:
+                return sites.filter(cust_address2__isnull=True) | sites.filter(cust_address2='')
+            return sites
+
+        @staticmethod
+        def cust_apt_blank(sites, value):
+            if value:
+                return sites.filter(cust_apt__isnull=True) | sites.filter(cust_apt='')
+            return sites
+
+        @staticmethod
+        def cust_city_blank(sites, value):
+            if value:
+                return sites.filter(cust_city__isnull=True) | sites.filter(cust_city='')
+            return sites
+
+        @staticmethod
+        def cust_zip_blank(sites, value):
+            if value:
+                return sites.filter(cust_zip__isnull=True) | sites.filter(cust_zip='')
+            return sites
+
+        @staticmethod
+        def route_blank(sites, value):
+            if value:
+                return sites.filter(route__isnull=True) | sites.filter(route='')
+            return sites
+
+        @staticmethod
+        def meter_number_blank(sites, value):
+            if value:
+                return sites.filter(meter_number__isnull=True) | sites.filter(meter_number='')
+            return sites
+
+        @staticmethod
+        def meter_size_blank(sites, value):
+            if value:
+                return sites.filter(meter_size__isnull=True) | sites.filter(meter_size='')
+            return sites
+
+        @staticmethod
+        def meter_reading_blank(sites, value):
+            if value:
+                return sites.filter(meter_reading__isnull=True)
+            return sites
+
+        @staticmethod
+        def connect_date_blank(sites, value):
+            if value:
+                return sites.filter(connect_date__isnull=True)
             return sites
 
     class Survey(object):
@@ -416,7 +512,8 @@ class SiteFilter(django_filters.FilterSet):
     cust_address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 2'))
     cust_apt = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Apt'))
     cust_city = django_filters.CharFilter(lookup_type='icontains', label=_('Customer City'))
-    cust_state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Customer State'), action=FilterActions.Site.state)
+    cust_state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Customer State'),
+                                             action=FilterActions.Site.cust_state)
     cust_zip = django_filters.CharFilter(lookup_type='icontains', label=_('Customer ZIP'))
     next_survey_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
                                                    action=FilterActions.Site.next_date,
@@ -439,6 +536,34 @@ class SiteFilter(django_filters.FilterSet):
                                                  action=FilterActions.Site.due_test_gt)
     due_test_date_lt = django_filters.DateFilter(label=_("Due install/test date to"),
                                                  action=FilterActions.Site.due_test_lt)
+    street_number_blank = django_filters.BooleanFilter(action=FilterActions.Site.street_number_blank,
+                                                       widget=forms.CheckboxInput)
+    address2_blank = django_filters.BooleanFilter(action=FilterActions.Site.address2_blank,
+                                                  widget=forms.CheckboxInput)
+    apt_blank = django_filters.BooleanFilter(action=FilterActions.Site.apt_blank,
+                                             widget=forms.CheckboxInput)
+    zip_blank = django_filters.BooleanFilter(action=FilterActions.Site.zip_blank,
+                                             widget=forms.CheckboxInput)
+    cust_address1_blank = django_filters.BooleanFilter(action=FilterActions.Site.cust_address1_blank,
+                                                       widget=forms.CheckboxInput)
+    cust_address2_blank = django_filters.BooleanFilter(action=FilterActions.Site.cust_address2_blank,
+                                                       widget=forms.CheckboxInput)
+    cust_apt_blank = django_filters.BooleanFilter(action=FilterActions.Site.cust_apt_blank,
+                                                  widget=forms.CheckboxInput)
+    cust_city_blank = django_filters.BooleanFilter(action=FilterActions.Site.cust_city_blank,
+                                                   widget=forms.CheckboxInput)
+    cust_zip_blank = django_filters.BooleanFilter(action=FilterActions.Site.cust_zip_blank,
+                                                  widget=forms.CheckboxInput)
+    route_blank = django_filters.BooleanFilter(action=FilterActions.Site.route_blank,
+                                               widget=forms.CheckboxInput)
+    meter_number_blank = django_filters.BooleanFilter(action=FilterActions.Site.meter_number_blank,
+                                                      widget=forms.CheckboxInput)
+    meter_size_blank = django_filters.BooleanFilter(action=FilterActions.Site.meter_size_blank,
+                                                    widget=forms.CheckboxInput)
+    meter_reading_blank = django_filters.BooleanFilter(action=FilterActions.Site.meter_reading_blank,
+                                                       widget=forms.CheckboxInput)
+    connect_date_blank = django_filters.BooleanFilter(action=FilterActions.Site.connect_date_blank,
+                                                      widget=forms.CheckboxInput)
     # they aren't displayed currently but may require them later
     # site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     # site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))

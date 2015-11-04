@@ -238,3 +238,9 @@ ul.test-form-ul {
 .filter-button {
     margin: 10px 10px 0;
 }
+
+.form-blank-label {
+    float: right;
+    margin-top: 3px;
+    padding-right: 5px;
+}
