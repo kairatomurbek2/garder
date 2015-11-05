@@ -143,6 +143,48 @@ CREDIT_CARD_TYPE_CHOICES = (
 
 OTHER = 'other'
 
+SITE_FIELD_NAMES = [
+    "pk",
+    "pws",
+    "connect_date",
+    "address1",
+    "address2",
+    "street_number",
+    "apt",
+    "city",
+    "state",
+    "zip",
+    "site_use",
+    "site_type",
+    "status",
+    "floors",
+    "interconnection_point",
+    "meter_number",
+    "meter_size",
+    "meter_reading",
+    "route",
+    "potable_present",
+    "fire_present",
+    "irrigation_present",
+    "is_due_install",
+    "is_backflow",
+    "next_survey_date",
+    "notes",
+    "last_survey_date",
+    "cust_number",
+    "cust_name",
+    "cust_code",
+    "cust_address1",
+    "cust_address2",
+    "cust_apt",
+    "cust_city",
+    "cust_state",
+    "cust_zip",
+    "contact_phone",
+    "contact_fax",
+    "contact_email"
+]
+
 DATEFORMAT_CHOICES = (
     ('%Y-%m-%d', '%Y-%m-%d'),
     ('%m/%d/%Y', '%m/%d/%Y'),

@@ -13,7 +13,7 @@ from django.forms import formset_factory, ModelChoiceField
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView, CreateView, UpdateView, FormView, View
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -35,6 +35,8 @@ from webapp.forms import TesterSiteSearchForm, ImportMappingsForm, BaseImportMap
 from webapp.utils.pdf_generator import PDFGenerator
 from webapp.utils import photo_util
 from webapp.utils.excel_parser import ExcelParser, FINISHED, BackgroundExcelParserRunner, ExcelValidationError
+from utils.excel_writer import XLSExporter
+from datetime import datetime
 
 
 class PermissionRequiredMixin(View):
@@ -92,6 +94,13 @@ class HomeView(BaseTemplateView):
         user = self.request.user
         if not user.is_superuser and user.has_perm('webapp.access_to_site_by_customer_account'):
             return redirect(reverse('webapp:tester-home'))
+        if 'xls' in self.request.GET:
+            sites = self._get_sites(user)
+            filtered_sites = filters.SiteFilter(self.request.GET, queryset=sites)
+            xls = XLSExporter(filtered_sites.qs).get_xls()
+            response = HttpResponse(xls, content_type='application/xls')
+            response['Content-Disposition'] = u'attachment; filename="Exported_Sites_%s.xls"' % datetime.now().date()
+            return response
         return super(HomeView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

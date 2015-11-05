@@ -9,6 +9,9 @@
             <a class="uk-button uk-button-primary filter-button" role="button" href="{% url 'webapp:home' %}">
                 {% trans "Clear Filters" %}
             </a>
+            <a id="xls-link" class="uk-button uk-button-primary filter-button" role="button" href="">
+                {% trans "Get XLS" %}
+            </a>
             {% paginate %}
         </div>
         <div id="table_div">
@@ -262,6 +265,9 @@
                 scrollingTop: navbarHeight
             });
             setup_blank_checks();
+            var xlsUrl = location.href;
+            xlsUrl += (xlsUrl.split('?')[1] ? '&':'?') + 'xls';
+            $("#xls-link").prop('href', xlsUrl)
         })
     </script>
     <script></script>
