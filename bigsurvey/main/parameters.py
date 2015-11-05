@@ -97,23 +97,24 @@ STATES_FILTER = (
 
 NEXT_DATE_FILTER_CHOICES = (
     ('all', _('All')),
-    ('never', _('Blank')),
+    ('blank', _('Blank')),
+    ('past', _('Past')),
     ('today', _('Today')),
     ('week', _('Next week')),
     ('month', _('Next month')),
     ('year', _('Next year')),
-    ('missed', _('In the past')),
 )
 
 PAST_DATE_FILTER_CHOICES = (
     ('all', _('All')),
-    ('never', _('Blank')),
-    ('week', _('1 week ago')),
-    ('month', _('1 month ago')),
-    ('2months', _('2 months ago')),
-    ('3months', _('3 months ago')),
-    ('6months', _('6 months ago')),
-    ('year', _('1 year ago')),
+    ('blank', _('Blank')),
+    ('week', _('Last week')),
+    ('month', _('Last month')),
+    ('1-2months', _('1-2 months ago')),
+    ('2-3months', _('2-3 months ago')),
+    ('3-4months', _('3-6 months ago')),
+    ('6-12months', _('6-12 months ago')),
+    ('year', _('Over a year ago')),
 )
 
 TESTER_ASSEMBLY_STATUSES = ['Installed', 'Replaced']

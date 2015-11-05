@@ -107,6 +107,8 @@ class Xpath:
         pagination_link = './/a[@data-action="pagination"][@data-id="%s"]'
         site_detail_link = './/tr[@class="clickable-row"][@data-id="%s"]'
         excel_field_select_by_model_field = './/input[@value="%s"]/../following-sibling::td/select'
+        site_id = './/tr/td[1][text()="%s"]'
+        site_table_text = './/tbody//td[contains(., "%s")]'
 
     class Paypal:
         username = './/input[@name="login_email"]'

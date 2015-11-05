@@ -104,3 +104,33 @@ def check_fields_in_form(step, count, form_name):
                        helper.find(Xpath.Pattern.textarea % row['field']) or \
                        helper.find(Xpath.Pattern.select % row['field'])
         helper.check_element_exists(form_element, 'Element with name "%s" was not found in the form "%s"' % (row['field'], form_name))
+
+
+@step('I should see sites with ids "(.*)"')
+def see_sites_with_ids(step, idstr):
+    ids = idstr.split(',')
+    for site_id in ids:
+        elem = helper.find(Xpath.Pattern.site_id % site_id)
+        helper.check_element_exists(elem, 'Site with %s id is not on page!' % site_id)
+
+
+@step('I should not see sites with ids "(.*)"')
+def see_sites_with_ids(step, idstr):
+    ids = idstr.split(',')
+    for site_id in ids:
+        elem = helper.find(Xpath.Pattern.site_id % site_id)
+        helper.check_element_doesnt_exist(elem, 'Site with %s id is on page!' % site_id)
+
+
+@step('I should see following sites$')
+def check_site_text_exists(step):
+    for row in step.hashes:
+        elem = helper.find(Xpath.Pattern.site_table_text % row['text'])
+        helper.check_element_exists(elem, '"%s" is not on page.' % row['text'])
+
+
+@step('I should not see following sites$')
+def check_site_text_does_not_exist(step):
+    for row in step.hashes:
+        elem = helper.find(Xpath.Pattern.site_table_text % row['text'])
+        helper.check_element_doesnt_exist(elem, '"%s" is on page.' % row['text'])

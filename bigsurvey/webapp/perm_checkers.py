@@ -48,12 +48,14 @@ class UserPermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
         perm = False
+        testers_group = models.Group.objects.get(name=Groups.tester)
         if request.user.has_perm('webapp.access_to_all_users'):
             perm = True
         elif request.user.has_perm('webapp.access_to_multiple_pws_users'):
-            perm = set(obj.employee.pws.all()).issubset(request.user.employee.pws.all()) and obj.employee.pws.all()
+            perm = set(obj.employee.pws.all()).issubset(request.user.employee.pws.all()) and obj.employee.pws.all() or \
+                testers_group in obj.groups.all() and \
+                bool(set(request.user.employee.pws.all()) & set(obj.employee.pws.all()))
         elif request.user.has_perm('webapp.access_to_pws_users'):
-            testers_group = models.Group.objects.get(name=Groups.tester)
             perm = set(obj.employee.pws.all()).issubset(request.user.employee.pws.all()) and obj.employee.pws.all() or \
                 testers_group in obj.groups.all() and request.user.employee.pws.all().first() in obj.employee.pws.all()
         return perm

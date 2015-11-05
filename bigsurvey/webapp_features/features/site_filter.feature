@@ -1,97 +1,84 @@
 @site_filter
 Feature: Filtration
+
   @keep_db
-  Scenario: Filtration by address1 field while logged in as root
+  @char_filters
+  Scenario Outline: Site Filtering by char filters
     Given I logged in as "root"
     And I open "site_list" page
-    When I fill in "address" with "cent"
+    When I fill in "<filter>" with "<value>"
     And I submit "site_filter" form
-    Then I should see following
-      | text      |
-      | Ancoridge |
-    And I should not see following
-      | text       |
-      | Boston     |
-      | Washington |
-      | New York   |
+    Then I should see sites with ids "<site_ids>"
+    And I should not see sites with ids "<other_site_ids>"
+
+  Examples:
+    | filter        | value       | site_ids  | other_site_ids     |
+    | cust_number   | ZXC2        | 3         | 1,2,4,5,6,7,8,9,10 |
+    | cust_name     | Newell      | 10        | 1,2,3,4,5,6,7,8,9  |
+    | street_number | 7269        | 10        | 1,2,3,4,5,6,7,8,9  |
+    | address1      | Avenue      | 3,7       | 1,2,4,5,6,8,9,10   |
+    | address2      | nowhere     | 3         | 1,2,4,5,6,7,8,9,10 |
+    | apt           | 75          | 10        | 1,2,3,4,5,6,7,8,9  |
+    | city          | washington  | 5         | 1,2,3,4,6,7,8,9,10 |
+    | zip           | 12          | 4,6,7     | 1,2,3,5,8,9,10     |
+    | cust_address1 | First       | 2         | 1,3,4,5,6,7,8,9,10 |
+    | cust_address2 | Beach       | 7         | 1,2,3,4,5,6,8,9,10 |
+    | cust_apt      | -           | 10        | 1,2,3,4,5,6,7,8,9  |
+    | cust_city     | ashington   | 5,6       | 1,2,3,4,7,8,9,10   |
+    | cust_zip      | 0           | 3,4,5,6,9 | 1,2,7,8,10         |
+    | route         | 123         | 5,10      | 1,2,3,4,6,7,8,9    |
+    | meter_number  | TM          | 8         | 1,2,3,4,5,6,7,9,10 |
+    | meter_size    | "           | 9         | 1,2,3,4,5,6,7,8,10 |
+    | meter_reading | 100         | 8         | 1,2,3,4,5,6,7,9,10 |
+    | connect_date  | 2015-01-15  | 1,2       | 3,4,5,6,7,8,9,10   |
 
   @keep_db
-  Scenario: Filtration by site_use field while logged in as admin
-    Given I logged in as "admin"
-    And I open "site_list" page
-    When I select "Industrial" from "site_use"
-    And I submit "site_filter" form
-    Then I should see following
-      | text    |
-      | Chikago |
-    And I should not see following
-      | text        |
-      | Houston     |
-      | Boston      |
-      | Washington  |
-      | New York    |
-      | Los Angeles |
-
-  @keep_db
-  Scenario: Filtration by site use and type while logged in as root
+  @list_filters
+  Scenario Outline: Site Filtering by list filters
     Given I logged in as "root"
     And I open "site_list" page
-    When I select "Commercial" from "site_use"
-    And I select "Offices" from "site_type"
+    When I select "<value>" from "<filter>"
     And I submit "site_filter" form
-    Then I should see following
-      | text  |
-      | VALVE |
-    And I should not see following
-      | text   |
-      | IKW182 |
+    Then I should see sites with ids "<site_ids>"
+    And I should not see sites with ids "<other_site_ids>"
+
+  Examples:
+    | filter           | value           | site_ids         | other_site_ids     |
+    | pws              | NUI812          | 4,9,10           | 1,2,3,5,6,7,8      |
+    | cust_code        | Industrial      | 4,8              | 1,2,3,5,6,7,9,10   |
+    | state            | WA              | 10               | 1,2,3,4,5,6,7,8,9  |
+    | state            | blank           | 1                | 2,3,4,5,6,7,8,9,10 |
+    | cust_state       | TX              | 3                | 1,2,4,5,6,7,8,9,10 |
+    | cust_state       | blank           | 1                | 2,3,4,5,6,7,8,9,10 |
+    | next_survey_date | past            | 1                | 2,3,4,5,6,7,8,9,10 |
+    | next_survey_date | year            | 9                | 1,2,3,4,5,6,7,8,10 |
+    | next_survey_date | blank           | 2,3,4,5,6,7,8,10 | 1,9                |
+    | last_survey_date | 6-12months      | 5,10             | 1,2,3,4,6,7,8,9    |
+    | last_survey_date | blank           | 1,2,3,4,6,7,8,9  | 5,10               |
 
   @keep_db
-  Scenario: Filtration by next survey date while logged in as admin
-    Given I logged in as "admin"
-    And I open "site_list" page
-    When I select "Next Year" from "next_survey_date"
-    And I submit "site_filter" form
-    Then I should see following
-      | text    |
-      | Chikago |
-    And I should not see following
-      | text    |
-      | Seattle |
-
-  @keep_db
-  Scenario: Filtration by last survey date while logged in as root
+  @blank_filters
+  Scenario Outline: Site Filtering by blank char filters
     Given I logged in as "root"
     And I open "site_list" page
-    When I select "1 week" from "last_survey_date"
+    When I check "<filter>"
     And I submit "site_filter" form
-    Then I should see following
-      | text       |
-      | Washington |
-      | Seattle    |
-    And I should not see following
-      | text    |
-      | Chikago |
-      | Boston  |
+    Then I should see sites with ids "<site_ids>"
+    And I should not see sites with ids "<other_site_ids>"
 
-  @keep_db
-  Scenario: Filtration by seq route
-    Given I logged in as "root"
-    And I open "site_list" page
-    When I fill in "route" with "ROUTE-123"
-    And I submit "site_filter" form
-    Then I should see following
-      | text       |
-      | Seattle    |
-      | Washington |
-
-  @keep_db
-  Scenario: Filtration by account number while logged in as root
-    Given I logged in as "root"
-    And I open "site_list" page
-    When I fill in "cust_number" with "VALVE"
-    And I submit "site_filter" form
-    Then I should see following
-      | text             |
-      | Seattle          |
-      | South Jackson st |
+  Examples:
+    | filter              | other_site_ids     | site_ids           |
+    | street_number_blank | 10                 | 1,2,3,4,5,6,7,8,9  |
+    | address2_blank      | 3                  | 1,2,4,5,6,7,8,9,10 |
+    | apt_blank           | 10                 | 1,2,3,4,5,6,7,8,9  |
+    | zip_blank           | 2,3,4,5,6,7,8,9,10 | 1                  |
+    | cust_address1_blank | 2,3,4,5,6,7,8,9,10 | 1                  |
+    | cust_address2_blank | 7                  | 1,2,3,4,5,6,8,9,10 |
+    | cust_apt_blank      | 10                 | 1,2,3,4,5,6,7,8,9  |
+    | cust_city_blank     | 2,3,4,5,6,7,8,9,10 | 1                  |
+    | cust_zip_blank      | 2,3,4,5,6,7,8,9,10 | 1                  |
+    | route_blank         | 5,10               | 1,2,3,4,6,7,8,9    |
+    | meter_number_blank  | 8                  | 1,2,3,4,5,6,7,9,10 |
+    | meter_size_blank    | 9                  | 1,2,3,4,5,6,7,8,10 |
+    | meter_reading_blank | 8,9                | 1,2,3,4,5,6,7,10   |
+    | connect_date_blank  | 1,2,3,4,5,7        | 6,8,9,10           |

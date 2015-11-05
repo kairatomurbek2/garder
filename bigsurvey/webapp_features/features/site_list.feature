@@ -4,7 +4,7 @@ Feature: Site list
   Scenario: Root is opening site list page
     Given I logged in as "root"
     When I open "site_list" page
-    Then I should see following
+    Then I should see following sites
       | text        |
       | First Site  |
       | Second Site |
@@ -18,14 +18,14 @@ Feature: Site list
   Scenario: Pws owner is opening site list page
     Given I logged in as "pws_owner"
     When I open "site_list" page
-    Then I should see following
+    Then I should see following sites
       | text        |
       | Ancoridge   |
       | Chikago     |
       | Seattle     |
       | New York    |
       | Washington  |
-    And I should not see following
+    And I should not see following sites
       | text        |
       | First Site  |
       | Second Site |
@@ -36,12 +36,12 @@ Feature: Site list
   Scenario: Admin is opening site list page
     Given I logged in as "admin"
     When I open "site_list" page
-    Then I should see following
+    Then I should see following sites
       | text      |
       | Ancoridge |
       | Chikago   |
       | Seattle   |
-    And I should not see following
+    And I should not see following sites
       | text        |
       | First Site  |
       | Second Site |
@@ -53,11 +53,11 @@ Feature: Site list
   Scenario: Surveyor is opening site list page
     Given I logged in as "surveyor"
     When I open "site_list" page
-    Then I should see following
+    Then I should see following sites
       | text       |
       | Ancoridge  |
       | Seattle    |
-    And I should not see following
+    And I should not see following sites
       | text        |
       | Second Site |
       | Boston      |

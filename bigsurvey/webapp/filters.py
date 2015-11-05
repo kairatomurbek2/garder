@@ -132,8 +132,10 @@ class FilterActions(object):
                 'month': current_date + timedelta(days=30),
                 'year': current_date + timedelta(days=365),
             }
-            if value == 'never':
+            if value == 'blank':
                 return sites.filter(next_survey_date=None)
+            if value == 'past':
+                return sites.filter(next_survey_date__lt=current_date)
             if value in dates:
                 return sites.filter(next_survey_date__range=[current_date, dates[value]])
             return sites
@@ -153,18 +155,21 @@ class FilterActions(object):
         @staticmethod
         def last_date(sites, value):
             current_date = datetime.now().date()
-            dates = {
-                'week': current_date - timedelta(weeks=1),
-                'month': current_date - timedelta(days=30),
-                '2months': current_date - timedelta(days=30 * 2),
-                '3months': current_date - timedelta(days=30 * 3),
-                '6months': current_date - timedelta(days=30 * 6),
-                'year': current_date - timedelta(days=365),
+            ranges = {
+                'week': [current_date - timedelta(weeks=1), current_date],
+                'month': [current_date - timedelta(days=30), current_date],
+                '1-2months': [current_date - timedelta(days=60), current_date - timedelta(days=30)],
+                '2-3months': [current_date - timedelta(days=90), current_date - timedelta(days=60)],
+                '3-6months': [current_date - timedelta(days=180), current_date - timedelta(days=90)],
+                '6-12months': [current_date - timedelta(days=365), current_date - timedelta(days=180)],
             }
-            if value == 'never':
+            year_ago = current_date - timedelta(days=365)
+            if value == 'blank':
                 return sites.filter(last_survey_date=None)
-            if value in dates:
-                return sites.filter(last_survey_date__lt=dates[value])
+            if value == 'year':
+                return sites.filter(last_survey_date__lt=year_ago)
+            if value in ranges:
+                return sites.filter(last_survey_date__range=ranges[value])
             return sites
 
         @staticmethod
@@ -432,7 +437,7 @@ class FilterActions(object):
                 '6months': current_date - timedelta(days=30 * 6),
                 'year': current_date - timedelta(days=365),
             }
-            if value == 'never':
+            if value == 'blank':
                 return testers.filter(employee__test_last_cert=None)
             if value in dates:
                 return testers.filter(employee__test_last_cert__gt=dates[value])
@@ -527,7 +532,7 @@ class SiteFilter(django_filters.FilterSet):
     last_test_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
                                                  action=FilterActions.Site.last_date,
                                                  label=_('Last Survey'))
-    route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='exact')
+    route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='icontains')
     meter_number = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Number'))
     meter_size = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Size'))
     meter_reading = django_filters.NumberFilter(label=_('Meter Reading'))
