@@ -20,3 +20,5 @@ bigsurvey/uploads/photo/*
 firefox-profile/*
 !firefox-profile/prefs.js
 !firefox-profile/permissions.sqlite
+bigsurvey/uploads/excel_export/*
+!bigsurvey/uploads/excel_export/.gitkeep

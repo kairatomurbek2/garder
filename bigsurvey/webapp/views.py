@@ -36,7 +36,6 @@ from webapp.utils.pdf_generator import PDFGenerator
 from webapp.utils import photo_util
 from webapp.utils.excel_parser import ExcelParser, FINISHED, BackgroundExcelParserRunner, ExcelValidationError
 from utils.excel_writer import XLSExporter
-from datetime import datetime
 
 
 class PermissionRequiredMixin(View):
@@ -97,7 +96,7 @@ class HomeView(BaseTemplateView):
         if 'xls' in self.request.GET:
             sites = self._get_sites(user)
             filtered_sites = filters.SiteFilter(self.request.GET, queryset=sites)
-            xls = XLSExporter(filtered_sites.qs).get_xls()
+            xls = open(XLSExporter(filtered_sites.qs).get_xls(), 'rb')
             response = HttpResponse(xls, content_type='application/xls')
             response['Content-Disposition'] = u'attachment; filename="Exported_Sites_%s.xls"' % datetime.now().date()
             return response

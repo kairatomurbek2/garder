@@ -185,6 +185,20 @@ SITE_FIELD_NAMES = [
     "contact_email"
 ]
 
+SITE_BOOLEAN_FIELDS = [
+    "potable_present",
+    "fire_present",
+    "irrigation_present",
+    "is_due_install",
+    "is_backflow",
+]
+
+SITE_DATE_FIELDS = [
+    "connect_date",
+    "next_survey_date",
+    "last_survey_date",
+]
+
 DATEFORMAT_CHOICES = (
     ('%Y-%m-%d', '%Y-%m-%d'),
     ('%m/%d/%Y', '%m/%d/%Y'),
