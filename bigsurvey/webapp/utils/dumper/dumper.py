@@ -90,21 +90,21 @@ class Preloader(Connector):
     def _preload_sites(self):
         print "======== PRELOADING SITES ========"
         sqls = (
-            """INSERT INTO ALL_SITES ( PWS, address1, address2, apt, city, state, zip,
+            """INSERT INTO ALL_SITES ( PWS, address1, address2, street_number, apt, city, state, zip,
                 Route, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading,
                 potable, fire, irrigation, is_due_install, is_backflow,
                 CustomerName, AccountNumber, CustCity, Code, CustZip,
-                CustAddress1, CustAddress2, CustState,
-                LastSurveyDate, NextSurveyDate)
-            SELECT ALL_PWS.ID, Services.ServiceStreetAddress, Services.ServiceStreetNumber, Services.SiteApt,
+                CustAddress1, CustAddress2, CustApt, CustState,
+                LastSurveyDate, NextSurveyDate, connect_date)
+            SELECT ALL_PWS.ID, Services.ServiceStreetAddress, Services.ServiceAddress2, Services.ServiceStreetNumber, Services.SiteApt,
                 Services.ServiceTown, Services.Service_State, Services.ServiceZip,
                 Services.Route, Services.SiteUse, Services.SiteType, Services.NumberofFloors,
                 Services.InterconnectionPoint, Services.MeterNumber, Services.MeterSize, Services.MeterReading,
                 Services.PotablePresent, Services.FirePresent, Services.IrrigationPresent,
                 Services.IsDueInstall, Services.IsBackflow,
                 Services.CustomerName, Services.AccountNumber, Services.CustomerCity,
-                Services.CustomerCode, Services.CustomerZip, Services.CustomerAddress1, Services.CustomerAddress2,
-                Services.CustomerState, Services.LastSurveyDate, Services.NextSurveyDate
+                Services.CustomerCode, Services.CustomerZip, Services.CustomerAddress1, Services.CustomerAddress2, Services.CustApt,
+                Services.CustomerState, Services.LastSurveyDate, Services.NextSurveyDate, Services.ConnectDate
             FROM ALL_PWS INNER JOIN Services ON ALL_PWS.Number = Services.PWSID;""",
             """UPDATE ALL_SITES 
 SET [state] = (Select Pval from Pvals WHERE ([Pval_ID]=[state])),
@@ -116,6 +116,8 @@ SET [state] = (Select Pval from Pvals WHERE ([Pval_ID]=[state])),
             "UPDATE ALL_SITES SET ALL_SITES.city = 'Unknown' WHERE ((ALL_SITES.city is null or ALL_SITES.city=''));",
             "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = [ALL_SITES].[CustAddress2] WHERE (ALL_SITES.CustAddress1='' or CustAddress1 is Null);",
             "UPDATE ALL_SITES SET ALL_SITES.CustAddress2 = '' WHERE (ALL_SITES.CustAddress2=CustAddress1);",
+            "UPDATE ALL_SITES SET ALL_SITES.address1 = [ALL_SITES].[address2] WHERE (ALL_SITES.address1='' or address1 is Null);",
+            "UPDATE ALL_SITES SET ALL_SITES.address2 = '' WHERE (ALL_SITES.address2=address1);",
             "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\\','/') WHERE (((ALL_SITES.CustomerName) Like '%\\%'));",
             "UPDATE ALL_SITES SET ALL_SITES.CustomerName = Replace(CustomerName,'\"','\\\"') WHERE (((ALL_SITES.CustomerName) Like '%\"%'));",
             "UPDATE ALL_SITES SET ALL_SITES.CustAddress1 = Replace(CustAddress1,'\\','/') WHERE (((ALL_SITES.CustAddress1) Like '%\\%'));",
@@ -298,13 +300,13 @@ class Formatter(Connector):
     TABLES = {
         "sites": ("ALL_SITES", [
             "Customer", "PWS", ("connect_date", "date"),
-            "address1", "address2", "apt", "city", "state", "zip",
+            "address1", "address2", "street_number", "apt", "city", "state", "zip",
             "site_use", "site_type", "floors", "ic_point",
             ("potable", "bit"), ("fire", "bit"), ("irrigation", "bit"),
             ("is_due_install", "bit"), ("is_backflow", "bit"),
             "route", "meter_number", "meter_size", "meter_reading",
             "CustomerName", "AccountNumber", "CustCity", "Code",
-            "CustZip", "CustAddress1", "CustAddress2", "CustState",
+            "CustZip", "CustAddress1", "CustAddress2", "CustApt", "CustState",
             ("LastSurveyDate", "date"), ("NextSurveyDate", "date")
         ]),
         "pws": ("ALL_PWS", [
@@ -331,14 +333,14 @@ class Formatter(Connector):
             # ("last_test_date", "date"), ("next_test_date", "date")
         ]),
         "tests": ("ALL_TESTS", [
-	    "bp_device", "tester", "user", ("test_date", "date"), 
+	    "bp_device", "tester", "user", ("test_date", "date"),
 	    ("cv1_leaked", "bit"), "cv1_gauge_pressure", ("cv1_cleaned", "bit"), "cv1_retest_pressure",
 	    ("cv2_leaked", "bit"), "cv2_gauge_pressure", ("cv2_cleaned", "bit"), "cv2_retest_pressure",
 	    ("rv_opened", "bit"), "rv_psi1", ("rv_cleaned", "bit"), "rv_psi2",
-	    ("outlet_sov_leaked", "bit"), 
+	    ("outlet_sov_leaked", "bit"),
 	    ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
 	    ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
-	    ("test_result", "bit"), "account_number", 
+	    ("test_result", "bit"), "account_number",
 	    ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date")
         ])
     }
@@ -511,7 +513,12 @@ class Jsoner(object):
 class Dumper(Connector):
     TEMPLATES = {
         'site': BASE_TEMPLATE % (
-        '{"status":1,"pws":%s,"connect_date":null,"address1":"%s","street_number":"%s","address2":"","apt":"%s","city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,"meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,"is_due_install":%s,"is_backflow":%s,"cust_number":"%s","cust_name":"%s","cust_code":%s,"cust_address1":"%s","cust_address2":"%s","cust_city":"%s","cust_state":"%s","cust_zip":"%s","contact_phone":"","contact_fax":"","contact_email":"","notes":"","last_survey_date":"%s","next_survey_date":"%s"}',
+        '{"status":1,"pws":%s,"connect_date":"%s","address1":"%s","address2":"%s","street_number":"%s","apt":"%s",\
+"city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,\
+"meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,\
+"is_due_install":%s,"is_backflow":%s,"cust_number":"%s","cust_name":"%s","cust_code":%s,"cust_address1":"%s","cust_address2":"%s","cust_apt":"%s",\
+"cust_city":"%s","cust_state":"%s","cust_zip":"%s","contact_phone":"","contact_fax":"","contact_email":"",\
+"notes":"","last_survey_date":"%s","next_survey_date":"%s"}',
         '"webapp.site"', '%s'),
         'survey': BASE_TEMPLATE % (
         '{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}',
@@ -531,9 +538,9 @@ class Dumper(Connector):
 "test_serial": "%s", "test_date": "%s", "rv_cleaned": %s}', '"webapp.test"', '%s'),
     }
     SQL_STRS = {
-        'dump_sites': 'select PWS, address1, address2, apt, city, state, zip, site_use, site_type, floors, ic_point, \
+        'dump_sites': 'select PWS, connect_date, address1, address2, street_number, apt, city, state, zip, site_use, site_type, floors, ic_point, \
 meter_number, meter_size, meter_reading, route, potable, fire, irrigation, is_due_install, is_backflow, \
-AccountNumber, CustomerName, Code, CustAddress1, CustAddress2, CustCity, CustState, CustZip, \
+AccountNumber, CustomerName, Code, CustAddress1, CustAddress2, CustApt, CustCity, CustState, CustZip, \
 LastSurveyDate, NextSurveyDate, ID from ALL_SITES',
         'dump_surveys': 'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, \'hph\', ID from ALL_SURVEYS',
         'dump_pwss': 'select Number, Name, WaterSource, ID from ALL_PWS',
@@ -554,11 +561,11 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
         'test'
     ]
     FIELDS_TO_REPLACE = {
-        'site': [(7, "webapp.siteuse"),
-                 (8, "webapp.sitetype"),
-                 (9, "webapp.floorscount"),
-                 (10, "webapp.icpointtype"),
-                 (22, "webapp.customercode")],
+        'site': [(9, "webapp.siteuse"),
+                 (10, "webapp.sitetype"),
+                 (11, "webapp.floorscount"),
+                 (12, "webapp.icpointtype"),
+                 (24, "webapp.customercode")],
         'survey': [(1, "webapp.servicetype"),
                    (3, "auth.user"),
                    (13, "webapp.special")],
@@ -739,5 +746,5 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
 
 if __name__ == '__main__':
     dumper = Dumper()
-    dumper.dump_testers()
+    #dumper.dump_testers()
     dumper.dump()
