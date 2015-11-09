@@ -263,7 +263,7 @@ class FilterActions(object):
         @staticmethod
         def meter_reading_blank(sites, value):
             if value:
-                return sites.filter(meter_reading__isnull=True)
+                return sites.filter(meter_reading__isnull=True) | sites.filter(meter_reading=0.0)
             return sites
 
         @staticmethod

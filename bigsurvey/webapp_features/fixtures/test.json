@@ -3483,7 +3483,7 @@
     "meter_number": null,
     "contact_email": null,
     "potable_present": true,
-    "meter_reading": null,
+    "meter_reading": 0,
     "is_due_install": false,
     "site_use": 1,
     "is_backflow": false,
