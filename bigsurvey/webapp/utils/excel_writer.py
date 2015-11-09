@@ -9,7 +9,7 @@ import os
 class XLSExporter(object):
     def __init__(self, dataset):
         self.file_name = os.path.join(BASE_DIR, 'uploads/excel_export/export_%s.xlsx' % datetime.now().strftime("%s"))
-        self.workbook = Workbook(self.file_name)
+        self.workbook = Workbook(self.file_name, {'constant_memory': True})
         self.current_sheet = self.workbook.add_worksheet(_("Sites"))
         self.dataset = dataset
         self.fields = SITE_FIELD_NAMES
@@ -46,5 +46,5 @@ class XLSExporter(object):
                 return 'Yes'
             return 'No'
         if field_name in SITE_DATE_FIELDS:
-            return field.strftime("%Y-%m-%d")
+            return '%02d-%02d-%02d' % (field.year, field.month, field.day)
         return unicode(field)
