@@ -57,6 +57,7 @@ class HazardFormForTester(forms.ModelForm):
             'site',
             'service_type',
             'hazard_type',
+            'hazard_degree',
             'location1',
             'location2',
             'notes',

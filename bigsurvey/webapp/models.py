@@ -298,6 +298,21 @@ class Regulation(models.Model):
         )
 
 
+class HazardDegree(models.Model):
+    degree = models.CharField(max_length=50, verbose_name=_("Hazard Degree"))
+
+    def __unicode__(self):
+        return u"%s" % self.degree
+
+    class Meta:
+        verbose_name = _('Hazard Degree')
+        verbose_name_plural = _('Hazard Degrees')
+        ordering = ('pk',)
+        permissions = (
+            ('browse_hazard_degree', _('Can browse Hazard Degree')),
+        )
+
+
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -393,6 +408,45 @@ class Employee(models.Model):
         )
 
 
+class TestKit(models.Model):
+    user = models.ForeignKey(User, verbose_name=_("Owner"), related_name='kits')
+    test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
+                                          related_name=_("kits"))
+    test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
+                                   related_name=_("kits"))
+    test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial"))
+    test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
+
+    def __unicode__(self):
+        return str(self.test_serial)
+
+    class Meta:
+        verbose_name = _("Test Kit")
+        verbose_name_plural = _("Test Kits")
+        permissions = (
+            ('access_to_all_test_kits', _("Access to all testers' kits")),
+            ('access_to_pws_test_kits', _("Access to own PWS' testers' kits")),
+        )
+
+
+class TesterCert(models.Model):
+    user = models.ForeignKey(User, verbose_name=_("Owner"), related_name='certs')
+    cert_number = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"))
+    cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
+    cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
+
+    def __unicode__(self):
+        return str(self.cert_number)
+
+    class Meta:
+        verbose_name = _("Tester Certificate")
+        verbose_name_plural = _("Tester Certificates")
+        permissions = (
+            ('access_to_all_tester_certs', _("Access to all testers' certs")),
+            ('access_to_pws_tester_certs', _("Access to own PWS' testers' certs")),
+        )
+
+
 class Site(models.Model):
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", help_text=_("PWS which Site belongs"), db_index=True)
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"), help_text=_("Connection date of Site"))
@@ -460,7 +514,8 @@ class Hazard(models.Model):
     location2 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 2"))
     latitude = models.FloatField(blank=True, null=True, verbose_name=_("Latitude"))
     longitude = models.FloatField(blank=True, null=True, verbose_name=_("Longitude"))
-    regulation_type = models.ForeignKey(Regulation, verbose_name=_("Regulation"), null=True, blank=True, related_name="hazards")
+    regulation_type = models.ForeignKey(Regulation, verbose_name=_("Regulation"), null=True, blank=True,
+                                        related_name="hazards")
     photo = models.ImageField(blank=True, null=True, default=None,
                               upload_to=photo_util.rename,
                               verbose_name=_('Photo'))
@@ -472,6 +527,8 @@ class Hazard(models.Model):
     aux_water = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Auxiliary Water"))
     service_type = models.ForeignKey(ServiceType, verbose_name=_("Service Type"), related_name="hazards")
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
+    hazard_degree = models.ForeignKey(HazardDegree, null=True, blank=True, verbose_name=_("Hazard Degree"),
+                                      related_name="hazards")
     assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
                                           related_name="hazards")
     assembly_status = models.ForeignKey(AssemblyStatus, null=True, blank=True, verbose_name=_("Assembly Status"),
@@ -482,8 +539,10 @@ class Hazard(models.Model):
     replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
     orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
                                     related_name="hazards")
-    bp_type_present = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True, verbose_name=_('BP Type Present'))
-    bp_type_required = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True, verbose_name=_('BP Type Required'))
+    bp_type_present = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True,
+                                       verbose_name=_('BP Type Present'))
+    bp_type_required = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True,
+                                        verbose_name=_('BP Type Required'))
     bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
                                 related_name="hazards")
     manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
@@ -619,6 +678,9 @@ class Test(models.Model):
     pvb_detail_guide = models.BooleanField(default=False, verbose_name=_('Guide'))
     pvb_detail_o_rings = models.BooleanField(default=False, verbose_name=_('O-Rings'))
     pvb_detail_other = models.BooleanField(default=False, verbose_name=_('Other'))
+    test_kit = models.ForeignKey(TestKit, null=True, blank=True, verbose_name=_('Test Kit'), related_name='tests')
+    tester_cert = models.ForeignKey(TesterCert, null=True, blank=True, verbose_name=_('Tester Cert'),
+                                    related_name='tests')
     test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
                                           related_name=_("tests"))
     test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),

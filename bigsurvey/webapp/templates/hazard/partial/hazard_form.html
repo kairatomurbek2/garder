@@ -56,6 +56,16 @@
             </tr>
             <tr>
                 <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.hazard_degree.id_for_label }}">{% trans "Hazard Degree" %}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.hazard_degree|add_class:'uk-width-1-1'|attr:'rows:3' %}
+                    {{ form.hazard_degree.errors }}
+                </td>
+                <td colspan="2" class="uk-width-1-2"></td>
+            </tr>
+            <tr>
+                <td class="uk-width-1-6 uk-text-right">
                     <label for="{{ form.location1.id_for_label }}">{{ form.location1.label }}</label>
                 </td>
                 <td class="uk-width-1-3">

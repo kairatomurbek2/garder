@@ -5738,5 +5738,7 @@
   },
   "model": "webapp.employee",
   "pk": 13
-}
+},
+{"fields":{"degree":"Pollutant"},"model":"webapp.hazarddegree","pk":1},
+{"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2}
 ]
