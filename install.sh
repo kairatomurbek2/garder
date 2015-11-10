@@ -7,10 +7,18 @@ fi
 pip install -r requirements.txt
 cd bigsurvey
 ./manage.py migrate --noinput
-for data_type in "base" "pws" "perms" "users" "help" "site_1" "site_2" "site_3" "site_4" "site_5" "site_6" "hazard" "survey" "letter"
+FILE_PATH="./webapp/fixtures/raw/"
+FILE_PREFIX="raw_data_"
+for data_type in "base" "pws" "perms" "users" "testers" "site" "hazard" "survey" "test" "letter"
 do
-   echo Loading ${data_type}...
-   ./manage.py loaddata data_${data_type}
+    for part_number in 0 `seq 50`
+    do
+        FILE_NAME="${FILE_PATH}${FILE_PREFIX}${data_type}_${part_number}.json"
+        if [ -f ${FILE_NAME} ]; then
+            echo Loading fixture ${FILE_NAME}...
+            ./manage.py loaddata ${FILE_NAME}
+        fi
+    done
 done
 echo Creating lettertypes...
 ./manage.py create_lettertypes_for_pws
