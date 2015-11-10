@@ -615,10 +615,12 @@ class TestBaseFormView(BaseFormView):
         if self.request.user.has_perm('webapp.access_to_own_tests'):
             queryset = models.User.objects.filter(pk=user.pk)
         if self.request.user.has_perm('webapp.access_to_pws_tests'):
-            queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin],
-                                                  employee__pws__in=user.employee.pws.all())
+            queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin, Groups.pws_owner],
+                                                  employee__pws__in=user.employee.pws.all()).distinct()
         if self.request.user.has_perm('webapp.access_to_all_tests'):
-            queryset = models.User.objects.filter(groups__name__in=[Groups.tester, Groups.admin])
+            queryset = models.User.objects.filter(
+                groups__name__in=[Groups.tester, Groups.admin, Groups.pws_owner]
+            ).distinct()
         return queryset
 
 
@@ -1190,7 +1192,9 @@ class UnpaidTestMixin(object):
         if user.has_perm('webapp.access_to_all_tests'):
             return unpaid_tests
         if user.has_perm("webapp.access_to_pws_tests"):
-            return unpaid_tests.filter(user=user)
+            groups = models.Group.objects.filter(name__in=[Groups.admin, Groups.pws_owner])
+            users = models.User.objects.filter(employee__pws=user.employee.pws.all(), groups=groups)
+            return unpaid_tests.filter(user__in=users)
         if user.has_perm('webapp.access_to_own_tests'):
             return unpaid_tests.filter(user=user)
 
