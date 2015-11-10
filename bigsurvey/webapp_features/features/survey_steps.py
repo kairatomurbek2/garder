@@ -4,6 +4,7 @@ from webapp import models
 from webapp_features.features import helper
 from webapp_features.features.common_steps import click_element_by_xpath
 from webapp_features.features.data import Xpath, get_url, Urls
+from time import sleep
 
 
 @step('I directly open "survey_detail" page with pk "(\d+)"')
@@ -115,6 +116,7 @@ def set_service_type_present(step, pk, service_type, value):
 
 @step('Site with pk "(\d+)" should have "(potable|fire|irrigation)" service turned (on|off)')
 def check_service_type_present(step, pk, service_type, value):
+    sleep(1)
     site = models.Site.objects.get(pk=pk)
     value = True if value == 'on' else False
     site_value = getattr(site, '%s_present' % service_type)

@@ -96,9 +96,8 @@ class HomeView(BaseTemplateView):
         if 'xls' in self.request.GET:
             sites = self._get_sites(user)
             filtered_sites = filters.SiteFilter(self.request.GET, queryset=sites)
-            xls = open(XLSExporter(filtered_sites.qs).get_xls(), 'rb')
-            response = HttpResponse(xls, content_type='application/xls')
-            response['Content-Disposition'] = u'attachment; filename="Exported_Sites_%s.xls"' % datetime.now().date()
+            xls = XLSExporter(filtered_sites.qs).get_xls()
+            response = HttpResponse(xls, content_type='text/plain')
             return response
         return super(HomeView, self).get(request, *args, **kwargs)
 

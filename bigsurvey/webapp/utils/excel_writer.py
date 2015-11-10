@@ -8,7 +8,8 @@ import os
 
 class XLSExporter(object):
     def __init__(self, dataset):
-        self.file_name = os.path.join(BASE_DIR, 'uploads/excel_export/export_%s.xlsx' % datetime.now().strftime("%s"))
+        self.file_uri = 'uploads/excel_export/Export_Services_%s.xlsx' % datetime.now().strftime("%Y-%m-%d-%s")
+        self.file_name = os.path.join(BASE_DIR, self.file_uri)
         self.workbook = Workbook(self.file_name, {'constant_memory': True})
         self.current_sheet = self.workbook.add_worksheet(_("Sites"))
         self.dataset = dataset
@@ -17,7 +18,7 @@ class XLSExporter(object):
     def get_xls(self):
         self._write_headers()
         self._write_data()
-        return self.file_name
+        return self.file_uri
 
     def _write_headers(self):
         col = 0
