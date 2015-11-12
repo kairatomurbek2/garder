@@ -178,8 +178,8 @@
 {
   "fields": {
     "username": "cdugas",
-    "first_name": "",
-    "last_name": "",
+    "first_name": "Cody",
+    "last_name": "Dugas",
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
@@ -332,8 +332,8 @@
 {
   "fields": {
     "username": "ncarter",
-    "first_name": "",
-    "last_name": "",
+    "first_name": "Nathan",
+    "last_name": "Carter",
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
@@ -445,20 +445,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "root"
     ],
-    "address": "IT-Attractor",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "IT-Attractor"
   },
   "model": "webapp.employee",
   "pk": 1
@@ -469,20 +462,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "dvillien"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 2
@@ -493,20 +479,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "jjdahl"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 3
@@ -517,20 +496,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "jlebas"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 4
@@ -541,20 +513,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "knijoka"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 5
@@ -565,20 +530,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "mlebas"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 6
@@ -589,20 +547,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "ndecoteau"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 7
@@ -613,20 +564,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "rleblanc"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 8
@@ -637,20 +581,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "cdugas"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 9
@@ -661,20 +598,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "dlouque"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 10
@@ -685,20 +615,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "rdufrene"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 11
@@ -709,20 +632,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "rmeyer"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 12
@@ -733,20 +649,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "dmccann"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 13
@@ -757,20 +666,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "mjacaruso"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 14
@@ -781,20 +683,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "mvitale"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 15
@@ -805,20 +700,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "ncarter"
     ],
-    "address": "USA",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "USA"
   },
   "model": "webapp.employee",
   "pk": 16
@@ -829,20 +717,13 @@
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "superadmin"
     ],
-    "address": "super address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "super address"
   },
   "model": "webapp.employee",
   "pk": 17
@@ -853,20 +734,13 @@
     "pws": [1],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "admin"
     ],
-    "address": "admin address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "admin address"
   },
   "model": "webapp.employee",
   "pk": 18
@@ -877,20 +751,13 @@
     "pws": [1],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "surveyor"
     ],
-    "address": "surveyor address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "surveyor address"
   },
   "model": "webapp.employee",
   "pk": 19
@@ -901,20 +768,13 @@
     "pws": [1],
     "zip": "",
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "tester"
     ],
-    "address": "tester address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "tester address"
   },
   "model": "webapp.employee",
   "pk": 20

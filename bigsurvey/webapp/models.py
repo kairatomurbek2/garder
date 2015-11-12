@@ -381,16 +381,7 @@ class Employee(models.Model):
     phone1 = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Phone 1"))
     phone2 = models.CharField(blank=True, null=True, max_length=20, verbose_name=_("Phone 2"))
     pws = models.ManyToManyField(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
-    cert_number = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"))
-    cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
-    cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
-    test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
-                                          related_name=_("testers"))
-    test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
-                                   related_name=_("testers"))
-    test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
     company = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Company"))
-    test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial"))
     has_licence_for_installation = models.BooleanField(default=False, verbose_name=_("Determines whether tester has access for installation"))
 
     def __unicode__(self):
@@ -410,12 +401,13 @@ class Employee(models.Model):
 
 class TestKit(models.Model):
     user = models.ForeignKey(User, verbose_name=_("Owner"), related_name='kits')
+    test_serial = models.CharField(max_length=20, verbose_name=_("Test Serial"))
     test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
                                           related_name=_("kits"))
     test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
                                    related_name=_("kits"))
-    test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial"))
     test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
+    is_active = models.BooleanField(default=True, verbose_name=_("Is still in use"))
 
     def __unicode__(self):
         return str(self.test_serial)
@@ -431,7 +423,7 @@ class TestKit(models.Model):
 
 class TesterCert(models.Model):
     user = models.ForeignKey(User, verbose_name=_("Owner"), related_name='certs')
-    cert_number = models.CharField(blank=True, null=True, max_length=30, verbose_name=_("Cert. Number"))
+    cert_number = models.CharField(max_length=30, verbose_name=_("Cert. Number"))
     cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
     cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
 
@@ -681,12 +673,6 @@ class Test(models.Model):
     test_kit = models.ForeignKey(TestKit, null=True, blank=True, verbose_name=_('Test Kit'), related_name='tests')
     tester_cert = models.ForeignKey(TesterCert, null=True, blank=True, verbose_name=_('Tester Cert'),
                                     related_name='tests')
-    test_manufacturer = models.ForeignKey(TestManufacturer, blank=True, null=True, verbose_name=_("Test Manufacturer"),
-                                          related_name=_("tests"))
-    test_model = models.ForeignKey(TestModel, blank=True, null=True, verbose_name=_("Test Model"),
-                                   related_name=_("tests"))
-    test_last_cert = models.DateField(blank=True, null=True, verbose_name=_("Last Cert."))
-    test_serial = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Test Serial"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)

@@ -73,6 +73,8 @@ class Preloader(Connector):
         self._preload_hazards()
         self._preload_letters()
         self._preload_tests()
+        self._preload_test_kits()
+        self._preload_tester_certs()
         self._disconnect()
 
     def _execute_list(self, sqls):
@@ -282,7 +284,7 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "update ALL_TESTS set TesterCertNumber = 'LJP-3187' where tester = 'Lloyd Johnson';",
             "update ALL_TESTS set TesterCertNumber = 'R20130031' where tester = 'R.H. Reynolds';",
             "update ALL_TESTS set TesterCertNumber = 'LJP-2689' where tester = 'Richard Duet';",
-            "update ALL_TESTS set tester = 'Ar Ar' where tester = 'Ar.';",
+            "update ALL_TESTS set TesterCertNumber = 'Unknown' where TesterCertNumber is NULL;",
             "update ALL_TESTS set test_manufacturer = (select Pval from Pvals where Pval_ID = test_manufacturer)",
             "UPDATE ALL_TESTS SET ALL_TESTS.notes = Replace([ALL_TESTS].[notes],Char(13),' ') WHERE (ALL_TESTS.notes Like ('%' + Char(13) + '%'));",
             "UPDATE ALL_TESTS SET ALL_TESTS.notes = Replace([ALL_TESTS].[notes],Char(10),'') WHERE (ALL_TESTS.notes Like ('%' + Char(10) + '%'));",
@@ -290,7 +292,32 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "update ALL_TESTS set tester='Cody Dugas' where tester='cody dugas';",
             "update ALL_TESTS set tester='Nathan Carter' where tester='nathan Carter';",
             "UPDATE ALL_TESTS SET ALL_TESTS.notes = Replace([notes],'\"','\\\"') WHERE (((ALL_TESTS.notes) Like '%\"%'));",
+            "update all_tests set test_serial='Unknown', test_manufacturer=NULL where test_serial is NULL",
+            "update all_tests set test_manufacturer='Midwest' where test_serial in ('02141335', '03081402', '03081482', '09071723','10101981','11091672','11101625','12100678')",
+            "update all_tests set test_manufacturer='Wilkins' where test_serial = '04090973'",
+            "update all_tests set test_manufacturer='Watts' where test_serial in ('191722','433934','RMA8530')",
         )
+        self._execute_list(sqls)
+
+    def _preload_test_kits(self):
+        print "======== PRELOADING TEST KITS ========"
+        sqls = (
+            "INSERT INTO ALL_TEST_KITS ( [user], serial, manufacturer, last_cert ) \
+(select tester, test_serial, test_manufacturer, MAX(test_last_cert) \
+from ALL_TESTS \
+group by tester, test_serial, test_manufacturer)",
+            "Update ALL_TESTS set test_kit = (select ID from all_test_kits where ALL_TEST_KITS.[user]=ALL_TESTS.tester and ALL_TEST_KITS.serial=ALL_TESTS.test_serial);",
+        )    
+        self._execute_list(sqls)
+
+    def _preload_tester_certs(self):
+        print "======== PRELOADING TESTER CERTS ========"
+        sqls = (
+            "INSERT INTO ALL_TESTER_CERTS ( [user], cert_number ) \
+(select tester, TesterCertNumber from ALL_TESTS \
+group by tester, TesterCertNumber);",
+            "Update ALL_TESTS set tester_cert = (select ID from all_tester_certs where ALL_TESTer_cerTS.[user]=ALL_TESTS.tester and ALL_TESTer_cerTS.cert_number=ALL_TESTS.testercertnumber);",
+        )    
         self._execute_list(sqls)
 
 
@@ -333,16 +360,23 @@ class Formatter(Connector):
             # ("last_test_date", "date"), ("next_test_date", "date")
         ]),
         "tests": ("ALL_TESTS", [
-	    "bp_device", "tester", "user", ("test_date", "date"),
+	    "bp_device", "tester", "user", ("test_date", "date"), 
 	    ("cv1_leaked", "bit"), "cv1_gauge_pressure", ("cv1_cleaned", "bit"), "cv1_retest_pressure",
 	    ("cv2_leaked", "bit"), "cv2_gauge_pressure", ("cv2_cleaned", "bit"), "cv2_retest_pressure",
 	    ("rv_opened", "bit"), "rv_psi1", ("rv_cleaned", "bit"), "rv_psi2",
-	    ("outlet_sov_leaked", "bit"),
+	    ("outlet_sov_leaked", "bit"), 
 	    ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
 	    ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
-	    ("test_result", "bit"), "account_number",
-	    ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date")
-        ])
+	    ("test_result", "bit"), "account_number", 
+	    ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date"),
+            "test_kit", "tester_cert"
+        ]),
+        "test_kits": ("ALL_TEST_KITS", [
+            "user", "serial", "manufacturer", ("last_cert", "date")
+        ]),
+        "tester_certs": ("ALL_TESTER_CERTS", [
+            "user", "cert_number"
+        ]),
     }
 
     def _create_tables(self):
@@ -421,7 +455,7 @@ class Jsoner(object):
                 "Adam Hodges": 21,
                 "Al Wilder": 22,
                 "Amado Enamorado": 23,
-                "Ar Ar": 24,
+                "Ar.": 24,
                 "Arthur Boucher": 25,
                 "B Miller": 26,
                 "Barry Conner": 27,
@@ -489,6 +523,7 @@ class Jsoner(object):
                 "Unknown": 89,
                 "Walter Barado III": 90,
                 "William laird": 91,
+                "William Laird": 91,
             }
         }
         self.fill_json()
@@ -529,13 +564,15 @@ class Dumper(Connector):
         'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
         'letter': BASE_TEMPLATE % ('{"already_sent":true,"site":%s,"letter_type":%s,"date":"%s","user":%s}', '"webapp.letter"', '%s'),
         'test': BASE_TEMPLATE % ('{"outlet_sov_leaked":%s,"rv_psi1":%s, "rv_psi2":%s, "cv2_cleaned": %s,\
-"cv2_retest_gauge_pressure": %s, "test_last_cert": "%s", "cv_retest_psi": %s, \
+"cv2_retest_gauge_pressure": %s, "cv_retest_psi": %s, \
 "air_inlet_retest_psi": %s,"cv2_leaked": %s, "cv_held_pressure": %s, \
-"test_manufacturer": %s, "cv2_gauge_pressure": %s, "pvb_cleaned": %s, "tester": %s,\
+"cv2_gauge_pressure": %s, "pvb_cleaned": %s, "tester": %s,\
 "cv1_cleaned": %s, "paid": true, "air_inlet_opened": %s, "air_inlet_psi": %s,"user": %s, \
 "test_result": %s, "cv1_retest_gauge_pressure": %s, "cv1_gauge_pressure": %s,\
 "rv_opened": %s, "cv1_leaked": %s, "bp_device": %s, "cv_leaked": %s, "notes": "%s", \
-"test_serial": "%s", "test_date": "%s", "rv_cleaned": %s}', '"webapp.test"', '%s'),
+"test_date": "%s", "rv_cleaned": %s}', '"webapp.test"', '%s'),
+        'test_kit': BASE_TEMPLATE % ('{"user":%s,"test_serial":"%s","test_manufacturer":%s,"test_last_cert":"%s"}', '"webapp.testkit"', '%s'),
+        'tester_cert': BASE_TEMPLATE % ('{"user":%s,"cert_number":"%s"}', '"webapp.testercert"', '%s'),
     }
     SQL_STRS = {
         'dump_sites': 'select PWS, connect_date, address1, address2, street_number, apt, city, state, zip, site_use, site_type, floors, ic_point, \
@@ -547,10 +584,12 @@ LastSurveyDate, NextSurveyDate, ID from ALL_SITES',
         'dump_hazards': 'select site, service_type, hazard_type, assembly_location, assembly_status, installed_properly, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, ID from ALL_HAZARDS',
         'dump_letters': 'select site, lettertype, letterdate, sender, ID from ALL_LETTERS',
         'dump_tests': 'select outlet_sov_leaked, rv_psi1, rv_psi2, cv2_cleaned,\
-cv2_retest_pressure, test_last_cert, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pressure,\
-test_manufacturer, cv2_gauge_pressure, pvb_cleaned, tester, cv1_cleaned,\
+cv2_retest_pressure, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pressure,\
+cv2_gauge_pressure, pvb_cleaned, tester, cv1_cleaned,\
 pvb_opened, air_inlet_psi, [user], test_result, cv1_retest_pressure, cv1_gauge_pressure,\
-rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_cleaned, ID from ALL_TESTS',
+rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, ID from ALL_TESTS',
+        'dump_test_kits':  'select [user], serial, manufacturer, last_cert, ID from ALL_TEST_KITS',
+        'dump_tester_certs':  'select [user], cert_number, ID from ALL_TESTer_cerTS',
     }
     DATA_TYPES = [
         'pws',
@@ -558,7 +597,9 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
         'survey',
         'hazard',
         'letter',
-        'test'
+        'test',
+        'test_kit',
+        'tester_cert'
     ]
     FIELDS_TO_REPLACE = {
         'site': [(9, "webapp.siteuse"),
@@ -579,9 +620,11 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
         'pws': [(2, "webapp.sourcetype")],
         'letter': [(1, "webapp.lettertype"),
                    (3, "auth.user")],
-        'test': [(10, "webapp.testmanufacturer"),
-                 (13, "auth.user"),
-                 (17, "auth.user")]
+        'test': [(11, "auth.user"),
+                 (15, "auth.user")],
+        'test_kit': [(0, 'auth.user'),
+                     (2, "webapp.testmanufacturer")],
+        'tester_cert': [(0, 'auth.user')],
     }
 
     def __init__(self):
@@ -614,7 +657,7 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
                     row = self.cursor.fetchone()
                     row_c += 1;
                     delim = ',\n'
-                    if row_c > 10000:
+                    if row_c > 4999:
                         row_c = 0
                         f.write('\n]')
                         f.close()
@@ -666,7 +709,19 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
         return row
 
     def dump_testers(self):
-        tester_pk = 21
+        print "====== Dumping Testers ======"
+        f = codecs.open("raw_data_testers_0.json", 'w', 'utf-8')
+        f.write('[')
+        self.cursor.execute('select distinct tester from all_tests')
+        rows = self.cursor.fetchall()
+        last_row = rows.pop(-1)
+        for row in rows:
+            f.write(self.get_tester(row))
+        f.write(self.get_tester(last_row))
+        f.write('\n]')
+        f.close()
+
+    def get_tester(self, row):
         template = """
 {
   "fields": {
@@ -696,41 +751,22 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
     "pws": [],
     "zip": "",
     "phone2": "",
-    "cert_number": "%s",
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": null,
-    "test_last_cert": null,
     "user": [
       "%s"
     ],
-    "address": "",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": ""
   },
   "model": "webapp.employee",
   "pk": %s
 },"""
-        f = codecs.open("raw_data_testers_0.json", 'w', 'utf-8')
-        f.write('[')
-        self.cursor.execute('select distinct tester, testercertnumber from all_tests')
-        rows = self.cursor.fetchall()
-        last_row = rows.pop(-1)
-        for row in rows:
-            first_name, last_name, username = self.handle_tester_names(row[0])
-            tester = template % (username, first_name, last_name, tester_pk, (row[1] if row[1] else 'null'), username, tester_pk)
-            f.write(tester)
-            tester_pk += 1
-        first_name, last_name, username = self.handle_tester_names(last_row[0])
-        tester = template[:-1] % (username, first_name, last_name, tester_pk, (last_row[1] if last_row[1] else 'null'), username, tester_pk)
+        first_name, last_name, username = self.handle_tester_names(row[0])
+        tester_pk = self.jsoner.models['auth.user'][row[0]]
+        tester = template % (username, first_name, last_name, tester_pk, username, tester_pk)
         tester.replace('"null"', 'null')
-        f.write(tester)
-        f.write('\n]')
-        f.close()
-        
+        return tester
 
     def handle_tester_names(self, names):
         names = names.split()
@@ -746,5 +782,5 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_serial, test_date, rv_c
 
 if __name__ == '__main__':
     dumper = Dumper()
-    #dumper.dump_testers()
+    dumper.dump_testers()
     dumper.dump()

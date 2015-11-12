@@ -3896,6 +3896,16 @@
         "importlog"
       ],
       [
+        "add_invite",
+        "webapp",
+        "invite"
+      ],
+      [
+        "change_invite",
+        "webapp",
+        "invite"
+      ],
+      [
         "add_letter",
         "webapp",
         "letter"
@@ -4241,6 +4251,46 @@
         "test"
       ],
       [
+        "access_to_all_tester_certs",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "add_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "change_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "delete_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "access_to_all_test_kits",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "add_testkit",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "change_testkit",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "delete_testkit",
+        "webapp",
+        "testkit"
+      ],
+      [
         "add_testmanufacturer",
         "webapp",
         "testmanufacturer"
@@ -4353,6 +4403,11 @@
         "browse_import_log",
         "webapp",
         "importlog"
+      ],
+      [
+        "add_invite",
+        "webapp",
+        "invite"
       ],
       [
         "add_letter",
@@ -4483,6 +4538,36 @@
         "change_test",
         "webapp",
         "test"
+      ],
+      [
+        "access_to_pws_tester_certs",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "add_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "change_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "access_to_pws_test_kits",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "add_testkit",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "change_testkit",
+        "webapp",
+        "testkit"
       ]
     ]
   },
@@ -4603,6 +4688,11 @@
         "hazard"
       ],
       [
+        "change_invite",
+        "webapp",
+        "invite"
+      ],
+      [
         "access_to_site_by_customer_account",
         "webapp",
         "site"
@@ -4677,12 +4767,12 @@
         "employee"
       ],
       [
-        "access_to_pws_hazards",
+        "access_to_multiple_pws_hazards",
         "webapp",
         "hazard"
       ],
       [
-        "access_to_multiple_pws_hazards",
+        "access_to_pws_hazards",
         "webapp",
         "hazard"
       ],
@@ -4717,6 +4807,16 @@
         "importlog"
       ],
       [
+        "add_invite",
+        "webapp",
+        "invite"
+      ],
+      [
+        "change_invite",
+        "webapp",
+        "invite"
+      ],
+      [
         "add_letter",
         "webapp",
         "letter"
@@ -4732,12 +4832,12 @@
         "letter"
       ],
       [
-        "pws_letter_access",
+        "multiple_pws_letter_access",
         "webapp",
         "letter"
       ],
       [
-        "multiple_pws_letter_access",
+        "pws_letter_access",
         "webapp",
         "letter"
       ],
@@ -4777,12 +4877,12 @@
         "pws"
       ],
       [
-        "own_multiple_pws",
+        "change_pws",
         "webapp",
         "pws"
       ],
       [
-        "change_pws",
+        "own_multiple_pws",
         "webapp",
         "pws"
       ],
@@ -4797,12 +4897,12 @@
         "site"
       ],
       [
-        "access_to_pws_sites",
+        "access_to_multiple_pws_sites",
         "webapp",
         "site"
       ],
       [
-        "access_to_multiple_pws_sites",
+        "access_to_pws_sites",
         "webapp",
         "site"
       ],
@@ -4827,12 +4927,12 @@
         "site"
       ],
       [
-        "access_to_pws_surveys",
+        "access_to_multiple_pws_surveys",
         "webapp",
         "survey"
       ],
       [
-        "access_to_multiple_pws_surveys",
+        "access_to_pws_surveys",
         "webapp",
         "survey"
       ],
@@ -4852,12 +4952,12 @@
         "survey"
       ],
       [
-        "access_to_pws_tests",
+        "access_to_multiple_pws_tests",
         "webapp",
         "test"
       ],
       [
-        "access_to_multiple_pws_tests",
+        "access_to_pws_tests",
         "webapp",
         "test"
       ],
@@ -4875,6 +4975,36 @@
         "change_test",
         "webapp",
         "test"
+      ],
+      [
+        "access_to_pws_tester_certs",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "add_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "change_testercert",
+        "webapp",
+        "testercert"
+      ],
+      [
+        "access_to_pws_test_kits",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "add_testkit",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "change_testkit",
+        "webapp",
+        "testkit"
       ]
     ]
   },

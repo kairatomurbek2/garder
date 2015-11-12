@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             name='TesterCert',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('cert_number', models.CharField(max_length=30, null=True, verbose_name='Cert. Number', blank=True)),
+                ('cert_number', models.CharField(max_length=30, verbose_name='Cert. Number')),
                 ('cert_date', models.DateField(null=True, verbose_name='Cert. Date', blank=True)),
                 ('cert_expires', models.DateField(null=True, verbose_name='Cert. Expires', blank=True)),
                 ('user', models.ForeignKey(related_name='certs', verbose_name='Owner', to=settings.AUTH_USER_MODEL)),
@@ -47,10 +47,11 @@ class Migration(migrations.Migration):
             name='TestKit',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('test_serial', models.CharField(max_length=20, null=True, verbose_name='Test Serial', blank=True)),
+                ('test_serial', models.CharField(max_length=20, verbose_name='Test Serial')),
                 ('test_last_cert', models.DateField(null=True, verbose_name='Last Cert.', blank=True)),
                 ('test_manufacturer', models.ForeignKey(related_name='kits', verbose_name='Test Manufacturer', blank=True, to='webapp.TestManufacturer', null=True)),
                 ('test_model', models.ForeignKey(related_name='kits', verbose_name='Test Model', blank=True, to='webapp.TestModel', null=True)),
+                ('is_active', models.BooleanField(default=True, verbose_name='Is still in use')),
                 ('user', models.ForeignKey(related_name='kits', verbose_name='Owner', to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -78,4 +79,48 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(related_name='tests', verbose_name='Tester Cert', blank=True, to='webapp.TesterCert', null=True),
             preserve_default=True,
         ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='cert_date',
+        ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='cert_expires',
+        ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='cert_number',
+        ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='test_last_cert',
+        ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='test_manufacturer',
+        ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='test_model',
+        ),
+        migrations.RemoveField(
+            model_name='employee',
+            name='test_serial',
+        ),
+        migrations.RemoveField(
+            model_name='test',
+            name='test_last_cert',
+        ),
+        migrations.RemoveField(
+            model_name='test',
+            name='test_manufacturer',
+        ),
+        migrations.RemoveField(
+            model_name='test',
+            name='test_model',
+        ),
+        migrations.RemoveField(
+            model_name='test',
+            name='test_serial',
+        )
     ]
