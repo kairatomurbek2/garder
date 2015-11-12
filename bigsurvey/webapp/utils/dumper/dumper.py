@@ -570,7 +570,7 @@ class Dumper(Connector):
 "cv1_cleaned": %s, "paid": true, "air_inlet_opened": %s, "air_inlet_psi": %s,"user": %s, \
 "test_result": %s, "cv1_retest_gauge_pressure": %s, "cv1_gauge_pressure": %s,\
 "rv_opened": %s, "cv1_leaked": %s, "bp_device": %s, "cv_leaked": %s, "notes": "%s", \
-"test_date": "%s", "rv_cleaned": %s}', '"webapp.test"', '%s'),
+"test_date": "%s", "rv_cleaned": %s, "test_kit": %s, "tester_cert": %s}', '"webapp.test"', '%s'),
         'test_kit': BASE_TEMPLATE % ('{"user":%s,"test_serial":"%s","test_manufacturer":%s,"test_last_cert":"%s"}', '"webapp.testkit"', '%s'),
         'tester_cert': BASE_TEMPLATE % ('{"user":%s,"cert_number":"%s"}', '"webapp.testercert"', '%s'),
     }
@@ -587,7 +587,7 @@ LastSurveyDate, NextSurveyDate, ID from ALL_SITES',
 cv2_retest_pressure, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pressure,\
 cv2_gauge_pressure, pvb_cleaned, tester, cv1_cleaned,\
 pvb_opened, air_inlet_psi, [user], test_result, cv1_retest_pressure, cv1_gauge_pressure,\
-rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, ID from ALL_TESTS',
+rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_kit, tester_cert, ID from ALL_TESTS',
         'dump_test_kits':  'select [user], serial, manufacturer, last_cert, ID from ALL_TEST_KITS',
         'dump_tester_certs':  'select [user], cert_number, ID from ALL_TESTer_cerTS',
     }

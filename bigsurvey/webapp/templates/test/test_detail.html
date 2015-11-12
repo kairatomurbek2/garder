@@ -48,13 +48,13 @@
                 </div>
                 <div class="uk-width-1-1">
                     <p class="inline-width-1-6">{% trans 'Test Kit Manuf.' %}: </p>
-                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_manufacturer }}</span>
+                    <span class="inline-width-1-6 border-bottom">{{ test.test_kit.test_manufacturer }}</span>
 
                     <p class="inline-width-1-6">{% trans 'Serial Number' %}: </p>
-                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_serial }}</span>
+                    <span class="inline-width-1-6 border-bottom">{{ test.test_kit.test_serial }}</span>
 
                     <p class="inline-width-1-6">{% trans 'Date Calibrated' %}: </p>
-                    <span class="inline-width-1-6 border-bottom">{{ request.user.employee.test_last_cert }}</span>
+                    <span class="inline-width-1-6 border-bottom">{{ test.test_kit.test_last_cert }}</span>
                 </div>
 
                 <table class="uk-table border-all uk-table-condensed">
@@ -277,7 +277,7 @@
                 </div>
                 <div class="uk-width-1-1">
                     <p class="inline-width-1-6">{% trans 'Certification Number' %}: </p>
-                    <span class="inline-width-1-6 border-bottom">{{ test.tester.employee.cert_number }}</span>
+                    <span class="inline-width-1-6 border-bottom">{{ test.tester_cert.cert_number }}</span>
                 </div>
 
                 <div class="uk-clearfix"></div>
