@@ -318,7 +318,7 @@ class Messages:
         payment_successful_plural = 'Payment was completed successfully. Tests are now visible on the site.'
         payment_failed = _('Some errors happened during the payment. Please try again later.')
         payment_cancelled = _('You have cancelled payment. You can pay later.')
-        assembly_type_not_set = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type" set. Please provide it <a href="%s">here</a>')
+        assembly_type_not_set = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type Required" set. Please provide it <a href="%s">here</a>')
 
     class Inspection:
         adding_success = _('Inspection was successfully added')

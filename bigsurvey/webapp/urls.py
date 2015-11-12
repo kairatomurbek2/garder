@@ -63,4 +63,6 @@ urlpatterns = patterns(
     url(r'^import-log/(?P<pk>\d+)/deactivated/$', views.ImportLogDeactivatedSitesView.as_view(), name="import_log_deactivated_sites"),
 
     url(r'^help/$', views.HelpView.as_view(), name="help"),
+    url(r'^get_test_kits/(?P<tester_id>\d+)/', views.get_test_kits, name='get_kits'),
+    url(r'^get_tester_certs/(?P<tester_id>\d+)/', views.get_tester_certs, name='get_certs'),
 )
