@@ -1,0 +1,63 @@
+{% load i18n choices %}
+{% if perms.webapp.add_tester_cert %}
+    <div class="padding-top-10">
+        <a class="uk-align-center uk-text-center" href="">
+            <i class="uk-icon-plus"></i> {% trans "Add Certificate" %}
+        </a>
+    </div>
+{% endif %}
+{% if selected_user.certs.all %}
+    <div class="wrapper">
+        <table class="uk-table uk-table-hover">
+            <thead>
+            <tr class="border-bottom">
+                <th class="border-right uk-text-center uk-width-1-10">
+                    {% trans "No." %}
+                </th>
+                <th>
+                    {% trans "Cert. Number" %}
+                </th>
+                <th>
+                    {% trans "Cert. Date" %}
+                </th>
+                <th>
+                    {% trans "Expire Date" %}
+                </th>
+                <th>
+                    {% trans "Is Active" %}
+                </th>
+                <th class="uk-text-center border-left uk-width-1-10">
+                    {% trans "Actions" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cert in selected_user.certs.all %}
+                <tr>
+                    <td class="uk-text-center border-right">
+                        {{ cert.pk }}
+                    </td>
+                    <td>
+                        {{ cert.cert_number }}
+                    </td>
+                    <td>
+                        {{ cert.cert_date }}
+                    </td>
+                    <td>
+                        {{ cert.cert_expires }}
+                    </td>
+                    <td>
+                        {{ cert.is_active|yn }}
+                    </td>
+                    <td class="border-left uk-text-center">
+                        <a href="">
+                            {% trans "Detail" %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+

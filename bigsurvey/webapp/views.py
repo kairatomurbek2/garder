@@ -1729,7 +1729,7 @@ class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
 
 
 def get_tester_certs(request, tester_id):
-    certs = models.TesterCert.objects.filter(user__pk=tester_id)
+    certs = models.TesterCert.objects.filter(user__pk=tester_id, is_active=True)
     certs_dict = {}
     for cert in certs:
         certs_dict[cert.pk] = cert.cert_number
@@ -1737,7 +1737,7 @@ def get_tester_certs(request, tester_id):
 
 
 def get_test_kits(request, tester_id):
-    kits = models.TestKit.objects.filter(user__pk=tester_id)
+    kits = models.TestKit.objects.filter(user__pk=tester_id, is_active=True)
     kits_dict = {}
     for kit in kits:
         kits_dict[kit.pk] = kit.test_serial

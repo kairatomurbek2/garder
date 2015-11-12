@@ -1,0 +1,68 @@
+{% load i18n choices %}
+{% if perms.webapp.add_test_kit %}
+    <div class="padding-top-10">
+        <a class="uk-align-center uk-text-center" href="">
+            <i class="uk-icon-plus"></i> {% trans "Add Test Kit" %}
+        </a>
+    </div>
+{% endif %}
+{% if selected_user.kits.all %}
+    <div class="wrapper">
+        <table class="uk-table uk-table-hover">
+            <thead>
+            <tr class="border-bottom">
+                <th class="border-right uk-text-center uk-width-1-10">
+                    {% trans "No." %}
+                </th>
+                <th>
+                    {% trans "Serial Number" %}
+                </th>
+                <th>
+                    {% trans "Model" %}
+                </th>
+                <th>
+                    {% trans "Manufacturer" %}
+                </th>
+                <th>
+                    {% trans "Calibration Date" %}
+                </th>
+                <th>
+                    {% trans "Is in use" %}
+                </th>
+                <th class="uk-text-center border-left uk-width-1-10">
+                    {% trans "Actions" %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for kit in selected_user.kits.all %}
+                <tr>
+                    <td class="uk-text-center border-right">
+                        {{ kit.pk }}
+                    </td>
+                    <td>
+                        {{ kit.test_serial }}
+                    </td>
+                    <td>
+                        {{ kit.test_model }}
+                    </td>
+                    <td>
+                        {{ kit.test_manufacturer }}
+                    </td>
+                    <td>
+                        {{ kit.test_last_cert }}
+                    </td>
+                    <td>
+                        {{ kit.is_active|yn }}
+                    </td>
+                    <td class="border-left uk-text-center">
+                        <a href="">
+                            {% trans "Detail" %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}

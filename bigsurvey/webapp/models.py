@@ -426,6 +426,7 @@ class TesterCert(models.Model):
     cert_number = models.CharField(max_length=30, verbose_name=_("Cert. Number"))
     cert_date = models.DateField(blank=True, null=True, verbose_name=_("Cert. Date"))
     cert_expires = models.DateField(blank=True, null=True, verbose_name=_("Cert. Expires"))
+    is_active = models.BooleanField(default=True, verbose_name=_("Is still valid"))
 
     def __unicode__(self):
         return str(self.cert_number)
