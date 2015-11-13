@@ -31,6 +31,7 @@ class Urls:
     test_detail = '/test/%s/'
     unpaid_test_list = '/unsaved-tests/'
     user_list = '/user/'
+    user_detail = '/user/%s/'
     user_add = '/user/add/'
     user_edit = '/user/%s/edit/'
     batch_update = '/batch_update/'
@@ -46,6 +47,10 @@ class Urls:
     letter_type_edit = '/letter_type/%s/edit/'
     letter_type_list = '/letter_type/'
     tester_invite = '/tester-search/'
+    kit_add = '/user/%s/kit-add/'
+    kit_edit = '/kit-edit/%s/'
+    cert_add = '/user/%s/cert-add/'
+    cert_edit = '/cert-edit/%s/'
 
 
 class Logins:

@@ -5812,5 +5812,6 @@
 },
 {"fields":{"degree":"Pollutant"},"model":"webapp.hazarddegree","pk":1},
 {"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2},
-{"fields":{"user":["tester"],"cert_number":"qwerty132"},"model":"webapp.testercert","pk":1}
+{"fields":{"user":["tester"],"cert_number":"qwerty132"},"model":"webapp.testercert","pk":1},
+{"fields":{"user":["tester"],"test_serial":"serial1"},"model":"webapp.testkit","pk":1}
 ]

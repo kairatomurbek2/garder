@@ -1346,7 +1346,7 @@ class TesterSearchView(BaseFormView):
             testers = models.User.objects.filter(
                 groups__name=Groups.tester,
                 email=email,
-                employee__cert_number=cert_number
+                certs__cert_number=cert_number
             )
         else:
             testers = models.User.objects.filter(

@@ -1,4 +1,5 @@
 from lettuce import step
+from common_steps import click_link
 
 from data import *
 from main.parameters import Messages
@@ -70,3 +71,9 @@ def check_user_editing_success_message(step):
 @step('I should see "user editing error" message')
 def check_user_editing_error_message(step):
     step.given('I should see "%s"' % Messages.User.editing_error)
+
+
+@step('Open user detail page with pk (\d+)')
+def open_user_detail(step, pk):
+    open_user_list_page(step)
+    click_link(step, "user_%s_detail" % pk)

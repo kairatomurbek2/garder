@@ -1,7 +1,8 @@
 {% load i18n choices %}
 {% if perms.webapp.add_tester_cert %}
     <div class="padding-top-10">
-        <a class="uk-align-center uk-text-center" href="{% url "webapp:tester_cert_add" selected_user.pk %}">
+        <a class="uk-align-center uk-text-center" href="{% url "webapp:tester_cert_add" selected_user.pk %}"
+                id="cert_add_link">
             <i class="uk-icon-plus"></i> {% trans "Add Certificate" %}
         </a>
     </div>
@@ -50,7 +51,8 @@
                         {{ cert.is_active|yn }}
                     </td>
                     <td class="border-left uk-text-center">
-                        <a href="{% url "webapp:tester_cert_edit" cert.pk %}">
+                        <a href="{% url "webapp:tester_cert_edit" cert.pk %}"
+                                id="cert_{{ cert.pk }}_edit_link">
                             {% trans "Edit" %}
                         </a>
                     </td>
@@ -58,6 +60,10 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+{% else %}
+    <div class="wrapper">
+        <h3 class="uk-text-primary uk-text-center">{% trans "No Certificates available." %}</h3>
     </div>
 {% endif %}
 
