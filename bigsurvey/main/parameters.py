@@ -260,6 +260,7 @@ DATEFORMAT_HELP = (
 
 class Messages:
     extension_not_allowed = _('File extension is not allowed. Allowed extensions: %(allowed_extensions)s')
+    form_error = _('Error while submitting form')
 
     class Site:
         adding_success = _('Site was successfully added')
@@ -337,6 +338,14 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('User was successfully updated')
         editing_error = _('Error while submitting form')
+
+    class TestKit:
+        test_kit_add_success = _('Test Kit was successfully added')
+        test_kit_edit_success = _('Test Kit was successfully updated')
+
+    class TesterCert:
+        tester_cert_add_success = _('Certificate was successfully added')
+        tester_cert_edit_success = _('Certificate was successfully updated')
 
     class TesterInvite:
         tester_not_found = _('Tester with such email and certificate number not found')

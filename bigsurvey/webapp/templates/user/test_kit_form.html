@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+{% block menu %}
+    <li><a href="{% url 'webapp:user_detail' user_pk %}">{% trans "Cancel" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <form class="uk-form" method="post" name="test_kit">
+            {% csrf_token %}
+            <table class="uk-table form-center border-none uk-table-condensed">
+                <tbody>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                        <label for="{{ form.test_serial.id_for_label }}">{{ form.test_serial.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {{ form.test_serial|add_class:'uk-width-1-1' }}
+                        {{ form.test_serial.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.test_manufacturer.id_for_label }}">{{ form.test_manufacturer.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {{ form.test_manufacturer|add_class:'uk-width-1-1' }}
+                        {{ form.test_manufacturer.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.test_model.id_for_label }}">{{ form.test_model.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {{ form.test_model|add_class:'uk-width-1-1' }}
+                        {{ form.test_model.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.test_last_cert.id_for_label }}">{{ form.test_last_cert.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {{ form.test_last_cert|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ form.test_last_cert.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.is_active.id_for_label }}">{{ form.is_active.label }}</label>
+                    </td>
+                    <td class="uk-width-1-6">
+                        {{ form.is_active|add_class:'uk-width-1-1' }}
+                        {{ form.is_active.errors }}
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

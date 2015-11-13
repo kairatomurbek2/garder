@@ -420,3 +420,15 @@ class TesterInviteForm(forms.Form):
         queryset = kwargs.pop('queryset', models.PWS.objects.none())
         super(TesterInviteForm, self).__init__(*args, **kwargs)
         self.fields['pws'].queryset = queryset
+
+
+class TesterCertForm(forms.ModelForm):
+    class Meta:
+        model = models.TesterCert
+        exclude = ('user',)
+
+
+class TestKitForm(forms.ModelForm):
+    class Meta:
+        model = models.TestKit
+        exclude = ('user',)

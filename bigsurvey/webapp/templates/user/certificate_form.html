@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+{% block menu %}
+    <li><a href="{% url 'webapp:user_detail' user_pk %}">{% trans "Cancel" %}</a></li>
+{% endblock %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <form class="uk-form" method="post" name="tester_cert">
+            {% csrf_token %}
+            <table class="uk-table form-center border-none uk-table-condensed">
+                <tbody>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                        <label for="{{ form.cert_number.id_for_label }}">{{ form.cert_number.label }}</label>
+                    </td>
+                    <td class="uk-width-2-6">
+                        {{ form.cert_number|add_class:'uk-width-1-1' }}
+                        {{ form.cert_number.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.cert_date.id_for_label }}">{{ form.cert_date.label }}</label>
+                    </td>
+                    <td class="uk-width-2-6">
+                        {{ form.cert_date|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ form.cert_date.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.cert_expires.id_for_label }}">{{ form.cert_expires.label }}</label>
+                    </td>
+                    <td class="uk-width-2-6">
+                        {{ form.cert_expires|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ form.cert_expires.errors }}
+                    </td>
+                    <td class="uk-width-1-6 uk-text-right">
+                        <label for="{{ form.is_active.id_for_label }}">{{ form.is_active.label }}</label>
+                    </td>
+                    <td class="uk-width-2-6">
+                        {{ form.is_active|add_class:'uk-width-1-1' }}
+                        {{ form.is_active.errors }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}

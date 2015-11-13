@@ -72,7 +72,7 @@ class BaseTemplateView(BaseView, TemplateView):
 
 class BaseFormView(BaseView, FormView):
     success_message = None
-    error_message = None
+    error_message = Messages.form_error
 
     def form_valid(self, form):
         if self.success_message:
@@ -1726,6 +1726,90 @@ class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
 
     def get_header(self, import_log):
         return Messages.Import.deactivated_sites_header % self.get_datetime_readable_value(import_log)
+
+
+class TesterCertBaseFormView(BaseFormView):
+    form_class = forms.TesterCertForm
+    model = models.TesterCert
+    template_name = "user/certificate_form.html"
+
+    def get_success_url(self):
+        return reverse('webapp:user_detail', args=(self.object.user.pk,))
+
+
+class TesterCertAddView(TesterCertBaseFormView, CreateView):
+    success_message = Messages.TesterCert.tester_cert_add_success
+    permission = 'webapp.add_testercert'
+
+    def get_context_data(self, **kwargs):
+        user = User.objects.get(pk=self.kwargs['pk'])
+        if perm_checkers.UserPermChecker.has_perm(self.request, user):
+            context = super(TesterCertAddView, self).get_context_data(**kwargs)
+            context['user_pk'] = user.pk
+            return context
+        raise Http404
+
+    def form_valid(self, form):
+        form.instance.user = User.objects.get(pk=self.kwargs['pk'])
+        return super(TesterCertAddView, self).form_valid(form)
+
+
+class TesterCertEditView(TesterCertBaseFormView, UpdateView):
+    success_message = Messages.TesterCert.tester_cert_edit_success
+    permission = 'webapp.change_testercert'
+
+    def get_form(self, form_class):
+        form = super(TesterCertEditView, self).get_form(form_class)
+        if perm_checkers.UserPermChecker.has_perm(self.request, form.instance.user):
+            return form
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        context = super(TesterCertEditView, self).get_context_data(**kwargs)
+        context['user_pk'] = context['form'].instance.user.pk
+        return context
+
+
+class TestKitBaseFormView(BaseFormView):
+    form_class = forms.TestKitForm
+    model = models.TestKit
+    template_name = "user/test_kit_form.html"
+
+    def get_success_url(self):
+        return reverse('webapp:user_detail', args=(self.object.user.pk,))
+
+
+class TestKitAddView(TestKitBaseFormView, CreateView):
+    success_message = Messages.TestKit.test_kit_add_success
+    permission = 'webapp.add_testkit'
+
+    def get_context_data(self, **kwargs):
+        user = User.objects.get(pk=self.kwargs['pk'])
+        if perm_checkers.UserPermChecker.has_perm(self.request, user):
+            context = super(TestKitAddView, self).get_context_data(**kwargs)
+            context['user_pk'] = user.pk
+            return context
+        raise Http404
+
+    def form_valid(self, form):
+        form.instance.user = User.objects.get(pk=self.kwargs['pk'])
+        return super(TestKitAddView, self).form_valid(form)
+
+
+class TestKitEditView(TestKitBaseFormView, UpdateView):
+    success_message = Messages.TestKit.test_kit_edit_success
+    permission = 'webapp.change_testkit'
+
+    def get_form(self, form_class):
+        form = super(TestKitEditView, self).get_form(form_class)
+        if perm_checkers.UserPermChecker.has_perm(self.request, form.instance.user):
+            return form
+        raise Http404
+
+    def get_context_data(self, **kwargs):
+        context = super(TestKitEditView, self).get_context_data(**kwargs)
+        context['user_pk'] = context['form'].instance.user.pk
+        return context
 
 
 def get_tester_certs(request, tester_id):

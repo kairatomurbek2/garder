@@ -65,4 +65,10 @@ urlpatterns = patterns(
     url(r'^help/$', views.HelpView.as_view(), name="help"),
     url(r'^get_test_kits/(?P<tester_id>\d+)/', views.get_test_kits, name='get_kits'),
     url(r'^get_tester_certs/(?P<tester_id>\d+)/', views.get_tester_certs, name='get_certs'),
+
+    url(r'^user/(?P<pk>\d+)/cert-add/$', views.TesterCertAddView.as_view(), name="tester_cert_add"),
+    url(r'^user/cert-edit/(?P<pk>\d+)/$', views.TesterCertEditView.as_view(), name="tester_cert_edit"),
+
+    url(r'^user/(?P<pk>\d+)/kit-add/$', views.TestKitAddView.as_view(), name="test_kit_add"),
+    url(r'^user/kit-edit/(?P<pk>\d+)/$', views.TestKitEditView.as_view(), name="test_kit_edit"),
 )

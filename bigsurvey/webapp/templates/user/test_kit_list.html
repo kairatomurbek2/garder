@@ -1,7 +1,7 @@
 {% load i18n choices %}
 {% if perms.webapp.add_test_kit %}
     <div class="padding-top-10">
-        <a class="uk-align-center uk-text-center" href="">
+        <a class="uk-align-center uk-text-center" href="{% url "webapp:test_kit_add" selected_user.pk %}">
             <i class="uk-icon-plus"></i> {% trans "Add Test Kit" %}
         </a>
     </div>
@@ -56,8 +56,8 @@
                         {{ kit.is_active|yn }}
                     </td>
                     <td class="border-left uk-text-center">
-                        <a href="">
-                            {% trans "Detail" %}
+                        <a href="{% url "webapp:test_kit_edit" kit.pk %}">
+                            {% trans "Edit" %}
                         </a>
                     </td>
                 </tr>
