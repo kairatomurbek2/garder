@@ -5327,7 +5327,8 @@
     "cv2_detail_cv_assembly": false,
     "pvb_detail_spring_air_inlet": true,
     "rv_detail_seat": false,
-    "cv1_detail_seat": false
+    "cv1_detail_seat": false,
+    "tester_cert": 1
   },
   "model": "webapp.test",
   "pk": 1
@@ -5404,7 +5405,8 @@
     "cv2_detail_cv_assembly": false,
     "pvb_detail_spring_air_inlet": false,
     "rv_detail_seat": false,
-    "cv1_detail_seat": false
+    "cv1_detail_seat": false,
+    "tester_cert": 1
   },
   "model": "webapp.test",
   "pk": 2
@@ -5481,7 +5483,8 @@
     "cv2_detail_cv_assembly": false,
     "pvb_detail_spring_air_inlet": false,
     "rv_detail_seat": false,
-    "cv1_detail_seat": false
+    "cv1_detail_seat": false,
+    "tester_cert": 1
   },
   "model": "webapp.test",
   "pk": 3
@@ -5558,7 +5561,8 @@
     "cv2_detail_cv_assembly": false,
     "pvb_detail_spring_air_inlet": false,
     "rv_detail_seat": false,
-    "cv1_detail_seat": false
+    "cv1_detail_seat": false,
+    "tester_cert": 1
   },
   "model": "webapp.test",
   "pk": 4
@@ -5651,20 +5655,13 @@
     "zip": "root zip",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "root company",
     "phone1": "root phone",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "AK",
-    "test_last_cert": null,
     "user": [
       "root"
     ],
-    "address": "root address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "root address"
   },
   "model": "webapp.employee",
   "pk": 1
@@ -5676,20 +5673,13 @@
     "zip": "tester zip",
     "has_licence_for_installation": true,
     "phone2": "",
-    "cert_number": "qwerty132",
     "company": "tester company",
     "phone1": "tester phone",
-    "test_serial": "",
-    "cert_expires": null,
-    "test_model": null,
     "state": "AL",
-    "test_last_cert": null,
     "user": [
       "tester"
     ],
-    "address": "tester address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "tester address"
   },
   "model": "webapp.employee",
   "pk": 2
@@ -5701,20 +5691,13 @@
     "zip": "survey zip",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "surveyor company",
     "phone1": "surveyor phone",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "AR",
-    "test_last_cert": null,
     "user": [
       "surveyor"
     ],
-    "address": "surveyor address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "surveyor address"
   },
   "model": "webapp.employee",
   "pk": 3
@@ -5726,20 +5709,13 @@
     "zip": "admin zip",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "admin company",
     "phone1": "admin phone",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "KY",
-    "test_last_cert": null,
     "user": [
       "admin"
     ],
-    "address": "admin address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "admin address"
   },
   "model": "webapp.employee",
   "pk": 4
@@ -5751,20 +5727,13 @@
     "zip": "supadm zip",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "superadmin company",
     "phone1": "superadmin phone",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "CO",
-    "test_last_cert": null,
     "user": [
       "superadmin"
     ],
-    "address": "superadmin address",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": "superadmin address"
   },
   "model": "webapp.employee",
   "pk": 5
@@ -5776,20 +5745,13 @@
     "zip": "",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "AR",
-    "test_last_cert": null,
     "user": [
       "surveyor_without_pws"
     ],
-    "address": "",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": ""
   },
   "model": "webapp.employee",
   "pk": 10
@@ -5801,20 +5763,13 @@
     "zip": "",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "OK",
-    "test_last_cert": null,
     "user": [
       "tester_without_pws"
     ],
-    "address": "",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": ""
   },
   "model": "webapp.employee",
   "pk": 11
@@ -5826,20 +5781,13 @@
     "zip": "",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "OK",
-    "test_last_cert": null,
     "user": [
       "pws6user"
     ],
-    "address": "",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": ""
   },
   "model": "webapp.employee",
   "pk": 12
@@ -5851,24 +5799,18 @@
     "zip": "",
     "has_licence_for_installation": false,
     "phone2": "",
-    "cert_number": null,
     "company": "",
     "phone1": "",
-    "test_serial": null,
-    "cert_expires": null,
-    "test_model": null,
     "state": "OK",
-    "test_last_cert": null,
     "user": [
       "owner"
     ],
-    "address": "",
-    "cert_date": null,
-    "test_manufacturer": null
+    "address": ""
   },
   "model": "webapp.employee",
   "pk": 13
 },
 {"fields":{"degree":"Pollutant"},"model":"webapp.hazarddegree","pk":1},
-{"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2}
+{"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2},
+{"fields":{"user":["tester"],"cert_number":"qwerty132"},"model":"webapp.testercert","pk":1}
 ]
