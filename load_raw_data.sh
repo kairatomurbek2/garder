@@ -4,7 +4,7 @@ set -e
 cd ./bigsurvey/
 FILE_PATH="./webapp/fixtures/raw/"
 FILE_PREFIX="raw_data_"
-for data_type in "site" "hazard" "survey" "base" "pws" "perms" "users" "testers" "test" "letter" "test_kit" "tester_cert"
+for data_type in "base" "pws" "perms" "users" "testers" "site" "hazard" "survey" "test_kit" "tester_cert" "test" "letter"
 do
     for part_number in 0 `seq 50`
     do
