@@ -52,3 +52,26 @@ Feature: Batch Update
       | 7     |
     When I submit "batch_update" form
     Then I should see "batch updating error" message
+
+  @batch_update_no_hazards
+  Scenario: Batch Updating sites due install/test date for sites with no hazards
+    Given I logged in as "root"
+    And I open "batch_update" page
+    And I check following values from "site_pks"
+      | value |
+      | 3     |
+      | 4     |
+      | 5     |
+    And I fill in "date" with "2015-08-22"
+    When I click "set_hazards_due_install_test_date" button
+    Then I should see "batch updating success" message
+    And I should see "batch updating warning" message
+    When I click "unupdated" link
+    Then I should see following
+      | text   |
+      | ZXC2   |
+      | SJK472 |
+    And I should not see following
+      | text    |
+      | QAZ2WSX |
+      | MIA281  |

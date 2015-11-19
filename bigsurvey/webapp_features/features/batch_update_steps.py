@@ -1,6 +1,7 @@
 from lettuce import step, world
 from main.parameters import Messages
 from webapp_features.features.data import get_url, Urls
+from django.core.urlresolvers import reverse
 
 
 @step('I directly open "batch_update" page')
@@ -17,6 +18,11 @@ def open_batch_update_page(step):
 @step('I should see "batch updating success" message')
 def check_batch_updating_success_message(step):
     step.given('I should see "%s"' % Messages.BatchUpdate.success)
+
+
+@step('I should see "batch updating warning" message')
+def check_batch_updating_warning_message(step):
+    step.given('I should see "Some of the selected sites do not have any hazards"')
 
 
 @step('I should see "batch updating error" message')
