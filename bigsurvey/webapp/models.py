@@ -498,6 +498,7 @@ class Site(models.Model):
             ('access_to_import', _('Can import Sites from Excel file')),
             ('access_to_batch_update', _('Has access to batch update')),
             ('change_all_info_about_site', _('Can change all information about Site')),
+            ('export_xls', _('Can export sites into XLS file')),
         )
 
 

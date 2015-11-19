@@ -4,6 +4,11 @@
     "name": "SuperAdministrators",
     "permissions": [
       [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
         "add_user",
         "auth",
         "user"
@@ -693,6 +698,11 @@
     "name": "Administrators",
     "permissions": [
       [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
         "add_user",
         "auth",
         "user"
@@ -1085,6 +1095,11 @@
     "name": "PWSOwners",
     "permissions": [
       [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
         "add_user",
         "auth",
         "user"
@@ -1363,5 +1378,59 @@
   },
   "model": "auth.group",
   "pk": 5
+},
+{
+  "fields": {
+    "name": "Administrative Authority",
+    "permissions": [
+      [
+        "access_to_all_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_all_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_all_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_all_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 6
 }
 ]

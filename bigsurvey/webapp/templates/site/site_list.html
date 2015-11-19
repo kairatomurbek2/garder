@@ -9,9 +9,11 @@
             <a class="uk-button uk-button-primary filter-button" role="button" href="{% url 'webapp:home' %}">
                 {% trans "Clear Filters" %}
             </a>
-            <a id="xls-get-link" class="uk-button uk-button-primary filter-button" role="button" href="" data-uk-modal="{target:'#xls-modal'}">
-                {% trans "Get XLS" %}
-            </a>
+            {% if perms.webapp.export_xls %}
+                <a id="xls-get-link" class="uk-button uk-button-primary filter-button" role="button" href="" data-uk-modal="{target:'#xls-modal'}">
+                    {% trans "Get XLS" %}
+                </a>
+            {% endif %}
             {% paginate %}
         </div>
         <div id="table_div">
@@ -254,7 +256,8 @@
         <div class="modal-content">
             <div class="uk-text-large uk-text-primary uk-text-center">
                 <p id="xls-message"></p>
-                <img id="xls-img" src=""/>
+                <img id="xls-load-img" src="{% static "img/loading.gif" %}"/>
+                <img id="xls-ready-img" src="{% static "img/ready.png" %}"/>
                 <p><a href="" id="xls-ready-link">{% trans 'Download' %}</a></p>
             </div>
         </div>
@@ -282,13 +285,15 @@
             $("#xls-get-link").click(function(){
                 $("#xls-ready-link").addClass('uk-hidden');
                 $("#xls-message").text("{% trans "Generating report. Please, wait..." %}");
-                $("#xls-img").prop('src', "{% static "img/loading.gif" %}");
+                $("#xls-ready-img").hide();
+                $("#xls-load-img").show();
                 $.get(xlsUrl, function(data){
                     $("#xls-ready-link").prop('href', data).removeClass('uk-hidden');
                     $("#xls-message").text(
                             "{% trans "Report is ready. If download haven't started automatically, use download link below." %}"
                     );
-                    $("#xls-img").prop('src', "{% static "img/ready.png" %}");
+                    $("#xls-load-img").hide();
+                    $("#xls-ready-img").show();
                     window.location.href = data;
                 });
             });

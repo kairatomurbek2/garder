@@ -3651,6 +3651,11 @@
     "name": "SuperAdministrators",
     "permissions": [
       [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
         "add_user",
         "auth",
         "user"
@@ -4340,6 +4345,11 @@
     "name": "Administrators",
     "permissions": [
       [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
         "add_user",
         "auth",
         "user"
@@ -4732,6 +4742,11 @@
     "name": "PWSOwners",
     "permissions": [
       [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
         "add_user",
         "auth",
         "user"
@@ -5013,6 +5028,60 @@
 },
 {
   "fields": {
+    "name": "Administrative Authority",
+    "permissions": [
+      [
+        "access_to_all_hazards",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "access_to_all_sites",
+        "webapp",
+        "site"
+      ],
+      [
+        "browse_site",
+        "webapp",
+        "site"
+      ],
+      [
+        "export_xls",
+        "webapp",
+        "site"
+      ],
+      [
+        "access_to_all_surveys",
+        "webapp",
+        "survey"
+      ],
+      [
+        "browse_survey",
+        "webapp",
+        "survey"
+      ],
+      [
+        "access_to_all_tests",
+        "webapp",
+        "test"
+      ],
+      [
+        "browse_test",
+        "webapp",
+        "test"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 6
+},
+{
+  "fields": {
     "username": "root",
     "first_name": "root",
     "last_name": "root",
@@ -5208,6 +5277,28 @@
   },
   "model": "auth.user",
   "pk": 12
+},
+{
+  "fields": {
+    "username": "adauth",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-11-19T04:40:03Z",
+    "groups": [
+      [
+        "Administrative Authority"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$Cr9FAH3wVRRw$gKFiLH+Sdu7FDK1mqLs8ci0lC88yEoHgpVPmy5RPGT4=",
+    "email": "",
+    "date_joined": "2015-11-19T04:37:06Z"
+  },
+  "model": "auth.user",
+  "pk": 13
 },
 {
   "fields": {
@@ -5809,6 +5900,24 @@
   },
   "model": "webapp.employee",
   "pk": 13
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "has_licence_for_installation": false,
+    "phone2": "",
+    "company": "AAC",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "adauth"
+    ],
+    "address": ""
+  },
+  "model": "webapp.employee",
+  "pk": 14
 },
 {"fields":{"degree":"Pollutant"},"model":"webapp.hazarddegree","pk":1},
 {"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2},

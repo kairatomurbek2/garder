@@ -778,5 +778,45 @@
   },
   "model": "webapp.employee",
   "pk": 20
+},
+{
+  "fields": {
+    "username": "adauth",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-11-19T04:40:03Z",
+    "groups": [
+      [
+        "Administrative Authority"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$Cr9FAH3wVRRw$gKFiLH+Sdu7FDK1mqLs8ci0lC88yEoHgpVPmy5RPGT4=",
+    "email": "",
+    "date_joined": "2015-11-19T04:37:06Z"
+  },
+  "model": "auth.user",
+  "pk": 92
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "has_licence_for_installation": false,
+    "phone2": "",
+    "company": "AAC",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "adauth"
+    ],
+    "address": ""
+  },
+  "model": "webapp.employee",
+  "pk": 92
 }
 ]

@@ -205,7 +205,9 @@
                                             </a>
                                         </td>
                                         <td class="uk-text-left">
+                                            {% if perms.webapp.change_survey %}
                                             <a href="{% url 'webapp:survey_edit' survey.pk %}" id="survey_{{ survey.pk }}_edit_link">{% trans "Edit" %}</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

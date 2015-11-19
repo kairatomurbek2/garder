@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n staticfiles google_map choices %}
 {% block menu %}
-    <li><a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">{% trans "Edit" %}</a></li>
+    {% if perms.webapp.change_hazard %}
+        <li>
+            <a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">
+                {% trans "Edit" %}
+            </a>
+        </li>
+    {% endif %}
     <li><a href="{% url 'webapp:site_detail' hazard.site.pk %}">{% trans "Back to Site" %}</a></li>
 {% endblock %}
 {% block content %}
