@@ -1,4 +1,4 @@
-{% load i18n pagination_tags widget_tweaks staticfiles %}
+{% load i18n pagination_tags widget_tweaks staticfiles test_due_date %}
 {% autopaginate site_filter.qs as filtered_sites 50 %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
@@ -42,6 +42,26 @@
                     <td class="opaque">
                         <span class="uk-text-bold">{{ site_filter.form.cust_name.label }}</span>
                         {{ site_filter.form.cust_name|add_class:"uk-width-1-1" }}
+                    </td>
+                    <td class="opaque">
+                        <span class="uk-text-bold">{% trans "Test Due Date" %}</span>
+                        <div class="uk-width-1-1">{{ site_filter.form.due_test_date_gt|add_class:"uk-width"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}</div>
+                        <div>{{ site_filter.form.due_test_date_lt|add_class:"uk-width"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}</div>
+                    </td>
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.next_survey_date.label }}</span>
+                        {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
+                    </td>
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.last_survey_date.label }}</span>
+                        {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
+                    </td>
+                    <td class="opaque">
+                        <span class="uk-text-bold">{{ site_filter.form.route.label }}</span>
+                        {{ site_filter.form.route|add_class:"uk-width-1-1" }}
+                        <label class="form-blank-label">
+                            {% trans "Blank:" %} {{ site_filter.form.route_blank }}
+                        </label>
                     </td>
                     <td class="opaque">
                         <span class="uk-text-bold">{{ site_filter.form.street_number.label }}</span>
@@ -123,13 +143,6 @@
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter.form.route.label }}</span>
-                        {{ site_filter.form.route|add_class:"uk-width-1-1" }}
-                        <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter.form.route_blank }}
-                        </label>
-                    </td>
-                    <td class="opaque">
                         <span class="uk-text-bold">{{ site_filter.form.meter_number.label }}</span>
                         {{ site_filter.form.meter_number|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
@@ -157,14 +170,6 @@
                             {% trans "Blank:" %} {{ site_filter.form.connect_date_blank }}
                         </label>
                     </td>
-                    <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter.form.next_survey_date.label }}</span>
-                        {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
-                    </td>
-                    <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter.form.last_survey_date.label }}</span>
-                        {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
-                    </td>
                 </tr>
                 </thead>
                 <tbody>
@@ -182,6 +187,18 @@
                         </td>
                         <td>
                             {{ site.cust_name }}
+                        </td>
+                        <td>
+                            {% get_due_test_date site %}
+                        </td>
+                        <td>
+                            {{ site.next_survey_date }}
+                        </td>
+                        <td>
+                            {{ site.last_survey_date }}
+                        </td>
+                        <td>
+                            {{ site.route }}
                         </td>
                         <td>
                             {{ site.street_number }}
@@ -223,9 +240,6 @@
                             {{ site.cust_zip }}
                         </td>
                         <td>
-                            {{ site.route }}
-                        </td>
-                        <td>
                             {{ site.meter_number }}
                         </td>
                         <td>
@@ -236,12 +250,6 @@
                         </td>
                         <td>
                             {{ site.connect_date }}
-                        </td>
-                        <td>
-                            {{ site.next_survey_date }}
-                        </td>
-                        <td>
-                            {{ site.last_survey_date }}
                         </td>
                     </tr>
                 {% endfor %}
