@@ -77,3 +77,9 @@ def check_user_editing_error_message(step):
 def open_user_detail(step, pk):
     open_user_list_page(step)
     click_link(step, "user_%s_detail" % pk)
+
+
+@step('I directly open "tester_list" page')
+def open_tester_list(step):
+    step.given('I open "%s"' % get_url(Urls.tester_list))
+

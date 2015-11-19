@@ -51,6 +51,10 @@ class Urls:
     kit_edit = '/kit-edit/%s/'
     cert_add = '/user/%s/cert-add/'
     cert_edit = '/cert-edit/%s/'
+    survey_list = '/survey/'
+    hazard_list = '/hazard/'
+    tester_list = '/testers/'
+    test_list = '/test/'
 
 
 class Logins:
@@ -77,6 +81,10 @@ class Logins:
     non_existent_user = {
         'username': 'non_existent_username',
         'password': 'non_existent_password'
+    }
+    adauth = {
+        'username': 'adauth',
+        'password': 'adauth'
     }
 
 

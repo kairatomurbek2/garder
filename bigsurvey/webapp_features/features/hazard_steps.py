@@ -87,3 +87,8 @@ def set_has_licence_for_installation(step, username, relation):
     has_licence_for_installation = True if relation == 'has' else False
     user.employee.has_licence_for_installation = has_licence_for_installation
     user.employee.save()
+
+
+@step('I directly open "hazard_list" page')
+def open_hazard_list(step):
+    step.given('I open "%s"' % get_url(Urls.hazard_list))

@@ -30,6 +30,11 @@ def login_as_tester(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.tester['username'], Logins.tester['password']))
 
 
+@step('I login as "adauth"')
+def login_as_tester(step):
+    step.given('I login with username "%s" and password "%s"' % (Logins.adauth['username'], Logins.adauth['password']))
+
+
 @step('I login as "non existent user"')
 def login_as_non_existent_user(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.non_existent_user['username'], Logins.non_existent_user['password']))

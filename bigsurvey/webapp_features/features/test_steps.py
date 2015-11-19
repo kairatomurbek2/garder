@@ -84,3 +84,8 @@ def set_hazard_assembly_type(step, pk, assembly_type):
     hazard = models.Hazard.objects.get(pk=pk)
     hazard.bp_type_required = assembly_type
     hazard.save()
+
+
+@step('I directly open "test_list" page')
+def open_test_list(step):
+    step.given('I open "%s"' % get_url(Urls.test_list))

@@ -121,3 +121,8 @@ def check_service_type_present(step, pk, service_type, value):
     value = True if value == 'on' else False
     site_value = getattr(site, '%s_present' % service_type)
     assert site_value == value, '%s service: expected %s, found %s' % (service_type.capitalize(), value, site_value)
+
+
+@step('I directly open "survey_list" page')
+def open_survey_list(step):
+    step.given('I open "%s"' % get_url(Urls.survey_list))
