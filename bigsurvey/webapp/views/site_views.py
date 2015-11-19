@@ -162,8 +162,29 @@ class BatchUpdateView(BaseTemplateView):
         models.Site.objects.filter(pk__in=site_pks).update(next_survey_date=date)
 
     def _batch_update_hazards(self, date, site_pks):
+        sites_without_hazards = []
         for site_pk in site_pks:
-            models.Site.objects.get(pk=site_pk).hazards.update(due_install_test_date=date)
+            rows_affected = models.Site.objects.get(pk=site_pk).hazards.update(due_install_test_date=date)
+            if rows_affected < 1:
+                sites_without_hazards.append(site_pk)
+        if sites_without_hazards:
+            self.request.session['sites_without_hazards'] = sites_without_hazards
+            messages.add_message(
+                self.request,
+                messages.WARNING,
+                Messages.BatchUpdate.hazard_warning % reverse('webapp:unupdated')
+            )
 
     def get_success_url(self):
         return reverse('webapp:batch_update')
+
+
+class UnupdatedSiteList(BaseTemplateView):
+    template_name = 'site/site_unupdated_list.html'
+    permission = 'webapp.access_to_batch_update'
+
+    def get_context_data(self, **kwargs):
+        context = super(UnupdatedSiteList, self).get_context_data(**kwargs)
+        site_pks = self.request.session.get('sites_without_hazards')
+        context['sites'] = models.Site.objects.filter(pk__in=site_pks)
+        return context
