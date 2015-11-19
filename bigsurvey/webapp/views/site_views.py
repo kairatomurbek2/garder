@@ -144,10 +144,19 @@ class BatchUpdateView(BaseTemplateView):
     def post(self, request):
         form = self.form_class(self.request.POST)
         if form.is_valid():
-            date = form.cleaned_data.get('date')
-            site_pks = self.request.POST.getlist('site_pks')
-            self._batch_update(date, site_pks)
-            messages.success(self.request, Messages.BatchUpdate.success)
+            empty = form.cleaned_data.get('empty_date')
+            if empty:
+                site_pks = self.request.POST.getlist('site_pks')
+                self._batch_update(None, site_pks)
+                messages.success(self.request, Messages.BatchUpdate.success)
+            else:
+                date = form.cleaned_data.get('date')
+                if date:
+                    site_pks = self.request.POST.getlist('site_pks')
+                    self._batch_update(date, site_pks)
+                    messages.success(self.request, Messages.BatchUpdate.success)
+                else:
+                    messages.error(self.request, Messages.BatchUpdate.error)
         else:
             messages.error(self.request, Messages.BatchUpdate.error)
         return redirect(self.get_success_url())

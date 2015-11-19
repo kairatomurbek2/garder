@@ -295,7 +295,8 @@ class UserEditForm(UserChangeForm):
 
 
 class BatchUpdateForm(forms.Form):
-    date = forms.DateField(label=_('Select date'))
+    date = forms.DateField(label=_('Select date'), required=False)
+    empty_date = forms.BooleanField(label=_('Empty date'), required=False)
 
 
 class LetterTypeForm(forms.ModelForm):

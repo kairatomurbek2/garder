@@ -75,3 +75,30 @@ Feature: Batch Update
       | text    |
       | QAZ2WSX |
       | MIA281  |
+
+  @batch_update_empty_date
+  Scenario: Batch Updating Sites' Next Survey Date with empty date
+    Given I logged in as "root"
+    And I open "batch_update" page
+    And I should see "Jan. 15, 2015"
+    And I check following values from "site_pks"
+      | value |
+      | 1     |
+    And I check "empty_date"
+    When I click "set_sites_next_survey_date" button
+    Then I should see "batch updating success" message
+    And I should not see "Jan. 15, 2015"
+
+
+  @batch_update_empty_date
+  Scenario: Batch Updating due test date with empty date
+    Given I logged in as "root"
+    And I open "batch_update" page
+    And I should see "May. 31, 2015"
+    And I check following values from "site_pks"
+      | value |
+      | 5     |
+    And I check "empty_date"
+    When I click "set_hazards_due_install_test_date" button
+    Then I should see "batch updating success" message
+    And I should not see "May. 31, 2015"
