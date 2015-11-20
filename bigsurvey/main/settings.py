@@ -131,6 +131,10 @@ MEDIA_URL = '/uploads/'
 
 EXCEL_FILES_DIR = os.path.join(MEDIA_ROOT, 'excel_files')
 
+EXCEL_EXPORT_DIR = os.path.join(MEDIA_ROOT, 'excel_export')
+
+EXPORT_BASE_URL = MEDIA_URL + 'excel_export/'
+
 PWS_LOGOS_DIR = os.path.join(MEDIA_ROOT, 'pws_logos')
 
 CKEDITOR_CONFIGS = {
@@ -166,6 +170,8 @@ PAYPAL_CLIENT_SECRET = 'EHUCx5wjMgFkQzqkhsWUtfG6-pzlvS72kaGafHmPu2-hfGE6ubLmS_yW
 HOST = 'http://127.0.0.1:8000'
 
 DELETE_UNPAID_TESTS_AFTER_DAYS = 2
+
+DELETE_OLD_XLS_FILES_AFTER_DAYS = 10
 
 try:
     from settings_local import *

@@ -1,16 +1,17 @@
 from xlsxwriter import Workbook
 from django.utils.translation import ugettext as _
 from main.parameters import SITE_FIELD_NAMES, SITE_BOOLEAN_FIELDS, SITE_DATE_FIELDS
-from main.settings import BASE_DIR
+from main.settings import EXCEL_EXPORT_DIR, EXPORT_BASE_URL
 from datetime import datetime
 import os
 
 
 class XLSExporter(object):
     def __init__(self, dataset):
-        self.file_uri = 'uploads/excel_export/Export_Services_%s.xlsx' % datetime.now().strftime("%Y-%m-%d-%s")
-        self.file_name = os.path.join(BASE_DIR, self.file_uri)
-        self.workbook = Workbook(self.file_name, {'constant_memory': True})
+        self.file_name = 'Export_Services_%s.xlsx' % datetime.now().strftime("%Y-%m-%d-%s")
+        self.file_uri = EXPORT_BASE_URL + self.file_name
+        self.file_path = os.path.join(EXCEL_EXPORT_DIR, self.file_name)
+        self.workbook = Workbook(self.file_path, {'constant_memory': True})
         self.current_sheet = self.workbook.add_worksheet(_("Sites"))
         self.dataset = dataset
         self.fields = SITE_FIELD_NAMES
