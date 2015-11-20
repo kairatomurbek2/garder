@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n pagination_tags widget_tweaks staticfiles test_due_date %}
+{% load i18n pagination_tags widget_tweaks staticfiles %}
 {% block scripts %}
     <script src="{% static 'js/custom/batch_update.js' %}"></script>
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
@@ -82,7 +82,7 @@
                                     {{ site.last_survey_date }}
                                 </td>
                                 <td>
-                                    {% get_due_test_date site %}
+                                    {{ site.due_install_test_date }}
                                 </td>
                             </tr>
                         {% endfor %}

@@ -141,15 +141,20 @@ class FilterActions(object):
             return sites
 
         @staticmethod
-        def due_test_gt(sites, value):
-            if value:
-                return sites.filter(hazards__due_install_test_date__gte=value).distinct()
-            return sites
-
-        @staticmethod
-        def due_test_lt(sites, value):
-            if value:
-                return sites.filter(hazards__due_install_test_date__lte=value).distinct()
+        def due_test_date(sites, value):
+            current_date = datetime.now()
+            dates = {
+                'today': current_date,
+                'week': current_date + timedelta(weeks=1),
+                'month': current_date + timedelta(days=30),
+                'year': current_date + timedelta(days=365),
+            }
+            if value == 'blank':
+                return sites.filter(due_install_test_date=None)
+            if value == 'past':
+                return sites.filter(due_install_test_date__lt=current_date)
+            if value in dates:
+                return sites.filter(due_install_test_date__range=[current_date, dates[value]])
             return sites
 
         @staticmethod
@@ -537,10 +542,8 @@ class SiteFilter(django_filters.FilterSet):
     meter_size = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Size'))
     meter_reading = django_filters.NumberFilter(label=_('Meter Reading'))
     connect_date = django_filters.DateFilter(label=_('Connect Date'))
-    due_test_date_gt = django_filters.DateFilter(label=_("Due install/test date from"),
-                                                 action=FilterActions.Site.due_test_gt)
-    due_test_date_lt = django_filters.DateFilter(label=_("Due install/test date to"),
-                                                 action=FilterActions.Site.due_test_lt)
+    due_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES, label=_("Test Due Date"),
+                                                action=FilterActions.Site.due_test_date)
     street_number_blank = django_filters.BooleanFilter(action=FilterActions.Site.street_number_blank,
                                                        widget=forms.CheckboxInput)
     address2_blank = django_filters.BooleanFilter(action=FilterActions.Site.address2_blank,

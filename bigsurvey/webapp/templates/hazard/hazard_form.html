@@ -12,7 +12,7 @@
         {% include 'hazard/partial/hazard_form.html' %}
     </div>
 {% endblock %}
-{% block scripts %}
+{% block end_scripts %}
     {% if perms.webapp.change_all_info_about_hazard %}
         {% load_google_map_js %}
         <script type="text/javascript">

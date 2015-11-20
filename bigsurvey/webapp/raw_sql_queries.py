@@ -86,3 +86,19 @@ class SetLastSurveyDateQuery(RawSqlQuery):
                     WHERE %(surveys_table_name)s.site_id = %(sites_table_name)s.id)
         '''
         return query % {'sites_table_name': cls.sites_table_name, 'surveys_table_name': cls.surveys_table_name}
+
+
+class SetDueInstallTestDateQuery(RawSqlQuery):
+    sites_table_name = models.Site._meta.db_table
+    hazards_table_name = models.Hazard._meta.db_table
+
+    @classmethod
+    def as_sql(cls):
+        query = '''
+        UPDATE %(sites_table_name)s
+            SET due_install_test_date =
+                (SELECT MIN(%(hazards_table_name)s.due_install_test_date)
+                    FROM %(hazards_table_name)s
+                    WHERE %(hazards_table_name)s.site_id = %(sites_table_name)s.id)
+        '''
+        return query % {'sites_table_name': cls.sites_table_name, 'hazards_table_name': cls.hazards_table_name}

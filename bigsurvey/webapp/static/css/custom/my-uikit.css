@@ -25,3 +25,7 @@
 .opaque {
     background-color: #FFF;
 }
+
+.opaque > span {
+    white-space: nowrap;
+}

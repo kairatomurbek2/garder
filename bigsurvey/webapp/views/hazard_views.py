@@ -7,6 +7,7 @@ from main.parameters import BP_TYPE, Messages, TESTER_ASSEMBLY_STATUSES
 from django.contrib import messages
 from webapp.raw_sql_queries import HazardPriorityQuery
 from django.db import connection
+from django.db.models import Min
 from webapp.utils import photo_util
 from django.shortcuts import HttpResponseRedirect
 from django.template import RequestContext
@@ -116,19 +117,22 @@ class HazardAddView(HazardBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
-        self._switch_on_service_type(form.instance.site, self.kwargs['service'])
         response = super(HazardAddView, self).form_valid(form)
+        self._update_site(form.instance.site, self.kwargs['service'])
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_OK, form)
         return response
 
-    def _switch_on_service_type(self, site, service_type):
+    def _update_site(self, site, service_type):
         if service_type == 'potable':
             site.potable_present = True
         elif service_type == 'fire':
             site.fire_present = True
         elif service_type == 'irrigation':
             site.irrigation_present = True
+        site.due_install_test_date = site.hazards.aggregate(
+            Min('due_install_test_date')
+        )['due_install_test_date__min']
         site.save()
 
     def form_invalid(self, form):
@@ -164,3 +168,14 @@ class HazardEditView(HazardBaseFormView, UpdateView):
         else:
             queryset = models.AssemblyStatus.objects.filter(assembly_status__in=TESTER_ASSEMBLY_STATUSES)
         return queryset
+
+    def form_valid(self, form):
+        response = super(HazardEditView, self).form_valid(form)
+        self._update_site(form.instance.site)
+        return response
+
+    def _update_site(self, site):
+        site.due_install_test_date = site.hazards.aggregate(
+            Min('due_install_test_date')
+        )['due_install_test_date__min']
+        site.save()

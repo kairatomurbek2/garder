@@ -1,4 +1,4 @@
-{% load i18n pagination_tags widget_tweaks staticfiles test_due_date %}
+{% load i18n pagination_tags widget_tweaks staticfiles %}
 {% autopaginate site_filter.qs as filtered_sites 50 %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
@@ -44,9 +44,8 @@
                         {{ site_filter.form.cust_name|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{% trans "Test Due Date" %}</span>
-                        <div class="uk-width-1-1">{{ site_filter.form.due_test_date_gt|add_class:"uk-width"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}</div>
-                        <div>{{ site_filter.form.due_test_date_lt|add_class:"uk-width"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}</div>
+                        <span class="uk-text-bold">{{ site_filter.form.due_test_date.label }}</span>
+                        {{ site_filter.form.due_test_date|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
                         <span class="uk-text-bold">{{ site_filter.form.next_survey_date.label }}</span>
@@ -189,7 +188,7 @@
                             {{ site.cust_name }}
                         </td>
                         <td>
-                            {% get_due_test_date site %}
+                            {{ site.due_install_test_date }}
                         </td>
                         <td>
                             {{ site.next_survey_date }}
