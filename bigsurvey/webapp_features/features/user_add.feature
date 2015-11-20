@@ -31,7 +31,7 @@ Feature: User adding
     When I submit "user" form
     Then I should be at "user_list" page
     And I should see "user adding success" message
-    And I should see following
+    And I should see following in tab 2
       | text                |
       | newuser             |
       | newuser@example.com |

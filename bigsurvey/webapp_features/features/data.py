@@ -122,6 +122,7 @@ class Xpath:
         excel_field_select_by_model_field = './/input[@value="%s"]/../following-sibling::td/select'
         site_id = './/tr/td[1][text()="%s"]'
         site_table_text = './/tbody//td[contains(., "%s")]'
+        user_page_tab = './/div[@id="tab_control"]/ul/li[%s]'
 
     class Paypal:
         username = './/input[@name="login_email"]'
