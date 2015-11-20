@@ -481,6 +481,7 @@ class Site(models.Model):
     contact_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Phone"), help_text=_("Customer's Phone"))
     contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Fax"), help_text=_("Customer's Fax"))
     contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Email"), help_text=_("Customer's Email Address"))
+    due_install_test_date = models.DateField(blank=True, null=True, verbose_name=_('Due Test Date'))
 
     def __unicode__(self):
         return u"%s %s, %s %s" % (self.street_number or '', self.address1, self.city, self.zip or '')

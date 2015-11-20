@@ -74,9 +74,10 @@ def check_user_editing_error_message(step):
     step.given('I should see "%s"' % Messages.User.editing_error)
 
 
-@step('Open user detail page with pk (\d+)')
-def open_user_detail(step, pk):
+@step('Open user detail page with pk (\d+) from tab (\d+)')
+def open_user_detail(step, pk, tab):
     open_user_list_page(step)
+    click_element_by_xpath(Xpath.Pattern.user_page_tab % tab)
     click_link(step, "user_%s_detail" % pk)
 
 
