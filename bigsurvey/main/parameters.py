@@ -126,6 +126,7 @@ class Groups:
     surveyor = 'Surveyors'
     tester = 'Testers'
     pws_owner = 'PWSOwners'
+    ad_auth = 'Administrative Authority'
 
 
 ADMIN_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]

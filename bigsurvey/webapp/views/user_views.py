@@ -15,41 +15,50 @@ class UserListView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(UserListView, self).get_context_data(**kwargs)
-        context['user_list'] = self._get_users()
+        context['user_lists'], context['user_groups'] = self._get_users()
         return context
 
     def _get_users(self):
-        user_list = OrderedDict()
+        user_lists = []
         if self.request.user.has_perm('webapp.access_to_all_users'):
-            user_list['SuperAdministrators'] = models.User.objects.filter(groups__name=Groups.superadmin)
-            user_list['PWSOwners'] = models.User.objects.filter(groups__name=Groups.pws_owner)
-            user_list['Administrators'] = models.User.objects.filter(groups__name=Groups.admin)
-            user_list['Surveyors'] = models.User.objects.filter(groups__name=Groups.surveyor)
-            user_list['Testers'] = models.User.objects.filter(groups__name=Groups.tester)
-            user_list['WithoutGroup'] = models.User.objects.filter(groups__name='')
+            user_groups = [
+                'Super Administrators', 'PWS Owners', 'Administrators',
+                'Surveyors', 'Testers', 'Administrative Authority', 'Without Group'
+            ]
+            user_lists.append(models.User.objects.filter(groups__name=Groups.superadmin))
+            user_lists.append(models.User.objects.filter(groups__name=Groups.pws_owner))
+            user_lists.append(models.User.objects.filter(groups__name=Groups.admin))
+            user_lists.append(models.User.objects.filter(groups__name=Groups.surveyor))
+            user_lists.append(models.User.objects.filter(groups__name=Groups.tester))
+            user_lists.append(models.User.objects.filter(groups__name=Groups.ad_auth))
+            user_lists.append(models.User.objects.filter(groups=None))
         elif self.request.user.has_perm('webapp.access_to_pws_users'):
+            user_groups = ['Administrators', 'Surveyors', 'Testers', 'Without Group']
             if self.request.user.has_perm('webapp.access_to_multiple_pws_users'):
-                user_list['PWSOwners'] = models.User.objects.filter(
+                user_groups.insert(0, 'PWS Owners')
+                user_lists.append(models.User.objects.filter(
                     groups__name=Groups.pws_owner,
                     employee__pws__in=self.request.user.employee.pws.all()
-                ).distinct()
-            user_list['Administrators'] = models.User.objects.filter(
+                ).distinct())
+            user_lists.append(models.User.objects.filter(
                 groups__name=Groups.admin,
                 employee__pws__in=self.request.user.employee.pws.all()
-            ).distinct()
-            user_list['Surveyors'] = models.User.objects.filter(
+            ).distinct())
+            user_lists.append(models.User.objects.filter(
                 groups__name=Groups.surveyor,
                 employee__pws__in=self.request.user.employee.pws.all()
-            )
-            user_list['Testers'] = models.User.objects.filter(
+            ))
+            user_lists.append(models.User.objects.filter(
                 groups__name=Groups.tester,
                 employee__pws__in=self.request.user.employee.pws.all()
-            ).distinct()
-            user_list['WithoutGroup'] = models.User.objects.filter(
-                groups__name='',
+            ).distinct())
+            user_lists.append(models.User.objects.filter(
+                groups=None,
                 employee__pws__in=self.request.user.employee.pws.all()
-            )
-        return user_list
+            ))
+        else:
+            raise Http404
+        return user_lists, user_groups
 
 
 class UserBaseFormView(BaseFormView):
