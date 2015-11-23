@@ -285,8 +285,6 @@ class Messages:
     class BatchUpdate:
         success = _('Batch update was performed successfully')
         error = _('Cannot perform batch update. Please, provide date or select "Empty Date" option')
-        hazard_warning = _('Some of the selected sites do not have any hazards so Due Install/Test Date \
-        could not be set for them. Please, follow <a id="unupdated_link" href="%s">This Link</a> to view the sites.')
 
     class PWS:
         adding_success = _('PWS was successfully added')

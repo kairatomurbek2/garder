@@ -71,6 +71,4 @@ urlpatterns = patterns(
 
     url(r'^user/(?P<pk>\d+)/kit-add/$', views.TestKitAddView.as_view(), name="test_kit_add"),
     url(r'^kit-edit/(?P<pk>\d+)/$', views.TestKitEditView.as_view(), name="test_kit_edit"),
-
-    url(r'^sites-not-upd/$', views.UnupdatedSiteList.as_view(), name="unupdated"),
 )

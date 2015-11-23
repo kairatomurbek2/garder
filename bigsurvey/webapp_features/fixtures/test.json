@@ -3270,6 +3270,7 @@
     "street_number": null,
     "cust_zip": "90192",
     "connect_date": "2015-01-22",
+    "due_install_test_date": "2015-05-31",
     "route": "ROUTE-123",
     "meter_size": null,
     "cust_name": "Amanda James",

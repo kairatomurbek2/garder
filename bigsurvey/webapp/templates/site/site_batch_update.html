@@ -16,8 +16,8 @@
                     {% csrf_token %}
                     <div class="uk-text-center">
                         {{ form.date|attr:'data-uk-datepicker:{format:"YYYY-MM-DD"}' }}
-                        <button type="submit" name="set_sites_next_survey_date" class="uk-button uk-button-success">{% trans "Set Sites' Next Survey Date" %}</button>
-                        <button type="submit" name="set_hazards_due_install_test_date" class="uk-button uk-button-success">{% trans "Set Hazards' Due Install/Test Date" %}</button>
+                        <button type="submit" name="set_sites_next_survey_date" class="uk-button uk-button-success">{% trans "Set Next Survey Date" %}</button>
+                        <button type="submit" name="set_hazards_due_install_test_date" class="uk-button uk-button-success">{% trans "Set Due Install/Test Date" %}</button>
                         <p class="uk-text-center">
                             {{ form.empty_date }} {{ form.empty_date.label }}
                         </p>

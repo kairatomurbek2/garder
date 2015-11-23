@@ -16,7 +16,7 @@ Feature: Batch Update
     | surveyor  | see      |
     | tester    | see      |
 
-  Scenario: Correct Batch Updating Sites' Next Survey Date
+  Scenario: Correct Batch Updating Next Survey Date
     Given I logged in as "root"
     And I open "batch_update" page
     And I check following values from "site_pks"
@@ -31,7 +31,7 @@ Feature: Batch Update
     When I open "site_detail" page with pk "8"
     Then I should see "Feb. 10, 2017"
 
-  Scenario: Correct Batch Update Hazards' Due Install Test Date
+  Scenario: Correct Batch Update Due Install Test Date
     Given I logged in as "root"
     And I open "batch_update" page
     And I check following values from "site_pks"
@@ -40,8 +40,7 @@ Feature: Batch Update
     And I fill in "date" with "2015-08-22"
     When I click "set_hazards_due_install_test_date" button
     Then I should see "batch updating success" message
-    When I open "hazard_detail" page with pk "2"
-    Then I should see "Aug. 22, 2015"
+    And I should see "Aug. 22, 2015"
 
   Scenario: Incorrect Batch Updating
     Given I logged in as "root"
@@ -52,29 +51,6 @@ Feature: Batch Update
       | 7     |
     When I submit "batch_update" form
     Then I should see "batch updating error" message
-
-  @batch_update_no_hazards
-  Scenario: Batch Updating sites due install/test date for sites with no hazards
-    Given I logged in as "root"
-    And I open "batch_update" page
-    And I check following values from "site_pks"
-      | value |
-      | 3     |
-      | 4     |
-      | 5     |
-    And I fill in "date" with "2015-08-22"
-    When I click "set_hazards_due_install_test_date" button
-    Then I should see "batch updating success" message
-    And I should see "batch updating warning" message
-    When I click "unupdated" link
-    Then I should see following
-      | text   |
-      | ZXC2   |
-      | SJK472 |
-    And I should not see following
-      | text    |
-      | QAZ2WSX |
-      | MIA281  |
 
   @batch_update_empty_date
   Scenario: Batch Updating Sites' Next Survey Date with empty date
@@ -94,11 +70,11 @@ Feature: Batch Update
   Scenario: Batch Updating due test date with empty date
     Given I logged in as "root"
     And I open "batch_update" page
-    And I should see "May. 31, 2015"
+    And I should see "May 31, 2015"
     And I check following values from "site_pks"
       | value |
       | 5     |
     And I check "empty_date"
     When I click "set_hazards_due_install_test_date" button
     Then I should see "batch updating success" message
-    And I should not see "May. 31, 2015"
+    And I should not see "May 31, 2015"
