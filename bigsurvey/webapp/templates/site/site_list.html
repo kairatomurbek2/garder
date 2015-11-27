@@ -2,7 +2,7 @@
 {% autopaginate site_filter.qs as filtered_sites 50 %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
-        <div class="fixed filter-button-div">
+        <div id="filter_buttons_div" class="fixed filter-button-div">
             <button class="uk-button uk-button-primary filter-button" type="submit">
                 {% trans "Apply Filters" %}
             </button>
@@ -281,6 +281,12 @@
     <script src="{% static 'js/custom/filters-blank.js' %}"></script>
     <script>
         $(document).ready(function () {
+            if ($(window).width() < 621) {
+                $("#brand-div").text('BSS');
+            }
+            else {
+                $("#brand-div").text('BACKFLOW SOFTWARE SOLUTIONS');
+            }
             var navbarHeight = parseInt(navbar.height() + fixedDiv.height());
             $("#table_div").css("margin-top", fixedDiv.height() + "px");
             $('.fixed-headers').floatThead({
@@ -304,7 +310,20 @@
                     window.location.href = data;
                 });
             });
+            $(window).resize(function() {
+                if ($(window).width() < 621) {
+                    $("#brand-div").text('BSS');
+                }
+                else {
+                    $("#brand-div").text('BACKFLOW SOFTWARE SOLUTIONS');
+                    /*$('#filter_buttons_div').removeClass("padding-top-40");
+                    $("#table_div").removeClass("padding-top-40");
+                    navbarHeight = parseInt(navbar.height() + fixedDiv.height());
+                    $('.fixed-headers').floatThead('destroy').floatThead({
+                        scrollingTop: navbarHeight
+                    });*/
+                }
+            });
         });
     </script>
-    <script></script>
 {% endblock %}
