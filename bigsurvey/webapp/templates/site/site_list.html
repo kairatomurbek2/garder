@@ -279,14 +279,10 @@
     <script src="{% static 'js/jquery.floatthead.js' %}"></script>
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
     <script src="{% static 'js/custom/filters-blank.js' %}"></script>
+{% endblock %}
+{% block end_scripts %}
     <script>
         $(document).ready(function () {
-            if ($(window).width() < 621) {
-                $("#brand-div").text('BSS');
-            }
-            else {
-                $("#brand-div").text('BACKFLOW SOFTWARE SOLUTIONS');
-            }
             var navbarHeight = parseInt(navbar.height() + fixedDiv.height());
             $("#table_div").css("margin-top", fixedDiv.height() + "px");
             $('.fixed-headers').floatThead({
@@ -309,20 +305,6 @@
                     $("#xls-ready-img").show();
                     window.location.href = data;
                 });
-            });
-            $(window).resize(function() {
-                if ($(window).width() < 621) {
-                    $("#brand-div").text('BSS');
-                }
-                else {
-                    $("#brand-div").text('BACKFLOW SOFTWARE SOLUTIONS');
-                    /*$('#filter_buttons_div').removeClass("padding-top-40");
-                    $("#table_div").removeClass("padding-top-40");
-                    navbarHeight = parseInt(navbar.height() + fixedDiv.height());
-                    $('.fixed-headers').floatThead('destroy').floatThead({
-                        scrollingTop: navbarHeight
-                    });*/
-                }
             });
         });
     </script>

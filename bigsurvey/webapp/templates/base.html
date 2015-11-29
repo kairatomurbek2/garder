@@ -26,7 +26,7 @@
     {% endblock %}
 </head>
 <body>
-<nav class="uk-navbar fixed-navbar uk-margin-large-bottom">
+<nav class="uk-navbar fixed-navbar uk-margin-large-bottom" style="height: 40px; max-height: 40px;">
     {% include 'partial/menu.html' %}
 
     <div class="uk-navbar-flip">
@@ -49,6 +49,25 @@
         {% include 'partial/canvas_menu.html' %}
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        if ($(window).width() < 650) {
+            $("#brand-div").text('BSS');
+        }
+        else {
+            $("#brand-div").text('BACKFLOW SOFTWARE SOLUTIONS');
+        }
+        $(window).resize(function() {
+            if ($(window).width() < 650) {
+                $("#brand-div").text('BSS');
+            }
+            else {
+                $("#brand-div").text('BACKFLOW SOFTWARE SOLUTIONS');
+            }
+        });
+    });
+</script>
 {% block end_scripts %}
 {% endblock %}
 </body>
