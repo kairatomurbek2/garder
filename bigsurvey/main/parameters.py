@@ -320,7 +320,7 @@ class Messages:
         payment_successful_plural = 'Payment was completed successfully. Tests are now visible on the site.'
         payment_failed = _('Some errors happened during the payment. Please try again later.')
         payment_cancelled = _('You have cancelled payment. You can pay later.')
-        assembly_type_not_set = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type Required" set. Please provide it <a href="%s">here</a>')
+        assembly_type_not_set = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type Present" set. Please provide it <a href="%s">here</a>')
         assembly_type_not_set_no_licence = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type Required" set. You are now unable to set "Assembly Type Required" because you do not have Licence for Installation. Please, contact your PWS administrator to resolve this issue.')
 
     class Inspection:

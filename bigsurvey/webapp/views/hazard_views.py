@@ -43,7 +43,7 @@ class HazardDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
         context['hazard'] = self._get_hazard()
-        if not context['hazard'].bp_type_required:
+        if not context['hazard'].bp_type_present:
             if not self.request.user.has_perm('webapp.change_all_info_about_hazard') and not self.request.user.employee.has_licence_for_installation:
                 messages.error(self.request, Messages.Test.assembly_type_not_set_no_licence)
             else:
@@ -134,8 +134,8 @@ class HazardAddView(HazardBaseFormView, CreateView):
         elif service_type == 'irrigation':
             site.irrigation_present = True
         site.due_install_test_date = site.hazards.aggregate(
-            Min('due_install_test_date')
-        )['due_install_test_date__min']
+            Min('due_test_date')
+        )['due_test_date__min']
         site.save()
 
     def form_invalid(self, form):
@@ -179,6 +179,6 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
     def _update_site(self, site):
         site.due_install_test_date = site.hazards.aggregate(
-            Min('due_install_test_date')
-        )['due_install_test_date__min']
+            Min('due_test_date')
+        )['due_test_date__min']
         site.save()

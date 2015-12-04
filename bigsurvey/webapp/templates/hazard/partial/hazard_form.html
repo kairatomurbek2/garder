@@ -47,11 +47,11 @@
                     {{ form.hazard_type.errors }}
                 </td>
                 <td class="uk-width-1-6 uk-text-right">
-                    <label for="{{ form.due_install_test_date.id_for_label }}">{{ form.due_install_test_date.label }}</label>
+                    <label for="{{ form.due_test_date.id_for_label }}">{{ form.due_test_date.label }}</label>
                 </td>
                 <td class="uk-width-1-3">
-                    {{ form.due_install_test_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
-                    {{ form.due_install_test_date.errors }}
+                    {{ form.due_test_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                    {{ form.due_test_date.errors }}
                 </td>
             </tr>
             <tr>

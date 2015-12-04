@@ -61,7 +61,7 @@ class HazardFormForTester(forms.ModelForm):
             'location1',
             'location2',
             'notes',
-            'due_install_test_date',
+            'due_test_date',
             'bp_type_required',
             'is_present',
         )

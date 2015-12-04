@@ -353,6 +353,23 @@ class FilterActions(object):
 
     class Hazard(object):
         @staticmethod
+        def due_test_date(hazards, value):
+            current_date = datetime.now()
+            dates = {
+                'today': current_date,
+                'week': current_date + timedelta(weeks=1),
+                'month': current_date + timedelta(days=30),
+                'year': current_date + timedelta(days=365),
+            }
+            if value == 'blank':
+                return hazards.filter(due_test_date=None)
+            if value == 'past':
+                return hazards.filter(due_test_date__lt=current_date)
+            if value in dates:
+                return hazards.filter(due_test_date__range=[current_date, dates[value]])
+            return hazards
+
+        @staticmethod
         def pws(hazards, value):
             if value:
                 return hazards.filter(site__pws__id=value)
@@ -615,8 +632,9 @@ class HazardFilter(django_filters.FilterSet):
     assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))
     bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'))
     bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Required'))
-    due_install_test_date = django_filters.DateRangeFilter(label=_('Due Install/Test Date'))
-
+    due_test_date = django_filters.DateRangeFilter(label=_('Due Install/Test Date'))
+    #due_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES, label=_("Test Due Date"),
+    #                                            action=FilterActions.Hazard.due_test_date)
 
 class TesterFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.User.pws)

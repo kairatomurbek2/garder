@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from webapp import perm_checkers, models, forms
 from main.parameters import Messages
 import json
+from datetime import datetime, timedelta
 
 
 class TesterCertBaseFormView(BaseFormView):
@@ -101,7 +102,8 @@ def get_tester_certs(request, tester_id):
 
 
 def get_test_kits(request, tester_id):
-    kits = models.TestKit.objects.filter(user__pk=tester_id, is_active=True)
+    filter_date = datetime.now().date() - timedelta(days=365)
+    kits = models.TestKit.objects.filter(user__pk=tester_id, is_active=True, test_last_cert__gte=filter_date)
     kits_dict = {}
     for kit in kits:
         kits_dict[kit.pk] = kit.test_serial

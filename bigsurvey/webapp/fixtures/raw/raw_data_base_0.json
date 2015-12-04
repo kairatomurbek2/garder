@@ -755,96 +755,103 @@
   "model": "webapp.bpsize",
   "pk": 3
 },
-{
+  {
   "fields": {
-    "bp_size": "1.5\""
+    "bp_size": "1.25\""
   },
   "model": "webapp.bpsize",
   "pk": 4
 },
 {
   "fields": {
-    "bp_size": "2\""
+    "bp_size": "1.5\""
   },
   "model": "webapp.bpsize",
   "pk": 5
 },
 {
   "fields": {
-    "bp_size": "2.5\""
+    "bp_size": "2\""
   },
   "model": "webapp.bpsize",
   "pk": 6
 },
 {
   "fields": {
-    "bp_size": "3\""
+    "bp_size": "2.5\""
   },
   "model": "webapp.bpsize",
   "pk": 7
 },
 {
   "fields": {
-    "bp_size": "4\""
+    "bp_size": "3\""
   },
   "model": "webapp.bpsize",
   "pk": 8
 },
 {
   "fields": {
-    "bp_size": "5\""
+    "bp_size": "4\""
   },
   "model": "webapp.bpsize",
   "pk": 9
 },
 {
   "fields": {
-    "bp_size": "6\""
+    "bp_size": "5\""
   },
   "model": "webapp.bpsize",
   "pk": 10
 },
 {
   "fields": {
-    "bp_size": "8\""
+    "bp_size": "6\""
   },
   "model": "webapp.bpsize",
   "pk": 11
 },
 {
   "fields": {
-    "bp_size": "9\""
+    "bp_size": "8\""
   },
   "model": "webapp.bpsize",
   "pk": 12
 },
 {
   "fields": {
-    "bp_size": "10\""
+    "bp_size": "9\""
   },
   "model": "webapp.bpsize",
   "pk": 13
 },
 {
   "fields": {
-    "bp_size": "12\""
+    "bp_size": "10\""
   },
   "model": "webapp.bpsize",
   "pk": 14
 },
 {
   "fields": {
-    "bp_size": "14\""
+    "bp_size": "12\""
   },
   "model": "webapp.bpsize",
   "pk": 15
 },
 {
   "fields": {
-    "bp_size": "16\""
+    "bp_size": "14\""
   },
   "model": "webapp.bpsize",
   "pk": 16
+},
+{
+  "fields": {
+    "bp_size": "16\""
+  },
+  "model": "webapp.bpsize",
+  "pk": 17
 },
 {
   "fields": {

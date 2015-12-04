@@ -46,10 +46,10 @@ class HazardPriorityQuery(RawSqlQuery):
         return '''
         SELECT
             CASE WHEN install_date IS NULL THEN
-                CASE WHEN due_install_test_date IS NULL THEN
+                CASE WHEN due_test_date IS NULL THEN
                     1000000
                 ELSE
-                    DATEDIFF(due_install_test_date, CURRENT_TIMESTAMP)
+                    DATEDIFF(due_test_date, CURRENT_TIMESTAMP)
                 END
             ELSE
                 100000 + DATEDIFF(CURRENT_TIMESTAMP, install_date)
@@ -61,10 +61,10 @@ class HazardPriorityQuery(RawSqlQuery):
         return '''
         SELECT
             CASE WHEN install_date IS NULL THEN
-                CASE WHEN due_install_test_date IS NULL THEN
+                CASE WHEN due_test_date IS NULL THEN
                     1000000
                 ELSE
-                    cast(round(julianday(due_install_test_date) - julianday() + 0.5) as int)
+                    cast(round(julianday(due_test_date) - julianday() + 0.5) as int)
                 END
             ELSE
                 100000 + cast(round(julianday() - julianday(install_date) - 0.5) as int)
@@ -97,7 +97,7 @@ class SetDueInstallTestDateQuery(RawSqlQuery):
         query = '''
         UPDATE %(sites_table_name)s
             SET due_install_test_date =
-                (SELECT MIN(%(hazards_table_name)s.due_install_test_date)
+                (SELECT MIN(%(hazards_table_name)s.due_test_date)
                     FROM %(hazards_table_name)s
                     WHERE %(hazards_table_name)s.site_id = %(sites_table_name)s.id)
         '''

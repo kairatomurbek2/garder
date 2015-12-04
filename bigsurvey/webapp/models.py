@@ -542,9 +542,9 @@ class Hazard(models.Model):
                                 related_name="hazards")
     manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
                                      related_name="hazards")
-    model_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Model No."))
-    serial_no = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("BP Serial No."))
-    due_install_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
+    model_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Model No."))
+    serial_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Serial No."))
+    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
     is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 

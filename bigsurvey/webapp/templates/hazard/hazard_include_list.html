@@ -46,7 +46,7 @@
                         {{ hazard.assembly_status }}
                     </td>
                     <td>
-                        {{ hazard.due_install_test_date }}
+                        {{ hazard.due_test_date }}
                     </td>
                     <td class="border-left uk-text-center">
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>

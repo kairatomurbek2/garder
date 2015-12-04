@@ -3,6 +3,7 @@ import codecs
 import json
 import os
 import shutil
+from time import sleep
 
 
 DB_NAME = "Execution.mdb"
@@ -47,9 +48,13 @@ class Connector(object):
             print
             if self.cursor.rowcount == 0:
                 print "===== WARNING ====="
+                print "0 rows affected"
+                print
+                print sql
+                sleep(3)
             else:
                 print "===== SUCCESS ====="
-            print sql
+                print sql
             print "== %s rows affected ==" % self.cursor.rowcount
             print
         except Exception as e:
@@ -59,6 +64,7 @@ class Connector(object):
             print
             print e
             print
+            sleep(5)
 
     def _execute_with_parameter(self, sql, parameter):
         pass
@@ -92,6 +98,7 @@ class Preloader(Connector):
     def _preload_sites(self):
         print "======== PRELOADING SITES ========"
         sqls = (
+            "update [Services] set PWSID = 'LA1095003' where PWSID = '26';",
             """INSERT INTO ALL_SITES ( PWS, address1, address2, street_number, apt, city, state, zip,
                 Route, site_use, site_type, floors, ic_point, meter_number, meter_size, meter_reading,
                 potable, fire, irrigation, is_due_install, is_backflow,
@@ -146,6 +153,8 @@ SET ALL_SITES.Code = (Select Pval from Pvals WHERE ([Pval_ID]=[Code])),
     def _preload_surveys(self):
         print "======== PRELOADING SURVEYS ========"
         sqls = (
+            "update Surveys set AccountNumber = '2004614i-30' where AccountNumber = '2004614F-30';",
+            "update Surveys set AccountNumber = '2004560i-30' where AccountNumber = '2004560F-30';",
             "INSERT INTO ALL_SURVEYS ([site], service_type, Surveyor, survey_date, Metered, pump_present, additives_present, cc_present, Protected, aux_water, detector_manufacturer, detector_model, detector_serial, Notes, Special, old_id ) SELECT ALL_SITES.ID, Surveys.[Type], LOWER([Surveyor]) AS LS, Surveys.SurveyDate, isnull((select 1 where LOWER([Metered])='yes'), 0) AS mtr, isnull((select 1 where LOWER([PumpPresent])='yes'), 0) AS pmp, isnull((select 1 where LOWER([Additives])='yes'), 0) AS adt, isnull((select 1 where LOWER([CCPresent])='yes'), 0) AS ccp, isnull((select 1 where LOWER([Protected])='yes'), 0) AS prt, isnull((select 1 where LOWER([AuxWater])='yes'), 0) AS auw, Surveys.DetectorManufacturer, Surveys.DetectorModelNo, Surveys.DetectorSerialNo, Surveys.Notes, Surveys.Special, Surveys.SurveyID FROM Surveys, ALL_SITES WHERE ([ALL_SITES].[AccountNumber]=[Surveys].[AccountNumber]);",
             """UPDATE ALL_SURVEYS SET ALL_SURVEYS.service_type = (select [Pval] from Pvals WHERE [Pval_ID]=[service_type]),
     ALL_SURVEYS.detector_manufacturer = (select [Pval] from Pvals WHERE [Pval_ID]=[detector_manufacturer]),
@@ -158,32 +167,44 @@ SET ALL_SITES.Code = (Select Pval from Pvals WHERE ([Pval_ID]=[Code])),
     def _preload_hazards(self):
         print "======== PRELOADING HAZARDS ========"
         sqls = (
-            """INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required,
-                    due_install_test_date,
-                    survey, service_type, site )
-                SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd,
-                    Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site
-                FROM Surveys, ALL_SURVEYS WHERE ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]);""",            
-            """UPDATE ALL_HAZARDS 
-SET 
-ALL_HAZARDS.assembly_location = (SELECT TOP 1 AssemblyLocation from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate),
-ALL_HAZARDS.installed_properly = isnull((select 1 where LOWER((SELECT TOP 1 InstalledProperly from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate))='yes'), 0),
-ALL_HAZARDS.installer = (SELECT TOP 1 Installer from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate), 
-ALL_HAZARDS.install_date = (SELECT TOP 1 InstallDate from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate),
-ALL_HAZARDS.replace_date = (SELECT TOP 1 ReplaceDate from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate), 
-ALL_HAZARDS.orientation = (SELECT TOP 1 Orientation from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate), 
-ALL_HAZARDS.bp_type_present = (SELECT TOP 1 TypeBPProvided from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate), 
-ALL_HAZARDS.bp_size = (SELECT TOP 1 bp_size from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate),
-ALL_HAZARDS.bp_manufacturer = (SELECT TOP 1 bp_manufacturer from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate),
-ALL_HAZARDS.model_no = (SELECT TOP 1 model_no from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate), 
-ALL_HAZARDS.serial_no = (SELECT TOP 1 serial_no from BackflowDevices WHERE BackflowDevices.SurveyID=(select old_id from ALL_SURVEYS where ALL_SURVEYS.ID=ALL_HAZARDS.survey) ORDER BY LastUpdate)""",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard2, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard2] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard3, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard3] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard4, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard4] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
-            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site ) SELECT Surveys.Hazard5, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site FROM Surveys, ALL_SURVEYS WHERE (([Hazard5] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
+            """INSERT INTO ALL_HAZARDS ( 
+	hazard_type, assembly_status, bp_type_required,
+	due_install_test_date,survey, service_type, 
+	[site], assembly_location, installer,
+	install_date, replace_date, orientation,
+	bp_type_present, bp_size, bp_manufacturer,
+	model_no, serial_no, old_survey_id, old_device_id )
+SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, 
+	ALL_SURVEYS.ID, BackflowDevices.BPType, ALL_SURVEYS.[site],
+	BackflowDevices.AssemblyLocation, BackflowDevices.Installer, BackflowDevices.InstallDate, 
+	BackflowDevices.ReplaceDate, BackflowDevices.Orientation, BackflowDevices.TypeBPProvided,
+	BackflowDevices.BPSize, BackflowDevices.Manufacturer, BackflowDevices.ModelNo,
+	BackflowDevices.SerialNo, BackflowDevices.SurveyID, BackflowDevices.BackflowID
+FROM BackflowDevices, Surveys, ALL_SURVEYS 
+WHERE ALL_SURVEYS.old_id=BackflowDevices.SurveyID and Surveys.SurveyID=BackflowDevices.SurveyID;""",
+            """UPDATE ALL_HAZARDS set
+ALL_HAZARDS.installed_properly = isnull((select 1 where LOWER(BackflowDevices.InstalledProperly)='yes'), 0)
+FROM BackflowDevices
+where ALL_HAZARDS.old_device_id = BackflowDevices.BackflowID""",
+            "update ALL_HAZARDS set ALL_HAZARDS.service_type = (Select Pval from Pvals WHERE service_type=Pval_ID);",
+            """INSERT INTO ALL_HAZARDS ( 
+	hazard_type, assembly_status, bp_type_required, 
+	due_install_test_date, survey, 
+	service_type, site, old_survey_id ) 
+SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, 
+	Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, 
+	ALL_SURVEYS.site, Surveys.SurveyID 
+FROM Surveys, ALL_SURVEYS 
+WHERE [Hazard1] Is Not Null AND 
+	[ALL_SURVEYS].[old_id]=[Surveys].[SurveyID] AND
+	Surveys.SurveyID not in (Select ALL_HAZARDS.old_survey_id from ALL_HAZARDS)""",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site, old_survey_id ) SELECT Surveys.Hazard2, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site, ALL_SURVEYS.old_id FROM Surveys, ALL_SURVEYS WHERE (([Hazard2] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site, old_survey_id ) SELECT Surveys.Hazard3, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site, ALL_SURVEYS.old_id FROM Surveys, ALL_SURVEYS WHERE (([Hazard3] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site, old_survey_id ) SELECT Surveys.Hazard4, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site, ALL_SURVEYS.old_id FROM Surveys, ALL_SURVEYS WHERE (([Hazard4] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
+            "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site, old_survey_id ) SELECT Surveys.Hazard5, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site, ALL_SURVEYS.old_id FROM Surveys, ALL_SURVEYS WHERE (([Hazard5] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
             "UPDATE Pvals SET Pvals.Pval = 'Landscape Nursery' WHERE (((Pvals.Pval) Like 'Landscape Nursery%'));",
             """UPDATE ALL_HAZARDS
-SET 
+SET
 ALL_HAZARDS.hazard_type = (Select Pval from Pvals WHERE hazard_type=Pval_ID),
 ALL_HAZARDS.assembly_location = (Select Pval from Pvals WHERE assembly_location=Pval_ID),
 ALL_HAZARDS.bp_type_present = (Select Pval from Pvals WHERE bp_type_present=Pval_ID),
@@ -193,7 +214,8 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "UPDATE ALL_HAZARDS set assembly_status='Due Install' where assembly_status='due install'",
             "UPDATE ALL_HAZARDS set assembly_status='Installed' where assembly_status='installed'",
             "update ALL_HAZARDS set installed_properly = 0 where installed_properly is null;",
-            "delete from ALL_HAZARDS where hazard_type is NULL;",
+            "UPDATE ALL_HAZARDS SET ALL_HAZARDS.bp_size = '1.25\"' WHERE ALL_HAZARDS.bp_size = '1.25';",
+            "UPDATE ALL_HAZARDS SET ALL_HAZARDS.bp_manufacturer = 'Ames' WHERE ALL_HAZARDS.bp_manufacturer = 'DCDA';",
         )
         self._execute_list(sqls)
 
@@ -239,7 +261,7 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "update all_tests set pvb_cleaned = 1 where pvb_cleaned is Null;",
             "delete from all_tests where bp_device is null;",
             "update all_tests set outlet_sov_leaked = 0 where outlet_sov_leaked is Null;",
-            "UPDATE ALL_TESTS set bp_device=(select TOP 1 ALL_HAZARDS.ID from ALL_HAZARDS where ALL_HAZARDS.[site]=(select ALL_SITES.ID from ALL_SITES where ALL_SITES.AccountNumber=ALL_TESTS.account_number))",
+            "UPDATE ALL_TESTS set bp_device=(select ALL_HAZARDS.ID from ALL_HAZARDS where ALL_HAZARDS.old_device_id=bp_device)",
             "UPDATE ALL_TESTS set tester='Bill Travis' where TesterCertNumber='6871'",
             "UPDATE ALL_TESTS set TesterCertNumber='LJP4526', tester='David Zeringue' where TesterCertNumber like '%4526%'",
             "UPDATE ALL_TESTS set TesterCertNumber='2010057', tester='Walter Barado III' where TesterCertNumber like '%201005%' or TesterCertNumber='2010097'",
@@ -355,9 +377,7 @@ class Formatter(Connector):
             ("install_date", "date"), ("replace_date", "date"),
             "orientation", "bp_type_present", "bp_type_required",
             "bp_size", "bp_manufacturer", "model_no", "serial_no",
-            ("due_install_test_date", "date")
-            # may require this later
-            # ("last_test_date", "date"), ("next_test_date", "date")
+            ("due_install_test_date", "date"), "old_survey_id", "old_device_id"
         ]),
         "tests": ("ALL_TESTS", [
 	    "bp_device", "tester", "user", ("test_date", "date"), 
@@ -527,7 +547,7 @@ class Jsoner(object):
             }
         }
         self.fill_json()
-        self.print_json()
+        #self.print_json()
 
     def fill_json(self):
         f = open("data_base.json")
@@ -559,7 +579,10 @@ class Dumper(Connector):
         '{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}',
         '"webapp.survey"', '%s'),
         'hazard': BASE_TEMPLATE % (
-        '{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,"assembly_status":%s,"installed_properly":%s,"installer":null,"install_date":null,"replace_date":null,"orientation":%s,"bp_type_present":"%s","bp_type_required":"%s","bp_size":%s,"manufacturer":%s,"model_no":"%s","serial_no":"%s","due_install_test_date":null,"is_present":true,"notes":""}',
+        '{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,\
+"assembly_status":%s,"installed_properly":%s,"installer":"%s","install_date":"%s","replace_date":"%s",\
+"orientation":%s,"bp_type_present":"%s","bp_type_required":"%s","bp_size":%s,"manufacturer":%s,"model_no":"%s",\
+"serial_no":"%s","due_test_date":"%s","is_present":true,"notes":""}',
         '"webapp.hazard"', '%s'),
         'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
         'letter': BASE_TEMPLATE % ('{"already_sent":true,"site":%s,"letter_type":%s,"date":"%s","user":%s}', '"webapp.letter"', '%s'),
@@ -581,7 +604,7 @@ AccountNumber, CustomerName, Code, CustAddress1, CustAddress2, CustApt, CustCity
 LastSurveyDate, NextSurveyDate, ID from ALL_SITES',
         'dump_surveys': 'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, \'hph\', ID from ALL_SURVEYS',
         'dump_pwss': 'select Number, Name, WaterSource, ID from ALL_PWS',
-        'dump_hazards': 'select site, service_type, hazard_type, assembly_location, assembly_status, installed_properly, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, ID from ALL_HAZARDS',
+        'dump_hazards': 'select site, service_type, hazard_type, assembly_location, assembly_status, installed_properly, installer, install_date, replace_date, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, due_install_test_date, ID from ALL_HAZARDS',
         'dump_letters': 'select site, lettertype, letterdate, sender, ID from ALL_LETTERS',
         'dump_tests': 'select outlet_sov_leaked, rv_psi1, rv_psi2, cv2_cleaned,\
 cv2_retest_pressure, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pressure,\
@@ -614,9 +637,9 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_
                    (2, "webapp.hazardtype"),
                    (3, "webapp.assemblylocation"),
                    (4, "webapp.assemblystatus"),
-                   (6, "webapp.orientation"),
-                   (9, "webapp.bpsize"),
-                   (10, "webapp.bpmanufacturer")],
+                   (9, "webapp.orientation"),
+                   (12, "webapp.bpsize"),
+                   (13, "webapp.bpmanufacturer")],
         'pws': [(2, "webapp.sourcetype")],
         'letter': [(1, "webapp.lettertype"),
                    (3, "auth.user")],
@@ -782,5 +805,5 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_
 
 if __name__ == '__main__':
     dumper = Dumper()
-    dumper.dump_testers()
+##    dumper.dump_testers()
     dumper.dump()

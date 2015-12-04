@@ -43,7 +43,7 @@
                 </div>
                 <div class="uk-width-1-1">
                     <p class="inline-width-1-5">{% trans 'Assembly Type' %}: </p>
-                    <span class="inline-width-3-5">{% render_bp_type_checkboxes hazard.bp_type_required %}</span>
+                    <span class="inline-width-3-5">{% render_bp_type_checkboxes hazard.bp_type_present %}</span>
 
                     <p class="inline-width-1-15">{% trans 'Size' %}: </p>
                     <span class="inline-width-2-15 border-bottom">{{ hazard.bp_size }}</span>
@@ -72,22 +72,22 @@
                 <table class="uk-table border-all uk-table-condensed">
                     <thead>
                     <tr>
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <th class="uk-width-1-4 uk-text-center">
                                 {% trans 'Check Valve #1' %}
                             </th>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES %}
                             <th class="uk-width-1-4 uk-text-center">
                                 {% trans 'Relief Valve' %}
                             </th>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <th class="uk-width-1-4 uk-text-center">
                                 {% trans 'Check Valve #2' %}
                             </th>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                             <th class="uk-width-1-4 uk-text-center">
                                 {% trans 'Pressure Vacuum Breaker' %}
                             </th>
@@ -95,9 +95,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                    {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                         <tr>
-                            {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                            {% if hazard.bp_type_present in BP_TYPE.RP_TYPES %}
                                 <td>
                                     {% render_radiobuttons form.cv1_leaked %}
                                 </td>
@@ -117,7 +117,7 @@
                                     {% render_radiobuttons form.cv2_leaked %}
                                 </td>
                             {% endif %}
-                            {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                            {% if hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                                 <td>
                                     <p>{% trans 'Air Inlet: Did not open' %} {{ form.air_inlet_did_not_open }}</p>
 
@@ -136,7 +136,7 @@
                         </tr>
                     {% endif %}
                     <tr>
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 <p>{% trans 'Gauge pressure across' %}</p>
 
@@ -148,13 +148,13 @@
                                 </p>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES %}
                             <td>
                                 <p>{% trans 'Outlet shut-off Valve' %}</p>
                                 {% render_radiobuttons form.outlet_sov_leaked %}
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 <p>{% trans 'Gauge pressure across' %}</p>
 
@@ -166,7 +166,7 @@
                                 </p>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                             <td>
                                 <p>{% trans 'Check Valve: Leaked' %} {{ form.cv_leaked }}</p>
 
@@ -184,7 +184,7 @@
                         {% endif %}
                     </tr>
                     <tr>
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 {% render_radiobuttons form.cv1_cleaned %}
                                 <div class="second-level-ul">
@@ -234,7 +234,7 @@
                                 </div>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES %}
                             <td>
                                 {% render_radiobuttons form.rv_cleaned %}
                                 <div class="second-level-ul">
@@ -280,7 +280,7 @@
                                 </div>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 {% render_radiobuttons form.cv2_cleaned %}
                                 <div class="second-level-ul">
@@ -330,7 +330,7 @@
                                 </div>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                             <td>
                                 {% render_radiobuttons form.pvb_cleaned %}
                                 <div class="second-level-ul">
@@ -381,7 +381,7 @@
                         {% endif %}
                     </tr>
                     <tr>
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 <p>
                                     {% trans 'Gauge pressure across' %}
@@ -395,7 +395,7 @@
                                 </p>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES %}
                             <td>
                                 <p>
                                     {% trans 'Relief valve opened at' %}
@@ -408,7 +408,7 @@
                                 </p>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.RP_TYPES or hazard.bp_type_required in BP_TYPE.DC_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 <p>
                                     {% trans 'Gauge pressure across' %}
@@ -422,7 +422,7 @@
                                 </p>
                             </td>
                         {% endif %}
-                        {% if hazard.bp_type_required in BP_TYPE.STANDALONE_TYPES %}
+                        {% if hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                             <td>
                                 <p>
                                     {% trans 'Air Inlet' %}
