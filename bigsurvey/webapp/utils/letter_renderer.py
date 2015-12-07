@@ -88,7 +88,7 @@ class LetterRenderer(object):
         }
         if hazard:
             replacements[Placeholders.assembly_type] = hazard.bp_type_required
-            replacements[Placeholders.due_date] = hazard.due_install_test_date.strftime("%m/%d/%Y") if hazard.due_install_test_date else ''
+            replacements[Placeholders.due_date] = hazard.due_test_date.strftime("%m/%d/%Y") if hazard.due_test_date else ''
         else:
             warnings.append(Placeholders.assembly_type)
             warnings.append(Placeholders.due_date)

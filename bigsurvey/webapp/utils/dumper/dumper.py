@@ -243,11 +243,11 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             SELECT BackflowID, TesterName, [User], TestDate, 
                 CheckValve1Status, GaugePressure1Valve1, MaintenanceValve1, MaintPressure2Valve1,
                 CheckValve2Status, GaugePressure1Valve2, MaintenanceValve2, MaintPressure2Valve2,
-                ReliefValveStatus, ReliefValvePSI1, MaintenanceReliefValve, ReliefValvePSI,
+                ReliefValveStatus, ReliefValvePSI, MaintenanceReliefValve, ReliefValvePSI1,
                 OutletSOValve,
                 CheckValveLeaked, CheckValveHeldPressure, CheckValvePSI,
                 PVBOpened, PVBOpenPressure, PVBMaintenance, AirInletPSI,
-                TestResult, AccountNumber, Notes, TesterCertNumber, TestSerialNumber, TestManufacturer, LastCalibrationDate
+                case TestResult when 305 then 1 else 0 end, AccountNumber, Notes, TesterCertNumber, TestSerialNumber, TestManufacturer, LastCalibrationDate
             FROM Tests;
             """,
             "update all_tests set cv1_leaked = 0 where cv1_leaked is Null;",

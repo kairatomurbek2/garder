@@ -342,7 +342,7 @@ class FilterActions(object):
         @staticmethod
         def bp_type(tests, value):
             if value:
-                return tests.filter(bp_device__bp_type_present__id=value)
+                return tests.filter(bp_device__bp_type_present=value)
             return tests
 
         @staticmethod
