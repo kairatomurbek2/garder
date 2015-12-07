@@ -87,7 +87,7 @@ class LetterRenderer(object):
             Placeholders.bailee_job_title: pws.bailee_job_title,
         }
         if hazard:
-            replacements[Placeholders.assembly_type] = hazard.bp_type_required
+            replacements[Placeholders.assembly_type] = (hazard.bp_type_present if hazard.bp_type_present else hazard.bp_type_required)
             replacements[Placeholders.due_date] = hazard.due_test_date.strftime("%m/%d/%Y") if hazard.due_test_date else ''
         else:
             warnings.append(Placeholders.assembly_type)

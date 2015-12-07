@@ -27,6 +27,23 @@ var selectChangedTrigger = function (select) {
     select.data('previous', val);
 };
 
+var selectInitialValue = function(select) {
+    var val = select.val();
+    if (val !== '') {
+        $(unselected_fields_selector).find('li[data-value="' + val + '"]').hide();
+        $(excel_fields_selector).not(select).filter(function () {
+            return $(this).val() === val;
+        }).val('').data('previous', '');
+        var model_field = select.parent('td').prev().find('input').val();
+        $(example_rows_table).find('th[data-value="' + val + '"]')
+            .find('.model_field')
+            .removeClass('uk-text-danger')
+            .addClass('uk-text-success')
+            .text(model_field);
+    }
+    select.data('previous', val);
+};
+
 var resetMappings = function () {
     $(excel_fields_selector).val('');
     $(unselected_fields_selector).find('li').show();
@@ -47,6 +64,11 @@ var populateMappings = function () {
                 selectChangedTrigger(select);
             }
         }
+    }
+    else {
+        $(excel_fields_selector).each(function(){
+            selectInitialValue($(this));
+        })
     }
 };
 

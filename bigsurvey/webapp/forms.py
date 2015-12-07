@@ -2,9 +2,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
-
+import re
 import models
-from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE
+from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS
 from webapp.validators import validate_excel_file
 
 
@@ -376,9 +377,15 @@ class BaseImportMappingsFormSet(forms.BaseFormSet):
             form.fields.get('model_field').help_text = help_text
 
     def set_required_model_fields(self, required_fields):
+        req_forms = []
+        non_req_forms = []
         for form in self.forms:
             if form.initial.get('model_field') in required_fields:
                 form.fields.get('excel_field').required = True
+                req_forms.append(form)
+            else:
+                non_req_forms.append(form)
+        self.forms = req_forms + non_req_forms
 
     def get_mappings(self):
         mappings = {}
@@ -392,8 +399,24 @@ class BaseImportMappingsFormSet(forms.BaseFormSet):
         return mappings
 
     def set_excel_field_choices(self, choices):
+        self.set_formatted_choices(choices)
         for form in self.forms:
             form.fields.get('excel_field').choices = [('', '----------')] + choices
+            form.fields.get('excel_field').initial = self.get_initial_for_excel_field(form.fields.get('model_field'))
+
+    def set_formatted_choices(self, choices):
+        formatted_choices = []
+        for choice in choices:
+            choice_label = re.sub('[^0-9a-zA-Z]+', '', choice[1]).lower()
+            formatted_choices.append((choice[0], choice_label))
+        self.formatted_choices = formatted_choices
+
+    def get_initial_for_excel_field(self, model_field):
+        for choice in self.formatted_choices:
+            possible_labels = POSSIBLE_IMPORT_MAPPINGS[model_field.label]
+            if choice[1] in possible_labels:
+                return choice[0]
+        return ''
 
 
 class PaymentForm(forms.Form):
