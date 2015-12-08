@@ -57,6 +57,7 @@ Feature: Import from Excel files
       | added_sites | updated_sites | deactivated_sites |
       | 1           | 6             | 3                 |
 
+  @import_incorrect
   Scenario: Incorrect Import
     Given I logged in as "root"
     When I open "import" page
@@ -66,6 +67,7 @@ Feature: Import from Excel files
     And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
     Then I should be at "import_mappings" page
+    And I select "----------" from "form-1-excel_field"
     And I submit "import-mappings" form
     Then I should be at "import_mappings_process" page
     And I should see "required fields not filled" message
