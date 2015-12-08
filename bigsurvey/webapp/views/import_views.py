@@ -192,6 +192,8 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
                 self.formset.add_error(error)
             for error in e.foreign_key_errors:
                 self.formset.add_error(error)
+            for error in e.numeric_errors:
+                self.formset.add_error(error)
             return self.render_to_response(self.get_context_data())
 
     def _try_to_import(self, mappings):

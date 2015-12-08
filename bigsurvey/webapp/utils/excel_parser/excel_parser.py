@@ -9,8 +9,9 @@ from xlrd.biffh import XL_CELL_NUMBER, XL_CELL_TEXT
 
 from main.parameters import SITE_STATUS
 from webapp import models
-from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE, RequiredValueIsEmptyError, \
-    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError, NUMERIC_FIELDS
+from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, \
+    DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE, RequiredValueIsEmptyError, \
+    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError, NUMERIC_FIELDS, NumericValueError
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
 
 
@@ -81,6 +82,7 @@ class ConstraintChecker(object):
         self.date_format_errors = []
         self.customer_number_errors = []
         self.foreign_key_errors = []
+        self.numeric_value_errors = []
 
     def execute(self):
         start_row_number = self.excel_document.headers_row_number + 1
@@ -98,9 +100,13 @@ class ConstraintChecker(object):
                     self.customer_number_errors.append(str(e))
                 except ForeignKeyError as e:
                     self.foreign_key_errors.append(str(e))
+                except NumericValueError as e:
+                    self.numeric_value_errors.append(str(e))
+
         if self.required_value_errors or self.date_format_errors \
-                or self.customer_number_errors or self.foreign_key_errors:
-            raise ExcelValidationError(self.required_value_errors, self.date_format_errors, self.customer_number_errors, self.foreign_key_errors)
+                or self.customer_number_errors or self.foreign_key_errors or self.numeric_value_errors:
+            raise ExcelValidationError(self.required_value_errors, self.date_format_errors,
+                                       self.customer_number_errors, self.foreign_key_errors, self.numeric_value_errors)
 
     def prettify_cell_index(self, row_number, col_number):
         if col_number < ALPHABET_LENGTH:

@@ -276,6 +276,7 @@ class Messages:
         foreign_key_error = _('Incorrect value in %s cell. Available values are %s, but found %s')
         required_value_is_empty = _('Found empty value in %s cell, please fill in this cell')
         incorrect_date_format = _('Date in %s cell does not match "%s" format')
+        incorrect_numeric_value = _('Cell %s should contain number or empty value')
         duplicate_cust_numbers = _('Duplicate Customer Numbers found in %s and %s cells')
         import_was_finished = _('Import was finished. Added sites: %d, updated sites: %d, deactivated sites: %d. More information <a href="%s">here</a>.')
         added_sites_header = _("You are browsing the sites that have been added during the import on %s")

@@ -4,7 +4,8 @@ from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 from main.parameters import Messages
 from webapp import models
-from webapp.utils.excel_parser import FOREIGN_KEY_FIELDS, CUST_NUMBER_FIELD_NAME, DATE_FIELDS, DateFormatError, ForeignKeyError, CustomerNumberError, RequiredValueIsEmptyError
+from webapp.utils.excel_parser import FOREIGN_KEY_FIELDS, CUST_NUMBER_FIELD_NAME, DATE_FIELDS, \
+    DateFormatError, ForeignKeyError, CustomerNumberError, RequiredValueIsEmptyError, NUMERIC_FIELDS, NumericValueError
 
 
 class ValueCheckerFactory(object):
@@ -24,6 +25,9 @@ class ValueCheckerFactory(object):
             builder = DateValueCheckerBuilder()
             builder.set_required(required)
             builder.set_date_format(date_format)
+        elif cls._is_numeric_field(field_name):
+            builder = NumericValueCheckerBuilder()
+            builder.set_required(required)
         else:
             builder = RequiredValueCheckerBuilder()
             builder.set_required(required)
@@ -40,6 +44,10 @@ class ValueCheckerFactory(object):
     @classmethod
     def _is_date_field(cls, field_name):
         return field_name in DATE_FIELDS
+
+    @classmethod
+    def _is_numeric_field(cls, field_name):
+        return field_name in NUMERIC_FIELDS
 
 
 class ValueCheckerBuilder(object):
@@ -100,6 +108,13 @@ class DateValueCheckerBuilder(RequiredValueCheckerBuilder):
         return date_value_checker
 
 
+class NumericValueCheckerBuilder(RequiredValueCheckerBuilder):
+    def build(self):
+        numeric_checker = NumericChecker()
+        numeric_checker.required = self._required
+        return numeric_checker
+
+
 class ValueChecker(object):
     __metaclass__ = ABCMeta
 
@@ -152,3 +167,13 @@ class DateValueChecker(RequiredValueChecker):
                 datetime.strptime(str(value), self.date_format)
             except ValueError:
                 raise DateFormatError(Messages.Import.incorrect_date_format % (coords, self.date_format))
+
+
+class NumericChecker(RequiredValueChecker):
+    def check(self, value, coords):
+        super(NumericChecker, self).check(value, coords)
+        if value:
+            try:
+                float(value)
+            except ValueError:
+                raise NumericValueError(Messages.Import.incorrect_numeric_value % coords)
