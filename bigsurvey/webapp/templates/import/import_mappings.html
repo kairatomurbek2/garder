@@ -54,6 +54,12 @@
 
                     <table class="uk-table border-none uk-table-condensed">
                         <tbody>
+                        <tr>
+                            <th class="uk-text-center">{% trans "Database Fields" %}</th>
+                            <th class="uk-text-center">{% trans "Imported Fields" %}</th>
+                            <th class="uk-text-center">{% trans "Database Fields" %}</th>
+                            <th class="uk-text-center">{% trans "Imported Fields" %}</th>
+                        </tr>
                         {% for row_index in rows_count|xrange_filter %}
                             <tr>
                                 {% for col_index in '01'|make_list %}
