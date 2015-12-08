@@ -8,6 +8,7 @@ CUST_NUMBER_FIELD_NAME = 'cust_number'
 PWS_FIELD_NAME = 'pws'
 FOREIGN_KEY_FIELDS = [PWS_FIELD_NAME, 'site_use', 'site_type', 'status', 'floors', 'interconnection_point', 'cust_code']
 DATE_FIELDS = ['connect_date', 'next_survey_date', 'last_survey_date']
+NUMERIC_FIELDS = ['meter_reading', ]
 
 
 class RequiredValueIsEmptyError(Exception):

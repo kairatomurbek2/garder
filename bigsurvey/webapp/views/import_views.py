@@ -25,6 +25,8 @@ class ImportView(BaseFormView):
         form = super(ImportView, self).get_form(form_class)
         if self.request.user.has_perm('webapp.access_to_all_sites'):
             form.fields['pws'] = ModelChoiceField(queryset=models.PWS.objects.all())
+        elif self.request.user.has_perm('webapp.access_to_multiple_pws_sites'):
+            form.fields['pws'] = ModelChoiceField(queryset=self.request.user.employee.pws.all())
         return form
 
     def get_context_data(self, **kwargs):

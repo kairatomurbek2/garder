@@ -10,7 +10,7 @@ from xlrd.biffh import XL_CELL_NUMBER, XL_CELL_TEXT
 from main.parameters import SITE_STATUS
 from webapp import models
 from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE, RequiredValueIsEmptyError, \
-    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError
+    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError, NUMERIC_FIELDS
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
 
 
@@ -183,6 +183,11 @@ class ExcelParser(object):
                         value = datetime.strptime(str(value), date_format)
                     else:
                         value = None
+                if field_name in NUMERIC_FIELDS:
+                    if value:
+                        value = float(value)
+                    else:
+                        value = 0
                 setattr(site, field_name, value)
             if site.pk:
                 updated_sites_watcher.add(site)
