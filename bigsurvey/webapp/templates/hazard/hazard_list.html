@@ -18,6 +18,7 @@
                 <th>{% trans "Hazard Type" %}</th>
                 <th>{% trans "Assembly Status" %}</th>
                 <th>{% trans "BP Type Present" %}</th>
+                <th>{% trans "BP Type Required" %}</th>
                 <th>{% trans "Due Install/Test Date" %}</th>
                 <th class="uk-text-center border-left">{% trans "Actions" %}</th>
             </tr>
@@ -34,6 +35,7 @@
                     <td>{{ hazard.hazard_type }}</td>
                     <td>{{ hazard.assembly_status }}</td>
                     <td>{{ hazard.bp_type_present }}</td>
+                    <td>{{ hazard.bp_type_required }}</td>
                     <td>{{ hazard.due_test_date }}</td>
                     <td class="border-left uk-text-center">
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">

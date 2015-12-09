@@ -72,6 +72,11 @@ class FilterChoices(object):
 
     @staticmethod
     def bp_type():
+        choices = (('', _('All')), ('none', _('Blank'))) + BP_TYPE_CHOICES
+        return choices
+
+    @staticmethod
+    def bp_type_test():
         choices = (('', _('All')),) + BP_TYPE_CHOICES
         return choices
 
@@ -89,7 +94,7 @@ class FilterChoices(object):
 
     @staticmethod
     def assembly_status():
-        choices = [('', _('All'))]
+        choices = [('', _('All')), ('none', _('Blank'))]
         for assembly_status in models.AssemblyStatus.objects.all():
             choices.append((assembly_status.pk, assembly_status.assembly_status))
         return choices
@@ -422,6 +427,36 @@ class FilterActions(object):
                 return hazards.filter(site__address1__icontains=value)
             return hazards
 
+        @staticmethod
+        def bp_type_present(hazards, value):
+            if value:
+                if value == 'none':
+                    return hazards.filter(bp_type_present=None)
+                return hazards.filter(bp_type_present=value)
+            return hazards
+
+        @staticmethod
+        def bp_type_required(hazards, value):
+            if value:
+                if value == 'none':
+                    return hazards.filter(bp_type_required=None)
+                return hazards.filter(bp_type_required=value)
+            return hazards
+
+        @staticmethod
+        def assembly_status(hazards, value):
+            if value:
+                if value == 'none':
+                    return hazards.filter(assembly_status=None)
+                return hazards.filter(assembly_status=value)
+            return hazards
+
+        @staticmethod
+        def due_test_blank(hazards, value):
+            if value:
+                return hazards.filter(due_test_date=None)
+            return hazards
+
     class User(object):
         @staticmethod
         def pws(testers, value):
@@ -514,14 +549,16 @@ class FilterActions(object):
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
     cust_number = django_filters.CharFilter(lookup_type='icontains', label=_('Account Number'), name='cust_number')
-    cust_code = django_filters.ChoiceFilter(choices=FilterChoices.customer_code(), label=_('Customer Code'), name='cust_code')
+    cust_code = django_filters.ChoiceFilter(choices=FilterChoices.customer_code(), label=_('Customer Code'),
+                                            name='cust_code')
     cust_name = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Name'), name='cust_name')
     street_number = django_filters.CharFilter(lookup_type='icontains', label=_('Street Number'), name='street_number')
     address1 = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address 1'), name='address1')
     address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address 2'), name='address2')
     apt = django_filters.CharFilter(lookup_type='icontains', label=_('Service Apt'))
     city = django_filters.CharFilter(lookup_type='icontains', label=_('Service City'))
-    state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Service State'), action=FilterActions.Site.state)
+    state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Service State'),
+                                        action=FilterActions.Site.state)
     zip = django_filters.CharFilter(lookup_type='icontains', label=_('Service ZIP'))
     cust_address1 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 1'))
     cust_address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 2'))
@@ -605,7 +642,7 @@ class TestFilter(django_filters.FilterSet):
                                                action=FilterActions.Test.service_type)
     hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'),
                                               action=FilterActions.Test.hazard_type)
-    bp_type = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'),
+    bp_type = django_filters.ChoiceFilter(choices=FilterChoices.bp_type_test(), label=_('BP Type Present'),
                                           action=FilterActions.Test.bp_type)
     test_date_from = django_filters.DateFilter(label=_('Test Date From'), action=FilterActions.Test.date_from)
     test_date_to = django_filters.DateFilter(label=_('Test Date To'), action=FilterActions.Test.date_to)
@@ -621,13 +658,18 @@ class HazardFilter(django_filters.FilterSet):
     address = django_filters.CharFilter(label=_('Service Address'), action=FilterActions.Hazard.site_address)
     service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'))
     hazard_type = django_filters.ChoiceFilter(choices=FilterChoices.hazard_type(), label=_('Hazard Type'))
-    assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))
-    bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'))
-    bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Required'))
+    assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'),
+                                                  action=FilterActions.Hazard.assembly_status)
+    bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'),
+                                                  action=FilterActions.Hazard.bp_type_present)
+    bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Required'),
+                                                   action=FilterActions.Hazard.bp_type_required)
     due_test_date_from = django_filters.DateFilter(label=_('Test Due Date From'),
                                                    action=FilterActions.Hazard.due_test_date_from)
     due_test_date_to = django_filters.DateFilter(label=_("Test Due Date To"),
                                                  action=FilterActions.Hazard.due_test_date_to)
+    due_test_blank = django_filters.BooleanFilter(action=FilterActions.Hazard.due_test_blank,
+                                                  widget=forms.CheckboxInput, label="Test Due Date Blank")
 
 
 class TesterFilter(django_filters.FilterSet):

@@ -71,12 +71,14 @@
                     <td>
                         {{ hazard_filter.form.due_test_date_from.label }}
                         {{ hazard_filter.form.due_test_date_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ hazard_filter.form.due_test_date_to.label }}
+                        {{ hazard_filter.form.due_test_date_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ hazard_filter.form.due_test_blank }} {{ hazard_filter.form.due_test_blank.label }}
                     </td>
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ hazard_filter.form.due_test_date_to.label }}
-                        {{ hazard_filter.form.due_test_date_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+
                     </td>
                 </tr>
                 <tr>
