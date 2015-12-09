@@ -39,20 +39,29 @@
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.last_survey_date.label }}
-                        {{ site_filter.form.last_survey_date|add_class:"uk-width-1-1" }}
+                        {{ site_filter.form.last_survey_from.label }}
+                        {{ site_filter.form.last_survey_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ site_filter.form.last_survey_to.label }}
+                        {{ site_filter.form.last_survey_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ site_filter.form.last_survey_blank }} {{ site_filter.form.last_survey_blank.label }}
                     </td>
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.next_survey_date.label }}
-                        {{ site_filter.form.next_survey_date|add_class:"uk-width-1-1" }}
+                        {{ site_filter.form.next_survey_from.label }}
+                        {{ site_filter.form.next_survey_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ site_filter.form.next_survey_to.label }}
+                        {{ site_filter.form.next_survey_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ site_filter.form.next_survey_blank }} {{ site_filter.form.next_survey_blank.label }}
                     </td>
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {{ site_filter.form.due_test_date.label }}
-                        {{ site_filter.form.due_test_date|add_class:"uk-width-1-1" }}
+                        {{ site_filter.form.due_test_from.label }}
+                        {{ site_filter.form.due_test_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ site_filter.form.due_test_to.label }}
+                        {{ site_filter.form.due_test_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ site_filter.form.due_test_blank }} {{ site_filter.form.due_test_blank.label }}
                     </td>
                 </tr>
                 <tr>

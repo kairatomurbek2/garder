@@ -63,9 +63,14 @@
                 </tr>
                 <tr class="uk-text-center">
                     <td>
-                        {% trans "Letter Date" %}
-                        {% trans "From" %} {{ letter_filter.form.date_gt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
-                        {% trans "To" %} {{ letter_filter.form.date_lt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                        {{ letter_filter.form.date_gt.label }}
+                        {{ letter_filter.form.date_gt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.date_lt.label }}
+                        {{ letter_filter.form.date_lt|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
                     </td>
                 </tr>
                 <tr>

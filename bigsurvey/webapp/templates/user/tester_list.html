@@ -31,26 +31,14 @@
                         {% trans "Company" %}
                     </th>
                     <th>
-                        {% trans "Certificate Number" %}
+                        {% trans "Email" %}
                     </th>
-                    <th>
-                        {% trans "Certificate Date" %}
-                    </th>
-                    <th>
-                        {% trans "Certificate Expires" %}
-                    </th>
-                    <th>
-                        {% trans "Test Kit Manufacturer" %}
-                    </th>
-                    <th>
-                        {% trans "Test Kit Model" %}
-                    </th>
-                    <th>
-                        {% trans "Test Kit Serial" %}
-                    </th>
-                    <th>
-                        {% trans "Test Kit Last Certification" %}
-                    </th>
+{#                    <th>#}
+{#                        {% trans "Certificates" %}#}
+{#                    </th>#}
+{#                    <th>#}
+{#                        {% trans "Test Kits" %}#}
+{#                    </th>#}
                     <th class="uk-text-center border-left">
                         {% trans "Actions" %}
                     </th>
@@ -77,26 +65,18 @@
                         {{ tester.employee.company }}
                     </td>
                     <td>
-                        {{ tester.employee.cert_number }}
+                        {{ tester.email }}
                     </td>
-                    <td>
-                        {{ tester.employee.cert_date }}
-                    </td>
-                    <td>
-                        {{ tester.employee.cert_expires }}
-                    </td>
-                    <td>
-                        {{ tester.employee.test_manufacturer }}
-                    </td>
-                    <td>
-                        {{ tester.employee.test_model }}
-                    </td>
-                    <td>
-                        {{ tester.employee.test_serial }}
-                    </td>
-                    <td>
-                        {{ tester.employee.test_last_cert }}
-                    </td>
+{#                    <td>#}
+{#                        {% for cert in tester.certs.all %}#}
+{#                            {{ cert.cert_number }} ({% if cert.is_active %}{% trans "active" %}{% else %}{% trans "expired" %}{% endif %})#}
+{#                        {% endfor %}#}
+{#                    </td>#}
+{#                    <td>#}
+{#                        {% for kit in tester.kits.all %}#}
+{#                            {{ kit.test_serial }} ({{ kit.test_last_cert }})#}
+{#                        {% endfor %}#}
+{#                    </td>#}
                     <td class="uk-text-center border-left">
                         <a href="{% url 'webapp:user_detail' tester.pk %}" id="user_{{ tester.pk }}_detail_link">
                             {% trans "Detail" %}

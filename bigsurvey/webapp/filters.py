@@ -124,57 +124,51 @@ class FilterChoices(object):
 class FilterActions(object):
     class Site(object):
         @staticmethod
-        def next_date(sites, value):
-            current_date = datetime.now()
-            dates = {
-                'today': current_date,
-                'week': current_date + timedelta(weeks=1),
-                'month': current_date + timedelta(days=30),
-                'year': current_date + timedelta(days=365),
-            }
-            if value == 'blank':
-                return sites.filter(next_survey_date=None)
-            if value == 'past':
-                return sites.filter(next_survey_date__lt=current_date)
-            if value in dates:
-                return sites.filter(next_survey_date__range=[current_date, dates[value]])
+        def next_survey_from(sites, value):
+            if value:
+                return sites.filter(next_survey_date__gte=value)
             return sites
 
         @staticmethod
-        def due_test_date(sites, value):
-            current_date = datetime.now()
-            dates = {
-                'today': current_date,
-                'week': current_date + timedelta(weeks=1),
-                'month': current_date + timedelta(days=30),
-                'year': current_date + timedelta(days=365),
-            }
-            if value == 'blank':
-                return sites.filter(due_install_test_date=None)
-            if value == 'past':
-                return sites.filter(due_install_test_date__lt=current_date)
-            if value in dates:
-                return sites.filter(due_install_test_date__range=[current_date, dates[value]])
+        def next_survey_to(sites, value):
+            if value:
+                return sites.filter(next_survey_date__lte=value)
             return sites
 
         @staticmethod
-        def last_date(sites, value):
-            current_date = datetime.now().date()
-            ranges = {
-                'week': [current_date - timedelta(weeks=1), current_date],
-                'month': [current_date - timedelta(days=30), current_date],
-                '1-2months': [current_date - timedelta(days=60), current_date - timedelta(days=30)],
-                '2-3months': [current_date - timedelta(days=90), current_date - timedelta(days=60)],
-                '3-6months': [current_date - timedelta(days=180), current_date - timedelta(days=90)],
-                '6-12months': [current_date - timedelta(days=365), current_date - timedelta(days=180)],
-            }
-            year_ago = current_date - timedelta(days=365)
-            if value == 'blank':
-                return sites.filter(last_survey_date=None)
-            if value == 'year':
-                return sites.filter(last_survey_date__lt=year_ago)
-            if value in ranges:
-                return sites.filter(last_survey_date__range=ranges[value])
+        def last_survey_from(sites, value):
+            if value:
+                return sites.filter(last_survey_date__gte=value)
+            return sites
+
+        @staticmethod
+        def last_survey_to(sites, value):
+            if value:
+                return sites.filter(last_survey_date__lte=value)
+            return sites
+
+        @staticmethod
+        def next_test_from(sites, value):
+            if value:
+                return sites.filter(due_install_test_date__gte=value)
+            return sites
+
+        @staticmethod
+        def next_test_to(sites, value):
+            if value:
+                return sites.filter(due_install_test_date__lte=value)
+            return sites
+
+        @staticmethod
+        def connect_date_from(sites, value):
+            if value:
+                return sites.filter(connect_date__gte=value)
+            return sites
+
+        @staticmethod
+        def connect_date_to(sites, value):
+            if value:
+                return sites.filter(connect_date__lte=value)
             return sites
 
         @staticmethod
@@ -277,6 +271,24 @@ class FilterActions(object):
                 return sites.filter(connect_date__isnull=True)
             return sites
 
+        @staticmethod
+        def next_survey_blank(sites, value):
+            if value:
+                return sites.filter(next_survey_date__isnull=True)
+            return sites
+
+        @staticmethod
+        def last_survey_blank(sites, value):
+            if value:
+                return sites.filter(last_survey_date__isnull=True)
+            return sites
+
+        @staticmethod
+        def next_test_blank(sites, value):
+            if value:
+                return sites.filter(due_install_test_date__isnull=True)
+            return sites
+
     class Survey(object):
         @staticmethod
         def pws(surveys, value):
@@ -301,6 +313,17 @@ class FilterActions(object):
             if value:
                 return surveys.filter(site__address1__icontains=value)
             return surveys
+
+        @staticmethod
+        def date_from(surveys, value):
+            if value:
+                return surveys.filter(survey_date__gte=value)
+            return surveys
+
+        @staticmethod
+        def date_to(surveys, value):
+            if value:
+                return surveys.filter(survey_date__lte=value)
 
     class Test(object):
         @staticmethod
@@ -351,22 +374,29 @@ class FilterActions(object):
                 return tests.filter(test_result=value)
             return tests
 
+        @staticmethod
+        def date_from(tests, value):
+            if value:
+                return tests.filter(test_date__gte=value)
+            return tests
+
+        @staticmethod
+        def date_to(tests, value):
+            if value:
+                return tests.filter(test_date__lte=value)
+            return tests
+
     class Hazard(object):
         @staticmethod
-        def due_test_date(hazards, value):
-            current_date = datetime.now()
-            dates = {
-                'today': current_date,
-                'week': current_date + timedelta(weeks=1),
-                'month': current_date + timedelta(days=30),
-                'year': current_date + timedelta(days=365),
-            }
-            if value == 'blank':
-                return hazards.filter(due_test_date=None)
-            if value == 'past':
-                return hazards.filter(due_test_date__lt=current_date)
-            if value in dates:
-                return hazards.filter(due_test_date__range=[current_date, dates[value]])
+        def due_test_date_from(hazards, value):
+            if value:
+                return hazards.filter(due_test_date__gte=value)
+            return hazards
+
+        @staticmethod
+        def due_test_date_to(hazards, value):
+            if value:
+                return hazards.filter(due_test_date__lte=value)
             return hazards
 
         @staticmethod
@@ -542,25 +572,27 @@ class SiteFilter(django_filters.FilterSet):
     cust_state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Customer State'),
                                              action=FilterActions.Site.cust_state)
     cust_zip = django_filters.CharFilter(lookup_type='icontains', label=_('Customer ZIP'))
-    next_survey_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
-                                                   action=FilterActions.Site.next_date,
-                                                   label=_('Next Survey'))
-    last_survey_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
-                                                   action=FilterActions.Site.last_date,
-                                                   label=_('Last Survey'))
-    next_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES,
-                                                 action=FilterActions.Site.next_date,
-                                                 label=_('Next Survey'))
-    last_test_date = django_filters.ChoiceFilter(choices=PAST_DATE_FILTER_CHOICES,
-                                                 action=FilterActions.Site.last_date,
-                                                 label=_('Last Survey'))
+
+    next_survey_from = django_filters.DateFilter(action=FilterActions.Site.next_survey_from,
+                                                 label=_('Next Survey From'))
+    next_survey_to = django_filters.DateFilter(action=FilterActions.Site.next_survey_to, label=_('Next Survey To'))
+    next_survey_blank = django_filters.BooleanFilter(action=FilterActions.Site.next_survey_blank,
+                                                     widget=forms.CheckboxInput, label="Next Survey Blank")
+    last_survey_from = django_filters.DateFilter(action=FilterActions.Site.last_survey_from,
+                                                 label=_('Last Survey From'))
+    last_survey_to = django_filters.DateFilter(action=FilterActions.Site.last_survey_to, label=_('Last Survey To'))
+    last_survey_blank = django_filters.BooleanFilter(action=FilterActions.Site.last_survey_blank,
+                                                     widget=forms.CheckboxInput, label="Last Survey Blank")
+    due_test_from = django_filters.DateFilter(action=FilterActions.Site.next_test_from, label=_('Due Test From'))
+    due_test_to = django_filters.DateFilter(action=FilterActions.Site.next_test_to, label=_('Due Test To'))
+    due_test_blank = django_filters.BooleanFilter(action=FilterActions.Site.next_test_blank,
+                                                  widget=forms.CheckboxInput, label="Due Test Blank")
     route = django_filters.CharFilter(label=_('Seq. Route'), lookup_type='icontains')
     meter_number = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Number'))
     meter_size = django_filters.CharFilter(lookup_type='icontains', label=_('Meter Size'))
     meter_reading = django_filters.NumberFilter(label=_('Meter Reading'))
-    connect_date = django_filters.DateFilter(label=_('Connect Date'))
-    due_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES, label=_("Test Due Date"),
-                                                action=FilterActions.Site.due_test_date)
+    connect_date_from = django_filters.DateFilter(label=_('Connect Date'), action=FilterActions.Site.connect_date_from)
+    connect_date_to = django_filters.DateFilter(label=_('Connect Date'), action=FilterActions.Site.connect_date_to)
     street_number_blank = django_filters.BooleanFilter(action=FilterActions.Site.street_number_blank,
                                                        widget=forms.CheckboxInput)
     address2_blank = django_filters.BooleanFilter(action=FilterActions.Site.address2_blank,
@@ -600,7 +632,8 @@ class SurveyFilter(django_filters.FilterSet):
     city = django_filters.CharFilter(label=_('Site City'), action=FilterActions.Survey.site_city)
     address = django_filters.CharFilter(label=_('Service Address'), action=FilterActions.Survey.site_address)
     service_type = django_filters.ChoiceFilter(choices=FilterChoices.service_type(), label=_('Service Type'))
-    survey_date = django_filters.DateRangeFilter(label=_('Survey Date'))
+    survey_date_from = django_filters.DateFilter(label=_('Survey Date From'), action=FilterActions.Survey.date_from)
+    survey_date_to = django_filters.DateFilter(label=_('Survey Date To'), action=FilterActions.Survey.date_to)
     survey_type = django_filters.ChoiceFilter(choices=FilterChoices.survey_type(), label=_('Survey Type'))
     surveyor = django_filters.ChoiceFilter(choices=FilterChoices.surveyor(), label=_('Surveyor'))
 
@@ -616,7 +649,8 @@ class TestFilter(django_filters.FilterSet):
                                               action=FilterActions.Test.hazard_type)
     bp_type = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'),
                                           action=FilterActions.Test.bp_type)
-    test_date = django_filters.DateRangeFilter(label=_('Test Date'))
+    test_date_from = django_filters.DateFilter(label=_('Test Date From'), action=FilterActions.Test.date_from)
+    test_date_to = django_filters.DateFilter(label=_('Test Date To'), action=FilterActions.Test.date_to)
     tester = django_filters.ChoiceFilter(choices=FilterChoices.tester(), label=_('Tester'))
     test_result = django_filters.ChoiceFilter(choices=FilterChoices.test_result(), label=_('Test Result'),
                                               action=FilterActions.Test.test_result)
@@ -632,9 +666,11 @@ class HazardFilter(django_filters.FilterSet):
     assembly_status = django_filters.ChoiceFilter(choices=FilterChoices.assembly_status(), label=_('Assembly Status'))
     bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Present'))
     bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('BP Type Required'))
-    due_test_date = django_filters.DateRangeFilter(label=_('Due Install/Test Date'))
-    #due_test_date = django_filters.ChoiceFilter(choices=NEXT_DATE_FILTER_CHOICES, label=_("Test Due Date"),
-    #                                            action=FilterActions.Hazard.due_test_date)
+    due_test_date_from = django_filters.DateFilter(label=_('Test Due Date From'),
+                                                   action=FilterActions.Hazard.due_test_date_from)
+    due_test_date_to = django_filters.DateFilter(label=_("Test Due Date To"),
+                                                 action=FilterActions.Hazard.due_test_date_to)
+
 
 class TesterFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.User.pws)
@@ -668,5 +704,5 @@ class LetterFilter(django_filters.FilterSet):
                                               action=FilterActions.Letter.letter_type)
     user = django_filters.CharFilter(label=_("Username"), action=FilterActions.Letter.user)
     already_sent = django_filters.BooleanFilter(label=_("Already Sent"))
-    date_gt = django_filters.DateFilter(label=_(""), action=FilterActions.Letter.date_gt)
-    date_lt = django_filters.DateFilter(label=_(""), action=FilterActions.Letter.date_lt)
+    date_gt = django_filters.DateFilter(label=_("Letter Date From"), action=FilterActions.Letter.date_gt)
+    date_lt = django_filters.DateFilter(label=_("Letter Date To"), action=FilterActions.Letter.date_lt)
