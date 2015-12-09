@@ -33,12 +33,12 @@
                     <th>
                         {% trans "Email" %}
                     </th>
-{#                    <th>#}
-{#                        {% trans "Certificates" %}#}
-{#                    </th>#}
-{#                    <th>#}
-{#                        {% trans "Test Kits" %}#}
-{#                    </th>#}
+                    <th>
+                        {% trans "Certificates" %}
+                    </th>
+                    <th>
+                        {% trans "Test Kits" %}
+                    </th>
                     <th class="uk-text-center border-left">
                         {% trans "Actions" %}
                     </th>
@@ -67,16 +67,16 @@
                     <td>
                         {{ tester.email }}
                     </td>
-{#                    <td>#}
-{#                        {% for cert in tester.certs.all %}#}
-{#                            {{ cert.cert_number }} ({% if cert.is_active %}{% trans "active" %}{% else %}{% trans "expired" %}{% endif %})#}
-{#                        {% endfor %}#}
-{#                    </td>#}
-{#                    <td>#}
-{#                        {% for kit in tester.kits.all %}#}
-{#                            {{ kit.test_serial }} ({{ kit.test_last_cert }})#}
-{#                        {% endfor %}#}
-{#                    </td>#}
+                    <td>
+                        {% for cert in tester.certs.all %}
+                            <p>{{ cert.cert_number }}</p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for kit in tester.kits.all %}
+                            <p>{{ kit.test_serial }}</p>
+                        {% endfor %}
+                    </td>
                     <td class="uk-text-center border-left">
                         <a href="{% url 'webapp:user_detail' tester.pk %}" id="user_{{ tester.pk }}_detail_link">
                             {% trans "Detail" %}
