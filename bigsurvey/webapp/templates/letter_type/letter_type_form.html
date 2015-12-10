@@ -26,8 +26,8 @@
                 <tr>
                     <td class="uk-text-right uk-text-bold uk-width-1-6">{% trans "Template" %}:</td>
                     <td class="uk-text-left uk-width-2-3" colspan="2">
-                        {{ form.template|add_class:"uk-width-1-1" }}
                         {{ form.template.errors }}
+                        {{ form.template }}
                     </td>
                     <td class="uk-width-1-6">
                         {% blocktrans %}
@@ -49,7 +49,8 @@
                                 <li>{CustomerName} - Customer's Name</li>
                                 <li>{AccountNumber} - Site's Account Number</li>
                                 <li>{CustomerAddress} - Customer's Address</li>
-                                <li>{AssemblyType} - Assembly Type (Air Gap, PVB, HBVB etc)</li>
+                                <li>{AssemblyTypePresent} - Assembly Type Present (Air Gap, PVB, HBVB etc)</li>
+                                <li>{AssemblyTypeRequired} - Assembly Type Required (Air Gap, PVB, HBVB etc)</li>
                                 <li>{CustomerCity} - Customer's City</li>
                                 <li>{CustomerState} - Customer's State</li>
                                 <li>{CustomerZip} - Customer's ZIP</li>
