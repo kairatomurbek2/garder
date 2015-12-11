@@ -1,0 +1,387 @@
+{% load i18n widget_tweaks staticfiles choices test_form_helper %}
+<style>
+    html {
+      font: normal 16px / 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    .wrapper {
+        width: 100%;
+        padding: 5px 5px 0 0;
+    }
+
+    .width-1-1 {
+        width: 100%;
+    }
+
+    .width-1-6 {
+      width: 16.666%;
+    }
+
+    .width-1-3 {
+      width: 33.333%;
+    }
+
+    .width-3-6,
+    .width-1-2 {
+      width: 50%;
+    }
+
+    .width-5-6 {
+      width: 83.333%;
+    }
+
+    .common-data td {
+        padding-left: 5px;
+    }
+
+    .test-data td {
+        padding: 5px;
+    }
+
+    .test-data p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .test-data li {
+        margin: 0;
+        padding: 0;
+    }
+
+    .border-bottom {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-bold {
+      font-weight: bold;
+    }
+
+    .text-success {
+        color: #659f13;
+    }
+
+    .text-danger {
+        color: #d85030;
+    }
+
+    .border-all, .border-all td, .border-all th {
+        border: 1px solid #ddd;
+    }
+
+    .inline-block {
+        display: inline-block;
+    }
+
+    .test-result-choices {
+        font-size: 20px;
+    }
+</style>
+{% for test in tests %}
+    {% if not forloop.first %}
+        <pdf:nextpage />
+    {% endif %}
+    <div class="wrapper">
+        <div>
+            <h3 class="uk-text-uppercase text-center text-bold uk-width-1-1">{% trans 'TEST AND MAINTENANCE REPORT' %}</h3>
+            <p class="uk-text-uppercase text-center uk-width-1-1">{% trans 'BACKFLOW PREVENTION ASSEMBLIES' %}</p>
+            <table>
+                <tbody class="common-data">
+                <tr>
+                    <td class="width-1-6">{% trans 'Customer' %}:</td>
+                    <td colspan="5" class="width-5-6 border-bottom">{{ test.bp_device.site.cust_name }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Street Address' %}:</td>
+                    <td colspan="5" class="width-5-6 border-bottom">{{ test.bp_device.site.address1 }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Street Number' %}:</td>
+                    <td colspan="5" class="width-5-6 border-bottom">{{ test.bp_device.site.street_number }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Mailing Address' %}:</td>
+                    <td colspan="5" class="width-5-6 border-bottom">{{ test.bp_device.site.cust_address1 }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Location of Assembly' %}:</td>
+                    <td colspan="5" class="width-5-6 border-bottom">{{ test.bp_device.assembly_location }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Assembly Type' %}:</td>
+                    <td colspan="3" class="width-3-6 border-bottom">{{ test.bp_device.bp_type_present }}</td>
+                    <td class="width-1-6">{% trans 'Size' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.bp_device.bp_size }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Manufacturer' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.bp_device.manufacturer }}</td>
+                    <td class="width-1-6">{% trans 'Model no.' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.bp_device.model_no }}</td>
+                    <td class="width-1-6">{% trans 'Serial no.' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.bp_device.serial_no }}</td>
+                </tr>
+                <tr>
+                    <td class="width-1-6">{% trans 'Test Kit Manuf.' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.test_kit.test_manufacturer }}</td>
+                    <td class="width-1-6">{% trans 'Serial Number' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.test_kit.test_serial }}</td>
+                    <td class="width-1-6">{% trans 'Date Calibrated' %}:</td>
+                    <td class="width-1-6 border-bottom">{{ test.test_kit.test_last_cert }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+            <table class="test-data border-all width-1-1">
+                <thead>
+                    <tr>
+                        {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES %}
+                            <th class="width-1-3 text-center">
+                                {% trans 'Check Valve #1' %}
+                            </th>
+                            <th class="width-1-3 text-center">
+                                {% trans 'Relief Valve' %}
+                            </th>
+                            <th class="width-1-3 text-center">
+                                {% trans 'Check Valve #2' %}
+                            </th>
+                        {% endif %}
+                        {% if test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                            <th class="width-1-2 text-center">
+                                {% trans 'Check Valve #1' %}
+                            </th>
+                            <th class="width-1-2 text-center">
+                                {% trans 'Check Valve #2' %}
+                            </th>
+                        {% endif %}
+                        {% if test.bp_device.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
+                            <th class="width-1-1 text-center">
+                                {% trans 'Pressure Vacuum Breaker' %}
+                            </th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
+                    <tr>
+                        {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES %}
+                            <td>
+                                {{ test.cv1_leaked|valve_leaked }}
+                            </td>
+                            <td>
+                                <p class="rv_psi1">
+                                    {% ifequal test.rv_psi1 None %}
+                                        {% trans 'Did not open' %}
+                                    {% else %}
+                                        {% trans 'Opened at' %}:
+                                        {{ test.rv_psi1 }}
+                                        {% trans 'psi' %}
+                                    {% endifequal %}
+                                </p>
+                            </td>
+                            <td>
+                                {{ test.cv2_leaked|valve_leaked }}
+                            </td>
+                        {% endif %}
+                        {% if test.bp_device.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
+                            <td>
+                                <p class="air_inlet_psi">
+                                    {% ifequal test.air_inlet_psi None %}
+                                        {% trans 'Air Inlet: Did not open' %}
+                                    {% else %}
+                                        {% trans 'Air Inlet: Opened at' %}:
+                                        {{ test.air_inlet_psi }}
+                                        {% trans 'psi' %}
+                                    {% endifequal %}
+                                </p>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endif %}
+                <tr>
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                        <td>
+                            <p>{% trans 'Gauge pressure accross' %}</p>
+                            <p class="cv1_gauge_pressure">
+                                {% trans 'Check valve' %}:
+                                {{ test.cv1_gauge_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES %}
+                        <td>
+                            <p>{% trans 'Outlet shut-off Valve' %}</p>
+                            <p>{{ test.outlet_sov_leaked|valve_leaked }}</p>
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                        <td>
+                            <p>{% trans 'Gauge pressure accross' %}</p>
+                            <p class="cv2_gauge_pressure">
+                                {% trans 'Check valve' %}:
+                                {{ test.cv2_gauge_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
+                        <td>
+                            <p class="cv_held_pressure">
+                                {% ifequal test.cv_held_pressure None %}
+                                    {% trans 'Check Valve: Leaked' %}
+                                {% else %}
+                                    {% trans 'Check Valve: Held at' %}:
+                                    {{ test.cv_held_pressure }}
+                                    {% trans 'psi' %}
+                                {% endifequal %}
+                            </p>
+                        </td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                        <td>
+                            <p>
+                                {{ test.cv1_cleaned|cleaned_replaced }}
+                            </p>
+                            {% if not test.cv1_cleaned %}
+                                <ul>
+                                    {% for detail in test.cv1_replaced_details %}
+                                        <li><span class="form-ul-label">{{ detail }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES %}
+                        <td>
+                            <p>
+                                {{ test.rv_cleaned|cleaned_replaced }}
+                            </p>
+                            {% if not test.rv_cleaned %}
+                                <ul>
+                                    {% for detail in test.rv_replaced_details %}
+                                        <li><span class="form-ul-label">{{ detail }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                        <td>
+                            <p>
+                                {{ test.cv2_cleaned|cleaned_replaced }}
+                            </p>
+                            {% if not test.cv2_cleaned %}
+                                <ul>
+                                    {% for detail in test.cv2_replaced_details %}
+                                        <li><span class="form-ul-label">{{ detail }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
+                        <td>
+                            <p>
+                                {{ test.pvb_cleaned|cleaned_replaced }}
+                            </p>
+                            {% if not test.pvb_cleaned %}
+                                <ul>
+                                    {% for detail in test.pvb_replaced_details %}
+                                        <li><span class="form-ul-label">{{ detail }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                        <td>
+                            <p>
+                                {% trans 'Gauge pressure accross' %}
+                            </p>
+                            <p>
+                                {% trans 'Check valve' %}
+                                {{ test.cv1_retest_gauge_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES %}
+                        <td>
+                            <p>
+                                {% trans 'Relief valve opened at' %}:
+                                {{ test.rv_psi2 }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.RP_TYPES or test.bp_device.bp_type_present in BP_TYPE.DC_TYPES %}
+                        <td>
+                            <p>
+                                {% trans 'Gauge pressure accross' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}:
+                                {{ test.cv2_retest_gauge_pressure }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    {% endif %}
+                    {% if test.bp_device.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
+                        <td>
+                            <p>
+                                {% trans 'Air Inlet' %}:
+                                {{ test.air_inlet_retest_psi }}
+                                {% trans 'psi' %}
+                            </p>
+
+                            <p>
+                                {% trans 'Check valve' %}:
+                                {{ test.cv_retest_psi }}
+                                {% trans 'psi' %}
+                            </p>
+                        </td>
+                    {% endif %}
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+            <h4 class="inline-block">{% trans 'The Assembly' %}:</h4>
+            <span class="test-result-choices {% if test.test_result %}text-success{% else %}text-danger{% endif %}">{{ test.test_result|test_result }}</span>
+            <h4 class="text-bold">{% trans 'NOTE: ALL REPAIRS/REPLACEMENT SHALL BE COMPLETED WITHIN FIVE (5) DAYS.' %}</h4>
+            <table>
+                <tbody class="common-data">
+                    <tr>
+                        <td class="width-1-6" colspan="1">{% trans 'Remarks' %}:</td>
+                        <td class="width-5-6" colspan="3">{{ test.notes }}</td>
+                    </tr>
+                    <tr>
+                        <td class="width-1-1" colspan="4">
+                            <br/>
+                            <u>{% trans 'I hereby certify that this data is accurate and reflects the proper operation and maintenance of the backflow preventer unit.' %}</u>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="width-1-6">{% trans 'Tester' %}:</td>
+                        <td class="width-2-6 border-bottom">{{ test.tester.first_name }} {{ test.tester.last_name }}</td>
+                        <td class="width-1-6">{% trans 'Date' %}:</td>
+                        <td class="width-2-6 border-bottom">{{ test.test_date }}</td>
+                    </tr>
+                    <tr>
+                        <td class="width-1-6">{% trans 'Certification Number' %}:</td>
+                        <td class="width-2-6 border-bottom">{{ test.tester_cert.cert_number }}</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endfor %}

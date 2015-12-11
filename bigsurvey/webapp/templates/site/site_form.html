@@ -24,7 +24,7 @@
                             {{ form.cust_number.errors }}
                         </td>
                         <td class="uk-width-1-6 uk-text-right uk-text-bold">
-                            <label for="{{ form.pws.id_for_label }}">{{ form.pws.label }}</label>
+                            <label for="{{ form.pws.id_for_label }}">{% trans "PWS" %}</label>
                         </td>
                         <td class="uk-width-1-6">
                             {% render_field form.pws|add_class:'uk-width-1-1' %}

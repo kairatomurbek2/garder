@@ -2,8 +2,9 @@
 {% load i18n widget_tweaks staticfiles choices test_form_helper %}
 {% block menu %}
     {% if perms.webapp.change_test %}
-    <li><a href="{% url 'webapp:test_edit' test.pk %}">{% trans 'Edit' %}</a></li>
+        <li><a href="{% url 'webapp:test_edit' test.pk %}">{% trans 'Edit' %}</a></li>
     {% endif %}
+    <li><a href="{% url 'webapp:test_pdf' test.pk %}">{% trans 'PDF' %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="wrapper">

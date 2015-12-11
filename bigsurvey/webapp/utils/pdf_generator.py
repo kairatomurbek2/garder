@@ -1,10 +1,6 @@
 import StringIO
-import os
-import urllib
-
 from xhtml2pdf import pisa
-
-from main.settings import MEDIA_ROOT, MEDIA_URL, STATIC_ROOT, STATIC_URL
+import os
 
 
 class PDFGenerator(object):
@@ -13,3 +9,4 @@ class PDFGenerator(object):
         stream = StringIO.StringIO()
         pisa.CreatePDF(html, stream)
         return stream.getvalue()
+

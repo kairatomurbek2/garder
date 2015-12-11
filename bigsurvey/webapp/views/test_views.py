@@ -1,3 +1,4 @@
+from django.template.loader import render_to_string
 from .base_views import BaseView, BaseTemplateView, BaseFormView
 from django.http import Http404, JsonResponse
 from django.core.urlresolvers import reverse
@@ -11,6 +12,9 @@ from django.shortcuts import redirect
 from django.utils.translation import ungettext as __
 from webapp.exceptions import PaymentWasNotCreatedError
 from django.conf import settings
+from webapp.responses import PDFResponse
+from webapp.utils.pdf_generator import PDFGenerator
+from datetime import datetime
 
 
 class TestListView(BaseTemplateView):
@@ -32,6 +36,17 @@ class TestListView(BaseTemplateView):
             return paid_tests.filter(bp_device__site__pws__in=user.employee.pws.all())
         if user.has_perm('webapp.access_to_own_tests'):
             return paid_tests.filter(tester=user)
+
+    def post(self, request, *args, **kwargs):
+        test_pks = self.request.POST.getlist('test_pks')
+        tests = models.Test.objects.filter(pk__in=test_pks)
+        context = {'tests': tests, 'BP_TYPE': BP_TYPE}
+        template = 'test/test_report_page.html'
+        html_content = render_to_string(template, context)
+        pdf_content = PDFGenerator.generate_from_html(html_content)
+        date = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        filename = u"Tests-Report-%s.pdf" % date
+        return PDFResponse(filename, pdf_content)
 
 
 class TestDetailView(BaseTemplateView):
@@ -251,3 +266,34 @@ class TestEditView(TestBaseFormView, UpdateView):
         if not self.object.rv_opened:
             initial['rv_did_not_open'] = True
         return initial
+
+
+class SingleTestPDFView(BaseTemplateView):
+    template_name = 'test/test_report_page.html'
+    permission = 'webapp.browse_test'
+
+    def get_pdf_response(self, **kwargs):
+        context = self.get_context_data(**kwargs)
+        html_content = render_to_string(self.template_name, context)
+        pdf_content = PDFGenerator.generate_from_html(html_content)
+        date = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        filename = u"Test-Report-%s.pdf" % date
+        return PDFResponse(filename, pdf_content)
+
+    def get(self, request, *args, **kwargs):
+        return self.get_pdf_response(**kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(SingleTestPDFView, self).get_context_data(**kwargs)
+        test_pk = self.kwargs.get('pk')
+        test = models.Test.objects.get(pk=test_pk)
+        self.check_perm(test)
+        context['tests'] = [test]
+        context['BP_TYPE'] = BP_TYPE
+        return context
+
+    def check_perm(self, test):
+        if not perm_checkers.TestPermChecker.has_perm(self.request, test):
+            raise Http404
+        if self.request.user != test.user and not test.paid:
+            raise Http404

@@ -71,4 +71,6 @@ urlpatterns = patterns(
 
     url(r'^user/(?P<pk>\d+)/kit-add/$', views.TestKitAddView.as_view(), name="test_kit_add"),
     url(r'^kit-edit/(?P<pk>\d+)/$', views.TestKitEditView.as_view(), name="test_kit_edit"),
+
+    url(r'^test/(?P<pk>\d+)/pdf/$', views.SingleTestPDFView.as_view(), name="test_pdf"),
 )

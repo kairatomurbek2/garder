@@ -9,9 +9,19 @@
         {% include 'test/test_filters.html' %}
         <div class="wrapper uk-width-4-5 filters-offset">
             {% paginate %}
+            <form method="post" class="uk-form" name="test-pdf">
+            <div class="uk-text-center">
+                <button type="submit" class="uk-button uk-button-primary">
+                    {% trans "Get selected Tests in PDF" %}
+                </button>
+            </div>
+            {% csrf_token %}
             <table class="uk-table uk-table-hover">
                 <thead>
                 <tr class="border-bottom">
+                    <th class="uk-text-center border-right">
+                        <input type="checkbox" data-action="check_all"/>
+                    </th>
                     <th class="border-right uk-text-center uk-width-1-10">
                         {% trans "No." %}
                     </th>
@@ -54,6 +64,9 @@
                 {% for test in filtered_tests %}
                     <tr>
                         <td class="uk-text-center border-right">
+                            <input type="checkbox" name="test_pks" value="{{ test.pk }}"/>
+                        </td>
+                        <td class="uk-text-center border-right">
                             {{ test.pk }}
                         </td>
                         <td>
@@ -95,10 +108,12 @@
                 {% endfor %}
                 </tbody>
             </table>
+            </form>
             {% paginate %}
         </div>
     </div>
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
+    <script src="{% static 'js/custom/test_pdf.js' %}"></script>
 {% endblock %}
