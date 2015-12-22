@@ -17,42 +17,46 @@
                 <td class="uk-text-center uk-text-primary">{{ pws.water_source }}</td>
             </tr>
             <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Office Address" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.office_address }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "City" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ pws.city }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "State" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ pws.state }}</td>
-            </tr>
-            <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Zip" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ pws.zip }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Office Address" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.office_address }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Phone" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.phone }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Email" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.email }}</td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="uk-text-right uk-text-muted">{% trans "Fax" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.fax }}</td>
+                <td colspan="4"></td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Person In Charge Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.bailee_name }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Person In Charge Job Title" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.bailee_job_title }}</td>
+                <td class="uk-text-right uk-text-muted">{% trans "Consultant Name" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.consultant_name }}</td>
+            </tr>
+            <tr>
+                <td class="uk-text-right uk-text-muted">{% trans "Consultant Phone" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.consultant_phone }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Plumber Packet Location" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ pws.plumber_packet_location }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Plumber Packet Address" %}</td>
                 <td class="uk-text-center uk-text-primary">{{ pws.plumber_packet_address }}</td>
             </tr>
-            <tr>
-                <td class="uk-text-right uk-text-muted">{% trans "Phone" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.phone }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Email" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.email }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Fax" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.fax }}</td>
-            </tr>
             <tr class="border-bottom">
-                <td class="uk-text-right uk-text-muted">{% trans "Person In Charge Name" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.bailee_name }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Person In Charge Job Title" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.bailee_job_title }}</td>
-                <td colspan="2"></td>
-            </tr>
-            <tr class="border-bottom">
-                <td class="uk-text-right uk-text-muted">{% trans "Consultant Name" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.consultant_name }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Consultant Phone" %}</td>
-                <td class="uk-text-center uk-text-primary">{{ pws.consultant_phone }}</td>
-
+                <td class="uk-text-right uk-text-muted">{% trans "Price Per Test" %}</td>
+                <td class="uk-text-center uk-text-primary">{{ pws.price }}</td>
+                <td colspan="4"></td>
             </tr>
             <tr class="border-bottom">
                 <td class="uk-text-right uk-text-muted">{% trans "Description" %}</td>

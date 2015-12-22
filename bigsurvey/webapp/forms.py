@@ -10,6 +10,8 @@ from webapp.validators import validate_excel_file
 
 
 class PWSForm(forms.ModelForm):
+    price = forms.DecimalField(min_value=0.01, decimal_places=2)
+
     class Meta:
         model = models.PWS
         fields = '__all__'

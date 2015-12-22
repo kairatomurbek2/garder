@@ -152,7 +152,7 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SurveyEditView, self).get_context_data(**kwargs)
         context['site_pk'] = self.object.site.pk
-        context['service_type'] = self.object.service_type.service_type
+        context['service_type'] = self.object.service_type.service_type.lower()
         return context
 
     def get_form(self, form_class):

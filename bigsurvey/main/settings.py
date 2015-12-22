@@ -162,8 +162,8 @@ MANAGE_PY = os.path.join(BASE_DIR, 'manage.py')
 STUB_FILES_DIR = os.path.join(BASE_DIR, 'stub-files')
 
 PAYPAL_MODE = 'sandbox'
-PAYPAL_CLIENT_ID = 'ARuglQBjPQQo6bUYpukNqLmFgPxQlg7Vb4zt0l0Gl6CAnX67uJGYYlMF_E5RDCKHTvOIyk3oRhFWkzuS'
-PAYPAL_CLIENT_SECRET = 'EHUCx5wjMgFkQzqkhsWUtfG6-pzlvS72kaGafHmPu2-hfGE6ubLmS_yW9s0E_Hpq1YyNOGMFa4LPHA3G'
+PAYPAL_CLIENT_ID = 'AV2p3Oa0Jf2O-MUdOPjm70z1pAm293geK0yy6oli4ZLkd3MEaef_glGLTi7tv2jtuEQZ8M-KENeBILZw'
+PAYPAL_CLIENT_SECRET = 'EE-ar9o_saSWsZzGgtuaH0sDP4XLvqYtb5Yd9KgFysRtNjR18oYc1o7J99xgrSy8Y3ztz52KICcagMHL'
 
 # without trailing slash
 # required for PayPal to provide absolute return URL
