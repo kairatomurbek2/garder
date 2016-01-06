@@ -117,6 +117,8 @@ class SurveyAddView(SurveyBaseFormView, CreateView):
         response = super(SurveyAddView, self).form_valid(form)
         self._update_last_survey_date(site)
         self._switch_on_service_type(site, form.instance.service_type.service_type)
+        if len(form.cleaned_data['hazards']) == 0:
+            form.instance.add_nhp_hazard()
         self._update_is_present(site, form.instance)
         return response
 

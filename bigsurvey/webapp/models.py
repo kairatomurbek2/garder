@@ -602,6 +602,11 @@ class Survey(models.Model):
         )
         ordering = ('-survey_date', '-id')
 
+    def add_nhp_hazard(self):
+        hazard_type = HazardType.objects.get(hazard_type=u'NHP')
+        nhp_hazard = Hazard.objects.create(site=self.site, hazard_type=hazard_type, service_type=self.service_type)
+        self.hazards.add(nhp_hazard)
+
 
 class Test(models.Model):
     bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"), related_name="tests")
