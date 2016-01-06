@@ -201,11 +201,13 @@
                     contentType: false,
                     data: new FormData(this),
                     success: function (response) {
-                        $('#hazard-form-modal').find('.modal-content').html(response.form);
-                        initGoogleMap.call($('#hazard-form-modal'));
+                        var $hazardModal = $('#hazard-form-modal');
+                        $hazardModal.find('.modal-content').html(response.form);
+                        initGoogleMap.call($hazardModal);
                         if (response.status == 'ok') {
                             var option = $('<option>', {value: response.option.value, selected: 'selected'}).text(response.option.text);
                             $('select[name="hazards"]').append(option);
+                            $hazardModal.hide();
                         }
 
                     }
