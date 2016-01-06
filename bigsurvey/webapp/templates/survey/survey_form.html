@@ -189,7 +189,14 @@
         };
 
         $(document).ready(function () {
-            $('#hazard-form-modal').on('submit', 'form', function (e) {
+            var $hazardModal = $('#hazard-form-modal');
+            var $addHazardBtn = $('#add_hazard_link');
+            $addHazardBtn.on('click', function () {
+                if (!$hazardModal.is(':visible')) {
+                    $hazardModal.show()
+                }
+            });
+            $hazardModal.on('submit', 'form', function (e) {
                 e.preventDefault();
 
                 var url = '{% url 'webapp:hazard_add' site_pk service_type %}';
@@ -201,7 +208,6 @@
                     contentType: false,
                     data: new FormData(this),
                     success: function (response) {
-                        var $hazardModal = $('#hazard-form-modal');
                         $hazardModal.find('.modal-content').html(response.form);
                         initGoogleMap.call($hazardModal);
                         if (response.status == 'ok') {
@@ -214,7 +220,7 @@
                 });
             });
 
-            $('#hazard-form-modal').on('show.uk.modal', function () {
+            $hazardModal.on('show.uk.modal', function () {
                 initGoogleMap.call(this);
             });
         });
