@@ -72,3 +72,15 @@ Feature: Survey Add
     And I should see following validation error messages on following fields
       | field       | error_message          |
       | survey_date | This field is required |
+
+
+  Scenario Outline: NHP hazard is added automatically when no hazards were chosen
+    Given I logged in as "root"
+    When I submit survey form for site with pk "6" and service "<service>" without hazard
+    Then On survey details page I see NHP hazard
+
+  Examples:
+    | service    |
+    | potable    |
+    | irrigation |
+    | fire       |

@@ -1,8 +1,11 @@
+import datetime
 from lettuce import step, world
 from main.parameters import Messages
 from webapp import models
 from webapp_features.features import helper
-from webapp_features.features.common_steps import click_element_by_xpath
+from webapp_features.features.common_steps import (
+    click_element_by_xpath, fill_in_textfield, submit_form
+)
 from webapp_features.features.data import Xpath, get_url, Urls
 from time import sleep
 
@@ -126,3 +129,16 @@ def check_service_type_present(step, pk, service_type, value):
 @step('I directly open "survey_list" page')
 def open_survey_list(step):
     step.given('I open "%s"' % get_url(Urls.survey_list))
+
+
+@step('I submit survey form for site with pk "(\d+)" and service "([a-z]+)" without hazard$')
+def submit_survey_without_hazard(step, pk, service):
+    step.given('I open "survey_add" page for site with pk "{0}" and service "{1}"'.format(pk, service))
+    today = datetime.date.strftime(datetime.date.today(), '%Y-%m-%d')
+    fill_in_textfield(step, 'survey_date', today)
+    submit_form(step, 'survey')
+
+
+@step('On survey details page I see NHP hazard')
+def on_survey_details_page_i_see_hazard(step):
+    step.given('I should see "NHP"')
