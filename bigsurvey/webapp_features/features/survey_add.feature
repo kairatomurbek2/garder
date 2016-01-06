@@ -34,7 +34,6 @@ Feature: Survey Add
     And I select "Church Rec Center" from "hazard_type"
     And I submit "hazard" form
     Then Site with pk "5" should have "potable" service turned on
-    And I close hazard modal
     And I submit "survey" form
     And I should see "survey adding success" message
     And I should see following
