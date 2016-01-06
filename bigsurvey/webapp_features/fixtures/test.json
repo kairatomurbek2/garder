@@ -5923,5 +5923,33 @@
 {"fields":{"degree":"Pollutant"},"model":"webapp.hazarddegree","pk":1},
 {"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2},
 {"fields":{"user":["tester"],"cert_number":"qwerty132"},"model":"webapp.testercert","pk":1},
-{"fields":{"user":["tester"],"test_serial":"serial1"},"model":"webapp.testkit","pk":1}
+{"fields":{"user":["tester"],"test_serial":"serial1"},"model":"webapp.testkit","pk":1},
+  {
+    "fields": {
+      "name": "LAC51:XIV Table 609.F.5"
+    },
+    "model": "webapp.regulation",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "name": "LAC51:XIV Table 609.F.6"
+    },
+    "model": "webapp.regulation",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "name": "CAN/CSA-B64.10"
+    },
+    "model": "webapp.regulation",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "name": "Industry Standard"
+    },
+    "model": "webapp.regulation",
+    "pk": 4
+  }
 ]
