@@ -11,7 +11,7 @@
             {% paginate %}
             <form method="post" class="uk-form" name="test-pdf">
             <div class="uk-text-center">
-                <button type="submit" class="uk-button uk-button-primary">
+                <button type="submit" class="uk-button uk-button-primary" id="pdf" disabled>
                     {% trans "Get selected Tests in PDF" %}
                 </button>
             </div>
@@ -20,7 +20,7 @@
                 <thead>
                 <tr class="border-bottom">
                     <th class="uk-text-center border-right">
-                        <input type="checkbox" data-action="check_all"/>
+                        <input type="checkbox" id="test_pks_all" onchange='checkPDFAvailability()' data-action="check_all"/>
                     </th>
                     <th class="border-right uk-text-center uk-width-1-10">
                         {% trans "No." %}
@@ -64,7 +64,7 @@
                 {% for test in filtered_tests %}
                     <tr>
                         <td class="uk-text-center border-right">
-                            <input type="checkbox" name="test_pks" value="{{ test.pk }}"/>
+                            <input type="checkbox" name="test_pks" onchange='checkPDFAvailability()' value="{{ test.pk }}"/>
                         </td>
                         <td class="uk-text-center border-right">
                             {{ test.pk }}
@@ -116,4 +116,17 @@
 {% block scripts %}
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
     <script src="{% static 'js/custom/test_pdf.js' %}"></script>
+    <script type="text/javascript">
+        function checkPDFAvailability() {
+            if ($('#test_pks_all').is(':checked')) {
+                $('#pdf').prop("disabled", false);
+            }
+            else if ($('input[name=test_pks]').is(':checked')) {
+                $('#pdf').prop("disabled", false);
+            }
+            else {
+                $('#pdf').prop("disabled", true);
+            }
+        }
+    </script>
 {% endblock %}
