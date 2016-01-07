@@ -43,3 +43,4 @@ unittest2==0.8.0
 xhtml2pdf==0.0.6
 xlrd==0.9.3
 XlsxWriter==0.7.7
+GitPython==1.0.1

@@ -1,4 +1,5 @@
 {% load i18n staticfiles %}
+{% load version %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +50,7 @@
         {% include 'partial/canvas_menu.html' %}
     </div>
 </div>
-
+<footer class="muted">{% get_git_tag_and_date %}</footer>
 <script type="text/javascript">
     $(document).ready(function() {
         if ($(window).width() < 650) {
