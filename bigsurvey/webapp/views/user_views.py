@@ -203,7 +203,12 @@ class UserEditView(UserBaseFormView):
             messages.error(self.request, self.error_message)
             user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
             employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-            return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
+            return render(self.request, self.template_name,
+                          {
+                              'user_form': user_form,
+                              'employee_form': employee_form,
+                              'display_is_active': True
+                          })
 
     def get_user_form(self):
         self.user_object = self.user_model.objects.get(pk=self.kwargs['pk'])
