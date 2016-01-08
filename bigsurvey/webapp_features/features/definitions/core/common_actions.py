@@ -37,6 +37,6 @@ def surveyor_logs_in():
     home_navigator.go_to_login_page()
     login('surveyor', 'surveyor')
 
-def tester_logos_in():
+def tester_logs_in():
     home_navigator.go_to_login_page()
     login('tester', 'tester')
