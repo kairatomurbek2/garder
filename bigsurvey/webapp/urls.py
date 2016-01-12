@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
 from webapp import views
-
+from forms import PasswordChangeWithMinLengthForm
 
 urlpatterns = patterns(
     '',
@@ -73,4 +73,8 @@ urlpatterns = patterns(
     url(r'^kit-edit/(?P<pk>\d+)/$', views.TestKitEditView.as_view(), name="test_kit_edit"),
 
     url(r'^test/(?P<pk>\d+)/pdf/$', views.SingleTestPDFView.as_view(), name="test_pdf"),
+    url(r'^password/$', 'django.contrib.auth.views.password_change',
+        {'post_change_redirect': '/password/edit/',
+         'password_change_form': PasswordChangeWithMinLengthForm},
+        name='password'),
 )

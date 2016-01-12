@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 import re
@@ -7,6 +8,7 @@ import models
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
     TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS
 from webapp.validators import validate_excel_file
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 class PWSForm(forms.ModelForm):
@@ -458,3 +460,25 @@ class TestKitForm(forms.ModelForm):
     class Meta:
         model = models.TestKit
         exclude = ('user',)
+
+class PasswordChangeWithMinLengthForm(PasswordChangeForm):
+    def clean_new_password2(self):
+        new_password1 = self.cleaned_data.get('new_password1')
+        new_password2 = self.cleaned_data.get('new_password2')
+        if len(new_password1) < 5:
+            raise forms.ValidationError(
+                _("Your password must be at least 5 characters long"))
+        if new_password1 and new_password1 != new_password2:
+            raise forms.ValidationError(
+                _("Repeat password is not same with new password!"))
+        return new_password2
+
+
+class EmailValidationOnForgotPassword(PasswordResetForm):
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not User.objects.filter(email__iexact=email, is_active=True).exists():
+            raise ValidationError(
+                _("There is no user registered with the specified email address!"))
+        return email
