@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from django.contrib.auth.models import User
+from django.db.models import Q
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 import re
@@ -318,20 +320,8 @@ class LetterForm(forms.ModelForm):
 
 
 class TesterSiteSearchForm(forms.Form):
-    pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), required=False)
-    cust_number = forms.CharField(label=_('Customer Number'), required=False)
-
-    site = None
-
-    def clean(self):
-        try:
-            self.site = models.Site.objects.get(
-                pws=self.cleaned_data['pws'],
-                cust_number=self.cleaned_data['cust_number']
-            )
-        except models.Site.DoesNotExist:
-            raise ValidationError(Messages.Site.not_found)
-        return super(TesterSiteSearchForm, self).clean()
+    pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), required=True)
+    search_value = forms.CharField(label=_('Search value'), required=True)
 
 
 class LetterOptionsForm(forms.Form):

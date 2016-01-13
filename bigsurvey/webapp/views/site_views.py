@@ -1,12 +1,12 @@
-from .base_views import BaseTemplateView, BaseFormView
-from webapp.utils.excel_writer import XLSExporter
+from django.contrib import messages
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
-from django.core.urlresolvers import reverse
-from webapp import filters, models, forms, perm_checkers
 from django.views.generic import FormView, CreateView, UpdateView
+from django.core.urlresolvers import reverse
+from .base_views import BaseTemplateView, BaseFormView
+from webapp.utils.excel_writer import XLSExporter
+from webapp import filters, models, forms, perm_checkers
 from main.parameters import SITE_STATUS, BP_TYPE, Messages
-from django.contrib import messages
 
 
 class HomeView(BaseTemplateView):
@@ -51,14 +51,18 @@ class TesterHomeView(BaseTemplateView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(TesterHomeView, self).get_context_data(**kwargs)
-        form = self.form_class(self.request.POST or None)
-        form.fields['pws'].queryset = self.request.user.employee.pws.all()
+        form = self.form_class(self.request.GET or None)
+        pws = self.request.user.employee.pws.all()
+        form.fields['pws'].queryset = pws
+        if self.request.GET and set(form.fields.keys()).issubset(set(self.request.GET.keys())):
+            if form.is_valid():
+                search_value = form.cleaned_data['search_value']
+                context['form'] = form
+                search_results = models.Site.search_in_cust_number_address_meter_number(pws, search_value)
+                context['sites_queryset'] = search_results
+                self.request.session['sites_pks'] = [site.pk for site in search_results]
         context['form'] = form
         return context
-
-    def form_valid(self, form):
-        self.request.session['site_pk'] = form.site.pk
-        return redirect(reverse('webapp:site_detail', args=(form.site.pk,)))
 
 
 class SiteDetailView(BaseTemplateView):

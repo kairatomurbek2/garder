@@ -2,6 +2,7 @@ from decimal import Decimal
 from datetime import date
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User, Group
 from ckeditor.fields import RichTextField
@@ -483,6 +484,29 @@ class Site(models.Model):
 
     def __unicode__(self):
         return u"%s %s, %s %s" % (self.street_number or '', self.address1, self.city, self.zip or '')
+
+    def site_details_in_search_result(self):
+        return u"{0} {1}, {2} {3} {4} {5}".format(
+            self.street_number or '',
+            self.address1,
+            self.city,
+            self.zip or '',
+            _("Customer number: ") + self.cust_number,
+            _("Meter number: ") + self.meter_number)
+    
+    @staticmethod
+    def search_in_cust_number_address_meter_number(pws, search_value):
+        lookups = [
+            models.Q(pws=pws, cust_number__icontains=search_value) |
+            models.Q(pws=pws, meter_number__icontains=search_value) |
+            models.Q(pws=pws, street_number__icontains=value) |
+            models.Q(pws=pws, address1__icontains=value) |
+            models.Q(pws=pws, address2__icontains=value)
+            for value in search_value.split()]
+        return Site.objects.filter(*lookups)
+
+    def get_absolute_url(self):
+        return reverse('webapp:site_detail', args=(self.pk,))
 
     class Meta:
         verbose_name = _("Site")
