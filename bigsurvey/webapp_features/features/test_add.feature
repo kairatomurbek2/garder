@@ -37,9 +37,9 @@ Feature: Test adding
     And I choose "True" from "test_result"
     And I choose "True" from "cv1_leaked"
     And I choose "False" from "cv2_leaked"
-    And I choose "True" from "cv1_cleaned"
-    And I choose "True" from "rv_cleaned"
-    And I choose "True" from "cv2_cleaned"
+    And I choose "1" from "cv1_cleaned"
+    And I choose "1" from "rv_cleaned"
+    And I choose "1" from "cv2_cleaned"
     And I choose "True" from "outlet_sov_leaked"
     And I check "rv_did_not_open"
     And I submit "test" form
@@ -62,8 +62,8 @@ Feature: Test adding
       | cv2_gauge_pressure | 321    |
     And I select "tester" from "tester"
     And I choose "True" from "test_result"
-    And I choose "True" from "cv1_cleaned"
-    And I choose "True" from "cv2_cleaned"
+    And I choose "1" from "cv1_cleaned"
+    And I choose "1" from "cv2_cleaned"
     And I submit "test" form
     Then I should see pay modal
     When I close pay modal
@@ -81,7 +81,7 @@ Feature: Test adding
     And I fill in "air_inlet_psi" with "1232"
     And I select "tester" from "tester"
     And I choose "True" from "test_result"
-    And I choose "True" from "pvb_cleaned"
+    And I choose "1" from "pvb_cleaned"
     And I check "cv_leaked"
     And I submit "test" form
     Then I should see pay modal
