@@ -88,14 +88,10 @@ class TestForm(forms.ModelForm):
                                         coerce=coerce_to_bool, required=False)
     outlet_sov_leaked = forms.TypedChoiceField(widget=forms.RadioSelect, choices=VALVE_LEAKED_CHOICES,
                                                coerce=coerce_to_bool, required=False)
-    cv1_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool, required=False)
-    rv_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                        coerce=coerce_to_bool, required=False)
-    cv2_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool, required=False)
-    pvb_cleaned = forms.TypedChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES,
-                                         coerce=coerce_to_bool, required=False)
+    cv1_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, required=False)
+    rv_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, required=False)
+    cv2_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, required=False)
+    pvb_cleaned = forms.ChoiceField(widget=forms.RadioSelect, choices=CLEANED_REPLACED_CHOICES, required=False)
     rv_did_not_open = forms.BooleanField(initial=False, required=False)
     air_inlet_did_not_open = forms.BooleanField(initial=False, required=False)
     cv_leaked = forms.BooleanField(initial=False, required=False)

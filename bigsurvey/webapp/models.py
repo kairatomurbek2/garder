@@ -632,10 +632,14 @@ class Test(models.Model):
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
     paid = models.BooleanField(default=False, verbose_name=_('Whether test paid?'))
-    cv1_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV1 Cleaned or Replaced"))
-    cv2_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("CV2 Cleaned or Replaced"))
-    rv_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("RV Cleaned or Replaced"))
-    pvb_cleaned = models.BooleanField(choices=CLEANED_REPLACED_CHOICES, default=True, verbose_name=_("PVB Cleaned or Replaced"))
+    cv1_cleaned = models.CharField(choices=CLEANED_REPLACED_CHOICES, default=CLEANED_REPLACED_CHOICES[0][0],
+                                   verbose_name=_("CV1 Cleaned or Replaced"), max_length=255)
+    cv2_cleaned = models.CharField(choices=CLEANED_REPLACED_CHOICES, default=CLEANED_REPLACED_CHOICES[0][0],
+                                   verbose_name=_("CV2 Cleaned or Replaced"), max_length=255)
+    rv_cleaned = models.CharField(choices=CLEANED_REPLACED_CHOICES, default=CLEANED_REPLACED_CHOICES[0][0],
+                                  verbose_name=_("RV Cleaned or Replaced"), max_length=255)
+    pvb_cleaned = models.CharField(choices=CLEANED_REPLACED_CHOICES, default=CLEANED_REPLACED_CHOICES[0][0],
+                                   verbose_name=_("PVB Cleaned or Replaced"), max_length=255)
     paypal_payment_id = models.CharField(max_length=50, null=True, blank=True, verbose_name=_('Paypal Payment ID'))
     cv1_detail_rubber_parts_kit = models.BooleanField(default=False, verbose_name=_('Rubber Parts Kit'))
     cv1_detail_cv_assembly = models.BooleanField(default=False, verbose_name=_('CV Assembly'))
