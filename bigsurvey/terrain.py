@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.management import call_command
 from lettuce import before, after, world
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 @before.all
@@ -16,6 +17,7 @@ def init():
     world.browser.implicitly_wait(1)
     world.user = None
     world.cache = {}
+    world.wait = WebDriverWait(world.browser, 20)
 
 
 @after.all

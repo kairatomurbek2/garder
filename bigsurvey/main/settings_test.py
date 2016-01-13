@@ -16,6 +16,7 @@ DEFAULT_FROM_EMAIL = "bss.bpsbr.com@gmail.com"
 REPLY_TO_EMAIL = "bss.bpsbr.com@gmail.com"
 
 RETURN_PATH_EMAIL = "bss.bpsbr.com@gmail.com"
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 FIREFOX_PROFILE_DIR = os.path.join(os.path.dirname(BASE_DIR), 'firefox-profile')
 

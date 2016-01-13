@@ -3,6 +3,7 @@
 In this file we define common functions that may be useful
 in all feature steps.
 """
+from lettuce.django import mail
 from webapp_features.features.definitions.core.form_interactors import (
     login_form
 )
@@ -40,3 +41,11 @@ def surveyor_logs_in():
 def tester_logs_in():
     home_navigator.go_to_login_page()
     login('tester', 'tester')
+
+def user_new_password():
+    home_navigator.go_to_login_page()
+    login()
+
+def read_email():
+    email_obj = mail.queue.get(block=True, timeout=15)
+    return email_obj
