@@ -156,9 +156,9 @@ class TestForm(forms.ModelForm):
     def _clean_valve_cleaned(self, type, error_message):
         field_name = '%s_cleaned' % type
         value = self.cleaned_data.get(field_name)
-        if value == self.fields[field_name].empty_value:
+        if value in self.fields[field_name].empty_values:
             self.add_error(field_name, ValidationError(self.fields[field_name].error_messages['required'], code='required'))
-        if value is False:
+        if value == u'2':
             details = [value for key, value in self.cleaned_data.items() if key.startswith('%s_detail' % type)]
             if not any(details):
                 self.add_error(field_name, ValidationError(error_message))
