@@ -65,8 +65,10 @@ TEST_RESULT_CHOICES = (
 )
 
 CLEANED_REPLACED_CHOICES = (
-    (True, "Cleaned only"),
-    (False, "Replaced")
+    ("0", _("Tested Only")),
+    ("1", _("Cleaned only")),
+    ("2", _("Replaced"))
+
 )
 
 STATES = (
