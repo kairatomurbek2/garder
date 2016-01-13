@@ -532,10 +532,10 @@
         };
 
         var radioChangedTrigger = function (radio, checkboxes) {
-            if (radio.filter(':checked').val() == 'True') {
-                checkboxes.attr('disabled', true);
-            } else {
+            if (radio.filter(':checked').val() == '2') {
                 checkboxes.removeAttr('disabled');
+            } else {
+                checkboxes.attr('disabled', true);
             }
         };
 

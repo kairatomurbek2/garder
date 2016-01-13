@@ -169,7 +169,7 @@
                         {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 {{ test.cv1_cleaned|cleaned_replaced }}
-                                {% if not test.cv1_cleaned %}
+                                {% if test.cv1_cleaned == '2' %}
                                     {% render_replaced_details test.cv1_replaced_details %}
                                 {% endif %}
                             </td>
@@ -177,7 +177,7 @@
                         {% if hazard.bp_type_present in BP_TYPE.RP_TYPES %}
                             <td>
                                 {{ test.rv_cleaned|cleaned_replaced }}
-                                {% if not test.rv_cleaned %}
+                                {% if test.rv_cleaned == '2' %}
                                     {% render_replaced_details test.rv_replaced_details %}
                                 {% endif %}
                             </td>
@@ -185,7 +185,7 @@
                         {% if hazard.bp_type_present in BP_TYPE.RP_TYPES or hazard.bp_type_present in BP_TYPE.DC_TYPES %}
                             <td>
                                 {{ test.cv2_cleaned|cleaned_replaced }}
-                                {% if not test.cv2_cleaned %}
+                                {% if test.cv2_cleaned == '2' %}
                                     {% render_replaced_details test.cv2_replaced_details %}
                                 {% endif %}
                             </td>
@@ -193,7 +193,7 @@
                         {% if hazard.bp_type_present in BP_TYPE.STANDALONE_TYPES %}
                             <td>
                                 {{ test.pvb_cleaned|cleaned_replaced }}
-                                {% if not test.pvb_cleaned %}
+                                {% if test.pvb_cleaned == '2' %}
                                     {% render_replaced_details test.pvb_replaced_details %}
                                 {% endif %}
                             </td>
