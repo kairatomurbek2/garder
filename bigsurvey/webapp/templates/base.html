@@ -33,6 +33,7 @@
         <ul class="uk-navbar-nav">
             {% block menu %}
             {% endblock %}
+            <li><a href="javascript:history.back()">{% trans "Back" %}</a></li>
             <li><a id="help_menu_link" href="{% url 'webapp:help' %}">{% trans "Help" %}</a></li>
             <li><a href="{% url 'accounts:logout' %}">{% trans "Log Out" %}</a></li>
         </ul>
