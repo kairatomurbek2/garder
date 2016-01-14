@@ -1,5 +1,5 @@
 {% load i18n choices %}
-{% if perms.webapp.add_tester_cert %}
+{% if perms.webapp.add_testercert %}
     <div class="padding-top-10">
         <a class="uk-align-center uk-text-center" href="{% url "webapp:tester_cert_add" selected_user.pk %}"
                 id="cert_add_link">
