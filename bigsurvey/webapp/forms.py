@@ -35,14 +35,6 @@ class SiteForm(forms.ModelForm):
         self.fields['status'].empty_label = None
         self.fields['status'].initial = SITE_STATUS.ACTIVE
 
-    def clean(self):
-        cleaned_data = super(SiteForm, self).clean()
-        cust_number = cleaned_data.get('cust_number')
-        pws = cleaned_data.get('pws')
-        if cust_number in [site.cust_number for site in pws.sites.all()]:
-            self.add_error('cust_number', ValidationError(Messages.Site.account_number_exists))
-        return cleaned_data
-
     class Meta:
         model = models.Site
         fields = '__all__'

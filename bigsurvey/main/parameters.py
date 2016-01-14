@@ -274,7 +274,7 @@ class Messages:
         search_error_fields_not_filled = _("Besides PWS, at least one of the following fields must be filled: %s")
         search_error_more_than_one_field_filled = _("Besides PWS, only one of the following fields can be filled: %s")
         search_server_error = _("Search engine error occurred. Please, contact site admin.")
-        account_number_exists = _("There is already site with this account number")
+        account_number_exists = _("There is already a site with this account number")
 
     class Import:
         required_fields_not_filled = _('Please fill in all required fields marked by bold label')

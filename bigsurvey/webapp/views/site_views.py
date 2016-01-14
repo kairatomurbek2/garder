@@ -1,5 +1,6 @@
 import datetime
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import FormView, CreateView, UpdateView
@@ -115,6 +116,13 @@ class SiteAddView(SiteBaseFormView, CreateView):
     permission = 'webapp.add_site'
     success_message = Messages.Site.adding_success
     error_message = Messages.Site.adding_error
+
+    def form_invalid(self, form):
+        cust_number = form.cleaned_data.get('cust_number')
+        pws = form.cleaned_data.get('pws')
+        if cust_number in [site.cust_number for site in pws.sites.all()]:
+            form.add_error('cust_number', ValidationError(Messages.Site.account_number_exists))
+        return super(SiteAddView, self).form_invalid(form)
 
 
 class SiteEditView(SiteBaseFormView, UpdateView):
