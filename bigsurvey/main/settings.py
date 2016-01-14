@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'pagination',
     'ckeditor',
 )
-
+SESSION_COOKIE_AGE = 900
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
