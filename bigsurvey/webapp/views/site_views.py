@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import messages
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
@@ -176,6 +177,11 @@ class BatchUpdateView(BaseTemplateView):
     def _batch_update(self, date, site_pks):
         if 'set_sites_next_survey_date' in self.request.POST:
             self._batch_update_sites(date, site_pks)
+        elif 'set_sites_last_survey_date' in self.request.POST:
+            if date and date > datetime.date.today():
+                messages.error(self.request, Messages.BatchUpdate.error_date_in_future)
+            else:
+                self._batch_update_survey(date, site_pks)
         else:
             self._batch_update_hazards(date, site_pks)
 
@@ -184,6 +190,9 @@ class BatchUpdateView(BaseTemplateView):
 
     def _batch_update_hazards(self, date, site_pks):
         models.Site.objects.filter(pk__in=site_pks).update(due_install_test_date=date)
+
+    def _batch_update_survey(self, date, site_pks):
+        models.Site.objects.filter(pk__in=site_pks).update(last_survey_date=date)
 
     def get_success_url(self):
         return reverse('webapp:batch_update')

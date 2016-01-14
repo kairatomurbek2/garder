@@ -291,6 +291,7 @@ class Messages:
     class BatchUpdate:
         success = _('Batch update was performed successfully')
         error = _('Cannot perform batch update. Please, provide date or select "Empty Date" option')
+        error_date_in_future = _('Cannot perform batch update. Please, provide current date or date in the past')
 
     class PWS:
         adding_success = _('PWS was successfully added')
