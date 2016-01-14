@@ -142,3 +142,9 @@ def click_link_containing_value(step, search_value):
     elem = helper.find(xpath)
     elem.click()
 
+
+@step('I should see the following link: "(.*)"')
+def i_see_a_link_with_text(step, link_text):
+    xpath = Xpath.Pattern.site_link_in_search_results % link_text
+    elem = helper.find(xpath)
+    assert elem is not None
