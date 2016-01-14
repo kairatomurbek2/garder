@@ -138,14 +138,14 @@ def check_site_text_does_not_exist(step):
 
 @step('I click link containing value "(.*)"')
 def click_link_containing_value(step, search_value):
-    xpath = Xpath.Pattern.site_link_in_search_results % search_value
+    xpath = Xpath.Pattern.site_link_in_search_results_with_param % search_value
     elem = helper.find(xpath)
     elem.click()
 
 
 @step('I should see the following link: "(.*)"')
 def i_see_a_link_with_text(step, link_text):
-    xpath = Xpath.Pattern.site_link_in_search_results % link_text
+    xpath = Xpath.Pattern.site_link_in_search_results_with_param % link_text
     elem = helper.find(xpath)
     assert elem is not None
 
@@ -153,7 +153,31 @@ def i_see_a_link_with_text(step, link_text):
 @step('I should see the following links in search result:')
 def i_see_links_in_search_results(step):
     for row in step.hashes:
-        xpath = Xpath.Pattern.site_link_in_search_results % row.values()[0]
+        xpath = Xpath.Pattern.site_link_in_search_results_with_param % row.values()[0]
         elem = helper.find(xpath)
         if elem is None:
             raise AssertionError
+
+
+@step('I should see the following error message above "(.*)" field:')
+def i_see_error_message_above_field(step, field_name):
+    error_message = step.hashes[0].values()[0]
+    xpath = Xpath.Pattern.search_field_error_message % (error_message, field_name)
+    elem = helper.find(xpath)
+    assert elem is not None
+
+
+@step('I should see the following error message above "(.*)", "(.*)" and "(.*)" fields')
+def i_should_see_error_message_above_unfilled_fields(step, address, cust_number, meter_number):
+    fields = [address, cust_number, meter_number]
+    error_message = step.hashes[0].values()[0]
+    for field in fields:
+        xpath = Xpath.Pattern.search_field_error_message % (error_message, field)
+        elem = helper.find(xpath)
+        assert elem is not None
+
+
+@step('I see no search results')
+def no_search_results(step):
+    elements = helper.find_multiple(Xpath.Pattern.site_links_in_search_results)
+    assert len(elements) == 0

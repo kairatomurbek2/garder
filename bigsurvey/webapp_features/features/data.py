@@ -123,7 +123,9 @@ class Xpath:
         site_id = './/tr/td[1][text()="%s"]'
         site_table_text = './/tbody//td[contains(., "%s")]'
         user_page_tab = './/div[@id="tab_control"]/ul/li[%s]'
-        site_link_in_search_results = './/a[@class="site-url"][contains(., "%s")]'
+        site_links_in_search_results = './/a[@class="site-url"]'
+        site_link_in_search_results_with_param = './/a[@class="site-url"][contains(., "%s")]'
+        search_field_error_message = './/ul[@class="errorlist"][contains(., "%s")]/preceding-sibling::p[contains(.,"%s")]'
 
     class Paypal:
         username = './/input[@name="login_email"]'
