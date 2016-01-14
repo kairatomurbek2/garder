@@ -14,3 +14,16 @@ Feature: Site search
       | address      | 18          | 18/12, Central Square, Ancoridge 39012 Customer number: SJK472                |
       | cust_number  | OIK182      | 121, Broadview, Chikago 00192 Customer number: OIK182 Meter number: 123456789 |
       | meter_number | 321654987   | 72 Mial st, Raleigh 27601 Customer number: RAL1234-14 Meter number: 321654987 |
+
+
+  @keep_db
+  Scenario: Search by address returns all sites with addresses containing the search term
+    Given I logged in as "tester"
+    When I select "PWS3, Third PWS" from "pws"
+    And I fill in "address" with "2"
+    And I submit "tester-site-search" form
+    Then I should see the following links in search result:
+    | site_link                                                                     |
+    | 18/12, Central Square, Ancoridge 39012 Customer number: SJK472                |
+    | 121, Broadview, Chikago 00192 Customer number: OIK182 Meter number: 123456789 |
+    | 72 Mial st, Raleigh 27601 Customer number: RAL1234-14 Meter number: 321654987 |

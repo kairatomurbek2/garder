@@ -148,3 +148,12 @@ def i_see_a_link_with_text(step, link_text):
     xpath = Xpath.Pattern.site_link_in_search_results % link_text
     elem = helper.find(xpath)
     assert elem is not None
+
+
+@step('I should see the following links in search result:')
+def i_see_links_in_search_results(step):
+    for row in step.hashes:
+        xpath = Xpath.Pattern.site_link_in_search_results % row.values()[0]
+        elem = helper.find(xpath)
+        if elem is None:
+            raise AssertionError
