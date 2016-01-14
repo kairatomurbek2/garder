@@ -6,6 +6,11 @@
             <p class="uk-text-large uk-text-muted">{% trans "Please enter credentials of the Site" %}</p>
             {% block form %}
                 <form class="uk-form" method="get" name="tester-site-search">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="uk-text-danger">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
                     {% if form.non_field_errors %}
                         <p class="uk-text-danger">{{ form.non_field_errors }}</p>
                     {% endif %}
@@ -15,9 +20,19 @@
                         {{ form.pws|add_class:'uk-width-1-1' }}
                     </div>
                     <div class="uk-form-row">
-                        <p>{% trans 'Customer Number, Customer Address or Meter Number' %}</p>
-                        {{ form.search_value.errors }}
-                        {{ form.search_value|add_class:'uk-width-1-1' }}
+                        <p>{% trans 'Street number and address' %}</p>
+                        {{ form.address.errors }}
+                        {{ form.address|add_class:'uk-width-1-1' }}
+                    </div>
+                    <div class="uk-form-row">
+                        <p>{% trans 'Customer Number' %}</p>
+                        {{ form.cust_number.errors }}
+                        {{ form.cust_number|add_class:'uk-width-1-1' }}
+                    </div>
+                    <div class="uk-form-row">
+                        <p>{% trans 'Meter Number' %}</p>
+                        {{ form.meter_number.errors }}
+                        {{ form.meter_number|add_class:'uk-width-1-1' }}
                     </div>
                     <div class="uk-form-row">
                         <button class="uk-button uk-button-primary uk-width-1-1" name="submit" type="submit">{% trans 'Search' %}</button>
@@ -26,19 +41,25 @@
             {% endblock %}
         </div>
     </div>
-    {% if sites_queryset %}
-    <div class="uk-grid">
-        <div class="uk-width-1-3 uk-container-center uk-vertical-align-middle uk-panel uk-panel-box">
-            <p class="uk-text-large uk-text-muted">{% trans "Search results" %}</p>
-            {% autopaginate sites_queryset 5 %}
-            {% for site in sites_queryset %}
-                <p><a href="{{ site.get_absolute_url }}">{{ site.site_details_in_search_result }}</a></p>
-            {% endfor %}
-        <div class="custom-pagination">
-            {% paginate %}
+    {% if sites_queryset or sites_queryset|length == 0 %}
+        <div class="uk-grid">
+            <div class="uk-width-1-3 uk-container-center uk-vertical-align-middle uk-panel uk-panel-box">
+            {% if sites_queryset|length > 0 %}
+                <p class="uk-text-large uk-text-muted">
+                    {% trans "Results for search in" %} {{ search_field }} {% trans "by term" %} {{ search_value }}
+                </p>
+                {% autopaginate sites_queryset 5 %}
+                {% for site in sites_queryset %}
+                    <p><a href="{{ site.get_absolute_url }}">{{ site.site_details_in_search_result }}</a></p>
+                {% endfor %}
+                <div class="custom-pagination">
+                    {% paginate %}
+                </div>
+            {% else %}
+                <p class="uk-text-large uk-text-muted">{% trans "Site was not found" %}</p>
+            {% endif %}
+            </div>
         </div>
-        </div>
-    </div>
     {% endif %}
 
 {% endblock %}

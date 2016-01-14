@@ -321,7 +321,36 @@ class LetterForm(forms.ModelForm):
 
 class TesterSiteSearchForm(forms.Form):
     pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), required=True)
-    search_value = forms.CharField(label=_('Search value'), required=True)
+    address = forms.CharField(label=_('Street number and address'), required=False)
+    cust_number = forms.CharField(label=_('Customer number'), required=False)
+    meter_number = forms.CharField(label=_('Meter number'), required=False)
+
+    search_field_and_value = None
+
+    def clean(self):
+        cleaned_data = super(TesterSiteSearchForm, self).clean()
+        address = cleaned_data.get('address')
+        cust_number = cleaned_data.get('cust_number')
+        meter_number = cleaned_data.get('meter_number')
+        if len(address) == 0 and len(cust_number) == 0 and len(meter_number) == 0:
+            search_fields = "%s, %s, %s" % (self.fields['address'].label, self.fields['cust_number'].label, self.fields['meter_number'].label)
+            error_message = Messages.Site.search_error_fields_not_filled % search_fields
+            self.add_error('address', ValidationError(error_message))
+            self.add_error('cust_number', ValidationError(error_message))
+            self.add_error('meter_number', ValidationError(error_message))
+        else:
+            self.search_field_and_value = [{field_name: cleaned_data.get(field_name)}
+                                           for field_name in self.fields
+                                           if field_name != 'pws' and len(cleaned_data.get(field_name)) > 0]
+            if len(self.search_field_and_value) > 1:
+                field_names = ["".join(pair.keys()) for pair in self.search_field_and_value]
+                labels = [self.fields[field_name].label for field_name in field_names]
+                for field_name in field_names:
+                    error_message = Messages.Site.search_error_more_than_one_field_filled % ", ".join(labels)
+                    self.add_error(field_name, ValidationError(error_message))
+            else:
+                self.search_field_and_value = self.search_field_and_value[0]
+        return cleaned_data
 
 
 class LetterOptionsForm(forms.Form):

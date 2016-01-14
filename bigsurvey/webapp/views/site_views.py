@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import FormView, CreateView, UpdateView
 from django.core.urlresolvers import reverse
+from webapp.models import NoSearchFieldIndicated
 from .base_views import BaseTemplateView, BaseFormView
 from webapp.utils.excel_writer import XLSExporter
 from webapp import filters, models, forms, perm_checkers
@@ -56,9 +57,17 @@ class TesterHomeView(BaseTemplateView, FormView):
         form.fields['pws'].queryset = pws
         if self.request.GET and set(form.fields.keys()).issubset(set(self.request.GET.keys())):
             if form.is_valid():
-                search_value = form.cleaned_data['search_value']
+                search_field = form.search_field_and_value.keys()[0]
+                search_value = form.search_field_and_value.get(search_field)
                 context['form'] = form
-                search_results = models.Site.search_in_cust_number_address_meter_number(pws, search_value)
+                context['search_field'] = form.fields[search_field].label
+                context['search_value'] = search_value
+                try:
+                    search_results = models.Site.search_in_cust_number_address_meter_number(
+                        pws, search_field, search_value)
+                except NoSearchFieldIndicated:
+                    search_results = []
+                    messages.error(self.request, Messages.Site.search_server_error)
                 context['sites_queryset'] = search_results
                 self.request.session['sites_pks'] = [site.pk for site in search_results]
         context['form'] = form

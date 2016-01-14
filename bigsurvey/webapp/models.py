@@ -441,6 +441,10 @@ class TesterCert(models.Model):
         )
 
 
+class NoSearchFieldIndicated(Exception):
+    pass
+
+
 class Site(models.Model):
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", db_index=True)
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))
@@ -488,21 +492,25 @@ class Site(models.Model):
     def site_details_in_search_result(self):
         return u"{0} {1}, {2} {3} {4} {5}".format(
             self.street_number or '',
-            self.address1,
-            self.city,
+            self.address1 or '',
+            self.city or '',
             self.zip or '',
-            _("Customer number: ") + self.cust_number,
-            _("Meter number: ") + self.meter_number)
-    
+            _("Customer number: ") + self.cust_number if self.cust_number else '',
+            _("Meter number: ") + self.meter_number if self.meter_number else '')
+
     @staticmethod
-    def search_in_cust_number_address_meter_number(pws, search_value):
-        lookups = [
-            models.Q(pws=pws, cust_number__icontains=search_value) |
-            models.Q(pws=pws, meter_number__icontains=search_value) |
-            models.Q(pws=pws, street_number__icontains=value) |
-            models.Q(pws=pws, address1__icontains=value) |
-            models.Q(pws=pws, address2__icontains=value)
-            for value in search_value.split()]
+    def search_in_cust_number_address_meter_number(pws, field, search_value):
+        if field == 'cust_number':
+            lookups = [models.Q(pws=pws, cust_number__iexact=search_value)]
+        elif field == 'address':
+            lookups = [models.Q(pws=pws, street_number__icontains=value) |
+                       models.Q(pws=pws, address1__icontains=value) |
+                       models.Q(pws=pws, address2__icontains=value)
+                       for value in search_value.split()]
+        elif field == 'meter_number':
+            lookups = [models.Q(pws=pws, meter_number__iexact=search_value)]
+        else:
+            raise NoSearchFieldIndicated()
         return Site.objects.filter(*lookups)
 
     def get_absolute_url(self):
