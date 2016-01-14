@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 import re
 import models
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
 from webapp.validators import validate_excel_file
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -29,6 +29,11 @@ class PWSFormForAdmin(forms.ModelForm):
 
 class SiteForm(forms.ModelForm):
     pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), empty_label=None)
+
+    def __init__(self, *args, **kwargs):
+        super(SiteForm, self).__init__(*args, **kwargs)
+        self.fields['status'].empty_label = None
+        self.fields['status'].initial = SITE_STATUS.ACTIVE
 
     def clean(self):
         cleaned_data = super(SiteForm, self).clean()
