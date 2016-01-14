@@ -50,7 +50,7 @@
                 </p>
                 {% autopaginate sites_queryset 5 %}
                 {% for site in sites_queryset %}
-                    <p><a href="{{ site.get_absolute_url }}">{{ site.site_details_in_search_result }}</a></p>
+                    <p><a id="{{ site.pk }}" class="site-url" href="{{ site.get_absolute_url }}">{{ site.site_details_in_search_result }}</a></p>
                 {% endfor %}
                 <div class="custom-pagination">
                     {% paginate %}
