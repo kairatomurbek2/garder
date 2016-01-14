@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 {% load i18n pagination_tags widget_tweaks staticfiles %}
-{% block scripts %}
-    <script src="{% static 'js/custom/batch_update.js' %}"></script>
-    <script src="{% static 'js/custom/filters-offset.js' %}"></script>
-{% endblock %}
 {% block content %}
     <div class="uk-grid">
         {% include 'site/site_filters.html' %}
@@ -16,8 +12,13 @@
                     {% csrf_token %}
                     <div class="uk-text-center">
                         {{ form.date|attr:'data-uk-datepicker:{format:"YYYY-MM-DD"}' }}
-                        <button type="submit" name="set_sites_next_survey_date" class="uk-button uk-button-success">{% trans "Set Next Survey Date" %}</button>
-                        <button type="submit" name="set_hazards_due_install_test_date" class="uk-button uk-button-success">{% trans "Set Due Install/Test Date" %}</button>
+                        <button type="submit" name="set_sites_next_survey_date"
+                                class="uk-button uk-button-success batch_btn"
+                                disabled>{% trans "Set Next Survey Date" %}</button>
+                        <button type="submit" name="set_hazards_due_install_test_date"
+                                class="uk-button uk-button-success batch_btn" disabled>{% trans "Set Due Install/Test Date" %}</button>
+                        <button type="submit" name="set_sites_last_survey_date"
+                                class="uk-button uk-button-success batch_btn" disabled>{% trans "Set Last Survey Date" %}</button>
                         <p class="uk-text-center">
                             {{ form.empty_date }} {{ form.empty_date.label }}
                         </p>
@@ -26,7 +27,8 @@
                         <thead>
                         <tr class="border-bottom">
                             <th class="uk-text-center border-right">
-                                <input type="checkbox" data-action="check_all"/>
+                                <input type="checkbox" data-action="check_all" id="batch_update_all"
+                                       onchange='checkAvailability()'/>
                             </th>
                             <th class="uk-text-center border-right">
                                 {% trans "No." %}
@@ -58,7 +60,8 @@
                         {% for site in filtered_sites %}
                             <tr>
                                 <td class="uk-text-center border-right">
-                                    <input type="checkbox" name="site_pks" value="{{ site.pk }}"/>
+                                    <input type="checkbox" name="site_pks" value="{{ site.pk }}"
+                                           onchange='checkAvailability()'/>
                                 </td>
                                 <td class="uk-text-center border-right">
                                     {{ site.pk }}
@@ -93,4 +96,21 @@
             {% paginate %}
         </div>
     </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/custom/batch_update.js' %}"></script>
+    <script src="{% static 'js/custom/filters-offset.js' %}"></script>
+    <script type="text/javascript">
+        function checkAvailability() {
+            if ($('#batch_update_all').is(':checked')) {
+                $('.batch_btn').prop("disabled", false);
+            }
+            else if ($('input[name=site_pks]').is(':checked')) {
+                $('.batch_btn').prop("disabled", false);
+            }
+            else {
+                $('.batch_btn').prop("disabled", true);
+            }
+        }
+    </script>
 {% endblock %}
