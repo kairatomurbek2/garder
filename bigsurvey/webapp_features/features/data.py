@@ -123,6 +123,7 @@ class Xpath:
         site_id = './/tr/td[1][text()="%s"]'
         site_table_text = './/tbody//td[contains(., "%s")]'
         user_page_tab = './/div[@id="tab_control"]/ul/li[%s]'
+        site_link_in_search_results = './/a[@class="site-url"][contains(., "%s")]'
 
     class Paypal:
         username = './/input[@name="login_email"]'

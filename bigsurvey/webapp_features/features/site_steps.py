@@ -134,3 +134,11 @@ def check_site_text_does_not_exist(step):
     for row in step.hashes:
         elem = helper.find(Xpath.Pattern.site_table_text % row['text'])
         helper.check_element_doesnt_exist(elem, '"%s" is on page.' % row['text'])
+
+
+@step('I click link containing value "(.*)"')
+def click_link_containing_value(step, search_value):
+    xpath = Xpath.Pattern.site_link_in_search_results % search_value
+    elem = helper.find(xpath)
+    elem.click()
+
