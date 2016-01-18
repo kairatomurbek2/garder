@@ -152,13 +152,126 @@
                     </td>
                     <td colspan="2"></td>
                 </tr>
+                {% if test_kit_form %}
+                    <tr class="test-kit-form hidden">
+                        <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                            <label for="{{ test_kit_form.test_serial.id_for_label }}">{{ test_kit_form.test_serial.label }}</label>
+                        </td>
+                        <td class="uk-width-1-6">
+                            {{ test_kit_form.test_serial|add_class:'uk-width-1-1' }}
+                            {{ test_kit_form.test_serial.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ test_kit_form.test_manufacturer.id_for_label }}">{{ test_kit_form.test_manufacturer.label }}</label>
+                        </td>
+                        <td class="uk-width-1-6">
+                            {{ test_kit_form.test_manufacturer|add_class:'uk-width-1-1' }}
+                            {{ test_kit_form.test_manufacturer.errors }}
+                        </td>
+
+                    </tr>
+                    <tr class="test-kit-form hidden">
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ test_kit_form.test_last_cert.id_for_label }}">{{ test_kit_form.test_last_cert.label }}</label>
+                        </td>
+                        <td class="uk-width-1-6">
+                            {{ test_kit_form.test_last_cert|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                            {{ test_kit_form.test_last_cert.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ test_kit_form.is_active.id_for_label }}">{{ test_kit_form.is_active.label }}</label>
+                        </td>
+                        <td class="uk-width-1-6">
+                            {{ test_kit_form.is_active|add_class:'uk-width-1-1' }}
+                            {{ test_kit_form.is_active.errors }}
+                        </td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ test_kit_form.test_model.id_for_label }}">{{ test_kit_form.test_model.label }}</label>
+                        </td>
+                        <td class="uk-width-1-6">
+                            {{ test_kit_form.test_model|add_class:'uk-width-1-1' }}
+                            {{ test_kit_form.test_model.errors }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if cert_form %}
+                    <tr class="cert-form hidden">
+                        <td class="uk-width-1-6 uk-text-right uk-text-bold">
+                            <label for="{{ cert_form.cert_number.id_for_label }}">{{ cert_form.cert_number.label }}</label>
+                        </td>
+                        <td class="uk-width-2-6">
+                            {{ cert_form.cert_number|add_class:'uk-width-1-1' }}
+                            {{ cert_form.cert_number.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ cert_form.cert_date.id_for_label }}">{{ cert_form.cert_date.label }}</label>
+                        </td>
+                        <td class="uk-width-2-6">
+                            {{ cert_form.cert_date|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                            {{ cert_form.cert_date.errors }}
+                        </td>
+                    </tr>
+                    <tr class="cert-form hidden">
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ cert_form.cert_expires.id_for_label }}">{{ cert_form.cert_expires.label }}</label>
+                        </td>
+                        <td class="uk-width-2-6">
+                            {{ cert_form.cert_expires|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                            {{ cert_form.cert_expires.errors }}
+                        </td>
+                        <td class="uk-width-1-6 uk-text-right">
+                            <label for="{{ cert_form.is_active.id_for_label }}">{{ cert_form.is_active.label }}</label>
+                        </td>
+                        <td class="uk-width-2-6">
+                            {{ cert_form.is_active|add_class:'uk-width-1-1' }}
+                            {{ cert_form.is_active.errors }}
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td colspan="4">
-                        <button type="submit" class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
+                        <button type="submit"
+                                class="uk-button uk-button-primary uk-float-right">{% trans "Submit" %}</button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </form>
     </div>
+{% endblock %}
+{% block end_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#id_groups").change(function () {
+                var val = $("#id_groups option:selected").text();
+                var test_kit_form = $(".test-kit-form");
+                var cert_form = $(".cert-form");
+
+                if (val == 'Testers' && !additionalFormsAreVisible(test_kit_form, cert_form)) {
+                    showAdditionalForms(test_kit_form, cert_form);
+                } else {
+                    hideAdditionalForms(test_kit_form, cert_form);
+                }
+            });
+
+            function additionalFormsAreVisible(test_kit_form, cert_form) {
+                return !!(test_kit_form.is(":visible") && cert_form.is(":visible"));
+
+            }
+
+            function showAdditionalForms(test_kit_form, cert_form) {
+                test_kit_form.show();
+                cert_form.show();
+            }
+
+            function hideAdditionalForms(test_kit_form, cert_form) {
+                test_kit_form.hide();
+                cert_form.hide();
+            }
+
+        });
+    </script>
 {% endblock %}

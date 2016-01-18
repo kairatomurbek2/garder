@@ -5,8 +5,9 @@ from webapp import models, forms, perm_checkers
 from main.parameters import Messages, Groups, OWNER_GROUPS, ADMIN_GROUPS
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
-from collections import OrderedDict
 from django.shortcuts import render, redirect
+from webapp.actions.builders import UserManagementActionsBuilder
+from webapp.actions.users import UserAdditionException
 
 
 class UserListView(BaseTemplateView):
@@ -66,6 +67,8 @@ class UserBaseFormView(BaseFormView):
     user_object = None
     employee_model = models.Employee
     employee_form_class = forms.EmployeeForm
+    cert_form_class = forms.TesterCertForm
+    test_kit_form_class = forms.TestKitForm
     employee_object = None
     template_name = 'user/user_form.html'
 
@@ -77,6 +80,10 @@ class UserBaseFormView(BaseFormView):
         context = self.get_context_data(**kwargs)
         context['user_form'] = user_form
         context['employee_form'] = employee_form
+        if self.request.user.has_perm('webapp.access_to_pws_test_kits')\
+                and self.request.user.has_perm('webapp.access_to_pws_tester_certs'):
+            context['test_kit_form'] = self.get_test_kit_form()
+            context['cert_form'] = self.get_cert_form()
         return render(self.request, self.template_name, context)
 
     def _get_queryset_for_group_field(self):
@@ -102,30 +109,39 @@ class UserBaseFormView(BaseFormView):
     def get_success_url(self):
         return reverse('webapp:user_list')
 
+    def get_test_kit_form(self):
+        return self.test_kit_form_class(**self.get_form_kwargs())
+
+    def get_cert_form(self):
+        return self.cert_form_class(**self.get_form_kwargs())
+
+
 
 class UserAddView(UserBaseFormView):
     permission = 'auth.add_user'
     user_form_class = forms.UserAddForm
     success_message = Messages.User.adding_success
-    error_message = Messages.User.adding_error
 
     def post(self, request, *args, **kwargs):
-        user_form = self.get_user_form()
-        employee_form = self.get_employee_form()
-        if user_form.is_valid() and employee_form.is_valid():
-            self.user_object = user_form.save()
-            employee_form.instance.user = self.user_object
-            self.employee_object = employee_form.save()
-            if not (self.request.user.has_perm('webapp.access_to_all_users') or self.request.user.has_perm('webapp.access_to_multiple_pws_users')):
-                self.employee_object.pws = [self.request.user.employee.pws.all()[0]]
-            self.employee_object.save()
+        action = UserManagementActionsBuilder.get_user_add_action(request.user,
+                                                                  self.get_user_form(),
+                                                                  self.get_employee_form(),
+                                                                  self.get_test_kit_form(),
+                                                                  self.get_cert_form())
+
+        try:
+            action.execute()
             messages.success(self.request, self.success_message)
             return redirect(self.get_success_url())
-        else:
-            messages.error(self.request, self.error_message)
-            user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
-            employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
-            return render(self.request, self.template_name, {'user_form': user_form, 'employee_form': employee_form})
+        except UserAdditionException as e:
+            messages.error(self.request, e.message)
+            action.user_form.fields['groups'].queryset = self._get_queryset_for_group_field()
+            action.employee_form.fields['pws'].queryset = self._get_queryset_for_pws_field()
+            return render(self.request, self.template_name,
+                          {'user_form': action.user_form,
+                           'employee_form': action.employee_form,
+                           'test_kit_form': action.test_kit_form,
+                           'cert_form': action.cert_form})
 
     def get_user_form(self):
         return self.user_form_class(**self.get_form_kwargs())
