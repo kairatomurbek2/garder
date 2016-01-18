@@ -9,7 +9,12 @@ import json
 from datetime import datetime, timedelta
 
 
-class TesterCertBaseFormView(BaseFormView):
+class TestKitAndCertPermissionMixin(object):
+
+    def has_test_kit_and_cer_permissions(self):
+        return perm_checkers.TestKitAndCertPermChecker.has_perm(self.request)
+
+class TesterCertBaseFormView(BaseFormView, TestKitAndCertPermissionMixin):
     form_class = forms.TesterCertForm
     model = models.TesterCert
     template_name = "user/certificate_form.html"
@@ -24,7 +29,8 @@ class TesterCertAddView(TesterCertBaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         user = User.objects.get(pk=self.kwargs['pk'])
-        if perm_checkers.UserPermChecker.has_perm(self.request, user):
+        if perm_checkers.UserPermChecker.has_perm(self.request, user) \
+                and self.has_test_kit_and_cer_permissions():
             context = super(TesterCertAddView, self).get_context_data(**kwargs)
             context['user_pk'] = user.pk
             return context
@@ -41,7 +47,8 @@ class TesterCertEditView(TesterCertBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(TesterCertEditView, self).get_form(form_class)
-        if perm_checkers.UserPermChecker.has_perm(self.request, form.instance.user):
+        if perm_checkers.UserPermChecker.has_perm(self.request, form.instance.user)\
+                and self.has_test_kit_and_cer_permissions():
             return form
         raise Http404
 
@@ -51,7 +58,7 @@ class TesterCertEditView(TesterCertBaseFormView, UpdateView):
         return context
 
 
-class TestKitBaseFormView(BaseFormView):
+class TestKitBaseFormView(BaseFormView, TestKitAndCertPermissionMixin):
     form_class = forms.TestKitForm
     model = models.TestKit
     template_name = "user/test_kit_form.html"
@@ -66,7 +73,7 @@ class TestKitAddView(TestKitBaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         user = User.objects.get(pk=self.kwargs['pk'])
-        if perm_checkers.UserPermChecker.has_perm(self.request, user):
+        if perm_checkers.UserPermChecker.has_perm(self.request, user) and self.has_test_kit_and_cer_permissions():
             context = super(TestKitAddView, self).get_context_data(**kwargs)
             context['user_pk'] = user.pk
             return context
@@ -83,7 +90,8 @@ class TestKitEditView(TestKitBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(TestKitEditView, self).get_form(form_class)
-        if perm_checkers.UserPermChecker.has_perm(self.request, form.instance.user):
+        if perm_checkers.UserPermChecker.has_perm(self.request, form.instance.user)\
+                and self.has_test_kit_and_cer_permissions():
             return form
         raise Http404
 

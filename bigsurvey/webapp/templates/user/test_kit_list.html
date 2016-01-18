@@ -1,5 +1,5 @@
 {% load i18n choices %}
-{% if perms.webapp.add_testkit %}
+{% if perms.webapp.access_to_pws_test_kits %}
     <div class="padding-top-10">
         <a class="uk-align-center uk-text-center" href="{% url "webapp:test_kit_add" selected_user.pk %}"
                 id="kit_add_link">
@@ -56,12 +56,16 @@
                     <td>
                         {{ kit.is_active|yn }}
                     </td>
+
                     <td class="border-left uk-text-center">
-                        <a href="{% url "webapp:test_kit_edit" kit.pk %}"
-                                id="kit_{{ kit.pk }}_edit_link">
-                            {% trans "Edit" %}
-                        </a>
+                        {% if perms.webapp.access_to_pws_test_kits %}
+                            <a href="{% url "webapp:test_kit_edit" kit.pk %}"
+                               id="kit_{{ kit.pk }}_edit_link">
+                                {% trans "Edit" %}
+                            </a>
+                        {% endif %}
                     </td>
+
                 </tr>
             {% endfor %}
             </tbody>

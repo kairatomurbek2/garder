@@ -80,3 +80,9 @@ class ImportLogPermChecker(ObjectPermChecker):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_import_logs') or \
                request.user.has_perm('webapp.access_to_pws_import_logs') and obj.pws in request.user.employee.pws.all()
+
+
+class TestKitAndCertPermChecker(object):
+    @staticmethod
+    def has_perm(request):
+        return request.user.has_perm('webapp.access_to_pws_test_kits') and request.user.has_perm('webapp.access_to_pws_tester_certs')

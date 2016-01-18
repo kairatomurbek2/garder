@@ -1,5 +1,5 @@
 {% load i18n choices %}
-{% if perms.webapp.add_testercert %}
+{% if perms.webapp.access_to_pws_tester_certs %}
     <div class="padding-top-10">
         <a class="uk-align-center uk-text-center" href="{% url "webapp:tester_cert_add" selected_user.pk %}"
                 id="cert_add_link">
@@ -51,10 +51,12 @@
                         {{ cert.is_active|yn }}
                     </td>
                     <td class="border-left uk-text-center">
-                        <a href="{% url "webapp:tester_cert_edit" cert.pk %}"
-                                id="cert_{{ cert.pk }}_edit_link">
-                            {% trans "Edit" %}
-                        </a>
+                        {% if perms.webapp.access_to_pws_tester_certs %}
+                            <a href="{% url "webapp:tester_cert_edit" cert.pk %}"
+                               id="cert_{{ cert.pk }}_edit_link">
+                                {% trans "Edit" %}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
