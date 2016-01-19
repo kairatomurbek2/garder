@@ -297,7 +297,7 @@
     <script>
         $(document).ready(function () {
             var navbarHeight = parseInt(navbar.height() + fixedDiv.height());
-            $("#table_div").css("margin-top", fixedDiv.height() + "px");
+            $("#table_div").css("margin-top", fixedDiv.outerHeight() + "px");
             $('.fixed-headers').floatThead({
                 scrollingTop: navbarHeight
             });
