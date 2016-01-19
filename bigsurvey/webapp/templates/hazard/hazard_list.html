@@ -34,9 +34,9 @@
                     <td>{{ hazard.service_type }}</td>
                     <td>{{ hazard.hazard_type }}</td>
                     <td>{{ hazard.assembly_status }}</td>
-                    <td>{{ hazard.bp_type_present }}</td>
+                    <td>{{ hazard.bp_device.bp_type_present }}</td>
                     <td>{{ hazard.bp_type_required }}</td>
-                    <td>{{ hazard.due_test_date }}</td>
+                    <td>{{ hazard.bp_device.due_test_date }}</td>
                     <td class="border-left uk-text-center">
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">
                             {% trans "Detail" %}

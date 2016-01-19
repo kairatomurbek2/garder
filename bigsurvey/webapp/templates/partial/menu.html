@@ -21,13 +21,11 @@
         {% endif %}
     {% endif %}
     {% if perms.webapp.browse_hazard %}
-        {% if perms.webapp.change_all_info_about_hazard %}
-            <li>
-                <a id="hazards_menu_link" href="{% url "webapp:hazard_list" %}">
-                    {% trans "Hazards" %}
-                </a>
-            </li>
-        {% endif %}
+        <li>
+            <a id="hazards_menu_link" href="{% url "webapp:hazard_list" %}">
+                {% trans "Hazards" %}
+            </a>
+        </li>
     {% endif %}
     {% if perms.webapp.browse_letter %}
         <li><a id="letters_menu_link" href="{% url 'webapp:letter_list' %}">{% trans "Letters" %}</a></li>

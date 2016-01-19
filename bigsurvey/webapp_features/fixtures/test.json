@@ -3550,143 +3550,175 @@
 {
   "fields": {
     "orientation": null,
+    "serial_no": "",
+    "replace_date": null,
+    "installed_properly": false,
+    "installer": "",
+    "bp_type_present": "PVB",
+    "bp_size": null,
+    "model_no": "",
+    "manufacturer": null,
+    "notes": "",
+    "install_date": "2015-02-18",
+    "assembly_location": 2,
+    "due_test_date": "2015-05-31"
+  },
+  "model": "webapp.bpdevice",
+  "pk": 1
+},
+{
+  "fields": {
+    "install_date": null,
+    "orientation": null,
+    "serial_no": "",
+    "replace_date": null,
+    "installed_properly": false,
+    "installer": "",
+    "bp_type_present": "RP",
+    "bp_size": null,
+    "model_no": "",
+    "manufacturer": null,
+    "notes": "",
+    "assembly_location": 2,
+    "due_test_date": null
+  },
+  "model": "webapp.bpdevice",
+  "pk": 2
+},
+{
+  "fields":{
+    "orientation": null,
+    "serial_no": "",
+    "replace_date": null,
+    "installed_properly": false,
+    "installer": "",
+    "bp_type_present": null,
+    "bp_size": null,
+    "model_no": "",
+    "manufacturer": null,
+    "notes": "",
+    "install_date": null,
+    "assembly_location": null,
+    "due_test_date": null
+  },
+  "model": "webapp.bpdevice",
+  "pk": 3
+},
+{
+  "fields": {
+    "orientation": null,
+    "serial_no": "",
+    "replace_date": null,
+    "installed_properly": false,
+    "installer": "",
+    "bp_type_present": "RP",
+    "bp_size": null,
+    "model_no": "",
+    "manufacturer": null,
+    "notes": "",
+    "install_date": null,
+    "assembly_location": 2,
+    "due_test_date": null
+  },
+  "model": "webapp.bpdevice",
+  "pk": 4
+},
+{
+  "fields": {
     "pump_present": false,
     "photo": "",
-    "serial_no": "",
     "site": 5,
-    "replace_date": null,
     "bp_type_required": "PVB",
     "hazard_type": 40,
     "longitude": 0.0,
-    "installed_properly": false,
-    "installer": "",
     "photo_thumb": "",
     "is_present": true,
-    "bp_type_present": "PVB",
     "cc_present": false,
     "service_type": 4,
-    "bp_size": null,
-    "model_no": "",
     "aux_water": false,
     "location2": "",
     "location1": "Seattle",
     "latitude": 0.0,
-    "manufacturer": null,
     "regulation_type": null,
     "notes": "",
-    "install_date": "2015-02-18",
     "assembly_status": 3,
-    "assembly_location": 2,
-    "due_test_date": "2015-05-31",
-    "additives_present": false
+    "additives_present": false,
+    "bp_device": 1
   },
   "model": "webapp.hazard",
   "pk": 1
 },
 {
   "fields": {
-    "orientation": null,
+    "assembly_status": 1,
     "pump_present": false,
     "photo": "",
-    "serial_no": "",
     "site": 10,
-    "replace_date": null,
     "bp_type_required": null,
     "hazard_type": 14,
     "longitude": 0.0,
-    "installed_properly": false,
-    "installer": "",
     "photo_thumb": "",
     "is_present": true,
-    "bp_type_present": "RP",
     "cc_present": false,
     "service_type": 3,
-    "bp_size": null,
-    "model_no": "",
     "aux_water": false,
     "location2": "",
     "location1": "Washington",
     "latitude": 0.0,
-    "manufacturer": null,
     "regulation_type": null,
     "notes": "",
-    "install_date": null,
-    "assembly_status": 1,
-    "assembly_location": 2,
-    "due_test_date": null,
-    "additives_present": false
+    "additives_present": false,
+    "bp_device": 2
   },
   "model": "webapp.hazard",
   "pk": 2
 },
 {
   "fields": {
-    "orientation": null,
     "pump_present": false,
     "photo": "",
-    "serial_no": "",
     "site": 5,
-    "replace_date": null,
     "bp_type_required": null,
     "hazard_type": 1,
     "longitude": 0.0,
-    "installed_properly": false,
-    "installer": "",
     "photo_thumb": "",
     "is_present": true,
-    "bp_type_present": null,
     "cc_present": false,
     "service_type": 3,
-    "bp_size": null,
-    "model_no": "",
     "aux_water": false,
     "location2": "",
     "location1": "White House",
     "latitude": 0.0,
-    "manufacturer": null,
     "regulation_type": null,
     "notes": "",
-    "install_date": null,
     "assembly_status": null,
-    "assembly_location": null,
-    "due_test_date": null,
-    "additives_present": false
+    "additives_present": false,
+    "bp_device": 3
   },
   "model": "webapp.hazard",
   "pk": 3
 },
 {
   "fields": {
-    "orientation": null,
     "pump_present": false,
     "photo": "",
-    "serial_no": "",
     "site": 1,
-    "replace_date": null,
     "bp_type_required": "RP",
     "hazard_type": 14,
     "longitude": 0.0,
-    "installed_properly": false,
-    "installer": "",
     "photo_thumb": "",
     "is_present": true,
-    "bp_type_present": "RP",
     "cc_present": false,
     "service_type": 3,
-    "bp_size": null,
-    "model_no": "",
     "aux_water": false,
     "location2": "",
     "location1": "Washington",
     "latitude": 0.0,
-    "manufacturer": null,
     "regulation_type": null,
     "notes": "",
-    "install_date": null,
     "assembly_status": 1,
-    "assembly_location": 2,
-    "due_test_date": null,
-    "additives_present": false
+    "additives_present": false,
+    "bp_device": 4
   },
   "model": "webapp.hazard",
   "pk": 4
@@ -3695,6 +3727,26 @@
   "fields": {
     "name": "SuperAdministrators",
     "permissions": [
+      [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_all_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
       [
         "export_xls",
         "webapp",
@@ -3877,11 +3929,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
@@ -4390,6 +4437,26 @@
     "name": "Administrators",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "export_xls",
         "webapp",
         "site"
@@ -4436,11 +4503,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
@@ -4634,6 +4696,26 @@
     "name": "Surveyors",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "access_to_pws_hazards",
         "webapp",
         "hazard"
@@ -4645,11 +4727,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
@@ -4728,6 +4805,16 @@
     "name": "Testers",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "access_to_pws_hazards",
         "webapp",
         "hazard"
@@ -4738,9 +4825,14 @@
         "hazard"
       ],
       [
-        "change_hazard",
+        "add_bpdevice",
         "webapp",
-        "hazard"
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
       ],
       [
         "change_invite",
@@ -4786,6 +4878,26 @@
   "fields": {
     "name": "PWSOwners",
     "permissions": [
+      [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_multiple_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
       [
         "export_xls",
         "webapp",
@@ -4848,11 +4960,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],

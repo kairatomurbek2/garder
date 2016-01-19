@@ -32,8 +32,9 @@ class HazardListView(BaseTemplateView):
         elif user.has_perm('webapp.access_to_pws_hazards'):
             queryset = (models.Hazard.objects.filter(site__pws__in=user.employee.pws.all(), is_present=True) |
                         models.Hazard.objects.filter(tests__tester=user)).distinct()
-        sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
-        return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
+        #TODO: do something about priority
+        #sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
+        return queryset #.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
 
 
 class HazardDetailView(BaseTemplateView):
@@ -43,7 +44,7 @@ class HazardDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
         context['hazard'] = self._get_hazard()
-        if not context['hazard'].bp_type_present:
+        if not context['hazard'].bp_device:
             if not self.request.user.has_perm('webapp.change_all_info_about_hazard') and not self.request.user.employee.has_licence_for_installation:
                 messages.error(self.request, Messages.Test.assembly_type_not_set_no_licence)
             else:
@@ -69,7 +70,6 @@ class HazardDetailView(BaseTemplateView):
 class HazardBaseFormView(BaseFormView):
     template_name = 'hazard/hazard_form.html'
     form_class = forms.HazardForm
-    form_class_for_tester = forms.HazardFormForTester
     model = models.Hazard
 
     def get_success_url(self):
@@ -89,6 +89,8 @@ class HazardAddView(HazardBaseFormView, CreateView):
     permission = 'webapp.add_hazard'
     success_message = Messages.Hazard.adding_success
     error_message = Messages.Hazard.adding_error
+    bp_form_class = forms.BPForm
+    object = None
 
     AJAX_OK = 'ok'
     AJAX_ERROR = 'error'
@@ -97,19 +99,23 @@ class HazardAddView(HazardBaseFormView, CreateView):
         context = super(HazardAddView, self).get_context_data(**kwargs)
         context['site_pk'] = self.kwargs['pk']
         context['service_type'] = self.kwargs['service']
+        if not context.get('bp_form'):
+            context['bp_form'] = self.bp_form_class()
         return context
 
-    def ajax_response(self, status, form):
+    def ajax_response(self, status, form, bp_form):
         json_data = {}
         context = self.get_context_data()
         if status == self.AJAX_OK:
-            context['form'] = forms.HazardForm()
+            context['form'] = forms.HazardForm(initial={'has_device': True})
+            context['bp_form'] = forms.BPForm()
             json_data['option'] = {
                 'value': self.object.pk,
                 'text': str(self.object)
             }
         else:
             context['form'] = form
+            context['bp_form'] = bp_form
         json_data['status'] = status
         json_data['form'] = render_to_string('hazard/partial/hazard_form.html', context, RequestContext(self.request))
         return JsonResponse(json_data)
@@ -120,13 +126,19 @@ class HazardAddView(HazardBaseFormView, CreateView):
             raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
-    def form_valid(self, form):
+    def form_valid(self, form, bp_form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         response = super(HazardAddView, self).form_valid(form)
+        if form.cleaned_data['has_device']:
+            bp_device = bp_form.save()
+        else:
+            bp_device = None
+        self.object.bp_device = bp_device
+        self.object.save()
         self._update_site(form.instance.site, self.kwargs['service'])
         if self.request.is_ajax():
-            return self.ajax_response(self.AJAX_OK, form)
+            return self.ajax_response(self.AJAX_OK, form, bp_form)
         return response
 
     def _update_site(self, site, service_type):
@@ -136,16 +148,37 @@ class HazardAddView(HazardBaseFormView, CreateView):
             site.fire_present = True
         elif service_type == 'irrigation':
             site.irrigation_present = True
-        site.due_install_test_date = site.hazards.aggregate(
-            Min('due_test_date')
-        )['due_test_date__min']
+        #TODO do something about updating
+        # site.due_install_test_date = site.hazards.all().bp_device.aggregate(
+        #     Min('due_test_date')
+        # )['due_test_date__min']
         site.save()
 
-    def form_invalid(self, form):
-        response = super(HazardAddView, self).form_invalid(form)
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        bp_form = self.get_bp_form()
+        if form.is_valid() and (bp_form.is_valid() or not form.cleaned_data['has_device']):
+            return self.form_valid(form, bp_form)
+        else:
+            return self.form_invalid(form, bp_form)
+
+    def get_bp_form(self):
+        kwargs = {
+            'initial': {},
+            'prefix': 'bp',
+        }
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return self.bp_form_class(**kwargs)
+
+    def form_invalid(self, form, bp_form):
         if self.request.is_ajax():
-            return self.ajax_response(self.AJAX_ERROR, form)
-        return response
+            return self.ajax_response(self.AJAX_ERROR, form, bp_form)
+        return self.render_to_response(self.get_context_data(form=form, bp_form=bp_form))
 
 
 class HazardEditView(HazardBaseFormView, UpdateView):
@@ -153,11 +186,15 @@ class HazardEditView(HazardBaseFormView, UpdateView):
     success_message = Messages.Hazard.editing_success
     error_message = Messages.Hazard.editing_error
 
-    def get_form_class(self):
-        if self.request.user.has_perm('webapp.change_all_info_about_hazard'):
-            return self.form_class
+    def get_context_data(self, **kwargs):
+        context = super(HazardEditView, self).get_context_data(**kwargs)
+        hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        context['hazard_pk'] = self.kwargs['pk']
+        if hazard.bp_device:
+            context['form'].fields['has_device'].initial = True
         else:
-            return self.form_class_for_tester
+            context['form'].fields['has_device'].initial = False
+        return context
 
     def get_form(self, form_class):
         form = super(HazardEditView, self).get_form(form_class)
@@ -177,7 +214,8 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
     def form_valid(self, form):
         response = super(HazardEditView, self).form_valid(form)
-        self._update_site(form.instance.site)
+        #TODO
+        #self._update_site(form.instance.site)
         return response
 
     def _update_site(self, site):

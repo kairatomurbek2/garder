@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n staticfiles widget_tweaks google_map %}
 {% block menu %}
-    {% if hazard.pk %}
-        <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
+    {% if hazard_pk %}
+        <li><a href="{% url 'webapp:hazard_detail' hazard_pk %}">{% trans "Cancel" %}</a></li>
     {% else %}
         <li><a href="{% url 'webapp:site_detail' site_pk %}">{% trans "Cancel" %}</a></li>
     {% endif %}
@@ -13,17 +13,15 @@
     </div>
 {% endblock %}
 {% block end_scripts %}
-    {% if perms.webapp.change_all_info_about_hazard %}
-        {% load_google_map_js %}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                GoogleMap.mapHolder = $('#mapholder');
-                GoogleMap.latitudeInput = $('input[name="latitude"]');
-                GoogleMap.longitudeInput = $('input[name="longitude"]');
-                GoogleMap.notificationLabel = $('#notification');
-                GoogleMap.getLocationButton = $('button[data-action="get-location"]');
-                GoogleMap.initialize(true);
-            });
-        </script>
-    {% endif %}
+    {% load_google_map_js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GoogleMap.mapHolder = $('#mapholder');
+            GoogleMap.latitudeInput = $('input[name="latitude"]');
+            GoogleMap.longitudeInput = $('input[name="longitude"]');
+            GoogleMap.notificationLabel = $('#notification');
+            GoogleMap.getLocationButton = $('button[data-action="get-location"]');
+            GoogleMap.initialize(true);
+        });
+    </script>
 {% endblock %}

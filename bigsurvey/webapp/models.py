@@ -607,6 +607,43 @@ class Site(models.Model):
 reversion.register(Site)
 
 
+class BPDevice(models.Model):
+    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
+                                          related_name="hazards")
+    installed_properly = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Installed Properly"))
+    installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
+    install_date = models.DateField(blank=True, null=True, verbose_name=_("Install Date"))
+    replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
+    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
+                                    related_name="hazards")
+    bp_type_present = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, verbose_name=_('BP Type Present'))
+    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
+                                related_name="hazards")
+    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
+                                     related_name="hazards")
+    model_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Model No."))
+    serial_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Serial No."))
+    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
+    notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+
+    def __unicode__(self):
+        return u"%s, %s" % (self.bp_type_present, self.hazard)
+
+    @property
+    def paid_tests(self):
+        return self.tests.filter(paid=True)
+
+    class Meta:
+        verbose_name = _("BP Device")
+        verbose_name_plural = _("BP Devices")
+        permissions = (
+            ('browse_devices', _('Can browse BP Device')),
+            ('access_to_all_devices', _('Has access to all BP Devices')),
+            ('access_to_pws_devices', _('Has access to PWS\'s BP Devices')),
+            ('access_to_multiple_pws_devices', _('Has access to multiple PWS\' BP Devices'))
+        )
+
+
 class Hazard(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="hazards")
     location1 = models.CharField(max_length=70, blank=True, null=True, verbose_name=_("Location 1"))
@@ -628,32 +665,16 @@ class Hazard(models.Model):
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
     hazard_degree = models.ForeignKey(HazardDegree, null=True, blank=True, verbose_name=_("Hazard Degree"),
                                       related_name="hazards")
-    assembly_location = models.ForeignKey(AssemblyLocation, null=True, blank=True, verbose_name=_("Assembly Location"),
-                                          related_name="hazards")
     assembly_status = models.ForeignKey(AssemblyStatus, null=True, blank=True, verbose_name=_("Assembly Status"),
                                         related_name="hazards")
-    installed_properly = models.BooleanField(choices=YESNO_CHOICES, default=False, verbose_name=_("Installed Properly"))
-    installer = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Installer"))
-    install_date = models.DateField(blank=True, null=True, verbose_name=_("Install Date"))
-    replace_date = models.DateField(null=True, blank=True, verbose_name=_("Replace Date"))
-    orientation = models.ForeignKey(Orientation, null=True, blank=True, verbose_name=_('orientation'),
-                                    related_name="hazards")
-    bp_type_present = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True,
-                                       verbose_name=_('BP Type Present'))
     bp_type_required = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True,
                                         verbose_name=_('BP Type Required'))
-    bp_size = models.ForeignKey(BPSize, null=True, blank=True, verbose_name=_("BP Size"),
-                                related_name="hazards")
-    manufacturer = models.ForeignKey(BPManufacturer, null=True, blank=True, verbose_name=_("BP Manufacturer"),
-                                     related_name="hazards")
-    model_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Model No."))
-    serial_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Serial No."))
-    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
+    bp_device = models.OneToOneField(BPDevice, null=True, blank=True, related_name=_("hazard"))
     is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.hazard_type, self.service_type)
+        return u"%s, %s, %s" % (self.hazard_type, self.service_type, self.site.cust_number)
 
     def get_pws_list(self):
         return [self.site.pws]
@@ -669,8 +690,7 @@ class Hazard(models.Model):
             ('browse_hazard', _('Can browse Hazard')),
             ('access_to_all_hazards', _('Has access to all Hazards')),
             ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
-            ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards')),
-            ('change_all_info_about_hazard', _('Can change all information about Hazard')),
+            ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards'))
         )
 
 reversion.register(Hazard)

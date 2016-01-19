@@ -394,13 +394,13 @@ class FilterActions(object):
         @staticmethod
         def due_test_date_from(hazards, value):
             if value:
-                return hazards.filter(due_test_date__gte=value)
+                return hazards.filter(bp_device__due_test_date__gte=value)
             return hazards
 
         @staticmethod
         def due_test_date_to(hazards, value):
             if value:
-                return hazards.filter(due_test_date__lte=value)
+                return hazards.filter(bp_device__due_test_date__lte=value)
             return hazards
 
         @staticmethod
@@ -432,7 +432,7 @@ class FilterActions(object):
             if value:
                 if value == 'none':
                     return hazards.filter(bp_type_present=None)
-                return hazards.filter(bp_type_present=value)
+                return hazards.filter(bp_device__bp_type_present=value)
             return hazards
 
         @staticmethod
@@ -454,7 +454,7 @@ class FilterActions(object):
         @staticmethod
         def due_test_blank(hazards, value):
             if value:
-                return hazards.filter(due_test_date=None)
+                return hazards.filter(bp_device__due_test_date=None)
             return hazards
 
     class User(object):

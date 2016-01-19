@@ -57,26 +57,19 @@ class SurveyForm(forms.ModelForm):
 
 
 class HazardForm(forms.ModelForm):
+    has_device = forms.BooleanField(required=False, initial=True)
+
     class Meta:
         model = models.Hazard
-        exclude = ('site', 'service_type', 'is_present',)
+        exclude = ('site', 'service_type', 'is_present', 'bp_device')
 
 
-class HazardFormForTester(forms.ModelForm):
+class BPForm(forms.ModelForm):
     class Meta:
-        model = models.Hazard
-        exclude = (
-            'site',
-            'service_type',
-            'hazard_type',
-            'hazard_degree',
-            'location1',
-            'location2',
-            'notes',
-            'due_test_date',
-            'bp_type_required',
-            'is_present',
-        )
+        model = models.BPDevice
+        fields = ('assembly_location', 'installed_properly', 'installer', 'install_date', 'replace_date',
+                  'orientation', 'bp_type_present', 'bp_size', 'manufacturer', 'model_no', 'serial_no',
+                  'due_test_date', 'notes')
 
 
 def coerce_to_bool(value):

@@ -1,0 +1,107 @@
+{% load i18n widget_tweaks %}
+
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right uk-text-bold">
+        <label for="{{ bp_form.bp_type_present.id_for_label }}">{% trans "Assembly Type Present" %}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.bp_type_present|add_class:'uk-width-1-1' %}
+        {{ bp_form.bp_type_present.errors }}
+    </td>
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.due_test_date.id_for_label }}">{{ bp_form.due_test_date.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {{ bp_form.due_test_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+        {{ bp_form.due_test_date.errors }}
+    </td>
+</tr>
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.installed_properly.id_for_label }}">{{ bp_form.installed_properly.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.installed_properly|add_class:'uk-width-1-1' %}
+        {{ bp_form.installed_properly.errors }}
+    </td>
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.installer.id_for_label }}">{{ bp_form.installer.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.installer|add_class:'uk-width-1-1' %}
+        {{ bp_form.installer.errors }}
+    </td>
+</tr>
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.install_date.id_for_label }}">{{ bp_form.install_date.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {{ bp_form.install_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+        {{ bp_form.install_date.errors }}
+    </td>
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.replace_date.id_for_label }}">{{ bp_form.replace_date.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {{ bp_form.replace_date|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+        {{ bp_form.replace_date.errors }}
+    </td>
+</tr>
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.bp_size.id_for_label }}">{{ bp_form.bp_size.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.bp_size|add_class:'uk-width-1-1' %}
+        {{ bp_form.bp_size.errors }}
+    </td>
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.manufacturer.id_for_label }}">{{ bp_form.manufacturer.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.manufacturer|add_class:'uk-width-1-1' %}
+        {{ bp_form.manufacturer.errors }}
+    </td>
+</tr>
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.model_no.id_for_label }}">{{ bp_form.model_no.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.model_no|add_class:'uk-width-1-1' %}
+        {{ bp_form.model_no.errors }}
+    </td>
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.serial_no.id_for_label }}">{{ bp_form.serial_no.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.serial_no|add_class:'uk-width-1-1' %}
+        {{ bp_form.serial_no.errors }}
+    </td>
+</tr>
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.assembly_location.id_for_label }}">{{ bp_form.assembly_location.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.assembly_location|add_class:'uk-width-1-1' %}
+        {{ bp_form.assembly_location.errors }}
+    </td>
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.orientation.id_for_label }}">{{ bp_form.orientation.label }}</label>
+    </td>
+    <td class="uk-width-1-3">
+        {% render_field bp_form.orientation|add_class:'uk-width-1-1' %}
+        {{ bp_form.orientation.errors }}
+    </td>
+</tr>
+<tr data-field-id="bp_device_form_row">
+    <td class="uk-width-1-6 uk-text-right">
+        <label for="{{ bp_form.notes.id_for_label }}">{% trans "Assembly Notes" %}</label>
+    </td>
+    <td class="uk-width-5-6" colspan="3">
+        {% render_field bp_form.notes|add_class:'uk-width-1-1'|attr:'rows:3' %}
+        {{ bp_form.notes.errors }}
+    </td>
+</tr>
