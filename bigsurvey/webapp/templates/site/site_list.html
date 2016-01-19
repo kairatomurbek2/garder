@@ -16,12 +16,12 @@
             {% endif %}
             {% paginate %}
         </div>
-        <div id="table_div">
+        <div id="table_div" >
             {% include 'messages.html' %}
             {% if header %}
                 <div class="uk-alert">{{ header }}</div>
             {% endif %}
-            <table class="uk-table big-table uk-table-hover fixed-headers">
+            <table class="uk-table big-table uk-table-hover fixed-headers" id="data_table">
                 <thead>
                 <tr class="table-border-bottom">
                     <th class="vertical-align-top table-border-right">
@@ -265,6 +265,10 @@
                         </td>
                     </tr>
                 {% endfor %}
+                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
+                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
+                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
+                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
                 </tbody>
             </table>
         </div>
@@ -297,7 +301,7 @@
     <script>
         $(document).ready(function () {
             var navbarHeight = parseInt(navbar.height() + fixedDiv.outerHeight());
-            $("#table_div").css("margin-top", fixedDiv.outerHeight() + "px");
+            $("#data_table").css("margin-top", fixedDiv.outerHeight() + "px");
             $('.fixed-headers').floatThead({
                 scrollingTop: navbarHeight
             });
