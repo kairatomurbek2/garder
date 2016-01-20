@@ -13,7 +13,7 @@ class AuditLogFilterForm(forms.Form):
     last_day_of_cur_month = first_day_of_cur_month + relativedelta(
         months=1, days=-1)
     pws = forms.ModelChoiceField(queryset=models.PWS.objects.none(), required=False,
-                                 empty_label=_("All available PWSs"))
+                                 empty_label=_("All available PWSs"), label='PWS')
     start_date = forms.DateField(initial=first_day_of_cur_month)
     end_date = forms.DateField(initial=last_day_of_cur_month)
     username = forms.CharField(required=False,
