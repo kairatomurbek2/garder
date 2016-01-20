@@ -1,4 +1,5 @@
 @site_search
+  @tmp
 Feature: Site search
 
   @keep_db
@@ -49,7 +50,7 @@ Feature: Site search
     Given I logged in as "tester"
     When I select "PWS3, Third PWS" from "pws"
     And I submit "tester-site-search" form
-    Then I should see the following error message above "Street number and address", "Customer Number" and "Meter Number" fields
+    Then I should see the following error message above "Street number and address", "Account Number" and "Meter Number" fields
       | error_message                                                                                                              |
       | Besides PWS, at least one of the following fields must be filled: Street number and address, Customer number, Meter number |
 
