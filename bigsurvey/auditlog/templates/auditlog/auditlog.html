@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n choices common widget_tweaks %}
+{% load i18n choices common widget_tweaks pagination_tags %}
 {% block content %}
     <div class="wrapper">
     <form action="" method="get" name="test_filter" class="uk-form">
@@ -46,6 +46,7 @@
             </tr>
         </thead>
         <tbody>
+        {% autopaginate version_objects_with_diffs 20 %}
         {% for version, diff in version_objects_with_diffs %}
             <tr>
                 <td class="uk-text-center border-right">
@@ -81,5 +82,8 @@
         {% endfor %}
         </tbody>
         </table>
+        <div class="custom-pagination">
+            {% paginate %}
+        </div>
     </div>
 {% endblock %}
