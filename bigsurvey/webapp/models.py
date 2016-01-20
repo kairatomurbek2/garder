@@ -455,8 +455,8 @@ class Employee(models.Model):
             ('access_to_audit_log', _('Has access to view PWS audit logs')),
         )
 
-
-reversion.register(Employee)
+reversion.register(User, exclude=["last_login"])
+reversion.register(Employee, follow=["user"])
 
 
 class TestKit(models.Model):
