@@ -1898,7 +1898,7 @@
 },
 {
   "fields": {
-    "assembly_status": "Replaced"
+    "assembly_status": "Maintenance"
   },
   "model": "webapp.assemblystatus",
   "pk": 2

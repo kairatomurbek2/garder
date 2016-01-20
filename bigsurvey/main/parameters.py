@@ -67,7 +67,7 @@ TEST_RESULT_CHOICES = (
 CLEANED_REPLACED_CHOICES = (
     ("0", _("Tested Only")),
     ("1", _("Cleaned only")),
-    ("2", _("Replaced"))
+    ("2", _("Maintenance"))
 
 )
 
