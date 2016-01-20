@@ -47,7 +47,7 @@ class AuditLogForm(forms.ModelForm):
 
 
 class AuditLogAdmin(admin.ModelAdmin):
-
+    actions = None
     list_filter = [('revision__date_created', DateRangeFilter), 'content_type']
     search_fields = ['revision__user__username']
     list_display = ['get_date_created', 'get_user', 'content_type', 'get_diff', 'object_id', 'object']
