@@ -58,6 +58,9 @@
                     {% if perms.webapp.access_to_batch_update %}
                         <li><a id="batch_update_menu_link" href="{% url 'webapp:batch_update' %}">{% trans "Batch Update" %}</a></li>
                     {% endif %}
+                    {% if perms.webapp.access_to_audit_log %}
+                        <li><a id="audit_log_menu_link" href="{% url 'webapp:audit_log' %}">{% trans "Audit log" %}</a></li>
+                    {% endif %}
                 </ul>
             </li>
         </ul>

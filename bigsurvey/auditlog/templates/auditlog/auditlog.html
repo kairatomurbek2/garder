@@ -1,10 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% load i18n choices common widget_tweaks %}
+{% block content %}
+    <div class="wrapper">
+    <form action="" method="get" name="test_filter" class="uk-form">
+        <div>
+            <div>{{ form.pws.label }}:</div><div>{{ form.pws|add_class:"uk-width-3-10" }}</div>
+            <div>{{ form.start_date.label }}:</div><div>{{ form.start_date|add_class:"uk-width-3-10"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}</div>
+            <div>{{ form.end_date.label }}:</div><div>{{ form.end_date|add_class:"uk-width-3-10"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}</div>
+        </div>
+        <div>
+            <div>{{ form.username.label }}:</div><div>{{ form.username|add_class:"uk-width-3-10" }}</div>
+            <div>{{ form.user_group.label }}:</div><div>{{ form.user_group|add_class:"uk-width-3-10" }}</div>
+            <div>{{ form.record_object.label }}:</div><div>{{ form.record_object|add_class:"uk-width-3-10" }}</div>
+        </div>
+        <div class="uk-align-left">
+            <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                {% trans "Apply Filters" %}
+            </button>
+        </div>
+    </form>
+        <table class="uk-table uk-table-hover">
+        <thead>
+            <tr class="border-bottom">
+                <th class="border-right uk-text-center">
+                    {% trans "No." %}
+                </th>
+                <th class="border-right uk-text-center">
+                    {% trans "Operation date and time" %}
+                </th>
+                <th class="border-right uk-text-center">
+                    {% trans "User" %}
+                </th>
+                <th class="border-right uk-text-center">
+                    {% trans "Groups" %}
+                </th>
+                <th class="border-right uk-text-center">
+                    {% trans "PWS" %}
+                </th>
+                <th class="border-right uk-text-center">
+                    {% trans "Object" %}
+                </th>
+                <th class="border-right uk-text-center">
+                    {% trans "Changes" %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for version, diff in version_objects_with_diffs %}
+            <tr>
+                <td class="uk-text-center border-right">
+                    {{ forloop.counter }}
+                </td>
+                <td class="uk-text-center border-right">
+                    {{ version.revision.date_created }}
+                </td>
+                <td class="uk-text-center border-right">
+                    {{ version.revision.user }}
+                </td>
+                <td class="uk-text-center border-right">
+                    {% for group in version.revision.user.groups.all %}
+                        <p>{{ group }}</p>
+                    {% endfor %}
+                </td>
+                <td class="uk-text-center border-right">
+                    {% for pws in version.object.get_pws_list %}
+                        <p>{{ pws }}</p>
+                    {% endfor %}
+                </td>
+                <td class="uk-text-center border-right">
+                    {{ version.object|verbose_name }}: {{ version.object }}
+                </td>
+                <td class="uk-text-center border-right">
+                    {% if diff|length > 0 %}
+                        {% autoescape off %}{{ diff }}{% endautoescape %}
+                    {% else %}
+                        {% trans "Initial revision record" %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock %}

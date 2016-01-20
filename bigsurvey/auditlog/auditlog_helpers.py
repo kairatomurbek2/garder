@@ -1,6 +1,6 @@
-
+import datetime
 import json
-
+from django.contrib.auth.models import User
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from diff_match_patch import diff_match_patch
@@ -72,3 +72,43 @@ def _compare_objects(current_version, prev_version):
             result[key]['prev'] = prev_version[key]
     return result
 
+
+def get_version_objects_with_diff(form, current_user_pws_list):
+    start_date = form.cleaned_data['start_date']
+    end_date = form.cleaned_data['end_date']
+    range_end = end_date + datetime.timedelta(days=1)
+    date_range = (start_date, range_end)
+
+    filtered_version_objects = Version.objects.filter(revision__date_created__range=date_range)
+    if form.cleaned_data['pws']:
+        pws_list = [form.cleaned_data['pws']]
+    else:
+        pws_list = current_user_pws_list
+    if form.cleaned_data['user_group']:
+        user_group = form.cleaned_data['user_group']
+        if user_group.name == u'SuperAdministrators':
+            filtered_version_objects = filtered_version_objects.filter(revision__user__is_superuser=True)
+        else:
+            users = User.objects.filter(groups=user_group, employee__pws__in=pws_list)
+            filtered_version_objects = filtered_version_objects.filter(revision__user__in=users)
+    if form.cleaned_data['username']:
+        users = User.objects.filter(username__icontains=form.cleaned_data['username'])
+        filtered_version_objects = filtered_version_objects.filter(revision__user__in=users)
+    if form.cleaned_data['record_object']:
+        filtered_version_objects = filtered_version_objects.filter(
+            object_repr__icontains=form.cleaned_data['record_object'])
+    target_objects = [obj for obj in filtered_version_objects
+                      if hasattr(obj.object, 'get_pws_list')
+                      and _check_pws(obj.object, pws_list)]
+    diffs = [render_diff(obj) for obj in target_objects]
+    return zip(target_objects, diffs)
+
+
+def _check_pws(obj, pws_list):
+    result = []
+    for pws in pws_list:
+        if pws in obj.get_pws_list():
+            result.append(True)
+        else:
+            result.append(False)
+    return True in result

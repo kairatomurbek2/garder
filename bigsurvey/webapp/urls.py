@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 
 from webapp import views
 from forms import PasswordChangeWithMinLengthForm
+from auditlog.views import AuditLogView
 
 urlpatterns = patterns(
     '',
@@ -77,4 +78,5 @@ urlpatterns = patterns(
         {'post_change_redirect': '/password/edit/',
          'password_change_form': PasswordChangeWithMinLengthForm},
         name='password'),
+    url(r'^audit-log/', AuditLogView.as_view(), name='audit_log'),
 )
