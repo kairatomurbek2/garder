@@ -4827,6 +4827,11 @@
         "employee"
       ],
       [
+        "access_to_audit_log",
+        "webapp",
+        "employee"
+      ],
+      [
         "access_to_multiple_pws_hazards",
         "webapp",
         "hazard"
