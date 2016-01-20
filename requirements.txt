@@ -44,3 +44,7 @@ xhtml2pdf==0.0.6
 xlrd==0.9.3
 XlsxWriter==0.7.7
 GitPython==1.0.1
+django-reversion==1.10.0
+diff-match-patch==20121119
+django-reversion-compare==0.5.6
+python-dateutil==2.1
