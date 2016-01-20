@@ -1,6 +1,7 @@
 import datetime
 import json
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from diff_match_patch import diff_match_patch
@@ -98,18 +99,32 @@ def get_version_objects_with_diff(form, current_user_pws_list):
         filtered_version_objects = filtered_version_objects.filter(
             object_repr__icontains=form.cleaned_data['record_object'])
     filtered_version_objects = filtered_version_objects.order_by('-revision__date_created')
-    target_objects = [obj for obj in filtered_version_objects
-                      if hasattr(obj.object, 'get_pws_list')
-                      and _check_pws(obj.object, pws_list)]
-    diffs = [render_diff(obj) for obj in target_objects]
-    return zip(target_objects, diffs)
+    target_objects = [(obj, render_diff(obj)) for obj in filtered_version_objects
+                      if _object_is_valid(obj) and _check_obj_pws(obj, pws_list) and len(render_diff(obj)) > 0]
+    return target_objects
 
 
-def _check_pws(obj, pws_list):
+def _object_is_valid(obj):
+    obj_has_attribute = hasattr(obj.object, 'get_pws_list')
+    obj_is_user_instance = obj.content_type == ContentType.objects.get_for_model(User)
+    return obj_has_attribute or obj_is_user_instance
+
+
+def _check_obj_pws(obj, pws_list):
     result = []
-    for pws in pws_list:
-        if pws in obj.get_pws_list():
+    if obj.content_type == ContentType.objects.get_for_model(User):
+        if _user_belongs_to_one_of_the_user_pws(obj, pws_list):
             result.append(True)
-        else:
-            result.append(False)
+    else:
+        for pws in pws_list:
+            if pws in obj.object.get_pws_list():
+                result.append(True)
+            else:
+                result.append(False)
     return True in result
+
+
+def _user_belongs_to_one_of_the_user_pws(obj, pws_list):
+    obj_pws_list = obj.object.employee.pws.all()
+    common_pws_as_set = set(obj_pws_list).intersection(set(pws_list))
+    return len(common_pws_as_set) > 0
