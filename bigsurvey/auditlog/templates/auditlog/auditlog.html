@@ -46,6 +46,7 @@
             </tr>
         </thead>
         <tbody>
+        {% if version_objects_with_diffs %}
         {% autopaginate version_objects_with_diffs 20 %}
         {% for version, diff in version_objects_with_diffs %}
             <tr>
@@ -80,6 +81,7 @@
                 </td>
             </tr>
         {% endfor %}
+        {% endif %}
         </tbody>
         </table>
         <div class="custom-pagination">
