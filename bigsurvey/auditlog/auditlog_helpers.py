@@ -74,30 +74,34 @@ def _compare_objects(current_version, prev_version):
     return result
 
 
-def get_version_objects_with_diff(form, current_user_pws_list):
-    start_date = form.cleaned_data['start_date']
-    end_date = form.cleaned_data['end_date']
+def get_version_objects_with_diff(current_user_pws_list, **kwargs):
+    start_date = kwargs.get('start_date')
+    end_date = kwargs.get('end_date')
+    pws = kwargs.get('pws')
+    user_group = kwargs.get('user_group')
+    username = kwargs.get('username')
+    record_object = kwargs.get('record_object')
+
     range_end = end_date + datetime.timedelta(days=1)
     date_range = (start_date, range_end)
 
     filtered_version_objects = Version.objects.filter(revision__date_created__range=date_range)
-    if form.cleaned_data['pws']:
-        pws_list = [form.cleaned_data['pws']]
+    if pws:
+        pws_list = [pws]
     else:
         pws_list = current_user_pws_list
-    if form.cleaned_data['user_group']:
-        user_group = form.cleaned_data['user_group']
+    if user_group:
         if user_group.name == u'SuperAdministrators':
             filtered_version_objects = filtered_version_objects.filter(revision__user__is_superuser=True)
         else:
             users = User.objects.filter(groups=user_group, employee__pws__in=pws_list)
             filtered_version_objects = filtered_version_objects.filter(revision__user__in=users)
-    if form.cleaned_data['username']:
-        users = User.objects.filter(username__icontains=form.cleaned_data['username'])
+    if username:
+        users = User.objects.filter(username__icontains=username)
         filtered_version_objects = filtered_version_objects.filter(revision__user__in=users)
-    if form.cleaned_data['record_object']:
+    if record_object:
         filtered_version_objects = filtered_version_objects.filter(
-            object_repr__icontains=form.cleaned_data['record_object'])
+            object_repr__icontains=record_object)
     filtered_version_objects = filtered_version_objects.order_by('-revision__date_created')
     target_objects = [(obj, render_diff(obj)) for obj in filtered_version_objects
                       if _object_is_valid(obj) and _check_obj_pws(obj, pws_list) and len(render_diff(obj)) > 0]
