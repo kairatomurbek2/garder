@@ -3592,7 +3592,7 @@
     "replace_date": null,
     "installed_properly": false,
     "installer": "",
-    "bp_type_present": null,
+    "bp_type_present": "DCDA",
     "bp_size": null,
     "model_no": "",
     "manufacturer": null,
@@ -3641,7 +3641,7 @@
     "latitude": 0.0,
     "regulation_type": null,
     "notes": "",
-    "assembly_status": 3,
+    "assembly_status": "due_install",
     "additives_present": false,
     "bp_device": 1
   },
@@ -3650,7 +3650,7 @@
 },
 {
   "fields": {
-    "assembly_status": 1,
+    "assembly_status": "installed",
     "pump_present": false,
     "photo": "",
     "site": 10,
@@ -3716,7 +3716,7 @@
     "latitude": 0.0,
     "regulation_type": null,
     "notes": "",
-    "assembly_status": 1,
+    "assembly_status": "installed",
     "additives_present": false,
     "bp_device": 4
   },

@@ -61,7 +61,8 @@ class TestDetailView(BaseTemplateView):
         if self.request.user != test.user and not test.paid:
             raise Http404
         context['test'] = test
-        context['hazard'] = test.bp_device
+        context['bp_device'] = test.bp_device
+        context['hazard'] = test.bp_device.hazard
         context['BP_TYPE'] = BP_TYPE
         return context
 
@@ -190,7 +191,7 @@ class TestBaseFormView(BaseFormView):
     def get_form(self, form_class):
         form = super(TestBaseFormView, self).get_form(form_class)
         form.fields['tester'].queryset = self._get_queryset_for_tester_field()
-        form.bp_type = self.get_hazard().bp_type_required
+        form.bp_type = self.get_hazard().bp_type_present
         return form
 
     def _get_queryset_for_tester_field(self):
@@ -216,11 +217,12 @@ class TestAddView(TestBaseFormView, CreateView):
     def get_hazard(self):
         if self.hazard:
             return self.hazard
-        self.hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        self.hazard = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         return self.hazard
 
     def get_form(self, form_class):
-        if not perm_checkers.HazardPermChecker.has_perm(self.request, models.Hazard.objects.get(pk=self.kwargs['pk'])):
+        bp_device = self.get_hazard()
+        if not perm_checkers.HazardPermChecker.has_perm(self.request, bp_device.hazard):
             raise Http404
         return super(TestAddView, self).get_form(form_class)
 
@@ -228,7 +230,7 @@ class TestAddView(TestBaseFormView, CreateView):
         return reverse('webapp:test_edit', args=(self.object.pk,))
 
     def form_valid(self, form):
-        form.instance.bp_device = models.Hazard.objects.get(pk=self.kwargs['pk'])
+        form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         form.instance.user = self.request.user
         response = super(TestAddView, self).form_valid(form)
         self.request.session['test_for_payment_pk'] = self.object.pk

@@ -79,7 +79,7 @@ Feature: Site detail
       | Jan. 26, 2015 |
       | surveyor      |
 
-  @keep_db
+  @keep_db @site_detail_for_tester
   Scenario: Tester is opening site detail page
     Given I logged in as "tester"
     When I select "North USA PWS" from "pws"

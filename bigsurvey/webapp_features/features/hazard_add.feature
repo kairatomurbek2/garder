@@ -31,8 +31,9 @@ Feature: Hazard Add
     Given I logged in as "root"
     When I directly open "hazard_add" page for site with pk "5" and service "fire"
     And I fill in following fields with following values
-      | field     | value    |
-      | location1 | backyard |
+      | field      | value    |
+      | location1  | backyard |
+    And I check "has_device"
     And I select "Ice Maker" from "hazard_type"
     And I select "Yes" from "pump_present"
     And I select "Yes" from "additives_present"

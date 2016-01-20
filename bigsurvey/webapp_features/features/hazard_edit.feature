@@ -21,38 +21,41 @@ Feature: Hazard Edit
       | surveyor  | 2  | not see  |
       | surveyor  | 1  | see      |
       | surveyor  | 4  | see      |
-      | tester    | 2  | not see  |
-      | tester    | 1  | not see  |
+      | tester    | 2  | see      |
+      | tester    | 1  | see      |
       | tester    | 3  | see      |
 
-  @keep_db
-  Scenario: Tester Field Set
-    Given I logged in as "tester"
-    When I directly open "hazard_edit" page with pk "2"
-    Then I should not see following
-      | text        |
-      | Hazard Type |
-      | Location 1  |
-      | Location 2  |
-      | Notes       |
+    #TODO move this to BPDevice tests. Tester should not edit hazard anymore
+#  @keep_db
+#  Scenario: Tester Field Set
+#    Given I logged in as "tester"
+#    When I directly open "hazard_edit" page with pk "2"
+#    Then I should not see following
+#      | text        |
+#      | Hazard Type |
+#      | Location 1  |
+#      | Location 2  |
+#      | Notes       |
 
-  Scenario Outline: Testing has_licence_for_installation property
-    Given "tester" <relation> licence for installation
-    And I logged in as "tester"
-    When I directly open "hazard_edit" page with pk "2"
-    Then I should <reaction> "Page not found"
-    Examples:
-      | relation      | reaction |
-      | has           | not see  |
-      | does not have | see      |
+  #TODO tester should see buttons "install" and "replace" or message about licence in hazard detail page
+#  Scenario Outline: Testing has_licence_for_installation property
+#    Given "tester" <relation> licence for installation
+#    And I logged in as "tester"
+#    When I directly open "hazard_edit" page with pk "2"
+#    Then I should <reaction> "Page not found"
+#    Examples:
+#      | relation      | reaction |
+#      | has           | not see  |
+#      | does not have | see      |
 
+  @correct_hazard_edit
   Scenario: Correct hazard editing
-    Given I logged in as "tester"
+    Given I logged in as "admin"
     When I directly open "hazard_edit" page with pk "2"
     And I fill in following fields with following values
-      | field     | value |
-      | installer | self  |
-    And I select "Horizontal" from "orientation"
+      | field     | value          |
+      | notes     | this is hazard |
+    And I select "Pollutant" from "hazard_degree"
     And I select "Yes" from "pump_present"
     And I select "Yes" from "additives_present"
     And I select "Yes" from "cc_present"
@@ -62,8 +65,8 @@ Feature: Hazard Edit
     And I should see "hazard editing success" message
     And I should see following
       | text              |
-      | self              |
-      | Horizontal        |
+      | this is hazard    |
+      | Pollutant         |
       | Trailer Park      |
       | Washington        |
       | Pump Present      |

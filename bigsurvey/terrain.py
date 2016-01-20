@@ -9,7 +9,11 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 @before.all
 def init():
-    call_command('reset_db', interactive=False, verbosity=1)
+    try:
+        call_command('flush', interactive=False, verbosity=1)
+        call_command('reset_autoincrement')
+    except RuntimeError:
+        pass
     call_command('migrate', interactive=False, verbosity=1, load_initial_data=False)
     call_command('restore_db', interactive=False, verbosity=1)
     world.browser = webdriver.Firefox(webdriver.FirefoxProfile(settings.FIREFOX_PROFILE_DIR))

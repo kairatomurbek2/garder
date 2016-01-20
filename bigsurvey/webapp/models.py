@@ -627,7 +627,11 @@ class BPDevice(models.Model):
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
-        return u"%s, %s" % (self.bp_type_present, self.hazard)
+        try:
+            hazard = self.hazard
+        except:
+            hazard = 'Not installed'
+        return u"%s, %s" % (self.bp_type_present, hazard)
 
     @property
     def paid_tests(self):
@@ -665,8 +669,8 @@ class Hazard(models.Model):
     hazard_type = models.ForeignKey(HazardType, verbose_name=_("Hazard Type"), related_name="hazards")
     hazard_degree = models.ForeignKey(HazardDegree, null=True, blank=True, verbose_name=_("Hazard Degree"),
                                       related_name="hazards")
-    assembly_status = models.ForeignKey(AssemblyStatus, null=True, blank=True, verbose_name=_("Assembly Status"),
-                                        related_name="hazards")
+    assembly_status = models.CharField(choices=ASSEMBLY_STATUS_CHOICES, max_length=15, null=True, blank=True,
+                                       verbose_name=_("Assembly Status"))
     bp_type_required = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True,
                                         verbose_name=_('BP Type Required'))
     bp_device = models.OneToOneField(BPDevice, null=True, blank=True, related_name=_("hazard"))
@@ -746,7 +750,7 @@ reversion.register(Survey)
 
 
 class Test(models.Model):
-    bp_device = models.ForeignKey(Hazard, verbose_name=_("BP Device"), related_name="tests")
+    bp_device = models.ForeignKey(BPDevice, verbose_name=_("BP Device"), related_name="tests")
     tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")
     user = models.ForeignKey(User, verbose_name=_("Who added test into System"), related_name="added_tests")
     test_date = models.DateField(verbose_name=_("Test Date"), default=date.today)

@@ -102,3 +102,10 @@ class SetDueInstallTestDateQuery(RawSqlQuery):
                     WHERE %(hazards_table_name)s.site_id = %(sites_table_name)s.id)
         '''
         return query % {'sites_table_name': cls.sites_table_name, 'hazards_table_name': cls.hazards_table_name}
+
+
+class ResetAutoincrementFieldsForTesting(RawSqlQuery):
+
+    @classmethod
+    def as_sqlite(cls):
+        return "delete from sqlite_sequence;"

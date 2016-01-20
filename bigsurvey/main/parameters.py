@@ -31,7 +31,6 @@ class BP_TYPE(object):
     NOT_REQUIRE_TEST_TYPES = [AIR_GAP, AVB, HBVB]
     REQUIRE_TEST_TYPES = [DC, DCDA, PVB, RP, RPDA, SVB]
 
-
 BP_TYPE_CHOICES = (
     (BP_TYPE.AIR_GAP, BP_TYPE.AIR_GAP),
     (BP_TYPE.AVB, BP_TYPE.AVB),
@@ -42,6 +41,28 @@ BP_TYPE_CHOICES = (
     (BP_TYPE.RP, BP_TYPE.RP),
     (BP_TYPE.RPDA, BP_TYPE.RPDA),
     (BP_TYPE.SVB, BP_TYPE.SVB),
+)
+
+
+class AssemblyStatus(object):
+    INSTALLED = 'installed'
+    DUE_INSTALL = 'due_install'
+    DUE_REPLACE = 'due_replace'
+    NOT_REQUIRED = 'not_required'
+    MAINTENANCE = 'maintenance'
+
+ASSEMBLY_STATUS_CHOICES = (
+    (AssemblyStatus.INSTALLED, _('Installed')),
+    (AssemblyStatus.DUE_INSTALL, _('Due Install')),
+    (AssemblyStatus.DUE_REPLACE, _('Due Replace')),
+    (AssemblyStatus.MAINTENANCE, _('Maintenance')),
+    (AssemblyStatus.NOT_REQUIRED, _('Not Required'))
+)
+
+ASSEMBLY_STATUSES_WITH_BP = (
+    AssemblyStatus.INSTALLED,
+    AssemblyStatus.DUE_REPLACE,
+    AssemblyStatus.MAINTENANCE
 )
 
 YESNO_CHOICES = (
@@ -118,8 +139,6 @@ PAST_DATE_FILTER_CHOICES = (
     ('6-12months', _('6-12 months ago')),
     ('year', _('Over a year ago')),
 )
-
-TESTER_ASSEMBLY_STATUSES = ['Installed', 'Replaced']
 
 
 class Groups:

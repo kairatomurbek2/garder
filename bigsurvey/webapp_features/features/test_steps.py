@@ -81,9 +81,9 @@ def check_test_detail_page(step, pk):
 
 @step('Hazard with pk "(\d+)" has "(Air Gap|AVB|DC|DCDA|RP|RPDA|PVB|SVB|HBVB)" assembly type')
 def set_hazard_assembly_type(step, pk, assembly_type):
-    hazard = models.Hazard.objects.get(pk=pk)
-    hazard.bp_type_present = assembly_type
-    hazard.save()
+    bp_device = models.BPDevice.objects.get(pk=pk)
+    bp_device.bp_type_present = assembly_type
+    bp_device.save()
 
 
 @step('I directly open "test_list" page')

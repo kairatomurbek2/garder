@@ -33,14 +33,14 @@ class HazardPermChecker(ObjectPermChecker):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_hazards') or \
                request.user.has_perm('webapp.access_to_pws_hazards') and obj.site.pws in request.user.employee.pws.all() or \
-               obj.tests.filter(tester=request.user).exists()
+               obj.bp_device.tests.filter(tester=request.user).exists()
 
 
 class TestPermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_tests') or \
-               request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.site.pws in request.user.employee.pws.all() or \
+               request.user.has_perm('webapp.access_to_pws_tests') and obj.bp_device.hazard.site.pws in request.user.employee.pws.all() or \
                obj.tester == request.user
 
 

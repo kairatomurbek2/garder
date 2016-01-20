@@ -115,14 +115,18 @@
         </div>
         <script type="text/javascript">
             function triggerDeviceForm(){
-                $('#includedBPForm').toggle();
+                var status = $("#id_assembly_status :selected").val();
+                if ($.inArray(status, ['installed', 'due_replace', 'maintenance']) < 0) {
+                    $('#includedBPForm').hide()
+                }
+                else {
+                    $('#includedBPForm').show()
+                }
             }
             $(function(){
-                var has_device = $('#id_has_device');
-                has_device.click(triggerDeviceForm);
-                if(!has_device.prop('checked')){
-                    $('#includedBPForm').hide();
-                }
+                var status_select = $('#id_assembly_status');
+                status_select.change(triggerDeviceForm);
+                triggerDeviceForm();
             });
         </script>
     {% endif %}
@@ -178,7 +182,7 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="submit" class="uk-button uk-button-primary uk-float-right">
+                    <button type="submit" class="uk-button uk-button-primary uk-float-right" id="hazard_submit_button">
                         {% trans "Submit" %}
                     </button>
                 </td>

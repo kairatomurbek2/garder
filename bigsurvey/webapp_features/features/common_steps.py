@@ -200,3 +200,9 @@ def refresh_page(step):
 def click_element_by_xpath(xpath):
     element = helper.find(xpath)
     element.click()
+
+
+@step('Sleep (\d+)')
+def sleep_step(step, seconds):
+    # to debug f***ing tests
+    time.sleep(float(seconds))

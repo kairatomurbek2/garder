@@ -25,6 +25,7 @@ Feature: Letter Adding
     | tester    | 1  | see      |
     | tester    | 10 | see      |
 
+  @letter_add_correct
   Scenario: Correct Letter Adding
     Given I logged in as "root"
     And PWS with pk "6" has uploaded logo

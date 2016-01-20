@@ -52,8 +52,8 @@
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
                     </td>
                     <td class="uk-text-center">
-                        {% if perms.webapp.add_test and hazard.bp_type_required in BP_TYPE.REQUIRE_TEST_TYPES %}
-                            <a href="{% url "webapp:test_add" hazard.pk %}">{% trans "Add Test" %}</a>
+                        {% if perms.webapp.add_test and hazard.bp_device and hazard.bp_device.bp_type_present in BP_TYPE.REQUIRE_TEST_TYPES %}
+                            <a href="{% url "webapp:test_add" hazard.bp_device.pk %}">{% trans "Add Test" %}</a>
                         {% endif %}
                     </td>
                 </tr>

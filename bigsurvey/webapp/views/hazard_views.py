@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.core.urlresolvers import reverse
 from webapp import filters, models, forms, perm_checkers
 from django.views.generic import CreateView, UpdateView
-from main.parameters import BP_TYPE, Messages, TESTER_ASSEMBLY_STATUSES
+from main.parameters import BP_TYPE, Messages, ASSEMBLY_STATUSES_WITH_BP
 from django.contrib import messages
 from webapp.raw_sql_queries import HazardPriorityQuery
 from django.db import connection
@@ -75,6 +75,11 @@ class HazardBaseFormView(BaseFormView):
     def get_success_url(self):
         return reverse('webapp:hazard_detail', args=(self.object.pk,))
 
+    def device_present(self, form):
+        if form.cleaned_data['assembly_status'] in ASSEMBLY_STATUSES_WITH_BP:
+            return True
+        return False
+
     def form_valid(self, form):
         self.object = form.save()
         if self.request.FILES.get('photo'):
@@ -107,7 +112,7 @@ class HazardAddView(HazardBaseFormView, CreateView):
         json_data = {}
         context = self.get_context_data()
         if status == self.AJAX_OK:
-            context['form'] = forms.HazardForm(initial={'has_device': True})
+            context['form'] = forms.HazardForm()
             context['bp_form'] = forms.BPForm()
             json_data['option'] = {
                 'value': self.object.pk,
@@ -126,11 +131,20 @@ class HazardAddView(HazardBaseFormView, CreateView):
             raise Http404
         return super(HazardAddView, self).get_form(form_class)
 
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        bp_form = self.get_bp_form()
+        if form.is_valid() and (bp_form.is_valid() or not self.device_present(form)):
+            return self.form_valid(form, bp_form)
+        else:
+            return self.form_invalid(form, bp_form)
+
     def form_valid(self, form, bp_form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         response = super(HazardAddView, self).form_valid(form)
-        if form.cleaned_data['has_device']:
+        if self.device_present(form):
             bp_device = bp_form.save()
         else:
             bp_device = None
@@ -154,15 +168,6 @@ class HazardAddView(HazardBaseFormView, CreateView):
         # )['due_test_date__min']
         site.save()
 
-    def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        bp_form = self.get_bp_form()
-        if form.is_valid() and (bp_form.is_valid() or not form.cleaned_data['has_device']):
-            return self.form_valid(form, bp_form)
-        else:
-            return self.form_invalid(form, bp_form)
-
     def get_bp_form(self):
         kwargs = {
             'initial': {},
@@ -176,6 +181,8 @@ class HazardAddView(HazardBaseFormView, CreateView):
         return self.bp_form_class(**kwargs)
 
     def form_invalid(self, form, bp_form):
+        if self.error_message:
+            messages.error(self.request, self.error_message)
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_ERROR, form, bp_form)
         return self.render_to_response(self.get_context_data(form=form, bp_form=bp_form))
@@ -188,33 +195,22 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(HazardEditView, self).get_context_data(**kwargs)
-        hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
         context['hazard_pk'] = self.kwargs['pk']
-        if hazard.bp_device:
-            context['form'].fields['has_device'].initial = True
-        else:
-            context['form'].fields['has_device'].initial = False
         return context
 
     def get_form(self, form_class):
         form = super(HazardEditView, self).get_form(form_class)
         if not perm_checkers.HazardPermChecker.has_perm(self.request, form.instance):
             raise Http404
-        if not self.request.user.has_perm('webapp.change_all_info_about_hazard') and not self.request.user.employee.has_licence_for_installation:
-            raise Http404
-        form.fields['assembly_status'].queryset = self._get_queryset_for_assembly_status_field()
         return form
-
-    def _get_queryset_for_assembly_status_field(self):
-        if self.request.user.has_perm('webapp.change_all_info_about_hazard'):
-            queryset = models.AssemblyStatus.objects.all()
-        else:
-            queryset = models.AssemblyStatus.objects.filter(assembly_status__in=TESTER_ASSEMBLY_STATUSES)
-        return queryset
 
     def form_valid(self, form):
         response = super(HazardEditView, self).form_valid(form)
-        #TODO
+        if not self.device_present(form):
+            form.instance.bp_device = None
+            form.instance.save()
+        # TODO: editing hazard with device
+        # TODO: something about update
         #self._update_site(form.instance.site)
         return response
 

@@ -65,7 +65,6 @@ Feature: Menu
       | tests |
     And I should not see following menu links
       | link    |
-      | hazards |
       | admin   |
       | pws     |
       | letters |
@@ -74,7 +73,7 @@ Feature: Menu
       | surveys |
       | testers |
 
-  @keep_db
+  @keep_db\
   Scenario: PWS owner menu
     Given I logged in as "pws_owner"
     When I open "home" page
