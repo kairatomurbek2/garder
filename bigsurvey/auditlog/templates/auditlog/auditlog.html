@@ -1,91 +1,143 @@
 {% extends "base.html" %}
 {% load i18n choices common widget_tweaks pagination_tags %}
 {% block content %}
-    <div class="wrapper">
-    <form action="" method="get" name="test_filter" class="uk-form">
-        <div>
-            <div>{{ form.pws.label }}:</div><div>{{ form.pws|add_class:"uk-width-3-10" }}</div>
-            <div>{{ form.start_date.label }}:</div><div>{{ form.start_date|add_class:"uk-width-3-10"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}</div>
-            <div>{{ form.end_date.label }}:</div><div>{{ form.end_date|add_class:"uk-width-3-10"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}</div>
+<div class="wrapper">
+    <form action="" method="get" name="test_filter" class="uk-form uk-form-stacked">
+        <div class="uk-block uk-block-muted">
+            <div class="uk-container">
+                <div class="uk-grid uk-grid-match" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-3 uk-row-first">
+                        <div class="uk-panel">
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" for="id_start_date">{{ form.start_date.label }}</label>
+
+                                <div class="uk-form-controls">
+                                    {{ form.start_date|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" for="id_end_date">{{ form.end_date.label }}</label>
+
+                                <div class="uk-form-controls">
+                                    {{ form.end_date|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-medium-1-3">
+                        <div class="uk-panel">
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" for="id_username">{{ form.username.label }}</label>
+
+                                <div class="uk-form-controls">
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" for="id_user_group">{{ form.user_group.label }}</label>
+
+                                <div class="uk-form-controls">
+                                    {{ form.user_group }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-medium-1-3">
+                        <div class="uk-panel">
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" for="id_pws">{{ form.pws.label }}</label>
+
+                                <div class="uk-form-controls">
+                                    {{ form.pws }}
+                                </div>
+                            </div>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label"
+                                       for="id_record_object">{{ form.record_object.label }}</label>
+
+                                <div class="uk-form-controls">
+                                    {{ form.record_object }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-form-row uk-align-center">
+                        <button class="uk-button uk-button-primary uk-align-center" type="submit">
+                            {% trans "Apply Filters" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <div>{{ form.username.label }}:</div><div>{{ form.username|add_class:"uk-width-3-10" }}</div>
-            <div>{{ form.user_group.label }}:</div><div>{{ form.user_group|add_class:"uk-width-3-10" }}</div>
-            <div>{{ form.record_object.label }}:</div><div>{{ form.record_object|add_class:"uk-width-3-10" }}</div>
-        </div>
-        <div class="uk-align-left">
-            <button class="uk-button uk-button-primary uk-align-center" type="submit">
-                {% trans "Apply Filters" %}
-            </button>
-        </div>
+
     </form>
-        <table class="uk-table uk-table-hover">
+    <table class="uk-table uk-table-hover">
         <thead>
-            <tr class="border-bottom">
-                <th class="border-right uk-text-center">
-                    {% trans "No." %}
-                </th>
-                <th class="border-right uk-text-center">
-                    {% trans "Operation date and time" %}
-                </th>
-                <th class="border-right uk-text-center">
-                    {% trans "User" %}
-                </th>
-                <th class="border-right uk-text-center">
-                    {% trans "Groups" %}
-                </th>
-                <th class="border-right uk-text-center">
-                    {% trans "PWS" %}
-                </th>
-                <th class="border-right uk-text-center">
-                    {% trans "Object" %}
-                </th>
-                <th class="border-right uk-text-center">
-                    {% trans "Changes" %}
-                </th>
-            </tr>
+        <tr class="border-bottom">
+            <th class="border-right uk-text-center">
+                {% trans "No." %}
+            </th>
+            <th class="border-right uk-text-center">
+                {% trans "Operation date and time" %}
+            </th>
+            <th class="border-right uk-text-center">
+                {% trans "User" %}
+            </th>
+            <th class="border-right uk-text-center">
+                {% trans "Groups" %}
+            </th>
+            <th class="border-right uk-text-center">
+                {% trans "PWS" %}
+            </th>
+            <th class="border-right uk-text-center">
+                {% trans "Object" %}
+            </th>
+            <th class="border-right uk-text-center">
+                {% trans "Changes" %}
+            </th>
+        </tr>
         </thead>
         <tbody>
         {% if version_objects_with_diffs %}
         {% autopaginate version_objects_with_diffs 20 %}
         {% for version, diff in version_objects_with_diffs %}
-            <tr>
-                <td class="uk-text-center border-right">
-                    {{ forloop.counter }}
-                </td>
-                <td class="uk-text-center border-right">
-                    {{ version.revision.date_created }}
-                </td>
-                <td class="uk-text-center border-right">
-                    {{ version.revision.user }}
-                </td>
-                <td class="uk-text-center border-right">
-                    {% for group in version.revision.user.groups.all %}
-                        <p>{{ group }}</p>
-                    {% endfor %}
-                </td>
-                <td class="uk-text-center border-right">
-                    {% for pws in version.object.get_pws_list %}
-                        <p>{{ pws }}</p>
-                    {% endfor %}
-                </td>
-                <td class="uk-text-center border-right">
-                    {{ version.object|verbose_name }}: {{ version.object }}
-                </td>
-                <td class="uk-text-center border-right">
-                    {% if diff|length > 0 %}
-                        {% autoescape off %}{{ diff }}{% endautoescape %}
-                    {% else %}
-                        {% trans "Initial revision record" %}
-                    {% endif %}
-                </td>
-            </tr>
+        <tr>
+            <td class="uk-text-center border-right">
+                {{ forloop.counter }}
+            </td>
+            <td class="uk-text-center border-right">
+                {{ version.revision.date_created }}
+            </td>
+            <td class="uk-text-center border-right">
+                {{ version.revision.user }}
+            </td>
+            <td class="uk-text-center border-right">
+                {% for group in version.revision.user.groups.all %}
+                    <p>{{ group }}</p>
+                {% endfor %}
+            </td>
+            <td class="uk-text-center border-right">
+                {% for pws in version.object.get_pws_list %}
+                    <p>{{ pws }}</p>
+                {% endfor %}
+            </td>
+            <td class="uk-text-center border-right">
+                {{ version.object|verbose_name }}: {{ version.object }}
+            </td>
+            <td class="uk-text-center border-right">
+                {% if diff|length > 0 %}
+                {% autoescape off %}{{ diff }}{% endautoescape %}
+                {% else %}
+                {% trans "Initial revision record" %}
+                {% endif %}
+            </td>
+        </tr>
         {% endfor %}
         {% endif %}
         </tbody>
-        </table>
-        <div class="custom-pagination">
-            {% paginate %}
-        </div>
+    </table>
+    <div class="custom-pagination">
+        {% paginate %}
     </div>
+</div>
 {% endblock %}
