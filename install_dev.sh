@@ -8,4 +8,5 @@ pip install -r requirements.txt
 cd bigsurvey
 ./manage.py migrate --noinput
 ./manage.py loaddata test
+./manage.py createinitialrevisions
 deactivate
