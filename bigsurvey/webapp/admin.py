@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext as _
 from django import forms
 from redactor.widgets import RedactorEditor
+from reversion_compare.admin import CompareVersionAdmin
 
 import models
 
@@ -28,7 +29,7 @@ class StaticTextAdminForm(forms.ModelForm):
         }
 
 
-class StaticTextAdmin(admin.ModelAdmin):
+class StaticTextAdmin(CompareVersionAdmin):
     form = StaticTextAdminForm
 
 
@@ -42,20 +43,20 @@ class SurveyAdminForm(forms.ModelForm):
         self.fields['hazards'].queryset = models.Hazard.objects.filter(site=self.instance.site)
 
 
-class SurveyAdmin(admin.ModelAdmin):
+class SurveyAdmin(CompareVersionAdmin):
     form = SurveyAdminForm
     filter_horizontal = ("hazards",)
 
 
-class TestAdmin(admin.ModelAdmin):
+class TestAdmin(CompareVersionAdmin):
     readonly_fields = 'paypal_payment_id',
 
 
-class ImportLogModelAdmin(admin.ModelAdmin):
+class ImportLogModelAdmin(CompareVersionAdmin):
     readonly_fields = 'added_sites', 'updated_sites', 'deleted_sites', 'progress'
 
 
-class LetterTypeAdmin(admin.ModelAdmin):
+class LetterTypeAdmin(CompareVersionAdmin):
     list_display = 'letter_type', 'pws'
 
 

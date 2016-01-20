@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User, Group
 from ckeditor.fields import RichTextField
+from reversion import revisions as reversion
 
 from main.parameters import *
 from utils import photo_util
@@ -28,6 +29,8 @@ class SourceType(models.Model):
             ('browse_sourcetype', _('Can browse Source Type')),
         )
 
+reversion.register(SourceType)
+
 
 class SiteType(models.Model):
     site_type = models.CharField(max_length=50, verbose_name=_("Site Type"))
@@ -42,6 +45,8 @@ class SiteType(models.Model):
         permissions = (
             ('browse_sitetype', _('Can browse Site Type')),
         )
+
+reversion.register(SiteType)
 
 
 class SiteUse(models.Model):
@@ -58,6 +63,8 @@ class SiteUse(models.Model):
             ('browse_siteuse', _('Can browse Site Use')),
         )
 
+reversion.register(SiteUse)
+
 
 class ServiceType(models.Model):
     service_type = models.CharField(max_length=20, verbose_name=_("Service Type"))
@@ -73,6 +80,8 @@ class ServiceType(models.Model):
             ('browse_servicetype', _('Can browse Service Type')),
         )
 
+reversion.register(ServiceType)
+
 
 class SurveyType(models.Model):
     survey_type = models.CharField(max_length=20, verbose_name=_("Survey Type"))
@@ -87,6 +96,8 @@ class SurveyType(models.Model):
         permissions = (
             ('browse_surveytype', _('Can browse Survey Type')),
         )
+
+reversion.register(SurveyType)
 
 
 class BPSize(models.Model):
@@ -104,6 +115,9 @@ class BPSize(models.Model):
         )
 
 
+reversion.register(BPSize)
+
+
 class BPManufacturer(models.Model):
     bp_manufacturer = models.CharField(max_length=30, verbose_name=_("BFP Manufacturer"))
 
@@ -117,6 +131,8 @@ class BPManufacturer(models.Model):
         permissions = (
             ('browse_bpmanufacturer', _('Can browse BP Manufacturer')),
         )
+
+reversion.register(BPManufacturer)
 
 
 class CustomerCode(models.Model):
@@ -133,6 +149,8 @@ class CustomerCode(models.Model):
             ('browse_customercode', _('Can browse Customer Code')),
         )
 
+reversion.register(CustomerCode)
+
 
 class HazardType(models.Model):
     hazard_type = models.CharField(max_length=50, verbose_name=_("Hazard Type"))
@@ -147,6 +165,8 @@ class HazardType(models.Model):
         permissions = (
             ('browse_hazardtype', _('Can browse Hazard Type')),
         )
+
+reversion.register(HazardType)
 
 
 class TestManufacturer(models.Model):
@@ -163,6 +183,8 @@ class TestManufacturer(models.Model):
             ('browse_testmanufacturer', _('Can browse Test Manufacturer')),
         )
 
+reversion.register(TestManufacturer)
+
 
 class ICPointType(models.Model):
     ic_point = models.CharField(max_length=20, verbose_name=_("Interconnection Point"))
@@ -177,6 +199,8 @@ class ICPointType(models.Model):
         permissions = (
             ('browse_icpointtype', _('Can browse Interconnection Point Type')),
         )
+
+reversion.register(ICPointType)
 
 
 class AssemblyLocation(models.Model):
@@ -193,6 +217,8 @@ class AssemblyLocation(models.Model):
             ('browse_assemblylocation', _('Can browse Assembly Location')),
         )
 
+reversion.register(AssemblyLocation)
+
 
 class AssemblyStatus(models.Model):
     assembly_status = models.CharField(max_length=50, verbose_name=_("Assembly Status"))
@@ -207,6 +233,8 @@ class AssemblyStatus(models.Model):
         permissions = (
             ('browse_assemblystatus', _('Can browse Assembly Status')),
         )
+
+reversion.register(AssemblyStatus)
 
 
 class FloorsCount(models.Model):
@@ -223,6 +251,8 @@ class FloorsCount(models.Model):
             ('browse_floorscount', _('Can browse Floors Count')),
         )
 
+reversion.register(FloorsCount)
+
 
 class TestModel(models.Model):
     model = models.CharField(max_length=20, verbose_name=_("Test Model"))
@@ -237,6 +267,8 @@ class TestModel(models.Model):
         permissions = (
             ('browse_testmodel', _('Can browse Test Models')),
         )
+
+reversion.register(TestModel)
 
 
 class Special(models.Model):
@@ -253,6 +285,8 @@ class Special(models.Model):
             ('browse_special', _('Can browse Special')),
         )
 
+reversion.register(Special)
+
 
 class Orientation(models.Model):
     orientation = models.CharField(max_length=15, verbose_name=_("Orientation"))
@@ -267,6 +301,8 @@ class Orientation(models.Model):
         permissions = (
             ('browse_orientation', _('Can browse Orientation Type')),
         )
+
+reversion.register(Orientation)
 
 
 class SiteStatus(models.Model):
@@ -283,6 +319,8 @@ class SiteStatus(models.Model):
             ('browse_sitestatus', _('Can browse Site Status')),
         )
 
+reversion.register(SiteStatus)
+
 
 class Regulation(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Regulation Type"))
@@ -298,6 +336,8 @@ class Regulation(models.Model):
             ('browse_regulation', _('Can browse Regulation Type')),
         )
 
+reversion.register(Regulation)
+
 
 class HazardDegree(models.Model):
     degree = models.CharField(max_length=50, verbose_name=_("Hazard Degree"))
@@ -312,6 +352,8 @@ class HazardDegree(models.Model):
         permissions = (
             ('browse_hazard_degree', _('Can browse Hazard Degree')),
         )
+
+reversion.register(HazardDegree)
 
 
 class PWS(models.Model):
@@ -340,6 +382,9 @@ class PWS(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.number, self.name)
 
+    def get_pws_list(self):
+        return [self]
+
     class Meta:
         verbose_name = _('Public Water System')
         verbose_name_plural = _('Public Water Systems')
@@ -351,6 +396,8 @@ class PWS(models.Model):
             ('change_own_pws', _('Can change his own Public Water System'))
         )
 
+reversion.register(PWS)
+
 
 class LetterType(models.Model):
     letter_type = models.CharField(max_length=20, verbose_name=_("Letter Type"))
@@ -360,6 +407,9 @@ class LetterType(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.letter_type
+
+    def get_pws_list(self):
+        return [self.pws]
 
     class Meta:
         verbose_name = _('Letter Type')
@@ -371,6 +421,8 @@ class LetterType(models.Model):
             ('access_to_all_lettertypes', _('Has access to all Letter Types')),
             ('access_to_pws_lettertypes', _('Has access to PWS\' Letter Types')),
         )
+
+reversion.register(LetterType)
 
 
 class Employee(models.Model):
@@ -388,6 +440,9 @@ class Employee(models.Model):
     def __unicode__(self):
         return str(self.user)
 
+    def get_pws_list(self):
+        return self.pws.all()
+
     class Meta:
         verbose_name = _("Employee")
         verbose_name_plural = _("Employees")
@@ -397,7 +452,11 @@ class Employee(models.Model):
             ('access_to_all_users', _('Has access to all Users')),
             ('access_to_pws_users', _('Has access to PWS\'s Users')),
             ('access_to_multiple_pws_users', _('Has access to Users from multiple PWS')),
+            ('access_to_audit_log', _('Has access to view PWS audit logs')),
         )
+
+
+reversion.register(Employee)
 
 
 class TestKit(models.Model):
@@ -413,6 +472,9 @@ class TestKit(models.Model):
     def __unicode__(self):
         return str(self.test_serial)
 
+    def get_pws_list(self):
+        return self.user.employee.pws.all()
+
     class Meta:
         verbose_name = _("Test Kit")
         verbose_name_plural = _("Test Kits")
@@ -420,6 +482,8 @@ class TestKit(models.Model):
             ('access_to_all_test_kits', _("Access to all testers' kits")),
             ('access_to_pws_test_kits', _("Access to own PWS' testers' kits")),
         )
+
+reversion.register(TestKit)
 
 
 class TesterCert(models.Model):
@@ -432,6 +496,9 @@ class TesterCert(models.Model):
     def __unicode__(self):
         return str(self.cert_number)
 
+    def get_pws_list(self):
+        return self.user.employee.pws.all()
+
     class Meta:
         verbose_name = _("Tester Certificate")
         verbose_name_plural = _("Tester Certificates")
@@ -439,6 +506,8 @@ class TesterCert(models.Model):
             ('access_to_all_tester_certs', _("Access to all testers' certs")),
             ('access_to_pws_tester_certs', _("Access to own PWS' testers' certs")),
         )
+
+reversion.register(TesterCert)
 
 
 class NoSearchFieldIndicated(Exception):
@@ -489,6 +558,9 @@ class Site(models.Model):
     def __unicode__(self):
         return u"%s %s, %s %s" % (self.street_number or '', self.address1, self.city, self.zip or '')
 
+    def get_pws_list(self):
+        return [self.pws]
+
     def site_details_in_search_result(self):
         return u"{0} {1}, {2} {3} {4} {5}".format(
             self.street_number or '',
@@ -531,6 +603,8 @@ class Site(models.Model):
             ('change_all_info_about_site', _('Can change all information about Site')),
             ('export_xls', _('Can export sites into XLS file')),
         )
+
+reversion.register(Site)
 
 
 class Hazard(models.Model):
@@ -581,6 +655,9 @@ class Hazard(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.hazard_type, self.service_type)
 
+    def get_pws_list(self):
+        return [self.site.pws]
+
     @property
     def paid_tests(self):
         return self.tests.filter(paid=True)
@@ -595,6 +672,8 @@ class Hazard(models.Model):
             ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards')),
             ('change_all_info_about_hazard', _('Can change all information about Hazard')),
         )
+
+reversion.register(Hazard)
 
 
 class Survey(models.Model):
@@ -621,6 +700,9 @@ class Survey(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.survey_date, self.service_type)
 
+    def get_pws_list(self):
+        return [self.site.pws]
+
     class Meta:
         verbose_name = _("Survey")
         verbose_name_plural = _("Surveys")
@@ -638,6 +720,9 @@ class Survey(models.Model):
         hazard_type = HazardType.objects.get(hazard_type=u'NHP')
         nhp_hazard = Hazard.objects.create(site=self.site, hazard_type=hazard_type, service_type=self.service_type)
         self.hazards.add(nhp_hazard)
+
+
+reversion.register(Survey)
 
 
 class Test(models.Model):
@@ -719,6 +804,9 @@ class Test(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.bp_device, self.test_date)
 
+    def get_pws_list(self):
+        return [self.bp_device.site.pws]
+
     @property
     def price(self):
         return self.bp_device.site.pws.price
@@ -756,6 +844,8 @@ class Test(models.Model):
         )
         ordering = ('-test_date', '-id')
 
+reversion.register(Test)
+
 
 class Letter(models.Model):
     site = models.ForeignKey(Site, blank=True, null=True, verbose_name=_("Site"), related_name="letters")
@@ -769,6 +859,9 @@ class Letter(models.Model):
     def __unicode__(self):
         return u"%s, %s" % (self.date, self.letter_type)
 
+    def get_pws_list(self):
+        return [self.site.pws]
+
     class Meta:
         verbose_name = _("Letter")
         verbose_name_plural = _("Letters")
@@ -779,6 +872,8 @@ class Letter(models.Model):
             ('multiple_pws_letter_access', _('Has access to multiple pws\' letters')),
             ('full_letter_access', _('Has access to all letters'))
         )
+
+reversion.register(Letter)
 
 
 class StaticText(models.Model):
@@ -793,6 +888,8 @@ class StaticText(models.Model):
         verbose_name = _("Static Text")
         verbose_name_plural = _("Static Texts")
 
+reversion.register(StaticText)
+
 
 class ImportLog(models.Model):
     user = models.ForeignKey(User, related_name='import_logs', verbose_name=_('User who performed import'))
@@ -803,6 +900,9 @@ class ImportLog(models.Model):
     deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports', verbose_name=_('Deactivated sites'))
     progress = models.IntegerField(default=0, verbose_name=_('Progress of import'))
 
+    def get_pws_list(self):
+        return [self.pws]
+
     class Meta:
         verbose_name = _('Import Log')
         verbose_name_plural = _('Import Logs')
@@ -811,6 +911,8 @@ class ImportLog(models.Model):
             ('access_to_all_import_logs', _('Has access to all Import Logs')),
             ('access_to_pws_import_logs', _('Has access to PWS\'s Import Logs')),
         )
+
+reversion.register(ImportLog)
 
 
 class Invite(models.Model):
@@ -821,9 +923,13 @@ class Invite(models.Model):
     accepted = models.BooleanField(default=False)
     code = models.CharField(max_length=64, default=uuid.uuid4)
 
+    def get_pws_list(self):
+        return self.invite_pws.all()
+
     class Meta:
         verbose_name = _('Invite')
         verbose_name_plural = _('Invites')
 
+reversion.register(Invite)
 
 import signals

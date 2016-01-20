@@ -28,6 +28,7 @@ TEMPLATE_DEBUG = True
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'webapp', 'templates'),
+    os.path.join(BASE_DIR, 'auditlog', 'templates'),
 )
 
 ALLOWED_HOSTS = []
@@ -50,7 +51,11 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'pagination',
     'ckeditor',
+    'reversion',
+    'reversion_compare',
+    'auditlog',
 )
+
 SESSION_COOKIE_AGE = 900
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'reversion.middleware.RevisionMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
