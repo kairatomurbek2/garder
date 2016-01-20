@@ -97,6 +97,7 @@ def get_version_objects_with_diff(form, current_user_pws_list):
     if form.cleaned_data['record_object']:
         filtered_version_objects = filtered_version_objects.filter(
             object_repr__icontains=form.cleaned_data['record_object'])
+    filtered_version_objects = filtered_version_objects.order_by('-revision__date_created')
     target_objects = [obj for obj in filtered_version_objects
                       if hasattr(obj.object, 'get_pws_list')
                       and _check_pws(obj.object, pws_list)]
