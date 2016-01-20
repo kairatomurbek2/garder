@@ -16,6 +16,8 @@ class AuditLogFilterForm(forms.Form):
                                  empty_label=_("All available PWSs"))
     start_date = forms.DateField(initial=first_day_of_cur_month)
     end_date = forms.DateField(initial=last_day_of_cur_month)
-    username = forms.CharField(required=False)
+    username = forms.CharField(required=False,
+                               widget=forms.TextInput(attrs={'placeholder': _('Enter text fragment')}))
     user_group = forms.ModelChoiceField(queryset=Group.objects.all(), required=False, empty_label=_("All user groups"))
-    record_object = forms.CharField(required=False)
+    record_object = forms.CharField(required=False,
+                                    widget=forms.TextInput(attrs={'placeholder': _('Enter text fragment')}))
