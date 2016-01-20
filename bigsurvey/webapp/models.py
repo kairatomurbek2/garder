@@ -647,6 +647,14 @@ class BPDevice(models.Model):
             ('access_to_multiple_pws_devices', _('Has access to multiple PWS\' BP Devices'))
         )
 
+    def get_pws_list(self):
+        try:
+            return [self.hazard.site.pws]
+        except:
+            return []
+
+reversion.register(BPDevice)
+
 
 class Hazard(models.Model):
     site = models.ForeignKey(Site, verbose_name=_("Site"), related_name="hazards")
@@ -682,10 +690,6 @@ class Hazard(models.Model):
 
     def get_pws_list(self):
         return [self.site.pws]
-
-    @property
-    def paid_tests(self):
-        return self.tests.filter(paid=True)
 
     class Meta:
         verbose_name = _("Hazard")
