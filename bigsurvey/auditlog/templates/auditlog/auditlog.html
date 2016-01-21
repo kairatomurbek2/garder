@@ -117,9 +117,17 @@
                 {% endfor %}
             </td>
             <td class="uk-text-center border-right">
-                {% for pws in version.object.get_pws_list %}
-                    <p>{{ pws }}</p>
-                {% endfor %}
+                {% if version.object.get_pws_list and version.object.get_pws_list|length > 0 %}
+                    {% for pws in version.object.get_pws_list %}
+                        <p>{{ pws }}</p>
+                    {% endfor %}
+                {% elif version.object.employee %}
+                    {% for pws in version.object.employee.pws.all %}
+                        <p>{{ pws }}</p>
+                    {% endfor %}
+                {% else %}
+                    ''
+                {% endif %}
             </td>
             <td class="uk-text-center border-right">
                 {{ version.object|verbose_name|capfirst }}: {{ version.object }}
@@ -128,7 +136,7 @@
                 {% if diff|length > 0 %}
                 {% autoescape off %}{{ diff }}{% endautoescape %}
                 {% else %}
-                {% trans "Initial revision record" %}
+                {% autoescape off %}{% trans "Changes are reflected <br>in the connected record" %}{% endautoescape %}
                 {% endif %}
             </td>
         </tr>
