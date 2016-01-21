@@ -1,10 +1,13 @@
-import datetime
 import json
+
+import datetime
+
+from diff_match_patch import diff_match_patch
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
-from diff_match_patch import diff_match_patch
 from reversion.models import Version
 
 dmp = diff_match_patch()
@@ -85,7 +88,9 @@ def get_version_objects_with_diff(current_user_pws_list, **kwargs):
     range_end = end_date + datetime.timedelta(days=1)
     date_range = (start_date, range_end)
 
-    filtered_version_objects = Version.objects.filter(revision__date_created__range=date_range)
+    pws_users = User.objects.filter(Q(employee__pws__in=current_user_pws_list) | Q(is_superuser=True))
+    filtered_version_objects = Version.objects.filter(revision__date_created__range=date_range,
+                                                      revision__user__in=pws_users)
     if pws:
         pws_list = [pws]
     else:
@@ -103,15 +108,9 @@ def get_version_objects_with_diff(current_user_pws_list, **kwargs):
         filtered_version_objects = filtered_version_objects.filter(
             object_repr__icontains=record_object)
     filtered_version_objects = filtered_version_objects.order_by('-revision__date_created')
-    target_objects = [(obj, render_diff(obj)) for obj in filtered_version_objects
-                      if _object_is_valid(obj) and _check_obj_pws(obj, pws_list) and len(render_diff(obj)) > 0]
+    target_objects = [(obj, render_diff(obj)) for obj in list(filtered_version_objects)
+                      if _check_obj_pws(obj, pws_list) and len(render_diff(obj)) > 0]
     return target_objects
-
-
-def _object_is_valid(obj):
-    obj_has_attribute = hasattr(obj.object, 'get_pws_list')
-    obj_is_user_instance = obj.content_type == ContentType.objects.get_for_model(User)
-    return obj_has_attribute or obj_is_user_instance
 
 
 def _check_obj_pws(obj, pws_list):
@@ -121,10 +120,13 @@ def _check_obj_pws(obj, pws_list):
             result.append(True)
     else:
         for pws in pws_list:
-            if pws in obj.object.get_pws_list():
+            try:
+                if pws in obj.object.get_pws_list():
+                    result.append(True)
+                else:
+                    result.append(False)
+            except AttributeError:
                 result.append(True)
-            else:
-                result.append(False)
     return True in result
 
 
