@@ -11,7 +11,7 @@
 <p>Please pay for tests listed below or they will be deleted within {{ days }} days after creation</p>
 <ul>
     {% for test in unpaid_tests %}
-        <li>{{ test.bp_device.site }}, {{ test.bp_device }}, {{ test }}</li>
+        <li>{{ test.bp_device.hazard.site }}, {{ test.bp_device }}, {{ test }}</li>
     {% endfor %}
 </ul>
 </body>

@@ -45,14 +45,14 @@ class HazardPriorityQuery(RawSqlQuery):
     def as_mysql(cls):
         return '''
         SELECT
-            CASE WHEN install_date IS NULL THEN
-                CASE WHEN due_test_date IS NULL THEN
+            CASE WHEN (SELECT install_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id) IS NULL THEN
+                CASE WHEN (SELECT due_test_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id) IS NULL THEN
                     1000000
                 ELSE
-                    DATEDIFF(due_test_date, CURRENT_TIMESTAMP)
+                    DATEDIFF((SELECT due_test_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id), CURRENT_TIMESTAMP)
                 END
             ELSE
-                100000 + DATEDIFF(CURRENT_TIMESTAMP, install_date)
+                100000 + DATEDIFF(CURRENT_TIMESTAMP, (SELECT install_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id))
             END
         '''
 
@@ -60,14 +60,14 @@ class HazardPriorityQuery(RawSqlQuery):
     def as_sqlite(cls):
         return '''
         SELECT
-            CASE WHEN install_date IS NULL THEN
-                CASE WHEN due_test_date IS NULL THEN
+            CASE WHEN (SELECT install_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id) IS NULL THEN
+                CASE WHEN (SELECT due_test_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id) IS NULL THEN
                     1000000
                 ELSE
-                    cast(round(julianday(due_test_date) - julianday() + 0.5) as int)
+                    cast(round(julianday((SELECT due_test_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id)) - julianday() + 0.5) as int)
                 END
             ELSE
-                100000 + cast(round(julianday() - julianday(install_date) - 0.5) as int)
+                100000 + cast(round(julianday() - julianday((SELECT install_date from webapp_bpdevice WHERE id = webapp_hazard.bp_device_id)) - 0.5) as int)
             END
         '''
 

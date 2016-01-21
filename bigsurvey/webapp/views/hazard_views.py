@@ -31,10 +31,9 @@ class HazardListView(BaseTemplateView):
             queryset = models.Hazard.objects.all()
         elif user.has_perm('webapp.access_to_pws_hazards'):
             queryset = (models.Hazard.objects.filter(site__pws__in=user.employee.pws.all(), is_present=True) |
-                        models.Hazard.objects.filter(tests__tester=user)).distinct()
-        #TODO: do something about priority
-        #sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
-        return queryset #.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
+                        models.Hazard.objects.filter(bp_device__tests__tester=user)).distinct()
+        sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
+        return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
 
 
 class HazardDetailView(BaseTemplateView):
@@ -150,23 +149,23 @@ class HazardAddView(HazardBaseFormView, CreateView):
             bp_device = None
         self.object.bp_device = bp_device
         self.object.save()
-        self._update_site(form.instance.site, self.kwargs['service'])
+        self._update_site(form.instance, self.kwargs['service'])
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_OK, form, bp_form)
         return response
 
-    def _update_site(self, site, service_type):
+    def _update_site(self, hazard, service_type):
         if service_type == 'potable':
-            site.potable_present = True
+            hazard.site.potable_present = True
         elif service_type == 'fire':
-            site.fire_present = True
+            hazard.site.fire_present = True
         elif service_type == 'irrigation':
-            site.irrigation_present = True
-        #TODO do something about updating
-        # site.due_install_test_date = site.hazards.all().bp_device.aggregate(
-        #     Min('due_test_date')
-        # )['due_test_date__min']
-        site.save()
+            hazard.site.irrigation_present = True
+        bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
+        hazard.site.due_install_test_date = bp_devices.aggregate(
+            Min('due_test_date')
+        )['due_test_date__min']
+        hazard.site.save()
 
     def get_bp_form(self):
         kwargs = {
@@ -209,13 +208,12 @@ class HazardEditView(HazardBaseFormView, UpdateView):
         if not self.device_present(form):
             form.instance.bp_device = None
             form.instance.save()
-        # TODO: editing hazard with device
-        # TODO: something about update
-        #self._update_site(form.instance.site)
+        self._update_site(form.instance)
         return response
 
-    def _update_site(self, site):
-        site.due_install_test_date = site.hazards.aggregate(
+    def _update_site(self, hazard):
+        bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
+        hazard.site.due_install_test_date = bp_devices.aggregate(
             Min('due_test_date')
         )['due_test_date__min']
-        site.save()
+        hazard.site.save()

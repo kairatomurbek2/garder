@@ -33,7 +33,6 @@ Feature: Hazard Add
     And I fill in following fields with following values
       | field      | value    |
       | location1  | backyard |
-    And I check "has_device"
     And I select "Ice Maker" from "hazard_type"
     And I select "Yes" from "pump_present"
     And I select "Yes" from "additives_present"

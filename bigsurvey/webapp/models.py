@@ -833,11 +833,11 @@ class Test(models.Model):
         return u"%s, %s" % (self.bp_device, self.test_date)
 
     def get_pws_list(self):
-        return [self.bp_device.site.pws]
+        return [self.bp_device.hazard.site.pws]
 
     @property
     def price(self):
-        return self.bp_device.site.pws.price
+        return self.bp_device.hazard.site.pws.price
 
     @property
     def cv1_replaced_details(self):

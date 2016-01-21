@@ -24,7 +24,7 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Hazard Type" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.hazard_type }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Location 1" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.location1 }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Location 2" %}</td>
@@ -40,14 +40,14 @@
                 <td class="uk-text-right uk-text-muted">{% trans "CC Present" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.cc_present|yn }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Auxiliary Water" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.aux_water|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Hazard Degree" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.hazard_degree }}</td>
                 <td colspan="2"></td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Status" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.assembly_status|yn }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Type Required" %}</td>
@@ -55,11 +55,11 @@
                 <td class="uk-text-right uk-text-muted">{% trans "Regulation" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.regulation_type }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>
                 <td class="uk-text-primary" colspan="5">{{ hazard.notes }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">
                     <label>{% trans "Geolocation" %}</label>
                     <p>{% trans "Latitude" %} <span class="uk-text-primary">{{ hazard.latitude }}</span></p>
@@ -87,7 +87,7 @@
             </tr>
             </tbody>
         </table>
-        <br/>
+        <hr/>
         <h3 class="uk-text-center">{% trans "BP-Device Info" %}</h3>
         {% if hazard.bp_device %}
         <table class="uk-table border-none uk-table-condensed">
@@ -116,7 +116,7 @@
                 <td class="uk-text-right uk-text-muted">{% trans "BP Size" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.bp_size }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Manufacturer" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.manufacturer }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Model No." %}</td>
@@ -131,9 +131,10 @@
             </tbody>
         </table>
     {% else %}
-        <h3 class="uk-text-left uk-text-primary">{% trans "No Backflow Preventer present" %}</h3>
+        <h3 class="uk-text-left uk-text-primary uk-text-center">{% trans "No Backflow Preventer present" %}</h3>
     {% endif %}
     </div>
+    <hr/>
     {% if perms.webapp.browse_test and hazard.bp_device.bp_type_present in BP_TYPE.REQUIRE_TEST_TYPES %}
         <h3 class="uk-text-center">{% trans "Tests" %}</h3>
         <div>
