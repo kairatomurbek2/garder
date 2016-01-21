@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n staticfiles google_map choices %}
 {% block menu %}
-    {% if perms.webapp.change_all_info_about_hazard or perms.webapp.change_hazard and user.employee.has_licence_for_installation %}
+    {% if perms.webapp.change_hazard %}
         <li>
             <a href="{% url 'webapp:hazard_edit' hazard.pk %}" id="hazard_{{ hazard.pk }}_edit_link">
                 {% trans "Edit" %}

@@ -43,14 +43,6 @@ class HazardDetailView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
         context['hazard'] = self._get_hazard()
-        if not context['hazard'].bp_device:
-            if not self.request.user.has_perm('webapp.change_all_info_about_hazard') and not self.request.user.employee.has_licence_for_installation:
-                messages.error(self.request, Messages.Test.assembly_type_not_set_no_licence)
-            else:
-                if context['hazard'].hazard_type.hazard_type == u'NHP':
-                    pass
-                else:
-                    messages.warning(self.request, Messages.Test.assembly_type_not_set % reverse('webapp:hazard_edit', args=(context['hazard'].pk,)))
         context['countlte0'] = self._is_tests_count_lte0(context['hazard'])
         context['BP_TYPE'] = BP_TYPE
         return context

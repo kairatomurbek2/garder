@@ -33,7 +33,7 @@ class TestListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_tests'):
             return paid_tests
         if user.has_perm("webapp.access_to_pws_tests"):
-            return paid_tests.filter(bp_device__site__pws__in=user.employee.pws.all())
+            return paid_tests.filter(bp_device__hazard__site__pws__in=user.employee.pws.all())
         if user.has_perm('webapp.access_to_own_tests'):
             return paid_tests.filter(tester=user)
 

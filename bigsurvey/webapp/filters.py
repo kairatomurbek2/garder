@@ -333,37 +333,37 @@ class FilterActions(object):
         @staticmethod
         def pws(tests, value):
             if value:
-                return tests.filter(bp_device__site__pws__id=value)
+                return tests.filter(bp_device__hazard__site__pws__id=value)
             return tests
 
         @staticmethod
         def site_city(tests, value):
             if value:
-                return tests.filter(bp_device__site__city__icontains=value)
+                return tests.filter(bp_device__hazard__site__city__icontains=value)
             return tests
 
         @staticmethod
         def customer_account(tests, value):
             if value:
-                return tests.filter(bp_device__site__cust_number__iexact=value)
+                return tests.filter(bp_device__hazard__site__cust_number__iexact=value)
             return tests
 
         @staticmethod
         def site_address(tests, value):
             if value:
-                return tests.filter(bp_device__site__address1__icontains=value)
+                return tests.filter(bp_device__hazard__site__address1__icontains=value)
             return tests
 
         @staticmethod
         def service_type(tests, value):
             if value:
-                return tests.filter(bp_device__service_type__id=value)
+                return tests.filter(bp_device__hazard__service_type__id=value)
             return tests
 
         @staticmethod
         def hazard_type(tests, value):
             if value:
-                return tests.filter(bp_device__hazard_type__id=value)
+                return tests.filter(bp_device__hazard__hazard_type__id=value)
             return tests
 
         @staticmethod
