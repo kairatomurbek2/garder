@@ -13,6 +13,7 @@ from webapp_features.features.definitions.core.navigators import (
 
 
 def login(username, password):
+    home_navigator.go_to_login_page()
     login_form.enter_username(username)
     login_form.enter_password(password)
     login_form.submit()
@@ -22,29 +23,31 @@ def root_admin_logs_in():
     home_navigator.go_to_login_page()
     login('root', '1qaz@WSX')
 
+
 def super_admin_logs_in():
     home_navigator.go_to_login_page()
     login('superadmin', 'superadmin')
+
 
 def owner_logs_in():
     home_navigator.go_to_login_page()
     login('owner', 'admin')
 
+
 def admin_logs_in():
     home_navigator.go_to_login_page()
     login('admin', 'admin')
+
 
 def surveyor_logs_in():
     home_navigator.go_to_login_page()
     login('surveyor', 'surveyor')
 
+
 def tester_logs_in():
     home_navigator.go_to_login_page()
     login('tester', 'tester')
 
-def user_new_password():
-    home_navigator.go_to_login_page()
-    login()
 
 def read_email():
     email_obj = mail.queue.get(block=True, timeout=15)

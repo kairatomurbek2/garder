@@ -31,5 +31,4 @@ def and_sets_a_new_password(step, password):
 
 @step(u'user "([^"]*)" and password "([^"]*)" may enter in page')
 def then_user_group1_and_password_group2_may_enter_in_page(step, username, password):
-    home_navigator.go_to_login_page()
     common_actions.login(username, password)

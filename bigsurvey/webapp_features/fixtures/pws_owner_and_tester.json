@@ -1,0 +1,109 @@
+[
+{
+  "fields": {
+    "username": "owner2",
+    "first_name": "owner2",
+    "last_name": "owner2",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-07-13T05:18:01Z",
+    "groups": [
+      [
+        "PWSOwners"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
+    "email": "",
+    "date_joined": "2015-01-15T10:55:45Z"
+  },
+  "model": "auth.user",
+  "pk": null
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [11],
+    "zip": "",
+    "has_licence_for_installation": false,
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": "OK",
+    "user": [
+      "owner2"
+    ],
+    "address": ""
+  },
+  "model": "webapp.employee",
+  "pk": null
+},
+{
+  "fields": {
+    "city": "Washington",
+    "fax": null,
+    "consultant_phone": null,
+    "name": "Black House PWS",
+    "zip": null,
+    "office_address": null,
+    "price": "6.00",
+    "plumber_packet_address": null,
+    "consultant_name": null,
+    "number": "BHP121",
+    "email": null,
+    "bailee_name": null,
+    "phone": null,
+    "state": null,
+    "bailee_job_title": "Director of Public Works",
+    "letter_left_header_block": "\n<p style=\"font-size:12px\">{PersonInChargeName}<br>\n{PersonInChargeJobTitle}<br>\n{PWSPhone}<br>\nFax: {PWSFax}<br>\n{PWSEmail}</p>\n",
+    "logo": "",
+    "letter_right_header_block": "\n<p style=\"font-size:12px\">{PWSOfficeAddress}<br>\n{PWSCity}, {PWSState}, {PWSZip}</p>\n",
+    "water_source": 3,
+    "notes": "",
+    "plumber_packet_location": null
+  },
+  "model": "webapp.pws",
+  "pk": 11
+},
+{
+  "fields": {
+    "username": "testPWStester",
+    "first_name": "testPWStester",
+    "last_name": "testPWStester",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-06-01T10:38:48Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$f1AektJQFT9r$JThfdyKIkuljMhpViPjrV3FHOwD7wviP4FygzknllYY=",
+    "email": "tester2@example.com",
+    "date_joined": "2015-01-15T10:53:43Z"
+  },
+  "model": "auth.user",
+  "pk": null
+},
+{
+  "fields": {
+    "city": "tester city",
+    "pws": [11],
+    "zip": "tester zip",
+    "has_licence_for_installation": true,
+    "phone2": "",
+    "company": "tester company",
+    "phone1": "tester phone",
+    "state": "AL",
+    "user": [
+      "testPWStester"
+    ],
+    "address": "tester address"
+  },
+  "model": "webapp.employee",
+  "pk": null
+}
+]
