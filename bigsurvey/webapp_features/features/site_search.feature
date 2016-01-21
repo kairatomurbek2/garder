@@ -1,5 +1,5 @@
 @site_search
-  @tmp
+
 Feature: Site search
 
   @keep_db
