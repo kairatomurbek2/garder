@@ -2,9 +2,13 @@ from django.core.management import call_command
 from lettuce import step
 from webapp_features.features.definitions.core import common_actions
 from webapp_features.features.definitions.core import finder
+from webapp_features.features.definitions.core.form_interactors import (
+    user_edit_form, site_form, auditlog_form
+)
 from webapp_features.features.definitions.core.navigators import home_navigator
-from webapp_features.features.definitions.core.page_interactors import users_page, auditlog_page
-from webapp_features.features.definitions.core.form_interactors import user_edit_form
+from webapp_features.features.definitions.core.page_interactors import (
+    users_page, auditlog_page, sites_page
+)
 
 
 @step('Owner of the following PWSs changes username of "(.*)" user to "(.*)":')
@@ -43,5 +47,26 @@ def but_owner_of_the_following_pwss_goes_to_auditlog_page(step):
 
 @step(u'And sees the following record:')
 def and_sees_the_following_record(step):
+    table = step.hashes[0]
+    auditlog_page.assert_that_auditlog_records_are_shown(table)
+
+
+@step(u'Given Surveyor edited site "([^"]*)"')
+def given_surveyor_edited_site_group1(step, site_account_number):
+    common_actions.surveyor_logs_in()
+    sites_page.open_site_for_editing(site_account_number)
+    site_form.select_yes_in_fire_present()
+    site_form.submit_form()
+
+
+@step(u'When owner filters auditlog by username "([^"]*)"')
+def when_owner_filters_auditlog_by_username_group1(step, username):
+    common_actions.owner_logs_in()
+    home_navigator.go_to_auditlog_page()
+    auditlog_form.filter_by_username(username)
+
+
+@step(u'Then he sees the following record:')
+def then_he_sees_the_following_record(step):
     table = step.hashes[0]
     auditlog_page.assert_that_auditlog_records_are_shown(table)
