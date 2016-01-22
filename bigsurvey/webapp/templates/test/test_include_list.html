@@ -2,7 +2,7 @@
 <div class="wrapper">
     {% if perms.webapp.add_test %}
             <div class="padding-top-10">
-                <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}" id="hazard_{{ hazard.pk }}_test_add_link">
+                <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.bp_device.pk %}" id="hazard_{{ hazard.bp_device.pk }}_test_add_link">
                     <i class="uk-icon-plus"></i> {% trans "Add Test" %}
                 </a>
             </div>
@@ -19,7 +19,7 @@
         {% endfor %}
         {% if perms.webapp.add_test %}
             <div class="padding-top-10">
-                <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.pk %}">
+                <a class="uk-align-center uk-text-center" href="{% url 'webapp:test_add' hazard.bp_device.pk %}">
                     <i class="uk-icon-plus"></i> {% trans "Add Test" %}
                 </a>
             </div>

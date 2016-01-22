@@ -223,10 +223,10 @@ class HazardEditView(HazardBaseFormView, UpdateView):
         response = super(HazardEditView, self).form_valid(form)
         if self.device_present(form):
             bp_form = forms.BPForm(instance=form.instance.bp_device, prefix='bp', data=self.request.POST)
-            bp_form.save()
+            form.instance.bp_device = bp_form.save()
         else:
             form.instance.bp_device = None
-            form.instance.save()
+        form.instance.save()
         self._update_site(form.instance)
         return response
 

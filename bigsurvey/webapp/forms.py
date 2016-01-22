@@ -1,3 +1,4 @@
+from ast import literal_eval
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from django.contrib.auth.models import User
@@ -100,8 +101,45 @@ class TestForm(forms.ModelForm):
         self._custom_errors = []
         self.bp_type = None
 
+    def _clean_cv1_gauge_pressure(self):
+        cv1_gauge_pressure = self.cleaned_data.get('cv1_gauge_pressure')
+        test_result = self.cleaned_data.get('test_result', False)
+        if cv1_gauge_pressure < 5 and self._cast_string_to_bool(test_result):
+            self.add_error('cv1_gauge_pressure', ValidationError(Messages.Test.cv1_gauge_pressure_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.cv1_gauge_pressure_value_should_be))
+
+    def _clean_cv2_gauge_pressure(self):
+        cv2_gauge_pressure = self.cleaned_data.get('cv2_gauge_pressure')
+        test_result = self.cleaned_data.get('test_result', False)
+        if cv2_gauge_pressure < 1 and self._cast_string_to_bool(test_result):
+            self.add_error('cv2_gauge_pressure', ValidationError(Messages.Test.cv2_gauge_pressure_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.cv2_gauge_pressure_value_should_be))
+
+    def _clean_cv1_retest_gauge_pressure(self):
+        cv1_retest_gauge_pressure = self.cleaned_data.get('cv1_retest_gauge_pressure')
+        test_result = self.cleaned_data.get('test_result', False)
+        if cv1_retest_gauge_pressure < 5 and self._cast_string_to_bool(test_result):
+            self.add_error('cv1_retest_gauge_pressure', ValidationError(Messages.Test.cv1_retest_gauge_pressure_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.cv1_retest_gauge_pressure_value_should_be))
+
+    def _clean_rv_psi2(self):
+        rv_psi2 = self.cleaned_data.get('rv_psi2')
+        test_result = self.cleaned_data.get('test_result', False)
+        if rv_psi2 < 2 and self._cast_string_to_bool(test_result):
+            self.add_error('rv_psi2', ValidationError(Messages.Test.rv_psi2_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.rv_psi2_value_should_be))
+
+    def _clean_cv2_retest_gauge_pressure(self):
+        cv2_retest_gauge_pressure = self.cleaned_data.get('cv2_retest_gauge_pressure')
+        test_result = self.cleaned_data.get('test_result', False)
+        if cv2_retest_gauge_pressure < 1 and self._cast_string_to_bool(test_result):
+            self.add_error('cv2_retest_gauge_pressure',
+                           ValidationError(Messages.Test.cv2_retest_gauge_pressure_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.cv2_retest_gauge_pressure_value_should_be))
+
     def _clean_rv_did_not_open(self):
         rv_did_not_open = self.cleaned_data.get('rv_did_not_open', False)
+        test_result = self.cleaned_data.get('test_result', False)
         if rv_did_not_open:
             self.cleaned_data.pop('rv_psi1', None)
             self.instance.rv_psi1 = None
@@ -111,9 +149,13 @@ class TestForm(forms.ModelForm):
             rv_psi1 = self.cleaned_data.get('rv_psi1')
             if rv_psi1 is None:
                 self.add_error('rv_did_not_open', ValidationError(Messages.Test.rv_not_provided))
+            elif rv_psi1 < 2 and self._cast_string_to_bool(test_result):
+                self.add_error('rv_psi1', ValidationError(Messages.Test.rv_psi1_value_should_be_gte_two))
+                self.add_error('test_result', ValidationError(Messages.Test.rv_psi1_value_should_be_gte_two))
 
     def _clean_air_inlet_did_not_open(self):
         air_inlet_did_not_open = self.cleaned_data.get('air_inlet_did_not_open', False)
+        test_result = self.cleaned_data.get('test_result', False)
         if air_inlet_did_not_open:
             self.cleaned_data.pop('air_inlet_psi', None)
             self.instance.air_inlet_psi = None
@@ -123,9 +165,13 @@ class TestForm(forms.ModelForm):
             air_inlet_psi = self.cleaned_data.get('air_inlet_psi')
             if air_inlet_psi is None:
                 self.add_error('air_inlet_did_not_open', ValidationError(Messages.Test.air_inlet_not_provided))
+            elif air_inlet_psi < 1 and self._cast_string_to_bool(test_result):
+                self.add_error('air_inlet_psi', ValidationError(Messages.Test.air_inlet_psi_value_should_be))
+                self.add_error('test_result', ValidationError(Messages.Test.air_inlet_psi_value_should_be))
 
     def _clean_cv_leaked(self):
         cv_leaked = self.cleaned_data.get('cv_leaked', False)
+        test_result = self.cleaned_data.get('test_result', False)
         if cv_leaked:
             self.cleaned_data.pop('cv_held_pressure', None)
             self.instance.cv_held_pressure = None
@@ -133,27 +179,64 @@ class TestForm(forms.ModelForm):
             cv_held_pressure = self.cleaned_data.get('cv_held_pressure')
             if cv_held_pressure is None:
                 self.add_error('cv_leaked', ValidationError(Messages.Test.cv_not_provided))
+            elif cv_held_pressure < 1 and self._cast_string_to_bool(test_result):
+                self.add_error('cv_leaked', ValidationError(Messages.Test.cv_leaked_value_should_be))
+                self.add_error('test_result', ValidationError(Messages.Test.cv_leaked_value_should_be))
+
+    def _clean_air_inlet_retest_psi(self):
+        air_inlet_retest_psi = self.cleaned_data.get('air_inlet_retest_psi')
+        test_result = self.cleaned_data.get('test_result', False)
+        if air_inlet_retest_psi < 1 and self._cast_string_to_bool(test_result):
+            self.add_error('air_inlet_retest_psi', ValidationError(Messages.Test.air_inlet_retest_psi_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.air_inlet_retest_psi_value_should_be))
+
+    def _clean_cv_retest_psi(self):
+        cv_retest_psi = self.cleaned_data.get('cv_retest_psi')
+        test_result = self.cleaned_data.get('test_result', False)
+        if cv_retest_psi < 1 and self._cast_string_to_bool(test_result):
+            self.add_error('cv_retest_psi', ValidationError(Messages.Test.cv_retest_psi_value_should_be))
+            self.add_error('test_result', ValidationError(Messages.Test.cv_retest_psi_value_should_be))
 
     def _clean_cv1_leaked(self):
         cv1_leaked = self.cleaned_data.get('cv1_leaked')
+        test_result = self.cleaned_data.get('test_result', False)
         if cv1_leaked == self.fields['cv1_leaked'].empty_value:
-            self.add_error('cv1_leaked', ValidationError(self.fields['cv1_leaked'].error_messages['required'], code='required'))
+            self.add_error('cv1_leaked',
+                           ValidationError(self.fields['cv1_leaked'].error_messages['required'], code='required'))
+        if cv1_leaked and self._cast_string_to_bool(test_result):
+            error_message = Messages.Test.cv1_leaked_and_passed_error
+            self.add_error('cv1_leaked', ValidationError(error_message))
+            self.add_error('test_result', ValidationError(error_message))
 
     def _clean_cv2_leaked(self):
         cv2_leaked = self.cleaned_data.get('cv2_leaked')
+        test_result = self.cleaned_data.get('test_result', False)
         if cv2_leaked == self.fields['cv2_leaked'].empty_value:
-            self.add_error('cv2_leaked', ValidationError(self.fields['cv2_leaked'].error_messages['required'], code='required'))
+            self.add_error('cv2_leaked',
+                           ValidationError(self.fields['cv2_leaked'].error_messages['required'], code='required'))
+        if cv2_leaked and self._cast_string_to_bool(test_result):
+            error_message = Messages.Test.cv2_leaked_and_passed_error
+            self.add_error('cv2_leaked', ValidationError(error_message))
+            self.add_error('test_result', ValidationError(error_message))
 
     def _clean_outlet_sov_leaked(self):
         outlet_sov_leaked = self.cleaned_data.get('outlet_sov_leaked')
+        test_result = self.cleaned_data.get('test_result', False)
         if outlet_sov_leaked == self.fields['outlet_sov_leaked'].empty_value:
-            self.add_error('outlet_sov_leaked', ValidationError(self.fields['outlet_sov_leaked'].error_messages['required'], code='required'))
+            self.add_error('outlet_sov_leaked',
+                           ValidationError(self.fields['outlet_sov_leaked'].error_messages['required'],
+                                           code='required'))
+        if outlet_sov_leaked and self._cast_string_to_bool(test_result):
+            error_message = Messages.Test.outlet_sov_leaked_and_passed_error
+            self.add_error('outlet_sov_leaked', ValidationError(error_message))
+            self.add_error('test_result', ValidationError(error_message))
 
     def _clean_valve_cleaned(self, type, error_message):
         field_name = '%s_cleaned' % type
         value = self.cleaned_data.get(field_name)
         if value in self.fields[field_name].empty_values:
-            self.add_error(field_name, ValidationError(self.fields[field_name].error_messages['required'], code='required'))
+            self.add_error(field_name,
+                           ValidationError(self.fields[field_name].error_messages['required'], code='required'))
         if value == u'2':
             details = [value for key, value in self.cleaned_data.items() if key.startswith('%s_detail' % type)]
             if not any(details):
@@ -179,6 +262,11 @@ class TestForm(forms.ModelForm):
         self._clean_cv1_cleaned()
         self._clean_cv2_cleaned()
         self._clean_rv_cleaned()
+        self._clean_cv1_gauge_pressure()
+        self._clean_cv2_gauge_pressure()
+        self._clean_cv1_retest_gauge_pressure()
+        self._clean_rv_psi2()
+        self._clean_cv2_retest_gauge_pressure()
 
     def clean_dc_types(self):
         self._clean_cv1_cleaned()
@@ -188,6 +276,8 @@ class TestForm(forms.ModelForm):
         self._clean_cv_leaked()
         self._clean_air_inlet_did_not_open()
         self._clean_pvb_cleaned()
+        self._clean_air_inlet_retest_psi()
+        self._clean_cv_retest_psi()
 
     def clean(self):
         if self.bp_type in BP_TYPE.RP_TYPES:
@@ -197,6 +287,10 @@ class TestForm(forms.ModelForm):
         if self.bp_type in BP_TYPE.STANDALONE_TYPES:
             self.clean_standalone_types()
         return super(TestForm, self).clean()
+
+    @staticmethod
+    def _cast_string_to_bool(value):
+        return literal_eval(value) if value == u'False' or value == u'True' else value
 
     class Meta:
         model = models.Test

@@ -332,6 +332,18 @@ class Messages:
         editing_error = _('Error while submitting form')
 
     class Test:
+        cv_retest_psi_value_should_be = _('Check valve  psi value should be greater than or equal to 1')
+        air_inlet_retest_psi_value_should_be = _('Air Inlet psi value should be greater than or equal to 1')
+        cv_leaked_value_should_be = _('Or held at Valve psi should be greater than or equal to 1')
+        air_inlet_psi_value_should_be = _('Opened at Valve psi value should be greater than or equal to 1')
+        cv2_retest_gauge_pressure_value_should_be = _('Gauge pressure across Valve psi value should be greater than or equal to 1')
+        rv_psi2_value_should_be = _('Relief valve opened at Valve psi value should be greater than or equal to 2')
+        cv1_retest_gauge_pressure_value_should_be = _('Gauge pressure across Valve psi value should be greater than or equal to 5')
+        cv2_gauge_pressure_value_should_be = _('Gauge pressure across Valve psi value should be greater than or equal to 1')
+        outlet_sov_leaked_and_passed_error = _('You should either set "Outlet shut-off Valve" to "Leaked" and "Test result" to "Failed" or set "Outlet shut-off Valve" to "Closed Tight" and "Test result" to "Passed"')
+        cv1_gauge_pressure_value_should_be = _('Gauge pressure across Valve psi value should be greater than or equal to 5')
+        cv2_leaked_and_passed_error = _('You should either set "Check Valve #2" to "Leaked" and "Test result" to "Failed" or set "Check Valve #2" to "Closed Tight" and "Test result" to "Passed"')
+        rv_psi1_value_should_be_gte_two = _('Relief Valve psi value should be greater than or equal to 2')
         adding_success = _('Test was successfully added')
         adding_error = _('Error while submitting form')
         editing_success = _('Test was successfully updated')
@@ -349,6 +361,7 @@ class Messages:
         payment_cancelled = _('You have cancelled payment. You can pay later.')
         assembly_type_not_set = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type Present" set. Please provide it <a href="%s">here</a>')
         assembly_type_not_set_no_licence = _('You are now unable to add the test for this hazard because hazard does not have "Assembly Type Required" set. You are now unable to set "Assembly Type Required" because you do not have Licence for Installation. Please, contact your PWS administrator to resolve this issue.')
+        cv1_leaked_and_passed_error = _('You should either set "Check Valve #1" to "Leaked" and "Test result" to "Failed" or set "Check Valve #1" to "Closed Tight" and "Test result" to "Passed"')
 
     class Inspection:
         adding_success = _('Inspection was successfully added')
