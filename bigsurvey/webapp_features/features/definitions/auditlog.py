@@ -17,7 +17,7 @@ TODAY = datetime.date.today()
 FIRST_DAY_OF_CUR_MONTH = TODAY - datetime.timedelta(days=TODAY.day - 1)
 
 
-@step('Owner of the following PWSs changes username of "(.*)" user to "(.*)":')
+@step('Owner of the following PWSs changes username of tester "(.*)" user to "(.*)":')
 def pws_owner_changes_tester_username(step, old_username, new_username):
     upload_initial_data()
     common_actions.login('owner2', 'admin')
@@ -133,3 +133,30 @@ def does_not_see_owner_changes(step):
 @step(u'And sees changes made by owner$')
 def sees_changes_made_by_owner(step):
     auditlog_page.assert_that_owners_changes_are_displayed_in_auditlog()
+
+
+@step(u'Given owner owns two PWSs and changes surveyors usernames:')
+def given_owner_owns_two_pwss_and_changes_surveyors_usernames(step):
+    common_actions.owner_logs_in()
+    table = step.hashes
+    for row in table:
+        home_navigator.go_to_users_page()
+        users_page.go_to_surveyor_tab()
+        users_page.open_user_edit_form(row['Surveyor old username'])
+        user_edit_form.change_username(row['Surveyor new username'])
+
+
+@step(u'When owner filters auditlog records by PWS "([^"]*)"')
+def when_owner_filters_auditlog_records_by_pws(step, pws):
+    home_navigator.go_to_auditlog_page()
+    auditlog_form.filter_by_pws(pws)
+
+
+@step(u'Then owner sees "([^"]*)" in the search results$')
+def then_owner_sees_group1_in_the_search_results(step, text_value):
+    auditlog_page.assert_that_text_fragment_is_displayed_in_search_result(text_value)
+
+
+@step(u'But owner does not see "([^"]*)" in the search results$')
+def but_owner_does_not_see_group1_in_the_search_results(step, text_value):
+    auditlog_page.assert_that_text_fragment_is_not_displayed_in_search_result(text_value)

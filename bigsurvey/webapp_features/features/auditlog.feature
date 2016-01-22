@@ -3,7 +3,7 @@ Feature: Audit Logging
 
   @keep_db
   Scenario: PWS owner sees only their own PWS audit log records
-    Given Owner of the following PWSs changes username of "testPWStester" user to "testPWStester1":
+    Given Owner of the following PWSs changes username of tester "testPWStester" user to "testPWStester1":
       | PWS name |
       | testPWS  |
     When Owner of the following PWSs goes to auditlog page:
@@ -52,10 +52,25 @@ Feature: Audit Logging
   Scenario: Filtering by date range
     Given Given surveyor edited site "RAL1234-14"
     And And owner edited site "VALVE"
-    When owner filters auditlog from current month start to current month end
+    When owner filters auditlog from current month start to current month ends
     Then he sees the following record:
       | User     | Groups    | PWS                   | Object                          | Changes      |
       | surveyor | Surveyors | NUI812, North USA PWS | Site: 72 Mial st, Raleigh 27601 | fire_present |
     And sees changes made by owner
     When owner filters auditlog from next month start to next month end
     Then Then he sees the following text in search results: "No records found"
+
+
+  Scenario Outline: Filtering by PWS
+    Given owner owns two PWSs and changes surveyors usernames:
+      | PWS name                | Surveyor old username | Surveyor new username |
+      | NUI812, North USA PWS   | surveyor              | surveyor1             |
+      | DOC121, White House PWS | pws6user              | pws6user1             |
+    When owner filters auditlog records by PWS "<pws>"
+    Then owner sees "<shown>" in the search results
+    But owner does not see "<hidden>" in the search results
+
+  Examples:
+    | pws                     | shown     | hidden    |
+    | DOC121, White House PWS | pws6user1 | surveyor1 |
+    | NUI812, North USA PWS   | surveyor1 | pws6user1 |

@@ -16,3 +16,6 @@ def open_user_edit_form(username):
     user_edit_link = finder.find_element_by_xpath(user_row_xpath)
     user_edit_link.click()
 
+
+def go_to_surveyor_tab():
+    go_to_tab('Surveyors')
