@@ -4,7 +4,7 @@
     {% if object %}
         <li><a href="{% url 'webapp:test_detail' object.pk %}">{% trans "Cancel" %}</a></li>
     {% else %}
-        <li><a href="{% url 'webapp:hazard_detail' bp_device.pk %}">{% trans "Cancel" %}</a></li>
+        <li><a href="{% url 'webapp:hazard_detail' hazard.pk %}">{% trans "Cancel" %}</a></li>
     {% endif %}
 {% endblock %}
 {% block styles %}
