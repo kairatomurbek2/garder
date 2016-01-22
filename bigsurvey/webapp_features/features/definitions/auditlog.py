@@ -69,10 +69,16 @@ def _edit_site(site_account_number):
     site_form.submit_form()
 
 
-@step(u'When owner filters auditlog by username "([^"]*)"')
-def when_owner_filters_auditlog_by_username_group1(step, username):
+@step(u'When owner filters auditlog by username "([^"]*)"$')
+def when_owner_filters_auditlog_by_username(step, username):
     home_navigator.go_to_auditlog_page()
     auditlog_form.filter_by_username(username)
+
+
+@step(u'When owner filters auditlog by user group "([^"]*)"$')
+def when_owner_filters_auditlog_by_user_group(step, user_group):
+    home_navigator.go_to_auditlog_page()
+    auditlog_form.filter_by_user_group(user_group)
 
 
 @step(u'Then he sees the following record:')
