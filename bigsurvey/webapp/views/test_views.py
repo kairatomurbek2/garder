@@ -177,12 +177,14 @@ class TestBaseFormView(BaseFormView):
     template_name = 'test/test_form.html'
     form_class = forms.TestForm
     model = models.Test
-    hazard = None
+    bp_device = None
 
     def get_context_data(self, **kwargs):
         context = super(TestBaseFormView, self).get_context_data(**kwargs)
         context['BP_TYPE'] = BP_TYPE
-        context['hazard'] = self.get_hazard()
+        bp_device = self.get_bp_device()
+        context['bp_device'] = bp_device
+        context['hazard'] = bp_device.hazard
         return context
 
     def get_success_url(self):
@@ -191,7 +193,7 @@ class TestBaseFormView(BaseFormView):
     def get_form(self, form_class):
         form = super(TestBaseFormView, self).get_form(form_class)
         form.fields['tester'].queryset = self._get_queryset_for_tester_field()
-        form.bp_type = self.get_hazard().bp_type_present
+        form.bp_type = self.get_bp_device().bp_type_present
         return form
 
     def _get_queryset_for_tester_field(self):
@@ -214,14 +216,14 @@ class TestAddView(TestBaseFormView, CreateView):
     success_message = Messages.Test.adding_success
     error_message = Messages.Test.adding_error
 
-    def get_hazard(self):
-        if self.hazard:
-            return self.hazard
-        self.hazard = models.BPDevice.objects.get(pk=self.kwargs['pk'])
-        return self.hazard
+    def get_bp_device(self):
+        if self.bp_device:
+            return self.bp_device
+        self.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
+        return self.bp_device
 
     def get_form(self, form_class):
-        bp_device = self.get_hazard()
+        bp_device = self.get_bp_device()
         if not perm_checkers.HazardPermChecker.has_perm(self.request, bp_device.hazard):
             raise Http404
         return super(TestAddView, self).get_form(form_class)
@@ -242,11 +244,11 @@ class TestEditView(TestBaseFormView, UpdateView):
     success_message = Messages.Test.editing_success
     error_message = Messages.Test.editing_error
 
-    def get_hazard(self):
-        if self.hazard:
-            return self.hazard
-        self.hazard = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
-        return self.hazard
+    def get_bp_device(self):
+        if self.bp_device:
+            return self.bp_device
+        self.bp_device = models.Test.objects.get(pk=self.kwargs['pk']).bp_device
+        return self.bp_device
 
     def get_context_data(self, **kwargs):
         context = super(TestEditView, self).get_context_data(**kwargs)

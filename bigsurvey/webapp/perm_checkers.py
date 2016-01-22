@@ -17,7 +17,7 @@ class SitePermChecker(ObjectPermChecker):
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_sites') or \
                request.user.has_perm('webapp.access_to_pws_sites') and obj.pws in request.user.employee.pws.all() or \
-               request.user.has_perm('webapp.access_to_site_by_customer_account') and obj.pk in request.session['sites_pks']
+               request.user.has_perm('webapp.access_to_site_by_customer_account') and obj.pk in request.session.get('sites_pks')
 
 
 class SurveyPermChecker(ObjectPermChecker):
@@ -32,8 +32,7 @@ class HazardPermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
         return request.user.has_perm('webapp.access_to_all_hazards') or \
-               request.user.has_perm('webapp.access_to_pws_hazards') and obj.site.pws in request.user.employee.pws.all() or \
-               obj.bp_device.tests.filter(tester=request.user).exists()
+               request.user.has_perm('webapp.access_to_pws_hazards') and obj.site.pws in request.user.employee.pws.all()
 
 
 class TestPermChecker(ObjectPermChecker):

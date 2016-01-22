@@ -24,7 +24,6 @@ urlpatterns = patterns(
     url(r'^hazard/$', views.HazardListView.as_view(), name="hazard_list"),
     url(r'^hazard/(?P<pk>\d+)/$', views.HazardDetailView.as_view(), name="hazard_detail"),
     url(r'^hazard/(?P<pk>\d+)/edit/$', views.HazardEditView.as_view(), name="hazard_edit"),
-    url(r'^hazard/(?P<pk>\d+)/add-test/$', views.TestAddView.as_view(), name="test_add"),
 
     url(r'^test/$', views.TestListView.as_view(), name="test_list"),
     url(r'^test/(?P<pk>\d+)/$', views.TestDetailView.as_view(), name="test_detail"),
@@ -82,4 +81,5 @@ urlpatterns = patterns(
 
     url(r'^hazard/(?P<pk>\d+)/install-bp/$', views.BPDeviceCreateView.as_view(), name="bp_device_add"),
     url(r'^bp-device/(?P<pk>\d+)/edit/$', views.BPDeviceUpdateView.as_view(), name="bp_device_edit"),
+    url(r'^bp-device/(?P<pk>\d+)/add-test/$', views.TestAddView.as_view(), name="test_add"),
 )

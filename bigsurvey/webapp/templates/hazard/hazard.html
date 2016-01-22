@@ -8,7 +8,9 @@
             </a>
         </li>
     {% endif %}
-    <li><a href="{% url 'webapp:site_detail' hazard.site.pk %}">{% trans "Back to Site" %}</a></li>
+    {% if show_back_button %}
+        <li><a href="{% url 'webapp:site_detail' hazard.site.pk %}">{% trans "Back to Site" %}</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="wrapper">

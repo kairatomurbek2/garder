@@ -30,8 +30,7 @@ class HazardListView(BaseTemplateView):
         if user.has_perm('webapp.access_to_all_hazards'):
             queryset = models.Hazard.objects.all()
         elif user.has_perm('webapp.access_to_pws_hazards'):
-            queryset = (models.Hazard.objects.filter(site__pws__in=user.employee.pws.all(), is_present=True) |
-                        models.Hazard.objects.filter(bp_device__tests__tester=user)).distinct()
+            queryset = models.Hazard.objects.filter(site__pws__in=user.employee.pws.all(), is_present=True)
         sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
         return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
 
@@ -42,10 +41,12 @@ class HazardDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
-        context['hazard'] = self._get_hazard()
+        hazard = self._get_hazard()
+        context['hazard'] = hazard
         context['countlte0'] = self._is_tests_count_lte0(context['hazard'])
         context['show_install_button'] = self.show_install_button()
         context['BP_TYPE'] = BP_TYPE
+        context['show_back_button'] = self.show_back_button(hazard)
         return context
 
     def _get_hazard(self):
@@ -53,6 +54,17 @@ class HazardDetailView(BaseTemplateView):
         if not perm_checkers.HazardPermChecker.has_perm(self.request, hazard):
             raise Http404
         return hazard
+
+    def show_back_button(self, hazard):
+        user = self.request.user
+        if user.has_perm('webapp.access_to_all_sites') or user.has_perm('webapp.access_to_pws_sites'):
+            return True
+        if user.has_perm('webapp.access_to_site_by_customer_account'):
+            session_site_pks = self.request.session.get('sites_pks')
+            if session_site_pks:
+                if hazard.site.pk in session_site_pks:
+                    return True
+        return False
 
     def show_install_button(self):
         user = self.request.user
