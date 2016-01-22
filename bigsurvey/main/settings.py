@@ -116,6 +116,9 @@ EMAIL_HOST_USER = 'bishmedservicemailto@gmail.com'
 EMAIL_HOST_PASSWORD = 'EapeeM9U'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "bss@bpsbr.com"
+REPLY_TO_EMAIL = "bss@bpsbr.com"
+RETURN_PATH_EMAIL = "bss@bpsbr.com"
 
 
 # Static files (CSS, JavaScript, Images)

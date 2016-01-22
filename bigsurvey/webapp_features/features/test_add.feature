@@ -21,7 +21,7 @@ Feature: Test adding
     | surveyor  | 1  | see      |
     | surveyor  | 4  | see      |
     | tester    | 2  | not see  |
-    | tester    | 1  | not see  |
+    | tester    | 1  | see  |
     | tester    | 3  | see      |
 
 
@@ -33,14 +33,17 @@ Feature: Test adding
       | field              | value  |
       | cv1_gauge_pressure | 123456 |
       | cv2_gauge_pressure | 321    |
+      | rv_psi2            |  5     |
+      |cv2_retest_gauge_pressure|1  |
+      |cv1_retest_gauge_pressure|323|
     And I select "tester" from "tester"
     And I choose "True" from "test_result"
-    And I choose "True" from "cv1_leaked"
+    And I choose "False" from "cv1_leaked"
     And I choose "False" from "cv2_leaked"
     And I choose "1" from "cv1_cleaned"
     And I choose "1" from "rv_cleaned"
     And I choose "1" from "cv2_cleaned"
-    And I choose "True" from "outlet_sov_leaked"
+    And I choose "False" from "outlet_sov_leaked"
     And I check "rv_did_not_open"
     And I submit "test" form
     Then I should see pay modal
@@ -79,6 +82,8 @@ Feature: Test adding
     And Hazard with pk "2" has "PVB" assembly type
     When I directly open "test_add" page for hazard with pk "2"
     And I fill in "air_inlet_psi" with "1232"
+    And I fill in "air_inlet_retest_psi" with "1232"
+    And I fill in "cv_retest_psi" with "1232"
     And I select "tester" from "tester"
     And I choose "True" from "test_result"
     And I choose "1" from "pvb_cleaned"
