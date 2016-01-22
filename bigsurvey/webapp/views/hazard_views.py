@@ -31,6 +31,8 @@ class HazardListView(BaseTemplateView):
             queryset = models.Hazard.objects.all()
         elif user.has_perm('webapp.access_to_pws_hazards'):
             queryset = models.Hazard.objects.filter(site__pws__in=user.employee.pws.all(), is_present=True)
+        else:
+            raise Http404
         sql_query_for_priority = HazardPriorityQuery.get_query(connection.vendor)
         return queryset.extra(select={'priority': sql_query_for_priority}, order_by=('priority',))
 
@@ -109,7 +111,7 @@ class HazardAddView(HazardBaseFormView, CreateView):
         context['site_pk'] = self.kwargs['pk']
         context['service_type'] = self.kwargs['service']
         if not context.get('bp_form'):
-            context['bp_form'] = self.bp_form_class()
+            context['bp_form'] = self.bp_form_class(prefix='bp')
         return context
 
     def ajax_response(self, status, form, bp_form):
@@ -117,7 +119,7 @@ class HazardAddView(HazardBaseFormView, CreateView):
         context = self.get_context_data()
         if status == self.AJAX_OK:
             context['form'] = forms.HazardForm()
-            context['bp_form'] = forms.BPForm()
+            context['bp_form'] = forms.BPForm(prefix='bp')
             json_data['option'] = {
                 'value': self.object.pk,
                 'text': str(self.object)

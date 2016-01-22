@@ -15,9 +15,12 @@ class ObjectPermChecker(object):
 class SitePermChecker(ObjectPermChecker):
     @staticmethod
     def has_perm(request, obj):
+        site_pks = request.session.get('sites_pks')
+        if not site_pks:
+            site_pks = []
         return request.user.has_perm('webapp.access_to_all_sites') or \
                request.user.has_perm('webapp.access_to_pws_sites') and obj.pws in request.user.employee.pws.all() or \
-               request.user.has_perm('webapp.access_to_site_by_customer_account') and obj.pk in request.session.get('sites_pks')
+               request.user.has_perm('webapp.access_to_site_by_customer_account') and obj.pk in site_pks
 
 
 class SurveyPermChecker(ObjectPermChecker):

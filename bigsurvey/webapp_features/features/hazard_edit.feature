@@ -25,29 +25,6 @@ Feature: Hazard Edit
       | tester    | 1  | see      |
       | tester    | 3  | see      |
 
-    #TODO move this to BPDevice tests. Tester should not edit hazard anymore
-#  @keep_db
-#  Scenario: Tester Field Set
-#    Given I logged in as "tester"
-#    When I directly open "hazard_edit" page with pk "2"
-#    Then I should not see following
-#      | text        |
-#      | Hazard Type |
-#      | Location 1  |
-#      | Location 2  |
-#      | Notes       |
-
-  #TODO tester should see buttons "install" and "replace" or message about licence in hazard detail page
-#  Scenario Outline: Testing has_licence_for_installation property
-#    Given "tester" <relation> licence for installation
-#    And I logged in as "tester"
-#    When I directly open "hazard_edit" page with pk "2"
-#    Then I should <reaction> "Page not found"
-#    Examples:
-#      | relation      | reaction |
-#      | has           | not see  |
-#      | does not have | see      |
-
   @correct_hazard_edit
   Scenario: Correct hazard editing
     Given I logged in as "admin"
