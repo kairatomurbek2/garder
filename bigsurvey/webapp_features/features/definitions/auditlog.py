@@ -51,9 +51,19 @@ def and_sees_the_following_record(step):
     auditlog_page.assert_that_auditlog_records_are_shown(table)
 
 
-@step(u'Given Surveyor edited site "([^"]*)"')
+@step(u'Given surveyor edited site "([^"]*)"$')
 def given_surveyor_edited_site_group1(step, site_account_number):
     common_actions.surveyor_logs_in()
+    _edit_site(site_account_number)
+
+
+@step(u'And owner edited site "([^"]*)"$')
+def given_surveyor_edited_site_group1(step, site_account_number):
+    common_actions.owner_logs_in()
+    _edit_site(site_account_number)
+
+
+def _edit_site(site_account_number):
     sites_page.open_site_for_editing(site_account_number)
     site_form.select_yes_in_fire_present()
     site_form.submit_form()
@@ -61,7 +71,6 @@ def given_surveyor_edited_site_group1(step, site_account_number):
 
 @step(u'When owner filters auditlog by username "([^"]*)"')
 def when_owner_filters_auditlog_by_username_group1(step, username):
-    common_actions.owner_logs_in()
     home_navigator.go_to_auditlog_page()
     auditlog_form.filter_by_username(username)
 
@@ -70,3 +79,8 @@ def when_owner_filters_auditlog_by_username_group1(step, username):
 def then_he_sees_the_following_record(step):
     table = step.hashes[0]
     auditlog_page.assert_that_auditlog_records_are_shown(table)
+
+
+@step(u'But does not see changes made by owner')
+def does_not_see_owner_changes(step):
+    auditlog_page.assert_that_owners_changes_are_not_displayed_in_auditlog()

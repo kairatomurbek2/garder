@@ -20,10 +20,10 @@ Feature: Audit Logging
 
   @keep_db
   Scenario: Filtering by username
-    Given Surveyor edited site "RAL1234-14"
+    Given surveyor edited site "RAL1234-14"
+    And owner edited site "VALVE"
     When owner filters auditlog by username "surveyor"
     Then he sees the following record:
       | User     | Groups    | PWS                   | Object                          | Changes      |
       | surveyor | Surveyors | NUI812, North USA PWS | Site: 72 Mial st, Raleigh 27601 | fire_present |
-
-
+    But does not see changes made by owner
