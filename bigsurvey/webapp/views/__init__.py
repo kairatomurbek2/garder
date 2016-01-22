@@ -10,3 +10,4 @@ from .tester_views import *
 from .kit_and_cert_views import *
 from .pws_views import *
 from .import_views import *
+from .bp_device_views import *

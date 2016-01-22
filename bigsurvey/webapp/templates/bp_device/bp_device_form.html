@@ -1,18 +1,23 @@
+{% extends "base.html" %}
 {% load i18n widget_tweaks %}
 {% include 'messages.html' %}
 
+{% block content %}
 <form class="uk-form" method="post" name="bp_device">
     {% csrf_token %}
     <table class="uk-table form-center border-none uk-table-condensed">
         <tbody>
-            {% include "bp_device/partial/bp_device_form_rows.html" %}
+            {% with bp_form=form %}
+                {% include "bp_device/partial/bp_device_form_rows.html" %}
+            {% endwith %}
+            <tr>
+                <td colspan="4">
+                    <button type="submit" class="uk-button uk-button-primary uk-float-right">
+                        {% trans "Submit" %}
+                    </button>
+                </td>
+            </tr>
         </tbody>
-        <tr>
-            <td colspan="4">
-                <button type="submit" class="uk-button uk-button-primary uk-float-right">
-                    {% trans "Submit" %}
-                </button>
-            </td>
-        </tr>
     </table>
 </form>
+{% endblock %}

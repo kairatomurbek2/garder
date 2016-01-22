@@ -79,4 +79,7 @@ urlpatterns = patterns(
          'password_change_form': PasswordChangeWithMinLengthForm},
         name='password'),
     url(r'^audit-log/', AuditLogView.as_view(), name='audit_log'),
+
+    url(r'^hazard/(?P<pk>\d+)/install-bp/$', views.BPDeviceCreateView.as_view(), name="bp_device_add"),
+    url(r'^bp-device/(?P<pk>\d+)/edit/$', views.BPDeviceUpdateView.as_view(), name="bp_device_edit"),
 )

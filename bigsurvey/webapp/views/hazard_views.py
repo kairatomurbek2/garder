@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.core.urlresolvers import reverse
 from webapp import filters, models, forms, perm_checkers
 from django.views.generic import CreateView, UpdateView
-from main.parameters import BP_TYPE, Messages, ASSEMBLY_STATUSES_WITH_BP
+from main.parameters import BP_TYPE, Messages, ASSEMBLY_STATUSES_WITH_BP, AssemblyStatus
 from django.contrib import messages
 from webapp.raw_sql_queries import HazardPriorityQuery
 from django.db import connection
@@ -44,6 +44,7 @@ class HazardDetailView(BaseTemplateView):
         context = super(HazardDetailView, self).get_context_data(**kwargs)
         context['hazard'] = self._get_hazard()
         context['countlte0'] = self._is_tests_count_lte0(context['hazard'])
+        context['show_install_button'] = self.show_install_button()
         context['BP_TYPE'] = BP_TYPE
         return context
 
@@ -52,6 +53,11 @@ class HazardDetailView(BaseTemplateView):
         if not perm_checkers.HazardPermChecker.has_perm(self.request, hazard):
             raise Http404
         return hazard
+
+    def show_install_button(self):
+        user = self.request.user
+        return not user.has_perm('webapp.change_hazard') \
+               and user.has_perm('webapp.change_bpdevice') and user.employee.has_licence_for_installation
 
     def _is_tests_count_lte0(self, hazard):
         tests_count = models.Test.objects.filter(bp_device=hazard, tester=self.request.user, paid=True).count()
@@ -65,11 +71,6 @@ class HazardBaseFormView(BaseFormView):
 
     def get_success_url(self):
         return reverse('webapp:hazard_detail', args=(self.object.pk,))
-
-    def device_present(self, form):
-        if form.cleaned_data['assembly_status'] in ASSEMBLY_STATUSES_WITH_BP:
-            return True
-        return False
 
     def form_valid(self, form):
         self.object = form.save()
@@ -131,6 +132,11 @@ class HazardAddView(HazardBaseFormView, CreateView):
         else:
             return self.form_invalid(form, bp_form)
 
+    def device_present(self, form):
+        if form.cleaned_data['assembly_status'] in ASSEMBLY_STATUSES_WITH_BP:
+            return True
+        return False
+
     def form_valid(self, form, bp_form):
         form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
         form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
@@ -187,6 +193,7 @@ class HazardEditView(HazardBaseFormView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(HazardEditView, self).get_context_data(**kwargs)
         context['hazard_pk'] = self.kwargs['pk']
+        context['bp_form'] = forms.BPForm(instance=context['form'].instance.bp_device, prefix='bp')
         return context
 
     def get_form(self, form_class):
@@ -195,9 +202,15 @@ class HazardEditView(HazardBaseFormView, UpdateView):
             raise Http404
         return form
 
+    def device_present(self, form):
+        return not form.cleaned_data['assembly_status'] == AssemblyStatus.DUE_INSTALL
+
     def form_valid(self, form):
         response = super(HazardEditView, self).form_valid(form)
-        if not self.device_present(form):
+        if self.device_present(form):
+            bp_form = forms.BPForm(instance=form.instance.bp_device, prefix='bp', data=self.request.POST)
+            bp_form.save()
+        else:
             form.instance.bp_device = None
             form.instance.save()
         self._update_site(form.instance)
