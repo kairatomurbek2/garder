@@ -81,6 +81,12 @@ def when_owner_filters_auditlog_by_user_group(step, user_group):
     auditlog_form.filter_by_user_group(user_group)
 
 
+@step(u'When owner filters auditlog by record object "([^"]*)"$')
+def when_owner_filters_auditlog_by_record_object(step, record_object_text_fragment):
+    home_navigator.go_to_auditlog_page()
+    auditlog_form.filter_by_record_object(record_object_text_fragment)
+
+
 @step(u'Then he sees the following record:')
 def then_he_sees_the_following_record(step):
     table = step.hashes[0]

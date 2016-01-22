@@ -37,3 +37,14 @@ Feature: Audit Logging
       | User     | Groups    | PWS                   | Object                          | Changes      |
       | surveyor | Surveyors | NUI812, North USA PWS | Site: 72 Mial st, Raleigh 27601 | fire_present |
     But does not see changes made by owner
+
+
+  Scenario: Filtering by record object
+    Given Given surveyor edited site "RAL1234-14"
+    And And owner edited site "VALVE"
+    When owner filters auditlog by record object "Raleigh"
+    Then he sees the following record:
+      | User     | Groups    | PWS                   | Object                          | Changes      |
+      | surveyor | Surveyors | NUI812, North USA PWS | Site: 72 Mial st, Raleigh 27601 | fire_present |
+    But does not see changes made by owner
+
