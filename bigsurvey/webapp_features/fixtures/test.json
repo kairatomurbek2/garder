@@ -5394,8 +5394,8 @@
 {
   "fields": {
     "username": "pws6user",
-    "first_name": "",
-    "last_name": "",
+    "first_name": "pws6user",
+    "last_name": "pws6user",
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
@@ -5407,7 +5407,7 @@
     ],
     "user_permissions": [],
     "password": "pbkdf2_sha256$12000$9xjIZttWgXf3$ldgZo6WFFIKvS76jUlhGORudXumALnBNqWw6z7jAROY=",
-    "email": "",
+    "email": "pws6user@pws6user.pw",
     "date_joined": "2015-02-17T08:54:19Z"
   },
   "model": "auth.user",
