@@ -1,4 +1,5 @@
-from django.http import Http404
+from django.core.urlresolvers import reverse
+from django.http import Http404, HttpResponseRedirect
 from django.views.generic import CreateView, UpdateView
 from .base_views import BaseFormView
 from main.parameters import AssemblyStatus
@@ -17,14 +18,17 @@ class BPDeviceBaseFormView(BaseFormView):
             return super(BPDeviceBaseFormView, self).get_context_data(**kwargs)
         raise Http404
 
+    def get_success_url(self):
+        return reverse('webapp:hazard_detail', args=(self.object.hazard.pk,))
+
 
 class BPDeviceCreateView(BPDeviceBaseFormView, CreateView):
     permission = 'webapp.add_bpdevice'
-    success_url = ''
 
     def form_valid(self, form):
-        self._update_hazard(form.instance)
-        raise Http404
+        self.object = form.save()
+        self._update_hazard(self.object)
+        return HttpResponseRedirect(self.get_success_url())
 
     def _update_hazard(self, bp_device):
         hazard = Hazard.objects.get(pk=self.kwargs['pk'])
@@ -35,6 +39,7 @@ class BPDeviceCreateView(BPDeviceBaseFormView, CreateView):
     def get_context_data(self, **kwargs):
         context = super(BPDeviceCreateView, self).get_context_data(**kwargs)
         if self.allowed():
+            context['hazard_pk'] = self.kwargs['pk']
             return context
         raise Http404
 
@@ -45,6 +50,7 @@ class BPDeviceCreateView(BPDeviceBaseFormView, CreateView):
                hazard.site.pws in user.employee.pws.all() and user.has_perm('webapp.access_to_pws_devices')
 
 
+# actually never used
 class BPDeviceUpdateView(BPDeviceBaseFormView, UpdateView):
     permission = 'webapp.change_bpdevice'
 

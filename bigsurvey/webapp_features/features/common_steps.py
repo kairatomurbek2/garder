@@ -121,7 +121,7 @@ def click_button(step, button_name):
     button.click()
 
 
-@step('I click button with label "([-_a-z0-9]+)"')
+@step('I click button with label "([-_a-zA-Z0-9 ]+)"')
 def click_button_with_label(step, label):
     button = helper.find(Xpath.Pattern.button_with_label % label)
     helper.check_element_exists(button, 'Button with label "%s" was not found' % label)

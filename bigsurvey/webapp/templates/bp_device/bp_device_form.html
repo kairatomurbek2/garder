@@ -21,3 +21,9 @@
     </table>
 </form>
 {% endblock %}
+
+{% block menu %}
+    {% if hazard_pk %}
+        <li><a href="{% url 'webapp:hazard_detail' hazard_pk %}">{% trans "Cancel" %}</a></li>
+    {% endif %}
+{% endblock %}

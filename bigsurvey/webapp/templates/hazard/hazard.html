@@ -134,7 +134,7 @@
         </table>
         {% if show_install_button %}
             <div class="uk-text-center">
-                <a class="uk-button uk-button-primary" href="{% url "webapp:bp_device_add" hazard.pk %}">
+                <a class="uk-button uk-button-primary" id="replace_device_link" href="{% url "webapp:bp_device_add" hazard.pk %}">
                     {% trans "Replace Backflow Preventer" %}
                 </a>
             </div>
@@ -143,7 +143,7 @@
         <h3 class="uk-text-left uk-text-primary uk-text-center">{% trans "No Backflow Preventer present" %}</h3>
         {% if show_install_button %}
             <div class="uk-text-center">
-                <a class="uk-button uk-button-primary" href="{% url "webapp:bp_device_add" hazard.pk %}">
+                <a class="uk-button uk-button-primary" id="install_device_link" href="{% url "webapp:bp_device_add" hazard.pk %}">
                     {% trans "Install Backflow Preventer" %}
                 </a>
             </div>
