@@ -141,6 +141,10 @@
             </td>
         </tr>
         {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="7"><div class="uk-text-center">{% trans "No records found" %}</div></td>
+        </tr>
         {% endif %}
         </tbody>
     </table>
