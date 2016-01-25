@@ -724,6 +724,7 @@ class Survey(models.Model):
     detector_serial_no = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Detector Serial No."))
     special = models.ForeignKey(Special, null=True, blank=True, verbose_name=_("Special"), related_name="surveys")
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+    letter_type = models.ForeignKey(LetterType, blank=True, null=True, verbose_name=_("Letter Type"), related_name="survey_letter_types")
 
     def __unicode__(self):
         return u"%s, %s" % (self.survey_date, self.service_type)

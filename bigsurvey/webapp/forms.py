@@ -51,6 +51,12 @@ class SurveyForm(forms.ModelForm):
     surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
                                       empty_label=None)
     hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all(), required=False)
+    letter_type = forms.ModelChoiceField(queryset=models.LetterType.objects.none(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        letter_types_qs = kwargs.pop('letter_types_qs')
+        super(SurveyForm, self).__init__(*args, **kwargs)
+        self.fields['letter_type'].queryset = letter_types_qs
 
     class Meta:
         model = models.Survey
