@@ -697,9 +697,3 @@ class LetterFilter(django_filters.FilterSet):
     already_sent = django_filters.BooleanFilter(label=_("Already Sent"))
     date_gt = django_filters.DateFilter(label=_("Letter Date From"), action=FilterActions.Letter.date_gt)
     date_lt = django_filters.DateFilter(label=_("Letter Date To"), action=FilterActions.Letter.date_lt)
-    bp_type_required = django_filters.ChoiceFilter(label=_("Assembly Type Required"),
-                                                   action=FilterActions.Letter.bp_type_required,
-                                                   choices=FilterChoices.bp_type())
-    bp_type_present = django_filters.ChoiceFilter(label=_("Assembly Type Present"),
-                                                  action=FilterActions.Letter.bp_type_present,
-                                                  choices=FilterChoices.bp_type())
