@@ -14,6 +14,8 @@
                     {% if perms.webapp.full_letter_access or perms.webapp.multiple_pws_letter_access %}
                         <th>{% trans "PWS" %}</th>
                     {% endif %}
+                    <th>{% trans "Assembly Type present" %}</th>
+                    <th>{% trans "Assembly Type required" %}</th>
                     <th>{% trans "Customer Account" %}</th>
                     <th>{% trans "Customer Email" %}</th>
                     <th>{% trans "Service Type" %}</th>
@@ -33,6 +35,8 @@
                         {% if perms.webapp.full_letter_access or perms.webapp.multiple_pws_letter_access %}
                             <td>{{ letter.site.pws.number }}</td>
                         {% endif %}
+                        <td>{{ letter.hazard.bp_device.bp_type_present }}</td>
+                        <td>{{ letter.hazard.bp_type_required }}</td>
                         <td>
                             <a href="{% url "webapp:site_detail" letter.site.pk %}">
                                 {{ letter.site.cust_number }}

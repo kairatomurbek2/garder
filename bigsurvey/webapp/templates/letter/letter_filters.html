@@ -21,6 +21,18 @@
                 {% endif %}
                 <tr class="uk-text-center">
                     <td>
+                        {{ letter_filter.form.bp_type_present.label }}
+                        {{ letter_filter.form.bp_type_present|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {{ letter_filter.form.bp_type_required.label }}
+                        {{ letter_filter.form.bp_type_required|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
                         {{ letter_filter.form.customer.label }}
                         {{ letter_filter.form.customer|add_class:"uk-width-1-1" }}
                     </td>

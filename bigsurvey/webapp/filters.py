@@ -545,6 +545,22 @@ class FilterActions(object):
                 return letters.filter(date__lte=value)
             return letters
 
+        @staticmethod
+        def bp_type_present(letters, value):
+            if value:
+                if value == 'none':
+                    return letters.filter(hazard__bp_device__bp_type_present=None)
+                return letters.filter(hazard__bp_device__bp_type_present=value)
+            return letters
+
+        @staticmethod
+        def bp_type_required(letters, value):
+            if value:
+                if value == 'none':
+                    return letters.filter(hazard__bp_type_required=None)
+                return letters.filter(hazard__bp_type_required=value)
+            return letters
+
 
 class SiteFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'))
@@ -697,3 +713,7 @@ class LetterFilter(django_filters.FilterSet):
     already_sent = django_filters.BooleanFilter(label=_("Already Sent"))
     date_gt = django_filters.DateFilter(label=_("Letter Date From"), action=FilterActions.Letter.date_gt)
     date_lt = django_filters.DateFilter(label=_("Letter Date To"), action=FilterActions.Letter.date_lt)
+    bp_type_present = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('Assembly Type present'),
+                                                  action=FilterActions.Letter.bp_type_present)
+    bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('Assembly Type required'),
+                                                   action=FilterActions.Letter.bp_type_required)
