@@ -1,20 +1,23 @@
 import datetime
+
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import FormView, CreateView, UpdateView
-from django.core.urlresolvers import reverse
-from webapp.models import NoSearchFieldIndicated
-from .base_views import BaseTemplateView, BaseFormView
-from webapp.utils.excel_writer import XLSExporter
-from webapp import filters, models, forms, perm_checkers
 from main.parameters import SITE_STATUS, BP_TYPE, Messages
+from webapp import filters, models, forms, perm_checkers
+from webapp.actions.builders import SiteFilteringActionsBuilder
+from webapp.models import NoSearchFieldIndicated
+from webapp.utils.excel_writer import XLSExporter
+from .base_views import BaseTemplateView, BaseFormView
 
 
-class HomeView(BaseTemplateView):
+class HomeView(FormView, BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
+    form_class = forms.SitesFilterForm
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -26,25 +29,48 @@ class HomeView(BaseTemplateView):
         return super(HomeView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
-        sites = self._get_sites(user)
-        context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites)
+        sites = self._get_sites()
+        pws_list = self._get_pws_list()
+        if self.request.GET:
+            form = self.form_class(self.request.GET, pws_qs=pws_list)
+            if form.is_valid():
+                action = SiteFilteringActionsBuilder.get_sites_filtered(form, pws_list, sites)
+                context['site_filter_form'] = form
+                context['sites'] = action.execute()
+                return context
+            else:
+                context['site_filter_form'] = form
+                return context
+        context['site_filter_form'] = self.form_class(pws_qs=pws_list)
+        context['sites'] = sites
         return context
 
     def _get_xls(self):
-        filtered_sites = filters.SiteFilter(self.request.GET, queryset=self._get_sites(self.request.user))
-        xls = XLSExporter(filtered_sites.qs).get_xls()
-        response = HttpResponse(xls, content_type='text/plain')
-        return response
+        pws_list = self._get_pws_list()
+        form = self.form_class(self.request.GET, pws_qs=pws_list)
+        if form.is_valid():
+            action = SiteFilteringActionsBuilder.get_sites_filtered(form, pws_list, self._get_sites())
+            filtered_sites = action.execute()
+            xls = XLSExporter(filtered_sites).get_xls()
+            response = HttpResponse(xls, content_type='text/plain')
+            return response
 
-    def _get_sites(self, user):
+    def _get_sites(self):
         sites = models.Site.objects.none()
-        if user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.objects.filter(pws__in=user.employee.pws.all())
-        if user.has_perm('webapp.access_to_all_sites'):
+        if self.request.user.has_perm('webapp.access_to_pws_sites'):
+            sites = models.Site.objects.filter(pws__in=self.request.user.employee.pws.all())
+        if self.request.user.has_perm('webapp.access_to_all_sites'):
             sites = models.Site.objects.all()
         return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
+
+    def _get_pws_list(self):
+        pws_list = models.PWS.objects.none()
+        if self.request.user.has_perm('webapp.browse_all_pws'):
+            pws_list = models.PWS.objects.all()
+        elif self.request.user.has_perm('webapp.own_multiple_pws'):
+            pws_list = self.request.user.employee.pws.all()
+        return pws_list
 
 
 class TesterHomeView(BaseTemplateView, FormView):

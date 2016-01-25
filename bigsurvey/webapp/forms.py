@@ -1,17 +1,16 @@
 from ast import literal_eval
+import models
+import re
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
-from django.contrib.auth.models import User
-from django.db.models import Q
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
-import re
-import models
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
     TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
 from webapp.validators import validate_excel_file
-from django.contrib.auth.forms import PasswordChangeForm
 
 
 class PWSForm(forms.ModelForm):
@@ -574,6 +573,7 @@ class TestKitForm(forms.ModelForm):
         model = models.TestKit
         exclude = ('user',)
 
+
 class PasswordChangeWithMinLengthForm(PasswordChangeForm):
     def clean_new_password2(self):
         new_password1 = self.cleaned_data.get('new_password1')
@@ -595,3 +595,57 @@ class EmailValidationOnForgotPassword(PasswordResetForm):
             raise ValidationError(
                 _("There is no user registered with the specified email address!"))
         return email
+
+
+class SitesFilterForm(forms.ModelForm):
+    pws = forms.ModelChoiceField(
+        required=False, queryset=models.PWS.objects.all(), empty_label=_("All"), label=_("PWS"))
+    cust_number = forms.CharField(required=False, label=_('Account Number'))
+    cust_code = forms.ModelChoiceField(
+        queryset=models.CustomerCode.objects.all(), required=False, empty_label=_("All"), label=_("Customer Code"))
+    cust_name = forms.CharField(required=False, label=_('Customer Name'))
+    address1 = forms.CharField(required=False, label=_('Service Address 1'))
+    city = forms.CharField(required=False, label=_("Service City"))
+    due_test_from = forms.DateField(required=False)
+    due_test_to = forms.DateField(required=False)
+    next_survey_from = forms.DateField(required=False)
+    next_survey_to = forms.DateField(required=False)
+    last_survey_from = forms.DateField(required=False)
+    last_survey_to = forms.DateField(required=False)
+    connect_date_from = forms.DateField(required=False)
+    connect_date_to = forms.DateField(required=False)
+    due_test_blank = forms.BooleanField(required=False, initial=False)
+    next_survey_blank = forms.BooleanField(required=False, initial=False)
+    last_survey_blank = forms.BooleanField(required=False, initial=False)
+    route = forms.CharField(required=False, label=_("Seq. route"))
+    route_blank = forms.BooleanField(required=False, initial=False)
+    street_number_blank = forms.BooleanField(required=False, initial=False)
+    address2_blank = forms.BooleanField(required=False, initial=False)
+    cust_address2_blank = forms.BooleanField(required=False, initial=False)
+    apt_blank = forms.BooleanField(required=False, initial=False)
+    zip_blank = forms.BooleanField(required=False, initial=False)
+    cust_address1_blank = forms.BooleanField(required=False, initial=False)
+    cust_apt_blank = forms.BooleanField(required=False, initial=False)
+    cust_city_blank = forms.BooleanField(required=False, initial=False)
+    cust_zip_blank = forms.BooleanField(required=False, initial=False)
+    meter_number_blank = forms.BooleanField(required=False, initial=False)
+    meter_size_blank = forms.BooleanField(required=False, initial=False)
+    meter_reading_blank = forms.BooleanField(required=False, initial=False)
+    connect_date_blank = forms.BooleanField(required=False, initial=False)
+
+    def __init__(self, *args, **kwargs):
+        pws_qs = kwargs.pop('pws_qs')
+        super(SitesFilterForm, self).__init__(*args, **kwargs)
+        self.fields['pws'].queryset = pws_qs
+        self.fields['address2'].label = _('Service Address 2')
+        self.fields['street_number'].label = label=_('Street Number')
+        self.fields['apt'].label = _("Service Apt")
+        self.fields['cust_address1'].label = _('Customer Address 1')
+        self.fields['cust_address2'].label = _('Customer Address 2')
+
+    class Meta:
+        model = models.Site
+        fields = (
+            'address2', 'street_number', 'apt',  'state', 'zip', 'meter_number', 'meter_size', 'meter_reading',
+            'cust_address1', 'cust_address2', 'cust_apt', 'cust_city', 'cust_state', 'cust_zip',
+        )
