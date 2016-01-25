@@ -42,7 +42,7 @@ def when_owner_of_the_following_pwss_goes_to_auditlog_page(step):
 
 @step(u'Then there are no auditlog records displayed on the page')
 def then_there_are_no_auditlog_records_displayed_on_the_page(step):
-    finder.find_invisible_element_by_xpath('.//tbody/tr')
+    finder.find_element_by_xpath('.//tbody/tr/td[contains(., "No records found")]')
 
 
 @step(u'But Owner of the following PWSs goes to auditlog page:')
