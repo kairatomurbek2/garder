@@ -49,11 +49,20 @@ class HazardDetailView(BaseTemplateView):
         context['show_install_button'] = self.show_install_button()
         context['BP_TYPE'] = BP_TYPE
         context['show_back_button'] = self.show_back_button(hazard)
-        if self.device_present(hazard) and not hazard.bp_device:
-            messages.warning(self.request, Messages.Hazard.device_presence_warning % hazard.get_assembly_status_display())
+        self._set_warn_messages(hazard)
+        return context
+
+    def _set_warn_messages(self, hazard):
+        if self._device_present(hazard):
+            if not hazard.bp_device:
+                messages.warning(self.request, Messages.Hazard.device_absence_warning %
+                                 hazard.get_assembly_status_display())
+        else:
+            if hazard.bp_device:
+                messages.warning(self.request, Messages.Hazard.device_presence_warning %
+                                 hazard.get_assembly_status_display())
         if not hazard.is_present:
             messages.warning(self.request, Messages.Hazard.hazard_inactive)
-        return context
 
     def _get_hazard(self):
         hazard = models.Hazard.objects.get(pk=self.kwargs['pk'])
@@ -61,8 +70,10 @@ class HazardDetailView(BaseTemplateView):
             raise Http404
         return hazard
 
-    def device_present(self, hazard):
-        return hazard.assembly_status in ASSEMBLY_STATUSES_WITH_BP
+    def _device_present(self, hazard):
+        if hazard.assembly_status in ASSEMBLY_STATUSES_WITH_BP:
+            return True
+        return False
 
     def show_back_button(self, hazard):
         user = self.request.user

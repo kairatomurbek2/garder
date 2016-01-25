@@ -330,8 +330,13 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('Hazard was successfully updated')
         editing_error = _('Error while submitting form')
-        device_presence_warning = _('Note: Hazard has Assembly Status "%s" but does not have BP-Device associated with it.')
+        device_absence_warning = _('Note: Hazard has Assembly Status "%s" but does not have BP-Device associated with it.')
+        device_presence_warning = _('Note: Hazard has Assembly Status "%s", but has BP-Device associated with it.')
         hazard_inactive = _('Note: Hazard is marked as not present on site anymore. You can mark it as present by editing it.')
+
+    class BPDevice:
+        adding_success = _('Backflow Preventer was successfully created')
+        editing_success = _('Backflow Preventer was successfully updated')
 
     class Test:
         cv_retest_psi_value_should_be = _('Check valve  psi value should be greater than or equal to 1')

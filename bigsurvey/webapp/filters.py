@@ -1,6 +1,6 @@
 import django_filters
 import models
-from main.parameters import Groups, BP_TYPE_CHOICES, STATES_FILTER
+from main.parameters import Groups, BP_TYPE_CHOICES, STATES_FILTER, ASSEMBLY_STATUS_CHOICES
 from django.utils.translation import ugettext as _
 from django import forms
 
@@ -95,8 +95,8 @@ class FilterChoices(object):
     @staticmethod
     def assembly_status():
         choices = [('', _('All')), ('none', _('Blank'))]
-        for assembly_status in models.AssemblyStatus.objects.all():
-            choices.append((assembly_status.pk, assembly_status.assembly_status))
+        for assembly_status in ASSEMBLY_STATUS_CHOICES:
+            choices.append(assembly_status)
         return choices
 
     @staticmethod
@@ -697,3 +697,9 @@ class LetterFilter(django_filters.FilterSet):
     already_sent = django_filters.BooleanFilter(label=_("Already Sent"))
     date_gt = django_filters.DateFilter(label=_("Letter Date From"), action=FilterActions.Letter.date_gt)
     date_lt = django_filters.DateFilter(label=_("Letter Date To"), action=FilterActions.Letter.date_lt)
+    bp_type_required = django_filters.ChoiceFilter(label=_("Assembly Type Required"),
+                                                   action=FilterActions.Letter.bp_type_required,
+                                                   choices=FilterChoices.bp_type())
+    bp_type_present = django_filters.ChoiceFilter(label=_("Assembly Type Present"),
+                                                  action=FilterActions.Letter.bp_type_present,
+                                                  choices=FilterChoices.bp_type())

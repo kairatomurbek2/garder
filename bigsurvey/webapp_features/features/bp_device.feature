@@ -1,7 +1,7 @@
 @bp_device
 Feature: BPDevice adding/editing
   
-  Scenario: Surveyor adds bp-device while editing hazard
+  Scenario: Surveyor adds bp-device while adding hazard
     Given I logged in as "surveyor"
     And I directly open "hazard_add" page for site with pk "10" and service "potable"
     When I select "Installed" from "assembly_status"
@@ -17,19 +17,6 @@ Feature: BPDevice adding/editing
     | BP-Device Info                |
     | AVB                           |
 
-  Scenario: Surveyor edits bp-device while editing hazard
-    Given I logged in as "surveyor"
-    And I directly open "hazard_edit" page with pk "2"
-    When I fill in "notes" with "about hazard"
-    And I fill in "bp-notes" with "about device"
-    And I submit "hazard" form
-    Then I should be at "hazard_detail" page with pk "2"
-    Then I should see following
-    | text                            |
-    | Hazard was successfully updated |
-    | about hazard                    |
-    | about device                    |
-
   Scenario: Surveyor removes bp-device from hazard
     Given I logged in as "surveyor"
     And I directly open "hazard_edit" page with pk "2"
@@ -41,19 +28,34 @@ Feature: BPDevice adding/editing
     | Hazard was successfully updated |
     | No Backflow Preventer present   |
 
-  Scenario: Surveyor adds bp-device while editing hazard
+  Scenario: Surveyor edits bp-device on existing hazard
     Given I logged in as "surveyor"
-    And Hazard with pk "2" has no bp device installed
-    And I directly open "hazard_edit" page with pk "2"
-    When I select "Installed" from "assembly_status"
-    And I select "DC" from "bp-bp_type_present"
-    And I submit "hazard" form
+    And I directly open "hazard_detail" page with pk "2"
+    And I should see "Edit Current BP-Device Info"
+    When I click "edit_device" link
+    And I fill in "notes" with "about device"
+    And I submit "bp_device" form
     Then I should be at "hazard_detail" page with pk "2"
     Then I should see following
-    | text                            |
-    | Hazard was successfully updated |
-    | Assembly Type Present           |
-    | DC                              |
+    | text                                        |
+    | Backflow Preventer was successfully updated |
+    | about device                                |
+
+  @this
+  Scenario: Surveyor installs bp-device on existing hazard
+    Given I logged in as "surveyor"
+    And Hazard with pk "2" has no bp device installed
+    And I directly open "hazard_detail" page with pk "2"
+    And I should see "Enter New BP-Device Info"
+    When I click "install_device" link
+    And I select "DC" from "bp_type_present"
+    And I submit "bp_device" form
+    Then I should be at "hazard_detail" page with pk "2"
+    Then I should see following
+    | text                                        |
+    | Backflow Preventer was successfully created |
+    | Assembly Type Present                       |
+    | DC                                          |
 
   Scenario: Tester installs bp-device on hazard
     Given I logged in as "tester"

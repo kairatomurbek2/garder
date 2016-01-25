@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.views.generic import CreateView, UpdateView
 from .base_views import BaseFormView
-from main.parameters import AssemblyStatus
+from main.parameters import AssemblyStatus, Messages
 from webapp.models import BPDevice, Hazard
 from webapp.forms import BPForm
 
@@ -24,16 +25,20 @@ class BPDeviceBaseFormView(BaseFormView):
 
 class BPDeviceCreateView(BPDeviceBaseFormView, CreateView):
     permission = 'webapp.add_bpdevice'
+    success_message = Messages.BPDevice.adding_success
 
     def form_valid(self, form):
         self.object = form.save()
         self._update_hazard(self.object)
+        messages.success(self.request, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
     def _update_hazard(self, bp_device):
         hazard = Hazard.objects.get(pk=self.kwargs['pk'])
         hazard.bp_device = bp_device
-        hazard.assembly_status = AssemblyStatus.INSTALLED
+        user = self.request.user
+        if not user.has_perm('webapp.change_hazard'):
+            hazard.assembly_status = AssemblyStatus.INSTALLED
         hazard.save()
 
     def get_context_data(self, **kwargs):
@@ -52,6 +57,7 @@ class BPDeviceCreateView(BPDeviceBaseFormView, CreateView):
 
 class BPDeviceUpdateView(BPDeviceBaseFormView, UpdateView):
     permission = 'webapp.change_bpdevice'
+    success_message = Messages.BPDevice.editing_success
 
     def get_context_data(self, **kwargs):
         context = super(BPDeviceUpdateView, self).get_context_data(**kwargs)
