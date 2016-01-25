@@ -49,6 +49,10 @@ class HazardDetailView(BaseTemplateView):
         context['show_install_button'] = self.show_install_button()
         context['BP_TYPE'] = BP_TYPE
         context['show_back_button'] = self.show_back_button(hazard)
+        if self.device_present(hazard) and not hazard.bp_device:
+            messages.warning(self.request, Messages.Hazard.device_presence_warning % hazard.get_assembly_status_display())
+        if not hazard.is_present:
+            messages.warning(self.request, Messages.Hazard.hazard_inactive)
         return context
 
     def _get_hazard(self):
@@ -56,6 +60,9 @@ class HazardDetailView(BaseTemplateView):
         if not perm_checkers.HazardPermChecker.has_perm(self.request, hazard):
             raise Http404
         return hazard
+
+    def device_present(self, hazard):
+        return hazard.assembly_status in ASSEMBLY_STATUSES_WITH_BP
 
     def show_back_button(self, hazard):
         user = self.request.user
@@ -207,7 +214,6 @@ class HazardEditView(HazardBaseFormView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(HazardEditView, self).get_context_data(**kwargs)
         context['hazard_pk'] = self.kwargs['pk']
-        context['bp_form'] = forms.BPForm(instance=context['form'].instance.bp_device, prefix='bp')
         return context
 
     def get_form(self, form_class):
@@ -221,12 +227,9 @@ class HazardEditView(HazardBaseFormView, UpdateView):
 
     def form_valid(self, form):
         response = super(HazardEditView, self).form_valid(form)
-        if self.device_present(form):
-            bp_form = forms.BPForm(instance=form.instance.bp_device, prefix='bp', data=self.request.POST)
-            form.instance.bp_device = bp_form.save()
-        else:
+        if not self.device_present(form):
             form.instance.bp_device = None
-        form.instance.save()
+            form.instance.save()
         self._update_site(form.instance)
         return response
 

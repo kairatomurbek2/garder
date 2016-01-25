@@ -22,7 +22,7 @@ Feature: Hazard Detail
     | surveyor  | 1  | see      |
     | surveyor  | 4  | see      |
     | tester    | 2  | not see  |
-    | tester    | 1  | not see  |
+    | tester    | 1  | see      |
     | tester    | 3  | see      |
 
   @keep_db

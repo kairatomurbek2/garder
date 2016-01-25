@@ -64,9 +64,11 @@ class SurveyForm(forms.ModelForm):
 
 
 class HazardForm(forms.ModelForm):
+    is_present = forms.BooleanField(initial=True)
+
     class Meta:
         model = models.Hazard
-        exclude = ('site', 'service_type', 'is_present', 'bp_device')
+        exclude = ('site', 'service_type', 'bp_device')
 
 
 class BPForm(forms.ModelForm):

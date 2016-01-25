@@ -50,7 +50,6 @@ class BPDeviceCreateView(BPDeviceBaseFormView, CreateView):
                hazard.site.pws in user.employee.pws.all() and user.has_perm('webapp.access_to_pws_devices')
 
 
-# actually never used
 class BPDeviceUpdateView(BPDeviceBaseFormView, UpdateView):
     permission = 'webapp.change_bpdevice'
 
@@ -58,6 +57,7 @@ class BPDeviceUpdateView(BPDeviceBaseFormView, UpdateView):
         context = super(BPDeviceUpdateView, self).get_context_data(**kwargs)
         hazard = context['form'].instance.hazard
         if self.allowed(hazard):
+            context['hazard_pk'] = hazard.pk
             return context
         raise Http404
 

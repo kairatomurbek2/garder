@@ -37,6 +37,7 @@ def clear_cookies_and_db(scenario, *args, **kwargs):
     if settings.REINITIALIZE_DATABASE and 'keep_db' not in scenario.tags:
         call_command('restore_db', interactive=False, verbosity=0)
         call_command('createinitialrevisions', interactive=False, verbosity=1)
+        call_command('reset_autoincrement')
     world.user = None
     world.cache = {}
 

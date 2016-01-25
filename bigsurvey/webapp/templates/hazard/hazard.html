@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Status" %}</td>
-                <td class="uk-text-left uk-text-primary">{{ hazard.assembly_status|yn }}</td>
+                <td class="uk-text-left uk-text-primary">{{ hazard.get_assembly_status_display }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Type Required" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_type_required }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Regulation" %}</td>
@@ -132,22 +132,31 @@
             </tr>
             </tbody>
         </table>
-        {% if show_install_button %}
-            <div class="uk-text-center">
+        <div class="uk-text-center">
+            {% if show_install_button %}
                 <a class="uk-button uk-button-primary" id="replace_device_link" href="{% url "webapp:bp_device_add" hazard.pk %}">
                     {% trans "Replace Backflow Preventer" %}
                 </a>
-            </div>
-        {% endif %}
+            {% else %}
+                <a class="uk-button uk-button-primary" id="edit_device_link" href="{% url "webapp:bp_device_edit" hazard.bp_device.pk %}">
+                    {% trans "Edit Current BP-Device Info" %}
+                </a>
+                <a class="uk-button uk-button-primary" id="replace_device_link" href="{% url "webapp:bp_device_add" hazard.pk %}">
+                    {% trans "Enter New BP-Device Info" %}
+                </a>
+            {% endif %}
+        </div>
     {% else %}
         <h3 class="uk-text-left uk-text-primary uk-text-center">{% trans "No Backflow Preventer present" %}</h3>
-        {% if show_install_button %}
-            <div class="uk-text-center">
-                <a class="uk-button uk-button-primary" id="install_device_link" href="{% url "webapp:bp_device_add" hazard.pk %}">
+        <div class="uk-text-center">
+            <a class="uk-button uk-button-primary" id="install_device_link" href="{% url "webapp:bp_device_add" hazard.pk %}">
+                {% if show_install_button %}
                     {% trans "Install Backflow Preventer" %}
-                </a>
-            </div>
-        {% endif %}
+                {% else %}
+                    {% trans "Enter New BP-Device Info" %}
+                {% endif %}
+            </a>
+        </div>
     {% endif %}
     </div>
     <hr/>
