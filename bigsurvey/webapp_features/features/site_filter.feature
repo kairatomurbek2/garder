@@ -80,9 +80,9 @@ Feature: Filtration
       | cust_city_blank     | 2,3,4,5,6,7,8,9,10 | 1                  |
       | cust_zip_blank      | 2,3,4,5,6,7,8,9,10 | 1                  |
       | route_blank         | 5,10               | 1,2,3,4,6,7,8,9    |
-      | meter_number_blank  | 8                  | 1,2,3,4,5,6,7,10 |
+      | meter_number_blank  | 8                  | 1,2,3,4,5,6,7,10   |
       | meter_size_blank    | 9                  | 1,2,3,4,5,6,7,8,10 |
-      | meter_reading_blank | 8,9                | 1,2,3,4,5,6,7,10   |
+      | meter_reading_blank | 8,9                | 1,2,3,4,5,6,7      |
       | connect_date_blank  | 1,2,3,4,5,7        | 6,8,9,10           |
       | next_survey_blank   | 1,9                | 2,3,4,5,6,7,8,10   |
       | last_survey_blank   | 5,10               | 1,2,3,4,6,7,8,9    |

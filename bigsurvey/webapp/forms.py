@@ -1,4 +1,5 @@
 from ast import literal_eval
+
 import models
 import re
 from django import forms
@@ -9,7 +10,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES_FILTER
 from webapp.validators import validate_excel_file
 
 
@@ -606,6 +607,8 @@ class SitesFilterForm(forms.ModelForm):
     cust_name = forms.CharField(required=False, label=_('Customer Name'))
     address1 = forms.CharField(required=False, label=_('Service Address 1'))
     city = forms.CharField(required=False, label=_("Service City"))
+    state = forms.ChoiceField(required=False, label=_("Service State"), choices=STATES_FILTER)
+    cust_state = forms.ChoiceField(required=False, label=_("Customer State"), choices=STATES_FILTER)
     due_test_from = forms.DateField(required=False)
     due_test_to = forms.DateField(required=False)
     next_survey_from = forms.DateField(required=False)
@@ -646,6 +649,6 @@ class SitesFilterForm(forms.ModelForm):
     class Meta:
         model = models.Site
         fields = (
-            'address2', 'street_number', 'apt',  'state', 'zip', 'meter_number', 'meter_size', 'meter_reading',
-            'cust_address1', 'cust_address2', 'cust_apt', 'cust_city', 'cust_state', 'cust_zip',
+            'address2', 'street_number', 'apt', 'zip', 'meter_number', 'meter_size', 'meter_reading',
+            'cust_address1', 'cust_address2', 'cust_apt', 'cust_city', 'cust_zip',
         )

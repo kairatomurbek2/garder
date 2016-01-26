@@ -39,7 +39,11 @@ class FilterSitesAction(object):
         if kwargs.get('city', None):
             sites = sites.filter(city__icontains=kwargs['city'])
         if kwargs.get('state', None):
-            sites = sites.filter(state__icontains=kwargs['state'])
+            val = kwargs['state']
+            if val == 'blank':
+                sites = sites.filter(state=None)
+            else:
+                sites = sites.filter(state=val)
         if kwargs.get('zip', None):
             sites = sites.filter(zip__icontains=kwargs['zip'])
         if kwargs.get('cust_address1', None):
@@ -51,7 +55,11 @@ class FilterSitesAction(object):
         if kwargs.get('cust_city', None):
             sites = sites.filter(cust_city__icontains=kwargs['cust_city'])
         if kwargs.get('cust_state', None):
-            sites = sites.filter(cust_state__icontains=kwargs['cust_state'])
+            val = kwargs['cust_state']
+            if val == 'blank':
+                sites = sites.filter(cust_state=None)
+            else:
+                sites = sites.filter(cust_state=val)
         if kwargs.get('cust_zip', None):
             sites = sites.filter(cust_zip__icontains=kwargs['cust_zip'])
         if kwargs.get('next_survey_from', None):
@@ -109,7 +117,7 @@ class FilterSitesAction(object):
         if kwargs.get('meter_size_blank', None):
             sites = sites.filter(meter_size__isnull=True) | sites.filter(meter_size='')
         if kwargs.get('meter_reading_blank', None):
-            sites = sites.filter(meter_reading__isnull=True) | sites.filter(meter_reading='')
+            sites = sites.filter(meter_reading__isnull=True)
         if kwargs.get('connect_date_blank', None):
             sites = sites.filter(connect_date__isnull=True)
         return sites
@@ -161,6 +169,8 @@ class FilterSitesAction(object):
             kwargs['meter_size'] = form.cleaned_data['meter_size']
             kwargs['meter_reading'] = form.cleaned_data['meter_reading']
             kwargs['cust_name'] = form.cleaned_data['cust_name']
+            kwargs['cust_zip'] = form.cleaned_data['cust_zip']
+            kwargs['cust_state'] = form.cleaned_data['cust_state']
         except AttributeError:
             kwargs['pws'] = self.pws_list
         except TypeError:
