@@ -11,17 +11,17 @@ Feature: Pagination
       | TestCity38 |
     And I should not see following
       | text       |
-      | TestCity40 |
+      | TestCity48 |
     When I turn to the "2" page
     Then I should see following
       | text       |
-      | TestCity40 |
+      | TestCity48 |
       | TestCity88 |
     And I should not see following
       | text       |
-      | TestCity90 |
+      | TestCity97 |
     When I turn to the "3" page
     Then I should see following
       | text       |
-      | TestCity90 |
+      | TestCity97 |
       | TestCity99 |

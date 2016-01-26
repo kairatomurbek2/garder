@@ -1,5 +1,6 @@
 {% load i18n pagination_tags widget_tweaks staticfiles %}
-
+{% if sites %}
+{% autopaginate sites 50 %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
         <div id="filter_buttons_div" class="fixed filter-button-div">
@@ -185,8 +186,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if sites %}
-                {% autopaginate sites 50 %}
                 {% for site in sites %}
                     <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}" data-id="{{ site.pk }}">
                         <td class="table-border-right">{{ site.pk }}</td>
