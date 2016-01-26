@@ -31,11 +31,9 @@ Feature: Menu
       | hazards      |
       | testers      |
       | users        |
-      | own_pws_edit |
     And I should not see following menu links
       | link  |
       | admin |
-      | pws   |
 
   @keep_db
   Scenario: Surveyor Menu
