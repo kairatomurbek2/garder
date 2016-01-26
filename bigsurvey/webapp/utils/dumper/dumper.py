@@ -51,7 +51,7 @@ class Connector(object):
                 print "0 rows affected"
                 print
                 print sql
-                sleep(3)
+                sleep(5)
             else:
                 print "===== SUCCESS ====="
                 print sql
@@ -64,7 +64,7 @@ class Connector(object):
             print
             print e
             print
-            sleep(5)
+            sleep(30)
 
     def _execute_with_parameter(self, sql, parameter):
         pass
@@ -77,6 +77,7 @@ class Preloader(Connector):
         self._preload_sites()
         self._preload_surveys()
         self._preload_hazards()
+        self._preload_devices()
         self._preload_letters()
         self._preload_tests()
         self._preload_test_kits()
@@ -204,18 +205,42 @@ WHERE [Hazard1] Is Not Null AND
             "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site, old_survey_id ) SELECT Surveys.Hazard5, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site, ALL_SURVEYS.old_id FROM Surveys, ALL_SURVEYS WHERE (([Hazard5] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
             "UPDATE Pvals SET Pvals.Pval = 'Landscape Nursery' WHERE (((Pvals.Pval) Like 'Landscape Nursery%'));",
             """UPDATE ALL_HAZARDS
-SET
-ALL_HAZARDS.hazard_type = (Select Pval from Pvals WHERE hazard_type=Pval_ID),
-ALL_HAZARDS.assembly_location = (Select Pval from Pvals WHERE assembly_location=Pval_ID),
-ALL_HAZARDS.bp_type_present = (Select Pval from Pvals WHERE bp_type_present=Pval_ID),
-ALL_HAZARDS.bp_type_required = (Select Pval from Pvals WHERE bp_type_required=Pval_ID),
-ALL_HAZARDS.bp_size = (Select Pval from Pvals WHERE bp_size=Pval_ID),
-ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval_ID);""",
+                SET
+                ALL_HAZARDS.hazard_type = (Select Pval from Pvals WHERE hazard_type=Pval_ID),
+                ALL_HAZARDS.assembly_location = (Select Pval from Pvals WHERE assembly_location=Pval_ID),
+                ALL_HAZARDS.bp_type_present = (Select Pval from Pvals WHERE bp_type_present=Pval_ID),
+                ALL_HAZARDS.bp_type_required = (Select Pval from Pvals WHERE bp_type_required=Pval_ID),
+                ALL_HAZARDS.bp_size = (Select Pval from Pvals WHERE bp_size=Pval_ID),
+                ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval_ID);""",
             "UPDATE ALL_HAZARDS set assembly_status='Due Install' where assembly_status='due install'",
             "UPDATE ALL_HAZARDS set assembly_status='Installed' where assembly_status='installed'",
             "update ALL_HAZARDS set installed_properly = 0 where installed_properly is null;",
             "UPDATE ALL_HAZARDS SET ALL_HAZARDS.bp_size = '1.25\"' WHERE ALL_HAZARDS.bp_size = '1.25';",
             "UPDATE ALL_HAZARDS SET ALL_HAZARDS.bp_manufacturer = 'Ames' WHERE ALL_HAZARDS.bp_manufacturer = 'DCDA';",
+            "delete from ALL_HAZARDS where ALL_HAZARDS.hazard_type is NULL",
+        )
+        self._execute_list(sqls)
+
+    def _preload_devices(self):
+        print "======== PRELOADING DEVICES ========"
+        sqls = (
+            """INSERT INTO ALL_DEVICES ( 
+                    due_install_test_date, assembly_location, installer,
+                    install_date, replace_date, orientation, installed_properly,
+                    bp_type_present, bp_size, bp_manufacturer,
+                    model_no, serial_no, old_device_id, hazard )
+                SELECT
+                    due_install_test_date, assembly_location, installer,
+                    install_date, replace_date, orientation, installed_properly,
+                    bp_type_present, bp_size, bp_manufacturer,
+                    model_no, serial_no, old_device_id, ID
+                FROM ALL_HAZARDS
+                WHERE ALL_HAZARDS.old_device_id is not NULL""",
+            "UPDATE ALL_HAZARDS SET ALL_HAZARDS.bp_device = ALL_DEVICES.ID FROM ALL_DEVICES WHERE ALL_HAZARDS.ID = ALL_DEVICES.hazard",
+            "UPDATE ALL_DEVICES SET bp_type_present = ALL_HAZARDS.bp_type_required FROM ALL_HAZARDS WHERE ALL_DEVICES.bp_type_present is NULL and ALL_DEVICES.hazard = ALL_HAZARDS.ID",
+##            "UPDATE ALL_HAZARDS SET bp_device = NULL where bp_device in (select ALL_DEVICES.ID from ALL_DEVICES where bp_type_present is NULL)",
+##            "DELETE FROM ALL_DEVICES WHERE bp_type_present is NULL",
+            "UPDATE ALL_DEVICES SET bp_type_present = 'Unknown' where bp_type_present is NULL",
         )
         self._execute_list(sqls)
 
@@ -259,9 +284,9 @@ ALL_HAZARDS.bp_manufacturer = (Select Pval from Pvals WHERE bp_manufacturer=Pval
             "update all_tests set cv2_cleaned = 1 where cv2_cleaned is Null;",
             "update all_tests set rv_cleaned = 1 where rv_cleaned is Null;",
             "update all_tests set pvb_cleaned = 1 where pvb_cleaned is Null;",
-            "delete from all_tests where bp_device is null;",
             "update all_tests set outlet_sov_leaked = 0 where outlet_sov_leaked is Null;",
-            "UPDATE ALL_TESTS set bp_device=(select ALL_HAZARDS.ID from ALL_HAZARDS where ALL_HAZARDS.old_device_id=bp_device)",
+            "UPDATE ALL_TESTS set bp_device=(select ALL_DEVICES.ID from ALL_DEVICES where ALL_DEVICES.old_device_id=bp_device)",
+##            "delete from all_tests where bp_device is null;",
             "UPDATE ALL_TESTS set tester='Bill Travis' where TesterCertNumber='6871'",
             "UPDATE ALL_TESTS set TesterCertNumber='LJP4526', tester='David Zeringue' where TesterCertNumber like '%4526%'",
             "UPDATE ALL_TESTS set TesterCertNumber='2010057', tester='Walter Barado III' where TesterCertNumber like '%201005%' or TesterCertNumber='2010097'",
@@ -377,19 +402,27 @@ class Formatter(Connector):
             ("install_date", "date"), ("replace_date", "date"),
             "orientation", "bp_type_present", "bp_type_required",
             "bp_size", "bp_manufacturer", "model_no", "serial_no",
-            ("due_install_test_date", "date"), "old_survey_id", "old_device_id"
+            ("due_install_test_date", "date"), "old_survey_id", "old_device_id", "bp_device"
+        ]),
+        "bp_devices": ("ALL_DEVICES", [
+            "hazard", "bp_type_present", "assembly_location",
+            "bp_size", "bp_manufacturer", "model_no", "serial_no",
+            ("due_install_test_date", "date"),
+            ("installed_properly", "bit"), "installer",
+            ("install_date", "date"), ("replace_date", "date"),
+            "orientation", "old_device_id"
         ]),
         "tests": ("ALL_TESTS", [
-	    "bp_device", "tester", "user", ("test_date", "date"), 
-	    ("cv1_leaked", "bit"), "cv1_gauge_pressure", ("cv1_cleaned", "bit"), "cv1_retest_pressure",
-	    ("cv2_leaked", "bit"), "cv2_gauge_pressure", ("cv2_cleaned", "bit"), "cv2_retest_pressure",
-	    ("rv_opened", "bit"), "rv_psi1", ("rv_cleaned", "bit"), "rv_psi2",
-	    ("outlet_sov_leaked", "bit"), 
-	    ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
-	    ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
-	    ("test_result", "bit"), "account_number", 
-	    ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date"),
-            "test_kit", "tester_cert"
+            "bp_device", "tester", "user", ("test_date", "date"),
+            ("cv1_leaked", "bit"), "cv1_gauge_pressure", ("cv1_cleaned", "bit"), "cv1_retest_pressure",
+            ("cv2_leaked", "bit"), "cv2_gauge_pressure", ("cv2_cleaned", "bit"), "cv2_retest_pressure",
+            ("rv_opened", "bit"), "rv_psi1", ("rv_cleaned", "bit"), "rv_psi2",
+            ("outlet_sov_leaked", "bit"),
+            ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
+            ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
+            ("test_result", "bit"), "account_number",
+            ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date"),
+                "test_kit", "tester_cert"
         ]),
         "test_kits": ("ALL_TEST_KITS", [
             "user", "serial", "manufacturer", ("last_cert", "date")
@@ -432,7 +465,6 @@ class Formatter(Connector):
 
 class Jsoner(object):
     def __init__(self):
-        models = {}
         self.models = {
             "webapp.sourcetype": {},
             "webapp.sitetype": {},
@@ -452,6 +484,7 @@ class Jsoner(object):
             "webapp.floorscount": {},
             "webapp.special": {},
             "webapp.orientation": {},
+            "test.maintenance": {},
             "auth.user": {
                 "MLeBas": 2,
                 "mlebas": 2,
@@ -568,32 +601,47 @@ class Jsoner(object):
 class Dumper(Connector):
     TEMPLATES = {
         'site': BASE_TEMPLATE % (
-        '{"status":1,"pws":%s,"connect_date":"%s","address1":"%s","address2":"%s","street_number":"%s","apt":"%s",\
-"city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,\
-"meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,\
-"is_due_install":%s,"is_backflow":%s,"cust_number":"%s","cust_name":"%s","cust_code":%s,"cust_address1":"%s","cust_address2":"%s","cust_apt":"%s",\
-"cust_city":"%s","cust_state":"%s","cust_zip":"%s","contact_phone":"","contact_fax":"","contact_email":"",\
-"notes":"","last_survey_date":"%s","next_survey_date":"%s"}',
-        '"webapp.site"', '%s'),
+            '{"status":1,"pws":%s,"connect_date":"%s","address1":"%s","address2":"%s","street_number":"%s","apt":"%s",\
+            "city":"%s","state":"%s","zip":"%s","site_use":%s,"site_type":%s,"floors":%s,"interconnection_point":%s,\
+            "meter_number":"%s","meter_size":"%s","meter_reading":%s,"route":"%s","potable_present":%s,"fire_present":%s,"irrigation_present":%s,\
+            "is_due_install":%s,"is_backflow":%s,"cust_number":"%s","cust_name":"%s","cust_code":%s,"cust_address1":"%s","cust_address2":"%s","cust_apt":"%s",\
+            "cust_city":"%s","cust_state":"%s","cust_zip":"%s","contact_phone":"","contact_fax":"","contact_email":"",\
+            "notes":"","last_survey_date":"%s","next_survey_date":"%s"}',
+            '"webapp.site"',
+            '%s'
+        ),
         'survey': BASE_TEMPLATE % (
         '{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}',
         '"webapp.survey"', '%s'),
         'hazard': BASE_TEMPLATE % (
-        '{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,"assembly_location":%s,\
-"assembly_status":%s,"installed_properly":%s,"installer":"%s","install_date":"%s","replace_date":"%s",\
-"orientation":%s,"bp_type_present":"%s","bp_type_required":"%s","bp_size":%s,"manufacturer":%s,"model_no":"%s",\
-"serial_no":"%s","due_test_date":"%s","is_present":true,"notes":""}',
-        '"webapp.hazard"', '%s'),
+            '{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,\
+             "assembly_status":"%s","bp_type_required":"%s","is_present":true,"notes":"","bp_device":%s}',
+            '"webapp.hazard"',
+            '%s'
+        ),
+        'device': BASE_TEMPLATE % (
+            '{"assembly_location":%s,"installed_properly":%s,"installer":"%s",\
+              "install_date":"%s","replace_date":"%s",\
+              "orientation":%s,"bp_type_present":"%s",\
+              "bp_size":%s,"manufacturer":%s,"model_no":"%s",\
+              "serial_no":"%s","due_test_date":"%s","notes":""}',
+            '"webapp.bpdevice"',
+            '%s'
+        ),
         'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
         'letter': BASE_TEMPLATE % ('{"already_sent":true,"site":%s,"letter_type":%s,"date":"%s","user":%s}', '"webapp.letter"', '%s'),
-        'test': BASE_TEMPLATE % ('{"outlet_sov_leaked":%s,"rv_psi1":%s, "rv_psi2":%s, "cv2_cleaned": %s,\
-"cv2_retest_gauge_pressure": %s, "cv_retest_psi": %s, \
-"air_inlet_retest_psi": %s,"cv2_leaked": %s, "cv_held_pressure": %s, \
-"cv2_gauge_pressure": %s, "pvb_cleaned": %s, "tester": %s,\
-"cv1_cleaned": %s, "paid": true, "air_inlet_opened": %s, "air_inlet_psi": %s,"user": %s, \
-"test_result": %s, "cv1_retest_gauge_pressure": %s, "cv1_gauge_pressure": %s,\
-"rv_opened": %s, "cv1_leaked": %s, "bp_device": %s, "cv_leaked": %s, "notes": "%s", \
-"test_date": "%s", "rv_cleaned": %s, "test_kit": %s, "tester_cert": %s}', '"webapp.test"', '%s'),
+        'test': BASE_TEMPLATE % (
+            '{"outlet_sov_leaked":%s,"rv_psi1":%s, "rv_psi2":%s, "cv2_cleaned": "%s",\
+            "cv2_retest_gauge_pressure": %s, "cv_retest_psi": %s, \
+            "air_inlet_retest_psi": %s,"cv2_leaked": %s, "cv_held_pressure": %s, \
+            "cv2_gauge_pressure": %s, "pvb_cleaned": "%s", "tester": %s,\
+            "cv1_cleaned": "%s", "paid": true, "air_inlet_opened": %s, "air_inlet_psi": %s,"user": %s, \
+            "test_result": %s, "cv1_retest_gauge_pressure": %s, "cv1_gauge_pressure": %s,\
+            "rv_opened": %s, "cv1_leaked": %s, "bp_device": %s, "cv_leaked": %s, "notes": "%s", \
+            "test_date": "%s", "rv_cleaned": "%s", "test_kit": %s, "tester_cert": %s}',
+            '"webapp.test"',
+            '%s'
+        ),
         'test_kit': BASE_TEMPLATE % ('{"user":%s,"test_serial":"%s","test_manufacturer":%s,"test_last_cert":"%s"}', '"webapp.testkit"', '%s'),
         'tester_cert': BASE_TEMPLATE % ('{"user":%s,"cert_number":"%s"}', '"webapp.testercert"', '%s'),
     }
@@ -604,7 +652,8 @@ AccountNumber, CustomerName, Code, CustAddress1, CustAddress2, CustApt, CustCity
 LastSurveyDate, NextSurveyDate, ID from ALL_SITES',
         'dump_surveys': 'select site, service_type, survey_date, surveyor, metered, pump_present, additives_present, cc_present, protected, aux_water, detector_manufacturer, detector_model, detector_serial, special, notes, \'hph\', ID from ALL_SURVEYS',
         'dump_pwss': 'select Number, Name, WaterSource, ID from ALL_PWS',
-        'dump_hazards': 'select site, service_type, hazard_type, assembly_location, assembly_status, installed_properly, installer, install_date, replace_date, orientation, bp_type_present, bp_type_required, bp_size, bp_manufacturer, model_no, serial_no, due_install_test_date, ID from ALL_HAZARDS',
+        'dump_hazards': 'select site, service_type, hazard_type, assembly_status, bp_type_required, bp_device, ID from ALL_HAZARDS',
+        'dump_devices': 'select assembly_location, installed_properly, installer, install_date, replace_date, orientation, bp_type_present, bp_size, bp_manufacturer, model_no, serial_no, due_install_test_date, ID from ALL_DEVICES',
         'dump_letters': 'select site, lettertype, letterdate, sender, ID from ALL_LETTERS',
         'dump_tests': 'select outlet_sov_leaked, rv_psi1, rv_psi2, cv2_cleaned,\
 cv2_retest_pressure, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pressure,\
@@ -619,6 +668,7 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_
         'site',
         'survey',
         'hazard',
+        'device',
         'letter',
         'test',
         'test_kit',
@@ -635,16 +685,20 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_
                    (13, "webapp.special")],
         'hazard': [(1, "webapp.servicetype"),
                    (2, "webapp.hazardtype"),
-                   (3, "webapp.assemblylocation"),
-                   (4, "webapp.assemblystatus"),
-                   (9, "webapp.orientation"),
-                   (12, "webapp.bpsize"),
-                   (13, "webapp.bpmanufacturer")],
+                   (3, "webapp.assemblystatus")],
+        'device': [(0, "webapp.assemblylocation"),
+                   (5, "webapp.orientation"),
+                   (7, "webapp.bpsize"),
+                   (8, "webapp.bpmanufacturer")],
         'pws': [(2, "webapp.sourcetype")],
         'letter': [(1, "webapp.lettertype"),
                    (3, "auth.user")],
-        'test': [(11, "auth.user"),
-                 (15, "auth.user")],
+        'test': [(3, "test.maintenance"),
+                 (10, "test.maintenance"),
+                 (11, "auth.user"),
+                 (12, "test.maintenance"),
+                 (15, "auth.user"),
+                 (25, "test.maintenance")],
         'test_kit': [(0, 'auth.user'),
                      (2, "webapp.testmanufacturer")],
         'tester_cert': [(0, 'auth.user')],

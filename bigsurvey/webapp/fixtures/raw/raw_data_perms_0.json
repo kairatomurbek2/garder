@@ -4,6 +4,26 @@
     "name": "SuperAdministrators",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_all_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "export_xls",
         "webapp",
         "site"
@@ -185,11 +205,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
@@ -698,6 +713,26 @@
     "name": "Administrators",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "export_xls",
         "webapp",
         "site"
@@ -744,11 +779,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
@@ -947,6 +977,26 @@
     "name": "Surveyors",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "access_to_pws_hazards",
         "webapp",
         "hazard"
@@ -958,11 +1008,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
@@ -1041,6 +1086,16 @@
     "name": "Testers",
     "permissions": [
       [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
         "access_to_pws_hazards",
         "webapp",
         "hazard"
@@ -1051,9 +1106,14 @@
         "hazard"
       ],
       [
-        "change_hazard",
+        "add_bpdevice",
         "webapp",
-        "hazard"
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
       ],
       [
         "change_invite",
@@ -1099,6 +1159,26 @@
   "fields": {
     "name": "PWSOwners",
     "permissions": [
+      [
+        "browse_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "access_to_multiple_pws_devices",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "add_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
+      [
+        "change_bpdevice",
+        "webapp",
+        "bpdevice"
+      ],
       [
         "export_xls",
         "webapp",
@@ -1161,11 +1241,6 @@
       ],
       [
         "browse_hazard",
-        "webapp",
-        "hazard"
-      ],
-      [
-        "change_all_info_about_hazard",
         "webapp",
         "hazard"
       ],
