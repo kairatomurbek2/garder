@@ -11,6 +11,7 @@ from webapp import filters, models, forms, perm_checkers
 from webapp.actions.builders import SiteFilteringActionsBuilder
 from webapp.models import NoSearchFieldIndicated
 from webapp.utils.excel_writer import XLSExporter
+from webapp.view_helpers import get_user_pws_list
 from .base_views import BaseTemplateView, BaseFormView
 
 
@@ -31,7 +32,7 @@ class HomeView(FormView, BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         sites = self._get_sites()
-        pws_list = self._get_pws_list()
+        pws_list = get_user_pws_list(self.request)
         if self.request.GET:
             form = self.form_class(self.request.GET, pws_qs=pws_list)
             if form.is_valid():
@@ -47,7 +48,7 @@ class HomeView(FormView, BaseTemplateView):
         return context
 
     def _get_xls(self):
-        pws_list = self._get_pws_list()
+        pws_list = get_user_pws_list(self.request)
         form = self.form_class(self.request.GET, pws_qs=pws_list)
         if form.is_valid():
             action = SiteFilteringActionsBuilder.get_sites_filtered(form, pws_list, self._get_sites())
@@ -63,14 +64,6 @@ class HomeView(FormView, BaseTemplateView):
         if self.request.user.has_perm('webapp.access_to_all_sites'):
             sites = models.Site.objects.all()
         return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
-
-    def _get_pws_list(self):
-        pws_list = models.PWS.objects.none()
-        if self.request.user.has_perm('webapp.browse_all_pws'):
-            pws_list = models.PWS.objects.all()
-        elif self.request.user.has_perm('webapp.own_multiple_pws'):
-            pws_list = self.request.user.employee.pws.all()
-        return pws_list
 
 
 class TesterHomeView(BaseTemplateView, FormView):

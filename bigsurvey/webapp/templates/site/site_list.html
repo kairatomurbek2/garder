@@ -1,5 +1,4 @@
 {% load i18n pagination_tags widget_tweaks staticfiles %}
-{% if sites %}
 {% autopaginate sites 50 %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
@@ -17,11 +16,17 @@
             {% endif %}
             {% paginate %}
         </div>
+        {% if header or messages %}
+            <div class="padding-top-40">
+                {% include 'messages.html' %}
+                <div class="message-wrapper">
+                    <div class="alert-margin-top uk-alert uk-alert-success">
+                        <p>{{ header }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <div id="table_div" >
-            {% include 'messages.html' %}
-            {% if header %}
-                <div class="uk-alert">{{ header }}</div>
-            {% endif %}
             <table class="uk-table big-table uk-table-hover fixed-headers" id="data_table">
                 <thead>
                 <tr class="table-border-bottom">
@@ -266,13 +271,13 @@
                         </td>
                     </tr>
                 {% endfor %}
-                {% endif %}
                 <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
                 <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
                 <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
                 <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
                 </tbody>
             </table>
+
         </div>
     </form>
 </div>
