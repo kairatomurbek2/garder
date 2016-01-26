@@ -10,7 +10,7 @@ Feature: PWS list
     | role      | reaction |
     | root      | not see  |
     | pws_owner | not see  |
-    | admin     | see      |
+    | admin     | not see  |
     | surveyor  | see      |
     | tester    | see      |
 
