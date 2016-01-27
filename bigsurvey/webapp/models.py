@@ -1,18 +1,17 @@
+import uuid
 from decimal import Decimal
+
 from datetime import date
 
-from django.db import models
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext as _
-from django.contrib.auth.models import User, Group
-from ckeditor.fields import RichTextField
-from reversion import revisions as reversion
-
-from main.parameters import *
-from utils import photo_util
 import fields
-
-import uuid
+from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User, Group
+from django.core.urlresolvers import reverse
+from django.db import models
+from django.utils.translation import ugettext as _
+from main.parameters import *
+from reversion import revisions as reversion
+from utils import photo_util
 
 
 class SourceType(models.Model):
@@ -514,6 +513,10 @@ class NoSearchFieldIndicated(Exception):
     pass
 
 
+class NoBpDeviceFoundWithSuchSerialNo(Exception):
+    pass
+
+
 class Site(models.Model):
     pws = models.ForeignKey(PWS, verbose_name=_("PWS"), related_name="sites", db_index=True)
     connect_date = models.DateField(null=True, blank=True, verbose_name=_("Connect Date"))
@@ -571,7 +574,7 @@ class Site(models.Model):
             _("Meter number: ") + self.meter_number if self.meter_number else '')
 
     @staticmethod
-    def search_in_cust_number_address_meter_number(pws, field, search_value):
+    def search_for_site(pws, field, search_value):
         if field == 'cust_number':
             lookups = [models.Q(pws=pws, cust_number__iexact=search_value)]
         elif field == 'address':
@@ -581,6 +584,12 @@ class Site(models.Model):
                        for value in search_value.split()]
         elif field == 'meter_number':
             lookups = [models.Q(pws=pws, meter_number__iexact=search_value)]
+        elif field == 'bp_device_serial_no':
+            try:
+                bp_device = BPDevice.objects.get(serial_no__iexact=search_value, hazard__site__pws=pws)
+            except BPDevice.DoesNotExist:
+                raise NoBpDeviceFoundWithSuchSerialNo()
+            return [bp_device.hazard.site]
         else:
             raise NoSearchFieldIndicated()
         return Site.objects.filter(*lookups)
@@ -681,7 +690,7 @@ class Hazard(models.Model):
                                        verbose_name=_("Assembly Status"))
     bp_type_required = models.CharField(choices=BP_TYPE_CHOICES, max_length=15, null=True, blank=True,
                                         verbose_name=_('BP Type Required'))
-    bp_device = models.OneToOneField(BPDevice, null=True, blank=True, related_name=_("hazard"))
+    bp_device = models.OneToOneField(BPDevice, null=True, blank=True, related_name="hazard")
     is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
@@ -961,4 +970,3 @@ class Invite(models.Model):
 
 reversion.register(Invite)
 
-import signals

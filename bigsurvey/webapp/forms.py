@@ -422,6 +422,7 @@ class TesterSiteSearchForm(forms.Form):
     address = forms.CharField(label=_('Street number and address'), required=False)
     cust_number = forms.CharField(label=_('Customer number'), required=False)
     meter_number = forms.CharField(label=_('Meter number'), required=False)
+    bp_device_serial_no = forms.CharField(label=_('BP Device Serial No'), required=False)
 
     search_field_and_value = None
 
@@ -430,12 +431,18 @@ class TesterSiteSearchForm(forms.Form):
         address = cleaned_data.get('address')
         cust_number = cleaned_data.get('cust_number')
         meter_number = cleaned_data.get('meter_number')
-        if len(address) == 0 and len(cust_number) == 0 and len(meter_number) == 0:
-            search_fields = "%s, %s, %s" % (self.fields['address'].label, self.fields['cust_number'].label, self.fields['meter_number'].label)
+        bp_device_serial_no = cleaned_data.get('bp_device_serial_no')
+
+        if len(address) == 0 and len(cust_number) == 0 and len(meter_number) == 0 and len(bp_device_serial_no) == 0:
+            search_fields = "%s, %s, %s, %s" % (self.fields['address'].label,
+                                            self.fields['cust_number'].label,
+                                            self.fields['meter_number'].label,
+                                            self.fields['bp_device_serial_no'].label)
             error_message = Messages.Site.search_error_fields_not_filled % search_fields
             self.add_error('address', ValidationError(error_message))
             self.add_error('cust_number', ValidationError(error_message))
             self.add_error('meter_number', ValidationError(error_message))
+            self.add_error('bp_device_serial_no', ValidationError(error_message))
         else:
             self.search_field_and_value = [{field_name: cleaned_data.get(field_name)}
                                            for field_name in self.fields

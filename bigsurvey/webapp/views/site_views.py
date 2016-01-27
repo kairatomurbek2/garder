@@ -9,7 +9,7 @@ from django.views.generic import FormView, CreateView, UpdateView
 from main.parameters import SITE_STATUS, BP_TYPE, Messages
 from webapp import filters, models, forms, perm_checkers
 from webapp.actions.builders import SiteFilteringActionsBuilder
-from webapp.models import NoSearchFieldIndicated
+from webapp.models import NoSearchFieldIndicated, NoBpDeviceFoundWithSuchSerialNo
 from webapp.utils.excel_writer import XLSExporter
 from webapp.view_helpers import get_user_pws_list
 from .base_views import BaseTemplateView, BaseFormView
@@ -74,21 +74,24 @@ class TesterHomeView(BaseTemplateView, FormView):
     def get_context_data(self, **kwargs):
         context = super(TesterHomeView, self).get_context_data(**kwargs)
         form = self.form_class(self.request.GET or None)
-        pws = self.request.user.employee.pws.all()
-        form.fields['pws'].queryset = pws
+        pws_list = self.request.user.employee.pws.all()
+        form.fields['pws'].queryset = pws_list
         if self.request.GET and set(form.fields.keys()).issubset(set(self.request.GET.keys())):
             if form.is_valid():
                 search_field = form.search_field_and_value.keys()[0]
                 search_value = form.search_field_and_value.get(search_field)
+                chosen_pws = form.cleaned_data['pws']
                 context['form'] = form
+                context['pws'] = chosen_pws
                 context['search_field'] = form.fields[search_field].label
                 context['search_value'] = search_value
                 try:
-                    search_results = models.Site.search_in_cust_number_address_meter_number(
-                        pws, search_field, search_value)
+                    search_results = models.Site.search_for_site(chosen_pws, search_field, search_value)
                 except NoSearchFieldIndicated:
                     search_results = []
                     messages.error(self.request, Messages.Site.search_server_error)
+                except NoBpDeviceFoundWithSuchSerialNo:
+                    search_results = []
                 context['sites_queryset'] = search_results
                 self.request.session['sites_pks'] = [site.pk for site in search_results]
         context['form'] = form

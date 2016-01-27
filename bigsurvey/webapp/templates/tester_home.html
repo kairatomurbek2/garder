@@ -35,6 +35,11 @@
                         {{ form.meter_number|add_class:'uk-width-1-1' }}
                     </div>
                     <div class="uk-form-row">
+                        <p>{% trans 'BP Device Serial No' %}</p>
+                        {{ form.bp_device_serial_no.errors }}
+                        {{ form.bp_device_serial_no|add_class:'uk-width-1-1' }}
+                    </div>
+                    <div class="uk-form-row">
                         <button class="uk-button uk-button-primary uk-width-1-1" name="submit" type="submit">{% trans 'Search' %}</button>
                     </div>
                 </form>
@@ -46,7 +51,7 @@
             <div class="uk-width-1-3 uk-container-center uk-vertical-align-middle uk-panel uk-panel-box">
             {% if sites_queryset|length > 0 %}
                 <p class="uk-text-large uk-text-muted">
-                    {% trans "Results for search in" %} {{ search_field }} {% trans "by term" %} {{ search_value }}
+                    {% trans "Results for search in" %} '{{ search_field }}' {% trans "by term" %} '{{ search_value }}' {% trans "among sites of the PWS" %} '{{ pws.name }}'
                 </p>
                 {% autopaginate sites_queryset 5 %}
                 {% for site in sites_queryset %}
@@ -56,6 +61,9 @@
                     {% paginate %}
                 </div>
             {% else %}
+                <p class="uk-text-large uk-text-muted">
+                    {% trans "Results for search in" %} '{{ search_field }}' {% trans "by term" %} '{{ search_value }}' {% trans "among sites of the PWS" %} '{{ pws.name }}'
+                </p>
                 <p class="uk-text-large uk-text-muted">{% trans "Site was not found" %}</p>
             {% endif %}
             </div>
