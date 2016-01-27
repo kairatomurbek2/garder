@@ -970,3 +970,4 @@ class Invite(models.Model):
 
 reversion.register(Invite)
 
+import signals
