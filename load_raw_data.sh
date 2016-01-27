@@ -1,10 +1,9 @@
 #!/bin/sh
-set -e
-. ./virtualenv/bin/activate
+
 cd ./bigsurvey/
 FILE_PATH="./webapp/fixtures/raw/"
 FILE_PREFIX="raw_data_"
-for data_type in "base" "pws" "perms" "users" "testers" "site" "device" "hazard" "survey" "test_kit" "tester_cert" "test" "letter" "regulation"
+for data_type in "base" "regulation" "pws" "perms" "users" "testers" "site" "device" "hazard" "survey" "test_kit" "tester_cert" "test" "letter"
 do
     for part_number in `seq 0 100`
     do
@@ -15,4 +14,4 @@ do
         fi
     done
 done
-deactivate
+cd ../
