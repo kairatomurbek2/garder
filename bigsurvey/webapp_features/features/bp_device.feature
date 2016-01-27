@@ -41,7 +41,6 @@ Feature: BPDevice adding/editing
     | Backflow Preventer was successfully updated |
     | about device                                |
 
-  @this
   Scenario: Surveyor installs bp-device on existing hazard
     Given I logged in as "surveyor"
     And Hazard with pk "2" has no bp device installed

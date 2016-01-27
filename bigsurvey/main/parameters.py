@@ -46,6 +46,20 @@ BP_TYPE_CHOICES = (
 )
 
 
+class LetterTypes(object):
+    DUE_INSTALL_FIRST = 'Due Install First'
+    DUE_INSTALL_SECOND = 'Due Install Second'
+    DUE_INSTALL_THIRD = 'Due Install Third'
+    ANNUAL_TEST_FIRST = 'Annual Test First'
+    ANNUAL_TEST_SECOND = 'Annual Test Second'
+    ANNUAL_TEST_THIRD = 'Annual Test Third'
+
+
+class BPLocations(object):
+    INTERNAL = 'Internal'
+    AT_METER = 'At Meter'
+
+
 class AssemblyStatus(object):
     INSTALLED = 'installed'
     DUE_INSTALL = 'due_install'

@@ -15,7 +15,7 @@
                 <th>{% trans "City" %}</th>
                 <th>{% trans "Office Address" %}</th>
                 <th>{% trans "Water Source" %}</th>
-                <th class="uk-text-center border-left">{% trans "Actions" %}</th>
+                <th colspan="2" class="uk-text-center border-left">{% trans "Actions" %}</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +29,9 @@
                     <td>{{ pws.water_source }}</td>
                     <td class="uk-text-center border-left border-bottom">
                         <a id="pws_{{ pws.pk }}_detail_link" href="{% url 'webapp:pws_detail' pws.pk %}">{% trans "Detail" %}</a>
+                    </td>
+                    <td class="uk-text-center">
+                        <a id="pws_{{ pws.pk }}_snapshot_link" href="{% url 'webapp:pws_snapshot' pws.pk %}">{% trans "Snapshot" %}</a>
                     </td>
                 </tr>
             {% endfor %}

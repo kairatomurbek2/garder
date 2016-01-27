@@ -1,4 +1,6 @@
 import os
+import helper
+from datetime import datetime
 
 from django.conf import settings
 
@@ -8,7 +10,7 @@ from lettuce import step
 from main.parameters import Messages
 
 from webapp import models
-from webapp_features.features.data import get_url
+from webapp_features.features.data import get_url, Xpath
 from webapp_features.features.data import Urls
 
 
@@ -37,6 +39,17 @@ def directly_open_pws_detail_page(step, pk):
 def open_pws_detail_page(step, pk):
     step.given('I open "pws_list" page')
     step.given('I click "pws_%s_detail" link' % pk)
+
+
+@step('I directly open "snapshot" page with pk (\d+)')
+def directly_open_snapshot_page(step, pws_pk):
+    step.given('I open "%s"' % get_url(Urls.pws_snapshot % pws_pk))
+
+
+@step('I open "snapshot" page with pk (\d+)')
+def open_snapshot_page(step, pws_pk):
+    step.given('I open "pws_list" page')
+    step.given('I click "pws_%s_snapshot" link' % pws_pk)
 
 
 @step('I open "pws_add" page')
@@ -125,3 +138,81 @@ def check_pws_field_value(step, pk, value, field):
     pws = models.PWS.objects.get(pk=pk)
     actual_value = getattr(pws, field)
     assert value == actual_value, 'Expected "%s" in "%s" field, found "%s"' % (value, field, actual_value)
+
+
+@step('PWS with pk (\d+) has at least one site')
+def create_site_for_pws(step, pws_pk):
+    pws = models.PWS.objects.get(pk=pws_pk)
+    cust_code = models.CustomerCode.objects.get(pk=3)
+    if not pws.sites.all().exists():
+        models.Site.objects.create(
+            pws=pws,
+            cust_number="temp1",
+            city="city1",
+            address1="address1",
+            cust_name="cust1",
+            cust_code=cust_code
+        )
+
+
+@step('PWS with pk (\d+) has (\d+) hazard\(s\)')
+def create_hazards_for_pws(step, pws_pk, number):
+    pws = models.PWS.objects.get(pk=pws_pk)
+    site = pws.sites.all().first()
+    service_type = models.ServiceType.objects.get(pk=3)
+    hazard_type = models.HazardType.objects.get(pk=1)
+    i = 0
+    while i < int(number):
+        models.Hazard.objects.create(site=site, service_type=service_type, hazard_type=hazard_type)
+        i += 1
+
+
+@step('PWS with pk (\d+) has (\d+) survey\(s\)')
+def create_surveys_for_pws(step, pws_pk, number):
+    pws = models.PWS.objects.get(pk=pws_pk)
+    site = pws.sites.all().first()
+    service_type = models.ServiceType.objects.get(pk=3)
+    i = 0
+    while i < int(number):
+        models.Survey.objects.create(survey_date=datetime.now().date(), service_type=service_type, site=site)
+        i += 1
+
+
+@step('PWS with pk (\d+) has (\d+) bp-device\(s\) of type "([a-zA-Z ]+)" installed (At Meter|Internal)')
+def create_devices_for_pws(step, pws_pk, number, bp_type, location):
+    pws = models.PWS.objects.get(pk=pws_pk)
+    site = pws.sites.all().first()
+    service_type = models.ServiceType.objects.get(pk=3)
+    hazard_type = models.HazardType.objects.get(pk=1)
+    assembly_location = models.AssemblyLocation.objects.get(assembly_location=location)
+    i = 0
+    while i < int(number):
+        bp_device = models.BPDevice.objects.create(bp_type_present=bp_type, assembly_location=assembly_location)
+        models.Hazard.objects.create(site=site, service_type=service_type, hazard_type=hazard_type, bp_device=bp_device)
+        i += 1
+
+
+@step('PWS with pk (\d+) has (\d+) letter\(s\) of type "([a-zA-Z ]+)"')
+def create_letters_for_pws(step, pws_pk, number, type):
+    pws = models.PWS.objects.get(pk=pws_pk)
+    site = pws.sites.all().first()
+    hazard = site.hazards.all().first()
+    letter_type = models.LetterType.objects.get(letter_type=type, pws=pws)
+    i = 0
+    while i < int(number):
+        models.Letter.objects.create(letter_type=letter_type, hazard=hazard, site=site, already_sent=True)
+        i += 1
+
+
+@step('I should see values in order "([0-9,]+)"')
+def see_snapshot_values(step, values_string):
+    values = values_string.split(",")
+    page_values = helper.find_multiple(Xpath.Pattern.snapshot_values)
+    i = 0
+    result = True
+    for item in values:
+        if int(item) != int(page_values[i].text):
+            result = False
+            break
+        i += 1
+    assert result

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n staticfiles choices %}
 {% block menu %}
+    <li><a href="{% url 'webapp:pws_snapshot' pws.pk %}" id="pws_{{ pws.pk }}_edit_link">{% trans "Snapshot" %}</a></li>
     <li><a href="{% url 'webapp:pws_edit' pws.pk %}" id="pws_{{ pws.pk }}_edit_link">{% trans "Edit" %}</a></li>
 {% endblock %}
 {% block content %}

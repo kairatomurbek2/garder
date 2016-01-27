@@ -56,6 +56,7 @@ class Urls:
     hazard_list = '/hazard/'
     tester_list = '/testers/'
     test_list = '/test/'
+    pws_snapshot = '/pws/%s/snapshot/'
 
 
 class Logins:
@@ -127,6 +128,7 @@ class Xpath:
         site_links_in_search_results = './/a[@class="site-url"]'
         site_link_in_search_results_with_param = './/a[@class="site-url"][contains(., "%s")]'
         search_field_error_message = './/ul[@class="errorlist"][contains(., "%s")]/preceding-sibling::p[contains(.,"%s")]'
+        snapshot_values = '//tr/td[2]'
 
     class Paypal:
         username = './/input[@name="login_email"]'

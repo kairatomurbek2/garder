@@ -91,17 +91,24 @@ class SetLastSurveyDateQuery(RawSqlQuery):
 class SetDueInstallTestDateQuery(RawSqlQuery):
     sites_table_name = models.Site._meta.db_table
     hazards_table_name = models.Hazard._meta.db_table
+    bp_devices_table_name = models.BPDevice._meta.db_table
 
     @classmethod
     def as_sql(cls):
         query = '''
         UPDATE %(sites_table_name)s
-            SET due_install_test_date =
-                (SELECT MIN(%(hazards_table_name)s.due_test_date)
-                    FROM %(hazards_table_name)s
-                    WHERE %(hazards_table_name)s.site_id = %(sites_table_name)s.id)
+            SET %(sites_table_name)s.due_install_test_date =
+                (SELECT MIN(%(bp_devices_table_name)s.due_test_date)
+                    FROM %(bp_devices_table_name)s
+                    WHERE %(bp_devices_table_name)s.id IN (SELECT %(hazards_table_name)s.bp_device_id
+                        FROM %(hazards_table_name)s
+                        WHERE %(hazards_table_name)s.site_id = %(sites_table_name)s.id))
         '''
-        return query % {'sites_table_name': cls.sites_table_name, 'hazards_table_name': cls.hazards_table_name}
+        return query % {
+            'sites_table_name': cls.sites_table_name,
+            'hazards_table_name': cls.hazards_table_name,
+            'bp_devices_table_name': cls.bp_devices_table_name
+        }
 
 
 class ResetAutoincrementFieldsForTesting(RawSqlQuery):

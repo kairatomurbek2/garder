@@ -2,8 +2,10 @@ from .base_views import BaseTemplateView, BaseFormView
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from webapp import models, forms
-from main.parameters import Messages
+from main.parameters import Messages, BP_TYPE, LetterTypes, BPLocations
 from django.views.generic import UpdateView, CreateView
+from django.utils.translation import ugettext as _
+from datetime import date
 
 
 class PWSListView(BaseTemplateView):
@@ -76,3 +78,89 @@ class PWSEditView(PWSBaseFormView, UpdateView):
         if not user.is_superuser and user.has_perm('webapp.change_own_pws') and self.object not in user.employee.pws.all():
             raise Http404
         return super(PWSEditView, self).get_context_data(**kwargs)
+
+
+class SnapshotItem(object):
+    def __init__(self, title='', value=None):
+        self.title = title
+        self.value = value
+
+
+class SnapshotView(BaseTemplateView):
+    template_name = 'pws/snapshot.html'
+    permission = 'webapp.browse_pws'
+    pws = None
+
+    def get_context_data(self, **kwargs):
+        self.pws = models.PWS.objects.get(pk=self.kwargs['pk'])
+        if self._allowed():
+            context = super(SnapshotView, self).get_context_data(**kwargs)
+            context['snapshot_items'] = self._get_snapshot_items()
+            context['pws_pk'] = self.pws.pk
+            return context
+        raise Http404
+
+    def _allowed(self):
+        return self.request.user.is_superuser or self.pws in self.request.user.employee.pws.all()
+
+    def _get_snapshot_items(self):
+        snapshot_items = [
+            SnapshotItem(_('Surveys Performed'), self._get_surveys_performed()),
+            SnapshotItem(_('Due Install 1st letters Sent'),
+                         self._get_letters_sent(letter_type=LetterTypes.DUE_INSTALL_FIRST)),
+            SnapshotItem(_('Due Install 2nd letters Sent'),
+                         self._get_letters_sent(letter_type=LetterTypes.DUE_INSTALL_SECOND)),
+            SnapshotItem(_('Due Install 3rd letters Sent'),
+                         self._get_letters_sent(letter_type=LetterTypes.DUE_INSTALL_THIRD)),
+            SnapshotItem(_('Annual Test 1st letters Sent'),
+                         self._get_letters_sent(letter_type=LetterTypes.ANNUAL_TEST_FIRST)),
+            SnapshotItem(_('Annual Test 2nd letters Sent'),
+                         self._get_letters_sent(letter_type=LetterTypes.ANNUAL_TEST_SECOND)),
+            SnapshotItem(_('Annual Test 3rd letters Sent'),
+                         self._get_letters_sent(letter_type=LetterTypes.ANNUAL_TEST_THIRD)),
+            SnapshotItem(_('No. of Containment Assemblies'),
+                         self._get_bp_devices(bp_location=BPLocations.AT_METER)),
+            SnapshotItem(_('No. of Isolation Assemblies'),
+                         self._get_bp_devices(bp_location=BPLocations.INTERNAL)),
+            SnapshotItem(_('No. of RP Backflow Preventers'),
+                         self._get_bp_devices(bp_type_group=BP_TYPE.RP_TYPES)),
+            SnapshotItem(_('No. of DC Backflow Preventers'),
+                         self._get_bp_devices(bp_type_group=BP_TYPE.DC_TYPES)),
+            SnapshotItem(_('No. of PVB Backflow Preventers'),
+                         self._get_bp_devices(bp_type_group=BP_TYPE.STANDALONE_TYPES)),
+        ]
+        return snapshot_items
+
+    def _get_surveys_performed(self, from_date=None, to_date=None):
+        if not from_date:
+            from_date = date(year=1900, month=1, day=1)
+        if not to_date:
+            to_date = date(year=3000, month=12, day=31)
+        return models.Survey.objects.filter(
+            site__pws=self.pws,
+            survey_date__gt=from_date,
+            survey_date__lt=to_date
+        ).count()
+
+    def _get_letters_sent(self, letter_type=None, from_date=None, to_date=None):
+        if not from_date:
+            from_date = date(year=1900, month=1, day=1)
+        if not to_date:
+            to_date = date(year=3000, month=12, day=31)
+        return models.Letter.objects.filter(
+            site__pws=self.pws,
+            date__gt=from_date,
+            date__lt=to_date,
+            already_sent=True,
+            letter_type__letter_type__icontains=letter_type
+        ).count()
+
+    def _get_bp_devices(self, bp_location=None, bp_type_group=None):
+        filter_kwargs = {
+            'hazard__site__pws': self.pws
+        }
+        if bp_location:
+            filter_kwargs['assembly_location__assembly_location'] = bp_location
+        if bp_type_group:
+            filter_kwargs['bp_type_present__in'] = bp_type_group
+        return models.BPDevice.objects.filter(**filter_kwargs).count()

@@ -46,6 +46,7 @@ urlpatterns = patterns(
     url(r'^pws/(?P<pk>\d+)/$', views.PWSDetailView.as_view(), name="pws_detail"),
     url(r'^pws/add/$', views.PWSAddView.as_view(), name="pws_add"),
     url(r'^pws/(?P<pk>\d+)/edit/$', views.PWSEditView.as_view(), name="pws_edit"),
+    url(r'^pws/(?P<pk>\d+)/snapshot/$', views.SnapshotView.as_view(), name="pws_snapshot"),
 
     url(r'^user/$', views.UserListView.as_view(), name="user_list"),
     url(r'^user/add/$', views.UserAddView.as_view(), name="user_add"),
