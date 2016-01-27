@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'reversion',
     'reversion_compare',
     'auditlog',
+    'captcha'
 )
 
 SESSION_COOKIE_AGE = 900
@@ -120,6 +121,11 @@ DEFAULT_FROM_EMAIL = "bss@bpsbr.com"
 REPLY_TO_EMAIL = "bss@bpsbr.com"
 RETURN_PATH_EMAIL = "bss@bpsbr.com"
 
+# captcha configuration
+RECAPTCHA_PUBLIC_KEY = '6LfQkBYTAAAAAOqc6TFVt7PoLEr44_mV4zN_-B_s'
+RECAPTCHA_PRIVATE_KEY = '6LfQkBYTAAAAAObzDbh8tOCaoO7OKiZFZPOVdjCb'
+NOCAPTCHA = False
+CAPTCHA_AJAX = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -127,6 +133,10 @@ RETURN_PATH_EMAIL = "bss@bpsbr.com"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
+
+WEBAPP_FIXTURES_BASE = os.path.join(BASE_DIR, 'webapp', 'fixtures')
+
+SAMPLE_DATA_JSON = os.path.join(WEBAPP_FIXTURES_BASE, 'sample_data_for_pws_registration.json')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
