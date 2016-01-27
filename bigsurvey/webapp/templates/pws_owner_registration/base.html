@@ -1,0 +1,35 @@
+{% load i18n staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0">
+    {% block title %}
+        <title>{% trans "Registration" %}</title>
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/uikit.gradient.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/custom/my-uikit.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/custom/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/components/datepicker.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/components/form-select.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/components/form-advanced.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/components/form-file.min.css' %}"/>
+    {% block styles %}
+    {% endblock %}
+    {% include 'partial/urls.html' %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/uikit.min.js' %}"></script>
+    <script src="{% static 'js/components/datepicker.min.js' %}"></script>
+    <script src="{% static 'js/components/form-select.min.js' %}"></script>
+    <script src="{% static 'js/custom/csrf.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+</head>
+<body>
+<div class="navbar-hack"></div>
+{% block content %}
+{% endblock %}
+{% block end_scripts %}
+{% endblock %}
+</body>
+</html>

@@ -43,6 +43,7 @@ em {
 .errorlist {
     margin: 0;
     color: #d85030;
+    list-style: none;
 }
 
 .padding-top-10 {

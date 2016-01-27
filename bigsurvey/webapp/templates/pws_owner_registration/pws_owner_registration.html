@@ -1,0 +1,148 @@
+{% extends 'pws_owner_registration/base.html' %}
+{% load i18n choices widget_tweaks %}
+{% block navbar %}
+{% endblock %}
+{% block content %}
+    <div class="uk-grid">
+        <div class="uk-width-1-2 uk-container-center uk-panel uk-panel-box">
+            {% include 'messages.html' %}
+            <form class="uk-form uk-form-stacked" method="post">
+                {% csrf_token %}
+                <div class="uk-form-row">
+                    {{ pws_form.number.errors }}
+                    <label for="{{ pws_form.number.id_for_label }}"
+                           class="uk-form-label">{{ pws_form.number.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field pws_form.number class="uk-width-1-1" %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ pws_form.name.errors }}
+                    <label for="{{ pws_form.name.id_for_label }}"
+                           class="uk-form-label">{{ pws_form.name.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field pws_form.name|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.first_name.errors }}
+                    <label for="{{ user_form.first_name.id_for_label }}"
+                           class="uk-form-label">{{ user_form.first_name.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.first_name|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.last_name.errors }}
+                    <label for="{{ user_form.last_name.id_for_label }}"
+                           class="uk-form-label">{{ user_form.last_name.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.last_name|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.address.errors }}
+                    <label for="{{ user_form.address.id_for_label }}"
+                           class="uk-form-label">{{ user_form.address.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.address|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.city.errors }}
+                    <label for="{{ user_form.city.id_for_label }}"
+                           class="uk-form-label">{{ user_form.city.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.city|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.state.errors }}
+                    <label for="{{ user_form.state.id_for_label }}"
+                           class="uk-form-label">{{ user_form.state.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.state|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.zip.errors }}
+                    <label for="{{ user_form.zip.id_for_label }}"
+                           class="uk-form-label">{{ user_form.zip.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.zip|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.phone1.errors }}
+                    <label for="{{ user_form.phone1.id_for_label }}"
+                           class="uk-form-label">{{ user_form.phone1.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.phone1|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.email.errors }}
+                    <label for="{{ user_form.email.id_for_label }}"
+                           class="uk-form-label">{{ user_form.email.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.email|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.username.errors }}
+                    <label for="{{ user_form.username.id_for_label }}"
+                           class="uk-form-label">{{ user_form.username.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.username|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.password1.errors }}
+                    <label for="{{ user_form.password1.id_for_label }}"
+                           class="uk-form-label">{{ user_form.password1.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.password1|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.password2.errors }}
+                    <label for="{{ user_form.password2.id_for_label }}"
+                           class="uk-form-label">{{ user_form.password2.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field user_form.password2|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    {{ user_form.captcha.errors }}
+                    {% render_field user_form.captcha|add_class:'uk-width-1-1' %}
+                </div>
+                <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                        <input type="checkbox" id="form-s-c"> <label
+                            for="form-s-c">{% trans "Disclaimer verifying that the person signing up for the PWS has the authority to do so, etc." %}</label>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <button type="submit"
+                            class="uk-button uk-button-primary uk-button-large uk-width-1-1">{% trans "Submit" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+{% endblock %}
