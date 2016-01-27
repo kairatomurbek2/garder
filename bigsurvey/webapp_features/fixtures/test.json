@@ -3550,7 +3550,7 @@
 {
   "fields": {
     "orientation": null,
-    "serial_no": "",
+    "serial_no": "123",
     "replace_date": null,
     "installed_properly": false,
     "installer": "",
@@ -3570,7 +3570,7 @@
   "fields": {
     "install_date": null,
     "orientation": null,
-    "serial_no": "",
+    "serial_no": "321",
     "replace_date": null,
     "installed_properly": false,
     "installer": "",
@@ -3588,7 +3588,7 @@
 {
   "fields":{
     "orientation": null,
-    "serial_no": "",
+    "serial_no": "456",
     "replace_date": null,
     "installed_properly": false,
     "installer": "",
@@ -3607,7 +3607,7 @@
 {
   "fields": {
     "orientation": null,
-    "serial_no": "",
+    "serial_no": "890",
     "replace_date": null,
     "installed_properly": false,
     "installer": "",
