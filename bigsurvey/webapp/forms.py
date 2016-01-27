@@ -1,4 +1,5 @@
 from ast import literal_eval
+from captcha.fields import ReCaptchaField
 
 import models
 import re
@@ -11,6 +12,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
     TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES_FILTER, STATES
 from webapp.validators import validate_excel_file
 
 

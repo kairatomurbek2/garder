@@ -421,3 +421,7 @@ POSSIBLE_IMPORT_MAPPINGS = {
     "Customer Email": ('customeremail', 'custemail', 'email',),
     "Due Test Date": ('dueinstalltestdate', 'dueinstalldate', 'duetestdate', 'dueinstalltest', 'dueinstall', 'duetest', 'testduedate', 'installduedate',),
 }
+
+
+class PWSRegistrationEmail(object):
+    successfull_registration_subject = _("You have successfully registered PWS %s")
