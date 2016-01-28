@@ -24,15 +24,15 @@ class XLSExporter(object):
     def _write_headers(self):
         col = 0
         bold = self.workbook.add_format({'bold': True})
-        for field in self.fields:
-            self.current_sheet.write(0, col, field, bold)
+        for _, field_label in self.fields:
+            self.current_sheet.write(0, col, field_label, bold)
             col += 1
 
     def _write_data(self):
         row = 1
         for item in self.dataset:
             col = 0
-            for field_name in self.fields:
+            for field_name, _ in self.fields:
                 field = getattr(item, field_name)
                 value = self._get_field_value(field, field_name)
                 self.current_sheet.write(row, col, value)
