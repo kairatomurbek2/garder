@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES_FILTER
 from webapp.validators import validate_excel_file
 
 
@@ -603,3 +603,18 @@ class EmailValidationOnForgotPassword(PasswordResetForm):
             raise ValidationError(
                 _("There is no user registered with the specified email address!"))
         return email
+
+
+class TestPriceForm(forms.ModelForm):
+    class Meta:
+        model = models.TestPriceHistory
+        fields = ['price']
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        current_price = models.TestPriceHistory.current().price
+        if price < 0:
+            self.add_error('price', _('Price per Test can not be lower than 0'))
+        if price == current_price:
+            self.add_error('price', _('New Price can not be the same as the current Price'))
+        return price
