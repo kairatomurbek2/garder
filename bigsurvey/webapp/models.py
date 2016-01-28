@@ -360,7 +360,6 @@ class PWS(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Name"))
     logo = fields.ImageField(upload_to='pws_logos', null=True, blank=True, verbose_name=_("Pws logo"))
     zip = models.CharField(max_length=10, blank=True, null=True, verbose_name=_("ZIP"))
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0), blank=True, verbose_name=_("Test's Price"))
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
     state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("State"), help_text=_("Site's State"))
     office_address = models.CharField(blank=True, null=True, max_length=50, verbose_name=_("Office Address"))
@@ -763,6 +762,28 @@ class Survey(models.Model):
 reversion.register(Survey)
 
 
+class TestPriceHistory(models.Model):
+    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name=_('Price'))
+    start_date = models.DateField(auto_now_add=True, verbose_name=_('Start Date'))
+    end_date = models.DateField(null=True, blank=True, verbose_name=_('Price end date'), editable=False)
+
+    class Meta:
+        verbose_name = _("Test Price")
+        verbose_name_plural = _("Test Price History")
+        permissions = (
+            ('setup_test_price', _('Can set up price per Test')),
+        )
+
+    def __unicode__(self):
+        return u"%s" % self.price
+
+    @classmethod
+    def current(cls):
+        return cls.objects.get(end_date=None)
+
+reversion.register(TestPriceHistory)
+
+
 class Test(models.Model):
     bp_device = models.ForeignKey(BPDevice, verbose_name=_("BP Device"), related_name="tests")
     tester = models.ForeignKey(User, verbose_name=_("Tester"), related_name="tests")
@@ -787,6 +808,7 @@ class Test(models.Model):
     test_result = models.BooleanField(choices=TEST_RESULT_CHOICES, default=False, verbose_name=_("Test Result"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
     paid = models.BooleanField(default=False, verbose_name=_('Whether test paid?'))
+    price = models.DecimalField(default=Decimal(0), decimal_places=2, max_digits=7, verbose_name=_('Price'))
     cv1_cleaned = models.CharField(choices=CLEANED_REPLACED_CHOICES, default=CLEANED_REPLACED_CHOICES[0][0],
                                    verbose_name=_("CV1 Cleaned or Replaced"), max_length=255)
     cv2_cleaned = models.CharField(choices=CLEANED_REPLACED_CHOICES, default=CLEANED_REPLACED_CHOICES[0][0],
@@ -844,10 +866,6 @@ class Test(models.Model):
 
     def get_pws_list(self):
         return [self.bp_device.hazard.site.pws]
-
-    @property
-    def price(self):
-        return self.bp_device.hazard.site.pws.price
 
     @property
     def cv1_replaced_details(self):

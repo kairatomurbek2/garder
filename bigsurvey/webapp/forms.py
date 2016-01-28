@@ -302,7 +302,7 @@ class TestForm(forms.ModelForm):
 
     class Meta:
         model = models.Test
-        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened', 'paid', 'user', 'paypal_payment_id')
+        exclude = ('bp_device', 'rv_opened', 'air_inlet_opened', 'paid', 'user', 'price', 'paypal_payment_id')
 
 
 class EmployeeForm(forms.ModelForm):

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% include "messages.html" %}
+    <div class="wrapper">
+        <div class="uk-align-center uk-width-large-2-5 uk-width-medium-3-5 uk-width-small-9-10">
+            <div class="uk-text-center">
+                <form class="uk-form" method="post">
+                    {% csrf_token %}
+                    <p>{{ form.price.label }}: {{ form.price }}</p>
+                    <p>{{ form.price.errors }}</p>
+                    <button class="uk-button uk-button-primary" type="submit">{% trans "Update Price" %}</button>
+                </form>
+            </div>
+            <table class="uk-table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Price" %}</th>
+                        <th>{% trans "Activation Date" %}</th>
+                        <th>{% trans "Deactivation Date" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for price_item in price_history %}
+                    <tr>
+                        <td>{{ price_item.price }}</td>
+                        <td>{{ price_item.start_date }}</td>
+                        <td>
+                            {% if price_item.end_date %}
+                                {{ price_item.end_date }}
+                            {% else %}
+                                {% trans "Active (Current Price)" %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

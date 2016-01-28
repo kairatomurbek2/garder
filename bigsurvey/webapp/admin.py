@@ -60,6 +60,10 @@ class LetterTypeAdmin(CompareVersionAdmin):
     list_display = 'letter_type', 'pws'
 
 
+class TestPriceAdmin(CompareVersionAdmin):
+    list_display = 'price', 'start_date', 'end_date'
+
+
 admin.site.unregister(User)
 admin.site.register(User, EmployeeAdmin)
 admin.site.register(models.AssemblyLocation)
@@ -94,3 +98,4 @@ admin.site.register(models.Invite)
 admin.site.register(models.TesterCert)
 admin.site.register(models.TestKit)
 admin.site.register(models.BPDevice)
+admin.site.register(models.TestPriceHistory, TestPriceAdmin)

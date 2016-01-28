@@ -83,4 +83,6 @@ urlpatterns = patterns(
     url(r'^hazard/(?P<pk>\d+)/install-bp/$', views.BPDeviceCreateView.as_view(), name="bp_device_add"),
     url(r'^bp-device/(?P<pk>\d+)/edit/$', views.BPDeviceUpdateView.as_view(), name="bp_device_edit"),
     url(r'^bp-device/(?P<pk>\d+)/add-test/$', views.TestAddView.as_view(), name="test_add"),
+
+    url(r'^test-price/$', views.TestPriceSetupView.as_view(), name='test_price')
 )

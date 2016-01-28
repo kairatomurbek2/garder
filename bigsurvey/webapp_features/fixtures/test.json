@@ -2030,7 +2030,6 @@
     "name": "Second PWS",
     "zip": null,
     "office_address": null,
-    "price": "1.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "PWS2",
@@ -2057,7 +2056,6 @@
     "name": "First PWS",
     "zip": null,
     "office_address": null,
-    "price": "2.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "PWS1",
@@ -2084,7 +2082,6 @@
     "name": "Third PWS",
     "zip": null,
     "office_address": null,
-    "price": "3.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "PWS3",
@@ -2111,7 +2108,6 @@
     "name": "Houston PWS",
     "zip": null,
     "office_address": null,
-    "price": "4.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "XOL852",
@@ -2138,7 +2134,6 @@
     "name": "Alaska Central PWS",
     "zip": null,
     "office_address": null,
-    "price": "5.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "AL202",
@@ -2165,7 +2160,6 @@
     "name": "White House PWS",
     "zip": null,
     "office_address": null,
-    "price": "6.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "DOC121",
@@ -2192,7 +2186,6 @@
     "name": "Los Angeles Beach System",
     "zip": null,
     "office_address": null,
-    "price": "7.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "LA200",
@@ -2219,7 +2212,6 @@
     "name": "MIT Public Water System",
     "zip": null,
     "office_address": null,
-    "price": "8.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "KSL12",
@@ -2246,7 +2238,6 @@
     "name": "North USA PWS",
     "zip": "70643",
     "office_address": "200 South Jefferson st.",
-    "price": "9.00",
     "plumber_packet_address": "city hall",
     "consultant_name": "Van der Veijden",
     "number": "NUI812",
@@ -2273,7 +2264,6 @@
     "name": "South Western PWS",
     "zip": null,
     "office_address": null,
-    "price": "10.00",
     "plumber_packet_address": null,
     "consultant_name": null,
     "number": "SW12",
@@ -5586,7 +5576,8 @@
     "pvb_detail_spring_air_inlet": true,
     "rv_detail_seat": false,
     "cv1_detail_seat": false,
-    "tester_cert": 1
+    "tester_cert": 1,
+    "price": "1.00"
   },
   "model": "webapp.test",
   "pk": 1
@@ -5664,7 +5655,8 @@
     "pvb_detail_spring_air_inlet": false,
     "rv_detail_seat": false,
     "cv1_detail_seat": false,
-    "tester_cert": 1
+    "tester_cert": 1,
+    "price": "1.00"
   },
   "model": "webapp.test",
   "pk": 2
@@ -5742,7 +5734,8 @@
     "pvb_detail_spring_air_inlet": false,
     "rv_detail_seat": false,
     "cv1_detail_seat": false,
-    "tester_cert": 1
+    "tester_cert": 1,
+    "price": "1.00"
   },
   "model": "webapp.test",
   "pk": 3
@@ -5820,7 +5813,8 @@
     "pvb_detail_spring_air_inlet": false,
     "rv_detail_seat": false,
     "cv1_detail_seat": false,
-    "tester_cert": 1
+    "tester_cert": 1,
+    "price": "1.00"
   },
   "model": "webapp.test",
   "pk": 4
@@ -6089,7 +6083,7 @@
 {"fields":{"degree":"Pollutant"},"model":"webapp.hazarddegree","pk":1},
 {"fields":{"degree":"Contaminant"},"model":"webapp.hazarddegree","pk":2},
 {"fields":{"user":["tester"],"cert_number":"qwerty132"},"model":"webapp.testercert","pk":1},
-{"fields":{"user":["tester"],"test_serial":"serial1"},"model":"webapp.testkit","pk":1},
+{"fields":{"user":["tester"],"test_serial":"serial1","test_last_cert":"2016-01-01"},"model":"webapp.testkit","pk":1},
   {
     "fields": {
       "name": "LAC51:XIV Table 609.F.5"
@@ -6117,5 +6111,14 @@
     },
     "model": "webapp.regulation",
     "pk": 4
+  },
+  {
+    "fields": {
+      "price": "1.00",
+      "start_date": "2016-01-01",
+      "end_date": null
+    },
+    "model": "webapp.testpricehistory",
+    "pk": 1
   }
 ]

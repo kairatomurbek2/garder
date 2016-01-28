@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.template.loader import render_to_string
 from .base_views import BaseView, BaseTemplateView, BaseFormView
 from django.http import Http404, JsonResponse
@@ -10,7 +11,7 @@ from paypalrestsdk.exceptions import ConnectionError
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import ungettext as __
-from webapp.exceptions import PaymentWasNotCreatedError
+from webapp.exceptions import PaymentWasNotCreatedError, PaymentTotalSumIsNull
 from django.conf import settings
 from webapp.responses import PDFResponse
 from webapp.utils.pdf_generator import PDFGenerator
@@ -116,8 +117,9 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
     def post(self, request, *args, **kwargs):
         payment_form = forms.PaymentForm(self.request.POST, queryset=self.get_unpaid_tests())
         if payment_form.is_valid():
-            payment = self.get_payment(payment_form.cleaned_data['tests'])
+            tests = payment_form.cleaned_data['tests']
             try:
+                payment = self.get_payment(tests)
                 if payment.create():
                     # we need to find approval_url and redirect user to this url
                     for link in payment.links:
@@ -127,6 +129,14 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
                                 'total_amount': payment.transactions[0]['amount']['total']}
                 else:
                     raise PaymentWasNotCreatedError(payment.error)
+            except PaymentTotalSumIsNull:
+                tests.update(paid=True)
+                messages.success(self.request, __(
+                    Messages.Test.payment_successful_singular,
+                    Messages.Test.payment_successful_plural,
+                    tests.count()
+                ))
+                response = {'status': 'no-payment'}
             except (ConnectionError, PaymentWasNotCreatedError, NameError):
                 response = {'status': 'error', 'message': Messages.Test.payment_failed}
         else:
@@ -135,6 +145,8 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
 
     def get_payment(self, tests):
         total_amount = sum((test.price for test in tests))
+        if total_amount < 0.01:
+            raise PaymentTotalSumIsNull()
         items = [
             {
                 "quantity": 1,
@@ -234,8 +246,13 @@ class TestAddView(TestBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         form.instance.user = self.request.user
+        price = models.TestPriceHistory.current().price
+        form.instance.price = price
+        if price < 0.01:
+            form.instance.paid = True
         response = super(TestAddView, self).form_valid(form)
         self.request.session['test_for_payment_pk'] = self.object.pk
+        self.request.session['test_price_not_null'] = price > 0
         return response
 
 
@@ -252,7 +269,9 @@ class TestEditView(TestBaseFormView, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(TestEditView, self).get_context_data(**kwargs)
-        context['test_for_payment_pk'] = self.request.session.pop('test_for_payment_pk', None)
+        price_not_null = self.request.session.pop('test_price_not_null', None)
+        if price_not_null:
+            context['test_for_payment_pk'] = self.request.session.pop('test_for_payment_pk', None)
         return context
 
     def get_form(self, form_class):

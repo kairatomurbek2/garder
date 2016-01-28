@@ -1,10 +1,13 @@
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import View, FormView, TemplateView
+from django.views.generic import View, FormView, TemplateView, CreateView
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from main.parameters import Messages
 from webapp import models
+from webapp import forms
 
 
 class PermissionRequiredMixin(View):
@@ -62,3 +65,27 @@ class HelpView(BaseTemplateView):
         context['user_help'] = models.StaticText.objects.filter(group__in=self.request.user.groups.all())
         context['for_all_help'] = models.StaticText.objects.filter(group=None)
         return context
+
+
+class TestPriceSetupView(BaseFormView, CreateView):
+    template_name = 'price_setup.html'
+    model = models.TestPriceHistory
+    form_class = forms.TestPriceForm
+    permission = 'webapp.setup_price'
+    success_url = reverse_lazy('webapp:test_price')
+
+    def get_context_data(self, **kwargs):
+        context = super(TestPriceSetupView, self).get_context_data(**kwargs)
+        context['price_history'] = models.TestPriceHistory.objects.all().order_by('-start_date')
+        return context
+
+    def form_valid(self, form):
+        current_price = models.TestPriceHistory.current()
+        current_date = datetime.now().date()
+        if current_date == current_price.start_date:
+            current_price.price = form.cleaned_data['price']
+        else:
+            self.object = form.save()
+            current_price.end_date = self.object.start_date
+        current_price.save()
+        return HttpResponseRedirect(self.success_url)

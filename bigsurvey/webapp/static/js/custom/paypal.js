@@ -63,6 +63,9 @@ var defaultSuccessHandler = function (response) {
             .text(response.message);
         hideElementWithDelay($(selectors.errorAlert));
     }
+    else if (response.status == 'no-payment') {
+        location.reload()
+    }
     $(selectors.spinner).hide();
     isPaymentProcessing = false;
 };
