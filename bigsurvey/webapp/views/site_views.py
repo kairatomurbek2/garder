@@ -8,17 +8,14 @@ from django.shortcuts import redirect
 from django.views.generic import FormView, CreateView, UpdateView
 from main.parameters import SITE_STATUS, BP_TYPE, Messages
 from webapp import filters, models, forms, perm_checkers
-from webapp.actions.builders import SiteFilteringActionsBuilder
 from webapp.models import NoSearchFieldIndicated, NoBpDeviceFoundWithSuchSerialNo
 from webapp.utils.excel_writer import XLSExporter
-from webapp.view_helpers import get_user_pws_list
 from .base_views import BaseTemplateView, BaseFormView
 
 
-class HomeView(FormView, BaseTemplateView):
+class HomeView(BaseTemplateView):
     template_name = "home.html"
     permission = 'webapp.browse_site'
-    form_class = forms.SitesFilterForm
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -30,32 +27,17 @@ class HomeView(FormView, BaseTemplateView):
         return super(HomeView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
         sites = self._get_sites()
-        pws_list = get_user_pws_list(self.request)
-        if self.request.GET:
-            form = self.form_class(self.request.GET, pws_qs=pws_list)
-            if form.is_valid():
-                action = SiteFilteringActionsBuilder.get_sites_filtered(form, pws_list, sites)
-                context['site_filter_form'] = form
-                context['sites'] = action.execute()
-                return context
-            else:
-                context['site_filter_form'] = form
-                return context
-        context['site_filter_form'] = self.form_class(pws_qs=pws_list)
-        context['sites'] = sites
+        context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites, user=user)
         return context
 
     def _get_xls(self):
-        pws_list = get_user_pws_list(self.request)
-        form = self.form_class(self.request.GET, pws_qs=pws_list)
-        if form.is_valid():
-            action = SiteFilteringActionsBuilder.get_sites_filtered(form, pws_list, self._get_sites())
-            filtered_sites = action.execute()
-            xls = XLSExporter(filtered_sites).get_xls()
-            response = HttpResponse(xls, content_type='text/plain')
-            return response
+        filtered_sites = filters.SiteFilter(self.request.GET, queryset=self._get_sites(), user=self.request.user)
+        xls = XLSExporter(filtered_sites.qs).get_xls()
+        response = HttpResponse(xls, content_type='text/plain')
+        return response
 
     def _get_sites(self):
         sites = models.Site.objects.none()
@@ -183,7 +165,7 @@ class BatchUpdateView(BaseTemplateView):
         return sites
 
     def _get_site_filter(self, queryset):
-        return self.filter_class(self.request.GET, queryset=queryset)
+        return self.filter_class(self.request.GET, queryset=queryset, user=self.request.user)
 
     def post(self, request):
         form = self.form_class(self.request.POST)

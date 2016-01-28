@@ -11,10 +11,9 @@ from django.forms import formset_factory, ModelChoiceField
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from main.parameters import Messages, OTHER, DATEFORMAT_HELP
-from webapp import models, perm_checkers
-from webapp.forms import ImportForm, ImportMappingsForm, BaseImportMappingsFormSet, SitesFilterForm
+from webapp import models, perm_checkers, filters
+from webapp.forms import ImportForm, ImportMappingsForm, BaseImportMappingsFormSet
 from webapp.utils.excel_parser import ExcelParser, ExcelValidationError, BackgroundExcelParserRunner, FINISHED
-from webapp.view_helpers import get_user_pws_list
 from .base_views import BaseTemplateView, BaseFormView
 
 
@@ -261,21 +260,19 @@ class ImportLogSitesMixin(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ImportLogSitesMixin, self).get_context_data(**kwargs)
-        form = SitesFilterForm(pws_qs=get_user_pws_list(self.request))
         import_log = models.ImportLog.objects.get(pk=self.kwargs['pk'])
         if not perm_checkers.ImportLogPermChecker.has_perm(self.request, import_log):
             raise Http404
         context['import_log'] = import_log
         context['header'] = self.get_header(import_log)
         sites = self.get_sites(import_log)
-        context['sites'] = sites
-        context['site_filter_form'] = form
+        context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites, user=self.request.user)
         return context
 
 
 class ImportLogAddedSitesView(ImportLogSitesMixin):
     def get_sites(self, import_log):
-        return import_log.added_sites.all()
+        return import_log.added_sites
 
     def get_header(self, import_log):
         return Messages.Import.added_sites_header % self.get_datetime_readable_value(import_log)
@@ -283,7 +280,7 @@ class ImportLogAddedSitesView(ImportLogSitesMixin):
 
 class ImportLogUpdatedSitesView(ImportLogSitesMixin):
     def get_sites(self, import_log):
-        return import_log.updated_sites.all()
+        return import_log.updated_sites
 
     def get_header(self, import_log):
         return Messages.Import.updated_sites_header % self.get_datetime_readable_value(import_log)
@@ -291,7 +288,7 @@ class ImportLogUpdatedSitesView(ImportLogSitesMixin):
 
 class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
     def get_sites(self, import_log):
-        return import_log.deactivated_sites.all()
+        return import_log.deactivated_sites
 
     def get_header(self, import_log):
         return Messages.Import.deactivated_sites_header % self.get_datetime_readable_value(import_log)

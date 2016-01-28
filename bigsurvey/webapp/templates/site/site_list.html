@@ -1,5 +1,5 @@
 {% load i18n pagination_tags widget_tweaks staticfiles %}
-{% autopaginate sites 50 %}
+{% autopaginate site_filter.qs as filtered_sites 50 %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
         <div id="filter_buttons_div" class="fixed filter-button-div">
@@ -34,164 +34,164 @@
                         {% trans "ID" %}
                     </th>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.pws.label }}</span>
-                        {{ site_filter_form.pws|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.pws.label }}</span>
+                        {{ site_filter.form.pws|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_number.label }}</span>
-                        {{ site_filter_form.cust_number|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_number.label }}</span>
+                        {{ site_filter.form.cust_number|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_code.label }}</span>
-                        {{ site_filter_form.cust_code|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_code.label }}</span>
+                        {{ site_filter.form.cust_code|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_name.label }}</span>
-                        {{ site_filter_form.cust_name|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_name.label }}</span>
+                        {{ site_filter.form.cust_name|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
                         <span class="uk-text-bold">{% trans "Test Due Date" %}</span>
-                        {{ site_filter_form.due_test_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
-                        {{ site_filter_form.due_test_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
+                        {{ site_filter.form.due_test_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
+                        {{ site_filter.form.due_test_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.due_test_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.due_test_blank }}
                         </label>
                     </td>
                     <td class="opaque">
                         <span class="uk-text-bold">{% trans "Next Survey Date" %}</span>
-                        {{ site_filter_form.next_survey_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
-                        {{ site_filter_form.next_survey_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
+                        {{ site_filter.form.next_survey_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
+                        {{ site_filter.form.next_survey_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.next_survey_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.next_survey_blank }}
                         </label>
                     </td>
                     <td class="opaque">
                         <span class="uk-text-bold">{% trans "Last Survey Date" %}</span>
-                        {{ site_filter_form.last_survey_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
-                        {{ site_filter_form.last_survey_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
+                        {{ site_filter.form.last_survey_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
+                        {{ site_filter.form.last_survey_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.last_survey_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.last_survey_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.route.label }}</span>
-                        {{ site_filter_form.route|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.route.label }}</span>
+                        {{ site_filter.form.route|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.route_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.route_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.street_number.label }}</span>
-                        {{ site_filter_form.street_number|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.street_number.label }}</span>
+                        {{ site_filter.form.street_number|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.street_number_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.street_number_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.address1.label }}</span>
-                        {{ site_filter_form.address1|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.address1.label }}</span>
+                        {{ site_filter.form.address1|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.address2.label }}</span>
-                        {{ site_filter_form.address2|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.address2.label }}</span>
+                        {{ site_filter.form.address2|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.address2_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.address2_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.apt.label }}</span>
-                        {{ site_filter_form.apt|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.apt.label }}</span>
+                        {{ site_filter.form.apt|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.apt_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.apt_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.city.label }}</span>
-                        {{ site_filter_form.city|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.city.label }}</span>
+                        {{ site_filter.form.city|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.state.label }}</span>
-                        {{ site_filter_form.state|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.state.label }}</span>
+                        {{ site_filter.form.state|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.zip.label }}</span>
-                        {{ site_filter_form.zip|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.zip.label }}</span>
+                        {{ site_filter.form.zip|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.zip_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.zip_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_address1.label }}</span>
-                        {{ site_filter_form.cust_address1|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_address1.label }}</span>
+                        {{ site_filter.form.cust_address1|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.cust_address1_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.cust_address1_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_address2.label }}</span>
-                        {{ site_filter_form.cust_address2|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_address2.label }}</span>
+                        {{ site_filter.form.cust_address2|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.cust_address2_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.cust_address2_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_apt.label }}</span>
-                        {{ site_filter_form.cust_apt|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_apt.label }}</span>
+                        {{ site_filter.form.cust_apt|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.cust_apt_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.cust_apt_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_city.label }}</span>
-                        {{ site_filter_form.cust_city|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_city.label }}</span>
+                        {{ site_filter.form.cust_city|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.cust_city_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.cust_city_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_state.label }}</span>
-                        {{ site_filter_form.cust_state|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_state.label }}</span>
+                        {{ site_filter.form.cust_state|add_class:"uk-width-1-1" }}
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.cust_zip.label }}</span>
-                        {{ site_filter_form.cust_zip|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.cust_zip.label }}</span>
+                        {{ site_filter.form.cust_zip|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.cust_zip_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.cust_zip_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.meter_number.label }}</span>
-                        {{ site_filter_form.meter_number|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.meter_number.label }}</span>
+                        {{ site_filter.form.meter_number|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.meter_number_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.meter_number_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.meter_size.label }}</span>
-                        {{ site_filter_form.meter_size|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.meter_size.label }}</span>
+                        {{ site_filter.form.meter_size|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.meter_size_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.meter_size_blank }}
                         </label>
                     </td>
                     <td class="opaque">
-                        <span class="uk-text-bold">{{ site_filter_form.meter_reading.label }}</span>
-                        {{ site_filter_form.meter_reading|add_class:"uk-width-1-1" }}
+                        <span class="uk-text-bold">{{ site_filter.form.meter_reading.label }}</span>
+                        {{ site_filter.form.meter_reading|add_class:"uk-width-1-1" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.meter_reading_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.meter_reading_blank }}
                         </label>
                     </td>
                     <td class="opaque">
                         <span class="uk-text-bold">{% trans "Connect Date" %}</span>
-                        {{ site_filter_form.connect_date_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
-                        {{ site_filter_form.connect_date_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
+                        {{ site_filter.form.connect_date_from|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:From" }}
+                        {{ site_filter.form.connect_date_to|add_class:"uk-width-1-1"|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}"|attr:"placeholder:To" }}
                         <label class="form-blank-label">
-                            {% trans "Blank:" %} {{ site_filter_form.connect_date_blank }}
+                            {% trans "Blank:" %} {{ site_filter.form.connect_date_blank }}
                         </label>
                     </td>
                 </tr>
                 </thead>
                 <tbody>
-                {% for site in sites %}
+                {% for site in filtered_sites %}
                     <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}" data-id="{{ site.pk }}">
                         <td class="table-border-right">{{ site.pk }}</td>
                         <td>
