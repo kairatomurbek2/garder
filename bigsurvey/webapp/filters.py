@@ -1,8 +1,8 @@
 import django_filters
 import models
-from main.parameters import Groups, BP_TYPE_CHOICES, STATES_FILTER, ASSEMBLY_STATUS_CHOICES
-from django.utils.translation import ugettext as _
 from django import forms
+from django.utils.translation import ugettext as _
+from main.parameters import Groups, BP_TYPE_CHOICES, STATES_FILTER, ASSEMBLY_STATUS_CHOICES
 
 
 class FilterChoices(object):
@@ -632,9 +632,18 @@ class SiteFilter(django_filters.FilterSet):
                                                        widget=forms.CheckboxInput)
     connect_date_blank = django_filters.BooleanFilter(action=FilterActions.Site.connect_date_blank,
                                                       widget=forms.CheckboxInput)
+
     # they aren't displayed currently but may require them later
     # site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
     # site_use = django_filters.ChoiceFilter(choices=FilterChoices.site_use(), label=_('Site Use'))
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super(SiteFilter, self).__init__(*args, **kwargs)
+        if user and not user.is_superuser:
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            self.filters['pws'].field.choices = choices
 
 
 class SurveyFilter(django_filters.FilterSet):
