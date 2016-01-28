@@ -1,4 +1,3 @@
-from webapp.actions.sites import FilterSitesAction
 from webapp.actions.users import AddUserAction
 
 
@@ -11,14 +10,4 @@ class UserManagementActionsBuilder(object):
         action.employee_form = employee_form
         action.test_kit_form = test_kit_form
         action.cert_form = cert_form
-        return action
-
-
-class SiteFilteringActionsBuilder(object):
-    @staticmethod
-    def get_sites_filtered(sites_filtering_form, pws_list, sites):
-        action = FilterSitesAction()
-        action.sites_filtering_form = sites_filtering_form
-        action.pws_list = pws_list
-        action.sites = sites
         return action
