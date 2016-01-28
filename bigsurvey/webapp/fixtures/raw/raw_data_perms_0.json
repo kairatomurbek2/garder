@@ -768,6 +768,11 @@
         "employee"
       ],
       [
+        "access_to_audit_log",
+        "webapp",
+        "employee"
+      ],
+      [
         "access_to_pws_hazards",
         "webapp",
         "hazard"
