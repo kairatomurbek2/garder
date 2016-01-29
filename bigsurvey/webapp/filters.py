@@ -418,7 +418,7 @@ class FilterActions(object):
         @staticmethod
         def customer_account(hazards, value):
             if value:
-                return hazards.filter(site__number__icontains=value)
+                return hazards.filter(site__cust_number__icontains=value)
             return hazards
 
         @staticmethod
