@@ -1,8 +1,8 @@
-{% load i18n %}
+{% load i18n staticfiles %}
 <ul class="uk-navbar-nav uk-hidden-small" data-content="menu">
     <li>
         <a class="uk-navbar-brand uk-hidden-small" href="{% url 'webapp:home' %}">
-            <b>{% trans "BACKFLOW SOFTWARE SOLUTIONS" %}</b>
+            <img src="{% static 'img/garder-logotype.png' %}" class="logo-garder"/>
         </a>
     </li>
     {% if perms.webapp.browse_site %}
