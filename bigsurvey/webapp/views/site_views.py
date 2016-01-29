@@ -9,7 +9,7 @@ from django.views.generic import FormView, CreateView, UpdateView
 from main.parameters import SITE_STATUS, BP_TYPE, Messages
 from webapp import filters, models, forms, perm_checkers
 from webapp.models import NoSearchFieldIndicated, NoBpDeviceFoundWithSuchSerialNo
-from webapp.utils.excel_writer import XLSExporter
+from webapp.utils.excel_writer.excel_writer import XLSExporter
 from .base_views import BaseTemplateView, BaseFormView
 
 

@@ -181,63 +181,6 @@ CREDIT_CARD_TYPE_CHOICES = (
 
 OTHER = 'other'
 
-SITE_FIELD_NAMES = [
-    ("pk", "ID"),
-    ("pws", "PWS"),
-    ("connect_date", "Connect Date"),
-    ("status", "Site Status"),
-    ("cust_number", "Account Number"),
-    ("cust_code", "Customer Code"),
-    ("last_survey_date", "Last Survey Date"),
-    ("next_survey_date", "Next Survey Date"),
-    ("due_install_test_date", "Due Install/Test Date"),
-    ("route", "Seq. Route"),
-    ("address1", "Service Address 1"),
-    ("address2", "Service Address 2"),
-    ("street_number", "Service Street Number"),
-    ("apt", "Service Apt."),
-    ("city", "Service City"),
-    ("state", "Service State"),
-    ("zip", "Service ZIP"),
-    ("site_use", "Site Use"),
-    ("site_type", "Site Type"),
-    ("floors", "Floors Count"),
-    ("interconnection_point", "Interconnection Point"),
-    ("meter_number", "Meter Number"),
-    ("meter_size", "Meter Size"),
-    ("meter_reading", "Meter Reading"),
-    ("potable_present",  "Potable Present"),
-    ("fire_present", "Fire Present"),
-    ("irrigation_present", "Irrigation Present"),
-    ("is_due_install", "Is Due Install"),
-    ("is_backflow", "Is Backflow"),
-    ("cust_address1", "Customer Address 1"),
-    ("cust_address2", "Customer Address 2"),
-    ("cust_apt", "Customer Apt."),
-    ("cust_city", "Customer City"),
-    ("cust_state", "Customer State"),
-    ("cust_zip", "Customer ZIP"),
-    ("cust_name", "Customer Name"),
-    ("contact_phone", "Contact Phone"),
-    ("contact_fax", "Contact FAX"),
-    ("contact_email", "Contact Email"),
-    ("notes", "Notes"),
-]
-
-SITE_BOOLEAN_FIELDS = [
-    "potable_present",
-    "fire_present",
-    "irrigation_present",
-    "is_due_install",
-    "is_backflow",
-]
-
-SITE_DATE_FIELDS = [
-    "connect_date",
-    "next_survey_date",
-    "last_survey_date",
-]
-
 DATEFORMAT_CHOICES = (
     ('%Y-%m-%d', '%Y-%m-%d'),
     ('%m/%d/%Y', '%m/%d/%Y'),
