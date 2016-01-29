@@ -17,6 +17,7 @@ Feature: PWS editing
     | surveyor  | 6  | see      |
     | tester    | 6  | see      |
 
+    @correct_pws_edit
   Scenario: Correct PWS editing
     Given I logged in as "root"
     And I open "pws_edit" page with pk "6"

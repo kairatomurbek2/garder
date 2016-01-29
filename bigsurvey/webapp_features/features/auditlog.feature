@@ -52,7 +52,7 @@ Feature: Audit Logging
   Scenario: Filtering by date range
     Given Given surveyor edited site "RAL1234-14"
     And And owner edited site "VALVE"
-    When owner filters auditlog from current month start to current month ends
+    When owner filters auditlog from current month start to current month end
     Then he sees the following record:
       | User     | Groups    | PWS                   | Object                          | Changes      |
       | surveyor | Surveyors | NUI812, North USA PWS | Site: 72 Mial st, Raleigh 27601 | fire_present |
