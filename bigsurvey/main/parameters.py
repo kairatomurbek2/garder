@@ -166,9 +166,9 @@ class Groups:
     ad_auth = 'Administrative Authority'
 
 
-ADMIN_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]
+ADMIN_GROUPS = [Groups.surveyor, Groups.tester]
 
-OWNER_GROUPS = [Groups.pws_owner, Groups.admin, Groups.surveyor, Groups.tester]
+OWNER_GROUPS = [Groups.admin, Groups.surveyor, Groups.tester]
 
 EXCEL_EXTENSIONS = ['.xls', '.xlsx']
 

@@ -16,3 +16,7 @@ def go_to_users_page():
 
 def go_to_auditlog_page():
     _common.go_to_url('/audit-log')
+
+
+def go_to_user_edit_form():
+    _common.go_to_url('/user/add/')

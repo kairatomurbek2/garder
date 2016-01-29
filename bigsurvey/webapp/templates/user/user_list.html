@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n staticfiles choices %}
+{% load i18n staticfiles choices common %}
 {% block menu %}
     <li><a href="{% url 'webapp:user_add' %}" id="user_add_link">{% trans "Add User" %}</a></li>
 {% endblock %}
@@ -49,10 +49,16 @@
                                             {% endfor %}
                                         </td>
                                         <td class="uk-text-center border-left">
+                                        {% if user == request.user %}
                                             <a href="{% url 'webapp:user_edit' user.pk %}" id="user_{{ user.pk }}_edit_link">{% trans "Edit" %}</a>
+                                        {% else %}
+                                        {% endif %}
                                         </td>
                                         <td class="uk-text-center">
+                                        {% if user == request.user %}
                                             <a href="{% url 'webapp:user_detail' user.pk %}" id="user_{{ user.pk }}_detail_link">{% trans "Detail" %}</a>
+                                        {% else %}
+                                        {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

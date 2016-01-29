@@ -19,3 +19,21 @@ def open_user_edit_form(username):
 
 def go_to_surveyor_tab():
     go_to_tab('Surveyors')
+
+
+def go_to_admins_tab():
+    go_to_tab('Administrators')
+
+
+def assert_edit_link_and_details_link_are_not_displayed_against_user(username, email):
+    edit_xpath = './/tr[contains(., "%s")][contains(., "%s")][contains(., "Edit")]' % (username, email)
+    detail_xpath = './/tr[contains(., "%s")][contains(., "%s")][contains(., "Detail")]' % (username, email)
+    finder.find_invisible_element_by_xpath(edit_xpath)
+    finder.find_invisible_element_by_xpath(detail_xpath)
+
+
+def assert_edit_link_and_details_link_are_displayed_against_user(username, email):
+    edit_xpath = './/tr[contains(., "%s")][contains(., "%s")][contains(., "Edit")]' % (username, email)
+    detail_xpath = './/tr[contains(., "%s")][contains(., "%s")][contains(., "Detail")]' % (username, email)
+    finder.find_element_by_xpath(edit_xpath)
+    finder.find_element_by_xpath(detail_xpath)

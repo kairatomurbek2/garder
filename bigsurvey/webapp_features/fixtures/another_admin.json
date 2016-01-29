@@ -1,0 +1,42 @@
+[
+{
+  "fields": {
+    "username": "another_admin",
+    "first_name": "another_admin",
+    "last_name": "another_admin",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-07-13T05:18:01Z",
+    "groups": [
+      [
+        "Administrators"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$8ESmszcAfMs8$jEm7zn5Xz8x12Bmye3UlKjL/1WUDqz9OkygH7QnHlOQ=",
+    "email": "another_admin@admin.admin",
+    "date_joined": "2015-01-15T10:55:45Z"
+  },
+  "model": "auth.user",
+  "pk": null
+},
+{
+  "fields": {
+    "city": "another_admin city",
+    "pws": [9],
+    "zip": "another_admin zip",
+    "has_licence_for_installation": false,
+    "phone2": "",
+    "company": "another_admin company",
+    "phone1": "another_admin phone",
+    "state": "KY",
+    "user": [
+      "another_admin"
+    ],
+    "address": "another_admin address"
+  },
+  "model": "webapp.employee",
+  "pk": null
+}
+]
