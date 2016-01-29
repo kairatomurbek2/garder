@@ -45,6 +45,14 @@ def login_as_pws_owner(step):
     step.given('I login with username "%s" and password "%s"' % (Logins.pws_owner['username'], Logins.pws_owner['password']))
 
 
+@step('I login as "superadmin"')
+def login_as_superadmin(step):
+    step.given('I login with username "%s" and password "%s"' % (
+        Logins.superadmin['username'],
+        Logins.superadmin['password']
+    ))
+
+
 @step('I login with username "(.*)" and password "(.*)"')
 def login(step, username, password):
     step.given('I fill in "username" with "%s"' % username)

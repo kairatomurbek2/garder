@@ -69,7 +69,7 @@
                     {% if perms.webapp.access_to_audit_log %}
                         <li><a id="audit_log_menu_link" href="{% url 'webapp:audit_log' %}">{% trans "Audit log" %}</a></li>
                     {% endif %}
-                    {% if user.is_superuser %}
+                    {% if perms.webapp.setup_test_price %}
                         <li><a id="test_price_menu_link" href="{% url 'webapp:test_price' %}">{% trans "Setup Test Price" %}</a></li>
                     {% endif %}
                 </ul>

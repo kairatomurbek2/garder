@@ -3718,6 +3718,11 @@
     "name": "SuperAdministrators",
     "permissions": [
       [
+        "setup_test_price",
+        "webapp",
+        "testpricehistory"
+      ],
+      [
         "browse_devices",
         "webapp",
         "bpdevice"

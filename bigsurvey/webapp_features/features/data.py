@@ -57,12 +57,17 @@ class Urls:
     tester_list = '/testers/'
     test_list = '/test/'
     pws_snapshot = '/pws/%s/snapshot/'
+    price_setup = '/test-price/'
 
 
 class Logins:
     root = {
         'username': 'root',
         'password': '1qaz@WSX'
+    }
+    superadmin = {
+        'username': 'superadmin',
+        'password': 'superadmin'
     }
     admin = {
         'username': 'admin',

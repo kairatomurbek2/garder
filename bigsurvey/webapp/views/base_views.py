@@ -71,7 +71,7 @@ class TestPriceSetupView(BaseFormView, CreateView):
     template_name = 'price_setup.html'
     model = models.TestPriceHistory
     form_class = forms.TestPriceForm
-    permission = 'webapp.setup_price'
+    permission = 'webapp.setup_test_price'
     success_url = reverse_lazy('webapp:test_price')
 
     def get_context_data(self, **kwargs):
