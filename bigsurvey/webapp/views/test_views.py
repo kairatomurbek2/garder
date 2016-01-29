@@ -246,7 +246,7 @@ class TestAddView(TestBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         form.instance.user = self.request.user
-        price = models.TestPriceHistory.current().price
+        price = models.TestPriceHistory.current(form.instance.bp_device.hazard.site.pws, True).price
         form.instance.price = price
         if price < 0.01:
             form.instance.paid = True

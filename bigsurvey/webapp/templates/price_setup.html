@@ -4,12 +4,14 @@
 {% block content %}
     {% include "messages.html" %}
     <div class="wrapper">
-        <div class="uk-align-center uk-width-large-2-5 uk-width-medium-3-5 uk-width-small-9-10">
+        <div class="uk-align-center uk-width-large-3-5 uk-width-medium-4-5 uk-width-small-9-10">
             <div class="uk-text-center">
                 <form class="uk-form" method="post">
                     {% csrf_token %}
                     <p>{{ form.price.label }}: {{ form.price }}</p>
                     <p>{{ form.price.errors }}</p>
+                    <p>{{ form.pws.label }}: {{ form.pws }}</p>
+                    <p>{{ form.pws.errors }}</p>
                     <button class="uk-button uk-button-primary" type="submit">{% trans "Update Price" %}</button>
                 </form>
             </div>
@@ -19,10 +21,11 @@
                         <th>{% trans "Price" %}</th>
                         <th>{% trans "Activation Date" %}</th>
                         <th>{% trans "Deactivation Date" %}</th>
+                        <th>{% trans "PWS" %}</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for price_item in price_history %}
+                {% for price_item in active_prices %}
                     <tr>
                         <td>{{ price_item.price }}</td>
                         <td>{{ price_item.start_date }}</td>
@@ -31,6 +34,34 @@
                                 {{ price_item.end_date }}
                             {% else %}
                                 {% trans "Active (Current Price)" %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if price_item.pws %}
+                                {{ price_item.pws }}
+                            {% else %}
+                                {% trans "Default" %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                    <tr><td colspan="4"></td></tr>
+                {% for price_item in old_prices %}
+                    <tr>
+                        <td>{{ price_item.price }}</td>
+                        <td>{{ price_item.start_date }}</td>
+                        <td>
+                            {% if price_item.end_date %}
+                                {{ price_item.end_date }}
+                            {% else %}
+                                {% trans "Active (Current Price)" %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if price_item.pws %}
+                                {{ price_item.pws }}
+                            {% else %}
+                                {% trans "Default" %}
                             {% endif %}
                         </td>
                     </tr>

@@ -76,16 +76,20 @@ class TestPriceSetupView(BaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(TestPriceSetupView, self).get_context_data(**kwargs)
-        context['price_history'] = models.TestPriceHistory.objects.all().order_by('-start_date')
+        context['active_prices'] = models.TestPriceHistory.objects.filter(end_date=None).order_by('pws')
+        context['old_prices'] = models.TestPriceHistory.objects.filter(end_date__isnull=False).order_by('-start_date')
         return context
 
     def form_valid(self, form):
-        current_price = models.TestPriceHistory.current()
-        current_date = datetime.now().date()
-        if current_date == current_price.start_date:
-            current_price.price = form.cleaned_data['price']
+        current_price = models.TestPriceHistory.current(pws=form.cleaned_data['pws'])
+        if current_price:
+            current_date = datetime.now().date()
+            if current_date == current_price.start_date:
+                current_price.price = form.cleaned_data['price']
+            else:
+                self.object = form.save()
+                current_price.end_date = self.object.start_date
+            current_price.save()
         else:
             self.object = form.save()
-            current_price.end_date = self.object.start_date
-        current_price.save()
         return HttpResponseRedirect(self.success_url)

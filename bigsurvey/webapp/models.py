@@ -763,9 +763,10 @@ reversion.register(Survey)
 
 
 class TestPriceHistory(models.Model):
-    price = models.DecimalField(max_digits=7, decimal_places=2, verbose_name=_('Price'))
+    price = models.DecimalField(default=Decimal(5), max_digits=7, decimal_places=2, verbose_name=_('Price'))
     start_date = models.DateField(auto_now_add=True, verbose_name=_('Start Date'))
     end_date = models.DateField(null=True, blank=True, verbose_name=_('Price end date'), editable=False)
+    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_('PWS'))
 
     class Meta:
         verbose_name = _("Test Price")
@@ -778,8 +779,13 @@ class TestPriceHistory(models.Model):
         return u"%s" % self.price
 
     @classmethod
-    def current(cls):
-        return cls.objects.get(end_date=None)
+    def current(cls, pws=None, default=False):
+        try:
+            return cls.objects.get(end_date=None, pws=pws)
+        except models.ObjectDoesNotExist:
+            if default:
+                return cls.objects.get(end_date=None, pws=None)
+            return None
 
 reversion.register(TestPriceHistory)
 
