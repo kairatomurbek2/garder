@@ -49,15 +49,15 @@
                                             {% endfor %}
                                         </td>
                                         <td class="uk-text-center border-left">
-                                        {% if user == request.user %}
-                                            <a href="{% url 'webapp:user_edit' user.pk %}" id="user_{{ user.pk }}_edit_link">{% trans "Edit" %}</a>
+                                        {% if user|has_group:view.administrator_group_name and request.user|has_group:view.administrator_group_name and user != request.user %}
                                         {% else %}
+                                            <a href="{% url 'webapp:user_edit' user.pk %}" id="user_{{ user.pk }}_edit_link">{% trans "Edit" %}</a>
                                         {% endif %}
                                         </td>
                                         <td class="uk-text-center">
-                                        {% if user == request.user %}
-                                            <a href="{% url 'webapp:user_detail' user.pk %}" id="user_{{ user.pk }}_detail_link">{% trans "Detail" %}</a>
+                                        {% if user|has_group:view.administrator_group_name and request.user|has_group:view.administrator_group_name and user != request.user %}
                                         {% else %}
+                                            <a href="{% url 'webapp:user_detail' user.pk %}" id="user_{{ user.pk }}_detail_link">{% trans "Detail" %}</a>
                                         {% endif %}
                                         </td>
                                     </tr>

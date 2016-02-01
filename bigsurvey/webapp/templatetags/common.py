@@ -21,3 +21,8 @@ def verbose_name(object):
 @register.filter(name="has_access")
 def has_access(user, access):
     return user.has_perm("webapp.%s" % access)
+
+
+@register.filter(name="has_group")
+def has_access(user, group_name):
+    return group_name in [group.name for group in user.groups.all()]

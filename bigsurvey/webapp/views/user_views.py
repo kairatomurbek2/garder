@@ -1,13 +1,13 @@
-from .base_views import BaseTemplateView, BaseFormView
-from django.http import Http404
-from django.core.urlresolvers import reverse
-from webapp import models, forms, perm_checkers
-from main.parameters import Messages, Groups, OWNER_GROUPS, ADMIN_GROUPS
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
+from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.shortcuts import render, redirect
+from main.parameters import Messages, Groups, OWNER_GROUPS, ADMIN_GROUPS
+from webapp import models, forms, perm_checkers
 from webapp.actions.builders import UserManagementActionsBuilder
 from webapp.actions.users import UserAdditionException
+from .base_views import BaseTemplateView, BaseFormView
 
 
 class UserListView(BaseTemplateView):
@@ -60,6 +60,10 @@ class UserListView(BaseTemplateView):
         else:
             raise Http404
         return user_lists, user_groups
+
+    @staticmethod
+    def administrator_group_name():
+        return Groups.admin
 
 
 class UserBaseFormView(BaseFormView):
