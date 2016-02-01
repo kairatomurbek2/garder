@@ -20,3 +20,7 @@ def go_to_auditlog_page():
 
 def go_to_user_edit_form():
     _common.go_to_url('/user/add/')
+
+
+def go_to_pws_page():
+    _common.go_to_url('/pws')
