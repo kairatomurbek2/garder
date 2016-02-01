@@ -10,8 +10,6 @@
                     {% csrf_token %}
                     <p>{{ form.price.label }}: {{ form.price }}</p>
                     <p>{{ form.price.errors }}</p>
-                    <p>{{ form.pws.label }}: {{ form.pws }}</p>
-                    <p>{{ form.pws.errors }}</p>
                     <button class="uk-button uk-button-primary" type="submit">{% trans "Update Price" %}</button>
                 </form>
             </div>
@@ -21,31 +19,23 @@
                         <th>{% trans "Price" %}</th>
                         <th>{% trans "Activation Date" %}</th>
                         <th>{% trans "Deactivation Date" %}</th>
-                        <th>{% trans "PWS" %}</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for price_item in active_prices %}
-                    <tr>
-                        <td>{{ price_item.price|floatformat:2 }}</td>
-                        <td>{{ price_item.start_date }}</td>
-                        <td>
-                            {% if price_item.end_date %}
-                                {{ price_item.end_date }}
-                            {% else %}
-                                {% trans "Active (Current Price)" %}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if price_item.pws %}
-                                {{ price_item.pws }}
-                            {% else %}
-                                {% trans "Default" %}
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                    <tr><td colspan="4"></td></tr>
+                <tr>
+                    <td>{{ active_price.price|floatformat:2 }}</td>
+                    <td>{{ active_price.start_date }}</td>
+                    <td>
+                        {% if active_price.end_date %}
+                            {{ active_price.end_date }}
+                        {% else %}
+                            {% trans "Active (Current Price)" %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% if old_prices %}
+                    <tr><td colspan="3"></td></tr>
+                {% endif %}
                 {% for price_item in old_prices %}
                     <tr>
                         <td>{{ price_item.price|floatformat:2 }}</td>
@@ -55,13 +45,6 @@
                                 {{ price_item.end_date }}
                             {% else %}
                                 {% trans "Active (Current Price)" %}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if price_item.pws %}
-                                {{ price_item.pws }}
-                            {% else %}
-                                {% trans "Default" %}
                             {% endif %}
                         </td>
                     </tr>

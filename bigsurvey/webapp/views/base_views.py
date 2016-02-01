@@ -4,10 +4,11 @@ from django.core.urlresolvers import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import View, FormView, TemplateView, CreateView
 from django.contrib import messages
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from main.parameters import Messages
 from webapp import models
 from webapp import forms
+from django.utils.translation import ugettext as _
 
 
 class PermissionRequiredMixin(View):
@@ -60,10 +61,23 @@ class BaseFormView(BaseView, FormView):
 class HelpView(BaseTemplateView):
     template_name = 'help.html'
 
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_superuser:
+            return super(HelpView, self).get(request, *args, **kwargs)
+        available_help_items = models.StaticText.objects.filter(
+            group=self.request.user.groups.all().first(),
+            pdf_file__isnull=False
+        ).order_by('-pk')
+        if available_help_items:
+            return HttpResponseRedirect(available_help_items.first().pdf_file.url, content_type='application/pdf')
+        return Http404
+
     def get_context_data(self, **kwargs):
         context = super(HelpView, self).get_context_data(**kwargs)
-        context['user_help'] = models.StaticText.objects.filter(group__in=self.request.user.groups.all())
-        context['for_all_help'] = models.StaticText.objects.filter(group=None)
+        help_groups = [(_('Without Group'), models.StaticText.objects.filter(group=None, pdf_file__isnull=False))]
+        for group in models.Group.objects.all():
+            help_groups.append((group.name, models.StaticText.objects.filter(group=group, pdf_file__isnull=False)))
+        context['help_groups'] = help_groups
         return context
 
 
@@ -76,12 +90,13 @@ class TestPriceSetupView(BaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(TestPriceSetupView, self).get_context_data(**kwargs)
-        context['active_prices'] = models.TestPriceHistory.objects.filter(end_date=None).order_by('pws')
-        context['old_prices'] = models.TestPriceHistory.objects.filter(end_date__isnull=False).order_by('-start_date')
+        active_price = models.TestPriceHistory.current()
+        context['active_price'] = active_price
+        context['old_prices'] = models.TestPriceHistory.objects.exclude(pk=active_price.pk).order_by('-start_date')
         return context
 
     def form_valid(self, form):
-        current_price = models.TestPriceHistory.current(pws=form.cleaned_data['pws'])
+        current_price = models.TestPriceHistory.current()
         if current_price:
             current_date = datetime.now().date()
             if current_date == current_price.start_date:

@@ -639,13 +639,13 @@ class EmailValidationOnForgotPassword(PasswordResetForm):
 class TestPriceForm(forms.ModelForm):
     class Meta:
         model = models.TestPriceHistory
-        fields = ['pws', 'price']
+        fields = ['price']
 
     def clean_price(self):
         price = self.cleaned_data['price']
-        current_price = models.TestPriceHistory.current(self.cleaned_data['pws']).price
+        current_price = models.TestPriceHistory.current()
         if price < 0:
             self.add_error('price', _('Price per Test can not be lower than 0'))
-        if price == current_price:
+        if price == current_price.price:
             self.add_error('price', _('New Price can not be the same as the current Price'))
         return price

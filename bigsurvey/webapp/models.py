@@ -2,6 +2,7 @@ import uuid
 from decimal import Decimal
 
 from datetime import date
+from django.core.exceptions import ValidationError
 
 import fields
 from ckeditor.fields import RichTextField
@@ -766,7 +767,6 @@ class TestPriceHistory(models.Model):
     price = models.DecimalField(default=Decimal(5), max_digits=7, decimal_places=2, verbose_name=_('Price'))
     start_date = models.DateField(auto_now_add=True, verbose_name=_('Start Date'))
     end_date = models.DateField(null=True, blank=True, verbose_name=_('Price end date'), editable=False)
-    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_('PWS'))
 
     class Meta:
         verbose_name = _("Test Price")
@@ -779,13 +779,8 @@ class TestPriceHistory(models.Model):
         return u"%s" % self.price
 
     @classmethod
-    def current(cls, pws=None, default=False):
-        try:
-            return cls.objects.get(end_date=None, pws=pws)
-        except models.ObjectDoesNotExist:
-            if default:
-                return cls.objects.get(end_date=None, pws=None)
-            return None
+    def current(cls):
+        return cls.objects.filter(end_date=None).order_by('-start_date').first()
 
 reversion.register(TestPriceHistory)
 
@@ -938,13 +933,18 @@ class Letter(models.Model):
 reversion.register(Letter)
 
 
+def validate_file_is_pdf(file):
+    if not file.name.endswith('.pdf'):
+        raise ValidationError(u'PDF file required')
+
+
 class StaticText(models.Model):
-    title = models.CharField(max_length=20, verbose_name=_('Title'))
     group = models.ForeignKey(Group, blank=True, null=True, verbose_name=_('Group'), related_name="static_texts")
-    text = RichTextField(null=True, blank=True, verbose_name=_('Text'))
+    pdf_file = models.FileField(upload_to='help', default=None, verbose_name=_('Help File'),
+                                validators=[validate_file_is_pdf, ])
 
     def __unicode__(self):
-        return u"%s" % self.title
+        return u"%s" % self.group
 
     class Meta:
         verbose_name = _("Static Text")

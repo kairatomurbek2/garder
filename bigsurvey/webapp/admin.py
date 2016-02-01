@@ -20,19 +20,6 @@ class EmployeeAdmin(UserAdmin):
     inlines = (EmployeeInline, )
 
 
-class StaticTextAdminForm(forms.ModelForm):
-    class Meta:
-        model = models.StaticText
-        fields = ['title', 'group', 'text']
-        widgets = {
-            'text': RedactorEditor(allow_image_upload=True, allow_file_upload=False),
-        }
-
-
-class StaticTextAdmin(CompareVersionAdmin):
-    form = StaticTextAdminForm
-
-
 class SurveyAdminForm(forms.ModelForm):
     class Meta:
         model = models.Survey
@@ -92,7 +79,7 @@ admin.site.register(models.TestManufacturer)
 admin.site.register(models.TestModel)
 admin.site.register(models.AssemblyStatus)
 admin.site.register(models.SiteStatus)
-admin.site.register(models.StaticText, StaticTextAdmin)
+admin.site.register(models.StaticText)
 admin.site.register(models.ImportLog)
 admin.site.register(models.Invite)
 admin.site.register(models.TesterCert)

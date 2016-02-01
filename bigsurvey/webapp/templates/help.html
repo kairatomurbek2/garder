@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
-{% load i18n staticfiles %}
+{% load i18n staticfiles file_names %}
 {% block content %}
-    <div class="uk-margin-large-left uk-margin-large-right">
-    {% for help_item in user_help %}
-    {{ help_item.text|safe }}
-    {% endfor %}
-    <br/>
-    <br/>
-    {% for help_item in for_all_help %}
-    {{ help_item.text|safe }}
-    {% endfor %}
+    <div class="wrapper">
+        {% for group, help_items in help_groups %}
+        <div class="uk-margin-large-left uk-margin-large-right uk-margin-large-bottom">
+            <h3>{{ group }}</h3>
+            <ul>
+                {% for help_item in help_items %}
+                    <li>
+                        <a href="{{ help_item.pdf_file.url }}">{{ help_item.pdf_file.name|file_name }}</a>
+                    </li>
+                {% empty %}
+                    <li>
+                        {% trans "No help for this group available" %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
     </div>
 {% endblock %}
