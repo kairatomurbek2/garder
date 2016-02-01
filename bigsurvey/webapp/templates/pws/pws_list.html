@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
-{% load i18n staticfiles %}
+{% load i18n staticfiles common %}
 {% block menu %}
+    {% if request.user|has_access:'add_pws' %}
     <li><a href="{% url 'webapp:pws_add' %}" id="pws_add_link">{% trans "Add PWS" %}</a></li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <div class="wrapper">
