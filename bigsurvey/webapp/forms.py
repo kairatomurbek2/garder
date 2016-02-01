@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES_FILTER
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
 from webapp.validators import validate_excel_file
 
 
@@ -307,12 +307,20 @@ class TestForm(forms.ModelForm):
 class EmployeeForm(forms.ModelForm):
     pws = forms.ModelMultipleChoiceField(models.PWS.objects.all(), required=True, label=_('PWS'))
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', False)
+        super(EmployeeForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = models.Employee
         exclude = ('user',)
 
 
 class EmployeeFormNoPWS(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', False)
+        super(EmployeeFormNoPWS, self).__init__(*args, **kwargs)
 
     class Meta:
         model = models.Employee
@@ -338,6 +346,9 @@ class UserAddForm(UserCreationForm):
                 code='email_used'
             )
         return data
+
+    def __init__(self, *args, **kwargs):
+        super(UserAddForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = models.User
@@ -388,6 +399,19 @@ class UserEditForm(UserChangeForm):
                 code='email_used'
             )
         return data
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', False)
+        super(UserEditForm, self).__init__(*args, **kwargs)
+        if user:
+            if self._user_is_admin_or_pws_owner(user):
+                self.fields['groups'].required = False
+
+    @staticmethod
+    def _user_is_admin_or_pws_owner(user):
+        is_admin = Groups.admin in [group.name for group in user.groups.all()]
+        is_pws_owner = Groups.pws_owner in [group.name for group in user.groups.all()]
+        return is_admin or is_pws_owner
 
     class Meta:
         model = models.User
@@ -570,12 +594,20 @@ class TesterInviteForm(forms.Form):
 
 
 class TesterCertForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', False)
+        super(TesterCertForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = models.TesterCert
         exclude = ('user',)
 
 
 class TestKitForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', False)
+        super(TestKitForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = models.TestKit
         exclude = ('user',)

@@ -120,7 +120,6 @@ class UserBaseFormView(BaseFormView):
         return self.cert_form_class(**self.get_form_kwargs())
 
 
-
 class UserAddView(UserBaseFormView):
     permission = 'auth.add_user'
     user_form_class = forms.UserAddForm
@@ -179,6 +178,11 @@ class UserEditView(UserBaseFormView):
     success_message = Messages.User.editing_success
     error_message = Messages.User.editing_error
 
+    def get_form_kwargs(self):
+        kwargs = super(UserEditView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get(self, request, *args, **kwargs):
         response = super(UserEditView, self).get(request, *args, **kwargs)
         if not perm_checkers.UserPermChecker.has_perm(self.request, self.user_object):
@@ -191,6 +195,8 @@ class UserEditView(UserBaseFormView):
         testers_group = models.Group.objects.get(name=Groups.tester)
         if testers_group not in user.groups.all() or self.request.user.has_perm('webapp.access_to_all_users'):
             context['display_is_active'] = True
+        if self._changing_self_group_is_not_allowed(user):
+            context['do_not_show_groups'] = True
         return context
 
     def post(self, request, *args, **kwargs):
@@ -242,3 +248,18 @@ class UserEditView(UserBaseFormView):
         if self.request.user.has_perm('webapp.access_to_all_users') or tester_group in self.user_object.groups.all():
             return forms.EmployeeFormNoPWS(instance=self.employee_object, **self.get_form_kwargs())
         return self.employee_form_class(instance=self.employee_object, **self.get_form_kwargs())
+
+    def _changing_self_group_is_not_allowed(self, user):
+        user_obj_and_request_user_is_admin = self._user_in_admin_group(user)
+        user_obj_and_request_user_is_owner = self._user_in_pws_owner_group(user)
+        return user_obj_and_request_user_is_admin or user_obj_and_request_user_is_owner
+
+    def _user_in_admin_group(self, user):
+        request_user_is_admin = Groups.admin in [group.name for group in self.request.user.groups.all()]
+        user_obj_is_admin = Groups.admin in [group.name for group in user.groups.all()]
+        return request_user_is_admin and user_obj_is_admin
+
+    def _user_in_pws_owner_group(self, user):
+        request_user_is_pws_owner = Groups.pws_owner in [group.name for group in self.request.user.groups.all()]
+        user_obj_is_pws_owner = Groups.pws_owner in [group.name for group in user.groups.all()]
+        return request_user_is_pws_owner and user_obj_is_pws_owner

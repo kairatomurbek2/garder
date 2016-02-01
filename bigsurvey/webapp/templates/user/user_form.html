@@ -61,6 +61,7 @@
                     </td>
                 </tr>
                 <tr>
+                    {% if not do_not_show_groups %}
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ user_form.groups.id_for_label }}">{{ user_form.groups.label }}</label>
                     </td>
@@ -68,6 +69,7 @@
                         {{ user_form.groups|add_class:'uk-width-1-1' }}
                         {{ user_form.groups.errors }}
                     </td>
+                    {% endif %}
                     {% if display_is_active %}
                         <td class="uk-width-1-6 uk-text-right">
                             <label for="{{ user_form.is_active.id_for_label }}">{{ user_form.is_active.label }}</label>
