@@ -17,7 +17,7 @@ TODAY = datetime.date.today()
 FIRST_DAY_OF_CUR_MONTH = TODAY - datetime.timedelta(days=TODAY.day - 1)
 
 
-@step('Owner of the following PWSs changes username of tester "(.*)" user to "(.*)":')
+@step('Owner of the following PWSs changes username of tester "(.*)" user to "(.*)":$')
 def pws_owner_changes_tester_username(step, old_username, new_username):
     upload_initial_data()
     common_actions.login('owner2', 'admin')
@@ -34,21 +34,19 @@ def upload_initial_data():
     call_command('createinitialrevisions', model_class='Employee')
 
 
-@step(u'Owner of the following PWSs goes to auditlog page:')
+@step(u'Owner of the following PWSs goes to auditlog page:$')
 def when_owner_of_the_following_pwss_goes_to_auditlog_page(step):
-    common_actions.owner_logs_in()
+    table = step.hashes
+    if u'testPWS' in [row['PWS name'] for row in table]:
+        common_actions.login('owner2', 'admin')
+    else:
+        common_actions.owner_logs_in()
     home_navigator.go_to_auditlog_page()
 
 
-@step(u'there are no auditlog records displayed on the page')
+@step(u'there are no auditlog records displayed on the page$')
 def then_there_are_no_auditlog_records_displayed_on_the_page(step):
     finder.find_element_by_xpath('.//tbody/tr/td[contains(., "No records found")]')
-
-
-@step(u'Owner of the following PWSs goes to auditlog page:')
-def but_owner_of_the_following_pwss_goes_to_auditlog_page(step):
-    common_actions.login('owner2', 'admin')
-    home_navigator.go_to_auditlog_page()
 
 
 @step(u'sees the following record:')
