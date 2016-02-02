@@ -94,12 +94,22 @@
                     {{ form.hazard_degree.errors }}
                 </td>
                 <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.due_install_date.id_for_label }}">{% trans "Due Install Date" %}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.due_install_date|add_class:'uk-width-1-1'|attr:"data-uk-datepicker:{format:'YYYY-MM-DD'}" %}
+                    {{ form.due_install_date.errors }}
+                </td>
+            </tr>
+            <tr>
+                <td class="uk-width-1-6 uk-text-right">
                     <label for="{{ form.is_present.id_for_label }}">{% trans "Is Present" %}</label>
                 </td>
                 <td class="uk-width-1-3">
                     {% render_field form.is_present|add_class:'uk-width-1-1'|attr:'rows:3' %}
                     {{ form.is_present.errors }}
                 </td>
+                <td colspan="2"></td>
             </tr>
         </tbody>
     </table>

@@ -632,7 +632,7 @@ class BPDevice(models.Model):
                                      related_name="hazards")
     model_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Model No."))
     serial_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Serial No."))
-    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install/Test Date"))
+    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Test Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
@@ -693,6 +693,7 @@ class Hazard(models.Model):
     bp_device = models.OneToOneField(BPDevice, null=True, blank=True, related_name="hazard")
     is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+    due_install_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install Date"))
 
     def __unicode__(self):
         return u"%s, %s, %s" % (self.hazard_type, self.service_type, self.site.cust_number)

@@ -113,6 +113,23 @@ class HazardBaseFormView(BaseFormView):
             messages.success(self.request, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
 
+    def _get_due_install_test_date(self, hazard):
+        bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
+        due_test_date_min = bp_devices.aggregate(
+            Min('due_test_date')
+        )['due_test_date__min']
+        due_install_date_min = hazard.site.hazards.all().aggregate(
+            Min('due_install_date')
+        )['due_install_date__min']
+        return self._min_date(due_test_date_min, due_install_date_min)
+
+    def _min_date(self, date1, date2):
+        if date1:
+            if date2:
+                return min(date1, date2)
+            return date1
+        return date2
+
 
 class HazardAddView(HazardBaseFormView, CreateView):
     permission = 'webapp.add_hazard'
@@ -185,16 +202,8 @@ class HazardAddView(HazardBaseFormView, CreateView):
         return response
 
     def _update_site(self, hazard, service_type):
-        if service_type == 'potable':
-            hazard.site.potable_present = True
-        elif service_type == 'fire':
-            hazard.site.fire_present = True
-        elif service_type == 'irrigation':
-            hazard.site.irrigation_present = True
-        bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
-        hazard.site.due_install_test_date = bp_devices.aggregate(
-            Min('due_test_date')
-        )['due_test_date__min']
+        setattr(hazard.site, '%s_present' % service_type, True)
+        hazard.site.due_install_test_date = self._get_due_install_test_date(hazard)
         hazard.site.save()
 
     def get_bp_form(self):
@@ -245,8 +254,5 @@ class HazardEditView(HazardBaseFormView, UpdateView):
         return response
 
     def _update_site(self, hazard):
-        bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
-        hazard.site.due_install_test_date = bp_devices.aggregate(
-            Min('due_test_date')
-        )['due_test_date__min']
+        hazard.site.due_install_test_date = self._get_due_install_test_date(hazard)
         hazard.site.save()
