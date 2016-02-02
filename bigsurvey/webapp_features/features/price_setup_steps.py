@@ -16,6 +16,6 @@ def direct_open_price_setup(step):
 
 @step('Current default price started today')
 def set_today_start_date_for_current_price(step):
-    price = TestPriceHistory.objects.get(end_date=None, pws=None)
+    price = TestPriceHistory.current()
     price.start_date = datetime.now().date()
     price.save()

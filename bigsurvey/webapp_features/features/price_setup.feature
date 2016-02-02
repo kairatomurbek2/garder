@@ -17,6 +17,7 @@ Feature: Price Setup
     | tester     | see      |
 
 
+  @keep_db
   Scenario Outline: Price incorrect editing
     Given I logged in as "root"
     And I open "price_setup" page
