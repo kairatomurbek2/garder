@@ -9,6 +9,7 @@ from webapp_features.features.definitions.core.page_interactors.users_page impor
     assert_edit_link_and_details_link_are_displayed_against_user
 )
 
+
 @step('I logged in as pws owner$')
 def log_in_as_owner(step):
     owner_logs_in()

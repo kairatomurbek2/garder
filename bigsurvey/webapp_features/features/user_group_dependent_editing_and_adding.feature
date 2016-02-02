@@ -21,12 +21,11 @@ Feature: User adding and editing depending on the user's group
       | Administrators |
       | Surveyors      |
       | Testers        |
-    Examples:
-      | user     | group          |
-      | owner    | PWS Owners     |
-      | admin    | Administrators |
-      | surveyor | Surveyors      |
-      | tester   | Testers        |
+  Examples:
+    | user     | group          |
+    | admin    | Administrators |
+    | surveyor | Surveyors      |
+    | tester   | Testers        |
 
   Scenario: Adding users by pws admin
     Given I logged in as pws admin
