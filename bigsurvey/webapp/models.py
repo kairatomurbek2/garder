@@ -377,6 +377,7 @@ class PWS(models.Model):
     email = models.EmailField(max_length=100, blank=True, null=True, verbose_name=_("PWS's email"))
     letter_left_header_block = RichTextField(blank=True, verbose_name=_('Letter Left Header block'))
     letter_right_header_block = RichTextField(blank=True, verbose_name=_('Letter Right Header block'))
+    is_active = models.BooleanField(default=True, verbose_name=_('PWS is active'))
 
     def __unicode__(self):
         return u"%s, %s" % (self.number, self.name)
@@ -435,6 +436,7 @@ class Employee(models.Model):
     pws = models.ManyToManyField(PWS, blank=True, null=True, verbose_name=_("PWS"), related_name="employees")
     company = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Company"))
     has_licence_for_installation = models.BooleanField(default=False, verbose_name=_("Determines whether tester has access for installation"))
+    has_paid = models.BooleanField(default=False, verbose_name=_('Has paid for demo trial'))
 
     def __unicode__(self):
         return str(self.user)
@@ -995,4 +997,21 @@ class Invite(models.Model):
 
 reversion.register(Invite)
 
+
+class DemoTrial(models.Model):
+    start_date = models.DateTimeField(auto_now=False, blank=True, null=True, verbose_name=_('Start Date'))
+    end_date = models.DateTimeField(auto_now=False, blank=True, null=True, verbose_name=_('End Date'))
+    employee = models.ForeignKey(Employee, null=True, blank=True, verbose_name=_('Demo Trial Employee'),
+                                 related_name='demo_trials')
+
+    class Meta:
+        verbose_name = _('Demo Trial')
+        verbose_name_plural = _('Demo Trials')
+
+    def __unicode__(self):
+        return '%s %s %s' % (self.employee, self.start_date, self.end_date)
+
+reversion.register(DemoTrial)
+
 import signals
+

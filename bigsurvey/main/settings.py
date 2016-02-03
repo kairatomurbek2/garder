@@ -68,6 +68,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'reversion.middleware.RevisionMiddleware',
+    'webapp.middlewares.demo_trial_watch_dog.DemoTrialWatchDog',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -120,12 +121,17 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "bss@bpsbr.com"
 REPLY_TO_EMAIL = "bss@bpsbr.com"
 RETURN_PATH_EMAIL = "bss@bpsbr.com"
+PWS_REGISTATION_FROM_EMAIL = "garder@bssbr.net"
 
 # captcha configuration
 RECAPTCHA_PUBLIC_KEY = '6LfQkBYTAAAAAOqc6TFVt7PoLEr44_mV4zN_-B_s'
 RECAPTCHA_PRIVATE_KEY = '6LfQkBYTAAAAAObzDbh8tOCaoO7OKiZFZPOVdjCb'
 NOCAPTCHA = False
 CAPTCHA_AJAX = True
+
+# Demo trial configuration
+DEMO_TRIAL_DAYS = 30
+PERIOD_DEMO_TRIAL = 10
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

@@ -1,10 +1,10 @@
 {% extends 'pws_owner_registration/base.html' %}
-{% load i18n choices widget_tweaks %}
+{% load i18n choices widget_tweaks static %}
 {% block navbar %}
 {% endblock %}
 {% block content %}
-    <div class="uk-grid">
-        <div class="uk-width-1-2 uk-container-center uk-panel uk-panel-box">
+    <div class="data-uk-grid">
+        <div class="uk-width-medium-1-2 uk-width-small-1-1 uk-container-center uk-panel uk-panel-box">
             {% include 'messages.html' %}
             <form class="uk-form uk-form-stacked" method="post">
                 {% csrf_token %}
@@ -131,18 +131,37 @@
                 </div>
                 <div class="uk-form-row">
                     <div class="uk-form-controls">
-                        <input type="checkbox" id="form-s-c"> <label
-                            for="form-s-c">{% trans "Disclaimer verifying that the person signing up for the PWS has the authority to do so, etc." %}</label>
+                        <input type="checkbox" id="form-s-c" onchange='checkAvailability()'>
+                        <label
+                                for="form-s-c">By clicking the button labelled "Submit" below, your acknowledgement
+                            shall have the same force and validity as a paper copy of an agreement setting out these <a>Terms
+                                and Conditions</a> that has been manually signed, or otherwise duly executed, by you or
+                            on your behalf and delivered. These <a>Terms and Conditions</a> and any non-contractual
+                            obligations arising out of or in conjunction with them will be governed by, and construed in
+                            accordance with, US law.
+                        </label>
                     </div>
                 </div>
                 <div class="uk-form-row">
                     <button type="submit"
-                            class="uk-button uk-button-primary uk-button-large uk-width-1-1">{% trans "Submit" %}</button>
+                            class="uk-button uk-button-primary uk-button-large uk-width-1-1" disabled
+                            id="submit">{% trans "Submit" %}</button>
                 </div>
             </form>
         </div>
     </div>
 {% endblock %}
 {% block scripts %}
-    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    {#    <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>#}
+    <script src="{% static 'js/custom/recaptcha_ajax.js' %}"></script>
+    <script type="text/javascript">
+        function checkAvailability() {
+            if ($('#form-s-c').is(':checked')) {
+                $('#submit').prop("disabled", false);
+            }
+            else {
+                $('#submit').prop("disabled", true);
+            }
+        }
+    </script>
 {% endblock %}

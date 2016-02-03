@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    {{ user }}
+    <form action="{% url 'webapp:activate_blocked_pws' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Pay and activate</button>
+    </form>
+{% endblock %}

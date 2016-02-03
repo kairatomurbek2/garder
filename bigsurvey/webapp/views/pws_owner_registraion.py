@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.mail.message import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
@@ -6,6 +7,7 @@ from django.views.generic import FormView
 from main.parameters import PWSRegistrationEmail, Messages
 from webapp import models
 from webapp.actions.builders import SampleSitesJsonUploaderBuilder
+from webapp.actions.demo_trial import DemoTrialCreator
 from webapp.forms import PWSOwnerRegistrationForm, PWSUserAddForm
 
 
@@ -32,6 +34,7 @@ class PwsOwnerRegistrationView(FormView):
             email = employee.user.email
             self.send_email(request, email, pws, employee.user)
             self.upload_sample_sites(pws)
+            self.create_demo_trial(employee)
             return HttpResponseRedirect('/')
         else:
             return self.form_invalid(pws_form, user_form, **kwargs)
@@ -66,9 +69,12 @@ class PwsOwnerRegistrationView(FormView):
 
     def send_email(self, request, email, pws, user):
         subject = PWSRegistrationEmail.successfull_registration_subject % pws.name
-        context_email = RequestContext(request, {'pws': pws, 'username': user.username})
+        context_email = RequestContext(request,
+                                       {'pws': pws, 'username': user.username, 'site_url': self.request.get_host()})
         message_html = loader.get_template(self.msg_content_template_email).render(context_email)
-        msg = EmailMultiAlternatives(subject=subject, body=message_html, to=[email])
+        msg = EmailMultiAlternatives(subject=subject, body=message_html,
+                                     headers={'Reply-To': settings.PWS_REGISTATION_FROM_EMAIL},
+                                     to=[email])
         msg.attach_alternative(message_html, "text/html")
         msg.send()
 
@@ -76,3 +82,9 @@ class PwsOwnerRegistrationView(FormView):
     def upload_sample_sites(pws):
         action = SampleSitesJsonUploaderBuilder.load_sample_data(pws)
         action.execute()
+
+    @staticmethod
+    def create_demo_trial(employee):
+        demo_trial_creator = DemoTrialCreator()
+        demo_trial_creator.employee = employee
+        demo_trial_creator.create_demo_trial_for_user()

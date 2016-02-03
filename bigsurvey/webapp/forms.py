@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS
     TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES_FILTER, STATES
 from webapp.validators import validate_excel_file
 
@@ -651,3 +650,34 @@ class TestPriceForm(forms.ModelForm):
         if price == current_price.price:
             self.add_error('price', _('New Price can not be the same as the current Price'))
         return price
+
+
+class PWSOwnerRegistrationForm(forms.ModelForm):
+    number = forms.CharField(max_length=15, required=True, label=_('PWS Number'),
+                             widget=forms.TextInput(attrs={'placeholder': _(' LL9999999')}))
+    name = forms.CharField(max_length=50, required=True, label=_('Water System Name'))
+
+    class Meta:
+        model = models.PWS
+        fields = ('number', 'name')
+
+class PWSUserAddForm(UserCreationForm):
+    address = forms.CharField(max_length=50, required=True)
+    city = forms.CharField(max_length=30, required=True)
+    state = forms.ChoiceField(choices=STATES, required=True)
+    zip = forms.CharField(max_length=10, required=True)
+    phone1 = forms.CharField(max_length=20, required=True, label=_('Phone Number'))
+    captcha = ReCaptchaField()
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if models.User.objects.filter(email=data).exists():
+            raise ValidationError(
+                _("User with such email already exists"),
+                code='email_used'
+            )
+        return data
+
+    class Meta:
+        model = models.User
+        fields = ('username', 'email', 'first_name', 'last_name', 'groups')

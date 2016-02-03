@@ -425,3 +425,12 @@ POSSIBLE_IMPORT_MAPPINGS = {
 
 class PWSRegistrationEmail(object):
     successfull_registration_subject = _("You have successfully registered PWS %s")
+
+
+class DemoTrialMessages(object):
+    demo_days_left_info = _('You have many days %s left')
+
+
+class DemoTrialSessionKeys(object):
+    demo_days_left_key = 'demo_days_left'
+    demo_days_left_message_key = 'demo_days_left_message'

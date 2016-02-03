@@ -1,11 +1,13 @@
 from .base_views import BaseTemplateView, BaseFormView
 from django.http import Http404
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from webapp import models, forms
 from main.parameters import Messages, BP_TYPE, LetterTypes, BPLocations
 from django.views.generic import UpdateView, CreateView
 from django.utils.translation import ugettext as _
 from datetime import date
+from webapp.actions.demo_trial import PayAndActivate
 
 
 class PWSListView(BaseTemplateView):
@@ -164,3 +166,19 @@ class SnapshotView(BaseTemplateView):
         if bp_type_group:
             filter_kwargs['bp_type_present__in'] = bp_type_group
         return models.BPDevice.objects.filter(**filter_kwargs).count()
+
+
+class ActivateBlockedPWS(BaseTemplateView):
+    template_name = 'pws/activate_blocked_pws.html'
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = super(ActivateBlockedPWS, self).get_context_data(**kwargs)
+        context['user'] = user
+        return context
+
+    def post(self, request, *args, **kwargs):
+        pws_list = self.request.user.employee.pws.all()
+        for pws in pws_list:
+            PayAndActivate.pay_and_activate(pws, request)
+        return redirect('webapp:home')
