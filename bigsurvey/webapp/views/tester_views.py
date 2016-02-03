@@ -18,7 +18,7 @@ class TesterListView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(TesterListView, self).get_context_data(**kwargs)
         testers = self._get_testers()
-        context['tester_filter'] = filters.TesterFilter(self.request.GET, queryset=testers)
+        context['tester_filter'] = filters.TesterFilter(self.request.GET, queryset=testers, user=self.request.user)
         return context
 
     def _get_testers(self):

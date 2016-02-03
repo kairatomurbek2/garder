@@ -21,7 +21,7 @@ class HazardListView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(HazardListView, self).get_context_data(**kwargs)
         hazards = self._get_hazard_list()
-        context['hazard_filter'] = filters.HazardFilter(self.request.GET, queryset=hazards)
+        context['hazard_filter'] = filters.HazardFilter(self.request.GET, queryset=hazards, user=self.request.user)
         return context
 
     def _get_hazard_list(self):

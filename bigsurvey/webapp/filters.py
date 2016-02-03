@@ -657,6 +657,14 @@ class SurveyFilter(django_filters.FilterSet):
     survey_type = django_filters.ChoiceFilter(choices=FilterChoices.survey_type(), label=_('Survey Type'))
     surveyor = django_filters.ChoiceFilter(choices=FilterChoices.surveyor(), label=_('Surveyor'))
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super(SurveyFilter, self).__init__(*args, **kwargs)
+        if user and not user.is_superuser:
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            self.filters['pws'].field.choices = choices
+
 
 class TestFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.Test.pws)
@@ -674,6 +682,14 @@ class TestFilter(django_filters.FilterSet):
     tester = django_filters.ChoiceFilter(choices=FilterChoices.tester(), label=_('Tester'))
     test_result = django_filters.ChoiceFilter(choices=FilterChoices.test_result(), label=_('Test Result'),
                                               action=FilterActions.Test.test_result)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super(TestFilter, self).__init__(*args, **kwargs)
+        if user and not user.is_superuser:
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            self.filters['pws'].field.choices = choices
 
 
 class HazardFilter(django_filters.FilterSet):
@@ -696,6 +712,14 @@ class HazardFilter(django_filters.FilterSet):
     due_test_blank = django_filters.BooleanFilter(action=FilterActions.Hazard.due_test_blank,
                                                   widget=forms.CheckboxInput, label="Test Due Date Blank")
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super(HazardFilter, self).__init__(*args, **kwargs)
+        if user and not user.is_superuser:
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            self.filters['pws'].field.choices = choices
+
 
 class TesterFilter(django_filters.FilterSet):
     pws = django_filters.ChoiceFilter(choices=FilterChoices.pws(), label=_('PWS'), action=FilterActions.User.pws)
@@ -705,6 +729,14 @@ class TesterFilter(django_filters.FilterSet):
     email = django_filters.CharFilter(label=_('Email'), lookup_type='icontains')
     cert_number = django_filters.CharFilter(label=_('Certificate Number'), action=FilterActions.User.cert_number)
     test_serial = django_filters.CharFilter(label=_('Test Kit Serial'), action=FilterActions.User.test_serial)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super(TesterFilter, self).__init__(*args, **kwargs)
+        if user and not user.is_superuser:
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            self.filters['pws'].field.choices = choices
 
 
 class LetterFilter(django_filters.FilterSet):
@@ -726,3 +758,11 @@ class LetterFilter(django_filters.FilterSet):
                                                   action=FilterActions.Letter.bp_type_present)
     bp_type_required = django_filters.ChoiceFilter(choices=FilterChoices.bp_type(), label=_('Assembly Type required'),
                                                    action=FilterActions.Letter.bp_type_required)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+
+        super(LetterFilter, self).__init__(*args, **kwargs)
+        if user and not user.is_superuser:
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            self.filters['pws'].field.choices = choices

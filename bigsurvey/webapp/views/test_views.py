@@ -29,7 +29,7 @@ class TestListView(BaseTemplateView):
         context['is_demo_trial'] = False
         if self._user_is_in_demo_trial():
             context['is_demo_trial'] = True
-        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
+        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests, user=self.request.user)
         return context
 
     def _get_test_list(self):
@@ -98,7 +98,7 @@ class UnpaidTestView(BaseTemplateView, UnpaidTestMixin):
     def get_context_data(self, **kwargs):
         context = super(UnpaidTestView, self).get_context_data(**kwargs)
         tests = self.get_unpaid_tests()
-        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
+        context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests, user=self.request.user)
         context['payment_form'] = forms.PaymentForm(queryset=tests)
         return context
 

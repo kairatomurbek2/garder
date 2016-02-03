@@ -13,7 +13,7 @@ class SurveyListView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(SurveyListView, self).get_context_data(**kwargs)
         surveys = self._get_survey_list()
-        context['survey_filter'] = filters.SurveyFilter(self.request.GET, queryset=surveys)
+        context['survey_filter'] = filters.SurveyFilter(self.request.GET, queryset=surveys, user=self.request.user)
         return context
 
     def _get_survey_list(self):

@@ -64,7 +64,7 @@ class LetterListView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(LetterListView, self).get_context_data(**kwargs)
-        letter_filter = filters.LetterFilter(self.request.GET, queryset=self._get_letter_list())
+        letter_filter = filters.LetterFilter(self.request.GET, queryset=self._get_letter_list(), user=self.request.user)
         context['letter_filter'] = letter_filter
         return context
 
