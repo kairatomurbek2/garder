@@ -10,7 +10,7 @@
                 {% trans "Clear Filters" %}
             </a>
             {% if perms.webapp.export_xls %}
-                <a id="xls-get-link" class="uk-button uk-button-primary filter-button" role="button" href="" data-uk-modal="{target:'#xls-modal'}">
+                <a id="xls-get-link" class="uk-button uk-button-primary filter-button" role="button" href="">
                     {% trans "Get XLS" %}
                 </a>
             {% endif %}
@@ -26,7 +26,7 @@
                 </div>
             </div>
         {% endif %}
-        <div id="table_div" >
+        <div id="table_div">
             <table class="uk-table big-table uk-table-hover fixed-headers" id="data_table">
                 <thead>
                 <tr class="table-border-bottom">
@@ -192,7 +192,8 @@
                 </thead>
                 <tbody>
                 {% for site in filtered_sites %}
-                    <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}" data-id="{{ site.pk }}">
+                    <tr class="clickable-row" data-href="{% url 'webapp:site_detail' site.pk %}"
+                        data-id="{{ site.pk }}">
                         <td class="table-border-right">{{ site.pk }}</td>
                         <td>
                             {{ site.pws.number }}
@@ -271,10 +272,18 @@
                         </td>
                     </tr>
                 {% endfor %}
-                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
-                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
-                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
-                <tr style="visibility: hidden; border: none;"><td style="visibility: hidden;border: none;">&nbsp;</td></tr>
+                <tr style="visibility: hidden; border: none;">
+                    <td style="visibility: hidden;border: none;">&nbsp;</td>
+                </tr>
+                <tr style="visibility: hidden; border: none;">
+                    <td style="visibility: hidden;border: none;">&nbsp;</td>
+                </tr>
+                <tr style="visibility: hidden; border: none;">
+                    <td style="visibility: hidden;border: none;">&nbsp;</td>
+                </tr>
+                <tr style="visibility: hidden; border: none;">
+                    <td style="visibility: hidden;border: none;">&nbsp;</td>
+                </tr>
                 </tbody>
             </table>
 
@@ -284,12 +293,30 @@
 <div class="uk-modal" id="xls-modal">
     <div class="uk-modal-dialog uk-modal-dialog-large">
         <a class="uk-modal-close uk-close uk-close-alt"></a>
+
         <div class="modal-content">
             <div class="uk-text-large uk-text-primary uk-text-center">
                 <p id="xls-message"></p>
                 <img id="xls-load-img" src="{% static "img/loading.gif" %}"/>
                 <img id="xls-ready-img" src="{% static "img/ready.png" %}"/>
+
                 <p><a href="" id="xls-ready-link">{% trans 'Download' %}</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="uk-modal" id="demo-trial-modal">
+    <div class="uk-modal-dialog uk-modal-dialog-large">
+        <a class="uk-modal-close uk-close uk-close-alt"></a>
+
+        <div class="uk-alert uk-alert-danger hidden" data-content="error-alert" data-uk-alert>
+            <p data-content="error-message"></p>
+        </div>
+        <div class="modal-content">
+            <div class="uk-text-large uk-text-center">
+                {% trans "Sorry, reports are only available to full license holders. Please, make " %}<a
+                    href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to download the
+                report
             </div>
         </div>
     </div>
@@ -312,15 +339,37 @@
             $('.fixed-headers').floatThead({
                 scrollingTop: navbarHeight
             });
-            setup_blank_checks();
-            var xlsUrl = location.href;
-            xlsUrl += (xlsUrl.split('?')[1] ? '&':'?') + 'xls';
-            $("#xls-get-link").click(function(){
+
+            var isDemoTrial = {{ is_demo_trial|yesno:"true,false" }};
+            $("#xls-get-link").click(function (e) {
+                e.preventDefault();
+                if (isDemoTrial) {
+                    showPaymentModal();
+                } else {
+                    showXlsModal();
+                    getXslData();
+                }
+            });
+
+            var showPaymentModal = function () {
+                var modal = UIkit.modal("#demo-trial-modal");
+                modal.show()
+            };
+
+            var showXlsModal = function () {
+                var modal = UIkit.modal('#xls-modal');
+                modal.show();
+            };
+
+            var getXslData = function () {
+                setup_blank_checks();
+                var xlsUrl = location.href;
+                xlsUrl += (xlsUrl.split('?')[1] ? '&' : '?') + 'xls';
                 $("#xls-ready-link").addClass('uk-hidden');
                 $("#xls-message").text("{% trans "Generating report. Please, wait..." %}");
                 $("#xls-ready-img").hide();
                 $("#xls-load-img").show();
-                $.get(xlsUrl, function(data){
+                $.get(xlsUrl, function (data) {
                     $("#xls-ready-link").prop('href', data).removeClass('uk-hidden');
                     $("#xls-message").text(
                             "{% trans "Report is ready. If download haven't started automatically, use download link below." %}"
@@ -329,7 +378,7 @@
                     $("#xls-ready-img").show();
                     window.location.href = data;
                 });
-            });
+            };
         });
     </script>
 {% endblock %}

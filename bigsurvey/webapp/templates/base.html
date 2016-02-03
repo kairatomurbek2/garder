@@ -45,6 +45,13 @@
     </div>
 </nav>
 <div class="navbar-hack"></div>
+{% if request.session.demo_days_left %}
+<div class="uk-text-center uk-panel uk-panel-box-primary">
+    {% trans "You have " %}{{ request.session.demo_days_left }} days left until trial-period ends. Please, make <a
+        href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to use all
+    functionalities inside the system.
+</div>
+{% endif %}
 {% block content %}
 {% endblock %}
 <div id="offcanvas" class="uk-offcanvas">

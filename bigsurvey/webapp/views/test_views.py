@@ -16,6 +16,7 @@ from django.conf import settings
 from webapp.responses import PDFResponse
 from webapp.utils.pdf_generator import PDFGenerator
 from datetime import datetime
+from webapp.views import OperationNotAllowedInTrialPeriodException
 
 
 class TestListView(BaseTemplateView):
@@ -25,6 +26,9 @@ class TestListView(BaseTemplateView):
     def get_context_data(self, **kwargs):
         context = super(TestListView, self).get_context_data(**kwargs)
         tests = self._get_test_list()
+        context['is_demo_trial'] = False
+        if self._user_is_in_demo_trial():
+            context['is_demo_trial'] = True
         context['test_filter'] = filters.TestFilter(self.request.GET, queryset=tests)
         return context
 
@@ -44,10 +48,15 @@ class TestListView(BaseTemplateView):
         context = {'tests': tests, 'BP_TYPE': BP_TYPE}
         template = 'test/test_report_page.html'
         html_content = render_to_string(template, context)
+        if self._user_is_in_demo_trial():
+            raise OperationNotAllowedInTrialPeriodException()
         pdf_content = PDFGenerator.generate_from_html(html_content)
         date = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
         filename = u"Tests-Report-%s.pdf" % date
         return PDFResponse(filename, pdf_content)
+
+    def _user_is_in_demo_trial(self):
+        return self.request.session.get('demo_days_left', None)
 
 
 class TestDetailView(BaseTemplateView):

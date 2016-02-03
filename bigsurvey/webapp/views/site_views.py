@@ -11,6 +11,7 @@ from webapp import filters, models, forms, perm_checkers
 from webapp.models import NoSearchFieldIndicated, NoBpDeviceFoundWithSuchSerialNo
 from webapp.utils.excel_writer.excel_writer import XLSExporter
 from .base_views import BaseTemplateView, BaseFormView
+from webapp.views.helpers import OperationNotAllowedInTrialPeriodException
 
 
 class HomeView(BaseTemplateView):
@@ -22,14 +23,19 @@ class HomeView(BaseTemplateView):
         if not user.is_superuser and user.has_perm('webapp.access_to_site_by_customer_account'):
             return redirect('webapp:tester-home')
         if 'xls' in self.request.GET:
-            if user.has_perm('webapp.export_xls'):
+            if user.has_perm('webapp.export_xls') and not self._user_is_in_demo_trial():
                 return self._get_xls()
+            else:
+                raise OperationNotAllowedInTrialPeriodException()
         return super(HomeView, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(HomeView, self).get_context_data(**kwargs)
         sites = self._get_sites()
+        context['is_demo_trial'] = False
+        if self._user_is_in_demo_trial():
+            context['is_demo_trial'] = True
         context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites, user=user)
         return context
 
@@ -46,6 +52,9 @@ class HomeView(BaseTemplateView):
         if self.request.user.has_perm('webapp.access_to_all_sites'):
             sites = models.Site.objects.all()
         return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
+
+    def _user_is_in_demo_trial(self):
+        return self.request.session.get('demo_days_left', None)
 
 
 class TesterHomeView(BaseTemplateView, FormView):

@@ -9,9 +9,9 @@
         {% include 'test/test_filters.html' %}
         <div class="wrapper uk-width-4-5 filters-offset">
             {% paginate %}
-            <form method="post" class="uk-form" name="test-pdf">
+            <form method="post" class="uk-form" name="test-pdf" onsubmit="return pdfGeneratorChecker()">
             <div class="uk-text-center">
-                <button type="submit" class="uk-button uk-button-primary" id="pdf" disabled>
+                <button type="submit" class="uk-button uk-button-primary pdf" id="pdf" disabled>
                     {% trans "Get selected Tests in PDF" %}
                 </button>
             </div>
@@ -111,7 +111,25 @@
             </form>
             {% paginate %}
         </div>
+     <div class="uk-modal" id="demo-trial-modal">
+        <div class="uk-modal-dialog uk-modal-dialog-large">
+            <a class="uk-modal-close uk-close uk-close-alt"></a>
+
+            <div class="uk-alert uk-alert-danger hidden" data-content="error-alert" data-uk-alert>
+                <p data-content="error-message"></p>
+            </div>
+            <div class="modal-content">
+                <div class="uk-text-large uk-text-center">
+                    {% trans "Sorry, reports are only available to full license holders. Please, make " %}<a
+                        href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to
+                    download the
+                    report
+                </div>
+            </div>
+        </div>
     </div>
+    </div>
+
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/custom/filters-offset.js' %}"></script>
@@ -128,5 +146,19 @@
                 $('#pdf').prop("disabled", true);
             }
         }
+        var isDemoTrial = {{ is_demo_trial|yesno:"true,false" }};
+        var pdfGeneratorChecker = function () {
+            if (isDemoTrial) {
+                console.log(isDemoTrial);
+                showPaymentModal();
+                return false;
+            } else {
+                return true;
+            }
+        };
+        var showPaymentModal = function () {
+            var modal = UIkit.modal("#demo-trial-modal");
+            modal.show()
+        };
     </script>
 {% endblock %}

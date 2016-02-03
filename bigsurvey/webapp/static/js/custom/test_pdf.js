@@ -18,7 +18,6 @@ $(document).ready(function () {
     $(Xpath.concrete_checkbox).click(function (e) {
         var totalCount = $(Xpath.concrete_checkbox).length;
         var checkedCount = $(Xpath.concrete_checbox_checked).length;
-        console.log(totalCount, checkedCount);
 
         var globalCheckbox = $(Xpath.global_checkbox);
         if (totalCount == checkedCount) {
