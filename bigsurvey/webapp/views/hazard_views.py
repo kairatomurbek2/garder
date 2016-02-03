@@ -1,17 +1,17 @@
-from .base_views import BaseTemplateView, BaseFormView
-from django.http import Http404, JsonResponse
-from django.core.urlresolvers import reverse
-from webapp import filters, models, forms, perm_checkers
-from django.views.generic import CreateView, UpdateView
-from main.parameters import BP_TYPE, Messages, ASSEMBLY_STATUSES_WITH_BP, AssemblyStatus
 from django.contrib import messages
-from webapp.raw_sql_queries import HazardPriorityQuery
+from django.core.urlresolvers import reverse
 from django.db import connection
 from django.db.models import Min
-from webapp.utils import photo_util
+from django.http import Http404, JsonResponse
 from django.shortcuts import HttpResponseRedirect
 from django.template import RequestContext
 from django.template.loader import render_to_string
+from django.views.generic import CreateView, UpdateView
+from main.parameters import BP_TYPE, Messages, ASSEMBLY_STATUSES_WITH_BP, AssemblyStatus
+from webapp import filters, models, forms, perm_checkers
+from webapp.raw_sql_queries import HazardPriorityQuery
+from webapp.utils import photo_util
+from .base_views import BaseTemplateView, BaseFormView
 
 
 class HazardListView(BaseTemplateView):
@@ -101,6 +101,22 @@ class HazardBaseFormView(BaseFormView):
     form_class = forms.HazardForm
     model = models.Hazard
 
+    def get_form_kwargs(self):
+        kwargs = super(HazardBaseFormView, self).get_form_kwargs()
+        form_data = {'letter_types_qs': self._get_queryset_for_letter_type_field()}
+        kwargs['letter_types_qs'] = form_data
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(HazardBaseFormView, self).get_context_data(**kwargs)
+        context['hazard_form'] = forms.HazardForm()
+        return context
+
+    def get_form(self, form_class):
+        form = super(HazardBaseFormView, self).get_form(form_class)
+        form.fields['letter_type'].queryset = self._get_queryset_for_letter_type_field()
+        return form
+
     def get_success_url(self):
         return reverse('webapp:hazard_detail', args=(self.object.pk,))
 
@@ -112,6 +128,11 @@ class HazardBaseFormView(BaseFormView):
         if self.success_message:
             messages.success(self.request, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
+
+    def _get_queryset_for_letter_type_field(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        queryset = models.LetterType.objects.filter(pws=site.pws)
+        return queryset
 
     def _get_due_install_test_date(self, hazard):
         bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
@@ -153,7 +174,7 @@ class HazardAddView(HazardBaseFormView, CreateView):
         json_data = {}
         context = self.get_context_data()
         if status == self.AJAX_OK:
-            context['form'] = forms.HazardForm()
+            context['form'] = self.get_form(self.get_form_class())
             context['bp_form'] = forms.BPForm(prefix='bp')
             json_data['option'] = {
                 'value': self.object.pk,

@@ -1,9 +1,9 @@
-from .base_views import BaseTemplateView, BaseFormView
-from django.http import Http404
 from django.core.urlresolvers import reverse
-from webapp import filters, models, forms, perm_checkers
+from django.http import Http404
 from django.views.generic import CreateView, UpdateView
 from main.parameters import BP_TYPE, Messages, Groups
+from webapp import filters, models, forms, perm_checkers
+from .base_views import BaseTemplateView, BaseFormView
 
 
 class SurveyListView(BaseTemplateView):
@@ -47,15 +47,9 @@ class SurveyBaseFormView(BaseFormView):
     form_class = forms.SurveyForm
     model = models.Survey
 
-    def get_form_kwargs(self):
-        kwargs = super(SurveyBaseFormView, self).get_form_kwargs()
-        form_data = {'letter_types_qs': self._get_queryset_for_letter_type_field()}
-        kwargs['letter_types_qs'] = form_data
-        return kwargs
-
     def get_context_data(self, **kwargs):
         context = super(SurveyBaseFormView, self).get_context_data(**kwargs)
-        context['hazard_form'] = forms.HazardForm()
+        context['hazard_form'] = forms.HazardForm(letter_types_qs=self._get_queryset_for_letter_type_field())
         context['bp_form'] = forms.BPForm(prefix='bp')
         return context
 
@@ -63,7 +57,6 @@ class SurveyBaseFormView(BaseFormView):
         form = super(SurveyBaseFormView, self).get_form(form_class)
         form.fields['surveyor'].queryset = self._get_queryset_for_surveyor_field()
         form.fields['hazards'].queryset = self._get_queryset_for_hazards_field(form.instance)
-        form.fields['letter_type'].queryset = self._get_queryset_for_letter_type_field()
         return form
 
     def _get_queryset_for_hazards_field(self, survey):

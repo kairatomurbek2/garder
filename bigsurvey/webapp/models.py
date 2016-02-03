@@ -696,6 +696,7 @@ class Hazard(models.Model):
     bp_device = models.OneToOneField(BPDevice, null=True, blank=True, related_name="hazard")
     is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
+    letter_type = models.ForeignKey(LetterType, blank=True, null=True, verbose_name=_("Letter Type"), related_name="hazards")
     due_install_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install Date"))
 
     def __unicode__(self):
