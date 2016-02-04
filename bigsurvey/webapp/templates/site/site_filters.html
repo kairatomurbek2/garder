@@ -21,6 +21,12 @@
                 {% endif %}
                 <tr class="uk-text-center">
                     <td>
+                        {{ site_filter.form.cust_name.label }}
+                        {{ site_filter.form.cust_name|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
                         {{ site_filter.form.route.label }}
                         {{ site_filter.form.route|add_class:"uk-width-1-1" }}
                     </td>
@@ -33,8 +39,20 @@
                 </tr>
                 <tr class="uk-text-center">
                     <td>
+                        {% trans "Service Street #" %}
+                        {{ site_filter.form.street_number|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
                         {% trans "Service Address" %}
                         {{ site_filter.form.address1|add_class:"uk-width-1-1" }}
+                    </td>
+                </tr>
+                <tr class="uk-text-center">
+                    <td>
+                        {% trans "BP type required" %}
+                        {{ site_filter.form.hazards_with_bp_type_required|add_class:"uk-width-1-1" }}
                     </td>
                 </tr>
                 <tr class="uk-text-center">

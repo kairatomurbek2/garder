@@ -293,6 +293,14 @@ class FilterActions(object):
                 return sites.filter(due_install_test_date__isnull=True)
             return sites
 
+        @staticmethod
+        def hazards_with_bp_type_required(sites, value):
+            if value == 'All':
+                return sites
+            if value:
+                return sites.filter(hazards__in=models.Hazard.objects.filter(bp_type_required=value))
+            return sites
+
     class Survey(object):
         @staticmethod
         def pws(surveys, value):
@@ -632,6 +640,9 @@ class SiteFilter(django_filters.FilterSet):
                                                        widget=forms.CheckboxInput)
     connect_date_blank = django_filters.BooleanFilter(action=FilterActions.Site.connect_date_blank,
                                                       widget=forms.CheckboxInput)
+    hazards_with_bp_type_required = django_filters.ChoiceFilter(
+        choices=FilterChoices.bp_type(), label=_('BP type required'),
+        action=FilterActions.Site.hazards_with_bp_type_required)
 
     # they aren't displayed currently but may require them later
     # site_type = django_filters.ChoiceFilter(choices=FilterChoices.site_type(), label=_('Site Type'))
