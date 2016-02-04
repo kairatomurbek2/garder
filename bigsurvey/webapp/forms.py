@@ -51,7 +51,8 @@ class SiteFormForSurveyor(forms.ModelForm):
 class SurveyForm(forms.ModelForm):
     surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
                                       empty_label=None)
-    hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all(), required=False)
+    hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all(), required=False,
+                                             widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = models.Survey
@@ -60,7 +61,8 @@ class SurveyForm(forms.ModelForm):
 
 class HazardForm(forms.ModelForm):
     is_present = forms.BooleanField(initial=True)
-    letter_type = forms.ModelChoiceField(queryset=models.LetterType.objects.none(), required=False)
+    letter_type = forms.ModelChoiceField(queryset=models.LetterType.objects.none(), required=False,
+                                         empty_label=_("No letter"))
 
     def __init__(self, *args, **kwargs):
         letter_types_qs = kwargs.pop('letter_types_qs', False)
