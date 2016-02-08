@@ -2,13 +2,14 @@ import uuid
 from decimal import Decimal
 
 from datetime import date
-from django.core.exceptions import ValidationError
 
 import fields
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User, Group
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import Min
 from django.utils.translation import ugettext as _
 from main.parameters import *
 from reversion import revisions as reversion
@@ -715,6 +716,32 @@ class Hazard(models.Model):
             ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards'))
         )
 
+    def get_due_install_test_date(self):
+        bp_devices = BPDevice.objects.filter(hazard__site=self.site)
+        due_test_date_min = bp_devices.aggregate(
+            Min('due_test_date')
+        )['due_test_date__min']
+        due_install_date_min = self.site.hazards.all().aggregate(
+            Min('due_install_date')
+        )['due_install_date__min']
+        return self._min_date(due_test_date_min, due_install_date_min)
+
+    @staticmethod
+    def _min_date(date1, date2):
+        if date1:
+            if date2:
+                return min(date1, date2)
+            return date1
+        return date2
+
+    def update_site(self):
+        self.site.due_install_test_date = self.get_due_install_test_date()
+        self.site.save()
+
+    def update_due_install_test_date(self, service_type):
+        setattr(self.site, '%s_present' % service_type, True)
+        self.update_site()
+
 reversion.register(Hazard)
 
 
@@ -1014,6 +1041,4 @@ class DemoTrial(models.Model):
         return '%s %s %s' % (self.employee, self.start_date, self.end_date)
 
 reversion.register(DemoTrial)
-
-import signals
 
