@@ -275,6 +275,7 @@ class Messages:
 
     class PWS:
         adding_success = _('PWS was successfully added')
+        adding_success_trial_demo = _('Thank you for registering for the further use of the system, go to your email')
         adding_error = _('Error while submitting form')
         editing_success = _('PWS was successfully updated')
         editing_error = _('Error while submitting form')

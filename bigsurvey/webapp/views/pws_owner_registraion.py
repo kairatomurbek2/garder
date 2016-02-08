@@ -10,13 +10,16 @@ from webapp import models
 from webapp.actions.builders import SampleSitesJsonUploaderBuilder
 from webapp.actions.demo_trial import DemoTrialCreator
 from webapp.forms import PWSOwnerRegistrationForm, PWSUserAddForm
-
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 class PwsOwnerRegistrationView(FormView):
     template_name = 'pws_owner_registration/pws_owner_registration.html'
     msg_content_template_email = 'pws_owner_registration/pws_name_mail.html'
-    success_message = Messages.PWS.adding_success
-    error_message = Messages.PWS.adding_error
+    success_message = Messages.PWS.adding_success_trial_demo
+
+    def get_success_url(self):
+        return reverse('webapp:pws_owner_registration')
 
     def get(self, request, *args, **kwargs):
         pws_form = PWSOwnerRegistrationForm()
@@ -36,7 +39,8 @@ class PwsOwnerRegistrationView(FormView):
             self.send_email(request, email, pws, employee.user)
             self.upload_sample_sites(pws)
             self.create_demo_trial(employee)
-            return HttpResponseRedirect('/')
+            messages.success(self.request, self.success_message)
+            return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(pws_form, user_form, **kwargs)
 
