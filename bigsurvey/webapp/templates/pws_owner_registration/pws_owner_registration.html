@@ -81,6 +81,15 @@
                     </div>
                 </div>
                 <div class="uk-form-row">
+                    {{ pws_form.county.errors }}
+                    <label for="{{ pws_form.county.id_for_label }}"
+                           class="uk-form-label">{{ pws_form.county.label }}</label>
+
+                    <div class="uk-form-controls">
+                        {% render_field pws_form.county|add_class:'uk-width-1-1' %}
+                    </div>
+                </div>
+                <div class="uk-form-row">
                     {{ user_form.phone1.errors }}
                     <label for="{{ user_form.phone1.id_for_label }}"
                            class="uk-form-label">{{ user_form.phone1.label }}</label>

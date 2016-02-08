@@ -378,6 +378,7 @@ class PWS(models.Model):
     letter_left_header_block = RichTextField(blank=True, verbose_name=_('Letter Left Header block'))
     letter_right_header_block = RichTextField(blank=True, verbose_name=_('Letter Right Header block'))
     is_active = models.BooleanField(default=True, verbose_name=_('PWS is active'))
+    county = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("County"))
 
     def __unicode__(self):
         return u"%s, %s" % (self.number, self.name)

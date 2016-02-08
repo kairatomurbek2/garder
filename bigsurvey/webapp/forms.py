@@ -656,6 +656,7 @@ class PWSOwnerRegistrationForm(forms.ModelForm):
     number = forms.CharField(max_length=15, required=True, label=_('PWS Number'),
                              widget=forms.TextInput(attrs={'placeholder': _(' LL9999999')}))
     name = forms.CharField(max_length=50, required=True, label=_('Water System Name'))
+    county = forms.CharField(max_length=100, required=True)
 
     class Meta:
         model = models.PWS

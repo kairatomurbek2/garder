@@ -49,7 +49,8 @@ class PwsOwnerRegistrationView(FormView):
     def _create_pws(pws_form):
         number = pws_form.cleaned_data['number']
         name = pws_form.cleaned_data['name']
-        pws = models.PWS.objects.create(number=number, name=name)
+        county = pws_form.cleaned_data['county']
+        pws = models.PWS.objects.create(number=number, name=name, county=county)
         return pws
 
     @staticmethod
