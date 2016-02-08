@@ -1,5 +1,6 @@
 from ast import literal_eval
 from captcha.fields import ReCaptchaField
+from django.core.validators import RegexValidator
 
 import models
 import re
@@ -667,7 +668,10 @@ class PWSUserAddForm(UserCreationForm):
     city = forms.CharField(max_length=30, required=True)
     state = forms.ChoiceField(choices=STATES, required=True)
     zip = forms.CharField(max_length=10, required=True)
-    phone1 = forms.CharField(max_length=20, required=True, label=_('Phone Number'))
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message=_(
+                                     "Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
+    phone1 = forms.CharField(validators=[phone_regex], max_length=20, required=True, label=_('Phone Number'))
     captcha = ReCaptchaField()
 
     def clean_email(self):
