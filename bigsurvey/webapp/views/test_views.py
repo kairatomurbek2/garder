@@ -116,7 +116,9 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
             if payment.execute({'payer_id': payer_id}):
                 test_pks = self.request.GET['tests'].split(',')
                 models.Test.objects.filter(pk__in=test_pks).update(paid=True, paypal_payment_id=payment_id)
-                messages.success(self.request, __(Messages.Test.payment_successful_singular, Messages.Test.payment_successful_plural, len(test_pks)))
+                messages.success(self.request,
+                                 __(Messages.Test.payment_successful_singular, Messages.Test.payment_successful_plural,
+                                    len(test_pks)))
             else:
                 messages.error(self.request, Messages.Test.payment_failed)
         else:
@@ -154,7 +156,7 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
 
     def get_payment(self, tests):
         total_amount = sum((test.price for test in tests))
-        if total_amount < 0.01:
+        if total_amount.compare(Decimal(0)) == 0:
             raise PaymentTotalSumIsNull()
         items = [
             {

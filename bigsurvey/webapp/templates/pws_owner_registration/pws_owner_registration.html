@@ -134,9 +134,11 @@
                         <input type="checkbox" id="form-s-c" onchange='checkAvailability()'>
                         <label
                                 for="form-s-c">By clicking the button labelled "Submit" below, your acknowledgement
-                            shall have the same force and validity as a paper copy of an agreement setting out these <a>Terms
+                            shall have the same force and validity as a paper copy of an agreement setting out these <a
+                                    href="{% url 'webapp:download_pdf' %}">Terms
                                 and Conditions</a> that has been manually signed, or otherwise duly executed, by you or
-                            on your behalf and delivered. These <a>Terms and Conditions</a> and any non-contractual
+                            on your behalf and delivered. These <a href="{% url 'webapp:download_pdf' %}">Terms and
+                                Conditions</a> and any non-contractual
                             obligations arising out of or in conjunction with them will be governed by, and construed in
                             accordance with, US law.
                         </label>

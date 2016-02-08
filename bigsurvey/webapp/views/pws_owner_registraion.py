@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.mail.message import EmailMultiAlternatives
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext, loader
-from django.views.generic import FormView
+from django.views.generic import FormView, View
 from main.parameters import PWSRegistrationEmail, Messages
+import os
 from webapp import models
 from webapp.actions.builders import SampleSitesJsonUploaderBuilder
 from webapp.actions.demo_trial import DemoTrialCreator
@@ -75,7 +76,11 @@ class PwsOwnerRegistrationView(FormView):
         msg = EmailMultiAlternatives(subject=subject, body=message_html,
                                      headers={'Reply-To': settings.PWS_REGISTATION_FROM_EMAIL},
                                      to=[email])
+        file_name_pdf = 'Terms_and_Conditions.pdf'
+        file_name_xlsx = 'Sample_Town.xlsx'
         msg.attach_alternative(message_html, "text/html")
+        msg.attach_file(os.path.join(settings.MEDIA, file_name_pdf), "application/pdf")
+        msg.attach_file(os.path.join(settings.MEDIA, file_name_xlsx), "application/xlsx")
         msg.send()
 
     @staticmethod
@@ -88,3 +93,12 @@ class PwsOwnerRegistrationView(FormView):
         demo_trial_creator = DemoTrialCreator()
         demo_trial_creator.employee = employee
         demo_trial_creator.create_demo_trial_for_user()
+
+class DownloadPublishedQuiz(View):
+    @staticmethod
+    def get(*args, **kwargs):
+        file_name = 'Terms_and_Conditions.pdf'
+        file = open(os.path.join(settings.MEDIA, file_name), 'rb')
+        response = HttpResponse(file, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="%s"' % file_name
+        return response

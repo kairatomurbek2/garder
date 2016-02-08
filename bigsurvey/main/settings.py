@@ -145,6 +145,7 @@ WEBAPP_FIXTURES_BASE = os.path.join(BASE_DIR, 'webapp', 'fixtures')
 SAMPLE_DATA_JSON = os.path.join(WEBAPP_FIXTURES_BASE, 'sample_data_for_pws_registration.json')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA = os.path.join(BASE_DIR, 'uploads/media')
 
 MEDIA_URL = '/uploads/'
 

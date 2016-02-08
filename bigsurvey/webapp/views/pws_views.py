@@ -1,7 +1,8 @@
-from .base_views import BaseTemplateView, BaseFormView
+from .base_views import BaseTemplateView, BaseFormView, BaseView
 from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+import paypalrestsdk
 from webapp import models, forms
 from main.parameters import Messages, BP_TYPE, LetterTypes, BPLocations
 from django.views.generic import UpdateView, CreateView
@@ -182,3 +183,21 @@ class ActivateBlockedPWS(BaseTemplateView):
         for pws in pws_list:
             PayAndActivate.pay_and_activate(pws, request)
         return redirect('webapp:home')
+
+#
+# class DemoDtialPayPAypalView(BaseView):
+#     SUCCESS = 'success'
+#     CANCEL = 'cancel'
+#
+#     def get(self, request, *args, **kwargs):
+#         action = self.request['action']
+#         if action == self.SUCCESS:
+#             payment_id = self.request.GET['paymentId']
+#             payer_id = self.request.GET['PayerID']
+#             payment = paypalrestsdk.Payment.find(payment_id)
+#             # if payment.execute({'payer_id': payer_id}):
+#             #     price_pks = self.request.GET['testpricehistory'].split(',')
+#             #     models.TestPriceHistory.objects.filter()
+#
+#     def post(self, request, *args, **kwargs):
+#         payment_form = forms
