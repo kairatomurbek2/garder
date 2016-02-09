@@ -37,7 +37,10 @@ class PwsOwnerRegistrationView(FormView):
             employee = self._create_user_and_employee(user_form, pws)
             email = employee.user.email
             self.send_email(request, email, pws, employee.user)
-            self.upload_sample_sites(pws)
+            test_pws = self._create_test_pws()
+            self.upload_sample_sites(test_pws)
+            employee.pws.add(test_pws)
+            employee.save()
             self.create_demo_trial(employee)
             messages.success(self.request, self.success_message)
             return HttpResponseRedirect(self.get_success_url())
@@ -54,6 +57,14 @@ class PwsOwnerRegistrationView(FormView):
         number = pws_form.cleaned_data['number']
         name = pws_form.cleaned_data['name']
         county = pws_form.cleaned_data['county']
+        pws = models.PWS.objects.create(number=number, name=name, county=county)
+        return pws
+
+    @staticmethod
+    def _create_test_pws():
+        number = Messages.PWS.test_pws_number
+        name = Messages.PWS.test_pws_name
+        county = 'Sample'
         pws = models.PWS.objects.create(number=number, name=name, county=county)
         return pws
 
