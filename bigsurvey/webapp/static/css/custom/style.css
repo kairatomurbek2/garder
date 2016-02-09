@@ -121,6 +121,8 @@ em {
     height: 100%;
     overflow-y: auto;
     padding-right: 16px;
+    background: #F0F8FF;
+
 }
 
 .fixed-headers thead tr {
@@ -234,6 +236,10 @@ ul.test-form-ul {
 .filter-button-div {
     width: 100%;
     background-color: #FFF;
+    top: 39px;
+    /*background: green;*/
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 .filter-button {
@@ -252,3 +258,16 @@ ul.test-form-ul {
 .logo-garder{
     width: 39px;
 }
+.my-fixed{
+    top: 108px;
+    width: 4000px;
+
+
+}
+.my-table-margin{
+    margin-top: 168px;
+
+}
+
+
+
