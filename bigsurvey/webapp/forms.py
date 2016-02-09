@@ -392,16 +392,6 @@ class UserEditForm(UserChangeForm):
     def clean_password(self):
         return self.initial.get('password')
 
-    def clean_email(self):
-        data = self.cleaned_data['email']
-        users_with_email = models.User.objects.filter(email=data)
-        if users_with_email.exists() and self.instance not in users_with_email:
-            raise ValidationError(
-                _("User with such email already exists"),
-                code='email_used'
-            )
-        return data
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', False)
         super(UserEditForm, self).__init__(*args, **kwargs)
@@ -577,22 +567,49 @@ class PaymentForm(forms.Form):
         self.fields['tests'].queryset = queryset
 
 
-class TesterSearchForm(forms.Form):
-    email = forms.EmailField(required=True)
+class UserSearchForm(forms.Form):
+    group = forms.ModelChoiceField(queryset=models.Group.objects.filter(
+        name__in=(Groups.admin, Groups.surveyor, Groups.tester)
+    ), required=True)
+    email = forms.EmailField(required=False)
+    username = forms.CharField(max_length=30, required=False)
     cert_number = forms.CharField(max_length=128, required=False)
 
     prefix = 'search'
 
+    def is_valid(self):
+        valid = super(UserSearchForm, self).is_valid()
+        if valid:
+            if self.is_empty(self.cleaned_data['email']) and self.is_empty(self.cleaned_data['username']):
+                self.add_error(None, _('Either username or email is required'))
+                return False
+        return valid
 
-class TesterInviteForm(forms.Form):
+    def is_empty(self, value):
+        return value == '' or value is None
+
+
+class UserInviteForm(forms.Form):
     pws = forms.ModelMultipleChoiceField(queryset=models.PWS.objects.none(), required=True)
-
+    user = forms.ModelChoiceField(queryset=models.User.objects.all(), required=True)
     prefix = 'invite'
 
     def __init__(self, *args, **kwargs):
-        queryset = kwargs.pop('queryset', models.PWS.objects.none())
-        super(TesterInviteForm, self).__init__(*args, **kwargs)
-        self.fields['pws'].queryset = queryset
+        pws_queryset = kwargs.pop('pws_queryset', models.PWS.objects.none())
+        users = kwargs.pop('users', models.User.objects.none())
+        super(UserInviteForm, self).__init__(*args, **kwargs)
+        self.fields['pws'].queryset = pws_queryset
+        self.fields['user'].queryset = users
+
+    def is_valid(self):
+        valid = super(UserInviteForm, self).is_valid()
+        if valid:
+            user = self.cleaned_data['user']
+            selected_pws = self.cleaned_data['pws']
+            if set(selected_pws).issubset(user.employee.pws.all()):
+                self.add_error(None, Messages.UserInvite.user_already_in_pws)
+                return False
+        return valid
 
 
 class TesterCertForm(forms.ModelForm):

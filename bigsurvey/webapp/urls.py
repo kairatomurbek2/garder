@@ -31,8 +31,8 @@ urlpatterns = patterns(
     url(r'^test/(?P<pk>\d+)/edit/$', views.TestEditView.as_view(), name="test_edit"),
     url(r'^test/pay/paypal/$', views.TestPayPaypalView.as_view(), name="test_pay_paypal"),
     url(r'^testers/$', views.TesterListView.as_view(), name="tester_list"),
-    url(r'^tester-search/$', views.TesterSearchView.as_view(), name="tester_search"),
-    url(r'^invite-accept/$', views.TesterInviteAcceptView.as_view(), name="invite_accept"),
+    url(r'^tester-search/$', views.UserSearchView.as_view(), name="tester_search"),
+    url(r'^invite-accept/$', views.UserInviteAcceptView.as_view(), name="invite_accept"),
 
     url(r'^letter_type/$', views.LetterTypeListView.as_view(), name="letter_type_list"),
     url(r'^letter_type/(?P<pk>\d+)/edit/$', views.LetterTypeEditView.as_view(), name="letter_type_edit"),

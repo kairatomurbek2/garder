@@ -1,8 +1,13 @@
+from smtplib import SMTPException
+from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from main import settings
 from main.parameters import Messages, Groups, OWNER_GROUPS, ADMIN_GROUPS
 from webapp import models, forms, perm_checkers
 from webapp.actions.builders import UserManagementActionsBuilder
@@ -263,3 +268,140 @@ class UserEditView(UserBaseFormView):
         request_user_is_pws_owner = Groups.pws_owner in [group.name for group in self.request.user.groups.all()]
         user_obj_is_pws_owner = Groups.pws_owner in [group.name for group in user.groups.all()]
         return request_user_is_pws_owner and user_obj_is_pws_owner
+
+
+class UserSearchView(BaseFormView):
+    template_name = 'user/user_search.html'
+    form_class = forms.UserSearchForm
+    permission = 'webapp.browse_user'
+    users = models.User.objects.none()
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(**self.get_form_kwargs())
+        if form.is_valid():
+            self.users = self.__get_users(form)
+            if 'invite_user' in request.POST:
+                invite_form = forms.UserInviteForm(
+                    pws_queryset=self.request.user.employee.pws.all(),
+                    users=self.users,
+                    **self.get_form_kwargs()
+                )
+                if invite_form.is_valid():
+                    return self.invite_form_valid(invite_form)
+                return self.invite_form_invalid(form, invite_form)
+            return self.form_valid(form)
+        return self.form_invalid(form)
+
+    def form_valid(self, form):
+        invite_form = None
+        if self.users:
+            invite_form = forms.UserInviteForm(
+                pws_queryset=self.request.user.employee.pws.all(),
+                users=self.users
+            )
+        else:
+            messages.error(self.request, Messages.UserInvite.user_not_found)
+        return self.render_to_response({'form': form, 'users': self.users, 'invite_form': invite_form})
+
+    def __get_users(self, form):
+        group = form.cleaned_data['group']
+        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
+        cert_number = form.cleaned_data['cert_number']
+        users = User.objects.filter(groups=group)
+        if username:
+            users = users.filter(username=username)
+        if email:
+            users = users.filter(email=email)
+        if group.name == Groups.tester and cert_number:
+            users = users.filter(certs__cert_number=cert_number)
+        return users
+
+    def invite_form_valid(self, invite_form):
+        invite = self.__create_invite(invite_form)
+        self.__send_email_to_user(invite, invite_form.cleaned_data['user'])
+        return HttpResponseRedirect(reverse('webapp:user_list'))
+
+    def __create_invite(self, invite_form):
+        user = invite_form.cleaned_data['user']
+        selected_pws = invite_form.cleaned_data['pws']
+        invite = models.Invite.objects.create(
+            invite_from=self.request.user,
+            invite_to=user,
+        )
+        for pws in selected_pws:
+            if pws not in user.employee.pws.all():
+                invite.invite_pws.add(pws)
+        invite.save()
+        return invite
+
+    def __send_email_to_user(self, invite, user):
+        context = {
+            'invite': invite,
+            'base_url': settings.HOST
+        }
+        html_template = 'email_templates/html/pws_invite_notification.html'
+        plain_template = 'email_templates/plain/pws_invite_notification.txt'
+        subject = 'Invitation from PWS'
+        html_content = render_to_string(html_template, context)
+        plain_content = render_to_string(plain_template, context)
+        try:
+            user.email_user(
+                subject=subject,
+                message=plain_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                html_message=html_content
+            )
+            messages.success(self.request, Messages.UserInvite.user_invite_success)
+        except SMTPException:
+            messages.error(self.request, Messages.UserInvite.user_invite_failed)
+
+    def invite_form_invalid(self, form, invite_form):
+        messages.error(self.request, Messages.UserInvite.user_invite_error)
+        return self.render_to_response({'form': form, 'users': self.users, 'invite_form': invite_form})
+
+
+class UserInviteAcceptView(BaseTemplateView):
+    template_name = 'user/user_invite_accept.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            invite = models.Invite.objects.get(code=request.GET.get('code'))
+        except ObjectDoesNotExist:
+            raise Http404
+        if invite.invite_to != request.user:
+            raise Http404
+        if invite.accepted:
+            invite_message = "You have already accepted this invite."
+        elif (datetime.now().date() - invite.invite_date).days > 3:
+            invite_message = "Invite expired. Please, contact PWS administrator to receive new invite."
+        else:
+            for pws in invite.invite_pws.all():
+                invite.invite_to.employee.pws.add(pws)
+            invite.invite_to.employee.save()
+            invite.accepted = True
+            invite.save()
+            invite_message = "Invite successfully accepted."
+        self.__send_email_to_admin(invite)
+        context = self.get_context_data(**kwargs)
+        context['invite_accept_text'] = invite_message
+        return self.render_to_response(context)
+
+    def __send_email_to_admin(self, invite):
+        context = {
+            'invite': invite,
+        }
+        html_template = 'email_templates/html/pws_invite_accept_notification.html'
+        plain_template = 'email_templates/plain/pws_invite_accept_notification.txt'
+        subject = 'Invitation have been accepted'
+        html_content = render_to_string(html_template, context)
+        plain_content = render_to_string(plain_template, context)
+        try:
+            invite.invite_from.email_user(
+                subject=subject,
+                message=plain_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                html_message=html_content
+            )
+        except SMTPException:
+            pass

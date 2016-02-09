@@ -984,10 +984,10 @@ reversion.register(ImportLog)
 class Invite(models.Model):
     invite_date = models.DateField(auto_now_add=True, verbose_name=_('Invite sending date'))
     invite_from = models.ForeignKey(User, verbose_name=_('Invite sender'), related_name='invites_sent')
-    invite_to = models.ForeignKey(User, verbose_name=_('Invited tester'), related_name='invites_received')
+    invite_to = models.ForeignKey(User, verbose_name=_('Invited user'), related_name='invites_received')
     invite_pws = models.ManyToManyField(PWS, verbose_name=_('Invite to PWS'))
     accepted = models.BooleanField(default=False)
-    code = models.CharField(max_length=64, default=uuid.uuid4)
+    code = models.CharField(max_length=64, default=uuid.uuid4, editable=False)
 
     def get_pws_list(self):
         return self.invite_pws.all()
