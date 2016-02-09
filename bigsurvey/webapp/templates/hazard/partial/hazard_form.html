@@ -1,8 +1,8 @@
 {% load i18n widget_tweaks %}
 
 {% include 'messages.html' %}
-<form class="uk-form" method="post" name="hazard" enctype="multipart/form-data">
-    {% csrf_token %}
+
+<span class="hazard-and-bp-forms" id="hazard-and-bp-forms-0">
     <table class="uk-table form-center border-none uk-table-condensed">
         <tbody>
             <tr>
@@ -113,6 +113,7 @@
             </tr>
         </tbody>
     </table>
+
     {% if bp_form %}
         <div id="includedBPForm">
             <hr/>
@@ -124,8 +125,9 @@
             <hr/>
         </div>
         <script type="text/javascript">
+            var assemblyTypeId = '#{{ form.assembly_status.id_for_label }}';
             function triggerDeviceForm(){
-                var status = $("#id_assembly_status :selected").val();
+                var status = $(assemblyTypeId + " :selected").val();
                 if ($.inArray(status, ['installed', 'due_replace', 'maintenance']) < 0) {
                     $('#includedBPForm').hide()
                 }
@@ -134,7 +136,7 @@
                 }
             }
             $(function(){
-                var status_select = $('#id_assembly_status');
+                var status_select = $(assemblyTypeId);
                 status_select.change(triggerDeviceForm);
                 triggerDeviceForm();
             });
@@ -163,7 +165,7 @@
                     <label>{% trans "Geolocation" %}</label>
                 </td>
                 <td class="uk-width-5-6" colspan="3">
-                    <div id="mapholder" style="height: 250px; margin-bottom: 20px"></div>
+                    <div id="mapholder-0" style="height: 250px; margin-bottom: 20px"></div>
                     <p>
                         <button type="button" name="get-location" class="uk-button uk-button-success" data-action="get-location">
                             {% trans 'Get location' %}
@@ -199,11 +201,11 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="submit" class="uk-button uk-button-primary uk-float-right" id="hazard_submit_button">
+                    <button type="submit" class="uk-button uk-button-primary uk-float-right hazard_submit_button" id="hazard_submit_button">
                         {% trans "Submit" %}
                     </button>
                 </td>
             </tr>
         </tbody>
     </table>
-</form>
+</span>

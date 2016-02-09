@@ -9,14 +9,17 @@
 {% endblock %}
 {% block content %}
     <div class="wrapper">
-        {% include 'hazard/partial/hazard_form.html' %}
+        <form class="uk-form" method="post" name="hazard" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'hazard/partial/hazard_form.html' %}
+        </form>
     </div>
 {% endblock %}
 {% block end_scripts %}
     {% load_google_map_js %}
     <script type="text/javascript">
         $(document).ready(function () {
-            GoogleMap.mapHolder = $('#mapholder');
+            GoogleMap.mapHolder = $('#mapholder-0');
             GoogleMap.latitudeInput = $('input[name="latitude"]');
             GoogleMap.longitudeInput = $('input[name="longitude"]');
             GoogleMap.notificationLabel = $('#notification');

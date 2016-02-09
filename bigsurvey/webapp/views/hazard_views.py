@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db import connection
-from django.db.models import Min
 from django.http import Http404, JsonResponse
 from django.shortcuts import HttpResponseRedirect
 from django.template import RequestContext
@@ -134,23 +133,6 @@ class HazardBaseFormView(BaseFormView):
         queryset = models.LetterType.objects.filter(pws=site.pws)
         return queryset
 
-    def _get_due_install_test_date(self, hazard):
-        bp_devices = models.BPDevice.objects.filter(hazard__site=hazard.site)
-        due_test_date_min = bp_devices.aggregate(
-            Min('due_test_date')
-        )['due_test_date__min']
-        due_install_date_min = hazard.site.hazards.all().aggregate(
-            Min('due_install_date')
-        )['due_install_date__min']
-        return self._min_date(due_test_date_min, due_install_date_min)
-
-    def _min_date(self, date1, date2):
-        if date1:
-            if date2:
-                return min(date1, date2)
-            return date1
-        return date2
-
 
 class HazardAddView(HazardBaseFormView, CreateView):
     permission = 'webapp.add_hazard'
@@ -217,15 +199,10 @@ class HazardAddView(HazardBaseFormView, CreateView):
             bp_device = None
         self.object.bp_device = bp_device
         self.object.save()
-        self._update_site(form.instance, self.kwargs['service'])
+        self.object.update_due_install_test_date(self.kwargs['service'])
         if self.request.is_ajax():
             return self.ajax_response(self.AJAX_OK, form, bp_form)
         return response
-
-    def _update_site(self, hazard, service_type):
-        setattr(hazard.site, '%s_present' % service_type, True)
-        hazard.site.due_install_test_date = self._get_due_install_test_date(hazard)
-        hazard.site.save()
 
     def get_bp_form(self):
         kwargs = {
@@ -271,9 +248,5 @@ class HazardEditView(HazardBaseFormView, UpdateView):
         if not self.device_present(form):
             form.instance.bp_device = None
             form.instance.save()
-        self._update_site(form.instance)
+        form.instance.update_site()
         return response
-
-    def _update_site(self, hazard):
-        hazard.site.due_install_test_date = self._get_due_install_test_date(hazard)
-        hazard.site.save()

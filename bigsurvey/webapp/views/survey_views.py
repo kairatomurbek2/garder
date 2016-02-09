@@ -1,7 +1,10 @@
 from django.core.urlresolvers import reverse
+from django.forms import formset_factory
 from django.http import Http404
-from django.views.generic import CreateView, UpdateView
-from main.parameters import BP_TYPE, Messages, Groups
+from django.http.response import HttpResponseRedirect
+from django.utils.functional import curry
+from django.views.generic import UpdateView
+from main.parameters import BP_TYPE, Messages, Groups, ASSEMBLY_STATUSES_WITH_BP
 from webapp import filters, models, forms, perm_checkers
 from .base_views import BaseTemplateView, BaseFormView
 
@@ -46,18 +49,54 @@ class SurveyBaseFormView(BaseFormView):
     template_name = 'survey/survey_form.html'
     form_class = forms.SurveyForm
     model = models.Survey
+    hazard_form_class = forms.HazardForm
+    bp_form_class = forms.BPForm
+
+    def get_hazard_formset(self):
+        HazardFormset = formset_factory(self.hazard_form_class)
+        HazardFormset.form = staticmethod(
+            curry(self.hazard_form_class, letter_types_qs=self._get_queryset_for_letter_type_field()))
+        return HazardFormset
 
     def get_context_data(self, **kwargs):
         context = super(SurveyBaseFormView, self).get_context_data(**kwargs)
-        context['hazard_form'] = forms.HazardForm(letter_types_qs=self._get_queryset_for_letter_type_field())
-        context['bp_form'] = forms.BPForm(prefix='bp')
+        HazardFormset = self.get_hazard_formset()
+        BPFormset = formset_factory(self.bp_form_class)
+        context['hazard_formset'] = HazardFormset(prefix='hazard')
+        context['bp_formset'] = BPFormset(prefix='bp')
         return context
 
     def get_form(self, form_class):
         form = super(SurveyBaseFormView, self).get_form(form_class)
+        form.prefix = 'survey'
         form.fields['surveyor'].queryset = self._get_queryset_for_surveyor_field()
         form.fields['hazards'].queryset = self._get_queryset_for_hazards_field(form.instance)
         return form
+
+    def get_bp_form(self):
+        kwargs = {
+            'initial': {},
+            'prefix': 'bp',
+        }
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return self.bp_form_class(**kwargs)
+
+    def get_hazard_form(self):
+        kwargs = {
+            'initial': {},
+            'prefix': 'hz',
+            'letter_types_qs': self._get_queryset_for_letter_type_field()
+        }
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return self.hazard_form_class(**kwargs)
 
     def _get_queryset_for_hazards_field(self, survey):
         try:
@@ -99,57 +138,57 @@ class SurveyBaseFormView(BaseFormView):
         return reverse('webapp:survey_detail', args=(self.object.pk,))
 
 
-class SurveyAddView(SurveyBaseFormView, CreateView):
-    permission = 'webapp.add_survey'
-    success_message = Messages.Survey.adding_success
-    error_message = Messages.Survey.adding_error
-
-    def get_context_data(self, **kwargs):
-        context = super(SurveyAddView, self).get_context_data(**kwargs)
-        context['site_pk'] = self.kwargs['pk']
-        context['service_type'] = self.kwargs['service']
-        context['fire'] = self._is_fire_service()
-        return context
-
-    def _is_fire_service(self):
-        if self.kwargs['service'] == 'fire':
-            return True
-        return False
-
-    def form_valid(self, form):
-        site = self._get_site()
-        form.instance.site = site
-        form.instance.service_type = self._get_service_type()
-        response = super(SurveyAddView, self).form_valid(form)
-        self._update_last_survey_date(site)
-        self._switch_on_service_type(site, form.instance.service_type.service_type)
-        if len(form.cleaned_data['hazards']) == 0:
-            form.instance.add_nhp_hazard()
-        self._update_is_present(site, form.instance)
-        return response
-
-    def _get_site(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not perm_checkers.SitePermChecker.has_perm(self.request, site):
-            raise Http404
-        return site
-
-    def _get_service_type(self):
-        return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
-
-    def _switch_on_service_type(self, site, service_type):
-        if service_type == 'potable':
-            site.potable_present = True
-        elif service_type == 'fire':
-            site.fire_present = True
-        elif service_type == 'irrigation':
-            site.irrigation_present = True
-        site.save()
-
-    def get_form(self, form_class):
-        if not perm_checkers.SitePermChecker.has_perm(self.request, self._get_site()):
-            raise Http404
-        return super(SurveyAddView, self).get_form(form_class)
+# class SurveyAddView(SurveyBaseFormView, CreateView):
+#     permission = 'webapp.add_survey'
+#     success_message = Messages.Survey.adding_success
+#     error_message = Messages.Survey.adding_error
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(SurveyAddView, self).get_context_data(**kwargs)
+#         context['site_pk'] = self.kwargs['pk']
+#         context['service_type'] = self.kwargs['service']
+#         context['fire'] = self._is_fire_service()
+#         return context
+#
+#     def _is_fire_service(self):
+#         if self.kwargs['service'] == 'fire':
+#             return True
+#         return False
+#
+#     def form_valid(self, form):
+#         site = self._get_site()
+#         form.instance.site = site
+#         form.instance.service_type = self._get_service_type()
+#         response = super(SurveyAddView, self).form_valid(form)
+#         self._update_last_survey_date(site)
+#         self._switch_on_service_type(site, form.instance.service_type.service_type)
+#         if len(form.cleaned_data['hazards']) == 0:
+#             form.instance.add_nhp_hazard()
+#         self._update_is_present(site, form.instance)
+#         return response
+#
+#     def _get_site(self):
+#         site = models.Site.objects.get(pk=self.kwargs['pk'])
+#         if not perm_checkers.SitePermChecker.has_perm(self.request, site):
+#             raise Http404
+#         return site
+#
+#     def _get_service_type(self):
+#         return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
+#
+#     def _switch_on_service_type(self, site, service_type):
+#         if service_type == 'potable':
+#             site.potable_present = True
+#         elif service_type == 'fire':
+#             site.fire_present = True
+#         elif service_type == 'irrigation':
+#             site.irrigation_present = True
+#         site.save()
+#
+#     def get_form(self, form_class):
+#         if not perm_checkers.SitePermChecker.has_perm(self.request, self._get_site()):
+#             raise Http404
+#         return super(SurveyAddView, self).get_form(form_class)
 
 
 class SurveyEditView(SurveyBaseFormView, UpdateView):
@@ -175,3 +214,90 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
         self._update_last_survey_date(site)
         self._update_is_present(site, form.instance)
         return response
+
+
+class SurveyAddView(SurveyBaseFormView):
+    permission = 'webapp.add_survey'
+    success_message = Messages.Survey.adding_success
+    error_message = Messages.Survey.adding_error
+
+    def get_context_data(self, **kwargs):
+        context = super(SurveyAddView, self).get_context_data(**kwargs)
+        context['site_pk'] = self.kwargs['pk']
+        context['service_type'] = self.kwargs['service']
+        context['fire'] = self._is_fire_service()
+        return context
+
+    def _is_fire_service(self):
+        if self.kwargs['service'] == 'fire':
+            return True
+        return False
+
+    def post(self, request, *args, **kwargs):
+        survey_form = self.get_form(self.form_class)
+        HazardFormset = self.get_hazard_formset()
+        hazard_formset = HazardFormset(request.POST, request.FILES, prefix='hazard')
+        if hazard_formset.is_valid() and survey_form.is_valid():
+            site = self._get_site()
+            new_hazards = self._create_hazards_and_update_related_objects(site, hazard_formset)
+            self._create_survey_and_update_related_objects(site, survey_form, new_hazards)
+            return HttpResponseRedirect(self.get_success_url())
+
+    @staticmethod
+    def device_present(form):
+        if form.cleaned_data['assembly_status'] in ASSEMBLY_STATUSES_WITH_BP:
+            return True
+        return False
+
+    def _create_hazards_and_update_related_objects(self, site, hazard_formset):
+        service_type = self._get_service_type()
+        new_hazards = []
+        for hazard_form in hazard_formset:
+            hazard_form.instance.site = site
+            hazard_form.instance.service_type = service_type
+            # if self.device_present(bp_form):
+            #     bp_device = bp_form.save()
+            # else:
+            #     bp_device = None
+            hazard_obj = hazard_form.save()
+            # hazard_obj.bp_device = bp_device
+            hazard_obj.save()
+            hazard_obj.update_due_install_test_date(service_type)
+            new_hazards.append(hazard_obj)
+        return new_hazards
+
+    def _create_survey_and_update_related_objects(self, site, survey_form, new_hazards):
+        survey_form.instance.site = site
+        survey_form.instance.service_type = self._get_service_type()
+        self.object = survey_form.save()
+        self._update_last_survey_date(site)
+        self._switch_on_service_type(site, survey_form.instance.service_type.service_type)
+        if len(survey_form.cleaned_data['hazards']) == 0 and len(new_hazards) == 0:
+            survey_form.instance.add_nhp_hazard()
+        if len(new_hazards) > 0:
+            for new_hazard in new_hazards:
+                survey_form.instance.hazards.add(new_hazard)
+        self._update_is_present(site, survey_form.instance)
+
+    def _get_site(self):
+        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        if not perm_checkers.SitePermChecker.has_perm(self.request, site):
+            raise Http404
+        return site
+
+    def _get_service_type(self):
+        return models.ServiceType.objects.filter(service_type__icontains=self.kwargs['service'])[0]
+
+    def _switch_on_service_type(self, site, service_type):
+        if service_type == 'potable':
+            site.potable_present = True
+        elif service_type == 'fire':
+            site.fire_present = True
+        elif service_type == 'irrigation':
+            site.irrigation_present = True
+        site.save()
+
+    def get_form(self, form_class):
+        if not perm_checkers.SitePermChecker.has_perm(self.request, self._get_site()):
+            raise Http404
+        return super(SurveyAddView, self).get_form(form_class)
