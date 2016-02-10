@@ -2,7 +2,7 @@
 {% load i18n staticfiles choices common %}
 {% block menu %}
     <li><a href="{% url 'webapp:user_add' %}" id="user_add_link">{% trans "Add User" %}</a></li>
-    <li><a id="invite_user_link" href="{% url 'webapp:tester_search' %}">{% trans "Invite User" %}</a></li>
+    <li><a id="invite_user_link" href="{% url 'webapp:user_search' %}">{% trans "Invite User" %}</a></li>
 {% endblock %}
 {% block content %}
     <div class="wrapper">

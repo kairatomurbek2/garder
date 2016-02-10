@@ -47,7 +47,7 @@ class Urls:
     import_log_sites = '/import-log/%s/%s/'
     letter_type_edit = '/letter_type/%s/edit/'
     letter_type_list = '/letter_type/'
-    tester_invite = '/tester-search/'
+    user_invite = '/user-search/'
     kit_add = '/user/%s/kit-add/'
     kit_edit = '/kit-edit/%s/'
     cert_add = '/user/%s/cert-add/'

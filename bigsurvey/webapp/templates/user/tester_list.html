@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n staticfiles pagination_tags widget_tweaks %}
 {% block menu %}
-    <li><a id="invite_user_link" href="{% url 'webapp:tester_search' %}">{% trans "Invite Tester" %}</a></li>
+    <li><a id="invite_user_link" href="{% url 'webapp:user_search' %}">{% trans "Invite Tester" %}</a></li>
 {% endblock %}
 {% block content %}
 {% autopaginate tester_filter.qs as filtered_testers 20 %}
