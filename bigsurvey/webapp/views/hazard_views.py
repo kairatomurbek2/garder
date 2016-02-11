@@ -1,11 +1,9 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db import connection
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from django.shortcuts import HttpResponseRedirect
-from django.template import RequestContext
-from django.template.loader import render_to_string
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import UpdateView
 from main.parameters import BP_TYPE, Messages, ASSEMBLY_STATUSES_WITH_BP, AssemblyStatus
 from webapp import filters, models, forms, perm_checkers
 from webapp.raw_sql_queries import HazardPriorityQuery
@@ -132,96 +130,6 @@ class HazardBaseFormView(BaseFormView):
         site = models.Site.objects.get(pk=self.kwargs['pk'])
         queryset = models.LetterType.objects.filter(pws=site.pws)
         return queryset
-
-
-class HazardAddView(HazardBaseFormView, CreateView):
-    permission = 'webapp.add_hazard'
-    success_message = Messages.Hazard.adding_success
-    error_message = Messages.Hazard.adding_error
-    bp_form_class = forms.BPForm
-    object = None
-
-    AJAX_OK = 'ok'
-    AJAX_ERROR = 'error'
-
-    def get_context_data(self, **kwargs):
-        context = super(HazardAddView, self).get_context_data(**kwargs)
-        context['site_pk'] = self.kwargs['pk']
-        context['service_type'] = self.kwargs['service']
-        if not context.get('bp_form'):
-            context['bp_form'] = self.bp_form_class(prefix='bp')
-        return context
-
-    def ajax_response(self, status, form, bp_form):
-        json_data = {}
-        context = self.get_context_data()
-        if status == self.AJAX_OK:
-            context['form'] = self.get_form(self.get_form_class())
-            context['bp_form'] = forms.BPForm(prefix='bp')
-            json_data['option'] = {
-                'value': self.object.pk,
-                'text': str(self.object)
-            }
-        else:
-            context['form'] = form
-            context['bp_form'] = bp_form
-        json_data['status'] = status
-        json_data['form'] = render_to_string('hazard/partial/hazard_form.html', context, RequestContext(self.request))
-        return JsonResponse(json_data)
-
-    def get_form(self, form_class):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
-        if not perm_checkers.SitePermChecker.has_perm(self.request, site):
-            raise Http404
-        return super(HazardAddView, self).get_form(form_class)
-
-    def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        bp_form = self.get_bp_form()
-        if form.is_valid() and (bp_form.is_valid() or not self.device_present(form)):
-            return self.form_valid(form, bp_form)
-        else:
-            return self.form_invalid(form, bp_form)
-
-    def device_present(self, form):
-        if form.cleaned_data['assembly_status'] in ASSEMBLY_STATUSES_WITH_BP:
-            return True
-        return False
-
-    def form_valid(self, form, bp_form):
-        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
-        form.instance.service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
-        response = super(HazardAddView, self).form_valid(form)
-        if self.device_present(form):
-            bp_device = bp_form.save()
-        else:
-            bp_device = None
-        self.object.bp_device = bp_device
-        self.object.save()
-        self.object.update_due_install_test_date(self.kwargs['service'])
-        if self.request.is_ajax():
-            return self.ajax_response(self.AJAX_OK, form, bp_form)
-        return response
-
-    def get_bp_form(self):
-        kwargs = {
-            'initial': {},
-            'prefix': 'bp',
-        }
-        if self.request.method in ('POST', 'PUT'):
-            kwargs.update({
-                'data': self.request.POST,
-                'files': self.request.FILES,
-            })
-        return self.bp_form_class(**kwargs)
-
-    def form_invalid(self, form, bp_form):
-        if self.error_message:
-            messages.error(self.request, self.error_message)
-        if self.request.is_ajax():
-            return self.ajax_response(self.AJAX_ERROR, form, bp_form)
-        return self.render_to_response(self.get_context_data(form=form, bp_form=bp_form))
 
 
 class HazardEditView(HazardBaseFormView, UpdateView):

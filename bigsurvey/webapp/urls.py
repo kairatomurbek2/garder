@@ -1,8 +1,7 @@
-from django.conf.urls import patterns, url
-
-from webapp import views
-from forms import PasswordChangeWithMinLengthForm
 from auditlog.views import AuditLogView
+from django.conf.urls import patterns, url
+from forms import PasswordChangeWithMinLengthForm
+from webapp import views
 
 urlpatterns = patterns(
     '',
@@ -13,7 +12,6 @@ urlpatterns = patterns(
     url(r'^site/(?P<pk>\d+)/edit/$', views.SiteEditView.as_view(), name="site_edit"),
     url(r'^site/(?P<pk>\d+)/add-letter/$', views.LetterAddView.as_view(), name="letter_add"),
     url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/add-survey/$', views.SurveyAddView.as_view(), name="survey_add"),
-    url(r'^site/(?P<pk>\d+)/(?P<service>[a-z]+)/add-hazard/$', views.HazardAddView.as_view(), name="hazard_add"),
 
     url(r'^batch_update/$', views.BatchUpdateView.as_view(), name='batch_update'),
 
