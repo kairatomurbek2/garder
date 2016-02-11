@@ -108,10 +108,13 @@
 
         initGoogleMap: function () {
             var newMapHolderId = '#mapholder-' + String(FormHandler.elements.addHazardBtnClickCount);
+            var latFieldNameSelector = 'input[name="hazard-0-latitude"]'.replace('0', String(FormHandler.elements.addHazardBtnClickCount));
+            var lonFieldNameSelector = 'input[name="hazard-0-longitude"]'.replace('0', String(FormHandler.elements.addHazardBtnClickCount));
+            var notificationIdSelector = '#notification-0'.replace('0', String(FormHandler.elements.addHazardBtnClickCount));
             GoogleMap.mapHolder = $(this).find(newMapHolderId);
-            GoogleMap.latitudeInput = $(this).find('input[name="latitude"]');
-            GoogleMap.longitudeInput = $(this).find('input[name="longitude"]');
-            GoogleMap.notificationLabel = $(this).find('#notification');
+            GoogleMap.latitudeInput = $(this).find(latFieldNameSelector);
+            GoogleMap.longitudeInput = $(this).find(lonFieldNameSelector);
+            GoogleMap.notificationLabel = $(this).find(notificationIdSelector);
             GoogleMap.getLocationButton = $('button[data-action="get-location"]');
             GoogleMap.initialize(true);
         },
