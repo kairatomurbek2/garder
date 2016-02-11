@@ -54,6 +54,7 @@ class SurveyBaseFormView(BaseFormView):
     hazard_form_class = forms.HazardForm
     bp_form_class = forms.BPForm
     hazard_error_message = Messages.Hazard.adding_error
+    survey_added_message = Messages.Survey.adding_success
 
     def get_hazard_formset(self):
         HazardFormset = formset_factory(self.hazard_form_class)
@@ -191,8 +192,12 @@ class SurveyAddView(SurveyBaseFormView):
         bp_formset = BPFormset(request.POST, request.FILES, prefix='bp')
         if hazard_formset.is_valid() and survey_form.is_valid():
             site = self.get_site()
-            new_hazards = self._create_hazards_and_update_related_objects(site, hazard_formset, bp_formset)
+            if hazard_formset.has_changed():
+                new_hazards = self._create_hazards_and_update_related_objects(site, hazard_formset, bp_formset)
+            else:
+                new_hazards = []
             self._create_survey_and_update_related_objects(site, survey_form, new_hazards)
+            messages.success(request, self.survey_added_message)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(survey_form, HazardFormset, BPFormset)
