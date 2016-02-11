@@ -16,6 +16,28 @@
     </div>
 {% endblock %}
 {% block end_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var assemblyTypeId = '#{{ form.assembly_status.id_for_label }}';
+
+            function triggerDeviceForm() {
+                var status = $(assemblyTypeId + " :selected").val();
+                if ($.inArray(status, ['installed', 'due_replace', 'maintenance']) < 0) {
+                    $('#includedBPForm-0').hide()
+                }
+                else {
+                    $('#includedBPForm-0').show()
+                }
+            }
+
+            $(function () {
+                var status_select = $(assemblyTypeId);
+                status_select.change(triggerDeviceForm);
+                triggerDeviceForm();
+            });
+        });
+
+    </script>
     {% load_google_map_js %}
     <script type="text/javascript">
         $(document).ready(function () {

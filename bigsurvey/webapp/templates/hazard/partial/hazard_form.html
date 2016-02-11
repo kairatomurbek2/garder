@@ -9,14 +9,14 @@
                 <td class="uk-width-1-6 uk-text-right uk-text-bold">
                     <label for="{{ form.hazard_type.id_for_label }}">{{ form.hazard_type.label }}</label>
                 </td>
-                <td class="uk-width-1-3">
+                <td class="uk-width-1-3 hazard-type">
                     {% render_field form.hazard_type|add_class:'uk-width-1-1' %}
                     {{ form.hazard_type.errors }}
                 </td>
                 <td class="uk-width-1-6 uk-text-right">
                     <label for="{{ form.assembly_status.id_for_label }}">{{ form.assembly_status.label }}</label>
                 </td>
-                <td class="uk-width-1-3">
+                <td class="uk-width-1-3 assembly-status">
                     {% render_field form.assembly_status|add_class:'uk-width-1-1' %}
                     {{ form.assembly_status.errors }}
                 </td>
@@ -109,13 +109,20 @@
                     {% render_field form.is_present|add_class:'uk-width-1-1'|attr:'rows:3' %}
                     {{ form.is_present.errors }}
                 </td>
+                <td class="uk-width-1-6 uk-text-right">
+                    <label for="{{ form.letter_type.id_for_label }}">{% trans "Letter type" %}</label>
+                </td>
+                <td class="uk-width-1-3">
+                    {% render_field form.letter_type|add_class:'uk-width-1-1' %}
+                    {{ form.letter_type.errors }}
+                </td>
                 <td colspan="2"></td>
             </tr>
         </tbody>
     </table>
 
     {% if bp_form %}
-        <div id="includedBPForm">
+        <div id="includedBPForm-0">
             <hr/>
             <table class="uk-table form-center border-none uk-table-condensed">
                 <tbody>
@@ -124,23 +131,7 @@
             </table>
             <hr/>
         </div>
-        <script type="text/javascript">
-            var assemblyTypeId = '#{{ form.assembly_status.id_for_label }}';
-            function triggerDeviceForm(){
-                var status = $(assemblyTypeId + " :selected").val();
-                if ($.inArray(status, ['installed', 'due_replace', 'maintenance']) < 0) {
-                    $('#includedBPForm').hide()
-                }
-                else {
-                    $('#includedBPForm').show()
-                }
-            }
-            $(function(){
-                var status_select = $(assemblyTypeId);
-                status_select.change(triggerDeviceForm);
-                triggerDeviceForm();
-            });
-        </script>
+
     {% endif %}
     <table class="uk-table form-center border-none uk-table-condensed">
         <tbody>
@@ -148,16 +139,9 @@
                 <td class="uk-width-1-6 uk-text-right">
                     <label for="{{ form.notes.id_for_label }}">{% trans "Hazard Notes" %}</label>
                 </td>
-                <td class="uk-width-1-3">
+                <td class="uk-width-1-3" colspan="3">
                     {% render_field form.notes|add_class:'uk-width-1-1'|attr:'rows:3' %}
                     {{ form.notes.errors }}
-                </td>
-                <td class="uk-width-1-6 uk-text-right">
-                    <label for="{{ form.letter_type.id_for_label }}">{% trans "Letter type" %}</label>
-                </td>
-                <td class="uk-width-1-3">
-                    {% render_field form.letter_type|add_class:'uk-width-1-1' %}
-                    {{ form.letter_type.errors }}
                 </td>
             </tr>
             <tr>
@@ -201,7 +185,7 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    <button type="submit" class="uk-button uk-button-primary uk-float-right hazard_submit_button" id="hazard_submit_button">
+                    <button type="submit" class="uk-button uk-button-primary uk-float-right hazard_submit_button" id="hazard-submit-button-0">
                         {% trans "Submit" %}
                     </button>
                 </td>

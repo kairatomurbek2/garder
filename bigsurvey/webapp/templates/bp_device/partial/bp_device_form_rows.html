@@ -4,7 +4,7 @@
     <td class="uk-width-1-6 uk-text-right uk-text-bold">
         <label for="{{ bp_form.bp_type_present.id_for_label }}">{% trans "Assembly Type Present" %}</label>
     </td>
-    <td class="uk-width-1-3">
+    <td class="uk-width-1-3" id="assembly-type-present">
         {% render_field bp_form.bp_type_present|add_class:'uk-width-1-1' %}
         {{ bp_form.bp_type_present.errors }}
     </td>
