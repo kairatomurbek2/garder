@@ -1,46 +1,24 @@
 @hazard_add
 Feature: Hazard Add
-  @keep_db
-  Scenario Outline: Hazard Add page access
-    Given I logged in as "<role>"
-    When I directly open "hazard_add" page for site with pk "<pk>" and service "<service>"
-    Then I should <reaction> "Page not found"
-
-    Examples:
-      | role      | pk | service | reaction |
-      | root      | 1  | potable | not see  |
-      | root      | 5  | fire    | not see  |
-      | root      | 10 | potable | not see  |
-      | admin     | 5  | fire    | see      |
-      | admin     | 10 | potable | not see  |
-      | admin     | 10 | fire    | not see  |
-      | admin     | 1  | potable | see      |
-      | surveyor  | 10 | potable | not see  |
-      | surveyor  | 10 | fire    | not see  |
-      | surveyor  | 5  | potable | see      |
-      | surveyor  | 1  | potable | see      |
-      | tester    | 1  | potable | see      |
-      | tester    | 5  | potable | see      |
-      | tester    | 10 | potable | see      |
-      | pws_owner | 1  | potable | see      |
-      | pws_owner | 5  | fire    | not see  |
-      | pws_owner | 10 | potable | not see  |
 
 
   Scenario: Correct hazard adding
     Given I logged in as "root"
-    When I directly open "hazard_add" page for site with pk "5" and service "fire"
+    And I open "survey_add" page for site with pk "5" and service "potable"
+    And I choose today in "survey-survey_date"
+    And I select "surveyor" from "survey-surveyor"
+    And I click "add_hazard" link
     And I fill in following fields with following values
-      | field      | value    |
-      | location1  | backyard |
-    And I select "Ice Maker" from "hazard_type"
-    And I select "Yes" from "pump_present"
-    And I select "Yes" from "additives_present"
-    And I select "Yes" from "cc_present"
-    And I select "Yes" from "aux_water"
-    And I submit "hazard" form
-    Then I should be at "hazard_detail" page with pk "5"
-    And I should see "hazard adding success" message
+      | field              | value    |
+      | hazard-0-location1 | backyard |
+    And I select "Ice Maker" from "hazard-0-hazard_type"
+    And I select "Yes" from "hazard-0-pump_present"
+    And I select "Yes" from "hazard-0-additives_present"
+    And I select "Yes" from "hazard-0-cc_present"
+    And I select "Yes" from "hazard-0-aux_water"
+    And I submit hazard adding form
+    And I submit survey form
+    Then I directly open "hazard_detail" page with pk "5"
     And I should see following
       | text              |
       | backyard          |
@@ -52,10 +30,11 @@ Feature: Hazard Add
 
   Scenario: Incorrect hazard adding
     Given I logged in as "root"
-    When I directly open "hazard_add" page for site with pk "5" and service "fire"
-    And I submit "hazard" form
-    Then I should be at "hazard_add" page for survey with pk "5" and service "fire"
-    And I should see "hazard adding error" message
+    And I open "survey_add" page for site with pk "5" and service "fire"
+    And I choose today in "survey-survey_date"
+    And I select "surveyor" from "survey-surveyor"
+    And I click "add_hazard" link
+    When I submit hazard adding form
     And I should see following validation error messages on following fields
-      | field       | error_message          |
-      | hazard_type | This field is required |
+      | field                | error_message          |
+      | hazard-0-hazard_type | This field is required |

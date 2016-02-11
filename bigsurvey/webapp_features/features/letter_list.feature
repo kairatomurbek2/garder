@@ -79,7 +79,6 @@ Feature: Letter List
     And I should not see following
       | text                  |
       | amanda_j@hotmail.com  |
-      | NUI812                |
       | PWS2                  |
 
   @keep_db
@@ -101,5 +100,4 @@ Feature: Letter List
     And I should not see following
       | text                  |
       | amanda_j@hotmail.com  |
-      | NUI812                |
       | PWS2                  |

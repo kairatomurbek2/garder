@@ -1,17 +1,20 @@
 @bp_device
 Feature: BPDevice adding/editing
-  
+
   Scenario: Surveyor adds bp-device while adding hazard
     Given I logged in as "surveyor"
-    And I directly open "hazard_add" page for site with pk "10" and service "potable"
-    When I select "Installed" from "assembly_status"
-    And I select "Aspirator" from "hazard_type"
-    And I select "AVB" from "bp-bp_type_present"
-    And I submit "hazard" form
-    Then I should be at "hazard_detail" page with pk "5"
+    And I open "survey_add" page for site with pk "10" and service "potable"
+    And I choose today in "survey-survey_date"
+    And I select "surveyor" from "survey-surveyor"
+    And I click "add_hazard" link
+    When I select "Installed" from "hazard-0-assembly_status"
+    And I select "Aspirator" from "hazard-0-hazard_type"
+    And I select "AVB" from "bp-0-bp_type_present"
+    And I submit hazard adding form
+    And I submit survey form
+    Then I directly open "hazard_detail" page with pk "5"
     Then I should see following
     | text                          |
-    | Hazard was successfully added |
     | Hazard Info                   |
     | Aspirator                     |
     | BP-Device Info                |
@@ -21,7 +24,7 @@ Feature: BPDevice adding/editing
     Given I logged in as "surveyor"
     And I directly open "hazard_edit" page with pk "2"
     When I select "Due Install" from "assembly_status"
-    And I submit "hazard" form
+    And I submit hazard adding form
     Then I should be at "hazard_detail" page with pk "2"
     Then I should see following
     | text                            |

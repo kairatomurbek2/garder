@@ -22,11 +22,6 @@ def open_hazard_detail_page(step, pk):
     step.given('I click "hazard_%s_detail" link' % pk)
 
 
-@step('I directly open "hazard_add" page for site with pk "(\d+)" and service "([a-z]+)"')
-def directly_open_hazard_add_page_for_site(step, survey_pk, service_name):
-    step.given('I open "%s"' % get_url(Urls.hazard_add % (survey_pk, service_name)))
-
-
 @step('I open "hazard_add" page for site with pk "(\d+)" and service "([a-z]+)"')
 def open_hazard_add_page_for_site(step, survey_pk, service_name):
     step.given('I open "site_detail" page with pk "%s"' % survey_pk)

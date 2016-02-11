@@ -1,12 +1,13 @@
-import os
 import time
 
-from django.conf import settings
-from lettuce import step, world
+import datetime
 
 import helper
-from webapp_features.features.data import get_url, Xpath
+import os
+from django.conf import settings
+from lettuce import step, world
 from webapp_features.features.data import Urls
+from webapp_features.features.data import get_url, Xpath
 
 
 @step('I open "(http.*)"')
@@ -56,6 +57,13 @@ def check_multiple_text_doesnt_exist(step):
         step.given('I should not see "%s"' % row['text'])
 
 
+@step('I choose today in "([-_a-z0-9]+)"')
+def choose_today(step, field_name):
+    today = datetime.datetime.today()
+    today_as_string = today.strftime('%Y-%m-%d')
+    step.given('I fill in "%s" with "%s"' % (field_name, today_as_string))
+
+
 @step('I fill in "([-_a-z0-9]+)" with "(.*)"')
 def fill_in_textfield(step, field_name, value):
     field = helper.find(Xpath.Pattern.input % field_name) or \
@@ -97,6 +105,17 @@ def submit_form(step, form_name):
     form.submit()
 
 
+@step('I submit survey form$')
+def submit_survey_form(step):
+    submit_btn = helper.find(Xpath.Pattern.survey_form_submit_btn)
+    submit_btn.click()
+
+
+@step('I submit hazard adding form')
+def submit_hazard_adding_form(step):
+    submit_btn = helper.find(Xpath.Pattern.hazard_addition_submit_btn)
+    submit_btn.click()
+
 @step('I should see "(.*)" validation error message on field "([-_a-z0-9]+)"')
 def check_error_message(step, error_message, field_name):
     field = helper.find(Xpath.Pattern.input % field_name) or \
@@ -104,7 +123,8 @@ def check_error_message(step, error_message, field_name):
             helper.find(Xpath.Pattern.select % field_name)
     helper.check_element_exists(field, 'Field "%s" was not found' % field_name)
     error = helper.find(Xpath.Pattern.validation_error_by_exact_text % error_message, field) or \
-            helper.find(Xpath.Pattern.validation_error_by_substr % error_message, field)
+            helper.find(Xpath.Pattern.validation_error_by_substr % error_message, field) or \
+            helper.find(Xpath.Pattern.custom_validation_error_on_survey_form % error_message)
     helper.check_element_exists(error, 'Field "%s" does not contain "%s" validation error message' % (field_name, error_message))
 
 
@@ -171,6 +191,13 @@ def choose_value_from_radiobutton(step, value, radiobutton_name):
 def check_value_from_checkbox(step, value, checkbox_name):
     checkbox = helper.find(Xpath.Pattern.checkbox_by_value % (checkbox_name, value))
     helper.check_element_exists(checkbox, 'Checkbox "%s" with value "%s" was not found' % (checkbox_name, value))
+    checkbox.click()
+
+
+@step('I check hazard "([^"]*)"$')
+def check_hazard(step, hazard_name):
+    checkbox = helper.find(Xpath.Pattern.survey_hazard % hazard_name)
+    helper.check_element_exists(checkbox, 'Checkbox with text "%s" was not found' % (hazard_name))
     checkbox.click()
 
 

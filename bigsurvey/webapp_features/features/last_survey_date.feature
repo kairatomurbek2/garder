@@ -15,10 +15,10 @@ Feature: Last survey date
   Scenario: I add survey with newer date
     Given I logged in as "root"
     When I open "survey_add" page for site with pk "10" and service "potable"
-    And I fill in "survey_date" with "2015-01-27"
-    And I select "surveyor" from "surveyor"
-    And I select "Trailer Park" from "hazards"
-    And I submit "survey" form
+    And I fill in "survey-survey_date" with "2015-01-27"
+    And I select "surveyor" from "survey-surveyor"
+    And I check hazard "Trailer Park"
+    And I submit survey form
     And I open "site_detail" page with pk "10"
     Then I should see following
       | text          |
@@ -27,10 +27,10 @@ Feature: Last survey date
   Scenario: I add survey with older date
     Given I logged in as "root"
     When I open "survey_add" page for site with pk "10" and service "potable"
-    And I fill in "survey_date" with "2015-01-24"
-    And I select "surveyor" from "surveyor"
-    And I select "Trailer Park" from "hazards"
-    And I submit "survey" form
+    And I fill in "survey-survey_date" with "2015-01-24"
+    And I select "surveyor" from "survey-surveyor"
+    And I check hazard "Trailer Park"
+    And I submit survey form
     And I open "site_list" page
     Then I should see following
       | text          |
@@ -42,8 +42,8 @@ Feature: Last survey date
   Scenario: I edit survey and set date
     Given I logged in as "root"
     When I open "survey_edit" page with pk "2"
-    And I fill in "survey_date" with "2015-01-24"
-    And I submit "survey" form
+    And I fill in "survey-survey_date" with "2015-01-24"
+    And I submit survey form
     And I open "site_detail" page with pk "10"
     Then I should see following
       | text          |

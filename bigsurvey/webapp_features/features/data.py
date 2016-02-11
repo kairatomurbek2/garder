@@ -24,7 +24,6 @@ class Urls:
     survey_edit = '/survey/%s/edit/'
     survey_add = '/site/%s/%s/add-survey/'
     hazard_detail = '/hazard/%s/'
-    hazard_add = '/site/%s/%s/add-hazard/'
     hazard_edit = '/hazard/%s/edit/'
     bp_device_add = '/hazard/%s/install-bp/'
     test_add = '/bp-device/%s/add-test/'
@@ -98,6 +97,9 @@ class Logins:
 class Xpath:
     class Pattern:
         # Common
+        survey_hazard = './/label[contains(., "%s")]/input'
+        custom_validation_error_on_survey_form = './/../p[@class="errorlist"][contains(., "%s")]'
+        survey_form_submit_btn = './/button[@id="survey-form-submit-btn"]'
         form = './/form[@name="%s"]'
         form_by_id = './/form[@id="%s"]'
         table = './/table[@id="%s"]'
@@ -117,6 +119,7 @@ class Xpath:
         link_by_href = './/a[@href="%s"]'
         link_by_exact_text = './/a[. = "%s"]'
         link_by_substr = './/a[contains(., "%s")]'
+        hazard_addition_submit_btn = './/button[@id="hazard-submit-button-0"]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'
