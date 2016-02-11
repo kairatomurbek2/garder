@@ -11,14 +11,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if perms.webapp.access_to_all_surveys or perms.webapp.access_to_multiple_pws_surveys %}
                 <tr class="uk-text-center">
                     <td>
                         {{ survey_filter.form.pws.label }}
                         {{ survey_filter.form.pws|add_class:"uk-width-1-1" }}
                     </td>
                 </tr>
-                {% endif %}
                 <tr class="uk-text-center">
                     <td>
                         {{ survey_filter.form.customer.label }}

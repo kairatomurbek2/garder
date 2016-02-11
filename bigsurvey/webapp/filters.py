@@ -653,7 +653,7 @@ class SiteFilter(django_filters.FilterSet):
 
         super(SiteFilter, self).__init__(*args, **kwargs)
         if user and not user.is_superuser:
-            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.filter(is_active=True)]
             self.filters['pws'].field.choices = choices
 
 
@@ -673,7 +673,7 @@ class SurveyFilter(django_filters.FilterSet):
 
         super(SurveyFilter, self).__init__(*args, **kwargs)
         if user and not user.is_superuser:
-            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.filter(is_active=True)]
             self.filters['pws'].field.choices = choices
 
 
@@ -699,7 +699,7 @@ class TestFilter(django_filters.FilterSet):
 
         super(TestFilter, self).__init__(*args, **kwargs)
         if user and not user.is_superuser:
-            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.filter(is_active=True)]
             self.filters['pws'].field.choices = choices
 
 
@@ -728,7 +728,7 @@ class HazardFilter(django_filters.FilterSet):
 
         super(HazardFilter, self).__init__(*args, **kwargs)
         if user and not user.is_superuser:
-            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.filter(is_active=True)]
             self.filters['pws'].field.choices = choices
 
 
@@ -746,7 +746,7 @@ class TesterFilter(django_filters.FilterSet):
 
         super(TesterFilter, self).__init__(*args, **kwargs)
         if user and not user.is_superuser:
-            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.filter(is_active=True)]
             self.filters['pws'].field.choices = choices
 
 
@@ -775,5 +775,5 @@ class LetterFilter(django_filters.FilterSet):
 
         super(LetterFilter, self).__init__(*args, **kwargs)
         if user and not user.is_superuser:
-            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.all()]
+            choices = [('', 'All')] + [(pws.pk, pws) for pws in user.employee.pws.filter(is_active=True)]
             self.filters['pws'].field.choices = choices

@@ -11,14 +11,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% if perms.webapp.full_letter_access or perms.webapp.multiple_pws_letter_access %}
                     <tr class="uk-text-center">
                         <td>
                             {{ letter_filter.form.pws.label }}
                             {{ letter_filter.form.pws|add_class:"uk-width-1-1" }}
                         </td>
                     </tr>
-                {% endif %}
                 <tr class="uk-text-center">
                     <td>
                         {{ letter_filter.form.bp_type_present.label }}
