@@ -1,18 +1,18 @@
 from ast import literal_eval
-from captcha.fields import ReCaptchaField
-from django.core.validators import RegexValidator
 
 import models
 import re
+from captcha.fields import ReCaptchaField
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES_FILTER, STATES
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES
 from webapp.validators import validate_excel_file
 
 
@@ -52,7 +52,7 @@ class SurveyForm(forms.ModelForm):
     surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
                                       empty_label=None)
     hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all(), required=False,
-                                             widget=forms.CheckboxSelectMultiple())
+                                             widget=forms.CheckboxSelectMultiple(attrs={"checked":""}))
 
     class Meta:
         model = models.Survey
