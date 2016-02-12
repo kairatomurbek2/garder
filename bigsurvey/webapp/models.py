@@ -1064,3 +1064,4 @@ class DemoTrial(models.Model):
 
 reversion.register(DemoTrial)
 
+import signals
