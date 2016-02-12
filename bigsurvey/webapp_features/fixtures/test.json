@@ -6131,9 +6131,20 @@
     "fields": {
       "price": "1.00",
       "start_date": "2016-01-01",
-      "end_date": null
+      "end_date": null,
+      "price_type": "test_price"
     },
     "model": "webapp.pricehistory",
     "pk": 1
+  },
+  {
+    "fields": {
+      "price": "50.00",
+      "start_date": "2016-01-01",
+      "end_date": null,
+      "price_type": "demo_trial_price"
+    },
+    "model": "webapp.pricehistory",
+    "pk": 2
   }
 ]

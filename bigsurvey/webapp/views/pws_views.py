@@ -213,7 +213,7 @@ class DemoTrialPayPaypalView(BaseView):
         return redirect('webapp:home')
 
     def post(self, request, *args, **kwargs):
-        price_obj = models.PriceHistory.objects.filter(price_type=DEMO_TRIAL_PRICE).order_by('start_date')[1]
+        price_obj = models.PriceHistory.objects.filter(price_type=DEMO_TRIAL_PRICE).order_by('start_date')[0]
         demo_trial_price = price_obj.price
         payment = self.get_payment(demo_trial_price)
         if payment.create():

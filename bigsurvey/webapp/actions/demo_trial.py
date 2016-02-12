@@ -88,7 +88,7 @@ class IsEmployeeInTrialPeriod(object):
         :type user: User
         :return:
         """
-        if user.is_superuser or user.groups.filter(name=Groups.ad_auth):
+        if user.is_superuser or user.groups.filter(name=Groups.ad_auth) or user.groups.filter(name=Groups.superadmin):
             return False
         if user.groups.filter(name=Groups.pws_owner).count():  # this is pws owner and did not pay
             if not user.employee.has_paid:
