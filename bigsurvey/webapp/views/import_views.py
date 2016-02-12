@@ -198,7 +198,7 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
             return self.render_to_response(self.get_context_data())
 
     def _try_to_import(self, mappings):
-        pws = models.PWS.objects.get(pk=self.request.session.get('import_pws_pk'))
+        pws = models.PWS.active_only.get(pk=self.request.session.get('import_pws_pk'))
         date_format = self.request.session.get('import_date_format')
         self.excel_parser.check_constraints(mappings, date_format)
         import_log = models.ImportLog.objects.create(user=self.request.user, pws=pws)

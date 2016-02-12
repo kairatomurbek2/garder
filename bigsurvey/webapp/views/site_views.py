@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.views.generic import FormView, CreateView, UpdateView
 from main.parameters import SITE_STATUS, BP_TYPE, Messages
 from webapp import filters, models, forms, perm_checkers
+from webapp.actions.demo_trial import IsEmployeeInTrialPeriod
 from webapp.models import NoSearchFieldIndicated, NoBpDeviceFoundWithSuchSerialNo
 from webapp.utils.excel_writer.excel_writer import XLSExporter
 from .base_views import BaseTemplateView, BaseFormView
@@ -46,16 +47,15 @@ class HomeView(BaseTemplateView):
         return response
 
     def _get_sites(self):
-        sites = models.Site.objects.none()
+        sites = models.Site.active_only.none()
         if self.request.user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.objects.filter(pws__in=self.request.user.employee.pws.all())
+            sites = models.Site.active_only.filter(pws__in=self.request.user.employee.pws.all())
         if self.request.user.has_perm('webapp.access_to_all_sites'):
-            sites = models.Site.objects.all()
+            sites = models.Site.active_only.all()
         return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
 
     def _user_is_in_demo_trial(self):
-        return self.request.session.get('demo_days_left', None)
-
+        return IsEmployeeInTrialPeriod.check(self.request.user)
 
 class TesterHomeView(BaseTemplateView, FormView):
     template_name = 'tester_home.html'
@@ -94,7 +94,7 @@ class SiteDetailView(BaseTemplateView):
     permission = 'webapp.browse_site'
 
     def get_context_data(self, **kwargs):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        site = models.Site.active_only.get(pk=self.kwargs['pk'])
         if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
         context = super(SiteDetailView, self).get_context_data(**kwargs)
@@ -166,11 +166,11 @@ class BatchUpdateView(BaseTemplateView):
 
     @staticmethod
     def _get_sites(user):
-        sites = models.Site.objects.none()
+        sites = models.Site.active_only.none()
         if user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.objects.filter(pws__in=user.employee.pws.all())
+            sites = models.Site.active_only.filter(pws__in=user.employee.pws.all())
         if user.has_perm('webapp.access_to_all_sites'):
-            sites = models.Site.objects.all()
+            sites = models.Site.active_only.all()
         return sites
 
     def _get_site_filter(self, queryset):
@@ -207,13 +207,13 @@ class BatchUpdateView(BaseTemplateView):
             self._batch_update_hazards(date, site_pks)
 
     def _batch_update_sites(self, date, site_pks):
-        models.Site.objects.filter(pk__in=site_pks).update(next_survey_date=date)
+        models.Site.active_only.filter(pk__in=site_pks).update(next_survey_date=date)
 
     def _batch_update_hazards(self, date, site_pks):
-        models.Site.objects.filter(pk__in=site_pks).update(due_install_test_date=date)
+        models.Site.active_only.filter(pk__in=site_pks).update(due_install_test_date=date)
 
     def _batch_update_survey(self, date, site_pks):
-        models.Site.objects.filter(pk__in=site_pks).update(last_survey_date=date)
+        models.Site.active_only.filter(pk__in=site_pks).update(last_survey_date=date)
 
     def get_success_url(self):
         return reverse('webapp:batch_update')

@@ -11,6 +11,7 @@ from paypalrestsdk.exceptions import ConnectionError
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils.translation import ungettext as __
+from webapp.actions.demo_trial import IsEmployeeInTrialPeriod
 from webapp.exceptions import PaymentWasNotCreatedError, PaymentTotalSumIsNull
 from django.conf import settings
 from webapp.responses import PDFResponse
@@ -56,7 +57,7 @@ class TestListView(BaseTemplateView):
         return PDFResponse(filename, pdf_content)
 
     def _user_is_in_demo_trial(self):
-        return self.request.session.get('demo_days_left', None)
+        return IsEmployeeInTrialPeriod.check(self.request.user)
 
 
 class TestDetailView(BaseTemplateView):
@@ -257,7 +258,7 @@ class TestAddView(TestBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         form.instance.user = self.request.user
-        price = models.TestPriceHistory.current().price
+        price = models.PriceHistory.current_for_test().price
         form.instance.price = price
         if price < 0.01:
             form.instance.paid = True

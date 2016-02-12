@@ -357,6 +357,19 @@ class HazardDegree(models.Model):
 reversion.register(HazardDegree)
 
 
+class ActivePwsManager(models.Manager):
+    use_for_related_fields = True
+
+    def get_queryset(self):
+        return super(ActivePwsManager, self).get_queryset().filter(pws__is_active=True)
+
+
+class ActiveUsersManager(models.Manager):
+    use_for_related_fields = True
+
+    def get_queryset(self):
+        return super(ActiveUsersManager, self).get_queryset().filter(is_active=True)
+
 class PWS(models.Model):
     number = models.CharField(max_length=15, verbose_name=_("Number"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -380,6 +393,8 @@ class PWS(models.Model):
     letter_right_header_block = RichTextField(blank=True, verbose_name=_('Letter Right Header block'))
     is_active = models.BooleanField(default=True, verbose_name=_('PWS is active'))
     county = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("County"))
+    objects = models.Manager()
+    active_only = ActiveUsersManager()
 
     def __unicode__(self):
         return u"%s, %s" % (self.number, self.name)
@@ -428,7 +443,7 @@ reversion.register(LetterType)
 
 
 class Employee(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='employee')
     address = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Address"))
     city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("City"))
     state = models.CharField(max_length=2, blank=True, null=True, choices=STATES, verbose_name=_("State"))
@@ -561,6 +576,8 @@ class Site(models.Model):
     contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Fax"))
     contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Customer Email"))
     due_install_test_date = models.DateField(blank=True, null=True, verbose_name=_("Due Test Date"))
+    objects = models.Manager()
+    active_only = ActivePwsManager()
 
     def __unicode__(self):
         return u"%s %s, %s %s" % (self.street_number or '', self.address1, self.city, self.zip or '')
@@ -596,7 +613,7 @@ class Site(models.Model):
             return [bp_device.hazard.site]
         else:
             raise NoSearchFieldIndicated()
-        return Site.objects.filter(*lookups)
+        return Site.active_only.filter(*lookups)
 
     def get_absolute_url(self):
         return reverse('webapp:site_detail', args=(self.pk,))
@@ -795,26 +812,31 @@ class Survey(models.Model):
 reversion.register(Survey)
 
 
-class TestPriceHistory(models.Model):
+class PriceHistory(models.Model):
     price = models.DecimalField(default=Decimal(5), max_digits=7, decimal_places=2, verbose_name=_('Price'))
     start_date = models.DateField(auto_now_add=True, verbose_name=_('Start Date'))
     end_date = models.DateField(null=True, blank=True, verbose_name=_('Price end date'), editable=False)
+    price_type = models.CharField(max_length=50, choices=PRICE_TYPE, default=DEMO_TRIAL_PRICE)
 
     class Meta:
-        verbose_name = _("Test Price")
-        verbose_name_plural = _("Test Price History")
+        verbose_name = _("Price")
+        verbose_name_plural = _("Price History")
         permissions = (
-            ('setup_test_price', _('Can set up price per Test')),
+            ('setup_test_price', _('Can set up price')),
         )
 
     def __unicode__(self):
         return u"%s" % self.price
 
     @classmethod
-    def current(cls):
-        return cls.objects.filter(end_date=None).order_by('-start_date').first()
+    def current_for_test(cls):
+        return cls.objects.filter(end_date=None, price_type=TEST_PRICE).order_by('-start_date').first()
 
-reversion.register(TestPriceHistory)
+    @classmethod
+    def current_for_demo(cls):
+        return cls.objects.filter(end_date=None, price_type=DEMO_TRIAL_PRICE).order_by('-start_date').first()
+
+reversion.register(PriceHistory)
 
 
 class Test(models.Model):

@@ -107,12 +107,12 @@ class UserBaseFormView(BaseFormView):
         return queryset
 
     def _get_queryset_for_pws_field(self):
-        queryset = models.PWS.objects.none()
+        queryset = models.PWS.active_only.none()
         if self.request.user.has_perm('webapp.access_to_pws_users'):
             if self.request.user.employee.pws.all():
                 queryset = self.request.user.employee.pws.all()
         if self.request.user.has_perm('webapp.access_to_all_users'):
-            queryset = models.PWS.objects.all()
+            queryset = models.PWS.active_only.all()
         return queryset
 
     def get_success_url(self):

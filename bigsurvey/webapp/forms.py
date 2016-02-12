@@ -30,7 +30,7 @@ class PWSFormForAdmin(forms.ModelForm):
 
 
 class SiteForm(forms.ModelForm):
-    pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), empty_label=None)
+    pws = forms.ModelChoiceField(queryset=models.PWS.active_only.all(), empty_label=None)
 
     def __init__(self, *args, **kwargs):
         super(SiteForm, self).__init__(*args, **kwargs)
@@ -309,7 +309,7 @@ class TestForm(forms.ModelForm):
 
 
 class EmployeeForm(forms.ModelForm):
-    pws = forms.ModelMultipleChoiceField(models.PWS.objects.all(), required=True, label=_('PWS'))
+    pws = forms.ModelMultipleChoiceField(models.PWS.active_only.all(), required=True, label=_('PWS'))
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', False)
@@ -435,7 +435,7 @@ class LetterForm(forms.ModelForm):
 
 
 class TesterSiteSearchForm(forms.Form):
-    pws = forms.ModelChoiceField(queryset=models.PWS.objects.all(), required=True)
+    pws = forms.ModelChoiceField(queryset=models.PWS.active_only.all(), required=True)
     address = forms.CharField(label=_('Street number and address'), required=False)
     cust_number = forms.CharField(label=_('Customer number'), required=False)
     meter_number = forms.CharField(label=_('Meter number'), required=False)
@@ -592,12 +592,12 @@ class UserSearchForm(forms.Form):
 
 
 class UserInviteForm(forms.Form):
-    pws = forms.ModelMultipleChoiceField(queryset=models.PWS.objects.none(), required=True)
+    pws = forms.ModelMultipleChoiceField(queryset=models.PWS.active_only.none(), required=True)
     user = forms.ModelChoiceField(queryset=models.User.objects.all(), required=True)
     prefix = 'invite'
 
     def __init__(self, *args, **kwargs):
-        pws_queryset = kwargs.pop('pws_queryset', models.PWS.objects.none())
+        pws_queryset = kwargs.pop('pws_queryset', models.PWS.active_only.none())
         users = kwargs.pop('users', models.User.objects.none())
         super(UserInviteForm, self).__init__(*args, **kwargs)
         self.fields['pws'].queryset = pws_queryset
@@ -659,16 +659,17 @@ class EmailValidationOnForgotPassword(PasswordResetForm):
 
 class TestPriceForm(forms.ModelForm):
     class Meta:
-        model = models.TestPriceHistory
+        model = models.PriceHistory
         fields = ['price']
 
     def clean_price(self):
         price = self.cleaned_data['price']
-        current_price = models.TestPriceHistory.current()
+        current_price = models.PriceHistory.current_for_test()
         if price < 0:
             self.add_error('price', _('Price per Test can not be lower than 0'))
-        if price == current_price.price:
-            self.add_error('price', _('New Price can not be the same as the current Price'))
+        if current_price:
+            if price == current_price.price:
+                self.add_error('price', _('New Price can not be the same as the current Price'))
         return price
 
 

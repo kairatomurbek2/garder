@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View, FormView, TemplateView, CreateView
 from django.contrib import messages
 from django.http import Http404, HttpResponseRedirect, HttpResponse
-from main.parameters import Messages
+from main.parameters import Messages, TEST_PRICE
 from webapp import models
 from webapp import forms
 from django.utils.translation import ugettext as _
@@ -83,28 +83,33 @@ class HelpView(BaseTemplateView):
 
 class TestPriceSetupView(BaseFormView, CreateView):
     template_name = 'price_setup.html'
-    model = models.TestPriceHistory
+    model = models.PriceHistory
     form_class = forms.TestPriceForm
     permission = 'webapp.setup_test_price'
     success_url = reverse_lazy('webapp:test_price')
 
     def get_context_data(self, **kwargs):
         context = super(TestPriceSetupView, self).get_context_data(**kwargs)
-        active_price = models.TestPriceHistory.current()
+        active_price = models.PriceHistory.current_for_test()
         context['active_price'] = active_price
-        context['old_prices'] = models.TestPriceHistory.objects.exclude(pk=active_price.pk).order_by('-start_date')
+        if active_price:
+            context['old_prices'] = models.PriceHistory.objects.filter(
+                price_type=TEST_PRICE
+            ).exclude(pk=active_price.pk).order_by('-start_date')
         return context
 
     def form_valid(self, form):
-        current_price = models.TestPriceHistory.current()
+        current_price = models.PriceHistory.current_for_test()
         if current_price:
             current_date = datetime.now().date()
             if current_date == current_price.start_date:
                 current_price.price = form.cleaned_data['price']
             else:
+                form.instance.price_type = TEST_PRICE
                 self.object = form.save()
                 current_price.end_date = self.object.start_date
             current_price.save()
         else:
+            form.instance.price_type = TEST_PRICE
             self.object = form.save()
         return HttpResponseRedirect(self.success_url)

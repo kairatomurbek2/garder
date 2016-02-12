@@ -127,7 +127,7 @@ class HazardBaseFormView(BaseFormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def _get_queryset_for_letter_type_field(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        site = models.Site.active_only.get(pk=self.kwargs['pk'])
         queryset = models.LetterType.objects.filter(pws=site.pws)
         return queryset
 

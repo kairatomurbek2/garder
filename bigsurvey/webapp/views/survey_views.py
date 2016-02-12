@@ -107,7 +107,7 @@ class SurveyBaseFormView(BaseFormView):
             site = survey.site
             service_type = survey.service_type
         except AttributeError:
-            site = models.Site.objects.get(pk=self.kwargs['pk'])
+            site = models.Site.active_only.get(pk=self.kwargs['pk'])
             service_type = models.ServiceType.objects.get(service_type=self.kwargs['service'])
         return site.hazards.filter(service_type=service_type)
 
@@ -125,7 +125,7 @@ class SurveyBaseFormView(BaseFormView):
         return queryset
 
     def _get_queryset_for_letter_type_field(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        site = models.Site.active_only.get(pk=self.kwargs['pk'])
         queryset = models.LetterType.objects.filter(pws=site.pws)
         return queryset
 
@@ -255,7 +255,7 @@ class SurveyAddView(SurveyBaseFormView):
         self._update_is_present(site, survey_form.instance)
 
     def get_site(self):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        site = models.Site.active_only.get(pk=self.kwargs['pk'])
         if not perm_checkers.SitePermChecker.has_perm(self.request, site):
             raise Http404
         return site

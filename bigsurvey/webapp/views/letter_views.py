@@ -98,7 +98,7 @@ class LetterAddView(LetterBaseFormView, CreateView):
     error_message = Messages.Letter.adding_error
 
     def get_form(self, form_class):
-        site = models.Site.objects.get(pk=self.kwargs['pk'])
+        site = models.Site.active_only.get(pk=self.kwargs['pk'])
         if perm_checkers.SitePermChecker.has_perm(self.request, site):
             form = super(LetterAddView, self).get_form(form_class)
             form.fields['hazard'].queryset = site.hazards.filter(is_present=True)
@@ -108,11 +108,11 @@ class LetterAddView(LetterBaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(LetterAddView, self).get_context_data(**kwargs)
-        context['site'] = models.Site.objects.get(pk=self.kwargs['pk'])
+        context['site'] = models.Site.active_only.get(pk=self.kwargs['pk'])
         return context
 
     def form_valid(self, form):
-        form.instance.site = models.Site.objects.get(pk=self.kwargs['pk'])
+        form.instance.site = models.Site.active_only.get(pk=self.kwargs['pk'])
         return super(LetterAddView, self).form_valid(form)
 
 
