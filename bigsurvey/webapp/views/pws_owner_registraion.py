@@ -4,7 +4,7 @@ from django.core.mail.message import EmailMultiAlternatives
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext, loader
 from django.views.generic import FormView, View
-from main.parameters import PWSRegistrationEmail, Messages
+from main.parameters import PWSRegistrationEmail, Messages, Groups
 import os
 from webapp import models
 from webapp.actions.builders import SampleSitesJsonUploaderBuilder
@@ -78,7 +78,7 @@ class PwsOwnerRegistrationView(FormView):
         password = user_form.cleaned_data['password1']
         user = user_form.save()
         user.set_password(password)
-        user.groups.add(Group.objects.get(name='PWSOwners'))
+        user.groups.add(Group.objects.get(name=Groups.pws_owner))
         employee = models.Employee.objects.create(address=address, city=city, state=state, zip=zip, phone1=phone1,
                                                   user=user)
         employee.pws.add(pws)

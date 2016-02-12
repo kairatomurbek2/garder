@@ -1,14 +1,18 @@
+from decimal import Decimal
+from django.conf import settings
 from .base_views import BaseTemplateView, BaseFormView, BaseView
-from django.http import Http404
+from django.contrib import messages
+from django.http import Http404, JsonResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 import paypalrestsdk
 from webapp import models, forms
-from main.parameters import Messages, BP_TYPE, LetterTypes, BPLocations
+from main.parameters import Messages, BP_TYPE, LetterTypes, BPLocations, Groups, DEMO_TRIAL_PRICE
 from django.views.generic import UpdateView, CreateView
 from django.utils.translation import ugettext as _
 from datetime import date
 from webapp.actions.demo_trial import PayAndActivate
+from webapp.exceptions import PaymentWasNotCreatedError, PaymentTotalSumIsNull
 
 
 class PWSListView(BaseTemplateView):
@@ -18,7 +22,7 @@ class PWSListView(BaseTemplateView):
         user = self.request.user
         context = super(PWSListView, self).get_context_data(**kwargs)
         if user.has_perm('webapp.browse_all_pws'):
-            pws_list = models.PWS.objects.all()
+            pws_list = models.PWS.active_only.all()
         elif user.has_perm('webapp.own_multiple_pws'):
             pws_list = user.employee.pws.all()
         else:
@@ -33,7 +37,7 @@ class PWSDetailView(BaseTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(PWSDetailView, self).get_context_data(**kwargs)
-        pws = models.PWS.objects.get(pk=self.kwargs['pk'])
+        pws = models.PWS.active_only.get(pk=self.kwargs['pk'])
         user = self.request.user
         if not user.is_superuser and user.has_perm('webapp.change_own_pws') and pws not in user.employee.pws.all():
             raise Http404
@@ -175,29 +179,89 @@ class ActivateBlockedPWS(BaseTemplateView):
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(ActivateBlockedPWS, self).get_context_data(**kwargs)
-        context['user'] = user
+        if not user.employee.has_paid and user.groups.filter(name=Groups.pws_owner).count():
+            context['user'] = user
+            context['can_pay'] = True
+            return context
+        context['can_pay'] = False
         return context
 
-    def post(self, request, *args, **kwargs):
-        pws_list = self.request.user.employee.pws.all()
-        for pws in pws_list:
-            PayAndActivate.pay_and_activate(pws, request)
+
+class DemoTrialPayPaypalView(BaseView):
+    SUCCESS = 'success'
+    CANCEL = 'cancel'
+
+    def get(self, request, *args, **kwargs):
+        action = self.request.GET['action']
+        if action == self.SUCCESS:
+            payment_id = self.request.GET['paymentId']
+            payer_id = self.request.GET['PayerID']
+            payment = paypalrestsdk.Payment.find(payment_id)
+            if payment.execute({'payer_id': payer_id}):
+                pws_list = self.request.user.employee.pws.all()
+                for pws in pws_list:
+                    PayAndActivate.pay_and_activate(pws, request)
+                messages.success(self.request,
+                                 (Messages.PWS.payment_successful_singular, Messages.PWS.payment_successful_plural))
+            else:
+                messages.error(self.request, Messages.PWS.payment_failed)
+        else:
+            messages.error(self.request, Messages.PWS.payment_cancelled)
+            return redirect('webapp:activate_blocked_pws')
         return redirect('webapp:home')
 
-#
-# class DemoDtialPayPAypalView(BaseView):
-#     SUCCESS = 'success'
-#     CANCEL = 'cancel'
-#
-#     def get(self, request, *args, **kwargs):
-#         action = self.request['action']
-#         if action == self.SUCCESS:
-#             payment_id = self.request.GET['paymentId']
-#             payer_id = self.request.GET['PayerID']
-#             payment = paypalrestsdk.Payment.find(payment_id)
-#             # if payment.execute({'payer_id': payer_id}):
-#             #     price_pks = self.request.GET['testpricehistory'].split(',')
-#             #     models.TestPriceHistory.objects.filter()
-#
-#     def post(self, request, *args, **kwargs):
-#         payment_form = forms
+    def post(self, request, *args, **kwargs):
+        price_obj = models.PriceHistory.objects.filter(price_type=DEMO_TRIAL_PRICE).order_by('start_date')[1]
+        demo_trial_price = price_obj.price
+        payment = self.get_payment(demo_trial_price)
+        if payment.create():
+            approval_url = self._get_approve_url(payment)
+            response = {'status': 'success', 'approval_url': approval_url,
+                        'total_amount': payment.transactions[0]['amount']['total']}
+        else:
+            raise PaymentWasNotCreatedError(payment.error)
+        return JsonResponse(response)
+
+    def _get_approve_url(self, payment):
+        for link in payment.links:
+            if link['rel'] == 'approval_url':
+                approval_url = link['href']
+        return approval_url
+
+    def get_payment(self, demo_trial_price):
+        total_amount = demo_trial_price
+        if total_amount.compare(Decimal(0)) == 0:
+            raise PaymentTotalSumIsNull()
+        items = [
+            {
+                "quantity": 1,
+                "name": "Payment for system usage",
+                "price": "%.2f" % demo_trial_price,
+                "currency": "USD"
+            }
+        ]
+
+        return paypalrestsdk.Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": "%s%s?action=%s" % (
+                    settings.HOST, reverse('webapp:demo_trial_paypal'), self.SUCCESS),
+                "cancel_url": "%s%s?action=%s" % (
+                    settings.HOST, reverse('webapp:demo_trial_paypal'), self.CANCEL)
+            },
+            "transactions": [
+                {
+                    "item_list": {
+                        "items": items
+                    },
+                    "amount": {
+                        "total": "%.2f" % total_amount,
+                        "currency": "USD"
+                    },
+                    "description": "Payment for demo trial"
+                }
+            ]
+        })

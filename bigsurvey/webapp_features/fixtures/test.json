@@ -3720,7 +3720,7 @@
       [
         "setup_test_price",
         "webapp",
-        "testpricehistory"
+        "pricehistory"
       ],
       [
         "browse_devices",
@@ -5918,7 +5918,8 @@
     "user": [
       "root"
     ],
-    "address": "root address"
+    "address": "root address",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 1
@@ -5936,7 +5937,8 @@
     "user": [
       "tester"
     ],
-    "address": "tester address"
+    "address": "tester address",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 2
@@ -5954,7 +5956,8 @@
     "user": [
       "surveyor"
     ],
-    "address": "surveyor address"
+    "address": "surveyor address",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 3
@@ -5972,7 +5975,8 @@
     "user": [
       "admin"
     ],
-    "address": "admin address"
+    "address": "admin address",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 4
@@ -5990,7 +5994,8 @@
     "user": [
       "superadmin"
     ],
-    "address": "superadmin address"
+    "address": "superadmin address",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 5
@@ -6008,7 +6013,8 @@
     "user": [
       "surveyor_without_pws"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 10
@@ -6026,7 +6032,8 @@
     "user": [
       "tester_without_pws"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 11
@@ -6044,7 +6051,8 @@
     "user": [
       "pws6user"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 12
@@ -6062,7 +6070,8 @@
     "user": [
       "owner"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 13
@@ -6080,7 +6089,8 @@
     "user": [
       "adauth"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 14
@@ -6123,7 +6133,7 @@
       "start_date": "2016-01-01",
       "end_date": null
     },
-    "model": "webapp.testpricehistory",
+    "model": "webapp.pricehistory",
     "pk": 1
   }
 ]

@@ -1,5 +1,9 @@
 from django.utils.translation import ugettext as _
 
+TEST_PRICE = "test_price"
+
+DEMO_TRIAL_PRICE = "demo_trial_price"
+
 
 class SERVICE_TYPE(object):
     POTABLE = "potable"
@@ -106,6 +110,10 @@ CLEANED_REPLACED_CHOICES = (
     ("1", _("Cleaned only")),
     ("2", _("Maintenance"))
 
+)
+PRICE_TYPE = (
+    (DEMO_TRIAL_PRICE, _("Demo Trial Price")),
+    (TEST_PRICE, _("Test Price"))
 )
 
 STATES = (
@@ -281,6 +289,10 @@ class Messages:
         adding_error = _('Error while submitting form')
         editing_success = _('PWS was successfully updated')
         editing_error = _('Error while submitting form')
+        payment_successful_singular = 'Payment was completed successfully.'
+        payment_successful_plural = 'Payment was completed successfully'
+        payment_failed = _('Some errors happened during the payment. Please try again later.')
+        payment_cancelled = _('You have cancelled payment. You can pay later.')
 
     class Survey:
         adding_success = _('Survey was successfully added')

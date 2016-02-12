@@ -1,6 +1,6 @@
 from datetime import datetime
 from lettuce import step
-from webapp.models import TestPriceHistory
+from webapp.models import PriceHistory
 from webapp_features.features.data import Urls, get_url
 
 
@@ -16,6 +16,6 @@ def direct_open_price_setup(step):
 
 @step('Current default price started today')
 def set_today_start_date_for_current_price(step):
-    price = TestPriceHistory.current()
+    price = PriceHistory.current_for_test()
     price.start_date = datetime.now().date()
     price.save()

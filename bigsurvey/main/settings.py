@@ -132,6 +132,7 @@ CAPTCHA_AJAX = True
 # Demo trial configuration
 DEMO_TRIAL_DAYS = 30
 PERIOD_DEMO_TRIAL = 10
+DEMO_TRIAL_PRICE = 50
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

@@ -451,7 +451,8 @@
       "user": [
         "root"
       ],
-      "address": "IT-Attractor"
+      "address": "IT-Attractor",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 1
@@ -468,7 +469,8 @@
       "user": [
         "dvillien"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 2
@@ -485,7 +487,8 @@
       "user": [
         "jjdahl"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 3
@@ -502,7 +505,8 @@
       "user": [
         "jlebas"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 4
@@ -519,7 +523,8 @@
       "user": [
         "knijoka"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 5
@@ -536,7 +541,8 @@
       "user": [
         "mlebas"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 6
@@ -553,7 +559,8 @@
       "user": [
         "ndecoteau"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 7
@@ -570,7 +577,8 @@
       "user": [
         "rleblanc"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 8
@@ -587,7 +595,8 @@
       "user": [
         "cdugas"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 9
@@ -604,7 +613,8 @@
       "user": [
         "dlouque"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 10
@@ -621,7 +631,8 @@
       "user": [
         "rdufrene"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 11
@@ -638,7 +649,8 @@
       "user": [
         "rmeyer"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 12
@@ -655,7 +667,8 @@
       "user": [
         "dmccann"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 13
@@ -672,7 +685,8 @@
       "user": [
         "mjacaruso"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 14
@@ -689,7 +703,8 @@
       "user": [
         "mvitale"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 15
@@ -706,7 +721,8 @@
       "user": [
         "ncarter"
       ],
-      "address": "USA"
+      "address": "USA",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 16
@@ -723,7 +739,8 @@
       "user": [
         "superadmin"
       ],
-      "address": "super address"
+      "address": "super address",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 17
@@ -740,7 +757,8 @@
       "user": [
         "admin"
       ],
-      "address": "admin address"
+      "address": "admin address",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 18
@@ -757,7 +775,8 @@
       "user": [
         "surveyor"
       ],
-      "address": "surveyor address"
+      "address": "surveyor address",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 19
@@ -774,7 +793,8 @@
       "user": [
         "tester"
       ],
-      "address": "tester address"
+      "address": "tester address",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 20
@@ -814,7 +834,8 @@
       "user": [
         "adauth"
       ],
-      "address": ""
+      "address": "",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 92
@@ -853,7 +874,8 @@
       "user": [
         "owner"
       ],
-      "address": "admin address"
+      "address": "admin address",
+      "has_paid": true
     },
     "model": "webapp.employee",
     "pk": 93
