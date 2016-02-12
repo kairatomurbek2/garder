@@ -1,7 +1,8 @@
 from django.utils import timezone
 from django.conf import settings
-from main.parameters import DemoTrialSessionKeys
+from main.parameters import DemoTrialSessionKeys, Groups
 from webapp.models import DemoTrial, Employee
+from django.contrib.auth.models import User
 
 
 class DaysDeltaCalculator(object):
@@ -24,7 +25,6 @@ class DemoTrialCreator(object):
 
 
 class DemoTrialBlockHelper(object):
-
     @staticmethod
     def block(pws):
         pws.is_active = False
@@ -78,3 +78,25 @@ class TrialPeriodChecker(object):
                         if pws.is_active:
                             DemoTrialBlockHelper.block(pws)
                     raise DemoTrialPeriodExpiredError()
+
+
+class IsEmployeeInTrialPeriod(object):
+    @staticmethod
+    def check(user):
+        """
+
+        :type user: User
+        :return:
+        """
+        if user.is_superuser:
+            return False
+        if user.groups.filter(name=Groups.pws_owner).count():  # this is pws owner and did not pay
+            if not user.employee.has_paid:
+                return True
+            return False
+        else:
+            pws = user.employee.get_pws_list()[0]
+            owner = pws.employees.filter(user__groups__name=Groups.pws_owner)[0]
+            if not owner.has_paid:
+                return True
+        return False
