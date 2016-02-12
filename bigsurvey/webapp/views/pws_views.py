@@ -61,6 +61,8 @@ class PWSAddView(PWSBaseFormView, CreateView):
 
     def form_valid(self, form):
         form_is_valid = super(PWSAddView, self).form_valid(form)
+        self.object.is_active = True
+        self.object.save()
         user = self.request.user
         if user.has_perm('webapp.own_multiple_pws'):
             user.employee.pws.add(self.object)
