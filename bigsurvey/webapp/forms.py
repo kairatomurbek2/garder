@@ -17,6 +17,7 @@ from webapp.validators import validate_excel_file
 
 
 class PWSForm(forms.ModelForm):
+    is_active = forms.CharField(widget=forms.HiddenInput(attrs={'readonly': 'readonly'}), required=False)
 
     class Meta:
         model = models.PWS
@@ -52,7 +53,7 @@ class SurveyForm(forms.ModelForm):
     surveyor = forms.ModelChoiceField(queryset=models.User.objects.filter(groups__name=Groups.surveyor),
                                       empty_label=None)
     hazards = forms.ModelMultipleChoiceField(queryset=models.Hazard.objects.all(), required=False,
-                                             widget=forms.CheckboxSelectMultiple(attrs={"checked":""}))
+                                             widget=forms.CheckboxSelectMultiple(attrs={"checked": ""}))
 
     class Meta:
         model = models.Survey
@@ -130,7 +131,8 @@ class TestForm(forms.ModelForm):
         cv1_retest_gauge_pressure = self.cleaned_data.get('cv1_retest_gauge_pressure')
         test_result = self.cleaned_data.get('test_result', False)
         if cv1_retest_gauge_pressure < 5 and self._cast_string_to_bool(test_result):
-            self.add_error('cv1_retest_gauge_pressure', ValidationError(Messages.Test.cv1_retest_gauge_pressure_value_should_be))
+            self.add_error('cv1_retest_gauge_pressure',
+                           ValidationError(Messages.Test.cv1_retest_gauge_pressure_value_should_be))
             self.add_error('test_result', ValidationError(Messages.Test.cv1_retest_gauge_pressure_value_should_be))
 
     def _clean_rv_psi2(self):
@@ -321,7 +323,6 @@ class EmployeeForm(forms.ModelForm):
 
 
 class EmployeeFormNoPWS(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', False)
         super(EmployeeFormNoPWS, self).__init__(*args, **kwargs)
@@ -452,9 +453,9 @@ class TesterSiteSearchForm(forms.Form):
 
         if len(address) == 0 and len(cust_number) == 0 and len(meter_number) == 0 and len(bp_device_serial_no) == 0:
             search_fields = "%s, %s, %s, %s" % (self.fields['address'].label,
-                                            self.fields['cust_number'].label,
-                                            self.fields['meter_number'].label,
-                                            self.fields['bp_device_serial_no'].label)
+                                                self.fields['cust_number'].label,
+                                                self.fields['meter_number'].label,
+                                                self.fields['bp_device_serial_no'].label)
             error_message = Messages.Site.search_error_fields_not_filled % search_fields
             self.add_error('address', ValidationError(error_message))
             self.add_error('cust_number', ValidationError(error_message))
@@ -477,7 +478,8 @@ class TesterSiteSearchForm(forms.Form):
 
 class LetterOptionsForm(forms.Form):
     attach_testers = forms.BooleanField(widget=forms.CheckboxInput, label=_('Attach testers list'), required=False)
-    attach_consultant_info = forms.BooleanField(widget=forms.CheckboxInput, label=_('Attach consultant info'), required=False)
+    attach_consultant_info = forms.BooleanField(widget=forms.CheckboxInput, label=_('Attach consultant info'),
+                                                required=False)
 
 
 class LetterSendForm(LetterOptionsForm):
@@ -648,7 +650,6 @@ class PasswordChangeWithMinLengthForm(PasswordChangeForm):
 
 
 class EmailValidationOnForgotPassword(PasswordResetForm):
-
     def clean_email(self):
         email = self.cleaned_data['email']
         if not User.objects.filter(email__iexact=email, is_active=True).exists():
@@ -682,6 +683,7 @@ class PWSOwnerRegistrationForm(forms.ModelForm):
     class Meta:
         model = models.PWS
         fields = ('number', 'name')
+
 
 class PWSUserAddForm(UserCreationForm):
     address = forms.CharField(max_length=50, required=True)
