@@ -3,8 +3,8 @@ set -e
 
 PROJECT_DIR=/home/bigsurvey/projects/bigsurvey
 DB_NAME=bigsurvey
-SQL_USER="root"
-SQL_PASS="root"
+SQL_USER="bigsurvey_user"
+SQL_PASS="B5S51fZtjWu8Nwa"
 
 cd ${PROJECT_DIR}
 BACKUP_NAME=`ls -t backups | head -n1`
