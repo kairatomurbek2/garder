@@ -28,7 +28,9 @@ class BackupsView(FormView):
                              settings.DATABASES['default']['PASSWORD']])
             return response
         elif "_latest" in self.request.POST:
-            subprocess.call(settings.RESTORE_BACKUP_SCRIPT)
+            subprocess.call([settings.RESTORE_BACKUP_SCRIPT, settings.DATABASES['default']['NAME'],
+                             settings.DATABASES['default']['USER'],
+                             settings.DATABASES['default']['PASSWORD']])
             return response
         elif "_upload" in self.request.POST:
             backup = self.request.FILES.get('upload_backup')
