@@ -741,7 +741,7 @@ class BackupForm(forms.Form):
                 try:
                     tar = tarfile.open(fileobj=backup_data, mode='r:gz')
                     tar_content = tar.getnames()
-                    if 'webapp' in tar_content:
+                    if 'bigsurvey' in tar_content:
                         matcher = re.compile("^bigsurvey_")
                         if any(matcher.match(name) for name in tar_content):
                             return True

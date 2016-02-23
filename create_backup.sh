@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR=/home/bigsurvey/projects/bigsurvey
-DB_NAME=bigsurvey
-SQL_USER="bigsurvey_user"
-SQL_PASS="B5S51fZtjWu8Nwa"
+CURRENT=`pwd`
+PROJECT_DIR=`basename "$CURRENT"`
+DB_NAME=${1}
+SQL_USER=${2}
+SQL_PASS=${3}
 CURRENTDATE=`date +%Y-%m-%d-%s`
-
-cd ${PROJECT_DIR}
+echo "$PROJECT_DIR"
 
 echo "Dumping database..."
 mysqldump -u${SQL_USER} -p${SQL_PASS} ${DB_NAME} | gzip -c > bigsurvey_${CURRENTDATE}.gz

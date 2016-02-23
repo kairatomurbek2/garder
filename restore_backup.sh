@@ -1,12 +1,13 @@
 #!/bin/bash
 set -e
 
-PROJECT_DIR=/home/bigsurvey/projects/bigsurvey
-DB_NAME=bigsurvey
-SQL_USER="bigsurvey_user"
-SQL_PASS="B5S51fZtjWu8Nwa"
+CURRENT=`pwd`
+PROJECT_DIR=`basename "$CURRENT"`
+DB_NAME=${1}
+SQL_USER=${2}
+SQL_PASS=${3}
+echo "$PROJECT_DIR"
 
-cd ${PROJECT_DIR}
 BACKUP_NAME=`ls -t backups | head -n1`
 
 if [ ! -z "$1" ]
@@ -28,7 +29,7 @@ echo "Unpacking backup..."
 sudo tar -zxf backups/${BACKUP_NAME} -C ./
 echo "Done."
 
-DB_BACKUP=`ls | grep bfp*.gz`
+DB_BACKUP=`ls | grep bigsurvey*.gz`
 
 echo "Restoring database..."
 gunzip < ${DB_BACKUP} | mysql -u${SQL_USER} -p${SQL_PASS} ${DB_NAME}
