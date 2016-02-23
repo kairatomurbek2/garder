@@ -37,7 +37,7 @@ echo "Done."
 
 echo "Cleaning up..."
 sudo rm -rf ${DB_BACKUP}
-touch survey/main/wsgi.py
+touch bigsurvey/main/wsgi.py
 sudo service apache2 restart
 echo "Done."
 
