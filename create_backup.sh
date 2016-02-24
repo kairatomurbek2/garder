@@ -6,7 +6,10 @@ PROJECT_DIR=`basename "$CURRENT"`
 DB_NAME=${1}
 SQL_USER=${2}
 SQL_PASS=${3}
+BASE_DIR=${4}
+
 CURRENTDATE=`date +%Y-%m-%d-%s`
+cd ${BASE_DIR}
 echo "$PROJECT_DIR"
 
 echo "Dumping database..."
