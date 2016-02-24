@@ -7,9 +7,9 @@ DB_NAME=${1}
 SQL_USER=${2}
 SQL_PASS=${3}
 echo "$PROJECT_DIR"
-
+BASE_DIR=${4}
 BACKUP_NAME=`ls -t backups | head -n1`
-
+cd ${BASE_DIR}
 if [ ! -z "$1" ]
 then
 if [ -f backups/$1 ]
