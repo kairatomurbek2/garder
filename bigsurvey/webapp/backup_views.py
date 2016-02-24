@@ -18,9 +18,9 @@ class BackupsView(FormView):
         response = super(BackupsView, self).form_valid(form)
         if "_restore" in self.request.POST:
             subprocess.call(
-                [settings.RESTORE_BACKUP_SCRIPT, settings.DATABASES['default']['NAME'],
+                [settings.RESTORE_BACKUP_SCRIPT, filename, settings.DATABASES['default']['NAME'],
                  settings.DATABASES['default']['USER'],
-                 settings.DATABASES['default']['PASSWORD'], os.path.join(settings.BASE_DIR, '..'), filename])
+                 settings.DATABASES['default']['PASSWORD'], os.path.join(settings.BASE_DIR, '..')])
             return response
         elif "_create" in self.request.POST:
             subprocess.call([settings.CREATE_BACKUP_SCRIPT, settings.DATABASES['default']['NAME'],
@@ -28,9 +28,10 @@ class BackupsView(FormView):
                              settings.DATABASES['default']['PASSWORD'], os.path.join(settings.BASE_DIR, '..')])
             return response
         elif "_latest" in self.request.POST:
-            subprocess.call([settings.RESTORE_BACKUP_SCRIPT, settings.DATABASES['default']['NAME'],
-                             settings.DATABASES['default']['USER'],
-                             settings.DATABASES['default']['PASSWORD'], os.path.join(settings.BASE_DIR, '..')])
+            subprocess.call(
+                [settings.RESTORE_BACKUP_SCRIPT, filename, settings.DATABASES['default']['NAME'],
+                 settings.DATABASES['default']['USER'],
+                 settings.DATABASES['default']['PASSWORD'], os.path.join(settings.BASE_DIR, '..')])
             return response
         elif "_upload" in self.request.POST:
             backup = self.request.FILES.get('upload_backup')

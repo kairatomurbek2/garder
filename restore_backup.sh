@@ -3,11 +3,11 @@ set -e
 
 CURRENT=`pwd`
 PROJECT_DIR=`basename "$CURRENT"`
-DB_NAME=${1}
-SQL_USER=${2}
-SQL_PASS=${3}
+DB_NAME=${2}
+SQL_USER=${3}
+SQL_PASS=${4}
 echo "$PROJECT_DIR"
-BASE_DIR=${4}
+BASE_DIR=${5}
 BACKUP_NAME=`ls -t backups | head -n1`
 cd ${BASE_DIR}
 if [ ! -z "$1" ]
