@@ -66,7 +66,7 @@ class LetterRenderer(object):
             Placeholders.site_city: site.city,
             Placeholders.site_state: site.state,
             Placeholders.cust_name: site.cust_name,
-            Placeholders.cust_address: site.cust_address1,
+            Placeholders.cust_address: site.cust_address2,
             Placeholders.cust_city: site.cust_city,
             Placeholders.cust_state: site.cust_state,
             Placeholders.cust_zip: site.cust_zip,
