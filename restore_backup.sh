@@ -8,8 +8,9 @@ SQL_USER=${3}
 SQL_PASS=${4}
 echo "$PROJECT_DIR"
 BASE_DIR=${5}
-BACKUP_NAME=`ls -t backups | head -n1`
 cd ${BASE_DIR}
+
+BACKUP_NAME=`ls -t backups | head -n1`
 if [ ! -z "$1" ]
 then
 if [ -f backups/$1 ]
@@ -26,7 +27,7 @@ if [ ! -z "${BACKUP_NAME}" ]
 then
 echo "Backup name is ${BACKUP_NAME}"
 echo "Unpacking backup..."
-sudo tar -zxf backups/${BACKUP_NAME} -C ./
+tar -zxvf backups/${BACKUP_NAME} -C ./
 echo "Done."
 
 DB_BACKUP=`ls | grep bigsurvey*.gz`
@@ -36,7 +37,7 @@ gunzip < ${DB_BACKUP} | mysql -u${SQL_USER} -p${SQL_PASS} ${DB_NAME}
 echo "Done."
 
 echo "Cleaning up..."
-sudo rm -rf ${DB_BACKUP}
+rm -rf ${DB_BACKUP}
 touch bigsurvey/main/wsgi.py
 sudo service apache2 restart
 echo "Done."
