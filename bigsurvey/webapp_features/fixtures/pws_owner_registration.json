@@ -1,0 +1,102 @@
+[
+  {
+    "fields": {
+      "username": "EastBoy",
+      "first_name": "John",
+      "last_name": "Smith",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2016-02-26T05:18:01Z",
+      "groups": [
+        [
+          "PWSOwners"
+        ]
+      ],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$12000$JBZY5FNAymLV$EH1zXo1ceUBdu+yGj5Ey8x9Bb31i29TIG7kb6FqUiaA=",
+      "email": "pwsowneremail@gmail.com",
+      "date_joined": "2016-02-26T10:55:45Z"
+    },
+    "model": "auth.user",
+    "pk": null
+  },
+  {
+    "fields": {
+      "plumber_packet_address": null,
+      "consultant_name": null,
+      "number": "LL9985452121",
+      "county": "Autauga County",
+      "letter_left_header_block": "",
+      "logo": "",
+      "bailee_name": null,
+      "city": "Sitka",
+      "water_source": null,
+      "consultant_phone": null,
+      "office_address": "111 First St ",
+      "state": "AL",
+      "email": null,
+      "fax": null,
+      "zip": "10007",
+      "is_active": true,
+      "phone": "+996700139680",
+      "letter_right_header_block": "",
+      "plumber_packet_location": null,
+      "name": "It attractor",
+      "notes": null,
+      "bailee_job_title": "Director of Public Works"
+    },
+    "model": "webapp.pws",
+    "pk": null
+  },
+  {
+    "fields": {
+      "plumber_packet_address": null,
+      "consultant_name": null,
+      "number": "SA1234567",
+      "county": "Sample",
+      "letter_left_header_block": "",
+      "logo": "",
+      "bailee_name": null,
+      "city": null,
+      "water_source": null,
+      "consultant_phone": null,
+      "office_address": null,
+      "state": null,
+      "email": null,
+      "fax": null,
+      "zip": null,
+      "is_active": true,
+      "phone": null,
+      "letter_right_header_block": "",
+      "plumber_packet_location": null,
+      "name": "Sample Town Public Water System",
+      "notes": null,
+      "bailee_job_title": "Director of Public Works"
+    },
+    "model": "webapp.pws",
+    "pk": null
+  },
+  {
+    "fields": {
+      "city": null,
+      "pws": [
+        11,
+        12
+      ],
+      "zip": null,
+      "has_licence_for_installation": false,
+      "phone2": null,
+      "company": null,
+      "phone1": null,
+      "state": null,
+      "user": [
+        "EastBoy"
+      ],
+      "address": null,
+      "has_paid": false
+    },
+    "model": "webapp.employee",
+    "pk": null
+  }
+]

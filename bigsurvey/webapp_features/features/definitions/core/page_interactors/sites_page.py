@@ -23,3 +23,9 @@ def open_site_for_editing(site_account_number):
 def following_sites():
     xpath = '//*[@id="data_table"]/tbody/tr[1]'
     finder.find_visible_element_by_xpath(xpath)
+
+
+def click_pay_button():
+    xpath = './/div[@class="wrapper uk-width-1-1 uk-text-center"]/button[contains(., "Pay and activate")]'
+    edit_btn = finder.find_element_by_xpath(xpath)
+    edit_btn.click()
