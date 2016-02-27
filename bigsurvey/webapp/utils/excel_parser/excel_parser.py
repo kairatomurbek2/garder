@@ -11,7 +11,8 @@ from main.parameters import SITE_STATUS
 from webapp import models
 from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, \
     DEFAULT_PROGRESS_UPDATE_STEP, FINISHED, DEFAULT_BULK_SIZE, RequiredValueIsEmptyError, \
-    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError, NUMERIC_FIELDS, NumericValueError
+    ForeignKeyError, CustomerNumberError, DateFormatError, ExcelValidationError, NUMERIC_FIELDS, NumericValueError, \
+    SPECIAL_FOREIGN_KEY_FIELDS
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
 
 
@@ -184,6 +185,10 @@ class ExcelParser(object):
                 value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
                 if field_name in FOREIGN_KEY_FIELDS:
                     field_name = FOREIGN_KEY_PATTERN % field_name
+                if field_name in SPECIAL_FOREIGN_KEY_FIELDS:
+                    search_expression = {SPECIAL_FOREIGN_KEY_FIELDS[field_name]['field']:value}
+                    foreign_key_value = SPECIAL_FOREIGN_KEY_FIELDS[field_name]['model'].objects.get(**search_expression)
+                    value = foreign_key_value
                 if field_name in DATE_FIELDS:
                     if value:
                         value = datetime.strptime(str(value), date_format)
