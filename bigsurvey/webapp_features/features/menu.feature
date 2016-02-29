@@ -70,6 +70,7 @@ Feature: Menu
       | users   |
       | surveys |
       | testers |
+      | hazards |
 
   @keep_db\
   Scenario: PWS owner menu
