@@ -31,9 +31,12 @@ class Migration(migrations.Migration):
         Group = apps.get_model('auth', 'Group')
         Permission = apps.get_model('auth', 'Permission')
         for group_name in GROUPS_TO_ADD:
-            group, created = Group.objects.get_or_create(name=group_name)
-            permissions = [Permission.objects.get(codename=i) for i in PERMISSIONS_TO_ADD]
-            group.permissions.add(*permissions)
+            try:
+                group = Group.objects.get(name=group_name)
+                permissions = [Permission.objects.get(codename=i) for i in PERMISSIONS_TO_ADD]
+                group.permissions.add(*permissions)
+            except Group.DoesNotExist:
+                pass
 
 
     dependencies = [
