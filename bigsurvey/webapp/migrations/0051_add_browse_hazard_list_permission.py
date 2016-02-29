@@ -23,7 +23,7 @@ GROUPS_TO_ADD = [
 class Migration(migrations.Migration):
     def add_permission(apps, schema_editor):
         for app in configured_apps.get_app_configs():
-            update_contenttypes(app, interactive=True, verbosity=0)
+            update_contenttypes(app, interactive=False, verbosity=0)
 
         for app in configured_apps.get_app_configs():
             create_permissions(app, verbosity=0)
