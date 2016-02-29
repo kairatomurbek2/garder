@@ -3928,6 +3928,11 @@
         "hazard"
       ],
       [
+        "browse_hazard_list",
+        "webapp",
+        "hazard"
+      ],
+      [
         "change_hazard",
         "webapp",
         "hazard"
@@ -4507,6 +4512,11 @@
         "hazard"
       ],
       [
+        "browse_hazard_list",
+        "webapp",
+        "hazard"
+      ],
+      [
         "change_hazard",
         "webapp",
         "hazard"
@@ -4732,6 +4742,11 @@
       ],
       [
         "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard_list",
         "webapp",
         "hazard"
       ],
@@ -4969,6 +4984,11 @@
         "hazard"
       ],
       [
+        "browse_hazard_list",
+        "webapp",
+        "hazard"
+      ],
+      [
         "change_hazard",
         "webapp",
         "hazard"
@@ -5199,6 +5219,11 @@
       ],
       [
         "browse_hazard",
+        "webapp",
+        "hazard"
+      ],
+      [
+        "browse_hazard_list",
         "webapp",
         "hazard"
       ],

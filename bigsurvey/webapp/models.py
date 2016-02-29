@@ -728,6 +728,7 @@ class Hazard(models.Model):
         verbose_name_plural = _("Hazards")
         permissions = (
             ('browse_hazard', _('Can browse Hazard')),
+            ('browse_hazard_list', _('Can browse Hazard List')),
             ('access_to_all_hazards', _('Has access to all Hazards')),
             ('access_to_pws_hazards', _('Has access to PWS\'s Hazards')),
             ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards'))

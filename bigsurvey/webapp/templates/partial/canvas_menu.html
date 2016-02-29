@@ -13,7 +13,7 @@
         <li><a id="unpaid_tests_menu_link"
                href="{% url 'webapp:unpaid_test_list' %}">{% trans 'Unsaved Tests' %}</a></li>
     {% endif %}
-    {% if perms.webapp.browse_hazard %}
+    {% if perms.webapp.browse_hazard_list %}
         <li>
             <a id="hazards_menu_link" href="{% url "webapp:hazard_list" %}">
                 {% trans "Hazards" %}
