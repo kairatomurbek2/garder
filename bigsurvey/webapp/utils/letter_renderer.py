@@ -92,14 +92,16 @@ class LetterRenderer(object):
                 replacements[Placeholders.assembly_type_present] = hazard.bp_device.bp_type_present
             else:
                 warnings.append(Placeholders.assembly_type_present)
+                replacements[Placeholders.assembly_type_present] = ''
             replacements[Placeholders.assembly_type_required] = hazard.bp_type_required
         else:
             warnings.append(Placeholders.assembly_type_present)
             warnings.append(Placeholders.assembly_type_required)
         replacements[Placeholders.due_date] = site.due_install_test_date.strftime("%m/%d/%Y") if site.due_install_test_date else ''
         for key, value in replacements.items():
-            if value is None or value == '':
+            if not value:
                 warnings.append(key)
+                template = template.replace(key, u'')
             elif value is EMPTY_VALUE:
                 template = template.replace(key, u'')
             else:

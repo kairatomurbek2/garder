@@ -70,7 +70,7 @@ class LetterListView(BaseTemplateView):
 
     def _get_letter_list(self):
         if self.request.user.has_perm('webapp.full_letter_access'):
-            return models.Letter.objects.all()
+            return models.Letter.objects.all().order_by('-pk')
         elif self.request.user.has_perm('webapp.pws_letter_access'):
             return models.Letter.objects.filter(site__pws__in=self.request.user.employee.pws.all())
         else:

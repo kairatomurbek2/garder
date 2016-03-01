@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'webapp.middlewares.demo_trial_watch_dog.DemoTrialWatchDog',
+    'webapp.middlewares.renew_session_on_activity.RenewSessionOnActivity',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
