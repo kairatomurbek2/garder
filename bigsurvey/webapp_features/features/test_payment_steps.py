@@ -41,6 +41,7 @@ def login_in_paypal(step):
         )
     username_field = helper.find(Xpath.Paypal.username)
     helper.check_element_exists(username_field, 'Username field was not found')
+    username_field.clear()
     username_field.send_keys(PaypalCredentials.username)
 
     password_field = helper.find(Xpath.Paypal.password)
