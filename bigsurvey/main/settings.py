@@ -115,9 +115,9 @@ USE_L10N = True
 USE_TZ = True
 
 # Email configuration
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'bishmedservicemailto@gmail.com'
-EMAIL_HOST_PASSWORD = 'EapeeM9U'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_HOST_USER = 'garderpassword@bssbr.net'
+EMAIL_HOST_PASSWORD = '$oftware1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "bss@bpsbr.com"
