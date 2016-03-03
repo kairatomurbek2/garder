@@ -42,7 +42,7 @@ Feature: Letter Adding
       | The City of Washington |
       | Amanda James           |
       | QAZ2WSX                |
-      | Washington, DC, 90192  |
+      | Washington DC 90192  |
       | 05/31/2015             |
       | White House            |
     And There should be logo of PWS with pk "6"
