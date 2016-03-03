@@ -171,7 +171,7 @@ class UserDetailView(BaseTemplateView):
         selected_user = User.objects.get(pk=kwargs['pk'])
         if perm_checkers.UserPermChecker.has_perm(self.request, selected_user):
             context['selected_user'] = selected_user
-            if Group.objects.get(name=Groups.tester) in selected_user.groups.all():
+            if Group.objects.get(name=Groups.tester) in selected_user.groups.all() and selected_user.has_perm('webapp.can_own_test_kit'):
                 context['is_tester'] = True
             return context
         raise Http404

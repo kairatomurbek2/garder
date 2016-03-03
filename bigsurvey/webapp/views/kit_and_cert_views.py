@@ -33,7 +33,8 @@ class TesterCertAddView(TesterCertBaseFormView, CreateView):
                 and self.has_test_kit_and_cer_permissions():
             context = super(TesterCertAddView, self).get_context_data(**kwargs)
             context['user_pk'] = user.pk
-            return context
+            if user.has_perm('webapp.can_own_cert_kit'):
+                return context
         raise Http404
 
     def form_valid(self, form):
@@ -76,7 +77,8 @@ class TestKitAddView(TestKitBaseFormView, CreateView):
         if perm_checkers.UserPermChecker.has_perm(self.request, user) and self.has_test_kit_and_cer_permissions():
             context = super(TestKitAddView, self).get_context_data(**kwargs)
             context['user_pk'] = user.pk
-            return context
+            if user.has_perm('webapp.can_own_test_kit'):
+                return context
         raise Http404
 
     def form_valid(self, form):

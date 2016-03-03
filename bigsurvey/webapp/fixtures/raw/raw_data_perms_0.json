@@ -1154,6 +1154,16 @@
         "change_test",
         "webapp",
         "test"
+      ],
+      [
+        "can_own_test_kit",
+        "webapp",
+        "testkit"
+      ],
+      [
+        "can_own_cert_kit",
+        "webapp",
+        "testercert"
       ]
     ]
   },

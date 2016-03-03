@@ -499,6 +499,7 @@ class TestKit(models.Model):
         permissions = (
             ('access_to_all_test_kits', _("Access to all testers' kits")),
             ('access_to_pws_test_kits', _("Access to own PWS' testers' kits")),
+            ('can_own_test_kit', _("Can own test kit")),
         )
 
 reversion.register(TestKit)
@@ -523,6 +524,7 @@ class TesterCert(models.Model):
         permissions = (
             ('access_to_all_tester_certs', _("Access to all testers' certs")),
             ('access_to_pws_tester_certs', _("Access to own PWS' testers' certs")),
+            ('can_own_cert_kit', _("Can own cert kit")),
         )
 
 reversion.register(TesterCert)
