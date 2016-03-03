@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url, static
+from django.views.generic import TemplateView
 from webapp.admin import admin_site_bigsurvey
 from django.conf import settings
 from webapp.forms import EmailValidationOnForgotPassword
@@ -18,4 +19,5 @@ urlpatterns = patterns(
     url(r'^password/reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         'django.contrib.auth.views.password_reset_confirm',
         {'post_reset_redirect': 'password_reset_complete'}, name='password_reset_activation'),
+    (r'^404/$', TemplateView.as_view(template_name="404.html")),
 ) + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
