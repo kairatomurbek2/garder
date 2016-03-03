@@ -36,7 +36,7 @@ Feature: Letter Viewing and Sending
       | May 05, 2015                        |
       | RP                                  |
       | {DueDate}                           |
-      | Seattle, WA, 12382                  |
+      | Seattle WA 12382                    |
       | 7269, South Jackson st, Seattle, WA |
       | +1685231452                         |
       | Sincerely, John McConley            |
