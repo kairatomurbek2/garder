@@ -133,7 +133,7 @@
             </tr>
             </tbody>
         </table>
-            {% if perms.browse_devices %}
+            {% if perms.webapp.browse_devices %}
                 <div class="uk-text-center">
                     {% if show_install_button %}
                         <a class="uk-button uk-button-primary" id="replace_device_link"
@@ -154,7 +154,7 @@
             {% endif %}
         {% else %}
             <h3 class="uk-text-left uk-text-primary uk-text-center">{% trans "No Backflow Preventer present" %}</h3>
-            {% if perms.browse_devices %}
+            {% if perms.webapp.browse_devices %}
                 <div class="uk-text-center">
                     <a class="uk-button uk-button-primary" id="install_device_link"
                        href="{% url "webapp:bp_device_add" hazard.pk %}">
