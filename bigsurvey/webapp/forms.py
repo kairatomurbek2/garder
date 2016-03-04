@@ -78,6 +78,22 @@ class HazardForm(forms.ModelForm):
         exclude = ('site', 'service_type', 'bp_device')
 
 
+class HazardFormForSurvey(forms.ModelForm):
+    is_present = forms.BooleanField(initial=True, widget=forms.HiddenInput())
+    letter_type = forms.ModelChoiceField(queryset=models.LetterType.objects.none(), required=False,
+                                         empty_label=_("No letter"))
+
+    def __init__(self, *args, **kwargs):
+        letter_types_qs = kwargs.pop('letter_types_qs', False)
+        super(HazardFormForSurvey, self).__init__(*args, **kwargs)
+        self.fields['letter_type'].queryset = letter_types_qs
+
+    class Meta:
+        model = models.Hazard
+        exclude = ('site', 'service_type', 'bp_device')
+
+
+
 class BPForm(forms.ModelForm):
     class Meta:
         model = models.BPDevice

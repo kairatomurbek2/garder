@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.forms import formset_factory
+from django.forms import formset_factory, BooleanField, HiddenInput
 from django.http import Http404
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -51,7 +51,7 @@ class SurveyBaseFormView(BaseFormView):
     template_name = 'survey/survey_form.html'
     form_class = forms.SurveyForm
     model = models.Survey
-    hazard_form_class = forms.HazardForm
+    hazard_form_class = forms.HazardFormForSurvey
     bp_form_class = forms.BPForm
     hazard_error_message = Messages.Hazard.adding_error
     survey_added_message = Messages.Survey.adding_success
@@ -183,6 +183,7 @@ class SurveyAddView(SurveyBaseFormView):
         if self.kwargs['service'] == 'fire':
             return True
         return False
+
 
     def post(self, request, *args, **kwargs):
         survey_form = self.get_survey_form(self.form_class)
