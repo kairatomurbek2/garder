@@ -82,4 +82,4 @@ Feature: Test Kits and Certificates
       | admin | kit_add  | 2  | not see  |
       | admin | cert_add | 4  | see      |
       | admin | cert_add | 3  | see      |
-      | admin | cert_add |    | not see  |
+      | admin | cert_add | 2  | not see  |
