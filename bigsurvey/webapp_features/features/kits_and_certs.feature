@@ -69,3 +69,17 @@ Feature: Test Kits and Certificates
     Then I should be at "user_detail" page with pk 2
     And I should see "qwerty213"
     And I should not see "qwerty132"
+
+
+  Scenario Outline: Test Kit and Certificates pages access for user
+    Given I logged in as "<role>"
+    When I directly open "<page>" page with pk <pk>
+    Then I should <reaction> "Page not found"
+    Examples:
+      | role  | page     | pk | reaction |
+      | admin | kit_add  | 4  | see      |
+      | admin | kit_add  | 3  | see      |
+      | admin | kit_add  | 2  | not see  |
+      | admin | cert_add | 4  | see      |
+      | admin | cert_add | 3  | see      |
+      | admin | cert_add |    | not see  |
