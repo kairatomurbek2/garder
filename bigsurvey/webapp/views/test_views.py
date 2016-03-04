@@ -260,7 +260,7 @@ class TestAddView(TestBaseFormView, CreateView):
         form.instance.user = self.request.user
         price = models.PriceHistory.current_for_test().price
         form.instance.price = price
-        if price < 0.01:
+        if price < 0.0001:
             form.instance.paid = True
         response = super(TestAddView, self).form_valid(form)
         self.request.session['test_for_payment_pk'] = self.object.pk
