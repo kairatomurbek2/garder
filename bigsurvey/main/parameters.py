@@ -280,6 +280,8 @@ class Messages:
         success = _('Batch update was performed successfully')
         error = _('Cannot perform batch update. Please, provide date or select "Empty Date" option')
         error_date_in_future = _('Cannot perform batch update. Please, provide current date or date in the past')
+        letter_creation_success = _('Letters successfully created for the following hazards: %s')
+        letters_not_created_for_hazards_warning = _('Letters not created for the following hazards: %s')
 
     class PWS:
         adding_success = _('PWS was successfully added')

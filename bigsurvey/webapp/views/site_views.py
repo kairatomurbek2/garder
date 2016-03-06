@@ -3,6 +3,7 @@ import datetime
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import FormView, CreateView, UpdateView
@@ -11,6 +12,7 @@ from webapp import filters, models, forms, perm_checkers
 from webapp.actions.demo_trial import IsEmployeeInTrialPeriod
 from webapp.models import NoSearchFieldIndicated, NoBpDeviceFoundWithSuchSerialNo
 from webapp.utils.excel_writer.excel_writer import XLSExporter
+from webapp.utils.letter_renderer import LetterRenderer
 from .base_views import BaseTemplateView, BaseFormView
 from webapp.views.helpers import OperationNotAllowedInTrialPeriodException
 
@@ -183,7 +185,6 @@ class BatchUpdateView(BaseTemplateView):
             site_pks = self.request.POST.getlist('site_pks')
             if empty:
                 self._batch_update(None, site_pks)
-                messages.success(self.request, Messages.BatchUpdate.success)
             else:
                 date = form.cleaned_data.get('date')
                 if date:
@@ -203,17 +204,39 @@ class BatchUpdateView(BaseTemplateView):
                 messages.error(self.request, Messages.BatchUpdate.error_date_in_future)
             else:
                 self._batch_update_survey(date, site_pks)
+        elif 'create_letters' in self.request.POST:
+            self._create_letters(site_pks)
         else:
             self._batch_update_hazards(date, site_pks)
 
     def _batch_update_sites(self, date, site_pks):
         models.Site.active_only.filter(pk__in=site_pks).update(next_survey_date=date)
+        messages.success(self.request, Messages.BatchUpdate.success)
 
     def _batch_update_hazards(self, date, site_pks):
         models.Site.active_only.filter(pk__in=site_pks).update(due_install_test_date=date)
 
     def _batch_update_survey(self, date, site_pks):
         models.Site.active_only.filter(pk__in=site_pks).update(last_survey_date=date)
+        messages.success(self.request, Messages.BatchUpdate.success)
+
+    def _create_letters(self, site_pks):
+        sites = models.Site.active_only.filter(pk__in=site_pks)
+        hazards_with_letter_types = models.Hazard.objects.filter(Q(site__in=sites) & Q(letter_type__isnull=False))
+        hazards_without_letter_types = models.Hazard.objects.filter(Q(site__in=sites) & Q(letter_type__isnull=True))
+        hazards_with_letters_string = ''
+        for hazard in hazards_with_letter_types:
+            hazards_with_letters_string += hazard.__str__() + ' '
+            letter = models.Letter.objects.create(
+                site=hazard.site,
+                hazard=hazard,
+                letter_type=hazard.letter_type)
+            LetterRenderer.render(letter)
+        messages.success(self.request, Messages.BatchUpdate.letter_creation_success % hazards_with_letters_string)
+        if len(hazards_without_letter_types) > 0:
+            hazards_without_letter_types_list = list(hazards_without_letter_types)
+            str = " ".join([h.__str__() for h in hazards_without_letter_types_list])
+            messages.warning(self.request, Messages.BatchUpdate.letters_not_created_for_hazards_warning % str)
 
     def get_success_url(self):
         return reverse('webapp:batch_update')
