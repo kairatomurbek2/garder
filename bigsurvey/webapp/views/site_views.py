@@ -185,6 +185,7 @@ class BatchUpdateView(BaseTemplateView):
             site_pks = self.request.POST.getlist('site_pks')
             if empty:
                 self._batch_update(None, site_pks)
+                messages.success(self.request, Messages.BatchUpdate.success)
             else:
                 date = form.cleaned_data.get('date')
                 if date:
