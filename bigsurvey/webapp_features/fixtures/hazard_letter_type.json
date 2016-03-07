@@ -1,0 +1,58 @@
+[
+  {
+    "fields": {
+      "pump_present": true,
+      "photo": "",
+      "site": 11,
+      "hazard_type": 55,
+      "longitude": 74.59738,
+      "photo_thumb": "",
+      "hazard_degree": 1,
+      "is_present": true,
+      "cc_present": true,
+      "service_type": 3,
+      "letter_type": 36,
+      "bp_type_required": "AVB",
+      "due_install_date": null,
+      "location2": "",
+      "location1": "",
+      "latitude": 42.8464806,
+      "regulation_type": 3,
+      "bp_device": null,
+      "notes": "",
+      "assembly_status": null,
+      "aux_water": true,
+      "additives_present": true
+    },
+    "model": "webapp.hazard",
+    "pk": null
+  },
+  {
+    "fields": {
+      "pump_present": false,
+      "photo": "",
+      "site": 11,
+      "hazard_type": 55,
+      "longitude": 74.59738,
+      "photo_thumb": "",
+      "hazard_degree": null,
+      "is_present": true,
+      "cc_present": false,
+      "service_type": 3,
+      "letter_type": null,
+      "bp_type_required": null,
+      "due_install_date": null,
+      "location2": "",
+      "location1": "",
+      "latitude": 42.8464806,
+      "regulation_type": 3,
+      "bp_device": null,
+      "notes": "",
+      "assembly_status": null,
+      "aux_water": false,
+      "additives_present": false
+    },
+    "model": "webapp.hazard",
+    "pk": null
+  }
+]

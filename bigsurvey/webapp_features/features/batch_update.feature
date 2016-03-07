@@ -78,3 +78,16 @@ Feature: Batch Update
     When I click "set_hazards_due_install_test_date" button
     Then I should see "batch updating success" message
     And I should not see "May 31, 2015"
+
+  Scenario: Batch Updating create letters
+    Given There Hazard letters
+    And I logged in as "root"
+    And I open "batch_update" page
+    And I check following values from "site_pks"
+      | value |
+      | 11    |
+    And I fill in "date" with "2017-02-10"
+    When I click "create_letters" button
+    Then I should see "letter creation success" message
+    And I should see "letters not created for hazards warning" message
+
