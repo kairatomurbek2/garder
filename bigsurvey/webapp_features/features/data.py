@@ -112,6 +112,7 @@ class Xpath:
         option_by_substr = './/option[contains(., "%s")]'
         checkbox_by_value = './/input[@type="checkbox"][@name="%s"][@value="%s"]'
         checkbox_by_name = './/input[@type="checkbox"][@name="%s"]'
+        checkbox_by_name = './/input[@type="checkbox"][@id="%s"]'
         radiobutton_by_value = './/input[@type="radio"][@name="%s"][@value="%s"]'
         button = './/button[@name="%s"]'
         button_with_label = './/button[contains(., "%s")]'
@@ -120,6 +121,9 @@ class Xpath:
         link_by_exact_text = './/a[. = "%s"]'
         link_by_substr = './/a[contains(., "%s")]'
         hazard_addition_submit_btn = './/button[@id="hazard-submit-button-0"]'
+        hazard_addition_submit_btn_one = './/button[@id="hazard-submit-button-1"]'
+        hazard_addition_submit_btn_two = './/button[@id="hazard-submit-button-2"]'
+        hazard_addition_submit_btn_three = './/button[@id="hazard-submit-button-3"]'
 
         # Specific
         text_inside_element = './/*[contains(., "%s")]'

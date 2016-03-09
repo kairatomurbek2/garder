@@ -116,6 +116,25 @@ def submit_hazard_adding_form(step):
     submit_btn = helper.find(Xpath.Pattern.hazard_addition_submit_btn)
     submit_btn.click()
 
+
+@step('I one submit hazard adding form')
+def submit_hazard_adding_form_one(step):
+    submit_btn = helper.find(Xpath.Pattern.hazard_addition_submit_btn_one)
+    submit_btn.click()
+
+
+@step('I two submit hazard adding form')
+def submit_hazard_adding_form_two(step):
+    submit_btn = helper.find(Xpath.Pattern.hazard_addition_submit_btn_two)
+    submit_btn.click()
+
+
+@step('I three submit hazard adding form')
+def submit_hazard_adding_form_three(step):
+    submit_btn = helper.find(Xpath.Pattern.hazard_addition_submit_btn_three)
+    submit_btn.click()
+
+
 @step('I should see "(.*)" validation error message on field "([-_a-z0-9]+)"')
 def check_error_message(step, error_message, field_name):
     field = helper.find(Xpath.Pattern.input % field_name) or \
@@ -205,6 +224,13 @@ def check_hazard(step, hazard_name):
 def check_single_checkbox(step, checkbox_name):
     checkbox = helper.find(Xpath.Pattern.checkbox_by_name % checkbox_name)
     helper.check_element_exists(checkbox, 'Checkbox "%s" was not found' % checkbox_name)
+    checkbox.click()
+
+
+@step('I uncheck "([-_a-z0-9]+)"$')
+def check_single_checkbox(step, checkbox_id):
+    checkbox = helper.find(Xpath.Pattern.checkbox_by_name % checkbox_id)
+    helper.check_element_exists(checkbox, 'Checkbox "%s" was not found' % checkbox_id)
     checkbox.click()
 
 
