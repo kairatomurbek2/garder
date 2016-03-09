@@ -176,14 +176,11 @@ class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
         return context
 
     def _set_messages(self, letter):
-        if not letter.already_sent:
-            warnings = LetterRenderer.render(letter)
-            if warnings:
-                messages.warning(self.request, Messages.Letter.fields_without_value % ", ".join(warnings))
-            else:
-                messages.success(self.request, Messages.Letter.required_data_present)
+        warnings = LetterRenderer.render(letter)
+        if warnings:
+            messages.warning(self.request, Messages.Letter.fields_without_value % ", ".join(warnings))
         else:
-            messages.info(self.request, Messages.Letter.letter_already_sent)
+            messages.success(self.request, Messages.Letter.required_data_present)
 
     def form_valid(self, form):
         letter = models.Letter.objects.get(pk=self.kwargs['pk'])
