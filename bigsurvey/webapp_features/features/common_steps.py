@@ -229,7 +229,7 @@ def check_single_checkbox(step, checkbox_name):
 
 @step('I uncheck "([-_a-z0-9]+)"$')
 def check_single_checkbox(step, checkbox_id):
-    checkbox = helper.find(Xpath.Pattern.checkbox_by_name % checkbox_id)
+    checkbox = helper.find(Xpath.Pattern.checkbox_by_id % checkbox_id)
     helper.check_element_exists(checkbox, 'Checkbox "%s" was not found' % checkbox_id)
     checkbox.click()
 

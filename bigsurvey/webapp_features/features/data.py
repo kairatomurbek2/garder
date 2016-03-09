@@ -112,7 +112,7 @@ class Xpath:
         option_by_substr = './/option[contains(., "%s")]'
         checkbox_by_value = './/input[@type="checkbox"][@name="%s"][@value="%s"]'
         checkbox_by_name = './/input[@type="checkbox"][@name="%s"]'
-        checkbox_by_name = './/input[@type="checkbox"][@id="%s"]'
+        checkbox_by_id = './/input[@type="checkbox"][@id="%s"]'
         radiobutton_by_value = './/input[@type="radio"][@name="%s"][@value="%s"]'
         button = './/button[@name="%s"]'
         button_with_label = './/button[contains(., "%s")]'
