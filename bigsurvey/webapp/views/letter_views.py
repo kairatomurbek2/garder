@@ -176,11 +176,14 @@ class LetterDetailView(BaseTemplateView, FormView, LetterMixin):
         return context
 
     def _set_messages(self, letter):
-        warnings = LetterRenderer.render(letter)
-        if warnings:
-            messages.warning(self.request, Messages.Letter.fields_without_value % ", ".join(warnings))
+        if not letter.already_sent:
+            warnings = LetterRenderer.render(letter)
+            if warnings:
+                messages.warning(self.request, Messages.Letter.fields_without_value % ", ".join(warnings))
+            else:
+                messages.success(self.request, Messages.Letter.required_data_present)
         else:
-            messages.success(self.request, Messages.Letter.required_data_present)
+            messages.info(self.request, Messages.Letter.letter_already_sent)
 
     def form_valid(self, form):
         letter = models.Letter.objects.get(pk=self.kwargs['pk'])
@@ -230,6 +233,8 @@ class LetterPDFView(BaseView, FormView, LetterMixin):
             letter = models.Letter.objects.get(pk=self.kwargs['pk'])
 
             body = self.get_email_body(letter, form, is_pdf=True)
+            letter.already_sent = True
+            letter.save()
             body += self.append_styles()
             pdf_content = PDFGenerator.generate_from_html(body)
             filename = u"%s_%s_%s.pdf" % (letter.date, letter.letter_type.letter_type.replace(' ', '_'), letter.site.cust_number)

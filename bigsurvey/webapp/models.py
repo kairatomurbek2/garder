@@ -967,7 +967,7 @@ class Letter(models.Model):
     letter_type = models.ForeignKey(LetterType, verbose_name=_("Letter Type"), related_name="letters")
     date = models.DateField(verbose_name=_("Send Date"), auto_now_add=True)
     user = models.ForeignKey(User, null=True, blank=True, verbose_name=_("Sender"), related_name="letters")
-    already_sent = models.BooleanField(default=True, verbose_name="Already Sent")
+    already_sent = models.BooleanField(default=False, verbose_name="Already Sent")
     rendered_body = models.TextField(null=True, blank=True, verbose_name=_("Letter Content"))
 
     def __unicode__(self):
