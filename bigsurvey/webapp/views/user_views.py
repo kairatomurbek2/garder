@@ -221,7 +221,10 @@ class UserEditView(UserBaseFormView):
                 self.employee_object.save()
             else:
                 self.user_object = user_form.save(commit=False)
-                pws_to_save = user.employee.pws.all().exclude(id__in=self.request.user.employee.pws.all()) | employee_form.cleaned_data['pws']
+                if self.request.user.is_superuser or self.request.user.groups.filter(name=Groups.superadmin):
+                    pws_to_save = employee_form.cleaned_data['pws']
+                else:
+                    pws_to_save = user.employee.pws.all().exclude(id__in=self.request.user.employee.pws.all()) | employee_form.cleaned_data['pws']
                 employee_form.cleaned_data['pws'] = pws_to_save
                 self.employee_object = employee_form.save()
                 testers_group = models.Group.objects.get(name=Groups.tester)
