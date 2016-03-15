@@ -68,6 +68,7 @@ class SurveyBaseFormView(BaseFormView):
         BPFormset = formset_factory(self.bp_form_class)
         context['hazard_formset'] = HazardFormset(prefix='hazard')
         context['bp_formset'] = BPFormset(prefix='bp')
+        context['allow_adding_hazards'] = True
         return context
 
     def get_form(self, form_class):
@@ -151,19 +152,31 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
         context = super(SurveyEditView, self).get_context_data(**kwargs)
         context['site_pk'] = self.object.site.pk
         context['service_type'] = self.object.service_type.service_type.lower()
+        survey = models.Survey.objects.get(pk=self.kwargs['pk'])
+        if survey.site.surveys.all().order_by('-pk').first() != survey:
+            context['allow_adding_hazards'] = False
         return context
 
     def get_form(self, form_class):
         form = super(SurveyEditView, self).get_form(form_class)
         if not perm_checkers.SurveyPermChecker.has_perm(self.request, form.instance):
             raise Http404
+        survey = form.instance
+        if survey.site.surveys.all().order_by('-pk').first() != survey:
+            del form.fields['hazards']
         return form
 
     def form_valid(self, form):
-        site = form.instance.site
+        survey = form.instance
+        site = survey.site
+        hazards = survey.hazards.all()
         response = super(SurveyEditView, self).form_valid(form)
         self._update_last_survey_date(site)
-        self._update_is_present(site, form.instance)
+        if survey.site.surveys.all().order_by('-pk').first() == survey:
+            self._update_is_present(site, survey)
+        else:
+            self.object.hazards = hazards
+            self.object.save()
         return response
 
 

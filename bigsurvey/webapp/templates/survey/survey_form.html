@@ -16,13 +16,16 @@
             {% csrf_token %}
             <table class="uk-table form-center border-none uk-table-condensed">
                 <tbody>
-                <tr>
-                    <td colspan="4" class="uk-text-right">
-                        <a data-uk-modal="{target:'#hazard-form-modal', bgclose:false}" class="uk-button uk-button-primary"
-                           id="add_hazard_link">
-                            <i class="uk-icon-plus"></i> {% trans 'Add Hazard' %}</a>
-                    </td>
-                </tr>
+                {% if allow_adding_hazards %}
+                    <tr>
+                        <td colspan="4" class="uk-text-right">
+                            <a data-uk-modal="{target:'#hazard-form-modal', bgclose:false}"
+                               class="uk-button uk-button-primary"
+                               id="add_hazard_link">
+                                <i class="uk-icon-plus"></i> {% trans 'Add Hazard' %}</a>
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td class="uk-width-1-6 uk-text-right uk-text-bold">
                         <label for="{{ form.survey_date.id_for_label }}">{{ form.survey_date.label }}</label>
@@ -166,45 +169,48 @@
                 </tr>
                 </tbody>
             </table>
+            {% if allow_adding_hazards %}
+                {{ hazard_formset.management_form }}
+                {{ bp_formset.management_form }}
+                {% for hazard_form in hazard_formset %}
+                    {% for bp_form in bp_formset %}
 
-            {{ hazard_formset.management_form }}
-            {{ bp_formset.management_form }}
-            {% for hazard_form in hazard_formset %}
-                {% for bp_form in bp_formset %}
+                        <div class="uk-modal" id="hazard-form-modal">
+                            <div class="uk-modal-dialog uk-modal-dialog-large">
+                                <a class="uk-modal-close uk-close uk-close-alt"></a>
 
-                    <div class="uk-modal" id="hazard-form-modal">
-                        <div class="uk-modal-dialog uk-modal-dialog-large">
-                            <a class="uk-modal-close uk-close uk-close-alt"></a>
-
-                            <div class="modal-content" id="hazard-modal-content">
-                                {% include 'hazard/partial/hazard_form_for_survey.html' with form=hazard_form bp_form=bp_form %}
+                                <div class="modal-content" id="hazard-modal-content">
+                                    {% include 'hazard/partial/hazard_form_for_survey.html' with form=hazard_form bp_form=bp_form %}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            {% endif %}
         </form>
     </div>
 {% endblock %}
-{% block end_scripts %}
-    {% load_google_map_js %}
-    <script src="{% static 'js/custom/survey_form_handler.js' %}"></script>
-    <script type="text/javascript">
+{% if allow_adding_hazards %}
+    {% block end_scripts %}
+        {% load_google_map_js %}
+        <script src="{% static 'js/custom/survey_form_handler.js' %}"></script>
+        <script type="text/javascript">
 
-        $(document).ready(function () {
+            $(document).ready(function () {
 
-            FormHandler.init({
-                hazardAssemblyTypeFieldIdSelector: "#{{ hazard_formset.0.assembly_status.id_for_label }}",
-                $surveyDateInput: $('#{{ form.survey_date.auto_id }}'),
-                serviceType: '{{ service_type }}',
-                custNumber: '{{ view.get_site.cust_number }}',
-                surveyHazardsId: '{{ form.hazards.auto_id }}',
-                surveyFormPrefix: '{{ form.prefix }}',
-                surveyFormHazardsName: '{{ form.hazards.name }}'
+                FormHandler.init({
+                    hazardAssemblyTypeFieldIdSelector: "#{{ hazard_formset.0.assembly_status.id_for_label }}",
+                    $surveyDateInput: $('#{{ form.survey_date.auto_id }}'),
+                    serviceType: '{{ service_type }}',
+                    custNumber: '{{ view.get_site.cust_number }}',
+                    surveyHazardsId: '{{ form.hazards.auto_id }}',
+                    surveyFormPrefix: '{{ form.prefix }}',
+                    surveyFormHazardsName: '{{ form.hazards.name }}'
+                });
+
             });
 
-        });
-
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}
+{% endif %}
