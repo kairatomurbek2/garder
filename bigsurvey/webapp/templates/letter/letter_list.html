@@ -25,8 +25,7 @@
                     <th>{% trans "Already Sent" %}</th>
                     <th>{% trans "Sent From" %}</th>
                     <th>{% trans "Date" %}</th>
-                    <th>{% trans "Test Due Date" %}</th>
-                    <th>{% trans "Due Install Date" %}</th>
+                    <th>{% trans "Test Due Date/Due Install Date" %}</th>
                     <th colspan="2" class="uk-text-center border-left">{% trans "Actions" %}</th>
                 </tr>
                 </thead>
@@ -53,7 +52,6 @@
                         <td>{{ letter.user.email }}</td>
                         <td>{{ letter.date }}</td>
                         <td>{{ letter.site.due_install_test_date }}</td>
-                        <td>{{ letter.hazard.due_install_date }}</td>
                         <td class="uk-text-center border-left">
                             <a id="letter_{{ letter.pk }}_detail_link" href="{% url 'webapp:letter_detail' letter.pk %}">
                                 {% trans "Show" %}
