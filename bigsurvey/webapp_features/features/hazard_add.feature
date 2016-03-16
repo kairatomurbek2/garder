@@ -135,3 +135,28 @@ Feature: Hazard Add
       | Additives Present |
       | Auxiliary Water   |
       | Yes               |
+
+  Scenario: Adding more survey
+    Given I logged in as "root"
+    And I open "survey_add" page for site with pk "1" and service "potable"
+    And I choose today in "survey-survey_date"
+    And I select "surveyor" from "survey-surveyor"
+    And I click "add_hazard" link
+    And I fill in following fields with following values
+      | field              | value    |
+      | hazard-0-location1 | backyard |
+    And I select "Ice Maker" from "hazard-0-hazard_type"
+    And I select "Yes" from "hazard-0-pump_present"
+    And I select "Yes" from "hazard-0-additives_present"
+    And I select "Yes" from "hazard-0-cc_present"
+    And I select "Yes" from "hazard-0-aux_water"
+    And I submit hazard adding form
+    And I submit survey form
+    And I directly open "site_detail" page with pk "1"
+    And I directly open "survey_edit" page with pk "3"
+    Then I should not see "Add Hazard"
+    And I should not see "Trailer Park, potable, Customer1"
+    And I directly open "survey_edit" page with pk "4"
+    Then I should see "Add Hazard"
+    And I should see "Trailer Park, potable, Customer1"
+    And I should see "Ice Maker, potable, Customer1"
