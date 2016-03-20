@@ -119,7 +119,7 @@ class SurveyBaseFormView(BaseFormView):
             queryset = models.User.objects.filter(
                 groups__name=Groups.surveyor,
                 employee__pws__in=self.request.user.employee.pws.all()
-            )
+            ).distinct()
         if self.request.user.has_perm('webapp.access_to_all_surveys'):
             queryset = models.User.objects.filter(groups__name=Groups.surveyor)
         return queryset

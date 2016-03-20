@@ -21,3 +21,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 FIREFOX_PROFILE_DIR = os.path.join(os.path.dirname(BASE_DIR), 'firefox-profile')
 
 REINITIALIZE_DATABASE = True
+
+USE_CAPTHCA = False

@@ -79,7 +79,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "webapp.processor.use_captcha"
 )
 
 ROOT_URLCONF = 'main.urls'
@@ -128,6 +129,7 @@ RECAPTCHA_PUBLIC_KEY = '6LfQkBYTAAAAAOqc6TFVt7PoLEr44_mV4zN_-B_s'
 RECAPTCHA_PRIVATE_KEY = '6LfQkBYTAAAAAObzDbh8tOCaoO7OKiZFZPOVdjCb'
 NOCAPTCHA = False
 CAPTCHA_AJAX = True
+USE_CAPTHCA = True
 
 # Demo trial configuration
 DEMO_TRIAL_DAYS = 30

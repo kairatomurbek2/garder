@@ -1,4 +1,5 @@
 from ast import literal_eval
+from django.conf import settings
 
 import models
 import re
@@ -679,22 +680,28 @@ class PWSOwnerRegistrationForm(forms.ModelForm):
                              widget=forms.TextInput(attrs={'placeholder': _(' LL9999999')}))
     name = forms.CharField(max_length=50, required=True, label=_('Water System Name'))
     county = forms.CharField(max_length=100, required=True)
-
-    class Meta:
-        model = models.PWS
-        fields = ('number', 'name')
-
-
-class PWSUserAddForm(UserCreationForm):
-    address = forms.CharField(max_length=50, required=True)
+    office_address = forms.CharField(max_length=50, required=True, label=_('Address'))
     city = forms.CharField(max_length=30, required=True)
     state = forms.ChoiceField(choices=STATES, required=True)
     zip = forms.CharField(max_length=10, required=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message=_(
                                      "Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
-    phone1 = forms.CharField(validators=[phone_regex], max_length=20, required=True, label=_('Phone Number'))
+    phone = forms.CharField(validators=[phone_regex], max_length=20, required=True, label=_('Phone Number'))
+
+    class Meta:
+        model = models.PWS
+        fields = ('number', 'name', 'office_address', 'city', 'state', 'zip', 'phone')
+
+
+class PWSUserAddForm(UserCreationForm):
     captcha = ReCaptchaField()
+
+    def __init__(self, *args, **kwargs):
+
+        super(PWSUserAddForm, self).__init__(*args, **kwargs)
+        if not settings.USE_CAPTHCA:
+            del self.fields['captcha']
 
     def clean_email(self):
         data = self.cleaned_data['email']

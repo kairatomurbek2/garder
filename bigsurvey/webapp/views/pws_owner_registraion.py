@@ -57,7 +57,13 @@ class PwsOwnerRegistrationView(FormView):
         number = pws_form.cleaned_data['number']
         name = pws_form.cleaned_data['name']
         county = pws_form.cleaned_data['county']
-        pws = models.PWS.objects.create(number=number, name=name, county=county)
+        office_address = pws_form.cleaned_data['office_address']
+        city = pws_form.cleaned_data['city']
+        state = pws_form.cleaned_data['state']
+        zip = pws_form.cleaned_data['zip']
+        phone = pws_form.cleaned_data['phone']
+        pws = models.PWS.objects.create(number=number, name=name, county=county, office_address=office_address,
+                                        city=city, state=state, zip=zip, phone=phone)
         return pws
 
     @staticmethod
@@ -70,17 +76,11 @@ class PwsOwnerRegistrationView(FormView):
 
     @staticmethod
     def _create_user_and_employee(user_form, pws):
-        address = user_form.cleaned_data['address']
-        city = user_form.cleaned_data['city']
-        state = user_form.cleaned_data['state']
-        zip = user_form.cleaned_data['zip']
-        phone1 = user_form.cleaned_data['phone1']
         password = user_form.cleaned_data['password1']
         user = user_form.save()
         user.set_password(password)
         user.groups.add(Group.objects.get(name=Groups.pws_owner))
-        employee = models.Employee.objects.create(address=address, city=city, state=state, zip=zip, phone1=phone1,
-                                                  user=user)
+        employee = models.Employee.objects.create(user=user)
         employee.pws.add(pws)
         return employee
 
