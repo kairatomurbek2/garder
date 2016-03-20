@@ -14,7 +14,10 @@ class DemoTrialWatchDog(object):
             return
         for pws_item in pws:
             if not self.excluded_pages(request):
-                employee = pws_item.employees.filter(user__groups__name=Groups.pws_owner)[0]
+                try:
+                    employee = pws_item.employees.filter(user__groups__name=Groups.pws_owner)[0]
+                except IndexError:
+                    continue
                 try:
                     checker = TrialPeriodChecker()
                     checker.employee = employee
