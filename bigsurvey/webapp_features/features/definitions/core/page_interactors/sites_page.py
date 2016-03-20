@@ -18,3 +18,8 @@ def open_site_for_editing(site_account_number):
     home_navigator.go_to_home_page()
     click_on_site(site_account_number)
     click_edit_link_on_site_page()
+
+
+def following_sites():
+    xpath = '//*[@id="data_table"]/tbody/tr[1]'
+    finder.find_visible_element_by_xpath(xpath)
