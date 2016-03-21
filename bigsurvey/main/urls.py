@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, include, url, static
-from django.contrib import admin
+from webapp.admin import admin_site_bigsurvey
 from django.conf import settings
 from webapp.forms import EmailValidationOnForgotPassword
 
 urlpatterns = patterns(
     '',
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin_site_bigsurvey.urls)),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^', include('webapp.urls', namespace='webapp')),
     url(r'^ckeditor/', include('ckeditor.urls')),

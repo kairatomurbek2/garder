@@ -42,6 +42,7 @@
             {% endblock %}
             {% block userlinks %}
                 {% url 'django-admindocs-docroot' as docsroot %}
+                <a href="{% url 'admin:backups' %}">{% trans 'Manage backups' %}</a> /
                 {% if docsroot %}
                     <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
                 {% endif %}

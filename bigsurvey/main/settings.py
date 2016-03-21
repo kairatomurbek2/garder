@@ -206,3 +206,11 @@ paypalrestsdk.configure({
     'client_id': PAYPAL_CLIENT_ID,
     'client_secret': PAYPAL_CLIENT_SECRET,
 })
+
+
+#backup settings
+BACKUPS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'backups')
+
+CREATE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'create_backup.sh')
+
+RESTORE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'restore_backup.sh')

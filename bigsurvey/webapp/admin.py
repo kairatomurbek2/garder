@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext as _
 from django import forms
-from redactor.widgets import RedactorEditor
 from reversion_compare.admin import CompareVersionAdmin
-
+from bigsurveyadminsite import admin_site_bigsurvey
 import models
+
 
 
 class EmployeeInline(admin.StackedInline):
@@ -50,39 +50,38 @@ class LetterTypeAdmin(CompareVersionAdmin):
 class PriceAdmin(CompareVersionAdmin):
     list_display = 'price', 'price_type', 'start_date', 'end_date'
 
-
-admin.site.unregister(User)
-admin.site.register(User, EmployeeAdmin)
-admin.site.register(models.AssemblyLocation)
-admin.site.register(models.BPManufacturer)
-admin.site.register(models.BPSize)
-admin.site.register(models.CustomerCode)
-admin.site.register(models.FloorsCount)
-admin.site.register(models.Hazard)
-admin.site.register(models.Regulation)
-admin.site.register(models.HazardType)
-admin.site.register(models.ICPointType)
-admin.site.register(models.Letter)
-admin.site.register(models.LetterType, LetterTypeAdmin)
-admin.site.register(models.Orientation)
-admin.site.register(models.PWS)
-admin.site.register(models.ServiceType)
-admin.site.register(models.Site)
-admin.site.register(models.SiteType)
-admin.site.register(models.SiteUse)
-admin.site.register(models.SourceType)
-admin.site.register(models.Special)
-admin.site.register(models.Survey, SurveyAdmin)
-admin.site.register(models.SurveyType)
-admin.site.register(models.Test, TestAdmin)
-admin.site.register(models.TestManufacturer)
-admin.site.register(models.TestModel)
-admin.site.register(models.AssemblyStatus)
-admin.site.register(models.SiteStatus)
-admin.site.register(models.StaticText)
-admin.site.register(models.ImportLog)
-admin.site.register(models.Invite)
-admin.site.register(models.TesterCert)
-admin.site.register(models.TestKit)
-admin.site.register(models.BPDevice)
-admin.site.register(models.PriceHistory, PriceAdmin)
+admin_site_bigsurvey.unregister(User)
+admin_site_bigsurvey.register(User, EmployeeAdmin)
+admin_site_bigsurvey.register(models.AssemblyLocation)
+admin_site_bigsurvey.register(models.BPManufacturer)
+admin_site_bigsurvey.register(models.BPSize)
+admin_site_bigsurvey.register(models.CustomerCode)
+admin_site_bigsurvey.register(models.FloorsCount)
+admin_site_bigsurvey.register(models.Hazard)
+admin_site_bigsurvey.register(models.Regulation)
+admin_site_bigsurvey.register(models.HazardType)
+admin_site_bigsurvey.register(models.ICPointType)
+admin_site_bigsurvey.register(models.Letter)
+admin_site_bigsurvey.register(models.LetterType, LetterTypeAdmin)
+admin_site_bigsurvey.register(models.Orientation)
+admin_site_bigsurvey.register(models.PWS)
+admin_site_bigsurvey.register(models.ServiceType)
+admin_site_bigsurvey.register(models.Site)
+admin_site_bigsurvey.register(models.SiteType)
+admin_site_bigsurvey.register(models.SiteUse)
+admin_site_bigsurvey.register(models.SourceType)
+admin_site_bigsurvey.register(models.Special)
+admin_site_bigsurvey.register(models.Survey, SurveyAdmin)
+admin_site_bigsurvey.register(models.SurveyType)
+admin_site_bigsurvey.register(models.Test, TestAdmin)
+admin_site_bigsurvey.register(models.TestManufacturer)
+admin_site_bigsurvey.register(models.TestModel)
+admin_site_bigsurvey.register(models.AssemblyStatus)
+admin_site_bigsurvey.register(models.SiteStatus)
+admin_site_bigsurvey.register(models.StaticText)
+admin_site_bigsurvey.register(models.ImportLog)
+admin_site_bigsurvey.register(models.Invite)
+admin_site_bigsurvey.register(models.TesterCert)
+admin_site_bigsurvey.register(models.TestKit)
+admin_site_bigsurvey.register(models.BPDevice)
+admin_site_bigsurvey.register(models.PriceHistory, PriceAdmin)

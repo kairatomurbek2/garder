@@ -1,0 +1,52 @@
+{% extends 'admin/index.html' %}
+{% load i18n %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+{% endblock %}
+{% block content %}
+    <form action="{% url "admin:backups" %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table style="text-align: center; border: none; vertical-align: middle;">
+        <tr>
+            <td>
+                {% trans "Backups Available" %}:
+            </td>
+            <td>
+                {{ form.backup }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="{% trans 'Restore selected' %}" name="_restore" style="width: 100%">
+            </td>
+            <td>
+                <input type="submit" value="{% trans 'Restore latest' %}" name="_latest" style="width: 100%">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="{% trans 'Download selected' %}" name="_download" style="width: 100%">
+            </td>
+            <td>
+                <input type="submit" value="{% trans 'Create backup' %}" name="_create" style="width: 100%">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-top: 2px solid #000000">
+                {{ form.upload_backup }}
+                <span>{{ form.upload_backup.errors }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="{% trans 'Upload saved backup' %}" name="_upload" style="width: 100%">
+            </td>
+        </tr>
+    </table>
+    </form>
+{% endblock %}
+{% block sidebar %}
+{% endblock %}

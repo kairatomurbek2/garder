@@ -1,7 +1,8 @@
 from ast import literal_eval
 from django.conf import settings
-
+from cStringIO import StringIO
 import models
+import os
 import re
 from captcha.fields import ReCaptchaField
 from django import forms
@@ -15,6 +16,7 @@ from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
     TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES
 from webapp.validators import validate_excel_file
+import tarfile
 
 
 class PWSForm(forms.ModelForm):
@@ -715,3 +717,39 @@ class PWSUserAddForm(UserCreationForm):
     class Meta:
         model = models.User
         fields = ('username', 'email', 'first_name', 'last_name', 'groups')
+
+
+class BackupForm(forms.Form):
+    backup = forms.ChoiceField(label=_('Backups Available'))
+    upload_backup = forms.FileField(label=_('Upload Backup'), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(BackupForm, self).__init__(*args, **kwargs)
+        files = os.listdir(settings.BACKUPS_DIR)
+        files.sort(key=lambda x: os.path.getmtime(os.path.join(settings.BACKUPS_DIR, x)), reverse=True)
+        self.fields["backup"].choices = zip(files, files)
+
+    def is_valid(self):
+        valid = super(BackupForm, self).is_valid()
+        if valid:
+            backup = self.cleaned_data.get("upload_backup")
+            if backup:
+                backup_data = StringIO()
+                for chunk in backup.chunks():
+                    backup_data.write(chunk)
+                backup_data.seek(0)
+                try:
+                    tar = tarfile.open(fileobj=backup_data, mode='r:gz')
+                    tar_content = tar.getnames()
+                    if 'webapp' in tar_content:
+                        matcher = re.compile("^bigsurvey_")
+                        if any(matcher.match(name) for name in tar_content):
+                            return True
+                    self.errors['upload_backup'] = _('ERROR: Backup contents are missing')
+                    backup_data.close()
+                    return False
+                except tarfile.TarError:
+                    self.errors['upload_backup'] = _('ERROR: Backup is corrupt or is not archive')
+                    backup_data.close()
+                    return False
+        return valid
