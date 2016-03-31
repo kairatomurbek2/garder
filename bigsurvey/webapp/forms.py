@@ -613,7 +613,7 @@ class UserSearchForm(forms.Form):
 
 
 class UserInviteForm(forms.Form):
-    pws = forms.ModelMultipleChoiceField(queryset=models.PWS.active_only.none(), required=True)
+    pws = forms.ModelMultipleChoiceField(queryset=models.PWS.active_only.none(), required=True, label=_('PWS'))
     user = forms.ModelChoiceField(queryset=models.User.objects.all(), required=True)
     prefix = 'invite'
 
