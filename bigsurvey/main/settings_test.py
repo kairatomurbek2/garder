@@ -23,3 +23,11 @@ FIREFOX_PROFILE_DIR = os.path.join(os.path.dirname(BASE_DIR), 'firefox-profile')
 REINITIALIZE_DATABASE = True
 
 USE_CAPTHCA = False
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
