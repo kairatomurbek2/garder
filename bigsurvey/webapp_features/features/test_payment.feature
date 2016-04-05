@@ -15,6 +15,7 @@ Feature: Test payment
     And I click "payment_creation" link
     And I wait until step 2 is appeared
     And I click "approval" link
+    And I click "Pay with Debit or Credit Card" link
     And I login in PayPal
     And I confirm payment
     Then I should be redirected to "unpaid_test_list" page
