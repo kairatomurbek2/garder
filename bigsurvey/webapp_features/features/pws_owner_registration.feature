@@ -19,15 +19,14 @@ Feature: PWS Owner Registration
         And I authenticate with "EastBoy" "password"
         Then I See the list of following sites
 
-    Scenario: Payment for demo trial
-        Given The system has data for the demo trial
-        And I authenticate with "EastBoy" "password"
-        And I click Pay and activate button
-        And I click "payment_creation" link
-        And I wait until step 2 is appeared
-        And I click "approval" link
-        And click url
-        And I login in PayPal
-        And I confirm payment
-        Then I should be redirected to "site" page
-        And I should see "payment was completed successfully" message
+#    Scenario: Payment for demo trial
+#        Given The system has data for the demo trial
+#        And I authenticate with "EastBoy" "password"
+#        And I click Pay and activate button
+#        And I click "payment_creation" link
+#        And I wait until step 2 is appeared
+#        And I click "approval" link
+#        And I login in PayPal
+#        And I confirm payment
+#        Then I should be redirected to "site" page
+#        And I should see "payment was completed successfully" message
