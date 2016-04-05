@@ -30,6 +30,13 @@ def click_link(step, link_name):
     link.click()
 
 
+@step('click url')
+def click_url(step):
+    elements = helper.find(Xpath.Pattern.link_a)
+    import time; time.sleep(6)
+    elements.click()
+
+
 @step('I should be at "(http.*)"')
 def check_url(step, url):
     assert world.browser.current_url == url, 'Current URL is %s, expected %s' % (world.browser.current_url, url)

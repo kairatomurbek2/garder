@@ -117,6 +117,7 @@ class Xpath:
         button = './/button[@name="%s"]'
         button_with_label = './/button[contains(., "%s")]'
         link = './/a[@id="%s_link"]'
+        link_a = './/a[@class="btn btn-secondary full submit ng-binding ng-scope"]'
         link_by_href = './/a[@href="%s"]'
         link_by_exact_text = './/a[. = "%s"]'
         link_by_substr = './/a[contains(., "%s")]'

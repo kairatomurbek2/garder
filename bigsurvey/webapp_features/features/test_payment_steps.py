@@ -33,7 +33,7 @@ def wait_until_step_2_is_appeared(step):
 
 @step('I login in PayPal')
 def login_in_paypal(step):
-    import time; time.sleep(3)
+    import time; time.sleep(6)
     login_button = helper.find(Xpath.Paypal.login_button)
     if login_button:
         login_button.click()
