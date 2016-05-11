@@ -1484,49 +1484,14 @@
     "name": "Administrative Authority",
     "permissions": [
       [
-        "access_to_all_hazards",
+        "own_multiple_pws",
         "webapp",
-        "hazard"
+        "pws"
       ],
       [
-        "browse_hazard",
+        "browse_pws",
         "webapp",
-        "hazard"
-      ],
-      [
-        "access_to_all_sites",
-        "webapp",
-        "site"
-      ],
-      [
-        "browse_site",
-        "webapp",
-        "site"
-      ],
-      [
-        "export_xls",
-        "webapp",
-        "site"
-      ],
-      [
-        "access_to_all_surveys",
-        "webapp",
-        "survey"
-      ],
-      [
-        "browse_survey",
-        "webapp",
-        "survey"
-      ],
-      [
-        "access_to_all_tests",
-        "webapp",
-        "test"
-      ],
-      [
-        "browse_test",
-        "webapp",
-        "test"
+        "pws"
       ]
     ]
   },
