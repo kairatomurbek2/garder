@@ -22,9 +22,9 @@ class PWSListView(BaseTemplateView):
         user = self.request.user
         context = super(PWSListView, self).get_context_data(**kwargs)
         if user.has_perm('webapp.browse_all_pws'):
-            pws_list = models.PWS.active_only.all()
+            pws_list = models.PWS.active_only.all().order_by('-pk')
         elif user.has_perm('webapp.own_multiple_pws'):
-            pws_list = user.employee.pws.all()
+            pws_list = user.employee.pws.all().order_by('-pk')
         else:
             raise Http404
         context['pws_list'] = pws_list

@@ -72,7 +72,7 @@ class LetterListView(BaseTemplateView):
         if self.request.user.has_perm('webapp.full_letter_access'):
             return models.Letter.objects.all().order_by('-pk')
         elif self.request.user.has_perm('webapp.pws_letter_access'):
-            return models.Letter.objects.filter(site__pws__in=self.request.user.employee.pws.all())
+            return models.Letter.objects.order_by('-pk').filter(site__pws__in=self.request.user.employee.pws.all())
         else:
             raise Http404
 

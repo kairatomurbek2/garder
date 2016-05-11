@@ -51,9 +51,9 @@ class HomeView(BaseTemplateView):
     def _get_sites(self):
         sites = models.Site.active_only.none()
         if self.request.user.has_perm('webapp.access_to_pws_sites'):
-            sites = models.Site.active_only.filter(pws__in=self.request.user.employee.pws.all())
+            sites = models.Site.active_only.order_by('-pk').filter(pws__in=self.request.user.employee.pws.all())
         if self.request.user.has_perm('webapp.access_to_all_sites'):
-            sites = models.Site.active_only.all()
+            sites = models.Site.active_only.all().order_by('-pk')
         return sites.filter(status__site_status__iexact=SITE_STATUS.ACTIVE)
 
     def _user_is_in_demo_trial(self):
