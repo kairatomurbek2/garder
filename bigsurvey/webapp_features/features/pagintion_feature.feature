@@ -7,8 +7,8 @@ Feature: Pagination
     When I open "site_list" page
     Then I should see following
       | text       |
-      | TestCity0  |
-      | TestCity38 |
+      | TestCity99 |
+      | TestCity92 |
     And I should not see following
       | text       |
       | TestCity48 |
@@ -16,12 +16,12 @@ Feature: Pagination
     Then I should see following
       | text       |
       | TestCity48 |
-      | TestCity88 |
+      | TestCity49 |
     And I should not see following
       | text       |
       | TestCity97 |
     When I turn to the "3" page
     Then I should see following
-      | text       |
-      | TestCity97 |
-      | TestCity99 |
+      | text    |
+      | Raleigh |
+      | Seattle |
