@@ -8,6 +8,8 @@ from webapp.actions.demo_trial import TrialPeriodChecker, \
 class DemoTrialWatchDog(object):
     def process_request(self, request):
         user = request.user
+        if user.groups.filter(name=Groups.ad_auth):
+            return
         try:
             pws = user.employee.get_pws_list()
         except AttributeError:
