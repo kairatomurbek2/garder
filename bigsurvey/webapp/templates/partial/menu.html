@@ -1,10 +1,18 @@
-{% load i18n staticfiles %}
+{% load i18n staticfiles common %}
 <ul class="uk-navbar-nav uk-hidden-small" data-content="menu">
+    {% if request.user|has_group:"Administrative Authority" %}
     <li>
+        <a class="uk-navbar-brand uk-hidden-small" href="{% url 'webapp:pws_list' %}">
+            <img src="{% static 'img/garder-logotype.png' %}" class="logo-garder"/>
+        </a>
+    </li>
+        {% else %}
+        <li>
         <a class="uk-navbar-brand uk-hidden-small" href="{% url 'webapp:home' %}">
             <img src="{% static 'img/garder-logotype.png' %}" class="logo-garder"/>
         </a>
     </li>
+{% endif %}
     {% if perms.webapp.browse_site %}
         <li><a id="sites_menu_link" href="{% url "webapp:home" %}">{% trans "Sites" %}</a></li>
     {% endif %}

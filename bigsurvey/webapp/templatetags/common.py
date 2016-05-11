@@ -26,3 +26,8 @@ def has_access(user, access):
 @register.filter(name="has_group")
 def has_access(user, group_name):
     return group_name in [group.name for group in user.groups.all()]
+
+
+@register.filter(name='has_group')
+def has_group(user, group_name):
+    return user.groups.filter(name=group_name).exists()
