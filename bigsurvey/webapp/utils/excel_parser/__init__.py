@@ -22,10 +22,6 @@ class DateFormatError(Exception):
     pass
 
 
-class CustomerNumberError(Exception):
-    pass
-
-
 class ForeignKeyError(Exception):
     pass
 

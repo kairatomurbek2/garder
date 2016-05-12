@@ -1,11 +1,10 @@
 from abc import ABCMeta, abstractmethod
 from datetime import datetime
-from django.db import IntegrityError
 from django.db.models import NOT_PROVIDED
 from main.parameters import Messages
 from webapp import models
 from webapp.utils.excel_parser import FOREIGN_KEY_FIELDS, CUST_NUMBER_FIELD_NAME, DATE_FIELDS, \
-    DateFormatError, ForeignKeyError, CustomerNumberError, RequiredValueIsEmptyError, NUMERIC_FIELDS, NumericValueError
+    DateFormatError, ForeignKeyError, RequiredValueIsEmptyError, NUMERIC_FIELDS, NumericValueError
 
 
 class ValueCheckerFactory(object):
@@ -13,9 +12,7 @@ class ValueCheckerFactory(object):
     def get_checker(cls, field_name, **kwargs):
         model_field = models.Site._meta.get_field(field_name)
         required = not model_field.null and model_field.default == NOT_PROVIDED
-        if cls._is_customer_number_field(field_name):
-            builder = CustomerNumberValueCheckerBuilder()
-        elif cls._is_foreign_key_field(field_name):
+        if cls._is_foreign_key_field(field_name):
             model = model_field.rel.to
             builder = ForeignKeyValueCheckerBuilder()
             builder.set_required(required)
@@ -71,15 +68,6 @@ class RequiredValueCheckerBuilder(ValueCheckerBuilder):
         return required_value_checker
 
 
-class CustomerNumberValueCheckerBuilder(RequiredValueCheckerBuilder):
-    def build(self):
-        # Customer Number always required
-        self.set_required(True)
-        customer_number_value_checker = CustomerNumberValueChecker()
-        customer_number_value_checker.required = self._required
-        return customer_number_value_checker
-
-
 class ForeignKeyValueCheckerBuilder(RequiredValueCheckerBuilder):
     _model = None
 
@@ -129,17 +117,6 @@ class RequiredValueChecker(ValueChecker):
     def check(self, value, coords):
         if self.required and not value:
             raise RequiredValueIsEmptyError(Messages.Import.required_value_is_empty % coords)
-
-
-class CustomerNumberValueChecker(RequiredValueChecker):
-    def __init__(self):
-        self._customer_numbers = {}
-
-    def check(self, value, coords):
-        super(CustomerNumberValueChecker, self).check(value, coords)
-        if value in self._customer_numbers:
-            raise CustomerNumberError(Messages.Import.duplicate_cust_numbers % (self._customer_numbers[value], coords))
-        self._customer_numbers[value] = coords
 
 
 class ForeignKeyValueChecker(RequiredValueChecker):

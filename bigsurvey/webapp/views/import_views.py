@@ -4,6 +4,7 @@ import time
 import os
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse
 from django.db.models import NOT_PROVIDED
@@ -23,6 +24,7 @@ class ImportView(BaseFormView):
     form_class = ImportForm
 
     def get_form(self, form_class):
+        self._delete_cached_data()
         form = super(ImportView, self).get_form(form_class)
         if self.request.user.has_perm('webapp.access_to_all_sites'):
             form.fields['pws'] = ModelChoiceField(queryset=models.PWS.objects.all())
@@ -47,7 +49,7 @@ class ImportView(BaseFormView):
             self.request.session['import_pws_pk'] = form.cleaned_data['pws'].pk
         except KeyError:
             self.request.session['import_pws_pk'] = self.request.user.employee.pws.all()[0].pk
-        self._delete_cached_data()
+        self.request.session['import_update_only'] = form.cleaned_data.get('update_only')
         return super(ImportView, self).form_valid(form)
 
     def _delete_previous_tmp_files(self):
@@ -189,8 +191,6 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
                 self.formset.add_error(error)
             for error in e.date_format_errors:
                 self.formset.add_error(error)
-            for error in e.customer_number_errors:
-                self.formset.add_error(error)
             for error in e.foreign_key_errors:
                 self.formset.add_error(error)
             for error in e.numeric_errors:
@@ -203,14 +203,17 @@ class ImportMappingsProcessView(ImportMappingsFormsetMixin):
         self.excel_parser.check_constraints(mappings, date_format)
         import_log = models.ImportLog.objects.create(user=self.request.user, pws=pws)
         self.request.session['import_log_pk'] = import_log.pk
-        self._run_background_parser(self.request.session['import_filename'], date_format, import_log, mappings)
+        update_only = self.request.session.get('import_update_only')
+        self._run_background_parser(self.request.session['import_filename'], date_format,
+                                    import_log, mappings, update_only)
 
-    def _run_background_parser(self, filename, date_format, import_log, mappings):
+    def _run_background_parser(self, filename, date_format, import_log, mappings, update_only):
         background_runner = BackgroundExcelParserRunner()
         background_runner.filename = filename
         background_runner.mappings = mappings
         background_runner.date_format = date_format
         background_runner.import_log_pk = import_log.pk
+        background_runner.update_only = update_only
         background_runner.execute()
 
     def get_formset_data(self):
@@ -221,15 +224,41 @@ class ImportProgressView(BaseTemplateView):
     permission = 'webapp.access_to_import'
 
     def get(self, request, *args, **kwargs):
-        import_log_pk = self.request.session['import_log_pk']
-        import_log = models.ImportLog.objects.get(pk=import_log_pk)
-        progress = import_log.progress
-        if import_log.progress == FINISHED:
-            messages.success(self.request, Messages.Import.import_was_finished % (
-                import_log.added_sites.count(), import_log.updated_sites.count(), import_log.deactivated_sites.count(), reverse('webapp:import_log_list')))
+        try:
+            import_log_pk = self.request.session['import_log_pk']
+            import_log = models.ImportLog.objects.get(pk=import_log_pk)
+            progress = import_log.progress
+            if progress == FINISHED:
+                if import_log.duplicates_file:
+                    messages.warning(self.request, Messages.Import.import_finished_duplicates % (
+                        import_log.duplicates_count,
+                        import_log.duplicates_file.url,
+                        import_log.added_sites.count(),
+                        import_log.updated_sites.count(),
+                        import_log.deactivated_sites.count(),
+                        reverse('webapp:import_log_list')
+                    ))
+                else:
+                    messages.success(self.request, Messages.Import.import_was_finished % (
+                        import_log.added_sites.count(),
+                        import_log.updated_sites.count(),
+                        import_log.deactivated_sites.count(),
+                        reverse('webapp:import_log_list')
+                    ))
+                del self.request.session['import_log_pk']
+                del self.request.session['import_pws_pk']
+                del self.request.session['import_date_format']
+        except ObjectDoesNotExist as e:
             del self.request.session['import_log_pk']
             del self.request.session['import_pws_pk']
             del self.request.session['import_date_format']
+            print e.message
+            progress = FINISHED
+        except KeyError as e:
+            print e.message
+            progress = FINISHED
+        except Exception as e:
+            progress = FINISHED
         return JsonResponse({'progress': progress})
 
 
@@ -292,4 +321,3 @@ class ImportLogDeactivatedSitesView(ImportLogSitesMixin):
 
     def get_header(self, import_log):
         return Messages.Import.deactivated_sites_header % self.get_datetime_readable_value(import_log)
-

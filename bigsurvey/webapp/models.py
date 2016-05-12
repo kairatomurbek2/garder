@@ -623,7 +623,7 @@ class Site(models.Model):
     class Meta:
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
-        unique_together = 'pws', 'cust_number'
+        unique_together = 'pws', 'cust_number', 'address1', 'street_number'
         permissions = (
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),
@@ -1016,7 +1016,11 @@ class ImportLog(models.Model):
     datetime = models.DateTimeField(auto_now_add=True, verbose_name=_('Datetime of import'))
     added_sites = models.ManyToManyField(Site, related_name='added_imports', verbose_name=_('Added sites'))
     updated_sites = models.ManyToManyField(Site, related_name='updated_imports', verbose_name=_('Updated sites'))
-    deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports', verbose_name=_('Deactivated sites'))
+    deactivated_sites = models.ManyToManyField(Site, related_name='deactivated_imports',
+                                               verbose_name=_('Deactivated sites'))
+    duplicates_count = models.IntegerField(verbose_name=_('Duplicates number'), default=0, blank=True)
+    duplicates_file = models.FileField(upload_to='excel_files/', null=True, blank=True,
+                                       verbose_name=_('Duplicate accounts file'))
     progress = models.IntegerField(default=0, verbose_name=_('Progress of import'))
 
     def get_pws_list(self):

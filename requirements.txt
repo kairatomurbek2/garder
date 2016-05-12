@@ -42,6 +42,7 @@ testtools==1.5.0
 unittest2==0.8.0
 xhtml2pdf==0.0.6
 xlrd==0.9.3
+xlwt==1.0.0
 XlsxWriter==0.7.7
 GitPython==1.0.1
 django-reversion==1.10.0

@@ -13,6 +13,7 @@
                     <th>{% trans "Added sites" %}</th>
                     <th>{% trans "Updated sites" %}</th>
                     <th>{% trans "Deactivated sites" %}</th>
+                    <th>{% trans "Duplicates file" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,11 @@
                         <td data-content="added_sites"><a href="{% url 'webapp:import_log_added_sites' import_log.pk %}">{{ import_log.added_sites.count }}</a></td>
                         <td data-content="updated_sites"><a href="{% url 'webapp:import_log_updated_sites' import_log.pk %}">{{ import_log.updated_sites.count }}</a></td>
                         <td data-content="deactivated_sites"><a href="{% url 'webapp:import_log_deactivated_sites' import_log.pk %}">{{ import_log.deactivated_sites.count }}</a></td>
+                        <td>
+                            {% if import_log.duplicates_file %}
+                                <a href="{{ import_log.duplicates_file.url }}">{% trans "Download" %}</a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

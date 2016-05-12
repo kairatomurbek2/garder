@@ -16,6 +16,7 @@ class Command(BaseCommand):
         make_option('--mappings', help='Mappings between Excel fields and Site Model fields'),
         make_option('--import_log_pk', help='Import Log\'s PK'),
         make_option('--date_format', help='Date Format'),
+        make_option('--update_only', help='Only update or add new sites but not deactivate missing ones')
     )
 
     def handle(self, *args, **options):
@@ -23,6 +24,7 @@ class Command(BaseCommand):
         mappings = json.loads(options['mappings'])
         import_log_pk = int(options['import_log_pk'])
         date_format = options['date_format']
+        update_only = bool(int(options['update_only']))
 
         excel_parser = ExcelParser(os.path.join(settings.EXCEL_FILES_DIR, filename))
-        excel_parser.parse_and_save(mappings, import_log_pk, date_format)
+        excel_parser.parse_and_save(mappings, import_log_pk, date_format, update_only)

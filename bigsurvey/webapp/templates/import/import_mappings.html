@@ -114,7 +114,7 @@
     <div id="import-progress" class="uk-modal">
         <div class="uk-modal-dialog">
             <div class="uk-modal-spinner valign-center-modal-spinner spinner-crossbrowser"></div>
-            <p class="uk-text-center uk-text-primary">{% trans 'Import was started. You can see the progress below.' %}</p>
+            <p class="uk-text-center uk-text-primary">{% trans 'Import has started. You can see the progress below.' %}</p>
 
             <div class="uk-progress uk-progress-striped uk-active">
                 <div class="uk-progress-bar" style="width: 0;">0%</div>
@@ -147,7 +147,7 @@
                             }
                         }
                     })
-                }, 1000);
+                }, 5000);
             });
         {% endif %}
     </script>

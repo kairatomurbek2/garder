@@ -509,6 +509,7 @@ class ImportForm(forms.Form):
     file = forms.FileField(validators=[validate_excel_file])
     date_format = forms.ChoiceField(choices=DATEFORMAT_CHOICES)
     date_format_other = forms.CharField(required=False)
+    update_only = forms.BooleanField(required=False, initial=False)
 
 
 class ImportMappingsForm(forms.Form):

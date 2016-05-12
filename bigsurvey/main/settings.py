@@ -152,7 +152,9 @@ MEDIA = os.path.join(BASE_DIR, 'uploads/media')
 
 MEDIA_URL = '/uploads/'
 
-EXCEL_FILES_DIR = os.path.join(MEDIA_ROOT, 'excel_files')
+EXCEL_FILES_DIR_NAME = 'excel_files'
+
+EXCEL_FILES_DIR = os.path.join(MEDIA_ROOT, EXCEL_FILES_DIR_NAME)
 
 EXCEL_EXPORT_DIR = os.path.join(MEDIA_ROOT, 'excel_export')
 
