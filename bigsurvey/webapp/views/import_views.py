@@ -235,15 +235,13 @@ class ImportProgressView(BaseTemplateView):
                         import_log.duplicates_file.url,
                         import_log.added_sites.count(),
                         import_log.updated_sites.count(),
-                        import_log.deactivated_sites.count(),
-                        reverse('webapp:import_log_list')
+                        import_log.deactivated_sites.count()
                     ))
                 else:
                     messages.success(self.request, Messages.Import.import_was_finished % (
                         import_log.added_sites.count(),
                         import_log.updated_sites.count(),
-                        import_log.deactivated_sites.count(),
-                        reverse('webapp:import_log_list')
+                        import_log.deactivated_sites.count()
                     ))
                 del self.request.session['import_log_pk']
                 del self.request.session['import_pws_pk']
@@ -256,8 +254,6 @@ class ImportProgressView(BaseTemplateView):
             progress = FINISHED
         except KeyError as e:
             print e.message
-            progress = FINISHED
-        except Exception as e:
             progress = FINISHED
         return JsonResponse({'progress': progress})
 

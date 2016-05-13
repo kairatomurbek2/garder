@@ -143,7 +143,7 @@
                             var percentage = response.progress + '%';
                             $('#import-progress').find('.uk-progress-bar').css('width', percentage).text(percentage);
                             if (response.progress == '100') {
-                                window.location.href = Urls.home;
+                                window.location.href = "{% url 'webapp:import_log_list' %}";
                             }
                         }
                     })
