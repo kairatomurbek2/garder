@@ -623,7 +623,7 @@ class Site(models.Model):
     class Meta:
         verbose_name = _("Site")
         verbose_name_plural = _("Sites")
-        unique_together = 'pws', 'cust_number', 'address1', 'street_number'
+        unique_together = 'pws', 'cust_number', 'address1', 'street_number', 'meter_number'
         permissions = (
             ('browse_site', _('Can browse Site')),
             ('access_to_all_sites', _('Has access to all Sites')),

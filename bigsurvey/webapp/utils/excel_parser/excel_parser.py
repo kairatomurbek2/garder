@@ -186,9 +186,11 @@ class ExcelParser(object):
     def find_duplicates(self, mappings):
         start_row_number = self.excel_document.headers_row_number + 1
         cust_account_column_number = mappings.get('cust_number')
+        meter_number_column_number = mappings.get('meter_number')
         service_address_column_number = mappings.get('address1')
         street_number_column_number = mappings.get('street_number')
-        columns_to_check = (cust_account_column_number, service_address_column_number, street_number_column_number)
+        columns_to_check = (cust_account_column_number, meter_number_column_number,
+                            service_address_column_number, street_number_column_number)
         columns_to_check_count = len(columns_to_check)
         for row_number_1 in xrange(start_row_number, self.excel_document.num_rows-1):
             if row_number_1 not in self.duplicate_account_rows:
@@ -251,21 +253,27 @@ class ExcelParser(object):
 
         cust_account_column_number = mappings.pop('cust_number')
         service_address_column_number = mappings.pop('address1')
+        meter_number_column_number = mappings.pop('meter_number')
         street_number_column_number = mappings.pop('street_number')
 
         for row_number in xrange(start_row_number, self.excel_document.num_rows):
             if row_number not in self.duplicate_account_rows:
                 cust_number = self.excel_document.get_cell_value_by_coords(row_number, cust_account_column_number)
+                meter_number = self.excel_document.get_cell_value_by_coords(row_number, meter_number_column_number)
                 service_address = self.excel_document.get_cell_value_by_coords(row_number, service_address_column_number)
                 street_number = self.excel_document.get_cell_value_by_coords(row_number, street_number_column_number)
                 try:
-                    site = models.Site.objects.get(pws=import_log.pws, cust_number=cust_number,
-                                                   address1=service_address, street_number=street_number)
+                    site = models.Site.objects.get(pws=import_log.pws,
+                                                   cust_number=cust_number,
+                                                   meter_number=meter_number,
+                                                   address1=service_address,
+                                                   street_number=street_number)
                     deactivated_sites_watcher.remove(site)
                 except models.Site.DoesNotExist:
                     site = models.Site()
                     site.pws = import_log.pws
                     site.cust_number = cust_number
+                    site.meter_number = meter_number
                     site.street_number = street_number
                     site.address1 = service_address
                 site.status = active_status
@@ -297,11 +305,15 @@ class ExcelParser(object):
                 progress_watcher.increment_processed_rows()
             else:
                 cust_number = self.excel_document.get_cell_value_by_coords(row_number, cust_account_column_number)
+                meter_number = self.excel_document.get_cell_value_by_coords(row_number, meter_number_column_number)
                 service_address = self.excel_document.get_cell_value_by_coords(row_number, service_address_column_number)
                 street_number = self.excel_document.get_cell_value_by_coords(row_number, street_number_column_number)
                 try:
-                    site = models.Site.objects.get(pws=import_log.pws, cust_number=cust_number,
-                                                   address1=service_address, street_number=street_number)
+                    site = models.Site.objects.get(pws=import_log.pws,
+                                                   cust_number=cust_number,
+                                                   meter_number=meter_number,
+                                                   address1=service_address,
+                                                   street_number=street_number)
                     deactivated_sites_watcher.remove(site)
                 except models.Site.DoesNotExist:
                     pass
