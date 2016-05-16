@@ -266,3 +266,10 @@ def click_element_by_xpath(xpath):
 def sleep_step(step, seconds):
     # to debug f***ing tests
     time.sleep(float(seconds))
+
+
+@step('I should see text "(.+)" (\d+) times')
+def see_text_n_times(step, text, n):
+    elements = helper.find_multiple(Xpath.Pattern.element_with_text % text)
+    m = len(elements)
+    assert(m == n, "Expected %s items, found %s." % (n, m))

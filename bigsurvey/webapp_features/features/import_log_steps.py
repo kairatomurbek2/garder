@@ -30,6 +30,13 @@ def check_import_sites_count(step):
     assert data['deactivated_sites'] == deactivated_sites, 'Expected %s deactivated sites, found %s' % (data['deactivated_sites'], deactivated_sites)
 
 
+@step('Last import should have duplicates file attached')
+def check_import_has_download_link(step):
+    import_table = helper.find(Xpath.Pattern.table % 'import_logs')
+    last_import_row = helper.find(Xpath.Pattern.table_row_by_number % 1, import_table)
+    helper.find(Xpath.Pattern.link_by_exact_text % "Download", last_import_row)
+
+
 @step('The is performed import from "(.*)" by "(.*)" into "(.*)"')
 def create_import(step, date, username, pws_number):
     user = models.User.objects.get(username=username)

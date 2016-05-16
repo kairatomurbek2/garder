@@ -65,3 +65,8 @@ def check_incorrect_date_format_message(step, params):
     params = tuple(params.split(DELIMITER))
     text = Messages.Import.required_value_is_empty % params
     helper.check_text_exists_inside_element(Xpath.import_mappings_form_errors, text, '"%s" is not on page.' % text)
+
+
+@step('I should see (warning|danger|success|info) message with text "(.+)"')
+def see_message_with_text(step, message_type, text):
+    helper.check_text_exists_inside_element(Xpath.message % message_type, text, '"%s" is not on page.' % text)

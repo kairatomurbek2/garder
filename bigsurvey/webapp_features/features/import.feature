@@ -36,9 +36,8 @@ Feature: Import from Excel files
     And Last import should have following data
       | added_sites | updated_sites | deactivated_sites |
       | 9           | 0             | 0                 |
-
-    When I open "home" page
-    Then I should see following
+    And I open "home" page
+    And I should see following
       | text      |
       | 110000110 |
       | 110000120 |
@@ -99,3 +98,46 @@ Feature: Import from Excel files
 #      | duplicate_cust_numbers.xlsx  | duplicate cust numbers  | A6 :: A10    |
 #      | foreign_key_error.xlsx       | foreign key error       | C7 :: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 :: 100 |
       | required_value_is_empty.xlsx | required value is empty | A4           |
+
+  @import_duplicates
+  Scenario: Import file contains duplicates
+    Given I logged in as "root"
+    And I open "import" page
+    And I fill in file input "file" with "duplicates.xlsx"
+    And I select "South Western PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y%m%d"
+    And I submit "import" form
+    When I submit "import-mappings" form
+    And I wait for 10 seconds
+    Then I should be at "import_log_list" page
+    And Last import should have following data
+      | added_sites | updated_sites | deactivated_sites |
+      | 9           | 0             | 0                 |
+    And I should see warning message with text "Import was finished but 4 duplicate accounts were not imported."
+    And Last import should have duplicates file attached
+
+  @import_only_update
+  Scenario: Importing without deactivation
+    Given I logged in as "root"
+    And I open "import" page
+    And I fill in file input "file" with "duplicates_fixed.xlsx"
+    And I select "White House PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y%m%d"
+    And I check "update_only"
+    And I submit "import" form
+    When I submit "import-mappings" form
+    And I wait for 10 seconds
+    Then I should be at "import_log_list" page
+    And Last import should have following data
+      | added_sites | updated_sites | deactivated_sites |
+      | 4           | 0             | 0                 |
+    And I open "home" page
+    And I should see following
+      | text      |
+      | QAZ2WSX2  |
+      | QAZ2WSX   |
+      | 110000200 |
+      | 110000301 |
+    And I should see text "110000301" 3 times

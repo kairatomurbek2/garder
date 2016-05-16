@@ -128,6 +128,9 @@ class Xpath:
         hazard_addition_submit_btn_three = './/button[@id="hazard-submit-button-3"]'
 
         # Specific
+        # looks for element but not for it's parents
+        element_with_text = './/*[contains(text(), "%s")]'
+        # looks for element and parents
         text_inside_element = './/*[contains(., "%s")]'
         table_row_by_number = './/tbody/tr[%d]'
         menu_item = './/a[@id="%s_menu_link"]'
@@ -157,6 +160,7 @@ class Xpath:
     canvas_menu = './/ul[@data-content="canvas-menu"]'
     more_link = './/li[@id="bfp_menu"]/a'
     import_mappings_form_errors = './/div[contains(@class, "uk-alert-danger")]/ul/li'
+    message = './/div[contains(@class, "uk-alert-%s")]'
     hazard_modal = './/div[@id="hazard-form-modal"]'
     pay_modal = './/div[@id="pay-modal"]'
     payment_step_2 = './/div[@data-content="step-2"]'
