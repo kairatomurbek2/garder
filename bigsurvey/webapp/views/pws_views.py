@@ -24,7 +24,10 @@ class PWSListView(BaseTemplateView):
         if user.has_perm('webapp.browse_all_pws'):
             pws_list = models.PWS.active_only.all().order_by('-pk')
         elif user.has_perm('webapp.own_multiple_pws'):
-            pws_list = user.employee.pws.all().order_by('-pk')
+            if user.groups.filter(name=Groups.ad_auth):
+                pws_list = user.employee.pws.filter(is_active=True).order_by('-pk')
+            else:
+                pws_list = user.employee.pws.all().order_by('-pk')
         else:
             raise Http404
         context['pws_list'] = pws_list
