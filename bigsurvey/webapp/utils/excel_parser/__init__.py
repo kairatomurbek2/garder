@@ -31,11 +31,10 @@ class NumericValueError(Exception):
 
 
 class ExcelValidationError(Exception):
-    def __init__(self, required_value_errors, date_format_errors, customer_number_errors,
+    def __init__(self, required_value_errors, date_format_errors,
                  foreign_key_errors, numeric_errors):
         self.required_value_errors = required_value_errors
         self.date_format_errors = date_format_errors
-        self.customer_number_errors = customer_number_errors
         self.foreign_key_errors = foreign_key_errors
         self.numeric_errors = numeric_errors
 

@@ -12,6 +12,11 @@ def open_import_log_list_page(step):
     step.given('I click "import_log" menu link')
 
 
+@step('I should be at "import_log_list" page')
+def check_import_log_list_page(step):
+    step.given('I should be at "%s"' % get_url(Urls.import_log))
+
+
 @step('Last import should have following data')
 def check_import_sites_count(step):
     import_table = helper.find(Xpath.Pattern.table % 'import_logs')

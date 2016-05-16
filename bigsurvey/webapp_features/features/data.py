@@ -44,6 +44,7 @@ class Urls:
     import_mappings = '/import-mappings/'
     import_mappings_process = '/import-mappings-process/'
     import_log_sites = '/import-log/%s/%s/'
+    import_log = '/import-log/'
     letter_type_edit = '/letter_type/%s/edit/'
     letter_type_list = '/letter_type/'
     user_invite = '/user-search/'
