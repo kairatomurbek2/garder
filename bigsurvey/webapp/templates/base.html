@@ -1,4 +1,4 @@
-{% load i18n staticfiles %}
+{% load i18n staticfiles common %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,18 +39,23 @@
         </ul>
     </div>
     <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
-
-    <div class="uk-navbar-brand uk-navbar uk-visible-small" id="brand-div">
-        <img src="{% static 'img/garder-logotype.png' %}" class="logo-garder">
-    </div>
+    {% if request.user|has_group:"Administrative Authority" %}
+        <a class="uk-navbar-brand uk-navbar uk-visible-small" id="brand-div" href="{% url 'webapp:pws_list' %}">
+            <img src="{% static 'img/garder-logotype.png' %}" class="logo-garder">
+        </a>
+    {% else %}
+        <a class="uk-navbar-brand uk-navbar uk-visible-small" id="brand-div" href="{% url 'webapp:home' %}">
+            <img src="{% static 'img/garder-logotype.png' %}" class="logo-garder">
+        </a>
+    {% endif %}
 </nav>
 <div class="navbar-hack"></div>
 {% if request.session.demo_days_left %}
-<div class="uk-text-center uk-panel uk-panel-box-primary" style="z-index: 1000;">
-    {% trans "You have " %}{{ request.session.demo_days_left }} days left until trial-period ends. Please, make <a
-        href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to use all
-    functionalities inside the system.
-</div>
+    <div class="uk-text-center uk-panel uk-panel-box-primary" style="z-index: 1000;">
+        {% trans "You have " %}{{ request.session.demo_days_left }} days left until trial-period ends. Please, make <a
+            href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to use all
+        functionalities inside the system.
+    </div>
 {% endif %}
 {% block content %}
 {% endblock %}
