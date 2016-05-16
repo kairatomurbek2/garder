@@ -4,7 +4,8 @@ from django.db.models import NOT_PROVIDED
 from main.parameters import Messages
 from webapp import models
 from webapp.utils.excel_parser import FOREIGN_KEY_FIELDS, CUST_NUMBER_FIELD_NAME, DATE_FIELDS, \
-    DateFormatError, ForeignKeyError, RequiredValueIsEmptyError, NUMERIC_FIELDS, NumericValueError
+    DateFormatError, ForeignKeyError, RequiredValueIsEmptyError, NUMERIC_FIELDS, NumericValueError, \
+    SPECIAL_FOREIGN_KEY_FIELDS
 
 
 class ValueCheckerFactory(object):
@@ -15,19 +16,20 @@ class ValueCheckerFactory(object):
         if cls._is_foreign_key_field(field_name):
             model = model_field.rel.to
             builder = ForeignKeyValueCheckerBuilder()
-            builder.set_required(required)
             builder.set_model(model)
+        elif cls._is_special_foreign_key_field(field_name):
+            builder = SpecialForeignKeyCheckerBuilder()
+            builder.set_model(SPECIAL_FOREIGN_KEY_FIELDS[field_name]['model'])
+            builder.set_field(SPECIAL_FOREIGN_KEY_FIELDS[field_name]['field'])
         elif cls._is_date_field(field_name):
             date_format = kwargs.pop('date_format')
             builder = DateValueCheckerBuilder()
-            builder.set_required(required)
             builder.set_date_format(date_format)
         elif cls._is_numeric_field(field_name):
             builder = NumericValueCheckerBuilder()
-            builder.set_required(required)
         else:
             builder = RequiredValueCheckerBuilder()
-            builder.set_required(required)
+        builder.set_required(required)
         return builder.build()
 
     @classmethod
@@ -37,6 +39,10 @@ class ValueCheckerFactory(object):
     @classmethod
     def _is_foreign_key_field(cls, field_name):
         return field_name in FOREIGN_KEY_FIELDS
+
+    @classmethod
+    def _is_special_foreign_key_field(cls, field_name):
+        return field_name in SPECIAL_FOREIGN_KEY_FIELDS
 
     @classmethod
     def _is_date_field(cls, field_name):
@@ -103,6 +109,26 @@ class NumericValueCheckerBuilder(RequiredValueCheckerBuilder):
         return numeric_checker
 
 
+class SpecialForeignKeyCheckerBuilder(RequiredValueCheckerBuilder):
+    _model = None
+    _field = None
+
+    def set_model(self, model):
+        self._model = model
+        return self
+
+    def set_field(self, field):
+        self._field = field
+        return self
+
+    def build(self):
+        special_checker = SpecialForeignKeyValueChecker()
+        special_checker.required = self._required
+        special_checker.model = self._model
+        special_checker.field = self._field
+        return special_checker
+
+
 class ValueChecker(object):
     __metaclass__ = ABCMeta
 
@@ -154,3 +180,22 @@ class NumericChecker(RequiredValueChecker):
                 float(value)
             except ValueError:
                 raise NumericValueError(Messages.Import.incorrect_numeric_value % coords)
+
+
+class SpecialForeignKeyValueChecker(RequiredValueChecker):
+    model = None
+    field = None
+    available_values = None
+
+    def get_available_values(self):
+        if self.available_values is None:
+            self.available_values = self.model.objects.values_list(self.field, flat=True).order_by('pk')
+        return self.available_values
+
+    def check(self, value, coords):
+        super(SpecialForeignKeyValueChecker, self).check(value, coords)
+        if value not in self.get_available_values():
+            raise ForeignKeyError(Messages.Import.foreign_key_error % (
+                coords,
+                ', '.join(map(str, self.get_available_values())),
+                value))

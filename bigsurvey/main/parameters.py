@@ -266,7 +266,7 @@ class Messages:
     class Import:
         required_fields_not_filled = _('Please fill in all required fields marked by bold label')
         duplicate_excel_fields = _('You have selected the same Excel field more than once')
-        foreign_key_error = _('Incorrect value in %s cell. Available values are %s, but found %s')
+        foreign_key_error = _('Incorrect value in %s cell. Available values are: %s. Found: %s')
         required_value_is_empty = _('Found empty value in %s cell, please fill in this cell')
         incorrect_date_format = _('Date in %s cell does not match "%s" format')
         incorrect_numeric_value = _('Cell %s should contain number or empty value')
