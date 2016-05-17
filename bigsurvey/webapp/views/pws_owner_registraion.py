@@ -13,6 +13,7 @@ from webapp.forms import PWSOwnerRegistrationForm, PWSUserAddForm
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 
+
 class PwsOwnerRegistrationView(FormView):
     template_name = 'pws_owner_registration/pws_owner_registration.html'
     msg_content_template_email = 'pws_owner_registration/pws_name_mail.html'
@@ -92,10 +93,10 @@ class PwsOwnerRegistrationView(FormView):
         msg = EmailMultiAlternatives(subject=subject, body=message_html,
                                      headers={'Reply-To': settings.PWS_REGISTATION_FROM_EMAIL},
                                      to=[email])
-        file_name_pdf = 'Terms_and_Conditions.pdf'
+        file_name_pdf = models.TermsConditions.objects.all().first().pdf_file
         file_name_xlsx = 'Sample_Town.xlsx'
         msg.attach_alternative(message_html, "text/html")
-        msg.attach_file(os.path.join(settings.MEDIA, file_name_pdf), "application/pdf")
+        msg.attach_file(os.path.join(settings.MEDIA_ROOT, file_name_pdf.name), "application/pdf")
         msg.attach_file(os.path.join(settings.MEDIA, file_name_xlsx), "application/xlsx")
         msg.send()
 
@@ -110,11 +111,11 @@ class PwsOwnerRegistrationView(FormView):
         demo_trial_creator.employee = employee
         demo_trial_creator.create_demo_trial_for_user()
 
+
 class DownloadPublishedQuiz(View):
     @staticmethod
     def get(*args, **kwargs):
-        file_name = 'Terms_and_Conditions.pdf'
-        file = open(os.path.join(settings.MEDIA, file_name), 'rb')
+        file = models.TermsConditions.objects.all().first().pdf_file
         response = HttpResponse(file, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="%s"' % file_name
+        response['Content-Disposition'] = 'attachment; filename="%s"' % os.path.basename(file.name)
         return response

@@ -1010,6 +1010,21 @@ class StaticText(models.Model):
 reversion.register(StaticText)
 
 
+class TermsConditions(models.Model):
+    pdf_file = models.FileField(upload_to='media', default=None, verbose_name=_('PDF File'),
+                                validators=[validate_file_is_pdf, ])
+
+    def __unicode__(self):
+        return str(self.pdf_file)
+
+    class Meta:
+        verbose_name = _('Term and Condition')
+        verbose_name_plural = _('Terms and Conditions')
+
+
+reversion.register(TermsConditions)
+
+
 class ImportLog(models.Model):
     user = models.ForeignKey(User, related_name='import_logs', verbose_name=_('User who performed import'))
     pws = models.ForeignKey(PWS, related_name='import_logs', verbose_name=_('PWS for which import was performed'))
