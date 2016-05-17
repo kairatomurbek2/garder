@@ -255,22 +255,29 @@ ul.test-form-ul {
 .padding-top-40 {
     padding-top: 40px;
 }
-.logo-garder{
+
+.logo-garder {
     width: 48px;
 }
-.my-fixed{
+
+.my-fixed {
     top: 108px;
     width: 4000px;
 
-
 }
-.my-table-margin{
+
+.my-table-margin {
     margin-top: 168px;
 
 }
 
-
-
-#id_is_active{
+#id_is_active {
     visibility: hidden;
+}
+
+.demo_trial {
+    z-index: 1000;
+    text-align: center;
+    background-color: #F0F8FF;
+    color: #2d7091;
 }

@@ -1,5 +1,12 @@
 {% load i18n pagination_tags widget_tweaks staticfiles %}
 {% autopaginate site_filter.qs as filtered_sites 50 %}
+{% if request.session.demo_days_left %}
+    <div class="uk-text-center uk-panel uk-panel-box-primary" style="z-index: 1000; margin-top: -18px;">
+        {% trans "You have " %}{{ request.session.demo_days_left }} days left until trial-period ends. Please, make <a
+            href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to use all
+        functionalities inside the system.
+    </div>
+{% endif %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
 
