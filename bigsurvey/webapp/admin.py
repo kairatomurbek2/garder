@@ -8,7 +8,6 @@ from bigsurveyadminsite import admin_site_bigsurvey
 import models
 
 
-
 class EmployeeInline(admin.StackedInline):
     model = models.Employee
     can_delete = False
@@ -17,7 +16,7 @@ class EmployeeInline(admin.StackedInline):
 
 
 class EmployeeAdmin(UserAdmin):
-    inlines = (EmployeeInline, )
+    inlines = (EmployeeInline,)
 
 
 class SurveyAdminForm(forms.ModelForm):
@@ -49,6 +48,16 @@ class LetterTypeAdmin(CompareVersionAdmin):
 
 class PriceAdmin(CompareVersionAdmin):
     list_display = 'price', 'price_type', 'start_date', 'end_date'
+
+
+class TermsConditionAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        num_objects = self.model.objects.count()
+        if num_objects >= 1:
+            return False
+        else:
+            return True
+
 
 admin_site_bigsurvey.unregister(User)
 admin_site_bigsurvey.register(User, EmployeeAdmin)
@@ -85,3 +94,4 @@ admin_site_bigsurvey.register(models.TesterCert)
 admin_site_bigsurvey.register(models.TestKit)
 admin_site_bigsurvey.register(models.BPDevice)
 admin_site_bigsurvey.register(models.PriceHistory, PriceAdmin)
+admin_site_bigsurvey.register(models.TermsConditions, TermsConditionAdmin)
