@@ -1370,5 +1370,12 @@
     },
     "model": "webapp.pricehistory",
     "pk": 2
+  },
+  {
+    "fields": {
+      "pdf_file": "media/Terms_and_Conditions.pdf"
+    },
+    "model": "webapp.termsconditions",
+    "pk": 1
   }
 ]

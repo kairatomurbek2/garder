@@ -161,6 +161,7 @@ EXCEL_EXPORT_DIR = os.path.join(MEDIA_ROOT, 'excel_export')
 EXPORT_BASE_URL = MEDIA_URL + 'excel_export/'
 
 PWS_LOGOS_DIR = os.path.join(MEDIA_ROOT, 'pws_logos')
+TAC_PDF_DIR = os.path.join(MEDIA_ROOT, 'media')
 
 CKEDITOR_CONFIGS = {
     'default': {
