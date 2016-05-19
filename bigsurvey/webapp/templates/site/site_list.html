@@ -7,19 +7,18 @@
         functionalities inside the system.
     </div>
 {% endif %}
+{% if header or messages %}
+    <div class="padding-top-70">
+        {% include 'messages.html' %}
+        <div class="message-wrapper">
+            <div class="alert-margin-top uk-alert uk-alert-success">
+                <p>{{ header }}</p>
+            </div>
+        </div>
+    </div>
+{% endif %}
 <div class="uk-grid">
     <form action="" method="get" name="site_filter" class="uk-form">
-
-        {% if header or messages %}
-            <div class="padding-top-40">
-                {% include 'messages.html' %}
-                <div class="message-wrapper">
-                    <div class="alert-margin-top uk-alert uk-alert-success">
-                        <p>{{ header }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
         <div id="table_div">
             <div id="filter_buttons_div" class="fixed filter-button-div">
                 <button class="uk-button uk-button-primary filter-button" type="submit">
