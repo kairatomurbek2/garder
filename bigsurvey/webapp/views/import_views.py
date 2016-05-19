@@ -289,7 +289,9 @@ class ImportLogSitesMixin(BaseTemplateView):
         if not perm_checkers.ImportLogPermChecker.has_perm(self.request, import_log):
             raise Http404
         context['import_log'] = import_log
-        context['header'] = self.get_header(import_log)
+        header = self.get_header(import_log)
+        if len(header.strip()) > 0:
+            context['header'] = header
         sites = self.get_sites(import_log)
         context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites, user=self.request.user)
         return context

@@ -272,7 +272,7 @@ class Messages:
         incorrect_numeric_value = _('Cell %s should contain number or empty value')
         import_was_finished = _('Import was successfully finished. Added sites: %d, updated sites: %d, \
         deactivated sites: %d.')
-        import_finished_duplicates = _('Import was finished but %s duplicate accounts were not imported. \
+        import_finished_duplicates = _('Import was finished but %s duplicate/ambiguous accounts were not imported. \
         You may download file with them from <a href="%s">here</a> and try to import again after issue is solved. \
         Added sites: %d, updated sites: %d, deactivated sites: %d.')
         added_sites_header = _("You are browsing the sites that have been added during the import on %s")

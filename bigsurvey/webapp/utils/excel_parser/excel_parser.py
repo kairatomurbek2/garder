@@ -5,10 +5,6 @@ import subprocess
 import os
 from bulk_update.helper import bulk_update
 from django.conf import settings
-import xlrd
-import xlwt
-from xlrd.biffh import XL_CELL_NUMBER, XL_CELL_TEXT
-
 from main.parameters import SITE_STATUS
 from webapp import models
 from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FOREIGN_KEY_FIELDS, DATE_FIELDS, \
@@ -16,79 +12,8 @@ from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FORE
     ForeignKeyError, DateFormatError, ExcelValidationError, NUMERIC_FIELDS, NumericValueError, \
     SPECIAL_FOREIGN_KEY_FIELDS
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
-
-
-class ExcelDocument(object):
-    filename = None
-    book = None
-    sheet = None
-    headers = []
-    headers_row_number = None
-    header_style = None
-
-    def open_for_read(self):
-        if not self.sheet:
-            self.book = xlrd.open_workbook(self.filename)
-            self.sheet = self.book.sheet_by_index(0)
-
-    def open_for_write(self):
-        if not self.sheet:
-            self.book = xlwt.Workbook()
-            self.sheet = self.book.add_sheet("Duplicates")
-            self.header_style = xlwt.easyxf("font: bold on")
-
-    def write_header(self, column, header):
-        self.sheet.write(self.headers_row_number, column, header, self.header_style)
-
-    def write_value(self, row, column, value):
-        self.sheet.write(row, column, value)
-
-    def write_to_file(self):
-        self.book.save(self.filename)
-
-    def parse_headers(self):
-        self.open_for_read()
-        if not self.headers:
-            for column_number in xrange(self.sheet.ncols):
-                cell = self.sheet.cell(self.headers_row_number, column_number)
-                value = self.get_cell_value(cell)
-                if value:
-                    self.headers.append((column_number, value))
-        return self.headers
-
-    def get_cell_value(self, cell):
-        if cell.ctype == XL_CELL_NUMBER:
-            return int(cell.value)
-        if cell.ctype == XL_CELL_TEXT:
-            return cell.value.strip()
-        return cell.value
-
-    def get_cell(self, row, column):
-        return self.sheet.cell(row, column)
-
-    def get_first_n_rows(self, rows_count):
-        self.open_for_read()
-        example_rows = []
-        start_row_number = self.headers_row_number + 1
-        if rows_count + start_row_number > self.sheet.nrows:
-            rows_count = self.sheet.nrows - start_row_number
-        for row_number in xrange(start_row_number, start_row_number + rows_count):
-            row = []
-            for column_number, field_name in self.headers:
-                cell = self.sheet.cell(row_number, column_number)
-                row.append(self.get_cell_value(cell))
-            example_rows.append(row)
-        return example_rows
-
-    def get_cell_value_by_coords(self, row, column):
-        cell = self.get_cell(row, column)
-        return self.get_cell_value(cell)
-
-    @property
-    def num_rows(self):
-        if not self.sheet:
-            self.open_for_read()
-        return self.sheet.nrows
+from .excel_document import ExcelDocument, EXCEL_MODE_READ, EXCEL_MODE_WRITE, \
+    EXCEL_WRITE_STYLE_BOLD, EXCEL_WRITE_STYLE_NORMAL, EXCEL_WRITE_STYLE_ITALIC
 
 
 class ConstraintChecker(object):
@@ -103,11 +28,11 @@ class ConstraintChecker(object):
         self.numeric_value_errors = []
 
     def execute(self):
-        start_row_number = self.excel_document.headers_row_number + 1
+        start_row_number = self.excel_document.header_row + 1
         for field_name, column_number in self.mappings.items():
             checker = ValueCheckerFactory.get_checker(field_name, date_format=self.date_format)
-            for row_number in xrange(start_row_number, self.excel_document.num_rows):
-                value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
+            for row_number in xrange(start_row_number, self.excel_document.row_count):
+                value = self.excel_document.read_cell(row_number, column_number)
                 try:
                     checker.check(value, self.prettify_cell_index(row_number, column_number))
                 except RequiredValueIsEmptyError as e:
@@ -141,65 +66,67 @@ class BackgroundExcelParserRunner(object):
     filename = None
     update_only = None
 
-    def execute(self):
-        filename_option = '--filename="%s"' % self.filename
-        json_mappings = json.dumps(json.dumps(self.mappings, separators=(',', ':')))
-        mappings_option = '--mappings="%s"' % json_mappings
-        import_log_option = '--import_log_pk="%d"' % self.import_log_pk
-        date_format_option = '--date_format="%s"' % self.date_format
-        update_only_option = '--update_only="%s"' % int(self.update_only)
-        command = ' '.join((
-            settings.PYTHON_EXECUTABLE,
-            settings.MANAGE_PY,
-            'parse_excel',
-            filename_option,
-            mappings_option,
-            import_log_option,
-            date_format_option,
-            update_only_option
-        ))
-        subprocess.Popen(command, shell=True)
+    def execute(self, debug=False):
+        if debug:
+            excel_parser = ExcelParser(os.path.join(settings.EXCEL_FILES_DIR, self.filename))
+            excel_parser.parse_and_save(self.mappings, self.import_log_pk, self.date_format, self.update_only)
+        else:
+            filename_option = '--filename="%s"' % self.filename
+            json_mappings = json.dumps(json.dumps(self.mappings, separators=(',', ':')))
+            mappings_option = '--mappings="%s"' % json_mappings
+            import_log_option = '--import_log_pk="%d"' % self.import_log_pk
+            date_format_option = '--date_format="%s"' % self.date_format
+            update_only_option = '--update_only="%s"' % int(self.update_only)
+            command = ' '.join((
+                settings.PYTHON_EXECUTABLE,
+                settings.MANAGE_PY,
+                'parse_excel',
+                filename_option,
+                mappings_option,
+                import_log_option,
+                date_format_option,
+                update_only_option
+            ))
+            subprocess.Popen(command, shell=True)
 
 
 class ExcelParser(object):
-    excel_document = None
     duplicate_account_rows = []
 
     def __init__(self, filename, headers_row_number=0):
-        self.excel_document = ExcelDocument()
-        self.excel_document.filename = filename
-        self.excel_document.headers_row_number = headers_row_number
+        self.import_document = ExcelDocument(filename, EXCEL_MODE_READ, headers_row_number)
+        export_doc_filename = os.path.join(
+            '/tmp',
+            'duplicate_' + os.path.basename(self.import_document.filename)
+        )
+        self.export_document = ExcelDocument(export_doc_filename, EXCEL_MODE_WRITE)
 
     def get_headers_as_choices(self):
-        return self.excel_document.parse_headers()
+        return self.import_document.read_headers()
 
     def get_example_rows(self, rows_count):
-        return self.excel_document.get_first_n_rows(rows_count)
+        return self.import_document.read_n_headered_rows(rows_count)
 
     def check_constraints(self, mappings, date_format):
         constraint_checker = ConstraintChecker()
-        constraint_checker.excel_document = self.excel_document
+        constraint_checker.excel_document = self.import_document
         constraint_checker.mappings = mappings
         constraint_checker.date_format = date_format
         constraint_checker.execute()
 
-    def find_duplicates(self, mappings):
-        start_row_number = self.excel_document.headers_row_number + 1
-        cust_account_column_number = mappings.get('cust_number')
-        meter_number_column_number = mappings.get('meter_number')
-        service_address_column_number = mappings.get('address1')
-        street_number_column_number = mappings.get('street_number')
-        columns_to_check = (cust_account_column_number, meter_number_column_number,
-                            service_address_column_number, street_number_column_number)
+    def _find_duplicates(self, mappings):
+        start_row_number = self.import_document.header_row + 1
+        columns_to_check = (mappings.get('cust_number'), mappings.get('meter_number'),
+                            mappings.get('address1'), mappings.get('street_number'))
         columns_to_check_count = len(columns_to_check)
-        for row_number_1 in xrange(start_row_number, self.excel_document.num_rows-1):
+        for row_number_1 in xrange(start_row_number, self.import_document.row_count-1):
             if row_number_1 not in self.duplicate_account_rows:
                 is_duplicate = False
-                for row_number_2 in xrange(row_number_1+1, self.excel_document.num_rows):
+                for row_number_2 in xrange(row_number_1+1, self.import_document.row_count):
                     equal_columns = 0
                     for column in columns_to_check:
-                        val1 = self.excel_document.get_cell_value_by_coords(row_number_1, column)
-                        val2 = self.excel_document.get_cell_value_by_coords(row_number_2, column)
+                        val1 = self.import_document.read_cell(row_number_1, column)
+                        val2 = self.import_document.read_cell(row_number_2, column)
                         if val1 == val2:
                             equal_columns += 1
                     if equal_columns == columns_to_check_count:
@@ -208,134 +135,183 @@ class ExcelParser(object):
                 if is_duplicate:
                     self.duplicate_account_rows.append(row_number_1)
 
-    def export_duplicates(self, mappings, import_log_pk):
-        export_document = ExcelDocument()
-        export_document.filename = os.path.join(
-            '/tmp',
-            'duplicate_' + os.path.basename(self.excel_document.filename)
-        )
-        export_document.headers_row_number = 0
-        export_document.open_for_write()
-        for column_number in xrange(0, self.excel_document.sheet.ncols):
-            header = self.excel_document.get_cell_value_by_coords(self.excel_document.headers_row_number, column_number)
-            export_document.write_header(column_number, header)
-        current_row = 1
-        for row_number in self.duplicate_account_rows:
-            for column_number in xrange(0, self.excel_document.sheet.ncols):
-                value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
-                export_document.write_value(current_row, column_number, value)
-            current_row += 1
-        export_document.write_to_file()
-        import_log = models.ImportLog.objects.get(pk=import_log_pk)
-        f = File(file(export_document.filename))
-        import_log.duplicates_file = f
-        import_log.duplicates_count = len(self.duplicate_account_rows)
-        import_log.save()
+    def _write_export_headers(self):
+        if self.export_document.current_row < 0:
+            self.export_document.set_write_style(EXCEL_WRITE_STYLE_BOLD)
+            self.export_document.write_next_row(*self.import_document.read_row(self.import_document.header_row))
+            self.export_document.set_write_style(EXCEL_WRITE_STYLE_NORMAL)
+
+    def _export_rows_from_file(self, row_numbers):
+        if len(row_numbers) > 0:
+            self._write_export_headers()
+            for row_number in row_numbers:
+                self.export_document.write_next_row(*self.import_document.read_row(row_number))
+
+    def _export_existing_sites(self, site_pks):
+        if len(site_pks) > 0:
+            self._write_export_headers()
+            row = self.export_document.current_row + 1
+            original_mappings_items = self.original_mappings.items()
+            self.export_document.set_write_style(EXCEL_WRITE_STYLE_ITALIC)
+            for site_pk in site_pks:
+                site = models.Site.objects.get(pk=site_pk)
+                last_col = 0
+                for field_name, column in original_mappings_items:
+                    value = self._get_site_field_value_for_export(getattr(site, field_name, ""), field_name)
+                    self.export_document.write_cell(row, column, value)
+                    if column > last_col:
+                        last_col = column
+                self.export_document.write_cell(row, last_col + 1, str(site.status))
+                row += 1
+            self.export_document.set_write_style(EXCEL_WRITE_STYLE_NORMAL)
+
+    def _get_site_field_value_for_export(self, originalValue, field_name):
+        if field_name in DATE_FIELDS:
+            if originalValue:
+                return originalValue.strftime(self.date_format)
+        return str(originalValue)
+
+    def _attach_export_document(self):
+        if self.export_document.current_row < 0:
+            self.export_document.close(save=False)
+        else:
+            self.export_document.close()
+            f = File(file(self.export_document.filename))
+            self.import_log.duplicates_file = f
+            self.import_log.duplicates_count = len(self.duplicate_account_rows) + len(self.ambiguous_rows)
+            self.import_log.save()
 
     def parse_and_save(self, mappings, import_log_pk, date_format, update_only=False):
-        self.find_duplicates(mappings)
-        if len(self.duplicate_account_rows) > 0:
-            self.export_duplicates(mappings, import_log_pk)
+        self._find_duplicates(mappings)
+        self._export_rows_from_file(self.duplicate_account_rows)
+        self._init_import_parameters(mappings, import_log_pk, date_format)
+        start_row_number = self.import_document.header_row + 1
+        for row_number in xrange(start_row_number, self.import_document.row_count):
+            self._setup_unique_key_fields(row_number)
+            if row_number in self.duplicate_account_rows:
+                self._remove_duplicate_from_deactivated_watcher()
+                continue
+            try:
+                site = self._get_existing_site()
+                self.deactivated_sites_watcher.remove(site)
+                self.updated_site_pks.append(site.pk)
+            except models.Site.DoesNotExist:
+                if self.cust_number in self.ambiguous_accounts:
+                    self.ambiguous_rows.append(row_number)
+                    continue
+                sites = models.Site.objects.filter(pws=self.import_log.pws, cust_number=self.cust_number)
+                if sites.count() > 0:
+                    self._process_ambiguous_sites(sites)
+                    self.ambiguous_accounts.append(self.cust_number)
+                    self.ambiguous_rows.append(row_number)
+                    continue
+                site = self._get_new_site()
+            self._update_site_from_row(site, row_number)
+            site.status = self.active_status
+            self._update_watchers(site)
+        self._export_rows_from_file(self.ambiguous_rows)
+        ambiguous_site_pks = list(set(self.ambiguous_site_pks) - set(self.updated_site_pks))
+        self._export_existing_sites(ambiguous_site_pks)
+        self._attach_export_document()
+        self._finish_import(update_only)
 
-        import_log = models.ImportLog.objects.get(pk=import_log_pk)
+    def _update_watchers(self, site):
+        if site.pk:
+            self.updated_sites_watcher.add(site)
+        else:
+            self.added_sites_watcher.add(site)
+        self.progress_watcher.increment_processed_rows()
 
-        deactivated_sites_watcher = DeactivatedSitesWatcher(import_log.pws)
-        updated_sites_watcher = UpdatedSitesWatcher()
-        added_sites_watcher = AddedSitesWatcher()
+    def _get_existing_site(self):
+        return models.Site.objects.get(pws=self.import_log.pws, cust_number=self.cust_number,
+                                       meter_number=self.meter_number, address1=self.service_address,
+                                       street_number=self.street_number)
 
-        total_rows_with_data = self.excel_document.num_rows
-        progress_watcher = ProgressWatcher(import_log, total_rows_with_data)
+    def _get_new_site(self):
+        site = models.Site()
+        site.pws = self.import_log.pws
+        site.cust_number = self.cust_number
+        return site
 
-        start_row_number = self.excel_document.headers_row_number + 1
+    def _remove_duplicate_from_deactivated_watcher(self):
+        try:
+            site = models.Site.objects.get(pws=self.import_log.pws, cust_number=self.cust_number,
+                                           meter_number=self.meter_number, address1=self.service_address,
+                                           street_number=self.street_number)
+            self.deactivated_sites_watcher.remove(site)
+        except models.Site.DoesNotExist:
+            pass
 
-        active_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.ACTIVE)
-        inactive_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.INACTIVE)
+    def _process_ambiguous_sites(self, sites):
+        for site in sites:
+            self.deactivated_sites_watcher.remove(site)
+            self.ambiguous_site_pks.append(site.pk)
 
-        cust_account_column_number = mappings.pop('cust_number')
-        service_address_column_number = mappings.pop('address1')
-        meter_number_column_number = mappings.pop('meter_number')
-        street_number_column_number = mappings.pop('street_number')
+    def _setup_unique_key_fields(self, row_number):
+        self.cust_number = self._get_cell_value_for_mapped_column(row_number, 'cust_number')
+        self.meter_number = self._get_cell_value_for_mapped_column(row_number, 'meter_number')
+        self.service_address = self._get_cell_value_for_mapped_column(row_number, 'address1')
+        self.street_number = self._get_cell_value_for_mapped_column(row_number, 'street_number')
 
-        for row_number in xrange(start_row_number, self.excel_document.num_rows):
-            if row_number not in self.duplicate_account_rows:
-                cust_number = self.excel_document.get_cell_value_by_coords(row_number, cust_account_column_number)
-                meter_number = self.excel_document.get_cell_value_by_coords(row_number, meter_number_column_number)
-                service_address = self.excel_document.get_cell_value_by_coords(row_number, service_address_column_number)
-                street_number = self.excel_document.get_cell_value_by_coords(row_number, street_number_column_number)
-                try:
-                    site = models.Site.objects.get(pws=import_log.pws,
-                                                   cust_number=cust_number,
-                                                   meter_number=meter_number,
-                                                   address1=service_address,
-                                                   street_number=street_number)
-                    deactivated_sites_watcher.remove(site)
-                except models.Site.DoesNotExist:
-                    site = models.Site()
-                    site.pws = import_log.pws
-                    site.cust_number = cust_number
-                    site.meter_number = meter_number
-                    site.street_number = street_number
-                    site.address1 = service_address
-                site.status = active_status
-                for field_name, column_number in mappings.items():
-                    value = self.excel_document.get_cell_value_by_coords(row_number, column_number)
-                    if field_name in FOREIGN_KEY_FIELDS:
-                        field_name = FOREIGN_KEY_PATTERN % field_name
-                    if field_name in SPECIAL_FOREIGN_KEY_FIELDS:
-                        search_expression = {SPECIAL_FOREIGN_KEY_FIELDS[field_name]['field']: value}
-                        foreign_key_value = SPECIAL_FOREIGN_KEY_FIELDS[field_name]['model'].objects.get(
-                            **search_expression
-                        )
-                        value = foreign_key_value
-                    if field_name in DATE_FIELDS:
-                        if value:
-                            value = datetime.strptime(str(value), date_format)
-                        else:
-                            value = None
-                    if field_name in NUMERIC_FIELDS:
-                        if value:
-                            value = float(value)
-                        else:
-                            value = 0
-                    setattr(site, field_name, value)
-                if site.pk:
-                    updated_sites_watcher.add(site)
+    def _get_cell_value_for_mapped_column(self, row, column_name):
+        return self.import_document.read_cell(row, self.original_mappings.get(column_name))
+
+    def _init_import_parameters(self, mappings, import_log_pk, date_format):
+        self.date_format = date_format
+        self.import_log = models.ImportLog.objects.get(pk=import_log_pk)
+        self.mappings = mappings
+        self.original_mappings = dict(mappings)
+        self.mappings.pop('cust_number')
+        self.deactivated_sites_watcher = DeactivatedSitesWatcher(self.import_log.pws)
+        self.updated_sites_watcher = UpdatedSitesWatcher()
+        self.added_sites_watcher = AddedSitesWatcher()
+        total_rows_with_data = self.import_document.row_count - self.import_document.header_row
+        self.progress_watcher = ProgressWatcher(self.import_log, total_rows_with_data)
+        self.active_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.ACTIVE)
+        self.inactive_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.INACTIVE)
+        self.ambiguous_accounts = []  # from file, inner usage
+        self.updated_site_pks = []  # from database, inner usage
+        self.ambiguous_site_pks = []  # from database, for export
+        self.ambiguous_rows = []  # from file, for export
+
+    def _update_site_from_row(self, site, row_number):
+        for field_name, column_number in self.mappings.items():
+            value = self.import_document.read_cell(row_number, column_number)
+            if field_name in FOREIGN_KEY_FIELDS:
+                field_name = FOREIGN_KEY_PATTERN % field_name
+            elif field_name in SPECIAL_FOREIGN_KEY_FIELDS:
+                search_expression = {SPECIAL_FOREIGN_KEY_FIELDS[field_name]['field']: value}
+                foreign_key_value = SPECIAL_FOREIGN_KEY_FIELDS[field_name]['model'].objects.get(
+                    **search_expression
+                )
+                value = foreign_key_value
+            elif field_name in DATE_FIELDS:
+                if value:
+                    value = datetime.strptime(str(value), self.date_format)
                 else:
-                    added_sites_watcher.add(site)
-                progress_watcher.increment_processed_rows()
-            else:
-                cust_number = self.excel_document.get_cell_value_by_coords(row_number, cust_account_column_number)
-                meter_number = self.excel_document.get_cell_value_by_coords(row_number, meter_number_column_number)
-                service_address = self.excel_document.get_cell_value_by_coords(row_number, service_address_column_number)
-                street_number = self.excel_document.get_cell_value_by_coords(row_number, street_number_column_number)
-                try:
-                    site = models.Site.objects.get(pws=import_log.pws,
-                                                   cust_number=cust_number,
-                                                   meter_number=meter_number,
-                                                   address1=service_address,
-                                                   street_number=street_number)
-                    deactivated_sites_watcher.remove(site)
-                except models.Site.DoesNotExist:
-                    pass
+                    value = None
+            elif field_name in NUMERIC_FIELDS:
+                if value:
+                    value = float(value)
+                else:
+                    value = 0
+            setattr(site, field_name, value)
 
-        updated_sites_watcher.perform_bulk_update()
-        added_sites_watcher.perform_bulk_create()
-
+    def _finish_import(self, update_only):
+        self.updated_sites_watcher.perform_bulk_update()
+        self.added_sites_watcher.perform_bulk_create()
+        updated_sites = self.updated_sites_watcher.get_updated_sites()
+        added_sites = self.added_sites_watcher.get_added_sites()
         if not update_only:
-            deactivated_sites = deactivated_sites_watcher.get_deactivated_sites()
-            deactivated_sites.update(status=inactive_status)
+            deactivated_sites = self.deactivated_sites_watcher.get_deactivated_sites()
+            deactivated_sites.update(status=self.inactive_status)
         else:
             deactivated_sites = models.Site.objects.none()
-        import_log.deactivated_sites = deactivated_sites
-
-        updated_sites = updated_sites_watcher.get_updated_sites()
-        import_log.updated_sites = updated_sites
-
-        added_sites = added_sites_watcher.get_added_sites()
-        import_log.added_sites = added_sites
-
-        import_log.save()
-        progress_watcher.set_as_finished()
+        self.import_log.deactivated_sites = deactivated_sites
+        self.import_log.updated_sites = updated_sites
+        self.import_log.added_sites = added_sites
+        self.import_log.save()
+        self.progress_watcher.set_as_finished()
 
 
 class ProgressWatcher(object):
@@ -358,7 +334,11 @@ class ProgressWatcher(object):
 
 class DeactivatedSitesWatcher(object):
     def __init__(self, pws):
-        self.deactivated_site_pks = list(models.Site.objects.filter(pws=pws).values_list('pk', flat=True))
+        active_status = models.SiteStatus.objects.get(site_status__iexact=SITE_STATUS.ACTIVE)
+        self.deactivated_site_pks = list(models.Site.objects.filter(
+            pws=pws,
+            status=active_status
+        ).values_list('pk', flat=True))
 
     def remove(self, site):
         try:
