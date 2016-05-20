@@ -207,7 +207,7 @@ class DemoTrialPayPaypalView(BaseView):
                 for pws in pws_list:
                     PayAndActivate.pay_and_activate(pws, request)
                 messages.success(self.request,
-                                 (Messages.PWS.payment_successful_singular, Messages.PWS.payment_successful_plural))
+                                 (Messages.PWS.payment_successful_singular))
             else:
                 messages.error(self.request, Messages.PWS.payment_failed)
         else:
