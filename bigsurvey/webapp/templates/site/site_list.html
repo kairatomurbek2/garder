@@ -7,16 +7,20 @@
         functionalities inside the system.
     </div>
 {% endif %}
-<div class="uk-grid">
-    <form action="" method="get" name="site_filter" class="uk-form">
-<div class="uk-grid">
-    <form action="" method="get" name="site_filter" class="uk-form">
-
-        {% if header or messages %}
-            <div class="padding-top-70">
-                {% include 'messages.html' %}
+{% if header or messages %}
+    <div class="padding-top-70">
+        {% include 'messages.html' %}
+        {% if header %}
+            <div class="message-wrapper">
+                <div class="alert-margin-top uk-alert uk-alert-success">
+                    <p>{{ header }}</p>
+                </div>
             </div>
         {% endif %}
+    </div>
+{% endif %}
+<div class="uk-grid">
+    <form action="" method="get" name="site_filter" class="uk-form">
         <div id="table_div">
             <div id="filter_buttons_div" class="fixed filter-button-div">
                 <button class="uk-button uk-button-primary filter-button" type="submit">
@@ -320,7 +324,8 @@
         <div class="modal-content">
             <div class="uk-text-large uk-text-center">
                 {% trans "Sorry, reports are only available to full license holders. Please, make " %}<a
-                    href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to download the
+                    href="{% url 'webapp:activate_blocked_pws' %}">{% trans "payment" %}</a> for the full license to
+                download the
                 report
             </div>
         </div>
@@ -342,7 +347,7 @@
             var navbarHeight = parseInt(navbar.height() + fixedDiv.outerHeight() - 2);
             $("#data_table").css("margin-top", fixedDiv.outerHeight() + "px");
             $('.fixed-headers').floatThead({
-                scrollingTop:  navbarHeight
+                scrollingTop: navbarHeight
             });
 
             var isDemoTrial = {{ is_demo_trial|yesno:"true,false" }};

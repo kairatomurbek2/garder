@@ -236,7 +236,7 @@ ul.test-form-ul {
 .filter-button-div {
     width: 100%;
     background-color: #FFF;
-    top: 30px;
+    top: 39px;
     /*background: green;*/
     padding-top: 20px;
     padding-bottom: 10px;
@@ -250,10 +250,6 @@ ul.test-form-ul {
     float: right;
     margin-top: 3px;
     padding-right: 5px;
-}
-
-.padding-top-70 {
-    padding-top: 70px;
 }
 
 .padding-top-70 {
