@@ -27,7 +27,6 @@ Feature: Import from Excel files
     When I submit "import" form
     Then I should be at "import_mappings" page
 
-    When I fill in mappings
     And I submit "import-mappings" form
     Then I should be at "import_mappings" page
 
@@ -55,7 +54,6 @@ Feature: Import from Excel files
     And I select "other" from "date_format"
     And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
-    And I fill in mappings
     And I submit "import-mappings" form
     And I wait for 10 seconds
     Then I should be at "import_log_list" page
@@ -87,7 +85,6 @@ Feature: Import from Excel files
     And I select "other" from "date_format"
     And I fill in "date_format_other" with "%Y%m%d"
     And I submit "import" form
-    And I fill in mappings
     And I submit "import-mappings" form
     Then I should be at "import_mappings_process" page
     And I should see "<message>" message with params "<params>"
@@ -113,7 +110,7 @@ Feature: Import from Excel files
     And Last import should have following data
       | added_sites | updated_sites | deactivated_sites |
       | 9           | 0             | 0                 |
-    And I should see warning message with text "Import was finished but 4 duplicate accounts were not imported."
+    And I should see warning message with text "Import was finished but 4 duplicate/ambiguous accounts were not imported."
     And Last import should have duplicates file attached
 
   @import_only_update

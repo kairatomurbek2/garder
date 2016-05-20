@@ -22,7 +22,7 @@ class ExcelDocument(object):
         self._italic_style = None
         self._header_row = header_row
         self._headers = None
-        self.row_count = 0
+        self._row_count = 0
         if self._mode == EXCEL_MODE_READ:
             self._open_for_read()
         else:
@@ -31,7 +31,7 @@ class ExcelDocument(object):
     def _open_for_read(self):
         self._workbook = xlrd.open_workbook(self.filename)
         self._sheet = self._workbook.sheet_by_index(0)
-        self.row_count = self._sheet.nrows
+        self._row_count = self._sheet.nrows
         self._parse_headers()
 
     def _parse_headers(self):
@@ -43,6 +43,15 @@ class ExcelDocument(object):
 
     def read_headers(self):
         return self._headers
+
+    def read_column(self, column, exclude_header=True):
+        values = []
+        start_row = self._header_row
+        if exclude_header:
+            start_row += 1
+        for row in xrange(start_row, self._row_count):
+            values.append(self.read_cell(row, column))
+        return values
 
     def read_n_rows(self, row_count, start_row=-1):
         start_row, row_count = self._fit_n_rows_parameters(row_count, start_row)
@@ -61,19 +70,19 @@ class ExcelDocument(object):
     def _fit_n_rows_parameters(self, row_count, start_row):
         if start_row < 0:
             start_row = self._header_row + 1
-        if row_count + start_row > self.row_count:
-            row_count = self.row_count - start_row
+        if row_count + start_row > self._row_count:
+            row_count = self._row_count - start_row
         return start_row, row_count
 
     def read_next_row(self):
         self._current_row += 1
-        if self._current_row < self.row_count:
+        if self._current_row < self._row_count:
             return self.read_row(self._current_row)
         return []
 
     def read_next_headered_row(self):
         self._current_row += 1
-        if self._current_row < self.row_count:
+        if self._current_row < self._row_count:
             return self.read_headered_row(self._current_row)
         return []
 
@@ -139,3 +148,7 @@ class ExcelDocument(object):
     @property
     def header_row(self):
         return self._header_row
+
+    @property
+    def row_count(self):
+        return self._row_count

@@ -166,9 +166,10 @@ class ExcelParser(object):
             self.export_document.set_write_style(EXCEL_WRITE_STYLE_NORMAL)
 
     def _get_site_field_value_for_export(self, originalValue, field_name):
+        if not originalValue:
+            return ""
         if field_name in DATE_FIELDS:
-            if originalValue:
-                return originalValue.strftime(self.date_format)
+            return originalValue.strftime(self.date_format)
         return str(originalValue)
 
     def _attach_export_document(self):
@@ -188,12 +189,11 @@ class ExcelParser(object):
         start_row_number = self.import_document.header_row + 1
         for row_number in xrange(start_row_number, self.import_document.row_count):
             self._setup_unique_key_fields(row_number)
-            if row_number in self.duplicate_account_rows:
-                self._remove_duplicate_from_deactivated_watcher()
-                continue
             try:
                 site = self._get_existing_site()
                 self.deactivated_sites_watcher.remove(site)
+                if row_number in self.duplicate_account_rows:
+                    continue
                 self.updated_site_pks.append(site.pk)
             except models.Site.DoesNotExist:
                 if self.cust_number in self.ambiguous_accounts:
@@ -232,15 +232,6 @@ class ExcelParser(object):
         site.pws = self.import_log.pws
         site.cust_number = self.cust_number
         return site
-
-    def _remove_duplicate_from_deactivated_watcher(self):
-        try:
-            site = models.Site.objects.get(pws=self.import_log.pws, cust_number=self.cust_number,
-                                           meter_number=self.meter_number, address1=self.service_address,
-                                           street_number=self.street_number)
-            self.deactivated_sites_watcher.remove(site)
-        except models.Site.DoesNotExist:
-            pass
 
     def _process_ambiguous_sites(self, sites):
         for site in sites:
