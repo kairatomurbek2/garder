@@ -39,4 +39,4 @@ class ExcelValidationError(Exception):
         self.numeric_errors = numeric_errors
 
 
-from excel_parser_experimental import *
+from excel_parser_v1 import *

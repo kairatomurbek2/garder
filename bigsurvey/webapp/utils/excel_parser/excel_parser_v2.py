@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 from django.core.files.base import File
 from datetime import datetime
@@ -14,6 +16,10 @@ from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FORE
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
 from .excel_document import ExcelDocument, EXCEL_MODE_READ, EXCEL_MODE_WRITE, \
     EXCEL_WRITE_STYLE_BOLD, EXCEL_WRITE_STYLE_NORMAL, EXCEL_WRITE_STYLE_ITALIC
+
+# Частично отрефакторенный парсер. Работает по схеме из тикета #361
+# Отличается от v1 тем, что при создании/деактивации сайтов проверяет сначла аккаунт
+# Если при этом есть совпадение по аккаунту, но нет по другим полям - экспортирует сайты и из базы, и из файла
 
 
 class ConstraintChecker(object):

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 from django.core.files.base import File
 from datetime import datetime
@@ -14,6 +16,10 @@ from webapp.utils.excel_parser import ALPHABET_LENGTH, FOREIGN_KEY_PATTERN, FORE
 from webapp.utils.excel_parser.value_checkers import ValueCheckerFactory
 from .excel_document import ExcelDocument, EXCEL_MODE_READ, EXCEL_MODE_WRITE, \
     EXCEL_WRITE_STYLE_BOLD, EXCEL_WRITE_STYLE_NORMAL, EXCEL_WRITE_STYLE_ITALIC
+
+# Отрефакторенный парсер
+# Работает так же, как v2, по схеме из #361
+# Отличается порядком работы и более структурированным кодом
 
 
 class ConstraintChecker(object):
