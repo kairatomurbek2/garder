@@ -110,7 +110,7 @@ Feature: Import from Excel files
     And Last import should have following data
       | added_sites | updated_sites | deactivated_sites |
       | 9           | 0             | 0                 |
-    And I should see warning message with text "Import was finished but 4 duplicate/ambiguous accounts were not imported."
+    And I should see warning message with text "Import was finished but 4 duplicate accounts were not imported."
     And Last import should have duplicates file attached
 
   @import_only_update
