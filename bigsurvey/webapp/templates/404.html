@@ -1,10 +1,19 @@
+{% load i18n staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% trans "404 page" %}</title>
+    <link rel="stylesheet" href="{% static 'css/custom/404.css' %}">
 </head>
 <body>
-<h1>Sorry, you have not rights to see this page <a href="javascript:history.back()">Go Back</a></h1>
+<div class="wrapper-fluid">
+    <div class="wrapper-block">
+        <div class="main-text">
+            <h2>404</h2>
+            <p>Sorry, you have not rights to see this page <a href="javascript:history.back()">Go Back</a>.</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>
