@@ -9,12 +9,13 @@ from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse
 from django.db.models import NOT_PROVIDED
 from django.forms import formset_factory, ModelChoiceField
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import redirect
 from main.parameters import Messages, OTHER, DATEFORMAT_HELP
 from webapp import models, perm_checkers, filters
 from webapp.forms import ImportForm, ImportMappingsForm, BaseImportMappingsFormSet
 from webapp.utils.excel_parser import ExcelParser, ExcelValidationError, BackgroundExcelParserRunner, FINISHED
+from webapp.utils.excel_writer.excel_writer import XLSExporter
 from .base_views import BaseTemplateView, BaseFormView
 
 
@@ -280,6 +281,11 @@ class ImportLogSitesMixin(BaseTemplateView):
     permission = 'webapp.browse_import_log'
     template_name = 'home.html'
 
+    def get(self, request, *args, **kwargs):
+        if 'xls' in self.request.GET:
+            return self._get_xls()
+        return super(ImportLogSitesMixin, self).get(request, *args, **kwargs)
+
     def get_datetime_readable_value(self, import_log):
         return import_log.datetime.strftime('%b. %d, %Y, %H:%M')
 
@@ -295,6 +301,13 @@ class ImportLogSitesMixin(BaseTemplateView):
         sites = self.get_sites(import_log)
         context['site_filter'] = filters.SiteFilter(self.request.GET, queryset=sites, user=self.request.user)
         return context
+
+    def _get_xls(self):
+        import_log = models.ImportLog.objects.get(pk=self.kwargs['pk'])
+        sites = self.get_sites(import_log).all()
+        xls = XLSExporter(sites).get_xls()
+        response = HttpResponse(xls, content_type='text/plain')
+        return response
 
 
 class ImportLogAddedSitesView(ImportLogSitesMixin):
