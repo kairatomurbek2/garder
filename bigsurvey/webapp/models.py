@@ -471,6 +471,7 @@ class Employee(models.Model):
             ('access_to_pws_users', _('Has access to PWS\'s Users')),
             ('access_to_multiple_pws_users', _('Has access to Users from multiple PWS')),
             ('access_to_audit_log', _('Has access to view PWS audit logs')),
+            ('can_edit_super_admin', _('Can edit super admin'))
         )
 
 reversion.register(User, exclude=["last_login"])

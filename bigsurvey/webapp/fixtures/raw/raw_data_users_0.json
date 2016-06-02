@@ -13,7 +13,13 @@
           "SuperAdministrators"
         ]
       ],
-      "user_permissions": [],
+      "user_permissions": [
+        [
+        "can_edit_super_admin",
+        "webapp",
+        "employee"
+      ]
+      ],
       "password": "pbkdf2_sha256$12000$53HuXLGhtZWu$S7BJ3p3rt/Fz+IKGo9tuUUJvPYKUMNr0gFUHakbKx5Y=",
       "email": "root@root.root",
       "date_joined": "2015-02-25T06:28:42Z"
@@ -35,7 +41,13 @@
           "SuperAdministrators"
         ]
       ],
-      "user_permissions": [],
+      "user_permissions": [
+        [
+        "can_edit_super_admin",
+        "webapp",
+        "employee"
+      ]
+      ],
       "password": "pbkdf2_sha256$12000$huwUpvbDKKsr$nRLO1lT/SaSQFV86xd9whUhpVECJW5D22g6/s7txc1M=",
       "email": "mlebas@gmail.com",
       "date_joined": "2015-02-25T06:38:29Z"

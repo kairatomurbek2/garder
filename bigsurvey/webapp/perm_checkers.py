@@ -51,8 +51,12 @@ class UserPermChecker(ObjectPermChecker):
     def has_perm(request, obj):
         perm = False
         testers_group = models.Group.objects.get(name=Groups.tester)
+        super_admin_group = models.Group.objects.get(name=Groups.superadmin)
         if request.user.has_perm('webapp.access_to_all_users'):
-            perm = True
+            if request.user.has_perm('webapp.can_edit_super_admin'):
+                perm = True
+            else:
+                perm = not(super_admin_group in obj.groups.all()) or obj == request.user
         elif request.user.has_perm('webapp.access_to_multiple_pws_users'):
             perm = set(obj.employee.pws.all()).issubset(request.user.employee.pws.all()) and obj.employee.pws.all() or \
                 testers_group in obj.groups.all() and \
