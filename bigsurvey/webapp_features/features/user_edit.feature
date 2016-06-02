@@ -74,3 +74,8 @@ Feature: User editing
       And I submit "user" form
       When I open "user_list" page
       Then I should see "PWS3" in tab 3
+
+  Scenario: Superadmin is not allowed to edit other superadmin
+    Given I logged in as "superadmin"
+    And I open "user_edit" page with pk "1" from tab 1
+    Then I should see "Page not found"
