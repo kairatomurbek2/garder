@@ -702,6 +702,16 @@
         "delete_testmodel",
         "webapp",
         "testmodel"
+      ],
+      [
+        "setup_test_price",
+        "webapp",
+        "pricehistory"
+      ],
+      [
+        "access_to_audit_log",
+        "webapp",
+        "employee"
       ]
     ]
   },

@@ -3753,6 +3753,11 @@
         "user"
       ],
       [
+        "access_to_audit_log",
+        "webapp",
+        "employee"
+      ],
+      [
         "change_user",
         "auth",
         "user"
