@@ -1483,6 +1483,11 @@
         "change_testkit",
         "webapp",
         "testkit"
+      ],
+      [
+        "browse_backup",
+        "webapp",
+        "backup"
       ]
     ]
   },
