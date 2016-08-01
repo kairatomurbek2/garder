@@ -1087,4 +1087,25 @@ class DemoTrial(models.Model):
 
 reversion.register(DemoTrial)
 
+
+class Backup(models.Model):
+    file_path = models.CharField(max_length=100)
+    time_stamp = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return u"%s" % self.time_stamp
+
+    class Meta:
+        verbose_name = _('Backup')
+        verbose_name_plural = _('Backups')
+        permissions = (
+            ('browse_backup', _('Can browse Backup')),
+        )
+
+
+class BackupByOwner(models.Model):
+    archive_backup = models.ForeignKey(Backup)
+    pws_owner = models.ForeignKey(User)
+    directory_name = models.CharField(max_length=100)
+
 import signals

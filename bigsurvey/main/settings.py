@@ -213,6 +213,7 @@ paypalrestsdk.configure({
 
 #backup settings
 BACKUPS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'backups')
+BACKUPS_DIR_PWS = '/home/garder/backup/'
 
 CREATE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'create_backup.sh')
 
