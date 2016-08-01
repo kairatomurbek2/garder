@@ -85,5 +85,6 @@ urlpatterns = patterns(
     url(r'^download-pdf', views.DownloadPublishedQuiz.as_view(), name="download_pdf"),
     url(r'^activate-blocked-pws', views.ActivateBlockedPWS.as_view(), name="activate_blocked_pws"),
     url(r'^demo-trial/pay/paypal/$', views.DemoTrialPayPaypalView.as_view(), name="demo_trial_paypal"),
-    url(r'^test-price/$', views.TestPriceSetupView.as_view(), name='test_price')
+    url(r'^test-price/$', views.TestPriceSetupView.as_view(), name='test_price'),
+    url(r'^backup/', views.BackupPWSOwner.as_view(), name='backup_pws')
 )

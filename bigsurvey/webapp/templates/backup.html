@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks staticfiles %}
+{% block content %}
+    <div class="wrapper">
+        {% include 'messages.html' %}
+        <div class="uk-grid">
+            <div class="uk-width-1-2 uk-container-center">
+                <form class="uk-form" method="post" enctype="multipart/form-data" id="rating">
+                    {% csrf_token %}
+                    {% if form.pws %}
+                        <div class="uk-form-row">
+                            <label for="{{ form.pws.id_for_label }}"
+                                   class="uk-form-label">{% trans 'Select PWS' %}</label>
+                            {{ form.pws.errors }}
+                            <div class="uk-form-controls">
+                                {% render_field form.pws class="uk-width-1-1" %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="uk-form-row">
+                        {{ form.time_stamp.errors }}
+                        <label for="{{ form.time_stamp.id_for_label }}"
+                               class="uk-form-label">{{ form.time_stamp.label }}</label>
+                        <div class="uk-form-controls">
+                            {% render_field form.time_stamp class="uk-width-1-1" %}
+                        </div>
+                    </div>
+
+                    <div class="uk-form-row">
+                        <button type="submit"
+                                class="uk-button uk-button-primary uk-button-large uk-width-1-1"
+                                onclick="SubmitForm()">{% trans 'Restore' %}</button>
+                    </div>
+                </form>
+                <div style="display: none" id="progress">
+                    <img id="progress_image" src="{% static 'img/loading.gif' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block end_scripts %}
+    <script type="text/javascript">
+        function SubmitForm() {
+            StartProgress();
+            var rating = document.getElementById("rating");
+            rating.submit();
+        }
+        function StartProgress() {
+            ProgressImage = document.getElementById('progress_image');
+            document.getElementById("progress").style.display = "block";
+            setTimeout("ProgressImage.src = ProgressImage.src", 100);
+            return true;
+        }
+    </script>
+{% endblock %}

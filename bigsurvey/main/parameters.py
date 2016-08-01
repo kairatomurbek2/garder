@@ -298,6 +298,7 @@ class Messages:
         payment_successful_plural = 'Payment was completed successfully'
         payment_failed = _('Some errors happened during the payment. Please try again later.')
         payment_cancelled = _('You have cancelled payment. You can pay later.')
+        backup_success = _('The recovery was successful')
 
     class Survey:
         adding_success = _('Survey was successfully added')
