@@ -11,3 +11,4 @@ from .pws_views import *
 from .import_views import *
 from .bp_device_views import *
 from .pws_owner_registraion import *
+from .backup_pws_owner import *

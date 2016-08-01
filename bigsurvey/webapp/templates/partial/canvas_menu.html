@@ -60,6 +60,9 @@
                         <li><a id="audit_log_menu_link" href="{% url 'webapp:audit_log' %}">{% trans "Audit log" %}</a>
                         </li>
                     {% endif %}
+                    {% if perms.webapp.browse_backup %}
+                        <li><a id="backup" href="{% url 'webapp:backup_pws' %}">{% trans "Backup" %}</a></li>
+                    {% endif %}
                 </ul>
             </li>
         </ul>

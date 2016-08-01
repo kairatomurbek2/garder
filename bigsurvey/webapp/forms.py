@@ -1,6 +1,9 @@
 from ast import literal_eval
 from django.conf import settings
 from cStringIO import StringIO
+
+from django.forms.utils import ErrorList
+
 import models
 import os
 import re
@@ -770,3 +773,21 @@ class BackupForm(forms.Form):
                     backup_data.close()
                     return False
         return valid
+
+
+def count(ids):
+    res = []
+    for i in range(len(ids)):
+        if i < 3:
+            res.append(ids[i])
+    return res
+
+
+class BackupPWSOwnerForm(forms.Form):
+    time_stamp = forms.ModelChoiceField(queryset=None, label=_('Select Backup'))
+
+    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList, label_suffix=None, empty_permitted=False):
+        super(BackupPWSOwnerForm, self).__init__(data, files, auto_id, prefix, initial, error_class, label_suffix, empty_permitted)
+
+        ids = models.Backup.objects.all().order_by('-pk').values_list('pk', flat=True)
+        self.fields['time_stamp'].queryset = models.Backup.objects.filter(pk__in=count(ids))
