@@ -184,6 +184,7 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 PYTHON_EXECUTABLE = os.path.join(os.path.dirname(BASE_DIR), 'virtualenv', 'bin', 'python')
 
 MANAGE_PY = os.path.join(BASE_DIR, 'manage.py')
+PYTHON_PATH = '/home/itattractor/bigsurvey/virtualenv/bin/python'
 
 STUB_FILES_DIR = os.path.join(BASE_DIR, 'stub-files')
 

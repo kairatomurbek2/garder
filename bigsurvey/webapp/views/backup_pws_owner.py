@@ -4,7 +4,6 @@ from subprocess import call
 import shutil
 from django.conf import settings
 from django.forms import ModelChoiceField
-import sys
 from main.parameters import Messages
 from webapp import forms, models
 from webapp.views import BaseFormView, reverse, HttpResponseRedirect
@@ -27,7 +26,7 @@ class BackupPWSOwner(BaseFormView):
         return form
 
     def form_valid(self, form):
-        python_path = '/home/itattractor/bigsurvey/virtualenv/bin/python'
+        python_path = settings.PYTHON_PATH
         backup = form.cleaned_data['time_stamp']
         backup_path = backup.file_path
         directory_name = backup.backupbyowner_set.get(pws_owner=self.request.user).directory_name
