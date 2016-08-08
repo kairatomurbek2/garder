@@ -184,7 +184,6 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 PYTHON_EXECUTABLE = os.path.join(os.path.dirname(BASE_DIR), 'virtualenv', 'bin', 'python')
 
 MANAGE_PY = os.path.join(BASE_DIR, 'manage.py')
-PYTHON_PATH = '/home/itattractor/bigsurvey/virtualenv/bin/python'
 
 STUB_FILES_DIR = os.path.join(BASE_DIR, 'stub-files')
 
@@ -244,9 +243,9 @@ paypalrestsdk.configure({
 
 
 #backup settings
-BACKUPS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'backups')
+BACKUPS_DIR = os.path.join(os.path.dirname(BASE_DIR), '../backups')
 BACKUPS_DIR_PWS = '/home/garder/backup/'
 
-CREATE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'create_backup.sh')
+CREATE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), '../create_backup.sh')
 
-RESTORE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'restore_backup.sh')
+RESTORE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), '../restore_backup.sh')
