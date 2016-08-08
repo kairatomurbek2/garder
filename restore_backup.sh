@@ -39,7 +39,8 @@ echo "Done."
 echo "Cleaning up..."
 rm -rf ${DB_BACKUP}
 touch bigsurvey/main/wsgi.py
-sudo service apache2 restart
+sudo service uwsgi restart
+sudo service nginx restart
 echo "Done."
 
 else

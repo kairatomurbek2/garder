@@ -66,7 +66,8 @@ def fetch_from_git(commit):
 
 
 def reload_server():
-    sudo('service apache2 reload')
+    sudo('service uwsgi reload')
+    sudo('service nginx reload')
 
 
 def deploy_demo(commit="master"):
