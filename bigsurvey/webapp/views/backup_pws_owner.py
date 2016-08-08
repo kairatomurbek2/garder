@@ -27,7 +27,7 @@ class BackupPWSOwner(BaseFormView):
         return form
 
     def form_valid(self, form):
-        python_path = sys.executable
+        python_path = '/home/itattractor/bigsurvey/virtualenv/bin/python'
         backup = form.cleaned_data['time_stamp']
         backup_path = backup.file_path
         directory_name = backup.backupbyowner_set.get(pws_owner=self.request.user).directory_name
