@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
+TWENTY_MBYTES = 20971520
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'v-4893dcgs2!)^dz&#&fc^!05f%wk$r!nqru4@%feq+)841l(*'
 
@@ -199,6 +199,37 @@ HOST = 'http://127.0.0.1:8000'
 DELETE_UNPAID_TESTS_AFTER_DAYS = 2
 
 DELETE_OLD_XLS_FILES_AFTER_DAYS = 10
+
+ADMINS = (
+    ('GARDER', 'bss.bpsbr.com@gmail.com'),
+)
+MANAGERS = ADMINS
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': TWENTY_MBYTES,
+            'filename': 'debug_log.txt',
+        },
+
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file','mail_admins'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 try:
     from settings_local import *
