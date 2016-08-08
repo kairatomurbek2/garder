@@ -55,14 +55,14 @@ Feature: Survey Add
       | hazard-0-longitude | -25   |
     Then Marker should be at "10" latitude and "-25" longitude
 
-  @survey_geolocation_check
-  Scenario: Geolocation check
-    Given I logged in as "root"
-    And Site with pk "5" has "potable" service turned off
-    When I open "survey_add" page for site with pk "5" and service "potable"
-    And I click "add_hazard" link
-    And I click "get-location-0" button
-    Then Marker should be approximately inside Bishkek
+#  @survey_geolocation_check
+#  Scenario: Geolocation check
+#    Given I logged in as "root"
+#    And Site with pk "5" has "potable" service turned off
+#    When I open "survey_add" page for site with pk "5" and service "potable"
+#    And I click "add_hazard" link
+#    And I click "get-location-0" button
+#    Then Marker should be approximately inside Bishkek
 
 
   Scenario: Incorrect survey adding
