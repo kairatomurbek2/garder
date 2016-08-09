@@ -798,6 +798,7 @@
       "city": "",
       "pws": [1],
       "zip": "",
+      "has_licence_for_installation": true,
       "phone2": "",
       "company": "",
       "phone1": "",
