@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import paypalrestsdk
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -243,9 +242,9 @@ paypalrestsdk.configure({
 
 
 #backup settings
-BACKUPS_DIR = os.path.join(os.path.dirname(BASE_DIR), '../backups')
+BACKUPS_DIR = os.path.join(os.path.dirname(BASE_DIR), 'backups')
 BACKUPS_DIR_PWS = '/home/garder/backup/'
 
-CREATE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), '../create_backup.sh')
+CREATE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'create_backup.sh')
 
-RESTORE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), '../restore_backup.sh')
+RESTORE_BACKUP_SCRIPT = os.path.join(os.path.dirname(BASE_DIR), 'restore_backup.sh')
