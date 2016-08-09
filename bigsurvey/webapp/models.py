@@ -1101,11 +1101,14 @@ class Backup(models.Model):
         permissions = (
             ('browse_backup', _('Can browse Backup')),
         )
+reversion.register(Backup)
 
 
 class BackupByOwner(models.Model):
     archive_backup = models.ForeignKey(Backup)
     pws_owner = models.ForeignKey(User)
     directory_name = models.CharField(max_length=100)
+
+reversion.register(BackupByOwner)
 
 import signals
