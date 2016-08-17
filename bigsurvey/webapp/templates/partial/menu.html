@@ -80,7 +80,7 @@
                     {% if perms.webapp.setup_test_price %}
                         <li><a id="test_price_menu_link" href="{% url 'webapp:test_price' %}">{% trans "Setup Test Price" %}</a></li>
                     {% endif %}
-                    {% if perms.webapp.browse_backup %}
+                    {% if perms.webapp.browse_backup and not request.session.demo_days_left %}
                         <li><a id="backup" href="{% url 'webapp:backup_pws' %}">{% trans "Backup" %}</a></li>
                     {% endif %}
                 </ul>
