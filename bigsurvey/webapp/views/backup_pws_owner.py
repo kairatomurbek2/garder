@@ -26,6 +26,7 @@ class BackupPWSOwner(BaseFormView):
         return form
 
     def form_valid(self, form):
+        self._deactivate_sites(form)
         python_path = settings.PYTHON_EXECUTABLE
         backup = form.cleaned_data['time_stamp']
         backup_path = backup.file_path
@@ -37,6 +38,13 @@ class BackupPWSOwner(BaseFormView):
         shutil.rmtree('/tmp/backup')
         messages.success(self.request, self.success_message)
         return HttpResponseRedirect(self.get_success_url())
+
+    def _deactivate_sites(self, form):
+        backup = form.cleaned_data['time_stamp']
+        queryset = models.ImportLog.objects.filter(pws__in=self.request.user.employee.pws.all(),
+                                                   datetime__gte=backup.time_stamp)
+        for import_log in queryset:
+            import_log.added_sites.update(status=models.SiteStatus.objects.get(site_status='Inactive'))
 
     def get_success_url(self):
         return reverse('webapp:backup_pws')
