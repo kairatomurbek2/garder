@@ -17,7 +17,7 @@ mysqldump -u${SQL_USER} -p${SQL_PASS} ${DB_NAME} | gzip -c > bigsurvey_${CURRENT
 echo "Done."
 
 echo "Packing backup..."
-tar -zcf ./backups/backup_${CURRENTDATE}.tar.gz bigsurvey fabfile.py create_backup.sh restore_backup.sh install* bigsurvey_${CURRENTDATE}.gz
+tar -zcf ./backups/backup_${CURRENTDATE}.tar.gz bigsurvey fabfile.py create_backup.sh restore_backup.sh download_pws_backup.sh restore_backup_pws.sh upload_pws_backup.sh install* bigsurvey_${CURRENTDATE}.gz
 echo "Done."
 
 echo "Cleaning up..."
