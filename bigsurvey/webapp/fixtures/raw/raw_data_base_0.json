@@ -895,6 +895,13 @@
   "model": "webapp.bpmanufacturer",
   "pk": 6
 },
+  {
+    "fields": {
+      "bp_manufacturer": "Beeco"
+    },
+    "model": "webapp.bpmanufacturer",
+    "pk": 7
+  },
 {
   "fields": {
     "customer_code": "Residential"
@@ -1117,6 +1124,13 @@
   },
   "model": "webapp.testmanufacturer",
   "pk": 4
+},
+  {
+  "fields": {
+    "test_manufacturer": "Febco"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 5
 },
 {
   "fields": {

@@ -33,7 +33,8 @@
     "user": [
       "ahodges"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 21
@@ -72,7 +73,8 @@
     "user": [
       "awilder"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 22
@@ -111,7 +113,8 @@
     "user": [
       "aenamorado"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 23
@@ -150,10 +153,51 @@
     "user": [
       "aar."
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 24
+},
+{
+  "fields": {
+    "username": "amalbrough",
+    "first_name": "Armand",
+    "last_name": "Malbrough",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 92
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "amalbrough"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 92
 },
 {
   "fields": {
@@ -189,7 +233,8 @@
     "user": [
       "aboucher"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 25
@@ -228,10 +273,51 @@
     "user": [
       "bmiller"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 26
+},
+{
+  "fields": {
+    "username": "bbrunet",
+    "first_name": "Barry",
+    "last_name": "Brunet",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 93
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "bbrunet"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 93
 },
 {
   "fields": {
@@ -267,7 +353,8 @@
     "user": [
       "bconner"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 27
@@ -306,7 +393,8 @@
     "user": [
       "bben"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 28
@@ -345,7 +433,8 @@
     "user": [
       "btravis"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 29
@@ -384,7 +473,8 @@
     "user": [
       "bjohnson"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 30
@@ -423,7 +513,8 @@
     "user": [
       "blouviere"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 31
@@ -462,7 +553,8 @@
     "user": [
       "bmayeaux"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 32
@@ -501,7 +593,8 @@
     "user": [
       "cplumbing"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 33
@@ -540,7 +633,8 @@
     "user": [
       "cvarnado"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 34
@@ -579,7 +673,8 @@
     "user": [
       "cschaub"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 35
@@ -618,10 +713,91 @@
     "user": [
       "cmontalbano"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 36
+},
+{
+  "fields": {
+    "username": "calleman",
+    "first_name": "Chrisitan",
+    "last_name": "Alleman",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 37
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "calleman"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 37
+},
+{
+  "fields": {
+    "username": "cschmidt",
+    "first_name": "Chrisitan",
+    "last_name": "Schmidt",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 38
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "cschmidt"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 38
 },
 {
   "fields": {
@@ -657,7 +833,8 @@
     "user": [
       "calleman"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 37
@@ -696,10 +873,91 @@
     "user": [
       "cschmidt"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 38
+},
+{
+  "fields": {
+    "username": "calleman",
+    "first_name": "Chrsitian",
+    "last_name": "Alleman",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 37
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "calleman"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 37
+},
+{
+  "fields": {
+    "username": "cdugas",
+    "first_name": "Cody",
+    "last_name": "Dugas",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 9
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "cdugas"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 9
 },
 {
   "fields": {
@@ -735,7 +993,8 @@
     "user": [
       "dguillory"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 40
@@ -774,7 +1033,8 @@
     "user": [
       "da"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 41
@@ -813,7 +1073,8 @@
     "user": [
       "ddeville"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 42
@@ -852,7 +1113,8 @@
     "user": [
       "dzeringue"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 43
@@ -891,7 +1153,8 @@
     "user": [
       "ddeshotel"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 44
@@ -930,7 +1193,8 @@
     "user": [
       "dgudry"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 45
@@ -969,7 +1233,8 @@
     "user": [
       "dgremillion"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 46
@@ -1008,7 +1273,8 @@
     "user": [
       "edimaggio"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 47
@@ -1047,7 +1313,8 @@
     "user": [
       "ebonvillian"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 48
@@ -1086,7 +1353,8 @@
     "user": [
       "echauvin"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 49
@@ -1094,8 +1362,8 @@
 {
   "fields": {
     "username": "fmitchell",
-    "first_name": "Floyd",
-    "last_name": "Mitchell",
+    "first_name": "floyd",
+    "last_name": "mitchell",
     "is_active": true,
     "is_superuser": false,
     "is_staff": false,
@@ -1125,7 +1393,8 @@
     "user": [
       "fmitchell"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 50
@@ -1164,10 +1433,131 @@
     "user": [
       "gpaline"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 51
+},
+{
+  "fields": {
+    "username": "gneely",
+    "first_name": "Geg",
+    "last_name": "Neely",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 53
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "gneely"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 53
+},
+{
+  "fields": {
+    "username": "ghotard",
+    "first_name": "Geraard",
+    "last_name": "Hotard",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 52
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "ghotard"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 52
+},
+{
+  "fields": {
+    "username": "ghotard",
+    "first_name": "Gerad",
+    "last_name": "Hotard",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 52
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "ghotard"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 52
 },
 {
   "fields": {
@@ -1203,7 +1593,8 @@
     "user": [
       "ghotard"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 52
@@ -1242,7 +1633,8 @@
     "user": [
       "gneely"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 53
@@ -1281,7 +1673,8 @@
     "user": [
       "jsyrdal"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 54
@@ -1320,7 +1713,8 @@
     "user": [
       "jwilson"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 55
@@ -1359,7 +1753,8 @@
     "user": [
       "jfontenot"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 56
@@ -1398,7 +1793,9 @@
     "user": [
       "jjeff"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
+
   },
   "model": "webapp.employee",
   "pk": 57
@@ -1437,7 +1834,8 @@
     "user": [
       "jgriffin"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 58
@@ -1476,7 +1874,48 @@
     "user": [
       "jmcmillian"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 59
+},
+{
+  "fields": {
+    "username": "jmcmillian",
+    "first_name": "Jessie",
+    "last_name": "McMillian",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 59
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "jmcmillian"
+    ],
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 59
@@ -1515,7 +1954,8 @@
     "user": [
       "jfrusha"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 60
@@ -1554,7 +1994,8 @@
     "user": [
       "jalfred"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 61
@@ -1593,10 +2034,51 @@
     "user": [
       "jrobin"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 62
+},
+{
+  "fields": {
+    "username": "jbarker",
+    "first_name": "Jude",
+    "last_name": "Barker",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 94
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "jbarker"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 94
 },
 {
   "fields": {
@@ -1632,7 +2114,8 @@
     "user": [
       "kkenneth"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 63
@@ -1671,10 +2154,51 @@
     "user": [
       "kdoise"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 64
+},
+{
+  "fields": {
+    "username": "kmartinez",
+    "first_name": "Kevin",
+    "last_name": "Martinez",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 95
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "kmartinez"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 95
 },
 {
   "fields": {
@@ -1710,7 +2234,8 @@
     "user": [
       "krobicheaux"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 65
@@ -1749,7 +2274,8 @@
     "user": [
       "ldale"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 66
@@ -1788,7 +2314,8 @@
     "user": [
       "lraymond"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 67
@@ -1827,7 +2354,8 @@
     "user": [
       "ljohnson"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 68
@@ -1866,7 +2394,8 @@
     "user": [
       "lbienvenu"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 69
@@ -1905,10 +2434,51 @@
     "user": [
       "lgeorge"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 70
+},
+{
+  "fields": {
+    "username": "mkmichel",
+    "first_name": "Mar",
+    "last_name": "kMichel",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 72
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "mkmichel"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 72
 },
 {
   "fields": {
@@ -1944,7 +2514,8 @@
     "user": [
       "mmalte"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 71
@@ -1983,7 +2554,8 @@
     "user": [
       "mmichel"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 72
@@ -2022,7 +2594,8 @@
     "user": [
       "metue"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 73
@@ -2061,7 +2634,8 @@
     "user": [
       "mnunez"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 74
@@ -2100,10 +2674,91 @@
     "user": [
       "mzeringue"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 75
+},
+{
+  "fields": {
+    "username": "mlasseigne",
+    "first_name": "Mike",
+    "last_name": "Lasseigne",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 96
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "mlasseigne"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 96
+},
+{
+  "fields": {
+    "username": "ncarter",
+    "first_name": "Nathan",
+    "last_name": "Carter",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 16
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "ncarter"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 16
 },
 {
   "fields": {
@@ -2139,10 +2794,51 @@
     "user": [
       "nnolan"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 77
+},
+{
+  "fields": {
+    "username": "pgremillon",
+    "first_name": "Patrick",
+    "last_name": "Gremillon",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 97
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "pgremillon"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 97
 },
 {
   "fields": {
@@ -2178,7 +2874,8 @@
     "user": [
       "pperirroux"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 78
@@ -2217,7 +2914,48 @@
     "user": [
       "pgremillion"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 79
+},
+{
+  "fields": {
+    "username": "pgremillion",
+    "first_name": "Phillip",
+    "last_name": "Gremillion",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 79
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "pgremillion"
+    ],
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 79
@@ -2256,10 +2994,91 @@
     "user": [
       "rreynolds"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 80
+},
+{
+  "fields": {
+    "username": "rfontenot",
+    "first_name": "Randall",
+    "last_name": "Fontenot",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 98
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "rfontenot"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 98
+},
+{
+  "fields": {
+    "username": "rscott",
+    "first_name": "Randy",
+    "last_name": "Scott",
+    "is_active": true,
+    "is_superuser": false,
+    "is_staff": false,
+    "last_login": "2015-04-07T08:56:00Z",
+    "groups": [
+      [
+        "Testers"
+      ]
+    ],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$bZ6VGUBnh5rh$dpAdMMyiWajKfBeYTH1axbt7u0ychcgOoJMIRe8inbM=",
+    "email": "",
+    "date_joined": "2015-03-09T08:27:26Z"
+  },
+  "model": "auth.user",
+  "pk": 99
+},
+{
+  "fields": {
+    "city": "",
+    "pws": [],
+    "zip": "",
+    "phone2": "",
+    "company": "",
+    "phone1": "",
+    "state": null,
+    "user": [
+      "rscott"
+    ],
+    "address": "",
+    "has_paid": true
+  },
+  "model": "webapp.employee",
+  "pk": 99
 },
 {
   "fields": {
@@ -2295,7 +3114,8 @@
     "user": [
       "rduet"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 81
@@ -2334,7 +3154,8 @@
     "user": [
       "rronnie"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 82
@@ -2373,7 +3194,8 @@
     "user": [
       "rcruse"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 83
@@ -2412,7 +3234,8 @@
     "user": [
       "rtillman"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 84
@@ -2451,7 +3274,8 @@
     "user": [
       "sfletcher"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 85
@@ -2490,7 +3314,8 @@
     "user": [
       "skelley"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 86
@@ -2529,7 +3354,8 @@
     "user": [
       "scole"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 87
@@ -2568,7 +3394,8 @@
     "user": [
       "thebert"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 88
@@ -2607,7 +3434,8 @@
     "user": [
       "uunknown"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 89
@@ -2646,7 +3474,8 @@
     "user": [
       "wbarado"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 90
@@ -2685,7 +3514,8 @@
     "user": [
       "wlaird"
     ],
-    "address": ""
+    "address": "",
+    "has_paid": true
   },
   "model": "webapp.employee",
   "pk": 91
