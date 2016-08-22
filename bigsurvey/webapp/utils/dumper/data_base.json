@@ -897,6 +897,13 @@
 },
 {
   "fields": {
+    "bp_manufacturer": "Beeco"
+  },
+  "model": "webapp.bpmanufacturer",
+  "pk": 7
+},
+{
+  "fields": {
     "customer_code": "Residential"
   },
   "model": "webapp.customercode",
@@ -1120,6 +1127,13 @@
 },
 {
   "fields": {
+    "test_manufacturer": "Febco"
+  },
+  "model": "webapp.testmanufacturer",
+  "pk": 5
+},
+{
+  "fields": {
     "ic_point": "Yard"
   },
   "model": "webapp.icpointtype",
@@ -1151,35 +1165,35 @@
     "assembly_status": "Installed"
   },
   "model": "webapp.assemblystatus",
-  "pk": "installed"
+  "pk": 1
 },
 {
   "fields": {
     "assembly_status": "Installed Properly"
   },
   "model": "webapp.assemblystatus",
-  "pk": "installed"
+  "pk": 2
 },
 {
   "fields": {
     "assembly_status": "Due Install"
   },
   "model": "webapp.assemblystatus",
-  "pk": "due_install"
+  "pk": 3
 },
 {
   "fields": {
     "assembly_status": "Installed Improperly"
   },
   "model": "webapp.assemblystatus",
-  "pk": "due_replace"
+  "pk": 4
 },
 {
   "fields": {
     "assembly_status": "Installed Incorrect BP"
   },
   "model": "webapp.assemblystatus",
-  "pk": "due_replace"
+  "pk": 5
 },
 {
   "fields": {
@@ -1348,19 +1362,5 @@
   },
   "model": "webapp.sitestatus",
   "pk": 4
-},
-{
-  "fields": {
-     "type": true
-  },
-  "model": "test.maintenance",
-  "pk": "1"
-},
-{
-  "fields": {
-     "type": false
-  },
-  "model": "test.maintenance",
-  "pk": "2"
 }
 ]

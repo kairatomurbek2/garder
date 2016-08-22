@@ -5,7 +5,6 @@ import os
 import shutil
 from time import sleep
 
-
 DB_NAME = "Execution.mdb"
 ACCESS_CON_STR = r"""
 DRIVER={SQL Server Native Client 10.0};
@@ -116,7 +115,7 @@ class Preloader(Connector):
                 Services.CustomerCode, Services.CustomerZip, Services.CustomerAddress1, Services.CustomerAddress2, Services.CustApt,
                 Services.CustomerState, Services.LastSurveyDate, Services.NextSurveyDate, Services.ConnectDate
             FROM ALL_PWS INNER JOIN Services ON ALL_PWS.Number = Services.PWSID;""",
-            """UPDATE ALL_SITES 
+            """UPDATE ALL_SITES
 SET [state] = (Select Pval from Pvals WHERE ([Pval_ID]=[state])),
     site_use = (Select Pval from Pvals WHERE ([Pval_ID]=[site_use])),
     site_type = (Select Pval from Pvals WHERE ([Pval_ID]=[site_type])),
@@ -168,35 +167,35 @@ SET ALL_SITES.Code = (Select Pval from Pvals WHERE ([Pval_ID]=[Code])),
     def _preload_hazards(self):
         print "======== PRELOADING HAZARDS ========"
         sqls = (
-            """INSERT INTO ALL_HAZARDS ( 
+            """INSERT INTO ALL_HAZARDS (
 	hazard_type, assembly_status, bp_type_required,
-	due_install_test_date,survey, service_type, 
+	due_install_test_date,survey, service_type,
 	[site], assembly_location, installer,
 	install_date, replace_date, orientation,
 	bp_type_present, bp_size, bp_manufacturer,
 	model_no, serial_no, old_survey_id, old_device_id )
-SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, 
+SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall,
 	ALL_SURVEYS.ID, BackflowDevices.BPType, ALL_SURVEYS.[site],
-	BackflowDevices.AssemblyLocation, BackflowDevices.Installer, BackflowDevices.InstallDate, 
+	BackflowDevices.AssemblyLocation, BackflowDevices.Installer, BackflowDevices.InstallDate,
 	BackflowDevices.ReplaceDate, BackflowDevices.Orientation, BackflowDevices.TypeBPProvided,
 	BackflowDevices.BPSize, BackflowDevices.Manufacturer, BackflowDevices.ModelNo,
 	BackflowDevices.SerialNo, BackflowDevices.SurveyID, BackflowDevices.BackflowID
-FROM BackflowDevices, Surveys, ALL_SURVEYS 
+FROM BackflowDevices, Surveys, ALL_SURVEYS
 WHERE ALL_SURVEYS.old_id=BackflowDevices.SurveyID and Surveys.SurveyID=BackflowDevices.SurveyID;""",
             """UPDATE ALL_HAZARDS set
 ALL_HAZARDS.installed_properly = isnull((select 1 where LOWER(BackflowDevices.InstalledProperly)='yes'), 0)
 FROM BackflowDevices
 where ALL_HAZARDS.old_device_id = BackflowDevices.BackflowID""",
             "update ALL_HAZARDS set ALL_HAZARDS.service_type = (Select Pval from Pvals WHERE service_type=Pval_ID);",
-            """INSERT INTO ALL_HAZARDS ( 
-	hazard_type, assembly_status, bp_type_required, 
-	due_install_test_date, survey, 
-	service_type, site, old_survey_id ) 
-SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd, 
-	Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, 
-	ALL_SURVEYS.site, Surveys.SurveyID 
-FROM Surveys, ALL_SURVEYS 
-WHERE [Hazard1] Is Not Null AND 
+            """INSERT INTO ALL_HAZARDS (
+	hazard_type, assembly_status, bp_type_required,
+	due_install_test_date, survey,
+	service_type, site, old_survey_id )
+SELECT Surveys.Hazard1, Surveys.AssemblyStatus, Surveys.TypeBPReqd,
+	Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type,
+	ALL_SURVEYS.site, Surveys.SurveyID
+FROM Surveys, ALL_SURVEYS
+WHERE [Hazard1] Is Not Null AND
 	[ALL_SURVEYS].[old_id]=[Surveys].[SurveyID] AND
 	Surveys.SurveyID not in (Select ALL_HAZARDS.old_survey_id from ALL_HAZARDS)""",
             "INSERT INTO ALL_HAZARDS ( hazard_type, assembly_status, bp_type_required, due_install_test_date, survey, service_type, site, old_survey_id ) SELECT Surveys.Hazard2, Surveys.AssemblyStatus, Surveys.TypeBPReqd, Surveys.DueInstall, ALL_SURVEYS.ID, ALL_SURVEYS.service_type, ALL_SURVEYS.site, ALL_SURVEYS.old_id FROM Surveys, ALL_SURVEYS WHERE (([Hazard2] Is Not Null) AND ([ALL_SURVEYS].[old_id]=[Surveys].[SurveyID]));",
@@ -224,7 +223,7 @@ WHERE [Hazard1] Is Not Null AND
     def _preload_devices(self):
         print "======== PRELOADING DEVICES ========"
         sqls = (
-            """INSERT INTO ALL_DEVICES ( 
+            """INSERT INTO ALL_DEVICES (
                     due_install_test_date, assembly_location, installer,
                     install_date, replace_date, orientation, installed_properly,
                     bp_type_present, bp_size, bp_manufacturer,
@@ -238,8 +237,8 @@ WHERE [Hazard1] Is Not Null AND
                 WHERE ALL_HAZARDS.old_device_id is not NULL""",
             "UPDATE ALL_HAZARDS SET ALL_HAZARDS.bp_device = ALL_DEVICES.ID FROM ALL_DEVICES WHERE ALL_HAZARDS.ID = ALL_DEVICES.hazard",
             "UPDATE ALL_DEVICES SET bp_type_present = ALL_HAZARDS.bp_type_required FROM ALL_HAZARDS WHERE ALL_DEVICES.bp_type_present is NULL and ALL_DEVICES.hazard = ALL_HAZARDS.ID",
-##            "UPDATE ALL_HAZARDS SET bp_device = NULL where bp_device in (select ALL_DEVICES.ID from ALL_DEVICES where bp_type_present is NULL)",
-##            "DELETE FROM ALL_DEVICES WHERE bp_type_present is NULL",
+            ##            "UPDATE ALL_HAZARDS SET bp_device = NULL where bp_device in (select ALL_DEVICES.ID from ALL_DEVICES where bp_type_present is NULL)",
+            ##            "DELETE FROM ALL_DEVICES WHERE bp_type_present is NULL",
             "UPDATE ALL_DEVICES SET bp_type_present = 'Unknown' where bp_type_present is NULL",
         )
         self._execute_list(sqls)
@@ -251,21 +250,21 @@ WHERE [Hazard1] Is Not Null AND
             "Update ALL_LETTERS set LetterType = (select Pval from Pvals where Pval_ID = LetterType);",
             "Update ALL_LETTERS set LetterType = 'Annual Test First' where lettertype='Annual Test';",
             "Update ALL_LETTERS set LetterType = 'Due Install First' where lettertype='Due Install';",
-        )    
+        )
         self._execute_list(sqls)
 
     def _preload_tests(self):
         print "======== PRELOADING TESTS ========"
         sqls = (
-            """Insert into ALL_TESTS ( bp_device, tester, [user], test_date, 
+            """Insert into ALL_TESTS ( bp_device, tester, [user], test_date,
                 cv1_leaked, cv1_gauge_pressure, cv1_cleaned, cv1_retest_pressure,
                 cv2_leaked, cv2_gauge_pressure, cv2_cleaned, cv2_retest_pressure,
                 rv_opened, rv_psi1, rv_cleaned, rv_psi2,
-                outlet_sov_leaked, 
+                outlet_sov_leaked,
                 cv_leaked, cv_held_pressure, cv_retest_psi,
                 pvb_opened, air_inlet_psi, pvb_cleaned, air_inlet_retest_psi,
                 test_result, account_number, notes, TesterCertNumber, test_serial, test_manufacturer, test_last_cert )
-            SELECT BackflowID, TesterName, [User], TestDate, 
+            SELECT BackflowID, TesterName, [User], TestDate,
                 CheckValve1Status, GaugePressure1Valve1, MaintenanceValve1, MaintPressure2Valve1,
                 CheckValve2Status, GaugePressure1Valve2, MaintenanceValve2, MaintPressure2Valve2,
                 ReliefValveStatus, ReliefValvePSI, MaintenanceReliefValve, ReliefValvePSI1,
@@ -286,7 +285,7 @@ WHERE [Hazard1] Is Not Null AND
             "update all_tests set pvb_cleaned = 1 where pvb_cleaned is Null;",
             "update all_tests set outlet_sov_leaked = 0 where outlet_sov_leaked is Null;",
             "UPDATE ALL_TESTS set bp_device=(select ALL_DEVICES.ID from ALL_DEVICES where ALL_DEVICES.old_device_id=bp_device)",
-##            "delete from all_tests where bp_device is null;",
+            ##            "delete from all_tests where bp_device is null;",
             "UPDATE ALL_TESTS set tester='Bill Travis' where TesterCertNumber='6871'",
             "UPDATE ALL_TESTS set TesterCertNumber='LJP4526', tester='David Zeringue' where TesterCertNumber like '%4526%'",
             "UPDATE ALL_TESTS set TesterCertNumber='2010057', tester='Walter Barado III' where TesterCertNumber like '%201005%' or TesterCertNumber='2010097'",
@@ -353,8 +352,8 @@ WHERE [Hazard1] Is Not Null AND
 (select tester, test_serial, test_manufacturer, MAX(test_last_cert) \
 from ALL_TESTS \
 group by tester, test_serial, test_manufacturer)",
-            "Update ALL_TESTS set test_kit = (select ID from all_test_kits where ALL_TEST_KITS.[user]=ALL_TESTS.tester and ALL_TEST_KITS.serial=ALL_TESTS.test_serial);",
-        )    
+            "Update ALL_TESTS set test_kit = (select ID from all_test_kits where ALL_TEST_KITS.[user]=ALL_TESTS.tester and ALL_TEST_KITS.serial=ALL_TESTS.test_serial and ALL_TEST_KITS.manufacturer=ALL_TESTS.test_manufacturer);"
+        )
         self._execute_list(sqls)
 
     def _preload_tester_certs(self):
@@ -364,7 +363,7 @@ group by tester, test_serial, test_manufacturer)",
 (select tester, TesterCertNumber from ALL_TESTS \
 group by tester, TesterCertNumber);",
             "Update ALL_TESTS set tester_cert = (select ID from all_tester_certs where ALL_TESTer_cerTS.[user]=ALL_TESTS.tester and ALL_TESTer_cerTS.cert_number=ALL_TESTS.testercertnumber);",
-        )    
+        )
         self._execute_list(sqls)
 
 
@@ -421,8 +420,9 @@ class Formatter(Connector):
             ("cv_leaked", "bit"), "cv_held_pressure", "cv_retest_psi",
             ("pvb_opened", "bit"), "air_inlet_psi", ("pvb_cleaned", "bit"), "air_inlet_retest_psi",
             ("test_result", "bit"), "account_number",
-            ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer", ("test_last_cert", "date"),
-                "test_kit", "tester_cert"
+            ("notes", "nvarchar(max)"), "TesterCertNumber", "test_serial", "test_manufacturer",
+            ("test_last_cert", "date"),
+            "test_kit", "tester_cert"
         ]),
         "test_kits": ("ALL_TEST_KITS", [
             "user", "serial", "manufacturer", ("last_cert", "date")
@@ -435,7 +435,10 @@ class Formatter(Connector):
     def _create_tables(self):
         print "======== CREATING TABLES ========"
         for table in self.TABLES.values():
-            sql = "DROP TABLE %s;" % table[0]
+            try:
+                sql = "DROP TABLE %s;" % table[0]
+            except Exception as e:
+                print "%s" % e
             self._execute(sql)
             sql = self.CREATE_TABLE_PATTERN % (table[0], self._format_fields(table[1]))
             self._execute(sql)
@@ -465,6 +468,7 @@ class Formatter(Connector):
 
 class Jsoner(object):
     def __init__(self):
+        models = {}
         self.models = {
             "webapp.sourcetype": {},
             "webapp.sitetype": {},
@@ -577,10 +581,36 @@ class Jsoner(object):
                 "Walter Barado III": 90,
                 "William laird": 91,
                 "William Laird": 91,
+                "Armand Malbrough": 92,
+                "Barry Brunet": 93,
+                "Chrisitan Alleman": 37,
+                "Chrisitan Schmidt": 38,
+                "Chrsitian Alleman": 37,
+                "christian alleman": 37,
+                "floyd mitchell": 50,
+                "Geg Neely": 53,
+                "Geraard Hotard": 52,
+                "Gerad Hotard": 52,
+                "Jessie McMillian": 59,
+                "Joey Alfred": 100,
+                "Jude Barker": 94,
+                "Kevin Martinez": 95,
+                "Mar kMichel": 72,
+                "Mike Lasseigne": 96,
+                "Patrick Gremillon": 97,
+                "Phillip  Gremillion": 79,
+                "Randall Fontenot": 98,
+                "Randy Scott": 99,
+                "NCARTER": 16,
+                "joey alfred": 100,
+                "CHRISTIAN ALLEMAN": 37,
+                "Christian alleman": 37,
+                "Phillip gremillion": 79,
+                "Barry brunet": 93,
             }
         }
         self.fill_json()
-        #self.print_json()
+        # self.print_json()
 
     def fill_json(self):
         f = open("data_base.json")
@@ -611,8 +641,8 @@ class Dumper(Connector):
             '%s'
         ),
         'survey': BASE_TEMPLATE % (
-        '{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}',
-        '"webapp.survey"', '%s'),
+            '{"site":%s,"service_type":%s,"survey_date":"%s","survey_type":null,"surveyor":%s,"metered":%s,"pump_present":%s,"additives_present":%s,"cc_present":%s,"protected":%s,"aux_water":%s,"detector_manufacturer":"%s","detector_model":"%s","detector_serial_no":"%s","special":%s,"notes":"%s","hazards":[%s]}',
+            '"webapp.survey"', '%s'),
         'hazard': BASE_TEMPLATE % (
             '{"site":%s,"service_type":%s,"location1":"","location2":"","hazard_type":%s,\
              "assembly_status":"%s","bp_type_required":"%s","is_present":true,"notes":"","bp_device":%s}',
@@ -628,8 +658,10 @@ class Dumper(Connector):
             '"webapp.bpdevice"',
             '%s'
         ),
-        'pws': BASE_TEMPLATE % ('{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
-        'letter': BASE_TEMPLATE % ('{"already_sent":true,"site":%s,"letter_type":%s,"date":"%s","user":%s}', '"webapp.letter"', '%s'),
+        'pws': BASE_TEMPLATE % (
+            '{"number":"%s","name":"%s","city":"","water_source":%s,"notes":""}', '"webapp.pws"', '%s'),
+        'letter': BASE_TEMPLATE % (
+            '{"already_sent":true,"site":%s,"letter_type":%s,"date":"%s","user":%s}', '"webapp.letter"', '%s'),
         'test': BASE_TEMPLATE % (
             '{"outlet_sov_leaked":%s,"rv_psi1":%s, "rv_psi2":%s, "cv2_cleaned": "%s",\
             "cv2_retest_gauge_pressure": %s, "cv_retest_psi": %s, \
@@ -642,7 +674,8 @@ class Dumper(Connector):
             '"webapp.test"',
             '%s'
         ),
-        'test_kit': BASE_TEMPLATE % ('{"user":%s,"test_serial":"%s","test_manufacturer":%s,"test_last_cert":"%s"}', '"webapp.testkit"', '%s'),
+        'test_kit': BASE_TEMPLATE % (
+            '{"user":%s,"test_serial":"%s","test_manufacturer":%s,"test_last_cert":"%s"}', '"webapp.testkit"', '%s'),
         'tester_cert': BASE_TEMPLATE % ('{"user":%s,"cert_number":"%s"}', '"webapp.testercert"', '%s'),
     }
     SQL_STRS = {
@@ -660,8 +693,8 @@ cv2_retest_pressure, cv_retest_psi, air_inlet_retest_psi, cv2_leaked, cv_held_pr
 cv2_gauge_pressure, pvb_cleaned, tester, cv1_cleaned,\
 pvb_opened, air_inlet_psi, [user], test_result, cv1_retest_pressure, cv1_gauge_pressure,\
 rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_kit, tester_cert, ID from ALL_TESTS',
-        'dump_test_kits':  'select [user], serial, manufacturer, last_cert, ID from ALL_TEST_KITS',
-        'dump_tester_certs':  'select [user], cert_number, ID from ALL_TESTer_cerTS',
+        'dump_test_kits': 'select [user], serial, manufacturer, last_cert, ID from ALL_TEST_KITS',
+        'dump_tester_certs': 'select [user], cert_number, ID from ALL_TESTer_cerTS',
     }
     DATA_TYPES = [
         'pws',
@@ -765,7 +798,8 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_
         return ",".join(hazard_ids)
 
     def replace_nones(self, string):
-        return string.replace("None", "null").replace("False", "false").replace("True", "true").replace('"null"', 'null')
+        return string.replace("None", "null").replace("False", "false").replace("True", "true").replace('"null"',
+                                                                                                        'null')
 
     def replace_fields(self, row, data_type):
         for index, model in self.FIELDS_TO_REPLACE[data_type]:
@@ -859,5 +893,5 @@ rv_opened, cv1_leaked, bp_device, cv_leaked, notes, test_date, rv_cleaned, test_
 
 if __name__ == '__main__':
     dumper = Dumper()
-##    dumper.dump_testers()
+    dumper.dump_testers()
     dumper.dump()
