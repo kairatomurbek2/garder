@@ -3551,7 +3551,6 @@
     "notes": "",
     "install_date": "2015-02-18",
     "assembly_location": 2,
-    "due_test_date": "2015-05-31"
   },
   "model": "webapp.bpdevice",
   "pk": 1
@@ -3570,7 +3569,6 @@
     "manufacturer": null,
     "notes": "",
     "assembly_location": 2,
-    "due_test_date": null
   },
   "model": "webapp.bpdevice",
   "pk": 2
@@ -3589,7 +3587,6 @@
     "notes": "",
     "install_date": null,
     "assembly_location": null,
-    "due_test_date": null
   },
   "model": "webapp.bpdevice",
   "pk": 3
@@ -3608,7 +3605,6 @@
     "notes": "",
     "install_date": null,
     "assembly_location": 2,
-    "due_test_date": null
   },
   "model": "webapp.bpdevice",
   "pk": 4
@@ -3633,6 +3629,7 @@
     "notes": "",
     "assembly_status": "due_install",
     "additives_present": false,
+    "due_test_date": "2015-05-31",
     "bp_device": 1
   },
   "model": "webapp.hazard",
@@ -3658,6 +3655,7 @@
     "regulation_type": null,
     "notes": "",
     "additives_present": false,
+    "due_test_date": null,
     "bp_device": 2
   },
   "model": "webapp.hazard",
@@ -3683,6 +3681,7 @@
     "notes": "",
     "assembly_status": null,
     "additives_present": false,
+    "due_test_date": null,
     "bp_device": 3
   },
   "model": "webapp.hazard",
@@ -3708,6 +3707,7 @@
     "notes": "",
     "assembly_status": "installed",
     "additives_present": false,
+    "due_test_date": null,
     "bp_device": 4
   },
   "model": "webapp.hazard",

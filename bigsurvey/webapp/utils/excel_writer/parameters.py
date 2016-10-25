@@ -24,7 +24,7 @@ SITE_FIELDS = [
     ("connect_date", "Connect Date"),
     ("last_survey_date", "Last Survey Date"),
     ("next_survey_date", "Next Survey Date"),
-    ("due_install_test_date", "Due Install/Test Date"),
+    ("due_install_test_date", "Due Test Date"),
     ("route", "Seq. Route"),
     ("site_use", "Site Use"),
     ("site_type", "Site Type"),
@@ -54,6 +54,7 @@ HAZARD_FIELDS = [
     ("cc_present", "CC Present"),
     ("aux_water", "Auxiliary Water"),
     ("hazard_degree", "Hazard Degree"),
+    ("due_test_date", "Due Test Date"),
     ("latitude", "Latitude"),
     ("longitude", "Longitude"),
     ("is_present", "Is Present"),
@@ -72,7 +73,6 @@ BP_DEVICE_FIELDS = [
     ("manufacturer", "BP Manufacturer"),
     ("model_no", "BP Model No."),
     ("serial_no", "BP Serial No."),
-    ("due_test_date", "Due Test Date"),
     ("notes", "Notes"),
 ]
 
@@ -97,6 +97,5 @@ DATE_FIELDS = [
     "due_install_test_date",
     "install_date",
     "replace_date",
-    "due_install_date",
     "due_test_date",
 ]

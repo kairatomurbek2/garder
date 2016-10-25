@@ -656,7 +656,6 @@ class BPDevice(models.Model):
                                      related_name="hazards")
     model_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Model No."))
     serial_no = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("BP Serial No."))
-    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Test Date"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
 
     def __unicode__(self):
@@ -718,7 +717,7 @@ class Hazard(models.Model):
     is_present = models.BooleanField(default=True, verbose_name=_("Is Present On Site"))
     notes = models.TextField(max_length=255, blank=True, null=True, verbose_name=_("Notes"))
     letter_type = models.ForeignKey(LetterType, blank=True, null=True, verbose_name=_("Letter Type"), related_name="hazards")
-    due_install_date = models.DateField(null=True, blank=True, verbose_name=_("Due Install Date"))
+    due_test_date = models.DateField(null=True, blank=True, verbose_name=_("Due Test Date"))
 
     def __unicode__(self):
         return u"%s, %s, %s" % (self.hazard_type, self.service_type, self.site.cust_number)
@@ -737,16 +736,6 @@ class Hazard(models.Model):
             ('access_to_multiple_pws_hazards', _('Has access to multiple PWS\' Hazards'))
         )
 
-    def get_due_install_test_date(self):
-        bp_devices = BPDevice.objects.filter(hazard__site=self.site)
-        due_test_date_min = bp_devices.aggregate(
-            Min('due_test_date')
-        )['due_test_date__min']
-        due_install_date_min = self.site.hazards.all().aggregate(
-            Min('due_install_date')
-        )['due_install_date__min']
-        return self._min_date(due_test_date_min, due_install_date_min)
-
     @staticmethod
     def _min_date(date1, date2):
         if date1:
@@ -756,7 +745,7 @@ class Hazard(models.Model):
         return date2
 
     def update_site(self):
-        self.site.due_install_test_date = self.get_due_install_test_date()
+        self.site.due_install_test_date = self.due_test_date
         self.site.save()
 
     def update_due_install_test_date(self, service_type):

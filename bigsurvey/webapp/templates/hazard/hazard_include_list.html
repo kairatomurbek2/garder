@@ -24,7 +24,7 @@
                     {% trans "Assembly Status" %}
                 </th>
                 <th>
-                    {% trans "Due Install/Test" %}
+                    {% trans "Due Test Date" %}
                 </th>
                 <th {% if perms.webapp.add_test %}colspan="2"{% endif %} class="uk-text-center border-left">
                     {% trans "Actions" %}
@@ -54,7 +54,7 @@
                         {{ hazard.get_assembly_status_display }}
                     </td>
                     <td>
-                        {{ hazard.bp_device.due_test_date }}
+                        {{ hazard.due_test_date }}
                     </td>
                     <td class="border-left uk-text-center">
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>
@@ -93,7 +93,7 @@
                     {% trans "Assembly Status" %}
                 </th>
                 <th>
-                    {% trans "Due Install/Test" %}
+                    {% trans "Due Test Date" %}
                 </th>
                 <th {% if perms.webapp.add_test %}colspan="2"{% endif %} class="uk-text-center border-left">
                     {% trans "Actions" %}
@@ -123,7 +123,7 @@
                         {{ hazard.get_assembly_status_display }}
                     </td>
                     <td>
-                        {{ hazard.bp_device.due_test_date }}
+                        {{ hazard.due_test_date }}
                     </td>
                     <td class="border-left uk-text-center">
                         <a href="{% url "webapp:hazard_detail" hazard.pk %}" id="hazard_{{ hazard.pk }}_detail_link">{% trans "Detail" %}</a>

@@ -16,6 +16,7 @@
     <div class="wrapper">
         {% include 'messages.html' %}
         <h3 class="uk-text-center">{% trans "Hazard Info" %}</h3>
+        <h5 class="uk-text-center">{% trans "Due Test Date" %}: {{ hazard.due_test_date }}</h5>
         <table class="uk-table border-none uk-table-condensed">
             <tbody>
             <tr>
@@ -100,32 +101,32 @@
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.bp_type_present }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Installed Properly" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.installed_properly|yn }}</td>
-                <td class="uk-text-right uk-text-muted">{% trans "Due Install/Test" %}</td>
-                <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.due_test_date }}</td>
-            </tr>
-            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Installer" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.installer }}</td>
+            </tr>
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Install Date" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.install_date }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Replace Date" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.replace_date }}</td>
-            </tr>
-            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Assembly Location" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.assembly_location }}</td>
+            </tr>
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Orientation" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.orientation }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "BP Size" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.bp_size }}</td>
-            </tr>
-            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Manufacturer" %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.manufacturer }}</td>
+            </tr>
+            <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Model No." %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.model_no }}</td>
                 <td class="uk-text-right uk-text-muted">{% trans "Serial No." %}</td>
                 <td class="uk-text-left uk-text-primary">{{ hazard.bp_device.serial_no }}</td>
+                <td></td>
+                <td></td>
             </tr>
             <tr>
                 <td class="uk-text-right uk-text-muted">{% trans "Notes" %}</td>

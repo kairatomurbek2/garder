@@ -102,7 +102,7 @@ class BPForm(forms.ModelForm):
         model = models.BPDevice
         fields = ('assembly_location', 'installed_properly', 'installer', 'install_date', 'replace_date',
                   'orientation', 'bp_type_present', 'bp_size', 'manufacturer', 'model_no', 'serial_no',
-                  'due_test_date', 'notes')
+                  'notes')
 
 
 def coerce_to_bool(value):
