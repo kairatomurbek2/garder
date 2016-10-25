@@ -3550,7 +3550,7 @@
     "manufacturer": null,
     "notes": "",
     "install_date": "2015-02-18",
-    "assembly_location": 2,
+    "assembly_location": 2
   },
   "model": "webapp.bpdevice",
   "pk": 1
@@ -3568,7 +3568,7 @@
     "model_no": "",
     "manufacturer": null,
     "notes": "",
-    "assembly_location": 2,
+    "assembly_location": 2
   },
   "model": "webapp.bpdevice",
   "pk": 2
@@ -3586,7 +3586,7 @@
     "manufacturer": null,
     "notes": "",
     "install_date": null,
-    "assembly_location": null,
+    "assembly_location": null
   },
   "model": "webapp.bpdevice",
   "pk": 3
@@ -3604,7 +3604,7 @@
     "manufacturer": null,
     "notes": "",
     "install_date": null,
-    "assembly_location": 2,
+    "assembly_location": 2
   },
   "model": "webapp.bpdevice",
   "pk": 4
