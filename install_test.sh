@@ -5,4 +5,6 @@ if [ ! -d "virtualenv" ]; then
 fi
 . virtualenv/bin/activate
 pip install -r requirements.txt
+cd ./bigsurvey
+./manage.py change_due_test_date_from_tests
 deactivate

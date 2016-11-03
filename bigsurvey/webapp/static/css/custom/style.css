@@ -271,10 +271,6 @@ ul.test-form-ul {
 
 }
 
-#id_is_active {
-    visibility: hidden;
-}
-
 .demo_trial {
     z-index: 1000;
     text-align: center;

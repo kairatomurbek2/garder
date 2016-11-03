@@ -14,6 +14,7 @@ class TestKitAndCertPermissionMixin(object):
     def has_test_kit_and_cer_permissions(self):
         return perm_checkers.TestKitAndCertPermChecker.has_perm(self.request)
 
+
 class TesterCertBaseFormView(BaseFormView, TestKitAndCertPermissionMixin):
     form_class = forms.TesterCertForm
     model = models.TesterCert

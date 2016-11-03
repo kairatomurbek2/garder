@@ -915,6 +915,12 @@ class Test(models.Model):
     def get_pws_list(self):
         return [self.bp_device.hazard.site.pws]
 
+    def update_due_test_date(self):
+        new_date = self.test_date.replace(year=self.test_date.year + 1)
+        if self.test_result and self.paid and (not self.bp_device.hazard.due_test_date or self.bp_device.hazard.due_test_date < new_date):
+            self.bp_device.hazard.due_test_date = new_date
+            self.bp_device.hazard.save()
+
     @property
     def cv1_replaced_details(self):
         return self._get_replaced_details('cv1')

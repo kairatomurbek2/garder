@@ -117,6 +117,8 @@ class TestPayPaypalView(BaseView, UnpaidTestMixin):
             if payment.execute({'payer_id': payer_id}):
                 test_pks = self.request.GET['tests'].split(',')
                 models.Test.objects.filter(pk__in=test_pks).update(paid=True, paypal_payment_id=payment_id)
+                for test in models.Test.objects.filter(pk__in=test_pks, paid=True):
+                    test.update_due_test_date()
                 messages.success(self.request,
                                  __(Messages.Test.payment_successful_singular, Messages.Test.payment_successful_plural,
                                     len(test_pks)))
@@ -262,6 +264,7 @@ class TestAddView(TestBaseFormView, CreateView):
         form.instance.price = price
         if price < 0.0001:
             form.instance.paid = True
+        form.instance.update_due_test_date()
         response = super(TestAddView, self).form_valid(form)
         self.request.session['test_for_payment_pk'] = self.object.pk
         self.request.session['test_price_not_null'] = price > 0
@@ -293,6 +296,12 @@ class TestEditView(TestBaseFormView, UpdateView):
         if form.instance.user != self.request.user and not form.instance.paid:
             raise Http404
         return form
+
+    def form_valid(self, form):
+        form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
+        form.instance.update_due_test_date()
+        response = super(TestEditView, self).form_valid(form)
+        return response
 
     def get_initial(self):
         initial = {}
