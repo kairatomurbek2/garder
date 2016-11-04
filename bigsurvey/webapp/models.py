@@ -917,9 +917,12 @@ class Test(models.Model):
 
     def update_due_test_date(self):
         new_date = self.test_date.replace(year=self.test_date.year + 1)
-        if self.test_result and self.paid and (not self.bp_device.hazard.due_test_date or self.bp_device.hazard.due_test_date < new_date):
+        if self.test_result and self.paid and (not self.bp_device.hazard.due_test_date or self.bp_device.hazard.due_test_date <= new_date):
             self.bp_device.hazard.due_test_date = new_date
             self.bp_device.hazard.save()
+            if not self.bp_device.hazard.site.due_install_test_date or self.bp_device.hazard.site.due_install_test_date >= new_date:
+                self.bp_device.hazard.site.due_install_test_date = new_date
+                self.bp_device.hazard.site.save()
 
     @property
     def cv1_replaced_details(self):
