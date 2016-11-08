@@ -92,7 +92,7 @@ Feature: Import from Excel files
     Examples:
       | file                         | message                 | params                                                                                                                     |
       | incorrect_date_format.xlsx   | incorrect date format   | D6 :: %Y%m%d                                                                                                               |
-      | foreign_key_error.xlsx       | foreign key error       | C7 :: Residental, Governmental, Commercial, Industrial, Trailer Park, Multifamily, Irrigation, Fire, Other, Potable :: 100 |
+      | foreign_key_error.xlsx       | foreign key error       | C7 :: Residential, Governmental, Commercial, Industrial, Trailer Park, Multifamily, Irrigation, Fire, Other, Potable :: 100 |
       | required_value_is_empty.xlsx | required value is empty | A4                                                                                                                         |
 
   @import_duplicates

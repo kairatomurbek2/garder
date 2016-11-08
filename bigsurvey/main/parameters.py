@@ -191,6 +191,7 @@ OTHER = 'other'
 
 DATEFORMAT_CHOICES = (
     ('%Y-%m-%d', '%Y-%m-%d'),
+    ('%Y%m%d', '%Y%m%d'),
     ('%m/%d/%Y', '%m/%d/%Y'),
     ('%m/%d/%y', '%m/%d/%y'),
     ('%b %d %Y', '%b %d %Y'),

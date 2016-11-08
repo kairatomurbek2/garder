@@ -659,7 +659,7 @@
 },
 {
   "fields": {
-    "site_use": "Residental"
+    "site_use": "Residential"
   },
   "model": "webapp.siteuse",
   "pk": 7
@@ -890,7 +890,7 @@
 },
 {
   "fields": {
-    "customer_code": "Residental"
+    "customer_code": "Residential"
   },
   "model": "webapp.customercode",
   "pk": 1
