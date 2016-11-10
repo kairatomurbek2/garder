@@ -918,12 +918,14 @@ class Test(models.Model):
     def update_due_test_date(self):
         try:
             new_date = self.test_date.replace(year=self.test_date.year + 1)
-            if self.test_result and self.paid and (not self.bp_device.hazard.due_test_date or self.bp_device.hazard.due_test_date <= new_date):
-                self.bp_device.hazard.due_test_date = new_date
-                self.bp_device.hazard.save()
-                if not self.bp_device.hazard.site.due_install_test_date or self.bp_device.hazard.site.due_install_test_date >= new_date:
-                    self.bp_device.hazard.site.due_install_test_date = new_date
-                    self.bp_device.hazard.site.save()
+            hazard = self.bp_device.hazard
+            if self.test_result and self.paid and hazard:
+                site = hazard.site
+                if hazard.due_test_date is None or hazard.due_test_date <= new_date:
+                    hazard.due_test_date = new_date
+                    hazard.save()
+                    site.due_install_test_date = site.hazards.all().aggregate(Min('due_test_date'))['due_test_date__min']
+                    site.save()
         except Hazard.DoesNotExist:
             pass
 
