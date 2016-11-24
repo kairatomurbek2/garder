@@ -921,11 +921,10 @@ class Test(models.Model):
             hazard = self.bp_device.hazard
             if self.test_result and self.paid and hazard:
                 site = hazard.site
-                if hazard.due_test_date is None or hazard.due_test_date <= new_date:
-                    hazard.due_test_date = new_date
-                    hazard.save()
-                    site.due_install_test_date = site.hazards.all().aggregate(Min('due_test_date'))['due_test_date__min']
-                    site.save()
+                hazard.due_test_date = new_date
+                hazard.save()
+                site.due_install_test_date = site.hazards.all().aggregate(Min('due_test_date'))['due_test_date__min']
+                site.save()
         except Hazard.DoesNotExist:
             pass
 

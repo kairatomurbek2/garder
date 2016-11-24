@@ -298,7 +298,6 @@ class TestEditView(TestBaseFormView, UpdateView):
         return form
 
     def form_valid(self, form):
-        form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         form.instance.update_due_test_date()
         response = super(TestEditView, self).form_valid(form)
         return response
