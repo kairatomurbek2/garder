@@ -15,6 +15,7 @@ from webapp_features.features.definitions.core.page_interactors import (
 
 TODAY = datetime.date.today()
 FIRST_DAY_OF_CUR_MONTH = TODAY - datetime.timedelta(days=TODAY.day - 1)
+THREE_MONTH_AGO_OF_CUR_MONTH = TODAY - datetime.timedelta(days=90)
 
 
 @step('Owner of the following PWSs changes username of tester "(.*)" user to "(.*)":$')
@@ -158,3 +159,15 @@ def then_owner_sees_group1_in_the_search_results(step, text_value):
 @step(u'owner does not see "([^"]*)" in the search results$')
 def but_owner_does_not_see_group1_in_the_search_results(step, text_value):
     auditlog_page.assert_that_text_fragment_is_not_displayed_in_search_result(text_value)
+
+@step(u'I open "audit-log" page')
+def open_audit_log_list_page(step):
+    step.given('I click on "more" link')
+    step.given('I click "audit_log" menu link')
+
+@step(u'I filters auditlog from three month ago start to current month end$')
+def when_owner_filters_from_current_month_start_to_current_month_end(step):
+    last_day_of_cur_month = FIRST_DAY_OF_CUR_MONTH + relativedelta(months=1, days=-1)
+    start_date_str = THREE_MONTH_AGO_OF_CUR_MONTH.strftime("%Y-%m-%d")
+    end_date_str = last_day_of_cur_month.strftime("%Y-%m-%d")
+    auditlog_form.filter_by_date_range(start_date_str, end_date_str)

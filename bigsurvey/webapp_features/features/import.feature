@@ -95,6 +95,17 @@ Feature: Import from Excel files
       | foreign_key_error.xlsx       | foreign key error       | C7 :: Residential, Governmental, Commercial, Industrial, Trailer Park, Multifamily, Irrigation, Fire, Other, Potable :: 100 |
       | required_value_is_empty.xlsx | required value is empty | A4                                                                                                                         |
 
+  @import_large_file
+  Scenario: Import large excel file
+    Given I logged in as "root"
+    When I open "import" page
+    And I fill in file input "file" with "large.xlsx"
+    And I select "South Western PWS" from "pws"
+    And I select "other" from "date_format"
+    And I fill in "date_format_other" with "%Y-%m-%d"
+    And I submit "import" form
+    Then I should be at "import_mappings" page
+
   @import_duplicates
   Scenario: Import file contains duplicates
     Given I logged in as "root"

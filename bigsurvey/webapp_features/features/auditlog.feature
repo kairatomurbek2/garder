@@ -74,3 +74,13 @@ Feature: Audit Logging
     | pws                     | shown     | hidden    |
     | DOC121, White House PWS | pws6user1 | surveyor1 |
     | NUI812, North USA PWS   | surveyor1 | pws6user1 |
+
+
+  Scenario: Verifying Audit Log filter
+    Given I logged in as "root"
+      And I open "audit-log" page
+     When I filters auditlog from three month ago start to current month end
+     Then he sees the following record:
+      | User  | Groups   | PWS                     | Object         | Changes      |
+      | owner | PWSOwner | DOC121, White House PWS | User: pws6user | pws6user1    |
+      | owner | PWSOwner | DOC121, White House PWS | Employee: pws6user | TruFalse    |
