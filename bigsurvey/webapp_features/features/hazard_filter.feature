@@ -1,5 +1,5 @@
-@letter
-@letter_filter
+@hazard
+@hazard_filter
 Feature: Hazard Filtration
 
   @keep_db

@@ -127,6 +127,9 @@ def check_service_type_present(step, pk, service_type, value):
     site_value = getattr(site, '%s_present' % service_type)
     assert site_value == value, '%s service: expected %s, found %s' % (service_type.capitalize(), value, site_value)
 
+@step('I open "survey_list" page')
+def open_test_list_page(step):
+    step.given('I click "surveys" menu link')
 
 @step('I directly open "survey_list" page')
 def open_survey_list(step):
