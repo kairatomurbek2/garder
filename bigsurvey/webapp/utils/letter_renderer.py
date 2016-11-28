@@ -39,7 +39,7 @@ class EMPTY_VALUE:
     pass
 
 
-PWS_LOGO_TEMPLATE = '<p style="text-align: center; height: 200px;"><img src="%s%s" style="width: auto; max-height: 100%%; max-width: 100%%"></p>'
+PWS_LOGO_TEMPLATE = '<p style="text-align: center; height: 300px;"><img src="%s%s" style="width: auto; max-height: 100%%; max-width: 100%%"></p>'
 
 
 class LetterRenderer(object):
