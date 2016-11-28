@@ -86,6 +86,11 @@ def open_tester_list(step):
     step.given('I open "%s"' % get_url(Urls.tester_list))
 
 
+@step('I open "tester_list" page')
+def open_test_list_page(step):
+    step.given('I click "testers" menu link')
+
+
 @step('I should see following user in following tab')
 def see_user_in_tab(step):
     for row in step.hashes:
