@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.forms import formset_factory, BooleanField, HiddenInput
+from django.forms.models import inlineformset_factory
 from django.http import Http404
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -159,25 +160,68 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(SurveyEditView, self).get_form(form_class)
-        if not perm_checkers.SurveyPermChecker.has_perm(self.request, form.instance):
-            raise Http404
         survey = form.instance
         if survey.site.surveys.all().order_by('-pk').first() != survey:
             del form.fields['hazards']
         return form
 
     def form_valid(self, form):
-        survey = form.instance
+        HazardFormset = self.get_hazard_formset()
+        hazard_formset = HazardFormset(self.request.POST, self.request.FILES, prefix='hazard')
+        BPFormset = formset_factory(self.bp_form_class)
+        bp_formset = BPFormset(self.request.POST, self.request.FILES, prefix='bp')
+        if hazard_formset.is_valid():
+            site = self.object.site
+            if hazard_formset.has_changed():
+                new_hazards = self._create_hazards_and_update_related_objects(site, hazard_formset, bp_formset)
+            else:
+                new_hazards = []
+        survey = form.save(commit=False)
+        survey.hazards.add(*new_hazards)
         site = survey.site
         hazards = survey.hazards.all()
-        response = super(SurveyEditView, self).form_valid(form)
         self._update_last_survey_date(site)
         if survey.site.surveys.all().order_by('-pk').first() == survey:
             self._update_is_present(site, survey)
         else:
-            self.object.hazards = hazards
-            self.object.save()
-        return response
+            survey.hazards = hazards
+            survey.save()
+        messages.success(self.request, self.success_message)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_survey_form(self, form_class):
+        return super(SurveyEditView, self).get_form(form_class)
+
+    def get_site(self):
+        site = models.Site.active_only.get(pk=self.kwargs['pk'])
+        return site
+
+    def _create_hazards_and_update_related_objects(self, site, hazard_formset, bp_formset):
+        service_type = self._get_service_type()
+        new_hazards = []
+        for i in xrange(len(hazard_formset)):
+            hazard_form = hazard_formset[i]
+            hazard_form.instance.site = site
+            hazard_form.instance.service_type = service_type
+            if self.device_present_from_form(hazard_form):
+                bp_device = bp_formset[i].save()
+            else:
+                bp_device = None
+            hazard_obj = hazard_form.save()
+            hazard_obj.bp_device = bp_device
+            hazard_obj.save()
+            hazard_obj.update_due_install_test_date(service_type)
+            new_hazards.append(hazard_obj)
+        return new_hazards
+
+    def _get_service_type(self):
+        return models.ServiceType.objects.all()[2]
+
+    @staticmethod
+    def device_present_from_form(hazard_form):
+        if hazard_form.cleaned_data['assembly_status'] in ASSEMBLY_STATUSES_WITH_BP:
+            return True
+        return False
 
 
 class SurveyAddView(SurveyBaseFormView):
