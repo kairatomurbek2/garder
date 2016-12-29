@@ -67,7 +67,6 @@ class SurveyForm(forms.ModelForm):
 
 
 class HazardForm(forms.ModelForm):
-    is_present = forms.BooleanField(initial=True)
     letter_type = forms.ModelChoiceField(queryset=models.LetterType.objects.none(), required=False,
                                          empty_label=_("No letter"))
 
