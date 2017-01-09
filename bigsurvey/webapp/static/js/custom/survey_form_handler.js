@@ -251,6 +251,7 @@
                 .prop('checked', 'checked');
             label.prepend(inp);
             li.append(label);
+            $('.uk-modal-page').css('overflow', 'auto');
             return li
         },
 
