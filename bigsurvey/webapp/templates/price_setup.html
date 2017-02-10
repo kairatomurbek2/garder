@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n staticfiles %}
 
 {% block content %}
     {% include "messages.html" %}
@@ -10,20 +10,25 @@
                     {% csrf_token %}
                     <p>{{ form.price.label }}: {{ form.price }}</p>
                     <p>{{ form.price.errors }}</p>
+                    <p>{{ form.pws_multiple.label }}: {{ form.pws_multiple }}</p>
+                    <p>{{ form.pws_multiple.errors }}</p>
                     <button class="uk-button uk-button-primary" type="submit">{% trans "Update Price" %}</button>
                 </form>
             </div>
             <table class="uk-table">
                 <thead>
-                    <tr>
-                        <th>{% trans "Price" %}</th>
-                        <th>{% trans "Activation Date" %}</th>
-                        <th>{% trans "Deactivation Date" %}</th>
-                    </tr>
+                <tr>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "PWS" %}</th>
+                    <th>{% trans "Activation Date" %}</th>
+                    <th>{% trans "Deactivation Date" %}</th>
+                </tr>
                 </thead>
                 <tbody>
+                {% for active_price in active_prices %}
                 <tr>
                     <td>{{ active_price.price|floatformat:2 }}</td>
+                    <td>{% if active_price.pws %}{{ active_price.pws }}{% else %}Default{% endif %}</td>
                     <td>{{ active_price.start_date }}</td>
                     <td>
                         {% if active_price.end_date %}
@@ -33,12 +38,16 @@
                         {% endif %}
                     </td>
                 </tr>
+                {% endfor %}
                 {% if old_prices %}
-                    <tr><td colspan="3"></td></tr>
+                    <tr>
+                        <td colspan="4"></td>
+                    </tr>
                 {% endif %}
                 {% for price_item in old_prices %}
                     <tr>
                         <td>{{ price_item.price|floatformat:2 }}</td>
+                        <td>{% if price_item.pws %}{{ price_item.pws }}{% else %}Default{% endif %}</td>
                         <td>{{ price_item.start_date }}</td>
                         <td>
                             {% if price_item.end_date %}
@@ -53,4 +62,13 @@
             </table>
         </div>
     </div>
+    <script type="text/javascript">
+        $(".js-select2-multiple").select2();
+    </script>
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/components/select2.min.css' %}"/>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/components/select2.min.js' %}"></script>
 {% endblock %}
