@@ -810,6 +810,7 @@ class PriceHistory(models.Model):
     start_date = models.DateField(auto_now_add=True, verbose_name=_('Start Date'))
     end_date = models.DateField(null=True, blank=True, verbose_name=_('Price end date'), editable=False)
     price_type = models.CharField(max_length=50, choices=PRICE_TYPE, default=DEMO_TRIAL_PRICE)
+    pws = models.ForeignKey(PWS, blank=True, null=True, verbose_name=_('PWS'))
 
     class Meta:
         verbose_name = _("Price")
@@ -821,9 +822,19 @@ class PriceHistory(models.Model):
     def __unicode__(self):
         return u"%s" % self.price
 
+
+    def save_multiple(self,object):
+        self.price=object.price
+        self.start_date=object.price
+        self.end_date=object.end_date
+        self.price_type=object.price_type
+        self.pws=object.pws
+        self.save()
+
+
     @classmethod
-    def current_for_test(cls):
-        return cls.objects.filter(end_date=None, price_type=TEST_PRICE).order_by('-start_date').first()
+    def current_for_test(cls,pws=None):
+        return cls.objects.filter(end_date=None, price_type=TEST_PRICE,pws=pws).order_by('-start_date').first()
 
     @classmethod
     def current_for_demo(cls):
