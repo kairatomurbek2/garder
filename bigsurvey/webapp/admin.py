@@ -47,7 +47,7 @@ class LetterTypeAdmin(CompareVersionAdmin):
 
 
 class PriceAdmin(CompareVersionAdmin):
-    list_display = 'price', 'price_type', 'start_date', 'end_date'
+    list_display = 'price', 'price_type', 'pws', 'start_date', 'end_date'
 
 
 class TermsConditionAdmin(admin.ModelAdmin):

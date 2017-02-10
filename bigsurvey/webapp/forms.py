@@ -95,7 +95,6 @@ class HazardFormForSurvey(forms.ModelForm):
         exclude = ('site', 'service_type', 'bp_device')
 
 
-
 class BPForm(forms.ModelForm):
     class Meta:
         model = models.BPDevice
@@ -681,6 +680,13 @@ class EmailValidationOnForgotPassword(PasswordResetForm):
 
 
 class TestPriceForm(forms.ModelForm):
+    pws_multiple = forms.ModelMultipleChoiceField(label='PWS',
+                                                  queryset=models.PWS.objects.all(),
+                                                  required=False,
+                                                  widget=forms.SelectMultiple(
+                                                      attrs={'class': 'js-select2-multiple'})
+                                                  )
+
     class Meta:
         model = models.PriceHistory
         fields = ['price']
@@ -785,8 +791,10 @@ def count(ids):
 class BackupPWSOwnerForm(forms.Form):
     time_stamp = forms.ModelChoiceField(queryset=None, label=_('Select Backup'))
 
-    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList, label_suffix=None, empty_permitted=False):
-        super(BackupPWSOwnerForm, self).__init__(data, files, auto_id, prefix, initial, error_class, label_suffix, empty_permitted)
+    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None, initial=None, error_class=ErrorList,
+                 label_suffix=None, empty_permitted=False):
+        super(BackupPWSOwnerForm, self).__init__(data, files, auto_id, prefix, initial, error_class, label_suffix,
+                                                 empty_permitted)
 
         ids = models.Backup.objects.all().order_by('-pk').values_list('pk', flat=True)
         self.fields['time_stamp'].queryset = models.Backup.objects.filter(pk__in=count(ids))
