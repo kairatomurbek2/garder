@@ -90,26 +90,49 @@ class TestPriceSetupView(BaseFormView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(TestPriceSetupView, self).get_context_data(**kwargs)
-        active_price = models.PriceHistory.current_for_test()
-        context['active_price'] = active_price
-        if active_price:
-            context['old_prices'] = models.PriceHistory.objects.filter(
-                price_type=TEST_PRICE
-            ).exclude(pk=active_price.pk).order_by('-start_date')
+        context['active_prices'] = models.PriceHistory.objects.filter(
+                price_type=TEST_PRICE,end_date__isnull=True
+            ).order_by('-start_date')
+        context['old_prices'] = models.PriceHistory.objects.filter(
+            price_type=TEST_PRICE
+        ).exclude(end_date__isnull=True).order_by('-start_date')
         return context
 
     def form_valid(self, form):
-        current_price = models.PriceHistory.current_for_test()
-        if current_price:
-            current_date = datetime.now().date()
-            if current_date == current_price.start_date:
-                current_price.price = form.cleaned_data['price']
+        pws_multiple=form.cleaned_data.get('pws_multiple')
+        if not pws_multiple:
+            current_price = models.PriceHistory.current_for_test()
+            if current_price:
+                current_date = datetime.now().date()
+                if current_date == current_price.start_date:
+                    current_price.price = form.cleaned_data['price']
+                else:
+                    form.instance.price_type = TEST_PRICE
+                    self.object = form.save()
+                    current_price.end_date = self.object.start_date
+                current_price.save()
             else:
                 form.instance.price_type = TEST_PRICE
                 self.object = form.save()
-                current_price.end_date = self.object.start_date
-            current_price.save()
         else:
-            form.instance.price_type = TEST_PRICE
-            self.object = form.save()
+            for pws in pws_multiple:
+                current_price = models.PriceHistory.current_for_test(pws)
+                if current_price:
+                    current_date = datetime.now().date()
+                    if current_date == current_price.start_date:
+                        current_price.price = form.cleaned_data['price']
+                    else:
+                        form.instance.price_type = TEST_PRICE
+                        self.object = form.save(commit=False)
+                        self.object.pws=pws
+                        new_price=models.PriceHistory()
+                        new_price.save_multiple(self.object)
+                        current_price.end_date = self.object.start_date
+                    current_price.save()
+                else:
+                    form.instance.price_type = TEST_PRICE
+                    self.object = form.save(commit=False)
+                    self.object.pws=pws
+                    new_price = models.PriceHistory()
+                    new_price.save_multiple(self.object)
         return HttpResponseRedirect(self.success_url)
