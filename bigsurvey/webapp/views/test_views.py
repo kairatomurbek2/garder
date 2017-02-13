@@ -260,14 +260,17 @@ class TestAddView(TestBaseFormView, CreateView):
     def form_valid(self, form):
         form.instance.bp_device = models.BPDevice.objects.get(pk=self.kwargs['pk'])
         form.instance.user = self.request.user
-        price = models.PriceHistory.current_for_test().price
-        form.instance.price = price
-        if price < 0.0001:
+        pws=self.bp_device.hazard.site.pws
+        current = models.PriceHistory.current_for_test(pws)
+        if not current:
+            current=models.PriceHistory.current_for_test(pws=None)# Get default price
+        form.instance.price = current.price
+        if current.price < 0.0001:
             form.instance.paid = True
         form.instance.update_due_test_date()
         response = super(TestAddView, self).form_valid(form)
         self.request.session['test_for_payment_pk'] = self.object.pk
-        self.request.session['test_price_not_null'] = price > 0
+        self.request.session['test_price_not_null'] = current.price > 0
         return response
 
 
