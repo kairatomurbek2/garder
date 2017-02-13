@@ -1,5 +1,5 @@
 from ast import literal_eval
-
+from decimal import Decimal
 from datetime import datetime
 from django.conf import settings
 from cStringIO import StringIO
@@ -689,22 +689,33 @@ class TestPriceForm(forms.ModelForm):
                                                   widget=forms.SelectMultiple(
                                                       attrs={'class': 'js-select2-multiple'})
                                                   )
-
+    price=forms.DecimalField(required=True,min_value=0,decimal_places=2,max_digits=7,label='Price',initial=Decimal(5))
     class Meta:
-        model = models.PriceHistory
-        fields = ['price']
+        model=models.PriceHistory
+        fields=[]
 
     def clean_price(self):
         price = self.cleaned_data['price']
-        current_price = models.PriceHistory.current_for_test()
         if price < 0:
             self.add_error('price', _('Price per Test can not be lower than 0'))
+        pws_list = self.cleaned_data.get('pws_multiple')
+        if pws_list:
+            for pws in pws_list:
+                if not self.validate_price(price, pws):
+                    break
+        else:
+            self.validate_price(price, pws=None)
+        return price
+
+    def validate_price(self, price, pws):
+        current_price = models.PriceHistory.current_for_test(pws)
         if current_price:
             if price == current_price.price:
                 self.add_error('price', _('New Price can not be the same as the current Price'))
-        return price
+                return False
+        return True
 
-    def save_price(self,pws=None):
+    def save_price(self, pws=None):
         current_price = models.PriceHistory.current_for_test(pws)
         if current_price:
             current_date = datetime.now().date()
@@ -714,7 +725,7 @@ class TestPriceForm(forms.ModelForm):
                 self.instance.price_type = TEST_PRICE
                 self.object = self.save(commit=False)
                 self.object.pws = pws
-                new_price=models.PriceHistory()
+                new_price = models.PriceHistory()
                 new_price.save_multiple(self.object)
                 current_price.end_date = new_price.start_date
             current_price.save()
@@ -725,8 +736,8 @@ class TestPriceForm(forms.ModelForm):
             models.PriceHistory().save_multiple(self.object)
 
     def save_multiple(self):
-        pws_multiple = self.cleaned_data.get('pws_multiple')
-        for pws in pws_multiple:
+        pws_list = self.cleaned_data.get('pws_multiple')
+        for pws in pws_list:
             self.save_price(pws)
 
 
