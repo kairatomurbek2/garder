@@ -823,7 +823,7 @@ class PriceHistory(models.Model):
         return u"%s" % self.price
 
 
-    def save_multiple(self,object):
+    def save_price_object(self,object):
         self.price=object.price
         self.start_date=object.price
         self.end_date=object.end_date

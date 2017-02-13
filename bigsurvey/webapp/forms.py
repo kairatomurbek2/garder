@@ -726,14 +726,14 @@ class TestPriceForm(forms.ModelForm):
                 self.object = self.save(commit=False)
                 self.object.pws = pws
                 new_price = models.PriceHistory()
-                new_price.save_multiple(self.object)
+                new_price.save_price_object(self.object)
                 current_price.end_date = new_price.start_date
             current_price.save()
         else:
             self.instance.price_type = TEST_PRICE
             self.object = self.save(commit=False)
             self.object.pws = pws
-            models.PriceHistory().save_multiple(self.object)
+            models.PriceHistory().save_price_object(self.object)
 
     def save_multiple(self):
         pws_list = self.cleaned_data.get('pws_multiple')
