@@ -825,7 +825,7 @@ class PriceHistory(models.Model):
 
     def save_price_object(self,object):
         self.price=object.price
-        self.start_date=object.price
+        self.start_date=object.start_date
         self.end_date=object.end_date
         self.price_type=object.price_type
         self.pws=object.pws
