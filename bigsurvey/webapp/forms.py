@@ -1,4 +1,6 @@
 from ast import literal_eval
+
+from datetime import datetime
 from django.conf import settings
 from cStringIO import StringIO
 
@@ -17,7 +19,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext as _
 from main.parameters import Groups, Messages, VALVE_LEAKED_CHOICES, CLEANED_REPLACED_CHOICES, \
-    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES
+    TEST_RESULT_CHOICES, DATEFORMAT_CHOICES, BP_TYPE, POSSIBLE_IMPORT_MAPPINGS, SITE_STATUS, STATES, \
+    TEST_PRICE
 from webapp.validators import validate_excel_file
 import tarfile
 
@@ -700,6 +703,31 @@ class TestPriceForm(forms.ModelForm):
             if price == current_price.price:
                 self.add_error('price', _('New Price can not be the same as the current Price'))
         return price
+
+    def save_price(self,pws=None):
+        current_price = models.PriceHistory.current_for_test(pws)
+        if current_price:
+            current_date = datetime.now().date()
+            if current_date == current_price.start_date:
+                current_price.price = self.cleaned_data['price']
+            else:
+                self.instance.price_type = TEST_PRICE
+                self.object = self.save(commit=False)
+                self.object.pws = pws
+                new_price=models.PriceHistory()
+                new_price.save_multiple(self.object)
+                current_price.end_date = new_price.start_date
+            current_price.save()
+        else:
+            self.instance.price_type = TEST_PRICE
+            self.object = self.save(commit=False)
+            self.object.pws = pws
+            models.PriceHistory().save_multiple(self.object)
+
+    def save_multiple(self):
+        pws_multiple = self.cleaned_data.get('pws_multiple')
+        for pws in pws_multiple:
+            self.save_price(pws)
 
 
 class PWSOwnerRegistrationForm(forms.ModelForm):

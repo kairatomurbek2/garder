@@ -101,38 +101,7 @@ class TestPriceSetupView(BaseFormView, CreateView):
     def form_valid(self, form):
         pws_multiple=form.cleaned_data.get('pws_multiple')
         if not pws_multiple:
-            current_price = models.PriceHistory.current_for_test()
-            if current_price:
-                current_date = datetime.now().date()
-                if current_date == current_price.start_date:
-                    current_price.price = form.cleaned_data['price']
-                else:
-                    form.instance.price_type = TEST_PRICE
-                    self.object = form.save()
-                    current_price.end_date = self.object.start_date
-                current_price.save()
-            else:
-                form.instance.price_type = TEST_PRICE
-                self.object = form.save()
+            form.save_price(pws=None)
         else:
-            for pws in pws_multiple:
-                current_price = models.PriceHistory.current_for_test(pws)
-                if current_price:
-                    current_date = datetime.now().date()
-                    if current_date == current_price.start_date:
-                        current_price.price = form.cleaned_data['price']
-                    else:
-                        form.instance.price_type = TEST_PRICE
-                        self.object = form.save(commit=False)
-                        self.object.pws=pws
-                        new_price=models.PriceHistory()
-                        new_price.save_multiple(self.object)
-                        current_price.end_date = self.object.start_date
-                    current_price.save()
-                else:
-                    form.instance.price_type = TEST_PRICE
-                    self.object = form.save(commit=False)
-                    self.object.pws=pws
-                    new_price = models.PriceHistory()
-                    new_price.save_multiple(self.object)
+            form.save_multiple()
         return HttpResponseRedirect(self.success_url)
