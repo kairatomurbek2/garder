@@ -717,12 +717,14 @@ class TestPriceForm(forms.ModelForm):
 
     def save_price(self, pws=None):
         current_price = models.PriceHistory.current_for_test(pws)
+        price=self.cleaned_data['price']
         if current_price:
             current_date = datetime.now().date()
             if current_date == current_price.start_date:
-                current_price.price = self.cleaned_data['price']
+                current_price.price = price
             else:
                 self.instance.price_type = TEST_PRICE
+                self.instance.price=price
                 self.object = self.save(commit=False)
                 self.object.pws = pws
                 new_price = models.PriceHistory()
@@ -731,6 +733,7 @@ class TestPriceForm(forms.ModelForm):
             current_price.save()
         else:
             self.instance.price_type = TEST_PRICE
+            self.instance.price = price
             self.object = self.save(commit=False)
             self.object.pws = pws
             models.PriceHistory().save_price_object(self.object)
