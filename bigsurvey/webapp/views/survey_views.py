@@ -176,7 +176,7 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
                 new_hazards = self._create_hazards_and_update_related_objects(site, hazard_formset, bp_formset)
             else:
                 new_hazards = []
-        survey = form.save(commit=False)
+        survey = form.save(commit=True)
         survey.hazards.add(*new_hazards)
         site = survey.site
         hazards = survey.hazards.all()
