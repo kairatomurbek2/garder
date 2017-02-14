@@ -160,6 +160,8 @@ class SurveyEditView(SurveyBaseFormView, UpdateView):
 
     def get_form(self, form_class):
         form = super(SurveyEditView, self).get_form(form_class)
+        if not perm_checkers.SurveyPermChecker.has_perm(self.request, form.instance):
+            raise Http404
         survey = form.instance
         if survey.site.surveys.all().order_by('-pk').first() != survey:
             del form.fields['hazards']
