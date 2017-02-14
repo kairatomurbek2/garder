@@ -44,8 +44,4 @@ Feature: Letter Viewing and Sending
       | Van der Veijden                     |
       | Edit                                |
       | Get PDF                             |
-      | +123456789                          |
-      | +987654321                          |
       | pws@test.com                        |
-      | 200 South Jefferson st.             |
-      | Chikago, IL, 70643                  |
