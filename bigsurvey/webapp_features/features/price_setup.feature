@@ -50,3 +50,21 @@ Feature: Price Setup
     And I submit "price_setup" form
     Then I should see "2.00"
     And I should not see "1.00"
+
+  Scenario: Price adding for PWS
+    Given Current default price started today
+    And I logged in as "root"
+    And I directly open "price_setup" page
+    When I fill in "price" with "15"
+    And I select "PWS1, First PWS" from "pws_multiple"
+    And I submit "price_setup" form
+    Then I should see "15.00"
+
+  Scenario: Price updating for PWS
+    Given Current default price started today
+    And I logged in as "root"
+    And I directly open "price_setup" page
+    When I fill in "price" with "10"
+    And I select "PWS2, Second PWS" from "pws_multiple"
+    And I submit "price_setup" form
+    Then I should see "10.00"

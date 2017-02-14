@@ -26,18 +26,18 @@
                 </thead>
                 <tbody>
                 {% for active_price in active_prices %}
-                <tr>
-                    <td>{{ active_price.price|floatformat:2 }}</td>
-                    <td>{% if active_price.pws %}{{ active_price.pws }}{% else %}Default{% endif %}</td>
-                    <td>{{ active_price.start_date }}</td>
-                    <td>
-                        {% if active_price.end_date %}
-                            {{ active_price.end_date }}
-                        {% else %}
-                            {% trans "Active (Current Price)" %}
-                        {% endif %}
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ active_price.price|floatformat:2 }}</td>
+                        <td>{% if active_price.pws %}{{ active_price.pws }}{% else %}Default{% endif %}</td>
+                        <td>{{ active_price.start_date }}</td>
+                        <td>{% spaceless %}
+                            {% if active_price.end_date %}
+                                {{ active_price.end_date }}
+                            {% else %}
+                                {% trans "Active (Current Price)" %}
+                            {% endif %}
+                         {% endspaceless %}</td>
+                    </tr>
                 {% endfor %}
                 {% if old_prices %}
                     <tr>

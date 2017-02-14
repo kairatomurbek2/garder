@@ -6154,6 +6154,17 @@
   },
   {
     "fields": {
+      "price": "5.00",
+      "start_date": "2016-01-01",
+      "pws":1,
+      "end_date": null,
+      "price_type": "test_price"
+    },
+    "model": "webapp.pricehistory",
+    "pk": 3
+  },
+  {
+    "fields": {
       "pdf_file": "media/pdf.pdf"
     },
     "model": "webapp.termsconditions",

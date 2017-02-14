@@ -689,7 +689,7 @@ class TestPriceForm(forms.ModelForm):
                                                   widget=forms.SelectMultiple(
                                                       attrs={'class': 'js-select2-multiple'})
                                                   )
-    price=forms.DecimalField(required=True,min_value=0,decimal_places=2,max_digits=7,label='Price',initial=Decimal(5))
+    price=forms.DecimalField(required=True,decimal_places=2,max_digits=7,label='Price',initial=Decimal(5))
     class Meta:
         model=models.PriceHistory
         fields=[]
