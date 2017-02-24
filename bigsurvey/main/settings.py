@@ -53,7 +53,8 @@ INSTALLED_APPS = (
     'reversion',
     'reversion_compare',
     'auditlog',
-    'captcha'
+    'captcha',
+    'ajax_select',
 )
 
 SESSION_COOKIE_AGE = 900

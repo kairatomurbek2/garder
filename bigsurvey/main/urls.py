@@ -2,10 +2,12 @@ from django.conf.urls import patterns, include, url, static
 from django.views.generic import TemplateView
 from webapp.admin import admin_site_bigsurvey
 from django.conf import settings
+from ajax_select import urls as ajax_select_urls
 from webapp.forms import EmailValidationOnForgotPassword
 
 urlpatterns = patterns(
     '',
+    url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^admin/', include(admin_site_bigsurvey.urls)),
     url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^', include('webapp.urls', namespace='webapp')),
