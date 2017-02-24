@@ -5,6 +5,9 @@ from django.utils.translation import ugettext as _
 from django import forms
 from reversion_compare.admin import CompareVersionAdmin
 from bigsurveyadminsite import admin_site_bigsurvey
+from ajax_select.fields import AutoCompleteSelectField
+from ajax_select import make_ajax_form
+
 import models
 
 
@@ -20,6 +23,8 @@ class EmployeeAdmin(UserAdmin):
 
 
 class SurveyAdminForm(forms.ModelForm):
+    site = AutoCompleteSelectField('site', required=False, help_text=None)
+
     class Meta:
         model = models.Survey
         exclude = []
@@ -27,6 +32,13 @@ class SurveyAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SurveyAdminForm, self).__init__(*args, **kwargs)
         self.fields['hazards'].queryset = models.Hazard.objects.filter(site=self.instance.site)
+
+
+class HazardAdmin(admin.ModelAdmin):
+    form = make_ajax_form(models.Hazard, {'site': 'site'})
+
+class LetterAdmin(admin.ModelAdmin):
+    form = make_ajax_form(models.Letter, {'site': 'site'})
 
 
 class SurveyAdmin(CompareVersionAdmin):
@@ -66,11 +78,11 @@ admin_site_bigsurvey.register(models.BPManufacturer)
 admin_site_bigsurvey.register(models.BPSize)
 admin_site_bigsurvey.register(models.CustomerCode)
 admin_site_bigsurvey.register(models.FloorsCount)
-admin_site_bigsurvey.register(models.Hazard)
+admin_site_bigsurvey.register(models.Hazard,HazardAdmin)
 admin_site_bigsurvey.register(models.Regulation)
 admin_site_bigsurvey.register(models.HazardType)
 admin_site_bigsurvey.register(models.ICPointType)
-admin_site_bigsurvey.register(models.Letter)
+admin_site_bigsurvey.register(models.Letter,LetterAdmin)
 admin_site_bigsurvey.register(models.LetterType, LetterTypeAdmin)
 admin_site_bigsurvey.register(models.Orientation)
 admin_site_bigsurvey.register(models.PWS)
