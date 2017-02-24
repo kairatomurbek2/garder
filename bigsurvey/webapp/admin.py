@@ -38,7 +38,7 @@ class HazardAdmin(admin.ModelAdmin):
     form = make_ajax_form(models.Hazard, {'site': 'site'})
 
 class LetterAdmin(admin.ModelAdmin):
-    form = make_ajax_form(models.Letter, {'site': 'site'})
+    form = make_ajax_form(models.Letter, {'site': 'site','hazard':'hazard'})
 
 
 class SurveyAdmin(CompareVersionAdmin):
