@@ -146,6 +146,7 @@ class LetterMixin(object):
         if form.cleaned_data.get('attach_testers', False):
             testers = models.User.objects.filter(groups__name=Groups.tester, employee__pws=letter.site.pws)
             if is_pdf:
+                html += '<pdf:nexttemplate name="testers" />'
                 html += page_delimiter
                 new_page_inserted = True
             html += render_to_string('email_templates/html/testers_list.html', {'testers': testers})
