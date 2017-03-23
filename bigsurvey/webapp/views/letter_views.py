@@ -142,15 +142,17 @@ class LetterMixin(object):
 
         new_page_inserted = False
         page_delimiter = '<pdf:nextpage />'
-
         if form.cleaned_data.get('attach_testers', False):
-            testers = models.User.objects.filter(groups__name=Groups.tester, employee__pws=letter.site.pws)
+            testers_true = models.User.objects.filter(groups__name=Groups.tester, employee__pws=letter.site.pws,
+                                                      employee__has_licence_for_installation=True)
+            testers_false = models.User.objects.filter(groups__name=Groups.tester, employee__pws=letter.site.pws,
+                                                       employee__has_licence_for_installation=False)
             if is_pdf:
                 html += '<pdf:nexttemplate name="testers" />'
                 html += page_delimiter
                 new_page_inserted = True
-            html += render_to_string('email_templates/html/testers_list.html', {'testers': testers})
-
+            html += render_to_string('email_templates/html/testers_list.html',
+                                     {'testers_true': testers_true, 'testers_false': testers_false})
         if form.cleaned_data.get('attach_consultant_info', False):
             if is_pdf and not new_page_inserted:
                 html += page_delimiter
