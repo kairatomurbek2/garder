@@ -31,3 +31,9 @@ def has_access(user, group_name):
 @register.filter(name='has_group')
 def has_group(user, group_name):
     return user.groups.filter(name=group_name).exists()
+
+
+@register.filter(name='string_indent')
+def string_indent(value, max_length):
+    if len(value) > max_length:
+        return "%s\n%s" % (value[:max_length], value[max_length:])

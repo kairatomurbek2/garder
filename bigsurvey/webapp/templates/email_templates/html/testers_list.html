@@ -1,4 +1,5 @@
-{% load i18n %}
+{% load i18n common %}
+
 <div style="table-layout: fixed; width: 100%; margin-top: 30px; padding-top: 20px">
     <h3>{% trans 'Testers List' %}</h3>
     <table style="width: 100%; border-collapse: collapse">
@@ -26,13 +27,13 @@
                 <td style="padding: 5px; border: 1px solid #000000;">{{ tester.employee.state }}</td>
                 <td style="padding: 5px; border: 1px solid #000000;">{{ tester.employee.zip }}</td>
                 <td style="padding: 5px; border: 1px solid #000000;">{{ tester.employee.phone1 }}</td>
-                <td style="padding: 5px; border: 1px solid #000000; width:300px;">{{ tester.email }}</td>
+                <td style="padding: 5px; border: 1px solid #000000; width:300px;">{{ tester.email|string_indent:35 }}</td>
             </tr>
         {% endfor %}
         {% if testers_false %}
             <tr>
                 <td colspan="7" style="padding: 5px;font-weight: bold; text-align: center; border:1px solid #000000">
-                    {% trans "Approved General testers" %}
+                    {% trans "Approved General Testers" %}
                 </td>
             </tr>
         {% endif %}
@@ -44,7 +45,7 @@
                 <td style="padding: 5px; border: 1px solid #000000;">{{ tester.employee.state }}</td>
                 <td style="padding: 5px; border: 1px solid #000000;">{{ tester.employee.zip }}</td>
                 <td style="padding: 5px; border: 1px solid #000000;">{{ tester.employee.phone1 }}</td>
-                <td style="padding: 5px; border: 1px solid #000000; width:300px;">{{ tester.email }}</td>
+                <td style="padding: 5px; border: 1px solid #000000; width:300px;">{{ tester.email|string_indent:35 }}</td>
             </tr>
         {% endfor %}
     </table>
