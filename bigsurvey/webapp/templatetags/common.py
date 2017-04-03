@@ -37,3 +37,5 @@ def has_group(user, group_name):
 def string_indent(value, max_length):
     if len(value) > max_length:
         return "%s\n%s" % (value[:max_length], value[max_length:])
+    else:
+        return value
