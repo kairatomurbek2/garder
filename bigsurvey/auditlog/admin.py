@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from diff_match_patch import diff_match_patch
 
 from auditlog.auditlog_helpers import render_diff
+from webapp.bigsurveyadminsite import admin_site_bigsurvey
 
 dmp = diff_match_patch()
 
@@ -77,4 +78,4 @@ class AuditLogAdmin(admin.ModelAdmin):
     def lookup_allowed(self, lookup, value):
         return True
 
-admin.site.register(Version, AuditLogAdmin)
+admin_site_bigsurvey.register(Version, AuditLogAdmin)
