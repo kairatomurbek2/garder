@@ -13,7 +13,7 @@ SITE_FIELDS = [
     ("street_number", "Service Street Number"),
     ("address1", "Service Address 1"),
     ("address2", "Service Address 2"),
-    ("apt", "Service Apt."),
+    ("apt", "Service Site Apt."),
     ("city", "Service City"),
     ("state", "Service State"),
     ("zip", "Service ZIP"),

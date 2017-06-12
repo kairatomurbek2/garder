@@ -579,7 +579,7 @@ class SiteFilter(django_filters.FilterSet):
     street_number = django_filters.CharFilter(lookup_type='icontains', label=_('Street Number'), name='street_number')
     address1 = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address 1'), name='address1')
     address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Service Address 2'), name='address2')
-    apt = django_filters.CharFilter(lookup_type='icontains', label=_('Service Apt'))
+    apt = django_filters.CharFilter(lookup_type='icontains', label=_('Service Site Apt'))
     city = django_filters.CharFilter(lookup_type='icontains', label=_('Service City'))
     state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Service State'),
                                         action=FilterActions.Site.state)

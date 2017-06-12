@@ -408,7 +408,7 @@ POSSIBLE_IMPORT_MAPPINGS = {
     "Service Street Address": ('streetaddress', 'sitestreetaddress', 'servicestreetaddress', 'sitestreet', 'servicestreet', 'siteaddress', 'serviceaddress', 'address1',),
     "Service Secondary Address": ('siteaddress2', 'serviceaddress2', 'address2',),
     "Service Street Number": ('sitestreetnumber', 'servicestreetnumber', 'streetnumber',),
-    "Service Apt": ('siteapt', 'serviceapt', 'apt', 'apartment',),
+    "Service Site Apt": ('servicesiteapt', 'serviceapt', 'apt', 'apartment',),
     "Service City": ('sitecity', 'sitetown', 'servicecity', 'servicetown', 'city', 'town',),
     "Service State": ('servicestate', 'state', 'sitestate',),
     "Service ZIP": ('sitezip', 'servicezip', 'zip',),

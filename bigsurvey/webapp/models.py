@@ -545,7 +545,7 @@ class Site(models.Model):
     address1 = models.CharField(max_length=100, verbose_name=_("Service Street Address"))
     address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Service Secondary Address"))
     street_number = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Service Street Number"))
-    apt = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Service Apt"))
+    apt = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Service Site Apt"))
     city = models.CharField(max_length=30, verbose_name=_("Service City"))
     state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("Service State"))
     zip = models.CharField(max_length=10, null=True, blank=True, verbose_name=_("Service ZIP"))
