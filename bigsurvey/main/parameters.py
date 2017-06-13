@@ -437,7 +437,7 @@ POSSIBLE_IMPORT_MAPPINGS = {
     "Mailing Site Apt": ('custapt', 'customerapt', 'mailingsiteapt'),
     "Mailing City": ('custcity', 'custtown', 'customercity', 'customertown', 'mailingcity', 'mailingtown'),
     "Mailing State": ('custstate', 'customerstate', 'mailingstate'),
-    "Customer ZIP": ('custzip', 'customerzip',),
+    "Mailing ZIP": ('custzip', 'customerzip', 'mailingzip'),
     "Customer Phone": ('custphone', 'customerphone', 'phone', 'tel', 'telephone',),
     "Customer Fax": ('custfax', 'customerfax', 'fax',),
     "Customer Email": ('customeremail', 'custemail', 'email',),

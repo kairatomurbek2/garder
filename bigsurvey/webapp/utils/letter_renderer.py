@@ -11,7 +11,7 @@ class Placeholders(object):
     cust_address = '{MailingAddress}'
     cust_city = '{MailingCity}'
     cust_state = '{MailingState}'
-    cust_zip = '{CustomerZip}'
+    cust_zip = '{MailingZip}'
     account_number = '{AccountNumber}'
     assembly_type_present = '{AssemblyTypePresent}'
     assembly_type_required = '{AssemblyTypeRequired}'

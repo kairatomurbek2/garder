@@ -590,7 +590,7 @@ class SiteFilter(django_filters.FilterSet):
     cust_city = django_filters.CharFilter(lookup_type='icontains', label=_('Mailing City'))
     cust_state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Mailing State'),
                                              action=FilterActions.Site.cust_state)
-    cust_zip = django_filters.CharFilter(lookup_type='icontains', label=_('Customer ZIP'))
+    cust_zip = django_filters.CharFilter(lookup_type='icontains', label=_('Mailing ZIP'))
 
     next_survey_from = django_filters.DateFilter(action=FilterActions.Site.next_survey_from,
                                                  label=_('Next Survey From'))

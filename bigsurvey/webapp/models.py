@@ -574,7 +574,7 @@ class Site(models.Model):
     cust_apt = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Mailing Site Apt"))
     cust_city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Mailing City"))
     cust_state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("Mailing State"))
-    cust_zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("Customer ZIP"))
+    cust_zip = models.CharField(null=True, blank=True, max_length=10, verbose_name=_("Mailing ZIP"))
     contact_phone = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Phone"))
     contact_fax = models.CharField(max_length=15, blank=True, null=True, verbose_name=_("Customer Fax"))
     contact_email = models.EmailField(max_length=30, blank=True, null=True, verbose_name=_("Customer Email"))
