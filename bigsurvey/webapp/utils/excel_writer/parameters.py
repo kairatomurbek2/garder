@@ -6,7 +6,7 @@ SITE_FIELDS = [
     ("cust_name", "Customer Name"),
     ("cust_address1", "Customer Address 1"),
     ("cust_address2", "Customer Address 2"),
-    ("cust_apt", "Customer Apt."),
+    ("cust_apt", "Mailing Site Apt."),
     ("cust_city", "Mailing City"),
     ("cust_state", "Customer State"),
     ("cust_zip", "Customer ZIP"),
