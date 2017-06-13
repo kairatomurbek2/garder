@@ -585,7 +585,7 @@ class SiteFilter(django_filters.FilterSet):
                                         action=FilterActions.Site.state)
     zip = django_filters.CharFilter(lookup_type='icontains', label=_('Service ZIP'))
     cust_address1 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 1'))
-    cust_address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Customer Address 2'))
+    cust_address2 = django_filters.CharFilter(lookup_type='icontains', label=_('Mailing Address'))
     cust_apt = django_filters.CharFilter(lookup_type='icontains', label=_('Mailing Site Apt'))
     cust_city = django_filters.CharFilter(lookup_type='icontains', label=_('Mailing City'))
     cust_state = django_filters.ChoiceFilter(choices=STATES_FILTER, label=_('Customer State'),

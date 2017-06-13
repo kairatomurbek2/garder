@@ -570,7 +570,7 @@ class Site(models.Model):
     cust_name = models.CharField(max_length=50, verbose_name=_("Customer Name"))
     cust_code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
     cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Customer Main Address"))
-    cust_address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Customer Secondary Address"))
+    cust_address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Mailing Address"))
     cust_apt = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Mailing Site Apt"))
     cust_city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Mailing City"))
     cust_state = models.CharField(max_length=2, null=True, blank=True, choices=STATES, verbose_name=_("Customer State"))

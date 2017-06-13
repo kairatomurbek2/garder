@@ -8,7 +8,7 @@ class Placeholders(object):
     site_city = '{ServiceCity}'
     site_state = '{ServiceState}'
     cust_name = '{CustomerName}'
-    cust_address = '{CustomerAddress}'
+    cust_address = '{MailingAddress}'
     cust_city = '{MailingCity}'
     cust_state = '{CustomerState}'
     cust_zip = '{CustomerZip}'
