@@ -9,7 +9,7 @@ class Placeholders(object):
     site_state = '{ServiceState}'
     cust_name = '{CustomerName}'
     cust_address = '{CustomerAddress}'
-    cust_city = '{CustomerCity}'
+    cust_city = '{MailingCity}'
     cust_state = '{CustomerState}'
     cust_zip = '{CustomerZip}'
     account_number = '{AccountNumber}'
