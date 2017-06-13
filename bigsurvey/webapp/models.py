@@ -569,7 +569,7 @@ class Site(models.Model):
     cust_number = models.CharField(max_length=15, verbose_name=_("Account Number"), db_index=True)
     cust_name = models.CharField(max_length=50, verbose_name=_("Customer Name"))
     cust_code = models.ForeignKey(CustomerCode, verbose_name=_("Customer Code"), related_name="customers")
-    cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Customer Main Address"))
+    cust_address1 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Customer Name 2"))
     cust_address2 = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Mailing Address"))
     cust_apt = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Mailing Site Apt"))
     cust_city = models.CharField(max_length=30, blank=True, null=True, verbose_name=_("Mailing City"))

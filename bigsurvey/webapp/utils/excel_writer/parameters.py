@@ -4,7 +4,7 @@ SITE_FIELDS = [
     ("cust_number", "Account Number"),
     ("cust_code", "Customer Code"),
     ("cust_name", "Customer Name"),
-    ("cust_address1", "Customer Address 1"),
+    ("cust_address1", "Customer Name 2"),
     ("cust_address2", "Mailing Address"),
     ("cust_apt", "Mailing Site Apt."),
     ("cust_city", "Mailing City"),

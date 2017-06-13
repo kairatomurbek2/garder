@@ -432,7 +432,7 @@ POSSIBLE_IMPORT_MAPPINGS = {
     "Account Number": ('account', 'customeraccount', 'accountnumber', 'customernumber', 'custaccount', 'custnumber', 'customeraccountnumber', 'custaccountnumber',),
     "Customer Name": ('name', 'customername', 'custname',),
     "Customer Code": ('code', 'customercode', 'custcode',),
-    "Customer Main Address": ('custaddress1', 'customeraddress1', 'custaddress', 'customeraddress',),
+    "Customer Name 2": ('custaddress1', 'customeraddress1', 'custaddress', 'customeraddress', 'customername2'),
     "Mailing Address": ('custaddress2', 'customeraddress2', 'mailingaddress'),
     "Mailing Site Apt": ('custapt', 'customerapt', 'mailingsiteapt'),
     "Mailing City": ('custcity', 'custtown', 'customercity', 'customertown', 'mailingcity', 'mailingtown'),
