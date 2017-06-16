@@ -1,9 +1,9 @@
 #!/bin/sh
-
+#"base" "regulation" "pws" "perms" "users" "testers" "site" "device" "hazard" "survey" "test_kit" "tester_cert" "test" "letter"
 cd ./bigsurvey/
 FILE_PATH="./webapp/fixtures/raw/"
 FILE_PREFIX="raw_data_"
-for data_type in "base" "regulation" "pws" "perms" "users" "testers" "site" "device" "hazard" "survey" "test_kit" "tester_cert" "test" "letter"
+for data_type in "letter_type"
 do
     for part_number in `seq 0 100`
     do
