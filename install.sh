@@ -10,9 +10,9 @@ cd ./bigsurvey
 echo =================== MIGRATING DATABASE STRUCTURE ===================
 ./manage.py migrate --noinput
 echo =========================== LOADING DATA ===========================
-cd ../
-bash ./load_raw_data.sh
-cd ./bigsurvey
+#cd ../
+#bash ./load_raw_data.sh
+#cd ./bigsurvey
 echo ====================== CREATING LETTER TYPES =======================
 ./manage.py create_lettertypes_for_pws
 echo ========================== SETTING DATES ===========================
